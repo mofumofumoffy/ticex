@@ -1,0 +1,22 @@
+{
+    "condition": {
+      "values": [
+        {
+          "prop": "force_integration_materials",
+          "type": "tconstruct:config"
+        },
+        {
+          "value": {
+            "tag": "ticex:reconstruction",
+            "type": "forge:tag_empty"
+          },
+          "type": "forge:not"
+        }
+      ],
+      "type": "forge:or"
+    },
+    "craftable": false,
+    "tier": 3,
+    "sortOrder": 7,
+    "hidden": false
+  }

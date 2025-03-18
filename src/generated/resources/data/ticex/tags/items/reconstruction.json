@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+      {
+        "id": "ticex:reconstruction_core",
+        "required": false
+      }
+    ]
+  }

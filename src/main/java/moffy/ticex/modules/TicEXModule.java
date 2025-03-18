@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class TicEXModule extends AddonModule{
@@ -56,7 +57,7 @@ public class TicEXModule extends AddonModule{
         TicEXRegistry.HEALING_RECEIVED = TicEXRegistry.ATTRIBUTES.register("healing_received", ()->new RangedAttribute("attribute."+TicEX.MODID+".healing_received", 1f, 0f, 1f));
         TicEXRegistry.DAMAGE_TAKEN = TicEXRegistry.ATTRIBUTES.register("damage_taken", ()->new RangedAttribute("attribute."+TicEX.MODID+".damage_taken", 1f, Float.MIN_NORMAL, 1f).setSyncable(true));
 
-        TicEXRegistry.CREATIVE_TAB = TicEXRegistry.CREATIVE_TABS.register(TicEX.MODID, () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.tab."+TicEX.MODID))
+        TicEXRegistry.CREATIVE_TAB_ITEMS = TicEXRegistry.CREATIVE_TABS.register(TicEX.MODID, () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.tab."+TicEX.MODID))
                                    .icon(() -> new ItemStack(TicEXRegistry.RECONSTRUCTION_CORE.get()))
                                    .displayItems(TicEXRegistry::addTabItems)
                                    .build());
@@ -74,7 +75,13 @@ public class TicEXModule extends AddonModule{
         TicEXRegistry.CREATIVE_TABS.register(bus);
         
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onPlayerTick);
+        //MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onMaterialsLoaded);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHeal);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHurt);
+    }
+
+    @Override
+    public void setup(FMLCommonSetupEvent event) {
+        event.enqueueWork(()->CatalystMaterialStatsType.RegisterStats());
     }
 }

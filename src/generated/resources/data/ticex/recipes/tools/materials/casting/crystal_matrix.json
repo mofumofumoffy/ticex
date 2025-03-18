@@ -4,6 +4,7 @@
       "amount": 90,
       "tag": "forge:molten_crystal_matrix"
     },
+    "cast_consumed": true,
     "output": "ticex:crystal_matrix",
     "temperature": 1050
   }

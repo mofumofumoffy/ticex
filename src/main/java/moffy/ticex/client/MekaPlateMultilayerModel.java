@@ -160,14 +160,14 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
                 boltRenderer.update(0, leftBolt, partialTicks);
                 boltRenderer.update(1, rightBolt, partialTicks);
             }
-            //Adjust the matrix so that we render the lightning in the correct spot if the player is crouching
+            
             matrix.pushPose();
             ModelPos.BODY.translate(baseModel, matrix, entity);
             boltRenderer.render(partialTicks, matrix, Minecraft.getInstance().renderBuffers().bufferSource());
             matrix.popPose();
         }
 
-        //Pass white as the color because we don't want to tint transparent quads
+        
         render(baseModel, renderer, matrix, light, overlayLight, Color.WHITE, hasEffect, entity, armorQuads.transparentQuads(), true);
     }
 
@@ -253,7 +253,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
     private ArmorQuads createQuads(Object2BooleanMap<ModuleModelSpec> modules, Set<EquipmentSlot> wornParts, boolean hasMekaToolLeft, boolean hasMekaToolRight) {
         Map<MekanismModelData, Map<ModelPos, Set<String>>> specialQuadsToRender = new Object2ObjectOpenHashMap<>();
         Map<MekanismModelData, Map<ModelPos, Set<String>>> specialLEDQuadsToRender = new Object2ObjectOpenHashMap<>();
-        // map of normal model part name to overwritten model part name (i.e. helmet_head_center1 -> override_solar_helmet_helmet_head_center1)
+        
         Map<String, OverrideData> overrides = new Object2ObjectOpenHashMap<>();
         Set<String> ignored = new HashSet<>();
 
@@ -267,10 +267,10 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
                         if (name.contains(OVERRIDDEN_TAG)) {
                             overrides.put(spec.processOverrideName(name), new OverrideData(modelData, name));
                         }
-                        // if this armor unit controls rendering of this module
+                        
                         if (type == spec.slotType) {
-                            // then add the part as one we will need to add to render, this way we can ensure
-                            // we respect any overrides that might be in a later model part
+                            
+                            
                             matchedParts.add(name);
                         }
                     }
@@ -282,15 +282,15 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
                     MekanismModelData modelData = entry.getKey();
                     Map<ModelPos, Set<String>> quadsToRender = specialQuadsToRender.computeIfAbsent(modelData, d -> new EnumMap<>(ModelPos.class));
                     Map<ModelPos, Set<String>> ledQuadsToRender = specialLEDQuadsToRender.computeIfAbsent(modelData, d -> new EnumMap<>(ModelPos.class));
-                    //For all the parts we matched, go through and try adding them, while respecting any overrides we might have
+                    
                     for (String name : matchedParts) {
                         ModelPos pos = ModelPos.get(name);
                         if (pos == null) {
                             Mekanism.logger.warn("MekaSuit part '{}' is invalid from modules model. Ignoring.", name);
                         } else {
-                            //Note: Currently the special quads here for overrides will likely point to our module and module led quads to render
-                            // but for consistency and future proofing it is better to make sure we look it up in case overrides gets other stuff
-                            // added to it at some point
+                            
+                            
+                            
                             addQuadsToRender(pos, name, overrides, quadsToRender, ledQuadsToRender, specialQuadsToRender, specialLEDQuadsToRender);
                         }
                     }
@@ -298,7 +298,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
             }
         }
 
-        // handle mekatool overrides
+        
         if (type == EquipmentSlot.CHEST) {
             if (hasMekaToolLeft) {
                 processMekaTool(MekanismModelCache.INSTANCE.MEKATOOL_LEFT_HAND, ignored);
@@ -312,15 +312,15 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
         Map<ModelPos, Set<String>> armorLEDQuadsToRender = new EnumMap<>(ModelPos.class);
         for (String name : MekaPlateModelCache.INSTANCE.MEKASUIT_EXO.getModel().getRootComponentNames()) {
             if (!checkEquipment(type, name)) {
-                // skip if it's the wrong equipment type
+                
                 continue;
             } else if (name.startsWith(EXCLUSIVE_TAG)) {
                 if (wornParts.contains(adjacentType)) {
-                    // skip if the part is exclusive and the adjacent part is present
+                    
                     continue;
                 }
             } else if (name.startsWith(SHARED_TAG) && wornParts.contains(adjacentType) && adjacentType.ordinal() > type.ordinal()) {
-                // skip if the part is shared and the shared part already rendered
+                
                 continue;
             }
             ModelPos pos = ModelPos.get(name);
@@ -346,7 +346,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
     private static void processMekaTool(OBJModelData mekaToolModel, Set<String> ignored) {
         for (String name : mekaToolModel.getModel().getRootComponentNames()) {
             if (name.contains(OVERRIDDEN_TAG)) {
-                //Note: We just ignore the pieces here as the override will be rendered as part of the item's model
+                
                 ignored.add(processOverrideName(name, "mekatool"));
             }
         }
@@ -367,10 +367,10 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
           Map<MekanismModelData, Map<ModelPos, Set<String>>> specialLEDQuadsToRender) {
         OverrideData override = overrides.get(name);
         if (override != null) {
-            //Update the name and the target quads if there is an override
+            
             name = override.name();
-            // Note: In theory the special quads should have our model data corresponding
-            // to a map already, but on the off chance they don't compute and add it
+            
+            
             MekanismModelData overrideData = override.modelData();
             quadsToRender = specialQuadsToRender.computeIfAbsent(overrideData, d -> new EnumMap<>(ModelPos.class));
             ledQuadsToRender = specialLEDQuadsToRender.computeIfAbsent(overrideData, d -> new EnumMap<>(ModelPos.class));
@@ -393,7 +393,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
     }
 
     private static void addParsedQuads(MekanismModelData modelData, ModelPos pos, Map<ModelPos, List<BakedQuad>> map, Set<String> quads, Set<String> ledQuads) {
-        //Only add a new entry to our map if we will have any quads. Our getQuads method will return empty if there are no quads
+        
         List<BakedQuad> bakedQuads = getQuads(modelData, quads, ledQuads, pos.getTransform());
         if (!bakedQuads.isEmpty()) {
             map.computeIfAbsent(pos, p -> new ArrayList<>()).addAll(bakedQuads);
@@ -413,8 +413,8 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
     private static List<BakedQuad> getQuads(MekanismModelData data, Set<String> parts, Set<String> ledParts, @Nullable QuadTransformation transform) {
         RandomSource random = Minecraft.getInstance().level.getRandom();
         List<BakedQuad> quads = new ArrayList<>();
-        //Note: We need to use a new list to not accidentally pollute the cached bake quads with the LED quads that we match them with
-        // this also means that we can avoid even baking the data against empty part lists entirely
+        
+        
         if (!parts.isEmpty()) {
             quads.addAll(data.bake(new MekaSuitModelConfiguration(parts)).getQuads(null, null, random, ModelData.EMPTY, null));
         }
@@ -456,9 +456,9 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
             super.reload(evt);
             Collection<ModuleModelSpec> modules = moduleModelSpec.values();
             for (String name : getModel().getRootComponentNames()) {
-                //Find the "best" spec by checking all the specs and finding out which one is listed first
-                // this way if we are overriding another module, then we just put the module that is overriding
-                // the other one first in the name so that it gets the spec matched to it
+                
+                
+                
                 ModuleModelSpec matchingSpec = null;
                 int bestScore = -1;
                 for (ModuleModelSpec spec : modules) {
@@ -477,7 +477,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
                     }
                 }
             }
-            //Update entries to reclaim some memory for empty sets
+            
             for (Map.Entry<ModuleModelSpec, SpecData> entry : specParts.entrySet()) {
                 SpecData specData = entry.getValue();
                 if (specData.active().isEmpty()) {
@@ -551,7 +551,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
 
         @Override
         public boolean isComponentVisible(String component, boolean fallback) {
-            //Ignore fallback as we always have a true or false answer
+            
             return parts.contains(component);
         }
     }

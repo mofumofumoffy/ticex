@@ -8,12 +8,14 @@
         "celestial":"#2ddbfa",
         "condensing":"#ededed",
         "dense":"#cfcfcf",
-        "aftershock": "#42e0f5"
+        "aftershock": "#42e0f5",
+        "rebirth": "#3483eb"
     },
     "material.ticex": {
         "infinity": "#FF5555",
         "neutronium": "#0d0d0d",
-        "crystal_matrix": "#42e0f5"
+        "crystal_matrix": "#42e0f5",
+        "reconstruction": "#3483eb"
     },
     "harvest_tier.ticex": {
 		"infinity": "#FF5555"

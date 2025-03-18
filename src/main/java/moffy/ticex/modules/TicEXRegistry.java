@@ -3,12 +3,12 @@ package moffy.ticex.modules;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
+import java.util.function.Supplier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.ArmorItem;
@@ -33,12 +33,13 @@ import slimeknights.mantle.registration.object.FlowingFluidObject;
 import slimeknights.mantle.registration.object.FluidObject;
 import slimeknights.mantle.registration.object.ItemObject;
 import slimeknights.tconstruct.common.registration.ItemDeferredRegisterExtension;
-import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.util.DynamicModifier;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
+import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.item.armor.MultilayerArmorItem;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
@@ -62,8 +63,6 @@ public class TicEXRegistry {
         SCORCHED = solidProps.apply(1);
     }
 
-    public static final MaterialStatsId CATALYST = new MaterialStatsId(new ResourceLocation(TicEX.MODID, "catalyst"));
-
     public static final ModifiableArmorMaterial MEKAPLATE = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
@@ -75,7 +74,8 @@ public class TicEXRegistry {
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, TicEX.MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TicEX.MODID);
 
-    public static RegistryObject<CreativeModeTab> CREATIVE_TAB = null;
+    public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
+    public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
 
     public static RegistryObject<Item> RECONSTRUCTION_CORE = null;
 
@@ -120,12 +120,30 @@ public class TicEXRegistry {
             output.accept(blockObject.get().asItem());
         }
 
-        if(MEKAPLATE_ARMOR != null){
-            output.acceptAll(MEKAPLATE_ARMOR.values().stream().map(armor->new ItemStack(armor)).toList());
+        acceptArmor(output, MEKAPLATE_ARMOR);
+
+        acceptCatalyst(output, CATALYST_MEKAPLATE);
+    }
+
+    private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends IModifiable> toolObject){
+        if(toolObject != null){
+            ToolBuildHandler.addVariants(output::accept, toolObject.get(), "");
+        }
+    }
+
+    private static void acceptArmor(CreativeModeTab.Output output, EnumObject<?,? extends IModifiable> armorObject){
+        if(armorObject != null){
+            armorObject.forEach(obj -> ToolBuildHandler.addVariants(output::accept, obj, ""));
+        }
+    }
+
+    private static void acceptCatalyst(CreativeModeTab.Output output, EnumObject<ArmorItem.Type, ToolPartItem> catalystObject){
+        if(catalystObject != null){
+            catalystObject.forEach(c -> c.addVariants(output::accept, ""));
         }
     }
 
     private static BlockBehaviour.Properties builder(MapColor color, SoundType soundType) {
-    return BlockBehaviour.Properties.of().sound(soundType).mapColor(color);
-  }
+        return BlockBehaviour.Properties.of().sound(soundType).mapColor(color);
+    }
 }

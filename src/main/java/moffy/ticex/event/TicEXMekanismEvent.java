@@ -32,7 +32,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
@@ -43,15 +42,15 @@ public class TicEXMekanismEvent {
     public void onLivingHurt(LivingHurtEvent event) {
         LivingEntity entity = event.getEntity();
         if (event.getAmount() <= 0 || !entity.isAlive()) {
-            //If some mod does weird things and causes the damage value to be negative or zero then exit
-            // as our logic assumes there is actually damage happening and can crash if someone tries to
-            // use a negative number as the damage value. We also check to make sure that we don't do
-            // anything if the entity is dead as living attack is still fired when the entity is dead
-            // for things like fall damage if the entity dies before hitting the ground, and then energy
-            // would be depleted regardless if keep inventory is on even if no damage was stopped as the
-            // entity can't take damage while dead. While living hurt is not fired, we catch this case
-            // just in case anyway because it is a simple boolean check and there is no guarantee that
-            // other mods may not be firing the event manually even when the entity is dead
+            
+            
+            
+            
+            
+            
+            
+            
+            
             return;
         }
         if (event.getSource().is(DamageTypeTags.IS_FALL)) {
@@ -73,26 +72,6 @@ public class TicEXMekanismEvent {
         }
     }
 
-    private boolean tryAbsorbAll(LivingAttackEvent event, @Nullable IEnergyContainer energyContainer, FloatSupplier absorptionRatio, FloatingLongSupplier energyCost) {
-        if (energyContainer != null && absorptionRatio.getAsFloat() == 1) {
-            FloatingLong energyRequirement = energyCost.get().multiply(event.getAmount());
-            if (energyRequirement.isZero()) {
-                //No energy is actually needed to absorb the damage, either because of the config
-                // or how small the amount to absorb is
-                event.setCanceled(true);
-                return true;
-            }
-            FloatingLong simulatedExtract = energyContainer.extract(energyRequirement, Action.SIMULATE, AutomationType.MANUAL);
-            if (simulatedExtract.equals(energyRequirement)) {
-                //If we could fully negate the damage cancel the event and extract it
-                energyContainer.extract(energyRequirement, Action.EXECUTE, AutomationType.MANUAL);
-                event.setCanceled(true);
-                return true;
-            }
-        }
-        return false;
-    }
-
     private boolean handleDamage(LivingHurtEvent event, @Nullable IEnergyContainer energyContainer, FloatSupplier absorptionRatio, FloatingLongSupplier energyCost) {
         if (energyContainer != null) {
             float absorption = absorptionRatio.getAsFloat();
@@ -100,8 +79,8 @@ public class TicEXMekanismEvent {
             FloatingLong energyRequirement = energyCost.get().multiply(amount);
             float ratioAbsorbed;
             if (energyRequirement.isZero()) {
-                //No energy is actually needed to absorb the damage, either because of the config
-                // or how small the amount to absorb is
+                
+                
                 ratioAbsorbed = absorption;
             } else {
                 ratioAbsorbed = absorption * energyContainer.extract(energyRequirement, Action.EXECUTE, AutomationType.MANUAL).divide(amount).floatValue();
@@ -128,7 +107,7 @@ public class TicEXMekanismEvent {
                 FloatingLong usage = MekanismConfig.gear.mekaSuitBaseJumpEnergyUsage.get().multiply(boost / 0.1F);
                 IEnergyContainer energyContainer = module.getEnergyContainer();
                 if (module.canUseEnergy(player, energyContainer, usage, false)) {
-                    // if we're sprinting with the boost module, limit the height
+                    
                     IModule<ModuleLocomotiveBoostingUnit> boostModule = IModuleHelper.INSTANCE.load(player.getItemBySlot(EquipmentSlot.LEGS), MekanismModules.LOCOMOTIVE_BOOSTING_UNIT);
                     if (boostModule != null && boostModule.isEnabled() && boostModule.getCustomInstance().canFunction(boostModule, player)) {
                         boost = (float) Math.sqrt(boost);
@@ -140,9 +119,6 @@ public class TicEXMekanismEvent {
         }
     }
 
-    /**
-     * @return null if free runners are not being worn, or they don't have an energy container for some reason
-     */
     @Nullable
     private FallEnergyInfo getFallAbsorptionEnergyInfo(LivingEntity base) {
         ItemStack feetStack = base.getItemBySlot(EquipmentSlot.FEET);
@@ -171,13 +147,13 @@ public class TicEXMekanismEvent {
         Optional<BlockPos> position = event.getPosition();
         if (position.isPresent()) {
             BlockPos pos = position.get();
-            // Blasting item speed check
+            
             ItemStack mainHand = player.getMainHandItem();
             if (!mainHand.isEmpty() && mainHand.getItem() instanceof IBlastingItem tool) {
                 Map<BlockPos, BlockState> blocks = tool.getBlastedBlocks(player.level(), player, mainHand, pos, event.getState());
                 if (!blocks.isEmpty()) {
-                    // Scales mining speed based on hardest block
-                    // Does not take into account the tool check for those blocks or other mining speed changes that don't apply to the target block.
+                    
+                    
                     float targetHardness = event.getState().getDestroySpeed(player.level(), pos);
                     float maxHardness = blocks.entrySet().stream()
                           .map(entry -> entry.getValue().getDestroySpeed(player.level(), entry.getKey()))
@@ -187,7 +163,7 @@ public class TicEXMekanismEvent {
             }
         }
 
-        //Gyroscopic stabilization check
+        
         ItemStack legs = player.getItemBySlot(EquipmentSlot.LEGS);
         if (!legs.isEmpty() && IModuleHelper.INSTANCE.isEnabled(legs, MekanismModules.GYROSCOPIC_STABILIZATION_UNIT)) {
             if (player.isEyeInFluidType(ForgeMod.WATER_TYPE.get()) && !EnchantmentHelper.hasAquaAffinity(player)) {

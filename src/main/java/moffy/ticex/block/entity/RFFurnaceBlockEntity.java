@@ -88,7 +88,9 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
         int energyRate = pBlockEntity.getEnergyStorage().getEnergyRate();
         int extracted = pBlockEntity.getEnergyStorage().extractEnergy(1000, false);
 
-        int fuelIndex = pBlockEntity.isCreative() ? 20 : Math.round(20 * (energyRate / (float)pBlockEntity.getMaxEnergyRate()));
+        float rate = (float)energyRate / pBlockEntity.getMaxEnergyRate();
+
+        int fuelIndex = pBlockEntity.isCreative() ? 20 : Math.round(20 * (1 - (float)Math.exp(-Math.PI*rate)));
 
         if(pBlockEntity.isCreative() || extracted >= 1){
             if(fuelIndex == 0){

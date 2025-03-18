@@ -11,6 +11,7 @@ import moffy.ticex.client.MekaPlateMultilayerModel;
 import moffy.ticex.client.MekaPlateModelCache;
 import moffy.ticex.event.TicEXMekanismEvent;
 import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
+import moffy.ticex.modules.CatalystMaterialStatsType;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,11 +22,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import slimeknights.tconstruct.library.materials.stats.MaterialStatType;
+import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
-import slimeknights.tconstruct.tools.ArmorDefinitions;
-import slimeknights.tconstruct.tools.stats.PlatingMaterialStats;
 
 public class TicEXMekanismModule extends AddonModule{
     
@@ -35,14 +34,17 @@ public class TicEXMekanismModule extends AddonModule{
     public static final String ADD_MEKAPLATE_LEGGINGS_MODULES = "add_mekaplate_leggings_modules";
     public static final String ADD_MEKAPLATE_BOOTS_MODULES = "add_mekaplate_boots_modules";
 
+    public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
+
     public TicEXMekanismModule(){
         Item.Properties PROPS = new Item.Properties();
 
+
         ToolCapabilityProvider.register(MekItemCapability::new);
 
-        TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum("mekaplate", ArmorItem.Type.values(), type -> new ItemModifiableMekaSuitArmor(ArmorDefinitions.PLATE, type, new Item.Properties().stacksTo(1)));
+        TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum("mekaplate", ArmorItem.Type.values(), type -> new ItemModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE, type, new Item.Properties().stacksTo(1)));
     
-        TicEXRegistry.CATALYST_MEKAPLATE = TicEXRegistry.ITEMS_EXTENDED.registerEnum("catalyst_mekaplate", ArmorItem.Type.values(), type -> new ToolPartItem(PROPS, ((MaterialStatType<PlatingMaterialStats>)PlatingMaterialStats.TYPES.get(type.ordinal())).getId()));
+        TicEXRegistry.CATALYST_MEKAPLATE = TicEXRegistry.ITEMS_EXTENDED.registerEnum("catalyst_mekaplate", ArmorItem.Type.values(), type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekaplate", type).getId()));
     }
 
     @Override

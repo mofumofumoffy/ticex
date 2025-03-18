@@ -1,0 +1,16 @@
+{
+    "default": [
+      {
+        "name": "ticex:rebirth",
+        "level": 1
+      }
+    ],
+    "perStat": {
+      "tconstruct:armor": [
+        {
+          "name": "ticex:rebirth",
+          "level": 1
+        }
+      ]
+    }
+  }
