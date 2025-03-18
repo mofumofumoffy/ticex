@@ -61,8 +61,11 @@ public class TicEXModule extends AddonModule{
                                    .displayItems(TicEXRegistry::addTabItems)
                                    .build());
 
+        TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
+
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         TicEXRegistry.ITEMS.register(bus);
+        TicEXRegistry.ITEMS_EXTENDED.register(bus);
         TicEXRegistry.BLOCKS.register(bus);
         TicEXRegistry.BLOCK_ENTITIES.register(bus);
         TicEXRegistry.FLUIDS.register(bus);

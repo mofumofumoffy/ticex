@@ -1,0 +1,8 @@
+# Made in Blockbench 4.12.3
+newmtl m_d99a866e-601e-1e4d-a1db-c8e32277b2cc
+map_Kd mekanism:entity/armor/mekasuit_armor_helmet
+newmtl m_6a65c9d4-a292-1dcc-a7aa-30cc066e12e3
+map_Kd mekanism:entity/armor/mekasuit_armor_body
+newmtl m_5abd6d40-9991-f91e-6f15-d74547d5ac98
+map_Kd mekanism:entity/armor/mekasuit_armor_exoskeleton
+newmtl none

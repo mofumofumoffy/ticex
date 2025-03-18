@@ -1,0 +1,15 @@
+{
+    "package": "moffy.ticex.mixin.mekanism",
+    "compatibilityLevel": "JAVA_17",
+    "refmap": "ticex.refmap.json",
+    "plugin": "moffy.ticex.modules.mekanism.TicEXMekanismMixinPlugin",
+    "mixins": [
+        "ModuleHelperMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "client": [],
+    "server": [],
+    "minVersion": 0.7
+}

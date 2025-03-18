@@ -1,0 +1,10 @@
+# Made in Blockbench 4.12.3
+newmtl m_d99a866e-601e-1e4d-a1db-c8e32277b2cc
+map_Kd mekanism:entity/armor/mekasuit_armor_helmet
+newmtl m_d037c612-2530-2ddc-5809-73d6e1cf2920
+map_Kd mekanism:entity/armor/mekasuit_armor_modules
+newmtl m_54bc8497-91e0-553a-a0f0-98543f87c73e
+map_Kd mekanism:entity/armor/mekasuit_gravitational_modulator
+newmtl m_994c40a8-8459-7a2b-3541-1a7c3118883b
+map_Kd mekanism:entity/armor/mekasuit_elytra
+newmtl none

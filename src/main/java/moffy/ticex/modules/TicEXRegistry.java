@@ -7,29 +7,40 @@ import java.util.function.IntFunction;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import slimeknights.mantle.fluid.UnplaceableFluid;
 import slimeknights.mantle.registration.deferred.FluidDeferredRegister;
+import slimeknights.mantle.registration.object.EnumObject;
 import slimeknights.mantle.registration.object.FlowingFluidObject;
 import slimeknights.mantle.registration.object.FluidObject;
+import slimeknights.mantle.registration.object.ItemObject;
+import slimeknights.tconstruct.common.registration.ItemDeferredRegisterExtension;
+import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.util.DynamicModifier;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
+import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
+import slimeknights.tconstruct.library.tools.item.armor.MultilayerArmorItem;
+import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
 
 public class TicEXRegistry {
@@ -51,7 +62,12 @@ public class TicEXRegistry {
         SCORCHED = solidProps.apply(1);
     }
 
+    public static final MaterialStatsId CATALYST = new MaterialStatsId(new ResourceLocation(TicEX.MODID, "catalyst"));
+
+    public static final ModifiableArmorMaterial MEKAPLATE = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
+
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
+    public static final ItemDeferredRegisterExtension ITEMS_EXTENDED = new ItemDeferredRegisterExtension(TicEX.MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TicEX.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TicEX.MODID);
     public static final FluidDeferredRegister FLUIDS = new FluidDeferredRegister(TicEX.MODID);
@@ -62,6 +78,10 @@ public class TicEXRegistry {
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB = null;
 
     public static RegistryObject<Item> RECONSTRUCTION_CORE = null;
+
+    public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKAPLATE = null; 
+
+    public static EnumObject<ArmorItem.Type, MultilayerArmorItem> MEKAPLATE_ARMOR = null;
 
     public static RegistryObject<Block> SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> CREATIVE_SEARED_RF_FURNACE = null;
@@ -80,12 +100,15 @@ public class TicEXRegistry {
     public static RegistryObject<Attribute> HEALING_RECEIVED = null;
     public static RegistryObject<Attribute> DAMAGE_TAKEN = null;
 
+    public static DynamicModifier REBIRTH_MODIFIER = null;
     public static StaticModifier<Modifier> OMNIPOTEMCE_MODIFIER = null;
     public static DynamicModifier COSMIC_UNBREAKABLE_MODIFIER = null;
     public static DynamicModifier COSMIC_LUCK_MODIFIER = null;
     public static StaticModifier<Modifier> BEDROCK_BREAKER_MODIFIER = null;
+    public static DynamicModifier TRANSCENDENTAL_MODIFIER = null;
     public static StaticModifier<Modifier> CELESTIAL_MODIFIER = null;
     public static StaticModifier<Modifier> CONDENSING_MODIFIER = null;
+    public static DynamicModifier DENSE_MODIFIER = null;
     public static StaticModifier<Modifier> AFTERSHOCK_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
@@ -95,6 +118,10 @@ public class TicEXRegistry {
 
         for(RegistryObject<Block> blockObject : BLOCKS.getEntries()){
             output.accept(blockObject.get().asItem());
+        }
+
+        if(MEKAPLATE_ARMOR != null){
+            output.acceptAll(MEKAPLATE_ARMOR.values().stream().map(armor->new ItemStack(armor)).toList());
         }
     }
 
