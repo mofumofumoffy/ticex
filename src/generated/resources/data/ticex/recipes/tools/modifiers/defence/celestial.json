@@ -1,5 +1,11 @@
 {
     "type": "tconstruct:modifier",
+    "conditions": [
+      {
+        "type": "ticex:mods_available",
+        "required": ["avaritia"]
+      }
+    ],
     "inputs": [
       { "item":"minecraft:elytra" },
       { "item":"avaritia:infinity_catalyst" }

@@ -3,6 +3,7 @@ package moffy.ticex.item;
 import java.util.List;
 
 import moffy.ticex.TicEX;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,7 +29,7 @@ public class ItemReconstCore extends Item{
         if(modifierName == null){
             components.add(Component.translatable("item." + TicEX.MODID + ".reconstruction_core.desc"));
         } else {
-            components.add(Component.translatable("modifier." + TicEX.MODID + "." + modifierName));
+            components.add(Component.translatable("modifier." + TicEX.MODID + "." + modifierName).withStyle(ChatFormatting.AQUA));
         }
     }
 }
