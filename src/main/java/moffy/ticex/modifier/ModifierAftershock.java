@@ -28,15 +28,13 @@ import slimeknights.tconstruct.library.tools.stat.ToolStats;
 
 public class ModifierAftershock extends Modifier implements MeleeHitModifierHook{
 
-    public static final ResourceKey<DamageType> AFTERSHOCK = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(TicEX.MODID, "aftershock"));
-
     @Override
     public void afterMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context,
             float damageDealt) {
         if(context.isFullyCharged()){
             Entity entity = context.getTarget();
-            ToolAttackUtil.attackEntitySecondary(getAftershockDamageSource(context.getLevel()), tool.getStats().get(ToolStats.ATTACK_DAMAGE) * modifier.getLevel() * 0.1f, entity, (entity instanceof LivingEntity ? (LivingEntity)entity : null), true);
-            context.getLevel().addParticle(ParticleTypes.ENCHANT, entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+            ToolAttackUtil.attackEntitySecondary(new DamageSource(context.getLevel().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MAGIC)), tool.getStats().get(ToolStats.ATTACK_DAMAGE) * modifier.getLevel() * 0.1f, entity, (entity instanceof LivingEntity ? (LivingEntity)entity : null), true);
+            context.getLevel().addParticle(ParticleTypes.ENCHANTED_HIT, entity.getX(), entity.getY(), entity.getZ(), 0, 5, 0);
         }
     }
     
@@ -45,10 +43,4 @@ public class ModifierAftershock extends Modifier implements MeleeHitModifierHook
     protected void registerHooks(Builder hookBuilder) {
         hookBuilder.addHook(this, ModifierHooks.MELEE_HIT);
     }
-
-    public static DamageSource getAftershockDamageSource(Level level){
-        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(AFTERSHOCK));
-    }
-
-
 }

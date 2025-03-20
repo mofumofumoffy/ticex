@@ -169,9 +169,11 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:jade-324717:6271651")
     runtimeOnly fg.deobf("curse.maven:fps-reducer-280294:4586784")
 
-    //runtimeOnly fg.deobf("curse.maven:the-twilight-forest-227639:5468648")
+    runtimeOnly fg.deobf("curse.maven:the-twilight-forest-227639:5468648")
     //runtimeOnly fg.deobf("curse.maven:the-god-1199808:6285723")
     //runtimeOnly fg.deobf("curse.maven:geckolib-388172:6312918")
+    runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:6237015")
+    runtimeOnly fg.deobf("curse.maven:selene-499980:6321048")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

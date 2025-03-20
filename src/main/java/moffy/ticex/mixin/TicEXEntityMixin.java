@@ -11,7 +11,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 @Mixin(AttributeSupplier.Builder.class)
 public class TicEXEntityMixin {
     @Inject(
-        at = {@At("HEAD")},
+        at = {@At("INVOKE")},
         method = {"build"},
         cancellable = true
     )
