@@ -13,12 +13,12 @@ import net.minecraftforge.common.util.LazyOptional;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider.IToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-public class MekItemCapability implements IToolCapabilityProvider{
+public class MekItemCapabilityProvider implements IToolCapabilityProvider{
 
     private IToolStackView tool;
     private ItemCapabilityWrapper mekCapabilityWrapper;
 
-    public MekItemCapability(ItemStack stack, Supplier<? extends IToolStackView> toolSupplier) {
+    public MekItemCapabilityProvider(ItemStack stack, Supplier<? extends IToolStackView> toolSupplier) {
         this.tool = toolSupplier.get();
 
         List<ItemCapability> capabilities = new ArrayList<>();

@@ -150,7 +150,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    implementation fg.deobf("blank:addonapi:0.2.0")
+    implementation fg.deobf("blank:addonapi:1.0.0")
 
     implementation fg.deobf("curse.maven:mantle-74924:6258424")
     implementation fg.deobf("curse.maven:tinkers-construct-74072:6266282")
@@ -169,7 +169,9 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:jade-324717:6271651")
     runtimeOnly fg.deobf("curse.maven:fps-reducer-280294:4586784")
 
-    runtimeOnly fg.deobf("curse.maven:the-twilight-forest-227639:5468648")
+    //runtimeOnly fg.deobf("curse.maven:the-twilight-forest-227639:5468648")
+    //runtimeOnly fg.deobf("curse.maven:the-god-1199808:6285723")
+    //runtimeOnly fg.deobf("curse.maven:geckolib-388172:6312918")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

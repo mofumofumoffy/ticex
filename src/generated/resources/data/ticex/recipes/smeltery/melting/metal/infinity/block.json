@@ -2,18 +2,15 @@
     "type": "tconstruct:melting",
     "conditions": [
       {
-        "value": {
-          "tag": "forge:storage_blocks/crystal_matrix",
-          "type": "forge:tag_empty"
-        },
-        "type": "forge:not"
+        "type": "ticex:mods_available",
+        "required": ["avaritia"]
       }
     ],
     "ingredient": {
-      "tag": "forge:storage_blocks/crystal_matrix"
+      "tag": "forge:storage_blocks/infinity"
     },
     "result": {
-      "fluid": "ticex:molten_crystal_matrix",
+      "fluid": "ticex:molten_infinity",
       "amount": 810
     },
     "temperature": 6360,

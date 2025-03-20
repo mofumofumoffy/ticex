@@ -6,7 +6,7 @@ import mekanism.common.Mekanism;
 import mekanism.common.registries.MekanismModules;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
-import moffy.ticex.caps.mekanism.MekItemCapability;
+import moffy.ticex.caps.mekanism.MekItemCapabilityProvider;
 import moffy.ticex.client.MekaPlateMultilayerModel;
 import moffy.ticex.client.MekaPlateModelCache;
 import moffy.ticex.event.TicEXMekanismEvent;
@@ -40,7 +40,7 @@ public class TicEXMekanismModule extends AddonModule{
         Item.Properties PROPS = new Item.Properties();
 
 
-        ToolCapabilityProvider.register(MekItemCapability::new);
+        ToolCapabilityProvider.register(MekItemCapabilityProvider::new);
 
         TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum("mekaplate", ArmorItem.Type.values(), type -> new ItemModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE, type, new Item.Properties().stacksTo(1)));
     

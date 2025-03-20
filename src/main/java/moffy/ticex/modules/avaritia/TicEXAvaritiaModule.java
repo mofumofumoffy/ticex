@@ -4,6 +4,7 @@ import java.util.List;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
+import moffy.ticex.event.TicEXAvaritiaEvent;
 import moffy.ticex.modifier.ModifierAftershock;
 import moffy.ticex.modifier.ModifierBedrockBreaker;
 import moffy.ticex.modifier.ModifierCelestial;
@@ -14,6 +15,7 @@ import moffy.ticex.utils.TicEXFluidUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import slimeknights.tconstruct.fluids.block.BurningLiquidBlock;
@@ -32,6 +34,9 @@ public class TicEXAvaritiaModule extends AddonModule{
         TicEXRegistry.MOLTEN_INFINITY = TicEXRegistry.FLUIDS.register("molten_infinity").type(TicEXFluidUtil.hot("molten_infinity").temperature(6360).lightLevel(15)).block(BurningLiquidBlock.createBurning(MapColor.EMERALD, 15, 20, 20f)).bucket().commonTag().flowing();
         TicEXRegistry.MOLTEN_NEUTRONIUM = TicEXRegistry.FLUIDS.register("molten_neutronium").type(TicEXFluidUtil.cool().temperature(1000)).block(MapColor.COLOR_BLACK, 0).bucket().commonTag().flowing();        
         TicEXRegistry.MOLTEN_CRYSTAL_MATRIX = TicEXRegistry.FLUIDS.register("molten_crystal_matrix").type(TicEXFluidUtil.cool().temperature(1000)).block(MapColor.COLOR_LIGHT_BLUE, 0).bucket().commonTag().flowing();    
+    
+        MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onGetHurt);
+        MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onDeath);
     }
 
     @Override

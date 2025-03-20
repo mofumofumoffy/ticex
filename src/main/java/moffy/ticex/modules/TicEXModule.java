@@ -6,6 +6,7 @@ import moffy.ticex.block.RFFurnaceBlock;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.ItemReconstCore;
+import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.utils.TicEXFluidUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -17,14 +18,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 
 public class TicEXModule extends AddonModule{
 
     public TicEXModule(){
+
         TicEXRegistry.RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register("reconstruction_core", ()->new ItemReconstCore(new Item.Properties(), null));
 
         TicEXRegistry.SEARED_RF_FURNACE = TicEXRegistry.BLOCKS.register("seared_rf_furnace", () -> new RFFurnaceBlock(TicEXRegistry.SEARED, false));
@@ -63,6 +67,7 @@ public class TicEXModule extends AddonModule{
                                    .build());
 
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
+        TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflectioon", ModifierDeflection::new);
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         TicEXRegistry.ITEMS.register(bus);

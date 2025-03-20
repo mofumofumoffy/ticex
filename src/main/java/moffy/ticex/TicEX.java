@@ -24,9 +24,11 @@ public class TicEX {
 
         COMMON.comment("RFFurnace Settings").push("rf_furnace");
         RF_FURNACE_RATE_CAPACITY = COMMON.comment("MAX Rate Capacity(RF/t)").define("RateCapacity", 100000);
+        COMMON.pop();
 
         COMMON.push("avaritia");
         CONDENSING_DROP_PROBABILITY = COMMON.comment("The probability of a neutron pile is dropped by condensing modifier").define("CondensingDropProbability", 0.01f);
+        COMMON.pop();
 
         AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(), COMMON);
         ModLoadingContext.get().registerConfig(Type.COMMON, COMMON.build());

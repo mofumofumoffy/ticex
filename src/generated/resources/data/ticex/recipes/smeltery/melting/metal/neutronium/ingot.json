@@ -2,11 +2,8 @@
     "type": "tconstruct:melting",
     "conditions": [
       {
-        "value": {
-          "tag": "forge:ingots/neutronium",
-          "type": "forge:tag_empty"
-        },
-        "type": "forge:not"
+        "type": "ticex:mods_available",
+        "required": ["avaritia"]
       }
     ],
     "ingredient": {
