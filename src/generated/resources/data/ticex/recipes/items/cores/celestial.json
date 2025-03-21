@@ -1,0 +1,29 @@
+{
+    "type": "avaritia:extreme_smithing",
+    "conditions": [
+      {
+        "type": "ticex:mods_available",
+        "required": ["avaritia"]
+      }
+    ],
+    "addition": [
+      {
+        "item": "minecraft:dragon_head"
+      },
+      {
+        "item": "minecraft:elytra"
+      },
+      {
+        "item": "avaritia:enhancement_core"
+      }
+    ],
+    "base": {
+      "item": "ticex:reconstruction_core"
+    },
+    "result": {
+      "item": "ticex:celestial_core"
+    },
+    "template": {
+      "item": "avaritia:upgrade_smithing_template"
+    }
+  }

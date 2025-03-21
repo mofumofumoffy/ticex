@@ -68,11 +68,13 @@ import mekanism.common.util.ItemDataUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.MekaPlateDispatcher;
+import moffy.ticex.client.mekanism.MekaPlateDispatcher;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
@@ -95,7 +97,6 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import slimeknights.tconstruct.library.client.armor.ArmorModelManager.ArmorModelDispatcher;
 import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.item.armor.MultilayerArmorItem;
 
@@ -103,22 +104,16 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
 
 
     private final AttributeCache attributeCache;
-    //TODO: Expand this system so that modules can maybe define needed tanks?
     private final List<ChemicalTankSpec<Gas>> gasTankSpecs = new ArrayList<>();
     private final List<ChemicalTankSpec<Gas>> gasTankSpecsView = Collections.unmodifiableList(gasTankSpecs);
     private final List<FluidTankSpec> fluidTankSpecs = new ArrayList<>();
     private final List<FluidTankSpec> fluidTankSpecsView = Collections.unmodifiableList(fluidTankSpecs);
-    @SuppressWarnings("unused")
     private final float absorption;
-    //Full laser dissipation causes 3/4 of the energy to be dissipated and the remaining energy to be refracted
-    @SuppressWarnings("unused")
     private final double laserDissipation;
-    @SuppressWarnings("unused")
     private final double laserRefraction;
 
     private final ResourceLocation name;
 
-    @SuppressWarnings("unused")
     public ItemModifiableMekaSuitArmor(ModifiableArmorMaterial material, ArmorItem.Type slot, Item.Properties properties) {
         super(material, slot, properties);
         CachedIntValue armorConfig;
@@ -169,8 +164,13 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
 
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-        // safety check
+        
         return 0;
+    }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        return MutableComponent.create(super.getName(stack).getContents()).withStyle(ChatFormatting.LIGHT_PURPLE);
     }
 
     @Override
@@ -222,7 +222,7 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
 
     @Override
     public boolean isNotReplaceableByPickAction(ItemStack stack, Player player, int inventorySlot) {
-        //Try to avoid replacing this item if there are any modules currently installed
+        
         return super.isNotReplaceableByPickAction(stack, player, inventorySlot) || ItemDataUtils.hasData(stack, NBTConstants.MODULES, Tag.TAG_COMPOUND);
     }
 
@@ -241,7 +241,7 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
         if (stack.isEmpty()) {
             return 0;
         }
-        //Enchantments in our data
+        
         ListTag enchantments = ItemDataUtils.getList(stack, NBTConstants.ENCHANTMENTS);
         return Math.max(MekanismUtils.getEnchantmentLevel(enchantments, enchantment), super.getEnchantmentLevel(stack, enchantment));
     }
@@ -270,8 +270,8 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
     @Override
     public void gatherCapabilities(List<ItemCapability> capabilities, ItemStack stack) {
         GenderCapabilityHelper.addGenderCapability(this, capabilities::add);
-        //Note: We interact with this capability using "manual" as the automation type, to ensure we can properly bypass the energy limit for extracting
-        // Internal is used by the "null" side, which is what will get used for most items
+        
+        
         capabilities.add(RateLimitEnergyHandler.create(() -> getChargeRate(stack), () -> getMaxEnergy(stack), BasicEnergyContainer.manualOnly,
               BasicEnergyContainer.alwaysTrue));
         capabilities.add(RadiationShieldingHandler.create(item -> isModuleEnabled(item, MekanismModules.RADIATION_SHIELDING_UNIT) ?
@@ -344,18 +344,18 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
 
     @Override
     public boolean supportsSlotType(ItemStack stack, @NotNull EquipmentSlot slotType) {
-        //Note: We ignore radial modes as those are just for the Meka-Tool currently
+        
         return slotType == getEquipmentSlot() && getModules(stack).stream().anyMatch(mekanism.common.content.gear.Module::handlesModeChange);
     }
 
     @Override
     public boolean canElytraFly(ItemStack stack, LivingEntity entity) {
         if (getType() == ArmorItem.Type.CHESTPLATE && !entity.isShiftKeyDown()) {
-            //Don't allow elytra flight if the player is sneaking. This lets the player exit elytra flight early
+            
             IModule<ModuleElytraUnit> module = getModule(stack, MekanismModules.ELYTRA_UNIT);
             if (module != null && module.isEnabled() && module.canUseEnergy(entity, MekanismConfig.gear.mekaSuitElytraEnergyUsage.get())) {
-                //If we can use the elytra, check if the jetpack unit is also installed, and if it is,
-                // only mark that we can use the elytra if the jetpack is not set to hover or if it is if it has no hydrogen stored
+                
+                
                 IModule<ModuleJetpackUnit> jetpack = getModule(stack, MekanismModules.JETPACK_UNIT);
                 return jetpack == null || !jetpack.isEnabled() || jetpack.getCustomInstance().getMode() != JetpackMode.HOVER ||
                        getContainedGas(stack, MekanismGases.HYDROGEN.get()).isEmpty();
@@ -366,8 +366,8 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
 
     @Override
     public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
-        //Note: As canElytraFly is checked just before this we don't bother validating ahead of time we have the energy
-        // or that we are the correct slot
+        
+        
         if (!entity.level().isClientSide) {
             int nextFlightTicks = flightTicks + 1;
             if (nextFlightTicks % 10 == 0) {
@@ -431,13 +431,13 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        //Ignore NBT for energized items causing re-equip animations
+        
         return slotChanged || oldStack.getItem() != newStack.getItem();
     }
 
     @Override
     public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
-        //Ignore NBT for energized items causing block break reset
+        
         return oldStack.getItem() != newStack.getItem();
     }
 
@@ -453,7 +453,7 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
     public static boolean tryAbsorbAll(Player player, DamageSource source, float amount) {
         List<Runnable> energyUsageCallbacks = new ArrayList<>(4);
         if (getDamageAbsorbed(player, source, amount, energyUsageCallbacks) >= 1) {
-            //If we can fully absorb it, actually use the energy from the various pieces and then return that we absorbed it all
+            
             for (Runnable energyUsageCallback : energyUsageCallbacks) {
                 energyUsageCallback.run();
             }
@@ -468,7 +468,7 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
         }
         float ratioAbsorbed = 0;
         List<FoundArmorDetails> armorDetails = new ArrayList<>();
-        //Start by looping the armor, allowing modules to absorb damage if they can
+        
         for (ItemStack stack : player.getArmorSlots()) {
             if (!stack.isEmpty() && stack.getItem() instanceof ItemModifiableMekaSuitArmor armor) {
                 IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
@@ -482,60 +482,60 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
                                 float absorption = damageAbsorbInfo.absorptionRatio().getAsFloat();
                                 ratioAbsorbed += absorbDamage(details.usageInfo, amount, absorption, ratioAbsorbed, damageAbsorbInfo.energyCost());
                                 if (ratioAbsorbed >= 1) {
-                                    //If we have fully absorbed the damage, stop checking/trying to absorb more
+                                    
                                     break;
                                 }
                             }
                         }
                     }
                     if (ratioAbsorbed >= 1) {
-                        //If we have fully absorbed the damage, stop checking/trying to absorb more
+                        
                         break;
                     }
                 }
             }
         }
         if (ratioAbsorbed < 1) {
-            //If we haven't fully absorbed it check the individual pieces of armor for if they can absorb any
+            
             Float absorbRatio = null;
             for (FoundArmorDetails details : armorDetails) {
                 if (absorbRatio == null) {
-                    //If we haven't looked up yet if we can absorb the damage type and if we can't
-                    // stop checking if the armor is able to
+                    
+                    
                     if (!source.is(MekanismTags.DamageTypes.MEKASUIT_ALWAYS_SUPPORTED) && source.is(DamageTypeTags.BYPASSES_ARMOR)) {
                         break;
                     }
-                    // Next lookup the ratio at which we can absorb the given damage type from the config
+                    
                     ResourceLocation damageTypeName = source.typeHolder().unwrapKey()
                           .map(ResourceKey::location)
-                          //Note: In theory the above path should always be done as vanilla only makes damage sources with reference holders
-                          // but just in case have the fallback to look up the name from the registry
+                          
+                          
                           .orElseGet(() -> player.level().registryAccess().registry(Registries.DAMAGE_TYPE)
                                 .map(registry -> registry.getKey(source.type()))
                                 .orElse(null)
                           );
-                    if (damageTypeName != null) {//Note: This should not be null unless something went wrong and the damage source is for a damage type that is not registered
+                    if (damageTypeName != null) {
                         absorbRatio = MekanismConfig.gear.mekaSuitDamageRatios.get().get(damageTypeName);
                     }
                     if (absorbRatio == null) {
                         absorbRatio = MekanismConfig.gear.mekaSuitUnspecifiedDamageRatio.getAsFloat();
                     }
                     if (absorbRatio == 0) {
-                        //If the config specifies that the damage type shouldn't be blocked at all
-                        // stop checking if the armor is able to
+                        
+                        
                         break;
                     }
                 }
                 float absorption = details.armor.absorption * absorbRatio;
                 ratioAbsorbed += absorbDamage(details.usageInfo, amount, absorption, ratioAbsorbed, MekanismConfig.gear.mekaSuitEnergyUsageDamage);
                 if (ratioAbsorbed >= 1) {
-                    //If we have fully absorbed the damage, stop checking/trying to absorb more
+                    
                     break;
                 }
             }
         }
         for (FoundArmorDetails details : armorDetails) {
-            //Use energy/or enqueue usage for each piece as needed
+            
             if (!details.usageInfo.energyUsed.isZero()) {
                 if (energyUseCallbacks == null) {
                     details.energyContainer.extract(details.usageInfo.energyUsed, Action.EXECUTE, AutomationType.MANUAL);
@@ -553,24 +553,24 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
     }
 
     private static float absorbDamage(EnergyUsageInfo usageInfo, float amount, float absorption, float currentAbsorbed, FloatingLongSupplier energyCost) {
-        //Cap the amount that we can absorb to how much we have left to absorb
+        
         absorption = Math.min(1 - currentAbsorbed, absorption);
         float toAbsorb = amount * absorption;
         if (toAbsorb > 0) {
             FloatingLong usage = energyCost.get().multiply(toAbsorb);
             if (usage.isZero()) {
-                //No energy is actually needed to absorb the damage, either because of the config
-                // or how small the amount to absorb is
+                
+                
                 return absorption;
             } else if (usageInfo.energyAvailable.greaterOrEqual(usage)) {
-                //If we have more energy available than we need, increase how much energy we "used"
-                // and decrease how much we have available.
+                
+                
                 usageInfo.energyUsed = usageInfo.energyUsed.plusEqual(usage);
                 usageInfo.energyAvailable = usageInfo.energyAvailable.minusEqual(usage);
                 return absorption;
             } else if (!usageInfo.energyAvailable.isZero()) {
-                //Otherwise, if we have energy available but not as much as needed to fully absorb it
-                // then we calculate what ratio we are able to block
+                
+                
                 float absorbedPercent = usageInfo.energyAvailable.divide(usage).floatValue();
                 usageInfo.energyUsed = usageInfo.energyUsed.plusEqual(usageInfo.energyAvailable);
                 usageInfo.energyAvailable = FloatingLong.ZERO;
@@ -599,7 +599,7 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
         private FloatingLong energyUsed = FloatingLong.ZERO;
 
         public EnergyUsageInfo(FloatingLong energyAvailable) {
-            //Copy it so we can just use minusEquals without worry
+            
             this.energyAvailable = energyAvailable.copy();
         }
     }

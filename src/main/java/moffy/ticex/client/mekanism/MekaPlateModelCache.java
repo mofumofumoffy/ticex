@@ -1,4 +1,4 @@
-package moffy.ticex.client;
+package moffy.ticex.client.mekanism;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -6,7 +6,7 @@ import java.util.Set;
 
 import mekanism.client.model.BaseModelCache;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.MekaPlateMultilayerModel.ModuleOBJModelData;
+import moffy.ticex.client.mekanism.MekaPlateMultilayerModel.ModuleOBJModelData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 

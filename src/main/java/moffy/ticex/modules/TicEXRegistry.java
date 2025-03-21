@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -31,7 +32,6 @@ import slimeknights.mantle.registration.deferred.FluidDeferredRegister;
 import slimeknights.mantle.registration.object.EnumObject;
 import slimeknights.mantle.registration.object.FlowingFluidObject;
 import slimeknights.mantle.registration.object.FluidObject;
-import slimeknights.mantle.registration.object.ItemObject;
 import slimeknights.tconstruct.common.registration.ItemDeferredRegisterExtension;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.util.DynamicModifier;
@@ -78,6 +78,8 @@ public class TicEXRegistry {
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
 
     public static RegistryObject<Item> RECONSTRUCTION_CORE = null;
+    public static RegistryObject<Item> CELESTIAL_CORE = null;
+    public static RegistryObject<Item> RADIATION_SHELDING_CORE = null;
 
     public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKAPLATE = null; 
 
@@ -111,6 +113,7 @@ public class TicEXRegistry {
     public static DynamicModifier DENSE_MODIFIER = null;
     public static StaticModifier<Modifier> AFTERSHOCK_MODIFIER = null;
     public static StaticModifier<Modifier> DEFLECTION_MODIFIER = null;
+    public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){
@@ -121,9 +124,9 @@ public class TicEXRegistry {
             output.accept(blockObject.get().asItem());
         }
 
-        acceptArmor(output, MEKAPLATE_ARMOR);
-
         acceptCatalyst(output, CATALYST_MEKAPLATE);
+
+        acceptArmor(output, MEKAPLATE_ARMOR);
     }
 
     private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends IModifiable> toolObject){

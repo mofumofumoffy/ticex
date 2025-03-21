@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import moffy.ticex.TicEX;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ArmorItem;
 import slimeknights.mantle.data.loadable.record.RecordLoadable;
 import slimeknights.tconstruct.TConstruct;
@@ -61,6 +63,11 @@ public record CatalystMaterialStatsType(MaterialStatType<?> getType) implements 
     @Override
     public List<Component> getLocalizedInfo() {
         return List.of(IMaterialStats.makeTooltip(TConstruct.getResource("extra.no_stats")));
+    }
+
+    @Override
+    public MutableComponent getLocalizedName() {
+        return IMaterialStats.super.getLocalizedName().withStyle(ChatFormatting.AQUA);
     }
 
     static{

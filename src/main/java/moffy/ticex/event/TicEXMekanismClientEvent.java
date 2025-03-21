@@ -1,7 +1,7 @@
 package moffy.ticex.event;
 
 import moffy.ticex.TicEX;
-import moffy.ticex.client.MekaPlateModelCache;
+import moffy.ticex.client.mekanism.MekaPlateModelCache;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelEvent;

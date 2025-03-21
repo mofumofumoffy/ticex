@@ -5,6 +5,7 @@ import java.util.List;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.event.TicEXAvaritiaEvent;
+import moffy.ticex.item.ItemReconstCore;
 import moffy.ticex.modifier.ModifierAftershock;
 import moffy.ticex.modifier.ModifierBedrockBreaker;
 import moffy.ticex.modifier.ModifierCelestial;
@@ -13,6 +14,7 @@ import moffy.ticex.modifier.ModifierOmnipotence;
 import moffy.ticex.modules.TicEXRegistry;
 import moffy.ticex.utils.TicEXFluidUtil;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.common.MinecraftForge;
@@ -23,6 +25,8 @@ import slimeknights.tconstruct.fluids.block.BurningLiquidBlock;
 public class TicEXAvaritiaModule extends AddonModule{
 
     public TicEXAvaritiaModule(){
+        TicEXRegistry.CELESTIAL_CORE = TicEXRegistry.ITEMS.register("celestial_core", ()->new ItemReconstCore(new Item.Properties(), "celestial"));
+
         TicEXRegistry.OMNIPOTEMCE_MODIFIER = TicEXRegistry.MODIFIERS.register("omnipotence", ModifierOmnipotence::new);
         TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_unbreakable");
         TicEXRegistry.COSMIC_LUCK_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_luck");

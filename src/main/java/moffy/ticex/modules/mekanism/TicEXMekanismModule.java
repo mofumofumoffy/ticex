@@ -7,9 +7,11 @@ import mekanism.common.registries.MekanismModules;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.mekanism.MekItemCapabilityProvider;
-import moffy.ticex.client.MekaPlateMultilayerModel;
-import moffy.ticex.client.MekaPlateModelCache;
+import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
+import moffy.ticex.client.mekanism.MekaPlateModelCache;
+import moffy.ticex.client.mekanism.MekaPlateMultilayerModel;
 import moffy.ticex.event.TicEXMekanismEvent;
+import moffy.ticex.item.ItemReconstCore;
 import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
 import moffy.ticex.modules.CatalystMaterialStatsType;
 import moffy.ticex.modules.TicEXRegistry;
@@ -41,10 +43,15 @@ public class TicEXMekanismModule extends AddonModule{
 
 
         ToolCapabilityProvider.register(MekItemCapabilityProvider::new);
+        ToolCapabilityProvider.register(RadiationShieldingCapabilityProvider::new);
+
+        TicEXRegistry.RADIATION_SHELDING_CORE = TicEXRegistry.ITEMS.register("radiation_shielding_core", ()->new ItemReconstCore(PROPS, "radiation_shielding"));
 
         TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum("mekaplate", ArmorItem.Type.values(), type -> new ItemModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE, type, new Item.Properties().stacksTo(1)));
     
         TicEXRegistry.CATALYST_MEKAPLATE = TicEXRegistry.ITEMS_EXTENDED.registerEnum("catalyst_mekaplate", ArmorItem.Type.values(), type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekaplate", type).getId()));
+    
+        TicEXRegistry.RADIATION_SHIELDING_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("radiation_shielding");
     }
 
     @Override

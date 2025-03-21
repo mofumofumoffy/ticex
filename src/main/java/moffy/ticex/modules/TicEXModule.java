@@ -1,5 +1,6 @@
 package moffy.ticex.modules;
 
+import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.RFFurnaceBlock;
@@ -8,8 +9,10 @@ import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.ItemReconstCore;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.utils.TicEXFluidUtil;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -20,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -67,16 +71,6 @@ public class TicEXModule extends AddonModule{
 
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
         TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflectioon", ModifierDeflection::new);
-
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        TicEXRegistry.ITEMS.register(bus);
-        TicEXRegistry.ITEMS_EXTENDED.register(bus);
-        TicEXRegistry.BLOCKS.register(bus);
-        TicEXRegistry.BLOCK_ENTITIES.register(bus);
-        TicEXRegistry.FLUIDS.register(bus);
-        TicEXRegistry.MODIFIERS.register(bus);
-        TicEXRegistry.ATTRIBUTES.register(bus);
-        TicEXRegistry.CREATIVE_TABS.register(bus);
         
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onPlayerTick);
         //MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onMaterialsLoaded);

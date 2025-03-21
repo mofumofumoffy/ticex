@@ -1,4 +1,4 @@
-package moffy.ticex.client;
+package moffy.ticex.client.mekanism;
 
 import java.util.ArrayList;
 import java.util.Collection;

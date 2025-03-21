@@ -23,11 +23,16 @@ public class ItemReconstCore extends Item{
     public boolean isFoil(ItemStack stack) {
         return modifierName != null;
     }
+
+    @Override
+    public Component getName(ItemStack pStack) {
+        return Component.translatable("item.ticex.reconstruction_core").withStyle(ChatFormatting.BLUE);
+    }
     
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
         if(modifierName == null){
-            components.add(Component.translatable("item." + TicEX.MODID + ".reconstruction_core.desc"));
+            components.add(Component.translatable("item." + TicEX.MODID + ".reconstruction_core.desc").withStyle(ChatFormatting.GRAY));
         } else {
             components.add(Component.translatable("modifier." + TicEX.MODID + "." + modifierName).withStyle(ChatFormatting.AQUA));
         }

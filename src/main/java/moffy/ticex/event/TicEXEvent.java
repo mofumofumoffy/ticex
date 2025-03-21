@@ -70,8 +70,8 @@ public class TicEXEvent {
         }
     }
 
-    @OnlyIn(Dist.DEDICATED_SERVER)
+    /* @OnlyIn(Dist.DEDICATED_SERVER)
     public static void onMaterialsLoaded(MaterialsLoadedEvent event){
         CatalystMaterialStatsType.RegisterStats();
-    }
+    } */
 }

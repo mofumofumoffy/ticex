@@ -2,16 +2,16 @@
     "itemGroup.tab.ticex": "TiCEX",
 
     "item.ticex.reconstruction_core": "Reconstruction Core",
-    "item.ticex.reconstruction_core.desc": "§8Modifiering Ingredients",
+    "item.ticex.reconstruction_core.desc": "Modifiering Ingredients",
     "item.ticex.molten_reconstruction_core_bucket": "Stream of Reconstruction Bucket",
     "item.ticex.molten_infinity_bucket": "Flow of Infinity Bucket",
     "item.ticex.molten_neutron_bucket": "Hyperdense Neutron Fluid Bucket",
     "item.ticex.molten_crystal_matrix_bucket": "Amorphous Crystal Matrix Bucket",
 
-    "item.ticex.mekaplate_helmet": "§5MekaPlate Helmet",
-    "item.ticex.mekaplate_chestplate": "§5MekaPlate Chestplate",
-    "item.ticex.mekaplate_leggings": "§5MekaPlate leggings",
-    "item.ticex.mekaplate_boots": "§5MekaPlate boots",
+    "item.ticex.mekaplate_helmet": "MekaPlate Helmet",
+    "item.ticex.mekaplate_chestplate": "MekaPlate Chestplate",
+    "item.ticex.mekaplate_leggings": "MekaPlate leggings",
+    "item.ticex.mekaplate_boots": "MekaPlate boots",
 
     "item.ticex.catalyst_mekaplate_helmet": "§bSeram Catalyst - MekaPlate Helmet",
     "item.ticex.catalyst_mekaplate_chestplate": "§bSeram Catalyst - MekaPlate Chestplate",
@@ -84,12 +84,17 @@
     "modifier.ticex.rebirth": "Rebirth",
     "modifier.ticex.rebirth.flavor": "Hello World!",
     "modifier.ticex.rebirth.description":"Tool takes over the base ability of an ingredient",
+    "modifier.ticex.radiation_shielding": "Radiation Shielding",
+    "modifier.ticex.radiation_shielding.flavor": "The final battle at the place where stars are falling",
+    "modifier.ticex.radiation_shielding.description": "Armor protects against radiation",
+
+
 
     "stat.tconstruct.harvest_tier.ticex.infinity": "Infinity",
-    "stat.ticex.catalyst_mekaplate_helmet": "§bCatalyst(MekaPlate Helmet)",
-    "stat.ticex.catalyst_mekaplate_chestplate": "§bCatalyst(MekaPlate Chestplate)",
-    "stat.ticex.catalyst_mekaplate_leggings": "§bCatalyst(MekaPlate Leggings)",
-    "stat.ticex.catalyst_mekaplate_boots": "§bCatalyst(MekaPlate Boots)",
+    "stat.ticex.catalyst_mekaplate_helmet": "Catalyst(MekaPlate Helmet)",
+    "stat.ticex.catalyst_mekaplate_chestplate": "Catalyst(MekaPlate Chestplate)",
+    "stat.ticex.catalyst_mekaplate_leggings": "Catalyst(MekaPlate Leggings)",
+    "stat.ticex.catalyst_mekaplate_boots": "Catalyst(MekaPlate Boots)",
 
     "gui.ticex.seram_gear": "Seram Gear",
     "gui.ticex.seram_gear.description": "Seram gear is tool or armor of a new era which has been reconstructed with the power of the star clusters.",

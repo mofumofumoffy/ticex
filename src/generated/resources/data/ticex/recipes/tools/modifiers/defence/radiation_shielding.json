@@ -1,0 +1,20 @@
+{
+    "type": "tconstruct:modifier",
+    "inputs": [
+      {
+        "item": "ticex:radiation_shielding_core"
+      }
+    ],
+    "tools": [
+      {
+        "type": "forge:difference",
+        "base": { "tag": "tconstruct:modifiable/armor/worn" },
+        "subtracted": { "tag": "ticex:armor/mekaplate" }
+      }
+    ],
+    "slots": {
+      "defense": 1
+    },
+    "allow_crystal": true,
+    "result": "ticex:radiation_shielding"
+  }
