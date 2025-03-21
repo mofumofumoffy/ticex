@@ -1,6 +1,5 @@
 package moffy.ticex.modules;
 
-import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.RFFurnaceBlock;
@@ -8,36 +7,37 @@ import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.ItemReconstCore;
 import moffy.ticex.modifier.ModifierDeflection;
+import moffy.ticex.modifier.ModifierSassy;
 import moffy.ticex.utils.TicEXFluidUtil;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 
 public class TicEXModule extends AddonModule{
 
     public TicEXModule(){
-
         TicEXRegistry.RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register("reconstruction_core", ()->new ItemReconstCore(new Item.Properties(), null));
+        TicEXRegistry.ETHERIC_INGOT = TicEXRegistry.ITEMS.register("etheric_ingot", ()->new Item(new Item.Properties()));
 
+        TicEXRegistry.ETHERIC_BLOCK = TicEXRegistry.BLOCKS.register("etheric_block", () -> new GlassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).noOcclusion()));
         TicEXRegistry.SEARED_RF_FURNACE = TicEXRegistry.BLOCKS.register("seared_rf_furnace", () -> new RFFurnaceBlock(TicEXRegistry.SEARED, false));
         TicEXRegistry.SCORCHED_RF_FURNACE = TicEXRegistry.BLOCKS.register("scorched_rf_furnace", () -> new RFFurnaceBlock(TicEXRegistry.SCORCHED, false));
         TicEXRegistry.CREATIVE_SEARED_RF_FURNACE = TicEXRegistry.BLOCKS.register("creative_seared_rf_furnace", () -> new RFFurnaceBlock(TicEXRegistry.SEARED, true));
         TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE = TicEXRegistry.BLOCKS.register("creative_scorched_rf_furnace", () -> new RFFurnaceBlock(TicEXRegistry.SCORCHED, true));
+        TicEXRegistry.ITEMS.register("etheric_block", ()->new BlockItem(TicEXRegistry.ETHERIC_BLOCK.get(), new Item.Properties()));
         TicEXRegistry.ITEMS.register("seared_rf_furnace", ()->new BlockItem(TicEXRegistry.SEARED_RF_FURNACE.get(), new Item.Properties()));
         TicEXRegistry.ITEMS.register("scorched_rf_furnace", ()->new BlockItem(TicEXRegistry.SCORCHED_RF_FURNACE.get(), new Item.Properties()));
         TicEXRegistry.ITEMS.register("creative_seared_rf_furnace", ()->new BlockItem(TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get(), new Item.Properties()));
@@ -56,6 +56,7 @@ public class TicEXModule extends AddonModule{
                 .build(null)
             );
 
+        TicEXRegistry.MOLTEN_ETHERIC = TicEXRegistry.FLUIDS.register("molten_etheric").type(TicEXFluidUtil.hot("molten_etheric").temperature(1000).density(1600)).block(MapColor.COLOR_LIGHT_GREEN, 0).bucket().commonTag().flowing();
         TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE = TicEXRegistry.FLUIDS.register("molten_reconstruction_core").type(TicEXFluidUtil.slime("reconstruction_core").temperature(1000).density(-1600)).bucket().unplacable();
         for(int i = 0; i < 20; i++){
             TicEXRegistry.RF_FURNACE_FUELS.add(TicEXRegistry.FLUIDS.register("rf_furnace_fuel_"+i).type(TicEXFluidUtil.hot("rf_furnace_fuel_"+i).temperature(1000).density(-1600)).unplacable());
@@ -70,8 +71,9 @@ public class TicEXModule extends AddonModule{
                                    .build());
 
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
-        TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflectioon", ModifierDeflection::new);
-        
+        TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
+        TicEXRegistry.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
+
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onPlayerTick);
         //MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onMaterialsLoaded);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHeal);

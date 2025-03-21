@@ -1,0 +1,18 @@
+{
+    "type": "tconstruct:material",
+    "conditions": [
+      {
+        "value": {
+          "tag": "forge:ingots/etheric",
+          "type": "forge:tag_empty"
+        },
+        "type": "forge:not"
+      }
+    ],
+    "ingredient": {
+      "tag": "forge:ingots/etheric"
+    },
+    "value": 1,
+    "needed": 9,
+    "material": "ticex:etheric"
+  }

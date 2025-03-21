@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+      {
+        "id": "ticex:etheric_block",
+        "required": false
+      }
+    ]
+  }

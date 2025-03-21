@@ -159,6 +159,10 @@ dependencies {
 
     implementation fg.deobf("curse.maven:mekanism-268560:6258796")
 
+    implementation fg.deobf("curse.maven:brandons-core-231382:5422013")
+    implementation fg.deobf("curse.maven:codechicken-lib-1-8-242818:5753868")
+    implementation fg.deobf("curse.maven:draconic-evolution-223565:6065044")
+
     runtimeOnly fg.deobf("curse.maven:jei-238222:6075247")
     runtimeOnly fg.deobf("curse.maven:mouse-tweaks-60089:5338457")
     runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")

@@ -9,13 +9,16 @@
         "condensing":"#ededed",
         "dense":"#cfcfcf",
         "aftershock": "#42e0f5",
-        "rebirth": "#3483eb"
+        "rebirth": "#3483eb",
+        "sassy": "#58e87a",
+        "deflection": "#398f4d"
     },
     "material.ticex": {
         "infinity": "#FF5555",
         "neutronium": "#0d0d0d",
         "crystal_matrix": "#42e0f5",
-        "reconstruction": "#3483eb"
+        "reconstruction": "#3483eb",
+        "etheric": "#2deb59"
     },
     "harvest_tier.ticex": {
 		"infinity": "#FF5555"

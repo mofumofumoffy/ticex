@@ -1,0 +1,10 @@
+{
+    "type": "tconstruct:material_fluid",
+    "fluid": {
+      "amount": 90,
+      "tag": "forge:molten_etheric"
+    },
+    "cast_consumed": true,
+    "output": "ticex:etheric",
+    "temperature": 2500
+  }

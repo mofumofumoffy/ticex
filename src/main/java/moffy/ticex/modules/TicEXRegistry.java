@@ -77,6 +77,7 @@ public class TicEXRegistry {
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
 
+    public static RegistryObject<Item> ETHERIC_INGOT = null;
     public static RegistryObject<Item> RECONSTRUCTION_CORE = null;
     public static RegistryObject<Item> CELESTIAL_CORE = null;
     public static RegistryObject<Item> RADIATION_SHELDING_CORE = null;
@@ -85,6 +86,7 @@ public class TicEXRegistry {
 
     public static EnumObject<ArmorItem.Type, MultilayerArmorItem> MEKAPLATE_ARMOR = null;
 
+    public static RegistryObject<Block> ETHERIC_BLOCK = null;
     public static RegistryObject<Block> SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> CREATIVE_SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> SCORCHED_RF_FURNACE = null;
@@ -98,6 +100,7 @@ public class TicEXRegistry {
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_INFINITY = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_NEUTRONIUM = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_CRYSTAL_MATRIX = null;
+    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
 
     public static RegistryObject<Attribute> HEALING_RECEIVED = null;
     public static RegistryObject<Attribute> DAMAGE_TAKEN = null;
@@ -114,6 +117,7 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> AFTERSHOCK_MODIFIER = null;
     public static StaticModifier<Modifier> DEFLECTION_MODIFIER = null;
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
+    public static StaticModifier<Modifier> SASSY_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){

@@ -1,0 +1,12 @@
+{
+    "type": "tconstruct:melting",
+    "ingredient": {
+      "tag": "forge:ingots/etheric"
+    },
+    "result": {
+      "fluid": "ticex:molten_etheric",
+      "amount": 90
+    },
+    "temperature": 2500,
+    "time": 60
+  }
