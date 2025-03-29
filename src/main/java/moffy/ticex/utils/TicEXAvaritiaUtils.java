@@ -2,7 +2,6 @@ package moffy.ticex.utils;
 
 import committee.nova.mods.avaritia.init.registry.ModDamageTypes;
 import committee.nova.mods.avaritia.init.registry.ModItems;
-import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.modifier.ModifierCelestial;
 import moffy.ticex.modifier.ModifierCondensing;

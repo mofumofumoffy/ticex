@@ -2,7 +2,6 @@ package moffy.ticex.modules.draconicevolution;
 
 import com.brandon3055.brandonscore.api.TechLevel;
 
-import codechicken.lib.util.ClientUtils;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.caps.draconicevolution.DEItemCapabilityProvider;
 import moffy.ticex.client.draconicevolution.TicEXDEShader;
@@ -10,7 +9,6 @@ import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierEvolved;
 import moffy.ticex.modules.TicEXRegistry;
 import moffy.ticex.utils.TicEXDEUtils;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;

@@ -1,6 +1,5 @@
 package moffy.ticex.client.mekanism;
 
-import moffy.ticex.TicEX;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.resources.ResourceLocation;

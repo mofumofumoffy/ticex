@@ -6,15 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.LongSupplier;
 
 import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
-import com.google.common.collect.Multimap;
 
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
@@ -32,8 +29,6 @@ import mekanism.api.math.FloatingLongSupplier;
 import mekanism.api.text.EnumColor;
 import mekanism.client.key.MekKeyHandler;
 import mekanism.client.key.MekanismKeyHandler;
-import mekanism.client.render.RenderPropertiesProvider;
-import mekanism.common.Mekanism;
 import mekanism.common.MekanismLang;
 import mekanism.common.capabilities.Capabilities;
 import mekanism.common.capabilities.ItemCapabilityWrapper.ItemCapability;
@@ -46,18 +41,14 @@ import mekanism.common.capabilities.fluid.item.RateLimitMultiTankFluidHandler.Fl
 import mekanism.common.capabilities.laser.item.LaserDissipationHandler;
 import mekanism.common.capabilities.radiation.item.RadiationShieldingHandler;
 import mekanism.common.config.MekanismConfig;
-import mekanism.common.config.value.CachedIntValue;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.mekasuit.ModuleElytraUnit;
 import mekanism.common.content.gear.mekasuit.ModuleJetpackUnit;
 import mekanism.common.content.gear.shared.ModuleEnergyUnit;
 import mekanism.common.integration.gender.GenderCapabilityHelper;
-import mekanism.common.item.gear.BaseSpecialArmorMaterial;
 import mekanism.common.item.gear.ItemHazmatSuitArmor;
-import mekanism.common.item.gear.ItemMekaSuitArmor;
 import mekanism.common.item.interfaces.IJetpackItem;
 import mekanism.common.item.interfaces.IModeItem;
-import mekanism.common.lib.attribute.AttributeCache;
 import mekanism.common.lib.attribute.IAttributeRefresher;
 import mekanism.common.registries.MekanismFluids;
 import mekanism.common.registries.MekanismGases;
@@ -67,7 +58,6 @@ import mekanism.common.util.ChemicalUtil;
 import mekanism.common.util.ItemDataUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
-import moffy.ticex.TicEX;
 import moffy.ticex.client.mekanism.MekaPlateDispatcher;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
@@ -102,8 +92,6 @@ import slimeknights.tconstruct.library.tools.item.armor.MultilayerArmorItem;
 
 public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements IModifiableMekItem, IModuleContainerItem, IModeItem, IJetpackItem, IAttributeRefresher{
 
-
-    private final AttributeCache attributeCache;
     private final List<ChemicalTankSpec<Gas>> gasTankSpecs = new ArrayList<>();
     private final List<ChemicalTankSpec<Gas>> gasTankSpecsView = Collections.unmodifiableList(gasTankSpecs);
     private final List<FluidTankSpec> fluidTankSpecs = new ArrayList<>();
@@ -116,7 +104,6 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
 
     public ItemModifiableMekaSuitArmor(ModifiableArmorMaterial material, ArmorItem.Type slot, Item.Properties properties) {
         super(material, slot, properties);
-        CachedIntValue armorConfig;
         switch (slot) {
             case HELMET -> {
                 fluidTankSpecs.add(FluidTankSpec.createFillOnly(MekanismConfig.gear.mekaSuitNutritionalTransferRate, MekanismConfig.gear.mekaSuitNutritionalMaxStorage,
@@ -124,7 +111,6 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
                 absorption = 0.15F;
                 laserDissipation = 0.15;
                 laserRefraction = 0.2;
-                armorConfig = MekanismConfig.gear.mekaSuitHelmetArmor;
             }
             case CHESTPLATE -> {
                 gasTankSpecs.add(ChemicalTankSpec.createFillOnly(MekanismConfig.gear.mekaSuitJetpackTransferRate, MekanismConfig.gear.mekaSuitJetpackMaxStorage,
@@ -132,23 +118,19 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
                 absorption = 0.4F;
                 laserDissipation = 0.3;
                 laserRefraction = 0.4;
-                armorConfig = MekanismConfig.gear.mekaSuitBodyArmorArmor;
             }
             case LEGGINGS -> {
                 absorption = 0.3F;
                 laserDissipation = 0.1875;
                 laserRefraction = 0.25;
-                armorConfig = MekanismConfig.gear.mekaSuitPantsArmor;
             }
             case BOOTS -> {
                 absorption = 0.15F;
                 laserDissipation = 0.1125;
                 laserRefraction = 0.15;
-                armorConfig = MekanismConfig.gear.mekaSuitBootsArmor;
             }
             default -> throw new IllegalArgumentException("Unknown Equipment Slot Type");
         }
-        this.attributeCache = new AttributeCache(this, armorConfig, MekanismConfig.gear.mekaSuitToughness, MekanismConfig.gear.mekaSuitKnockbackResistance);
         this.name = material.getId();
     }
 

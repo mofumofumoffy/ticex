@@ -26,7 +26,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 public abstract class ModuleHelperMixin {
 
     @Shadow
-    protected abstract void logDebugReceivedIMC(String imcMethod, String senderModId, IModuleDataProvider<?> moduleDataProvider);
+    private void logDebugReceivedIMC(String imcMethod, String senderModId, IModuleDataProvider<?> moduleDataProvider){}
 
     @Shadow
     protected Map<Item, Set<ModuleData<?>>> supportedModules;

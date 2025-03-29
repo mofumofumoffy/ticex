@@ -141,6 +141,7 @@ public class TicEXRegistry {
         acceptArmor(output, MEKAPLATE_ARMOR);
     }
 
+    @SuppressWarnings("unused")
     private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends IModifiable> toolObject){
         if(toolObject != null){
             ToolBuildHandler.addVariants(output::accept, toolObject.get(), "");

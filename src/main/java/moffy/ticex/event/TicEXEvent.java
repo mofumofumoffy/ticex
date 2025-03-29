@@ -1,14 +1,10 @@
 package moffy.ticex.event;
 
-import moffy.ticex.modules.CatalystMaterialStatsType;
 import moffy.ticex.modules.TicEXRegistry;
 import moffy.ticex.utils.TicEXAvaritiaUtils;
 import moffy.ticex.utils.TicEXUtils;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;

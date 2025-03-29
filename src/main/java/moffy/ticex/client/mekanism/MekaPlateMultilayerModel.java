@@ -70,6 +70,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
@@ -174,7 +175,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
     private void render(HumanoidModel<? extends LivingEntity> baseModel, MultiBufferSource renderer, PoseStack matrix, int light, int overlayLight,
           Color color, boolean hasEffect, LivingEntity entity, Map<ModelPos, List<BakedQuad>> quadMap, boolean transparent) {
         if (!quadMap.isEmpty()) {
-            RenderType renderType = transparent ? RenderType.entityTranslucent(TextureAtlas.LOCATION_BLOCKS) : MekanismRenderType.MEKASUIT;
+            RenderType renderType = transparent ? RenderType.entityTranslucent(InventoryMenu.BLOCK_ATLAS) : MekanismRenderType.MEKASUIT;
             VertexConsumer builder = ItemRenderer.getFoilBufferDirect(renderer, renderType, false, hasEffect);
             for (Map.Entry<ModelPos, List<BakedQuad>> entry : quadMap.entrySet()) {
                 matrix.pushPose();

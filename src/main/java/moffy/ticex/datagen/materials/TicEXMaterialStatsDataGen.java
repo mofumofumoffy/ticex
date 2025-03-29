@@ -2,7 +2,6 @@ package moffy.ticex.datagen.materials;
 
 import moffy.ticex.modules.avaritia.InfinityTier;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import slimeknights.tconstruct.library.data.material.AbstractMaterialDataProvider;
 import slimeknights.tconstruct.library.data.material.AbstractMaterialStatsDataProvider;

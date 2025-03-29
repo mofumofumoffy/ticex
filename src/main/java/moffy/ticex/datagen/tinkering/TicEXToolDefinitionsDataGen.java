@@ -13,7 +13,6 @@ import slimeknights.tconstruct.library.tools.definition.module.material.DefaultM
 import slimeknights.tconstruct.library.tools.definition.module.material.PartStatsModule;
 import slimeknights.tconstruct.library.tools.nbt.MultiplierNBT;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
-import slimeknights.tconstruct.tools.ArmorDefinitions;
 import slimeknights.tconstruct.tools.TinkerToolParts;
 
 public class TicEXToolDefinitionsDataGen extends AbstractToolDefinitionDataProvider{
