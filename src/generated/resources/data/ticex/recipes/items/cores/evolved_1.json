@@ -1,5 +1,11 @@
 {
     "type": "draconicevolution:fusion_crafting",
+    "conditions": [
+      {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:draconicevolution"
+      }
+    ],
     "result": {
         "item": "ticex:draconium_evolved_core"
     },
