@@ -23,6 +23,7 @@ import codechicken.lib.math.MathHelper;
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.TicEXRegistry;
 import moffy.ticex.utils.TicEXDEUtils;
+import moffy.ticex.utils.TicEXUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -61,7 +62,6 @@ import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.context.ToolHarvestContext;
 import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.helper.ToolHarvestLogic;
-import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
@@ -92,7 +92,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
     public void addTooltip(IToolStackView tool, ModifierEntry entry, Player player, List<Component> components, TooltipKey tooltipKey,
             TooltipFlag tooltipFlag) {
 
-        ItemStack toolStack = getTool(player);
+        ItemStack toolStack = TicEXUtils.getToolStack(player, TicEXRegistry.EVOLVED_MODIFIER.get());
 
         if(!toolStack.isEmpty()){
             components.add(Component.translatable("[Modular Item]").withStyle(ChatFormatting.BLUE));
@@ -109,19 +109,6 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
             }
         }
         //components.add(Component.translatable("[Modular Item]").withStyle(ChatFormatting.BLUE));
-    }
-    
-    private ItemStack getTool(LivingEntity entity){
-        ItemStack mainHandStack = entity.getMainHandItem();
-        if(mainHandStack.getItem() instanceof IModifiable && ToolStack.from(mainHandStack).getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) > 0){
-            return mainHandStack;
-        } else {
-            ItemStack offHandStack = entity.getOffhandItem();
-            if(offHandStack.getItem() instanceof IModifiable && ToolStack.from(offHandStack).getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) > 0){
-                return offHandStack;
-            }
-        }
-        return ItemStack.EMPTY;
     }
 
     @Override
@@ -235,7 +222,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
     public void afterBlockBreak(IToolStackView tool, ModifierEntry modifierEntry, ToolHarvestContext context) {
         Player player = context.getPlayer();
         if(player != null && !context.isAOE()){
-            ItemStack stack = getTool(player);
+            ItemStack stack = TicEXUtils.getToolStack(player, TicEXRegistry.EVOLVED_MODIFIER.get());
             if(!stack.isEmpty()){
                 ModuleHost host = stack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).orElseThrow(IllegalStateException::new);
                 IOPStorage storage = stack.getCapability(DECapabilities.OP_STORAGE).orElseThrow(IllegalStateException::new);

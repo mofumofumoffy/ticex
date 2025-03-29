@@ -8,14 +8,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.ModList;
 
 public class TicEXEvent {
 
     public static void onEntityHurt(LivingHurtEvent event){
-        if(ModList.get().isLoaded("avaritia")){
-            TicEXAvaritiaUtils.generatePile(event.getEntity(), event.getEntity().level(), event.getEntity().position());
-        }
 
         //attribute
         float damage = event.getAmount();

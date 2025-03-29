@@ -1,7 +1,5 @@
 package moffy.ticex.modifier;
 
-import java.util.Collection;
-
 import committee.nova.mods.avaritia.init.registry.ModDamageTypes;
 import committee.nova.mods.avaritia.util.ToolUtils;
 import net.minecraft.core.Direction;
@@ -11,8 +9,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -68,7 +66,7 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
             float damageDealt){
         LivingEntity attackerEntity = context.getAttacker();
         Entity victim = context.getTarget();
-        if(damageDealt > 0 && victim.isAlive() && context.getLevel() instanceof ServerLevel){
+        if(victim.isAlive() && context.getLevel() instanceof ServerLevel){
             dealInfinityDamage(context.getLevel(), attackerEntity, victim);
         }
     }
@@ -79,7 +77,7 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
         boolean result = ProjectileHitModifierHook.super.onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit,
         attacker, target);
 
-        if(result){
+        if(attacker.level() instanceof ServerLevel){
             dealInfinityDamage(attacker.level(), attacker, target);
         }
 
@@ -92,32 +90,40 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
         event.setNewSpeed(Float.MAX_VALUE);
     }
 
-    private void dealInfinityDamage(Level level, LivingEntity attackerEntity, Entity victim){
-        ServerLevel serverLevel = (ServerLevel)level;
-        Collection<ItemEntity> drops = victim.captureDrops();
-        if(drops != null){
-            for(ItemEntity drop : drops){
-                level.addFreshEntity(drop);
-            }
-        }
+    private void dealInfinityDamage(Level level, LivingEntity attackerEntity, Entity targetEntity){
+        if(targetEntity.isAlive()){
+            LivingEntity victim = null;
 
-        serverLevel.broadcastEntityEvent(victim, (byte)3);   
-        victim.setPose(Pose.DYING);
-        if(victim.isAlive()){
-            LivingEntity livingEntity = null;
-            if(victim instanceof LivingEntity){
-                livingEntity = (LivingEntity)victim;
-            } else if(victim instanceof PartEntity<?> partEntity){
-                livingEntity = partEntity.getParent() instanceof LivingEntity ? (LivingEntity)partEntity.getParent() : null;
+            if(targetEntity instanceof LivingEntity){
+                victim = (LivingEntity)targetEntity;
+            } else if(targetEntity instanceof PartEntity){
+                Entity parentEntity = ((PartEntity<?>)targetEntity).getParent();
+                if(parentEntity instanceof LivingEntity){
+                    victim = (LivingEntity)parentEntity;
+                }
             }
+            
+            
+            if(level instanceof ServerLevel){
+                if(victim != null){        
+                    ServerLevel serverLevel = (ServerLevel)level;
+                    
+                    ToolUtils.sweepAttack(level, attackerEntity, targetEntity);
 
-            if(livingEntity != null){
-                livingEntity.setHealth(0);
-                livingEntity.die(new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ModDamageTypes.INFINITY), livingEntity, attackerEntity));
-                /* if(livingEntity.isAlive()){
-                    livingEntity.kill();
-                } */
+                    victim.setHealth(0);
+                    victim.die(new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ModDamageTypes.INFINITY), victim, attackerEntity));
+
+                    victim.level().addFreshEntity(new ExperienceOrb(victim.level(), victim.getX(), victim.getY(), victim.getZ(), victim.getExperienceReward()));
+
+                    serverLevel.broadcastEntityEvent(victim, (byte)3);
+                } else {
+                
+                    ServerLevel serverLevel = (ServerLevel)level;
+                    targetEntity.kill();
+                    serverLevel.broadcastEntityEvent(victim, (byte)3);
+                } 
             }
+            if(victim != null)victim.setPose(Pose.DYING);
         }
     }
 }

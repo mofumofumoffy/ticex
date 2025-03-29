@@ -13,40 +13,37 @@
         "tconstruct:grip"
       ],
       "transformer": {
-        "type": "tconstruct:recolor_sprite",
-        "color_mapping": {
-          "type": "tconstruct:grey_to_color",
-          "palette": [
-            {
-              "color": "FF000000",
-              "grey": 0
-            },
-            {
-              "color": "FF1A8191",
-              "grey": 63
-            },
-            {
-              "color": "FF2083A4",
-              "grey": 102
-            },
-            {
-              "color": "FF2D96B9",
-              "grey": 140
-            },
-            {
-              "color": "FF35A6D6",
-              "grey": 178
-            },
-            {
-              "color": "FF47BDEF",
-              "grey": 216
-            },
-            {
-              "color": "FFAADCFF",
-              "grey": 255
-            }
-          ]
-        }
+        "type": "tconstruct:grey_to_sprite",
+        "palette": [
+          {
+            "color": "FF000000",
+            "grey": 0
+          },
+          {
+            "grey": 63,
+            "path": "ticex:material/crystal_matrix_outline_dark"
+          },
+          {
+            "grey": 102,
+            "path": "ticex:material/crystal_matrix_outline"
+          },
+          {
+            "color": "FF2D96B9",
+            "grey": 140
+          },
+          {
+            "color": "FF35A6D6",
+            "grey": 178
+          },
+          {
+            "color": "FF47BDEF",
+            "grey": 216
+          },
+          {
+            "color": "FFAADCFF",
+            "grey": 255
+          }
+        ]
       }
     }
   }

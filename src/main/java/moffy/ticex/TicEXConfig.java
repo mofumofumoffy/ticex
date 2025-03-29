@@ -20,7 +20,7 @@ public class TicEXConfig {
         COMMON.pop();
 
         COMMON.push("avaritia");
-        CONDENSING_DROP_PROBABILITY = COMMON.comment("Probability of a neutron pile is dropped by condensing modifier").define("condensingDropProbability", 0.01f);
+        CONDENSING_DROP_PROBABILITY = COMMON.comment("Probability of a neutron pile is dropped by condensing modifier").define("condensingDropProbability", 0.003f);
         COMMON.pop();
 
         CLIENT.comment("Client Settings").push("client");
