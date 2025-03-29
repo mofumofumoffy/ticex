@@ -2,8 +2,8 @@
     "type": "avaritia:extreme_smithing",
     "conditions": [
       {
-        "type": "ticex:mods_available",
-        "required": ["avaritia"]
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:avaritia_compat"
       }
     ],
     "addition": [

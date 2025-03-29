@@ -2,11 +2,8 @@ package moffy.ticex.modifier;
 
 import java.util.Collection;
 
-import committee.nova.mods.avaritia.common.item.tools.infinity.InfinitySwordItem;
 import committee.nova.mods.avaritia.init.registry.ModDamageTypes;
 import committee.nova.mods.avaritia.util.ToolUtils;
-import moffy.ticex.TicEX;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
@@ -19,8 +16,8 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.entity.PartEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
@@ -49,17 +46,19 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
     public float beforeMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damage,
             float baseKnockback, float knockback) {
         LivingEntity victim = context.getLivingTarget();
-        if (victim instanceof EnderDragon) {
-            victim.setInvulnerable(false);
-        } else if (victim instanceof Player pvp) {
-            if (ToolUtils.isInfinite(pvp)) {
-                pvp.level().explode(context.getPlayerAttacker(), pvp.getBlockX(), pvp.getBlockY(), pvp.getBlockZ(), 25.0F, Level.ExplosionInteraction.MOB);
-                return 0;
+        if(victim != null){
+            if (victim instanceof EnderDragon) {
+                victim.setInvulnerable(false);
+            } else if (victim instanceof Player pvp) {
+                if (ToolUtils.isInfinite(pvp)) {
+                    pvp.level().explode(context.getPlayerAttacker(), pvp.getBlockX(), pvp.getBlockY(), pvp.getBlockZ(), 25.0F, Level.ExplosionInteraction.MOB);
+                    return 0;
+                } else {
+                    victim.setInvulnerable(false);
+                }
             } else {
                 victim.setInvulnerable(false);
             }
-        } else {
-            victim.setInvulnerable(false);
         }
         return MeleeHitModifierHook.super.beforeMeleeHit(tool, modifier, context, damage, baseKnockback, knockback);
     }
@@ -90,19 +89,12 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
     @Override
     public void onBreakSpeed(IToolStackView tool, ModifierEntry entry, BreakSpeed event, Direction direction, boolean isEffective,
             float miningSpeedModifier) {
-        BlockState state = event.getState();
-        BlockPos pos = event.getPosition().get();
-        Player player = event.getEntity();
-        Level level = player.level();
-        if(!state.canHarvestBlock(player.level(), event.getPosition().get(), player)){
-            state.getBlock().playerDestroy(level, player, pos, state, level.getBlockEntity(pos), player.getMainHandItem());
-        }
         event.setNewSpeed(Float.MAX_VALUE);
     }
 
     private void dealInfinityDamage(Level level, LivingEntity attackerEntity, Entity victim){
         ServerLevel serverLevel = (ServerLevel)level;
-        Collection<ItemEntity> drops = attackerEntity.captureDrops();
+        Collection<ItemEntity> drops = victim.captureDrops();
         if(drops != null){
             for(ItemEntity drop : drops){
                 level.addFreshEntity(drop);
@@ -111,5 +103,21 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
 
         serverLevel.broadcastEntityEvent(victim, (byte)3);   
         victim.setPose(Pose.DYING);
+        if(victim.isAlive()){
+            LivingEntity livingEntity = null;
+            if(victim instanceof LivingEntity){
+                livingEntity = (LivingEntity)victim;
+            } else if(victim instanceof PartEntity<?> partEntity){
+                livingEntity = partEntity.getParent() instanceof LivingEntity ? (LivingEntity)partEntity.getParent() : null;
+            }
+
+            if(livingEntity != null){
+                livingEntity.setHealth(0);
+                livingEntity.die(new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ModDamageTypes.INFINITY), livingEntity, attackerEntity));
+                /* if(livingEntity.isAlive()){
+                    livingEntity.kill();
+                } */
+            }
+        }
     }
 }

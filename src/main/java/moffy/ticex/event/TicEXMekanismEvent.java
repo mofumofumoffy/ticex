@@ -22,6 +22,7 @@ import mekanism.common.content.gear.mekasuit.ModuleLocomotiveBoostingUnit;
 import mekanism.common.item.gear.ItemFreeRunners;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.StorageUtils;
+import moffy.ticex.client.mekanism.MekaPlateModelCache;
 import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.DamageTypeTags;
@@ -31,14 +32,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class TicEXMekanismEvent {
-    @SubscribeEvent
+
     public void onLivingHurt(LivingHurtEvent event) {
         LivingEntity entity = event.getEntity();
         if (event.getAmount() <= 0 || !entity.isAlive()) {
@@ -98,7 +102,6 @@ public class TicEXMekanismEvent {
         return false;
     }
 
-    @SubscribeEvent
     public void onLivingJump(LivingJumpEvent event) {
         if (event.getEntity() instanceof Player player) {
             IModule<ModuleHydraulicPropulsionUnit> module = IModuleHelper.INSTANCE.load(player.getItemBySlot(EquipmentSlot.FEET), MekanismModules.HYDRAULIC_PROPULSION_UNIT);
@@ -139,7 +142,6 @@ public class TicEXMekanismEvent {
     private record FallEnergyInfo(@Nullable IEnergyContainer container, FloatSupplier damageRatio, FloatingLongSupplier energyCost) {
     }
 
-    @SubscribeEvent
     public void getBreakSpeed(BreakSpeed event) {
         Player player = event.getEntity();
         float speed = event.getNewSpeed();
@@ -176,5 +178,15 @@ public class TicEXMekanismEvent {
         }
 
         event.setNewSpeed(speed);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void onLoadAdditionalModel(ModelEvent.RegisterAdditional event){
+            MekaPlateModelCache.INSTANCE.setup(event);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void onModelBake(BakingCompleted event){
+            MekaPlateModelCache.INSTANCE.onBake(event);
     }
 }

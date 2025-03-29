@@ -6,7 +6,12 @@
     "mixins": [
         "TicEXEntityMixin"
     ],
-    "client": [],
+    "client": [
+        "NormalModifierModelMixin",
+        "ToolModelMixin",
+        "ItemRendererMixin",
+        "MaterialArmorTextureSupplierMixin"
+    ],
     "server": [],
     "injectors": {
         "defaultRequire": 1

@@ -1,0 +1,15 @@
+{
+    "type": "tconstruct:modifier",
+    "allow_crystal": true,
+    "check_trait_level": true,
+    "inputs": [
+      {
+        "item": "ticex:inject_core"
+      }
+    ],
+    "level": 1,
+    "result": "ticex:inject",
+    "tools": [
+      {"tag": "tconstruct:modifiable/bonus_slots"}
+    ]
+  }

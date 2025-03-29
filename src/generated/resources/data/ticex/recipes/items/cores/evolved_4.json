@@ -1,0 +1,24 @@
+{
+    "type": "draconicevolution:fusion_crafting",
+    "result": {
+        "item": "ticex:chaotic_evolved_core"
+    },
+    "catalyst": {
+        "item": "ticex:reconstruction_core"
+    },
+    "total_energy": 1024000000,
+    "tier": "CHAOTIC",
+    "ingredients": [
+        { "item": "draconicevolution:wyvern_core"},
+        { "item": "draconicevolution:wyvern_core"},
+        { "item": "draconicevolution:awakened_core"},
+        { "item": "draconicevolution:awakened_core"},
+        { "item": "draconicevolution:chaotic_core" },
+        { "item": "minecraft:dragon_egg"},
+        { "item": "minecraft:dragon_egg"},
+        { "item": "draconicevolution:chaotic_sword"},
+        { "item": "draconicevolution:chaotic_shovel"},
+        { "item": "draconicevolution:chaotic_pickaxe"},
+        { "item": "draconicevolution:module_core" }
+    ]
+  }

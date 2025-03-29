@@ -11,7 +11,7 @@ import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
 import moffy.ticex.client.mekanism.MekaPlateModelCache;
 import moffy.ticex.client.mekanism.MekaPlateMultilayerModel;
 import moffy.ticex.event.TicEXMekanismEvent;
-import moffy.ticex.item.ItemReconstCore;
+import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
 import moffy.ticex.modules.CatalystMaterialStatsType;
 import moffy.ticex.modules.TicEXRegistry;
@@ -20,10 +20,14 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
@@ -39,6 +43,7 @@ public class TicEXMekanismModule extends AddonModule{
     public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
 
     public TicEXMekanismModule(){
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         Item.Properties PROPS = new Item.Properties();
 
 
@@ -47,11 +52,18 @@ public class TicEXMekanismModule extends AddonModule{
 
         TicEXRegistry.RADIATION_SHELDING_CORE = TicEXRegistry.ITEMS.register("radiation_shielding_core", ()->new ItemReconstCore(PROPS, "radiation_shielding"));
 
-        TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum("mekaplate", ArmorItem.Type.values(), type -> new ItemModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE, type, new Item.Properties().stacksTo(1)));
+        TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum("mekaplate", ArmorItem.Type.values(), type -> new ItemModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE_DEFINITION, type, new Item.Properties().stacksTo(1)));
     
         TicEXRegistry.CATALYST_MEKAPLATE = TicEXRegistry.ITEMS_EXTENDED.registerEnum("catalyst_mekaplate", ArmorItem.Type.values(), type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekaplate", type).getId()));
     
         TicEXRegistry.RADIATION_SHIELDING_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("radiation_shielding");
+
+        MinecraftForge.EVENT_BUS.register(new TicEXMekanismEvent());
+
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
+            bus.addListener(TicEXMekanismEvent::onLoadAdditionalModel);
+            bus.addListener(TicEXMekanismEvent::onModelBake);
+        });
     }
 
     @Override
@@ -68,7 +80,7 @@ public class TicEXMekanismModule extends AddonModule{
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
         MekaPlateModelCache.INSTANCE.registerMekaSuitModuleModel(new ResourceLocation(TicEX.MODID, "models/entity/modifiable_mekasuit_modules.obj"));
-        MinecraftForge.EVENT_BUS.register(new TicEXMekanismEvent());
+        
         MekaPlateMultilayerModel.registerModule("jetpack", MekanismModules.JETPACK_UNIT, EquipmentSlot.CHEST, (entity)->true);
         MekaPlateMultilayerModel.registerModule("modulator", MekanismModules.GRAVITATIONAL_MODULATING_UNIT, EquipmentSlot.CHEST, (entity)->true);
         MekaPlateMultilayerModel.registerModule("elytra", MekanismModules.ELYTRA_UNIT, EquipmentSlot.CHEST, LivingEntity::isFallFlying);

@@ -2,17 +2,17 @@ package moffy.ticex.event;
 
 import moffy.ticex.modules.CatalystMaterialStatsType;
 import moffy.ticex.modules.TicEXRegistry;
-import moffy.ticex.modules.avaritia.TicEXAvaritiaUtils;
+import moffy.ticex.utils.TicEXAvaritiaUtils;
 import moffy.ticex.utils.TicEXUtils;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.ModList;
-import slimeknights.tconstruct.library.events.MaterialsLoadedEvent;
 
 public class TicEXEvent {
 
@@ -59,7 +59,7 @@ public class TicEXEvent {
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if(!player.isCreative()){
+        if(!player.isCreative() && TicEXAvaritiaUtils.hasCelestial(player)){
             if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
                 player.getAbilities().mayfly = true;
                 player.onUpdateAbilities();
@@ -69,9 +69,4 @@ public class TicEXEvent {
             }
         }
     }
-
-    /* @OnlyIn(Dist.DEDICATED_SERVER)
-    public static void onMaterialsLoaded(MaterialsLoadedEvent event){
-        CatalystMaterialStatsType.RegisterStats();
-    } */
 }

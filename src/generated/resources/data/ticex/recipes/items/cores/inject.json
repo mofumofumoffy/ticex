@@ -1,0 +1,17 @@
+{
+    "type": "draconicevolution:fusion_crafting",
+    "result": {
+        "item": "ticex:inject_core"
+    },
+    "catalyst": {
+        "item": "ticex:reconstruction_core"
+    },
+    "total_energy": 256000000,
+    "tier": "CHAOTIC",
+    "ingredients": [
+        { "item": "draconicevolution:draconium_core" },
+        { "item": "draconicevolution:wyvern_core" },
+        { "item": "draconicevolution:awakened_core" },
+        { "item": "draconicevolution:chaotic_core" }
+    ]
+  }

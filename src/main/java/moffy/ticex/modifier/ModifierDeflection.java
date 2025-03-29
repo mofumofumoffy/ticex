@@ -14,7 +14,7 @@ public class ModifierDeflection extends NoLevelsModifier implements MeleeHitModi
 
     @Override
     public int getPriority() {
-        return 1;
+        return -1;
     }
 
     @Override
@@ -26,10 +26,12 @@ public class ModifierDeflection extends NoLevelsModifier implements MeleeHitModi
     @Override
     public float beforeMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damage,
             float baseKnockback, float knockback) {
-        Entity entity = context.getTarget();
-        for (ModifierEntry modifierEntry : tool.getModifierList()){
-            ToolAttackContext newContext = new ToolAttackContext(context.getAttacker(), context.getPlayerAttacker(), context.getHand(), entity, entity instanceof LivingEntity ? (LivingEntity)entity : null, context.isCritical(), damage, true);
-            modifierEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifier, newContext, damage);
+        if(!context.isExtraAttack()){
+            Entity entity = context.getTarget();
+            for (ModifierEntry modifierEntry : tool.getModifierList()){
+                ToolAttackContext newContext = new ToolAttackContext(context.getAttacker(), context.getPlayerAttacker(), context.getHand(), entity, entity instanceof LivingEntity ? (LivingEntity)entity : null, context.isCritical(), damage, false);
+                modifierEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifier, newContext, damage);
+            }
         }
         return 0;
     }

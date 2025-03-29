@@ -1,0 +1,9 @@
+{
+    "sources": [
+      {
+        "type": "minecraft:directory",
+        "prefix": "tinker_armor/",
+        "source": "tinker_armor"
+      }
+    ]
+}

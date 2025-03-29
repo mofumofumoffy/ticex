@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import moffy.ticex.TicEX;
+import moffy.ticex.TicEXConfig;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -45,7 +46,7 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
     public RFFurnaceBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, boolean isCreative) {
         super(pType, pPos, pBlockState);
         this.isCreative = isCreative;
-        this.maxEnergyRate = TicEX.RF_FURNACE_RATE_CAPACITY.get();
+        this.maxEnergyRate = TicEXConfig.RF_FURNACE_RATE_CAPACITY.get();
         this.energyStorage = new RFFurnaceEnergyStorage(maxEnergyRate);
         this.lastStrength = -1;
 

@@ -7,8 +7,8 @@ import java.util.function.Supplier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
+import moffy.ticex.client.TicEXShaderMap;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -63,7 +62,10 @@ public class TicEXRegistry {
         SCORCHED = solidProps.apply(1);
     }
 
-    public static final ModifiableArmorMaterial MEKAPLATE = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
+    public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
+
+    public static final TicEXShaderMap.Tool TOOL_SHADERS = new TicEXShaderMap.Tool();
+    public static final TicEXShaderMap.Armor ARMOR_SHADERS = new TicEXShaderMap.Armor();
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
     public static final ItemDeferredRegisterExtension ITEMS_EXTENDED = new ItemDeferredRegisterExtension(TicEX.MODID);
@@ -81,6 +83,11 @@ public class TicEXRegistry {
     public static RegistryObject<Item> RECONSTRUCTION_CORE = null;
     public static RegistryObject<Item> CELESTIAL_CORE = null;
     public static RegistryObject<Item> RADIATION_SHELDING_CORE = null;
+    public static RegistryObject<Item> DRACONIUM_EVOLVED_CORE = null;
+    public static RegistryObject<Item> WYVERN_EVOLVED_CORE = null;
+    public static RegistryObject<Item> DRACONIC_EVOLVED_CORE = null;
+    public static RegistryObject<Item> CHAOTIC_EVOLVED_CORE = null;
+    public static RegistryObject<Item> INJECT_CORE = null;
 
     public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKAPLATE = null; 
 
@@ -118,6 +125,7 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> DEFLECTION_MODIFIER = null;
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
     public static StaticModifier<Modifier> SASSY_MODIFIER = null;
+    public static StaticModifier<Modifier> EVOLVED_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){

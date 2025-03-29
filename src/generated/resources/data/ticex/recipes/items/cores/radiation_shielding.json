@@ -2,8 +2,8 @@
     "type": "mekanism:reaction",
     "conditions": [
       {
-        "type": "ticex:mods_available",
-        "required": ["mekanism"]
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:mekanism_compat"
       }
     ],
     "itemInput": {

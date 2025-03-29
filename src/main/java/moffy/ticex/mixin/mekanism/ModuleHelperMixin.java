@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.google.common.collect.ImmutableSet;
 
-import mekanism.api.MekanismIMC;
 import mekanism.api.gear.ModuleData;
 import mekanism.api.providers.IModuleDataProvider;
 import mekanism.common.Mekanism;

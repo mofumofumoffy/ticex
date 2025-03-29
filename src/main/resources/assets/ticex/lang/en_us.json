@@ -97,6 +97,16 @@
     "modifier.ticex.deflection": "Deflection",
     "modifier.ticex.deflection.flavor": "nSogeki...",
     "modifier.ticex.deflection.description": "Tool can hit on enemies who are not applicatable",
+    "modifier.ticex.evolved": "Evolved",
+    "modifier.ticex.evolved.flavor": "But also be relative.",
+    "modifier.ticex.evolved.description": "Tool can be applied force of module",
+    "modifier.ticex.evolved.1": "§9Draconium§4-Evolved",
+    "modifier.ticex.evolved.2": "§5Wyvern§4-Evolved",
+    "modifier.ticex.evolved.3": "§eDraconic§4-Evolved",
+    "modifier.ticex.evolved.4": "§8Chaotic§4-Evolved",
+    "modifier.ticex.inject": "Inject",
+    "modifier.ticex.inject.flavor": "Just a little more!",
+    "modifier.ticex.inject.description": "Tool gets additional ability slot",
 
 
 
@@ -106,8 +116,13 @@
     "stat.ticex.catalyst_mekaplate_leggings": "Catalyst(MekaPlate Leggings)",
     "stat.ticex.catalyst_mekaplate_boots": "Catalyst(MekaPlate Boots)",
 
+    "recipe.ticex.modifier.evolved_requirements_1": "§9Draconium§r-Evolved requires Netherite and Reinforced V to apply",
+    "recipe.ticex.modifier.evolved_requirements_2": "§5Wyvern§r-Evolved requires §9Draconium§r-Evolved to apply",
+    "recipe.ticex.modifier.evolved_requirements_3": "§eDraconic§r-Evolved requires §5Wyvern§r-Evolved to apply",
+    "recipe.ticex.modifier.evolved_requirements_4": "§8Chaotic§r-Evolved requires §eDraconic§r-Evolved to apply",
+
     "gui.ticex.seram_gear": "Seram Gear",
-    "gui.ticex.seram_gear.description": "Seram gear is tool or armor of a new era which has been reconstructed with the power of the star clusters.",
+    "gui.ticex.seram_gear.description": "Seram gear is armor of a new era which has been reconstructed with the power of the star clusters.",
 
     "attribute.ticex.damage_taken": "Damage Taken",
     "attribute.ticex.healing_received": "Healing Received"

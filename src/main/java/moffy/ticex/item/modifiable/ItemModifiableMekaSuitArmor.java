@@ -227,11 +227,6 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
     }
 
     @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return false;
-    }
-
-    @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
         return false;
     }
@@ -411,12 +406,6 @@ public class ItemModifiableMekaSuitArmor extends MultilayerArmorItem implements 
     private FloatingLong getChargeRate(ItemStack stack) {
         IModule<ModuleEnergyUnit> module = getModule(stack, MekanismModules.ENERGY_UNIT);
         return module == null ? MekanismConfig.gear.mekaSuitBaseChargeRate.get() : module.getCustomInstance().getChargeRate(module);
-    }
-
-    @NotNull
-    @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(@NotNull EquipmentSlot slot, @NotNull ItemStack stack) {
-        return slot == getEquipmentSlot() ? attributeCache.get() : ImmutableMultimap.of();
     }
 
     @Override

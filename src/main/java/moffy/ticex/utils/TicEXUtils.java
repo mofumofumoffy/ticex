@@ -1,6 +1,5 @@
 package moffy.ticex.utils;
 
-import moffy.ticex.modules.avaritia.TicEXAvaritiaUtils;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -22,7 +21,7 @@ public class TicEXUtils {
         boolean canFly = false;
 
         if(ModList.get().isLoaded("avaritia")){
-            canFly = canFly || TicEXAvaritiaUtils.hasPlayerCelestial(player);
+            canFly = canFly || TicEXAvaritiaUtils.hasCelestial(player);
         }
 
         return canFly;

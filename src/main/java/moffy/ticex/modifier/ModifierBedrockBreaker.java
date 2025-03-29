@@ -45,7 +45,7 @@ public class ModifierBedrockBreaker extends NoLevelsModifier{
 
     private void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event){
         BlockState state = event.getEntity().level().getBlockState(event.getPos());
-		if (!event.getEntity().isCreative() && state.getDestroySpeed(event.getEntity().level(), event.getPos()) < 0.0F) {
+		if (!event.getEntity().isCreative()) {
 			ToolStack tool = getHeldTool(event.getEntity(), InteractionHand.MAIN_HAND);
 			if (tool == null || tool.isBroken() || tool.getModifierLevel(this) < 1)
 				return;
@@ -85,15 +85,9 @@ public class ModifierBedrockBreaker extends NoLevelsModifier{
         }
     }
 
-    /**
-	 * Actually removes a block from the world. Cloned from {@link net.minecraft.server.level.ServerPlayerGameMode}
-	 * @param tool     Tool used in breaking
-	 * @param context  Harvest context
-	 * @return  True if the block was removed
-	 */
 	private static boolean removeBlock(IToolStackView tool, ToolHarvestContext context) {
 		Boolean removed = null;
-		if (!tool.isBroken()) {
+		if (!tool.isBroken() && !context.isAOE()) {
 			for (ModifierEntry entry : tool.getModifierList()) {
 				removed = entry.getModifier().getHook(ModifierHooks.REMOVE_BLOCK).removeBlock(tool, entry, context);
 				if (removed != null) {

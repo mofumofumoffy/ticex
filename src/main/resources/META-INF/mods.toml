@@ -37,7 +37,7 @@ authors="${mod_authors}" #optional
 # NONE means that no display test is set on your mod. You need to do this yourself, see IExtensionPoint.DisplayTest for more information. You can define any scheme you wish with this value.
 # IMPORTANT NOTE: this is NOT an instruction as to which environments (CLIENT or DEDICATED SERVER) your mod loads on. Your mod should load (and maybe do nothing!) whereever it finds itself.
 #displayTest="MATCH_VERSION" # MATCH_VERSION is the default if nothing is specified (#optional)
-mixins = ["ticex.mixins.json", "ticex.mekanism.mixins.json"]
+mixins = ["ticex.mixins.json", "ticex.mekanism.mixins.json", "ticex.draconicevolution.mixins.json"]
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''${mod_description}'''
@@ -62,6 +62,20 @@ description='''${mod_description}'''
     # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="${minecraft_version_range}"
     ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="addonapi"
+    mandatory=true
+    versionRange="[1.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="tconstruct"
+    mandatory=true
+    versionRange="[3.9.2.37,)"
+    ordering="AFTER"
     side="BOTH"
 
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares

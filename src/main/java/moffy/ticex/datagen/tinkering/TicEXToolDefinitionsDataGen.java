@@ -36,7 +36,7 @@ public class TicEXToolDefinitionsDataGen extends AbstractToolDefinitionDataProvi
                         .slots(SlotType.UPGRADE, 2)
                         .slots(SlotType.DEFENSE, 3).build();
 
-        defineArmor(TicEXRegistry.MEKAPLATE)
+        defineArmor(TicEXRegistry.MEKAPLATE_DEFINITION)
             .modules(slots -> PartStatsModule.armor(slots)
                 .part(TinkerToolParts.plating, 1)
                 .part(TinkerToolParts.maille, 1)

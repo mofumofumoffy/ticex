@@ -1,29 +1,40 @@
 package moffy.ticex.modules;
 
+import java.util.List;
+
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.RFFurnaceBlock;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.event.TicEXEvent;
-import moffy.ticex.item.ItemReconstCore;
+import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.modifier.ModifierSassy;
-import moffy.ticex.utils.TicEXFluidUtil;
+import moffy.ticex.modules.avaritia.InfinityTier;
+import moffy.ticex.utils.TicEXFluidUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 
 public class TicEXModule extends AddonModule{
@@ -56,10 +67,10 @@ public class TicEXModule extends AddonModule{
                 .build(null)
             );
 
-        TicEXRegistry.MOLTEN_ETHERIC = TicEXRegistry.FLUIDS.register("molten_etheric").type(TicEXFluidUtil.hot("molten_etheric").temperature(1000).density(1600)).block(MapColor.COLOR_LIGHT_GREEN, 0).bucket().commonTag().flowing();
-        TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE = TicEXRegistry.FLUIDS.register("molten_reconstruction_core").type(TicEXFluidUtil.slime("reconstruction_core").temperature(1000).density(-1600)).bucket().unplacable();
+        TicEXRegistry.MOLTEN_ETHERIC = TicEXRegistry.FLUIDS.register("molten_etheric").type(TicEXFluidUtils.hot("molten_etheric").temperature(1000).density(1600)).block(MapColor.COLOR_LIGHT_GREEN, 0).bucket().commonTag().flowing();
+        TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE = TicEXRegistry.FLUIDS.register("molten_reconstruction_core").type(TicEXFluidUtils.slime("reconstruction_core").temperature(1000).density(-1600)).bucket().unplacable();
         for(int i = 0; i < 20; i++){
-            TicEXRegistry.RF_FURNACE_FUELS.add(TicEXRegistry.FLUIDS.register("rf_furnace_fuel_"+i).type(TicEXFluidUtil.hot("rf_furnace_fuel_"+i).temperature(1000).density(-1600)).unplacable());
+            TicEXRegistry.RF_FURNACE_FUELS.add(TicEXRegistry.FLUIDS.register("rf_furnace_fuel_"+i).type(TicEXFluidUtils.hot("rf_furnace_fuel_"+i).temperature(1000).density(-1600)).unplacable());
         }
 
         TicEXRegistry.HEALING_RECEIVED = TicEXRegistry.ATTRIBUTES.register("healing_received", ()->new RangedAttribute("attribute."+TicEX.MODID+".healing_received", 1f, 0f, 1f));
@@ -83,5 +94,15 @@ public class TicEXModule extends AddonModule{
     @Override
     public void setup(FMLCommonSetupEvent event) {
         event.enqueueWork(()->CatalystMaterialStatsType.RegisterStats());
+        if(TierSortingRegistry.isTierSorted(InfinityTier.instance)){
+            TierSortingRegistry.registerTier(InfinityTier.instance, new ResourceLocation(TicEX.MODID, "infinity"), List.of(TierSortingRegistry.getSortedTiers().get(TierSortingRegistry.getSortedTiers().size() - 1)), List.of());
+        } else {
+            TierSortingRegistry.registerTier(InfinityTier.instance, new ResourceLocation(TicEX.MODID, "infinity"), List.of(Tiers.NETHERITE), List.of());
+        }
+    }
+
+    @Override
+    public void clientSetup(FMLClientSetupEvent event) {
+        
     }
 }
