@@ -1,4 +1,4 @@
-# TiCEX -Tinkers' Construct EX
+# TiCEX - Tinkers' Construct EX
 
 🌐 他の言語: [English](README.md)
 
