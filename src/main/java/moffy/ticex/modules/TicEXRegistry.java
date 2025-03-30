@@ -31,6 +31,7 @@ import slimeknights.mantle.registration.deferred.FluidDeferredRegister;
 import slimeknights.mantle.registration.object.EnumObject;
 import slimeknights.mantle.registration.object.FlowingFluidObject;
 import slimeknights.mantle.registration.object.FluidObject;
+import slimeknights.mantle.registration.object.ItemObject;
 import slimeknights.tconstruct.common.registration.ItemDeferredRegisterExtension;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.util.DynamicModifier;
@@ -39,6 +40,7 @@ import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.item.armor.MultilayerArmorItem;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
@@ -91,6 +93,8 @@ public class TicEXRegistry {
 
     public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKAPLATE = null; 
 
+    public static ItemObject<ModifiableItem> SLASHBLADE_TOOL = null;
+
     public static EnumObject<ArmorItem.Type, MultilayerArmorItem> MEKAPLATE_ARMOR = null;
 
     public static RegistryObject<Block> ETHERIC_BLOCK = null;
@@ -126,6 +130,7 @@ public class TicEXRegistry {
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
     public static StaticModifier<Modifier> SASSY_MODIFIER = null;
     public static StaticModifier<Modifier> EVOLVED_MODIFIER = null;
+    public static StaticModifier<Modifier> KONPAKU_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){

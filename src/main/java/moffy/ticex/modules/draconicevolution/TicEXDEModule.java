@@ -10,7 +10,9 @@ import moffy.ticex.modifier.ModifierEvolved;
 import moffy.ticex.modules.TicEXRegistry;
 import moffy.ticex.utils.TicEXDEUtils;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.tools.data.ModifierIds;
@@ -33,17 +35,19 @@ public class TicEXDEModule extends AddonModule{
 
         TicEXRegistry.EVOLVED_MODIFIER = TicEXRegistry.MODIFIERS.register("evolved", ModifierEvolved::new);
         
-        TicEXDEShader.init(bus);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
+            TicEXDEShader.init(bus);
 
         TicEXRegistry.TOOL_SHADERS.addShader(
             ModifierIds.reinforced,
-            (wrapper)->{
-                TechLevel techLevel = TicEXDEUtils.getTechLevel(wrapper.getTool());
-                if(techLevel != null && TicEXDEShader.instance != null){
-                    TicEXDEShader.glUniformBaseColor(TicEXDEShader.instance, techLevel, 1F);
-                    wrapper.renderQuadsWithConsumer(TicEXDEShader.instance.getRenderType(), wrapper.getQuad(), techLevel == TechLevel.CHAOTIC ? 0.9f : wrapper.getRed(), wrapper.getGreen(), wrapper.getBlue());
+                (wrapper)->{
+                    TechLevel techLevel = TicEXDEUtils.getTechLevel(wrapper.getTool());
+                    if(techLevel != null && TicEXDEShader.instance != null){
+                        TicEXDEShader.glUniformBaseColor(TicEXDEShader.instance, techLevel, 1F);
+                        wrapper.renderQuadsWithConsumer(TicEXDEShader.instance.getRenderType(), wrapper.getQuad(), techLevel == TechLevel.CHAOTIC ? 0.9f : wrapper.getRed(), wrapper.getGreen(), wrapper.getBlue());
+                    }
                 }
-            }
-        );
+            );
+        });
     }
 }

@@ -18,7 +18,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
 import slimeknights.tconstruct.fluids.block.BurningLiquidBlock;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
@@ -43,24 +45,26 @@ public class TicEXAvaritiaModule extends AddonModule{
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onGetHurt);
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onDeath);
 
-        TicEXCosmicShader.setup();
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
+            TicEXCosmicShader.setup();
         
-        MaterialVariantId infinityMaterial = new MaterialId(new ResourceLocation(TicEX.MODID, "infinity"));
+            MaterialVariantId infinityMaterial = new MaterialId(new ResourceLocation(TicEX.MODID, "infinity"));
 
-        TicEXRegistry.TOOL_SHADERS.addShader(infinityMaterial, 
-            (wrapper)->{
-                TicEXCosmicShader.instance.setupCosmic(wrapper.getDisplayContext());
-                RenderType cosmicRenderType = TicEXCosmicShader.instance.getCosmicRenderTypeTool();
-                wrapper.renderQuadsWithConsumer(cosmicRenderType);
-            }
-        );
+            TicEXRegistry.TOOL_SHADERS.addShader(infinityMaterial, 
+                (wrapper)->{
+                    TicEXCosmicShader.instance.setupCosmic(wrapper.getDisplayContext());
+                    RenderType cosmicRenderType = TicEXCosmicShader.instance.getCosmicRenderTypeTool();
+                    wrapper.renderQuadsWithConsumer(cosmicRenderType);
+                }
+            );
 
-        TicEXRegistry.ARMOR_SHADERS.addShader(infinityMaterial,
-            (wrapper)->{
-                TicEXCosmicShader.instance.setupCosmic();
-                Material material = new Material(InventoryMenu.BLOCK_ATLAS, wrapper.getTexture());
-                wrapper.renderArmorWithConsumer(material.buffer(wrapper.getBufferSource(), TicEXCosmicShader.instance::getCosmicRenderTypeArmor));
-            }
-        );
+            TicEXRegistry.ARMOR_SHADERS.addShader(infinityMaterial,
+                (wrapper)->{
+                    TicEXCosmicShader.instance.setupCosmic();
+                    Material material = new Material(InventoryMenu.BLOCK_ATLAS, wrapper.getTexture());
+                    wrapper.renderArmorWithConsumer(material.buffer(wrapper.getBufferSource(), TicEXCosmicShader.instance::getCosmicRenderTypeArmor));
+                }
+            );
+        });
     }
 }

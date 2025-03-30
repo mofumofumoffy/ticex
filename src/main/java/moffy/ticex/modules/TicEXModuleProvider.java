@@ -5,6 +5,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.modules.avaritia.TicEXAvaritiaModule;
 import moffy.ticex.modules.draconicevolution.TicEXDEModule;
 import moffy.ticex.modules.mekanism.TicEXMekanismModule;
+import moffy.ticex.modules.slashblade.TicEXSlashBladeModule;
 import net.minecraft.resources.ResourceLocation;
 
 public class TicEXModuleProvider extends AddonModuleProvider{
@@ -15,6 +16,7 @@ public class TicEXModuleProvider extends AddonModuleProvider{
         addRawModule(new ResourceLocation(TicEX.MODID, "avaritia_compat"), "Avaritia Compat", TicEXAvaritiaModule::new, new String[]{"tconstruct", "avaritia"});
         addRawModule(new ResourceLocation(TicEX.MODID, "mekanism_compat"), "Mekanism Compat", TicEXMekanismModule::new, new String[]{"tconstruct", "mekanism"});
         addRawModule(new ResourceLocation(TicEX.MODID, "draconicevolution_compat"), "Draconic Evolution Compat", TicEXDEModule::new, new String[]{"tconstruct", "draconicevolution"});
+        //addRawModule(new ResourceLocation(TicEX.MODID, "slashblade_compat"), "SlashBlade Compat", TicEXSlashBladeModule::new, new String[]{"tconstruct", "slashblade"});
     }
     
 
