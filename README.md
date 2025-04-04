@@ -32,7 +32,7 @@
 
 - **Draconic Evolution**  
   - *Evolved Modifier* supporting Draconic Evolution modules
-  - tiered materials which can steal mobs' soul  
+  - Tiered materials which can steal mobs' soul  
   - A chaotic, swirling shader  
 
 ## Other Additions
