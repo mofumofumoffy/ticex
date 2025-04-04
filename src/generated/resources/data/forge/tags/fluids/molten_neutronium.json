@@ -1,6 +1,6 @@
 {
     "replace": false,
     "values": [
-      "ticex:molten_neutronium"
+      {"id":"ticex:molten_neutronium", "required":false}
     ]
   }

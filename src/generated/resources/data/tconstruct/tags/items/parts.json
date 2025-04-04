@@ -1,14 +1,14 @@
 {
     "values": [
-      "ticex:catalyst_mekasuit_helmet",
-      "ticex:catalyst_mekasuit_chestplate",
-      "ticex:catalyst_mekasuit_leggings",
-      "ticex:catalyst_mekasuit_boots",
-      "ticex:catalyst_slashblade",
+      {"id":"ticex:catalyst_mekasuit_helmet", "required":false},
+      {"id":"ticex:catalyst_mekasuit_chestplate", "required":false},
+      {"id":"ticex:catalyst_mekasuit_leggings", "required":false},
+      {"id":"ticex:catalyst_mekasuit_boots", "required":false},
+      {"id":"ticex:catalyst_slashblade", "required":false},
 
-      "ticex:catalyst_mekaplate_helmet",
-      "ticex:catalyst_mekaplate_chestplate",
-      "ticex:catalyst_mekaplate_leggings",
-      "ticex:catalyst_mekaplate_boots"
+      {"id":"ticex:catalyst_mekaplate_helmet", "required":false},
+      {"id":"ticex:catalyst_mekaplate_chestplate", "required":false},
+      {"id":"ticex:catalyst_mekaplate_leggings", "required":false},
+      {"id":"ticex:catalyst_mekaplate_boots", "required":false}
     ]
   }

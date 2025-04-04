@@ -1,5 +1,5 @@
 {
     "values": [
-      "ticex:mekaplate_chestplate"
+      {"id":"ticex:mekaplate_chestplate", "required":false}
     ]
   }

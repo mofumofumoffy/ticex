@@ -1,6 +1,6 @@
 {
     "replace": false,
     "values": [
-      "ticex:molten_infinity"
+      {"id":"ticex:molten_infinity", "required":false}
     ]
   }

@@ -1,4 +1,10 @@
 {
+    "conditions": [
+      {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:mekanism_compat"
+      }
+    ],
     "modules": [
       {
         "type": "tconstruct:part_stats",

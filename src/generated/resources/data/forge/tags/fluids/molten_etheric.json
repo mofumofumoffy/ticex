@@ -1,6 +1,6 @@
 {
     "replace": false,
     "values": [
-      "ticex:molten_etheric"
+      {"id":"ticex:molten_etheric", "required":false}
     ]
   }

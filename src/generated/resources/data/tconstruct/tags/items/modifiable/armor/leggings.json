@@ -1,5 +1,5 @@
 {
     "values": [
-      "ticex:mekaplate_leggings"
+      {"id":"ticex:mekaplate_leggings", "required":false}
     ]
   }

@@ -1,9 +1,9 @@
 {
     "values": [
-        "ticex:mekaplate_helmet",
-        "ticex:mekaplate_chestplate",
-        "ticex:mekaplate_leggings",
-        "ticex:mekaplate_boots",
-        "ticex:reforged_slashblade"
+        {"id":"ticex:mekaplate_helmet", "required":false},
+        {"id":"ticex:mekaplate_chestplate", "required":false},
+        {"id":"ticex:mekaplate_leggings", "required":false},
+        {"id":"ticex:mekaplate_boots", "required":false},
+        {"id":"ticex:reforged_slashblade", "required":false}
     ]
 }

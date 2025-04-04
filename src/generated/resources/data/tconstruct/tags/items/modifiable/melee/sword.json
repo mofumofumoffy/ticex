@@ -1,5 +1,5 @@
 {
     "values": [
-      "ticex:reforged_slashblade"
+      {"id":"ticex:reforged_slashblade", "required":false}
     ]
   }

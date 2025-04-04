@@ -1,6 +1,6 @@
 {
     "replace": false,
     "values": [
-      "ticex:molten_reconstruction_core"
+      {"id":"ticex:molten_reconstruction_core", "required":false}
     ]
   }

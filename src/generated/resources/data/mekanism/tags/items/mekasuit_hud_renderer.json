@@ -1,5 +1,5 @@
 {
     "values": [
-      "ticex:mekaplate_helmet"
+      {"id":"ticex:mekaplate_helmet", "required":false}
     ]
   }
