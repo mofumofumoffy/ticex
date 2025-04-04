@@ -29,6 +29,7 @@
  - MekaPlate アーマー: MekaSuit モジュールをサポートするプレートアーマー
 - Draconic Evolution
  - Draconic Evolution モジュールをサポートする Evolved モディファイア
+ - モブのソウルを刈り取る4種のマテリアル
  - 渦巻く混沌のシェーダー
 
 ## その他の追加要素

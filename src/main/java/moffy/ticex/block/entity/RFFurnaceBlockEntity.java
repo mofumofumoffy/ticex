@@ -92,8 +92,10 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
 
         int fuelIndex = pBlockEntity.isCreative() ? 20 : Math.round(20 * (1 - (float)Math.exp(-Math.PI*rate)));
 
-        if(extracted >= 1){
-            if(fuelIndex == 0 && !pBlockEntity.isCreative()){
+        if(pBlockEntity.isCreative()){
+            pBlockEntity.updateFluidTo(new FluidStack(TicEXRegistry.RF_FURNACE_FUELS.get(19).get(), FluidType.BUCKET_VOLUME));
+        }else if(extracted >= 1){
+            if(fuelIndex == 0){
                 pBlockEntity.updateFluidTo(FluidStack.EMPTY);
             } else {
                 pBlockEntity.updateFluidTo(new FluidStack(TicEXRegistry.RF_FURNACE_FUELS.get(fuelIndex - 1).get(), FluidType.BUCKET_VOLUME));
@@ -163,6 +165,7 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
     @Override
     public void load(CompoundTag tag) {
         tank.setCapacity(this.tankCapacity);
+        this.isCreative = tag.getBoolean("isCreative");
         updateTank(tag.getCompound(NBTTags.TANK));
         super.load(tag);
     }
@@ -171,7 +174,8 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
     public void saveSynced(CompoundTag tag) {
         super.saveSynced(tag);
         if (!tank.isEmpty()) {
-        tag.put(NBTTags.TANK, tank.writeToNBT(new CompoundTag()));
+            tag.putBoolean("isCreative", isCreative);
+            tag.put(NBTTags.TANK, tank.writeToNBT(new CompoundTag()));
         }
     }
 }

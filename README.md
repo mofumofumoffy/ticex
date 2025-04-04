@@ -31,7 +31,8 @@
   - *MekaPlate Armor*: Plate armor supporting MekaSuit modules  
 
 - **Draconic Evolution**  
-  - *Evolved Modifier* supporting Draconic Evolution modules  
+  - *Evolved Modifier* supporting Draconic Evolution modules
+  - tiered materials which can steal mobs' soul  
   - A chaotic, swirling shader  
 
 ## Other Additions
