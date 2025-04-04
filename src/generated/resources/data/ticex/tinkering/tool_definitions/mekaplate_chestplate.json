@@ -5,7 +5,7 @@
         "parts": [
           "tconstruct:chestplate_plating",
           "tconstruct:maille",
-          "ticex:catalyst_mekaplate_chestplate"
+          "ticex:catalyst_mekasuit_chestplate"
         ],
         "primary_part": 0
       },

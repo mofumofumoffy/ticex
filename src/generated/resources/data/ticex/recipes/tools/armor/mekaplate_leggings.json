@@ -1,6 +1,6 @@
 {
     "type": "tconstruct:tool_building",
-    "result": "ticex:mekaplate_boots",
+    "result": "ticex:mekaplate_leggings",
     "result_count": 1,
     "slot_layout": "ticex:seram_gear"
   }

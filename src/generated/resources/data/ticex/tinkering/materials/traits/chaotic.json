@@ -1,0 +1,20 @@
+{
+    "default": [
+      {
+        "name":"tconstruct:lacerating",
+        "level":1
+      }
+    ],
+    "perStat": {
+      "tconstruct:head": [
+        {
+          "name": "ticex:soul_rending",
+          "level": 3
+        },
+        {
+          "name":"tconstruct:lacerating",
+          "level":1
+        }
+      ]
+    }
+  }

@@ -1,0 +1,27 @@
+{
+    "parts": [
+      {
+        "path": "ticex:item/tool/parts/slashblade_blade",
+        "stat_type": "tconstruct:head"
+      },
+      {
+        "path": "ticex:item/tool/parts/slashblade_saya",
+        "stat_type": "tconstruct:handle"
+      },
+      {
+        "allow_animated": false,
+        "path": "ticex:obj_tool/slashblade_tool/blade",
+        "stat_type": "tconstruct:head"
+      },
+      {
+        "allow_animated": false,
+        "path": "ticex:obj_tool/slashblade_tool/handle",
+        "stat_type": "tconstruct:handle"
+      },
+      {
+        "allow_animated": false,
+        "path": "ticex:obj_tool/slashblade_tool/saya",
+        "stat_type": "tconstruct:handle"
+      }
+    ]
+}

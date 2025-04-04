@@ -1,6 +1,7 @@
 package moffy.ticex.client;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -8,6 +9,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -18,14 +20,15 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 public abstract class ShaderProvider<T> {
     private Consumer<T> underlay;
     private Consumer<T> overlay;
+    private Supplier<ShaderInstance> shaderInstance;
 
     public ShaderProvider(Consumer<T> overlay){
-        this((t)->{}, overlay);
+        this(overlay, (t)->{});
     }
 
-    public ShaderProvider(Consumer<T> underlay, Consumer<T> overlay){
-        this.underlay = underlay;
+    public ShaderProvider(Consumer<T> overlay, Consumer<T> underlay){
         this.overlay = overlay;
+        this.underlay = underlay;
     }
 
     public void renderUnderLayer(T wrapper){
@@ -36,12 +39,16 @@ public abstract class ShaderProvider<T> {
         this.overlay.accept(wrapper);
     }
 
+    public Supplier<ShaderInstance> getShaderInstance() {
+        return shaderInstance;
+    }
+
     public static class Tool extends ShaderProvider<RenderQuadArgsWrapper>{
         public Tool(Consumer<RenderQuadArgsWrapper> overlay) {
             super(overlay);
         }
 
-        public Tool(Consumer<RenderQuadArgsWrapper>underlay, Consumer<RenderQuadArgsWrapper> overlay) {
+        public Tool(Consumer<RenderQuadArgsWrapper>overlay, Consumer<RenderQuadArgsWrapper> underlay) {
             super(underlay, overlay);
         }
     }
@@ -52,10 +59,9 @@ public abstract class ShaderProvider<T> {
             super(overlay);
         }
 
-        public Armor(Consumer<ArmorRenderArgsWrapper> underlay, Consumer<ArmorRenderArgsWrapper> overlay) {
-            super(underlay, overlay);
-        }
-        
+        public Armor(Consumer<ArmorRenderArgsWrapper> overlay, Consumer<ArmorRenderArgsWrapper> underlay) {
+            super(overlay, underlay);
+        }  
     }
 
     public static class RenderQuadArgsWrapper{

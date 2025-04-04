@@ -1,6 +1,8 @@
 package moffy.ticex.item.modifiable;
 
 import moffy.ticex.TicEX;
+import moffy.ticex.client.slashblade.SBToolISTER;
+import moffy.ticex.entity.slashblade.SBToolItemEntity;
 
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -20,11 +22,8 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeMap;
 
-import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.SlashBladeConfig;
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
-import mods.flammpfeil.slashblade.client.renderer.SlashBladeTEISR;
-import mods.flammpfeil.slashblade.entity.BladeItemEntity;
 import mods.flammpfeil.slashblade.event.SlashBladeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ReachModifier;
@@ -51,6 +50,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -133,7 +133,7 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 
 	public boolean isEnchanted(ItemStack stack){
 		ToolStack tool = ToolStack.from(stack);
-        boolean hasEnchant = tool.getModifierLevel(TicEXRegistry.KONPAKU_MODIFIER.get()) == 0;
+        boolean hasEnchant = tool.getModifierLevel(TicEXRegistry.KONPAKU_MODIFIER.get()) > 0;
 		return hasEnchant;
 	}
 
@@ -211,6 +211,13 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
         super.setDamage(stack, maxDamage);
 	}
 
+	@Override
+	public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
+		return !stack.getCapability(ItemSlashBlade.BLADESTATE).filter(s -> s.getLastActionTime() == entity.level().getGameTime())
+				.isPresent();
+	}
+	
+
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T damager, Consumer<T> onBroken) {
 
@@ -226,7 +233,6 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 		if (current != cap.isBroken()) {
 			onBroken.accept(damager);
 			if (damager instanceof ServerPlayer player) {
-				stack.getShareTag();
 				CriteriaTriggers.CONSUME_ITEM.trigger(player, stack);
 			}
 
@@ -370,7 +376,8 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 						: ComboStateRegistry.NONE.get();
 				if(isSelected)
 					cs.tickAction(living);
-					state.sendChanges(living);
+				
+				state.sendChanges(living);
 			}
 		});
 	}
@@ -389,7 +396,7 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
     @OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        
 		stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(s -> {
 			this.appendSwordType(stack, worldIn, tooltip, flagIn);
 			this.appendProudSoulCount(tooltip, stack);
@@ -398,6 +405,7 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 			this.appendRefineCount(tooltip, stack);
 			this.appendSpecialEffects(tooltip, s);
 		});
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
     @OnlyIn(Dist.CLIENT)
@@ -468,11 +476,10 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 
 	@OnlyIn(Dist.CLIENT)
 	public void appendSwordType(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		EnumSet<SwordType> swordType = SwordType.from(stack);
 		if (isWitched(stack)) {
 			tooltip.add(
 					Component.translatable("slashblade.sword_type.bewitched").withStyle(ChatFormatting.DARK_PURPLE));
-		} else if (!swordType.contains(SwordType.SEALED)) {
+		} else if (isEnchanted(stack)) {
 			tooltip.add(Component.translatable("slashblade.sword_type.enchanted").withStyle(ChatFormatting.DARK_AQUA));
 		} else {
 			tooltip.add(Component.translatable("slashblade.sword_type.noname").withStyle(ChatFormatting.DARK_GRAY));
@@ -485,11 +492,12 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 	}
 
     @Override
+	@SuppressWarnings("unchecked")
 	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity)
 	{
-		if (!(entity instanceof BladeItemEntity)){
-			Level world = entity.level();
-			BladeItemEntity e = new BladeItemEntity(SlashBlade.RegistryEvents.BladeItem, world);
+		if (!(entity instanceof SBToolItemEntity)){
+			Level world = entity.level();			
+			SBToolItemEntity e = new SBToolItemEntity((EntityType<SBToolItemEntity>)TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(), world);
 			e.restoreFrom(entity);
 			e.init();
 			entity.discard();
@@ -507,7 +515,7 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 	public void initializeClient(Consumer<IClientItemExtensions> consumer) {
 
 		consumer.accept(new IClientItemExtensions() {
-			BlockEntityWithoutLevelRenderer renderer = new SlashBladeTEISR(
+			BlockEntityWithoutLevelRenderer renderer = new SBToolISTER(
 					Minecraft.getInstance().getBlockEntityRenderDispatcher(),
 					Minecraft.getInstance().getEntityModels());
 
@@ -516,7 +524,5 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 				return renderer;
 			}
 		});
-
-		super.initializeClient(consumer);
 	}
 }

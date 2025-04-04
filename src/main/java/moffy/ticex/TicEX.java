@@ -35,6 +35,7 @@ public class TicEX {
         TicEXRegistry.BLOCKS.register(bus);
         TicEXRegistry.BLOCK_ENTITIES.register(bus);
         TicEXRegistry.FLUIDS.register(bus);
+        TicEXRegistry.ENTITIES.register(bus);
         TicEXRegistry.MODIFIERS.register(bus);
         TicEXRegistry.ATTRIBUTES.register(bus);
         TicEXRegistry.CREATIVE_TABS.register(bus);

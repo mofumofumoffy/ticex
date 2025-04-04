@@ -1,243 +1,376 @@
 package moffy.ticex.caps.slashblade;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.mojang.datafixers.types.Type;
+import javax.annotation.Nonnull;
 
-import mods.flammpfeil.slashblade.capability.slashblade.SlashBladeState;
+import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.client.renderer.CarryType;
-import mods.flammpfeil.slashblade.slasharts.SlashArts;
-import mods.flammpfeil.slashblade.util.EnumSetConverter;
-import mods.flammpfeil.slashblade.util.NBTHelper;
+import mods.flammpfeil.slashblade.registry.ComboStateRegistry;
+import mods.flammpfeil.slashblade.registry.SpecialEffectsRegistry;
+import mods.flammpfeil.slashblade.registry.combo.ComboState;
+import mods.flammpfeil.slashblade.registry.specialeffects.SpecialEffect;
+import moffy.ticex.TicEX;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.registries.IForgeRegistry;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-public class ToolBladeStateCapability extends SlashBladeState{
+public class ToolBladeStateCapability implements ISlashBladeState{
 
-    private IToolStackView tool;
+    protected long lastActionTime;
+    protected int targetEntityId;
+    protected boolean _onClick;
+    protected float fallDecreaseRate;
+    protected boolean isCharged;
+    protected float attackAmplifier;
+    protected ResourceLocation comboSeq;
+    protected String lastPosHash;
+    protected boolean isBroken;
+    protected boolean isNoScabbard;
+    protected boolean isSealed;
+    protected float baseAttackModifier = 4.0F;
+    protected int killCount;
+    protected int refine;
+    protected UUID owner;
+    protected UUID uniqueId = UUID.randomUUID();
+    protected String translationKey = "";
+    protected ResourceLocation slashArtsKey;
+    protected boolean isDefaultBewitched = false;
+    protected ResourceLocation comboRootName;
+    protected Optional<CarryType> carryType = Optional.empty();
+    protected Optional<Color> effectColor = Optional.empty();
+    protected boolean effectColorInverse;
+    protected Optional<Vec3> adjust = Optional.empty();
+    protected Optional<ResourceLocation> texture = Optional.empty();
+    protected Optional<ResourceLocation> model = Optional.empty();
+    protected LazyOptional<ResourceLocation> rootCombo = this.instantiateRootComboHolder();
+    protected int maxDamage = 40;
+    protected int damage = 0;
+    protected int proudSoul = 0;
+    protected boolean isChangedActiveState = false;
+    protected List<ResourceLocation> specialEffects = new ArrayList<>();
+
+    protected IToolStackView tool;
 
     public ToolBladeStateCapability(ItemStack blade, IToolStackView tool) {
-        super(blade);
         this.tool = tool;
-        /* if(tool.getPersistentData().contains(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, 10)){
+        if(tool.getPersistentData().contains(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, 10)){
             deserializeNBT(tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION));
-        } */
+        }
     }
 
-    @Override
-    public boolean removeSpecialEffect(ResourceLocation se) {
-        boolean result = super.removeSpecialEffect(se);
+    public long getLastActionTime() {
+      return this.lastActionTime;
+   }
+
+   public void setLastActionTime(long lastActionTime) {
+      this.lastActionTime = lastActionTime;
+      this.setHasChangedActiveState(true);
+   }
+
+   public boolean onClick() {
+      return this._onClick;
+   }
+
+   public void setOnClick(boolean onClick) {
+      this._onClick = onClick;
+      this.setHasChangedActiveState(true);
+   }
+
+   public float getFallDecreaseRate() {
+      return this.fallDecreaseRate;
+   }
+
+   public void setFallDecreaseRate(float fallDecreaseRate) {
+      this.fallDecreaseRate = fallDecreaseRate;
+      this.setHasChangedActiveState(true);
+   }
+
+   public float getAttackAmplifier() {
+      return this.attackAmplifier;
+   }
+
+   public void setAttackAmplifier(float attackAmplifier) {
+      this.attackAmplifier = attackAmplifier;
+      this.setHasChangedActiveState(true);
+   }
+
+   @Nonnull
+   public ResourceLocation getComboSeq() {
+      return this.comboSeq != null ? this.comboSeq : ComboStateRegistry.NONE.getId();
+   }
+
+   public void setComboSeq(ResourceLocation comboSeq) {
+      this.comboSeq = comboSeq;
+      this.setHasChangedActiveState(true);
+   }
+
+   public boolean isBroken() {
+      return this.isBroken;
+   }
+
+   public void setBroken(boolean broken) {
+      this.isBroken = broken;
+      this.setHasChangedActiveState(true);
+   }
+
+   public boolean isSealed() {
+      return this.isSealed;
+   }
+
+   public void setSealed(boolean sealed) {
+      this.isSealed = sealed;
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public float getBaseAttackModifier() {
+      return this.baseAttackModifier;
+   }
+
+   public void setBaseAttackModifier(float baseAttackModifier) {
+      this.baseAttackModifier = baseAttackModifier;
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public int getKillCount() {
+      return this.killCount;
+   }
+
+   public void setKillCount(int killCount) {
+      this.killCount = killCount;
+      this.setHasChangedActiveState(true);
+   }
+
+   public int getRefine() {
+      return this.refine;
+   }
+
+   public void setRefine(int refine) {
+      this.refine = refine;
+      this.setHasChangedActiveState(true);
+   }
+
+   public ResourceLocation getSlashArtsKey() {
+      return this.slashArtsKey;
+   }
+
+   public void setSlashArtsKey(ResourceLocation key) {
+      this.slashArtsKey = key;
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public boolean isDefaultBewitched() {
+      return this.isDefaultBewitched;
+   }
+
+   public void setDefaultBewitched(boolean defaultBewitched) {
+      this.isDefaultBewitched = defaultBewitched;
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public String getTranslationKey() {
+      return this.translationKey;
+   }
+
+   public void setTranslationKey(String translationKey) {
+      this.translationKey = (String)Optional.ofNullable(translationKey).orElse("");
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   @Nonnull
+   public CarryType getCarryType() {
+      return (CarryType)this.carryType.orElse(CarryType.NONE);
+   }
+
+   public void setCarryType(CarryType carryType) {
+      this.carryType = Optional.ofNullable(carryType);
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public Color getEffectColor() {
+      return (Color)this.effectColor.orElseGet(() -> {
+         return new Color(3355647);
+      });
+   }
+
+   public void setEffectColor(Color effectColor) {
+      this.effectColor = Optional.ofNullable(effectColor);
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public boolean isEffectColorInverse() {
+      return this.effectColorInverse;
+   }
+
+   public void setEffectColorInverse(boolean effectColorInverse) {
+      this.effectColorInverse = effectColorInverse;
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public Vec3 getAdjust() {
+      return (Vec3)this.adjust.orElseGet(() -> {
+         return Vec3.ZERO;
+      });
+   }
+
+   public void setAdjust(Vec3 adjust) {
+      this.adjust = Optional.ofNullable(adjust);
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public Optional<ResourceLocation> getTexture() {
+      return this.texture;
+   }
+
+   public void setTexture(ResourceLocation texture) {
+      this.texture = Optional.ofNullable(texture);
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public Optional<ResourceLocation> getModel() {
+      return this.model;
+   }
+
+   public void setModel(ResourceLocation model) {
+      this.model = Optional.ofNullable(model);
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public int getTargetEntityId() {
+      
+      return this.targetEntityId;
+   }
+
+   public void setTargetEntityId(int id) {
+      this.targetEntityId = id;
+      
+      this.setHasChangedActiveState(true);
+   }
+
+   public ResourceLocation getComboRoot() {
+      return this.comboRootName != null && ((IForgeRegistry<ComboState>)ComboStateRegistry.REGISTRY.get()).containsKey(this.comboRootName) ? this.comboRootName : ComboStateRegistry.STANDBY.getId();
+   }
+
+   public void setComboRoot(ResourceLocation rootLoc) {
+      this.comboRootName = ((IForgeRegistry<ComboState>)ComboStateRegistry.REGISTRY.get()).containsKey(rootLoc) ? rootLoc : ComboStateRegistry.STANDBY.getId();
+      this.rootCombo = this.instantiateRootComboHolder();
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   private LazyOptional<ResourceLocation> instantiateRootComboHolder() {
+      return LazyOptional.of(() -> {
+         return !((IForgeRegistry<ComboState>)ComboStateRegistry.REGISTRY.get()).containsKey(this.getComboRoot()) ? ComboStateRegistry.STANDBY.getId() : this.getComboRoot();
+      });
+   }
+
+   public boolean hasChangedActiveState() {
+      return this.isChangedActiveState;
+   }
+
+   public void setHasChangedActiveState(boolean isChanged) {
+      this.isChangedActiveState = isChanged;
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public UUID getUniqueId() {
+      return this.uniqueId;
+   }
+
+   public void setUniqueId(UUID uniqueId) {
+      this.uniqueId = uniqueId;
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public int getMaxDamage() {
+      return this.maxDamage;
+   }
+
+   public void setMaxDamage(int damage) {
+      this.maxDamage = damage;
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public int getDamage() {
+      return this.damage;
+   }
+
+   public void setDamage(int damage) {
+      this.damage = Math.max(0, damage);
+      this.setHasChangedActiveState(true);
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public int getProudSoulCount() {
+      return this.proudSoul;
+   }
+
+   public void setProudSoulCount(int psCount) {
+      this.proudSoul = Math.max(0, psCount);
+      this.setHasChangedActiveState(true);
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public List<ResourceLocation> getSpecialEffects() {
+      return this.specialEffects;
+   }
+
+   public void setSpecialEffects(ListTag list) {
+      List<ResourceLocation> result = new ArrayList<>();
+      list.forEach((tag) -> {
+         ResourceLocation se = ResourceLocation.tryParse(tag.getAsString());
+         if (((IForgeRegistry<SpecialEffect>)SpecialEffectsRegistry.REGISTRY.get()).containsKey(se)) {
+            result.add(se);
+         }
+
+      });
+      this.specialEffects = result;
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+   }
+
+   public boolean addSpecialEffect(ResourceLocation se) {
+        boolean result = ((IForgeRegistry<SpecialEffect>)SpecialEffectsRegistry.REGISTRY.get()).containsKey(se) ? this.specialEffects.add(se) : false;
         if(result){
             tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
         }
         return result;
-    }
+   }
 
-    @Override
-    public boolean addSpecialEffect(ResourceLocation se) {
-        boolean result = super.addSpecialEffect(se);
+   public boolean removeSpecialEffect(ResourceLocation se) {
+        boolean result = this.specialEffects.remove(se);
         if(result){
             tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
         }
         return result;
+   }
+
+    public boolean hasSpecialEffect(ResourceLocation se) {
+        if (((IForgeRegistry<SpecialEffect>)SpecialEffectsRegistry.REGISTRY.get()).containsKey(se)) {
+            return this.specialEffects.contains(se);
+        } else {
+            this.specialEffects.remove(se);
+            return true;
+        }
     }
 
-    @Override
-    public void setHasChangedActiveState(boolean isChanged) {
-        super.setHasChangedActiveState(isChanged);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setOnClick(boolean onClick) {
-        super.setOnClick(onClick);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setFallDecreaseRate(float fallDecreaseRate) {
-        super.setFallDecreaseRate(fallDecreaseRate);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setActiveState(CompoundTag tag) {
-        super.setActiveState(tag);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setAdjust(Vec3 adjust) {
-        super.setAdjust(adjust);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setAttackAmplifier(float attackAmplifier) {
-        super.setAttackAmplifier(attackAmplifier);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setBaseAttackModifier(float baseAttackModifier) {
-        super.setBaseAttackModifier(baseAttackModifier);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setBroken(boolean broken) {
-        super.setBroken(broken);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setCarryType(CarryType carryType) {
-        super.setCarryType(carryType);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setColorCode(int colorCode) {
-        super.setColorCode(colorCode);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setComboRoot(ResourceLocation rootLoc) {
-        super.setComboRoot(rootLoc);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setComboSeq(ResourceLocation comboSeq) {
-        super.setComboSeq(comboSeq);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setDamage(int damage) {
-        super.setDamage(damage);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setDefaultBewitched(boolean defaultBewitched) {
-        super.setDefaultBewitched(defaultBewitched);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setEffectColor(Color effectColor) {
-        super.setEffectColor(effectColor);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setEffectColorInverse(boolean effectColorInverse) {
-        super.setEffectColorInverse(effectColorInverse);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setKillCount(int killCount) {
-        super.setKillCount(killCount);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setLastActionTime(long lastActionTime) {
-        super.setLastActionTime(lastActionTime);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setMaxDamage(int damage) {
-        super.setMaxDamage(damage);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setTargetEntityId(int id) {
-        super.setTargetEntityId(id);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setModel(ResourceLocation model) {
-        super.setModel(model);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setProudSoulCount(int psCount) {
-        super.setProudSoulCount(psCount);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setRefine(int refine) {
-        super.setRefine(refine);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setSealed(boolean sealed) {
-        super.setSealed(sealed);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setSlashArtsKey(ResourceLocation key) {
-        super.setSlashArtsKey(key);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setSpecialEffects(ListTag list) {
-        super.setSpecialEffects(list);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setTargetEntityId(Entity target) {
-        super.setTargetEntityId(target);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setTexture(ResourceLocation texture) {
-        super.setTexture(texture);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setTranslationKey(String translationKey) {
-        super.setTranslationKey(translationKey);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-
-    @Override
-    public void setUniqueId(UUID uniqueId) {
-        super.setUniqueId(uniqueId);
-        tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
-    }
-    
     @Override
     public ResourceLocation resolvCurrentComboState(LivingEntity user) {
-        if(user.getMainHandItem().getItem() instanceof ModifiableSlashBladeItem){
-            return (ResourceLocation)this.resolvCurrentComboStateTicks(user).getValue();
-        }
-        return super.resolvCurrentComboState(user);
+        return !(user.getMainHandItem().getItem() instanceof ModifiableSlashBladeItem) ? ComboStateRegistry.NONE.getId() : (ResourceLocation)this.resolvCurrentComboStateTicks(user).getValue();
+    }
+
+    @Override
+    public void deserializeNBT(CompoundTag arg0) {
+      TicEX.LOGGER.info("{}",arg0);
+        ISlashBladeState.super.deserializeNBT(arg0);
     }
 }

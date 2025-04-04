@@ -28,6 +28,21 @@ public record CatalystMaterialStatsType(MaterialStatType<?> getType) implements 
         this.getType = getType;
     };
 
+    public static MaterialStatType<CatalystMaterialStatsType> getOrMakeType(String id){
+        if(TYPES.containsKey(id)){
+            return TYPES.get(id);
+        } else {
+            MaterialStatsId statsId = new MaterialStatsId(TicEX.MODID, id);
+            MaterialStatType<CatalystMaterialStatsType> catalystStatType = new MaterialStatType<CatalystMaterialStatsType>(statsId, (type) -> {
+                return new CatalystMaterialStatsType(type);
+            }, LOADABLE);
+
+            TYPES.put(id, catalystStatType);
+
+            return catalystStatType;
+        }
+    }
+
     public static MaterialStatType<CatalystMaterialStatsType> getOrMakeType(String prefix, ArmorItem.Type armorType) {
         String id = prefix+"_"+armorType.getName();
         if(TYPES.containsKey(id)){

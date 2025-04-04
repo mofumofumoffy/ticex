@@ -92,8 +92,8 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
 
         int fuelIndex = pBlockEntity.isCreative() ? 20 : Math.round(20 * (1 - (float)Math.exp(-Math.PI*rate)));
 
-        if(pBlockEntity.isCreative() || extracted >= 1){
-            if(fuelIndex == 0){
+        if(extracted >= 1){
+            if(fuelIndex == 0 && !pBlockEntity.isCreative()){
                 pBlockEntity.updateFluidTo(FluidStack.EMPTY);
             } else {
                 pBlockEntity.updateFluidTo(new FluidStack(TicEXRegistry.RF_FURNACE_FUELS.get(fuelIndex - 1).get(), FluidType.BUCKET_VOLUME));

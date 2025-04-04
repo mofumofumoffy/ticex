@@ -16,7 +16,7 @@ public class TicEXAvaritiaEvent {
         if(target instanceof Player player){
             if(player.getMainHandItem().getItem() instanceof IModifiable){
                 ToolStack tool = ToolStack.from(player.getMainHandItem());
-                if (!player.getMainHandItem().isEmpty() && tool.getModifierLevel(TicEXRegistry.OMNIPOTEMCE_MODIFIER.get()) > 0 && player.getMainHandItem().useOnRelease()) {
+                if (!player.getMainHandItem().isEmpty() && TicEXRegistry.OMNIPOTEMCE_MODIFIER != null && tool.getModifierLevel(TicEXRegistry.OMNIPOTEMCE_MODIFIER.get()) > 0 && player.getMainHandItem().useOnRelease()) {
                     event.setCanceled(true);
                 }
             }
@@ -28,7 +28,7 @@ public class TicEXAvaritiaEvent {
             for(ItemStack armorStack : player.getArmorSlots()){
                 if(armorStack.getItem() instanceof IModifiable){
                     ToolStack armor = ToolStack.from(armorStack);
-                    if(armor.getModifierLevel(TicEXRegistry.TRANSCENDENTAL_MODIFIER.get()) > 0){
+                    if(TicEXRegistry.TRANSCENDENTAL_MODIFIER != null && armor.getModifierLevel(TicEXRegistry.TRANSCENDENTAL_MODIFIER.get()) > 0){
                         event.setCanceled(true);
                         player.setHealth(player.getMaxHealth());
                     }

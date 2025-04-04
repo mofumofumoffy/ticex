@@ -1,16 +1,22 @@
 package moffy.ticex.modules;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
-import moffy.ticex.client.TicEXShaderMap;
+import moffy.ticex.client.ShaderInstanceMap;
+import moffy.ticex.client.ToolShaderMap;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -66,14 +72,18 @@ public class TicEXRegistry {
 
     public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
 
-    public static final TicEXShaderMap.Tool TOOL_SHADERS = new TicEXShaderMap.Tool();
-    public static final TicEXShaderMap.Armor ARMOR_SHADERS = new TicEXShaderMap.Armor();
+    public static final Map<Item, Function<BakedModel, BakedModel>> CUSTOM_MODELS = new HashMap<>();
+    public static final ToolShaderMap.Tool TOOL_SHADERS = new ToolShaderMap.Tool();
+    public static final ToolShaderMap.Armor ARMOR_SHADERS = new ToolShaderMap.Armor();
+    public static final ShaderInstanceMap SHADER_INSTANCE_MAP = new ShaderInstanceMap();
+    
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
     public static final ItemDeferredRegisterExtension ITEMS_EXTENDED = new ItemDeferredRegisterExtension(TicEX.MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TicEX.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TicEX.MODID);
     public static final FluidDeferredRegister FLUIDS = new FluidDeferredRegister(TicEX.MODID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, TicEX.MODID);
     public static final ModifierDeferredRegister MODIFIERS = ModifierDeferredRegister.create(TicEX.MODID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, TicEX.MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TicEX.MODID);
@@ -82,6 +92,10 @@ public class TicEXRegistry {
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
 
     public static RegistryObject<Item> ETHERIC_INGOT = null;
+    public static RegistryObject<Item> DRACONIUM_CRYSTAL = null;
+    public static RegistryObject<Item> WYVERN_CRYSTAL = null;
+    public static RegistryObject<Item> DRACONIC_CRYSTAL = null;
+    public static RegistryObject<Item> CHAOTIC_CRYSTAL = null;
     public static RegistryObject<Item> RECONSTRUCTION_CORE = null;
     public static RegistryObject<Item> CELESTIAL_CORE = null;
     public static RegistryObject<Item> RADIATION_SHELDING_CORE = null;
@@ -90,6 +104,13 @@ public class TicEXRegistry {
     public static RegistryObject<Item> DRACONIC_EVOLVED_CORE = null;
     public static RegistryObject<Item> CHAOTIC_EVOLVED_CORE = null;
     public static RegistryObject<Item> INJECT_CORE = null;
+    
+
+    public static ItemObject<ToolPartItem> SLASHBLADE_BLADE = null;
+    public static ItemObject<ToolPartItem> SLASHBLADE_SAYA = null;
+
+    public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKASUIT = null; 
+    public static ItemObject<ToolPartItem> CATALYST_SLASHBLADE = null;
 
     public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKAPLATE = null; 
 
@@ -113,6 +134,8 @@ public class TicEXRegistry {
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_CRYSTAL_MATRIX = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
 
+    public static RegistryObject<EntityType<?>>SLASHBLADE_TOOL_ITEM_ENTITY = null;
+
     public static RegistryObject<Attribute> HEALING_RECEIVED = null;
     public static RegistryObject<Attribute> DAMAGE_TAKEN = null;
 
@@ -130,7 +153,9 @@ public class TicEXRegistry {
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
     public static StaticModifier<Modifier> SASSY_MODIFIER = null;
     public static StaticModifier<Modifier> EVOLVED_MODIFIER = null;
+    public static StaticModifier<Modifier> SOUL_RENDING_MODIFIER = null;
     public static StaticModifier<Modifier> KONPAKU_MODIFIER = null;
+    public static StaticModifier<Modifier> KOSHIRAE_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){
@@ -141,12 +166,17 @@ public class TicEXRegistry {
             output.accept(blockObject.get().asItem());
         }
 
-        acceptCatalyst(output, CATALYST_MEKAPLATE);
+        acceptCatalystArmor(output, CATALYST_MEKASUIT);
+        acceptPart(output, CATALYST_SLASHBLADE);
+
+        acceptPart(output, SLASHBLADE_BLADE);
+        acceptPart(output, SLASHBLADE_SAYA);
+
+        acceptTool(output, SLASHBLADE_TOOL);
 
         acceptArmor(output, MEKAPLATE_ARMOR);
     }
 
-    @SuppressWarnings("unused")
     private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends IModifiable> toolObject){
         if(toolObject != null){
             ToolBuildHandler.addVariants(output::accept, toolObject.get(), "");
@@ -159,9 +189,15 @@ public class TicEXRegistry {
         }
     }
 
-    private static void acceptCatalyst(CreativeModeTab.Output output, EnumObject<ArmorItem.Type, ToolPartItem> catalystObject){
+    private static void acceptCatalystArmor(CreativeModeTab.Output output, EnumObject<ArmorItem.Type, ToolPartItem> catalystObject){
         if(catalystObject != null){
             catalystObject.forEach(c -> c.addVariants(output::accept, ""));
+        }
+    }
+
+    private static void acceptPart(CreativeModeTab.Output output, ItemObject<ToolPartItem> partObject){
+        if(partObject != null){
+            partObject.get().addVariants(output::accept, "");
         }
     }
 

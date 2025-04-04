@@ -54,7 +54,8 @@ public abstract class ItemRendererMixin {
         cancellable = true
     )
     public void render(ItemStack pItemStack, ItemDisplayContext pDisplayContext, boolean pLeftHand, PoseStack pPoseStack, MultiBufferSource pBuffer, int pCombinedLight, int pCombinedOverlay, BakedModel pModel, CallbackInfo cb){
-        if (!pItemStack.isEmpty() && !pModel.isCustomRenderer() && TicEXConfig.USE_SHADER.get()){
+
+        if (!pItemStack.isEmpty() && TicEXConfig.USE_SHADER.get() && !TicEXRegistry.CUSTOM_MODELS.keySet().contains(pItemStack.getItem())){
             if(pItemStack.getItem() instanceof IModifiable){
                 ToolStack tool = ToolStack.from(pItemStack);
                 if(TicEXRegistry.TOOL_SHADERS.isToolTarget(tool)){

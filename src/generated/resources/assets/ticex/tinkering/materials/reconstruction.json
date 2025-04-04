@@ -5,7 +5,7 @@
     ],
     "generator": {
       "supported_stats": [
-        "ticex:catalyst_mekaplate_helmet",
+        "ticex:catalyst_mekasuit_helmet",
         "ticex:catalyst_mekaplate_chestplate",
         "ticex:catalyst_mekaplate_leggings",
         "ticex:catalyst_mekaplate_boots"

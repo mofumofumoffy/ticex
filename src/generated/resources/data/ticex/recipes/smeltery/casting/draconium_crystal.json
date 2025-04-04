@@ -1,0 +1,15 @@
+{
+    "type": "tconstruct:casting_table",
+    "cast": {
+      "item": "draconicevolution:draconium_core"
+    },
+    "cast_consumed": true,
+    "cooling_time": 83,
+    "fluid": {
+      "amount": 500,
+      "tag": "forge:molten_reconstruction_core"
+    },
+    "result": {
+      "tag": "ticex:de_crystal/draconium"
+    }
+}

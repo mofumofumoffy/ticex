@@ -13,14 +13,19 @@
         "sassy": "#58e87a",
         "deflection": "#398f4d",
         "evolved": "#8a0404",
-        "inject": "#555555"
+        "inject": "#555555",
+        "soul_rending": "#9A5CC6"
     },
     "material.ticex": {
         "infinity": "#FF5555",
         "neutronium": "#0d0d0d",
         "crystal_matrix": "#42e0f5",
         "reconstruction": "#3483eb",
-        "etheric": "#2deb59"
+        "etheric": "#2deb59",
+        "draconium": "#0000aa",
+        "wyvern": "#aa00aa",
+        "draconic": "#ffff55",
+        "chaotic": "#555555"
     },
     "harvest_tier.ticex": {
 		"infinity": "#FF5555"

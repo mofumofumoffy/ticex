@@ -65,6 +65,8 @@ public class TicEXAvaritiaModule extends AddonModule{
                     wrapper.renderArmorWithConsumer(material.buffer(wrapper.getBufferSource(), TicEXCosmicShader.instance::getCosmicRenderTypeArmor));
                 }
             );
-        });
+
+            TicEXRegistry.SHADER_INSTANCE_MAP.addShader(infinityMaterial, TicEXCosmicShader.instance::getCosmicShader, TicEXCosmicShader.instance::setupCosmic);
+        }); 
     }
 }

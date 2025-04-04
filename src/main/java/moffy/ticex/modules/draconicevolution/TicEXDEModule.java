@@ -7,6 +7,7 @@ import moffy.ticex.caps.draconicevolution.DEItemCapabilityProvider;
 import moffy.ticex.client.draconicevolution.TicEXDEShader;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierEvolved;
+import moffy.ticex.modifier.ModifierSoulRending;
 import moffy.ticex.modules.TicEXRegistry;
 import moffy.ticex.utils.TicEXDEUtils;
 import net.minecraft.world.item.Item;
@@ -27,19 +28,26 @@ public class TicEXDEModule extends AddonModule{
 
         Item.Properties defaultProps = new Item.Properties();
 
+        TicEXRegistry.DRACONIUM_CRYSTAL  = TicEXRegistry.ITEMS.register("draconium_crystal", ()->new Item(defaultProps));
+        TicEXRegistry.WYVERN_CRYSTAL = TicEXRegistry.ITEMS.register("wyvern_crystal", ()->new Item(defaultProps));
+        TicEXRegistry.DRACONIC_CRYSTAL = TicEXRegistry.ITEMS.register("draconic_crystal", ()->new Item(defaultProps));
+        TicEXRegistry.CHAOTIC_CRYSTAL = TicEXRegistry.ITEMS.register("chaotic_crystal", ()->new Item(defaultProps));
+
         TicEXRegistry.DRACONIUM_EVOLVED_CORE = TicEXRegistry.ITEMS.register("draconium_evolved_core", ()->new ItemReconstCore(defaultProps, "evolved", 1));
         TicEXRegistry.WYVERN_EVOLVED_CORE = TicEXRegistry.ITEMS.register("wyvern_evolved_core", ()->new ItemReconstCore(defaultProps, "evolved", 2));
         TicEXRegistry.DRACONIC_EVOLVED_CORE = TicEXRegistry.ITEMS.register("draconic_evolved_core", ()->new ItemReconstCore(defaultProps, "evolved", 3));
         TicEXRegistry.CHAOTIC_EVOLVED_CORE = TicEXRegistry.ITEMS.register("chaotic_evolved_core", ()->new ItemReconstCore(defaultProps, "evolved", 4));
         TicEXRegistry.INJECT_CORE = TicEXRegistry.ITEMS.register("inject_core", ()->new ItemReconstCore(defaultProps, "inject"));
 
+        TicEXRegistry.SOUL_RENDING_MODIFIER = TicEXRegistry.MODIFIERS.register("soul_rending", ModifierSoulRending::new);
+
         TicEXRegistry.EVOLVED_MODIFIER = TicEXRegistry.MODIFIERS.register("evolved", ModifierEvolved::new);
         
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
             TicEXDEShader.init(bus);
 
-        TicEXRegistry.TOOL_SHADERS.addShader(
-            ModifierIds.reinforced,
+            TicEXRegistry.TOOL_SHADERS.addShader(
+                ModifierIds.reinforced,
                 (wrapper)->{
                     TechLevel techLevel = TicEXDEUtils.getTechLevel(wrapper.getTool());
                     if(techLevel != null && TicEXDEShader.instance != null){
@@ -48,6 +56,7 @@ public class TicEXDEModule extends AddonModule{
                     }
                 }
             );
+            TicEXRegistry.SHADER_INSTANCE_MAP.addShader(ModifierIds.reinforced, TicEXDEShader.instance::getShaderInstance);
         });
     }
 }

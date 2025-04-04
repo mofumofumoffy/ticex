@@ -1,0 +1,9 @@
+{
+  "replace": false,
+    "values": [
+      {
+        "id": "ticex:draconic_crystal",
+        "required": false
+      }
+    ]
+  }

@@ -11,7 +11,7 @@ version = mod_version
 group = mod_group_id
 
 base {
-    archivesName = mod_id
+    archivesName = "${mod_id}-mc1.20.1"
 }
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
@@ -117,6 +117,7 @@ mixin {
     config 'ticex.mixins.json'
     config 'ticex.mekanism.mixins.json'
     config 'ticex.draconicevolution.mixins.json'
+    config 'ticex.slashblade.mixin.json'
 
     debug.verbose = true
     debug.export = true
@@ -151,7 +152,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    implementation fg.deobf("blank:addonapi:1.1.0")
+    implementation fg.deobf("blank:addonapi-mc1.20.1:1.2.0")
 
     implementation fg.deobf("curse.maven:mantle-74924:6258424")
     implementation fg.deobf("curse.maven:tinkers-construct-74072:6266282")
@@ -168,13 +169,14 @@ dependencies {
 
     runtimeOnly fg.deobf("curse.maven:jei-238222:6075247")
     runtimeOnly fg.deobf("curse.maven:mouse-tweaks-60089:5338457")
-    runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
-    runtimeOnly fg.deobf("curse.maven:radium-reforged-570017:5706069")
+    //runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
+    //runtimeOnly fg.deobf("curse.maven:radium-reforged-570017:5706069")
     runtimeOnly fg.deobf("curse.maven:bookshelf-228525:5423987")
     runtimeOnly fg.deobf("curse.maven:modernfix-790626:6125143")
     runtimeOnly fg.deobf("curse.maven:ferritecore-429235:4810975")
     runtimeOnly fg.deobf("curse.maven:jade-324717:6271651")
     runtimeOnly fg.deobf("curse.maven:fps-reducer-280294:4586784")
+    runtimeOnly fg.deobf("curse.maven:curios-309927:6238756")
 
     //runtimeOnly fg.deobf("curse.maven:the-twilight-forest-227639:5468648")
     //runtimeOnly fg.deobf("curse.maven:the-god-1199808:6285723")

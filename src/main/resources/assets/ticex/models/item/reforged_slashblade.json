@@ -1,0 +1,15 @@
+{
+  "loader": "tconstruct:tool",
+  "parent": "slashblade:item/slashblade",
+  "textures": {
+    "blade":   "ticex:item/tool/slashblade_tool/blade",
+    "handle": "ticex:item/tool/slashblade_tool/handle",
+    "saya":  "ticex:item/tool/slashblade_tool/saya"
+  },
+  "modifier_roots": [ "ticex:item/tool/slashblade_tool/modifiers/" ],
+  "parts": [
+    { "name": "handle", "index": 1 },
+    { "name": "blade",   "index": 0 },
+    { "name": "saya",  "index": 2 }
+  ]
+}

@@ -9,6 +9,7 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 public class TicEXConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
     public static ForgeConfigSpec.ConfigValue<Float> CONDENSING_DROP_PROBABILITY;
+    public static ForgeConfigSpec.ConfigValue<Boolean> MEKAPLATE_USE_POWER_SHIELD;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
 
     public static void registerConfig(){
@@ -21,6 +22,10 @@ public class TicEXConfig {
 
         COMMON.push("avaritia");
         CONDENSING_DROP_PROBABILITY = COMMON.comment("Probability of a neutron pile is dropped by condensing modifier").define("condensingDropProbability", 0.003f);
+        COMMON.pop();
+
+        COMMON.push("mekanism");
+        MEKAPLATE_USE_POWER_SHIELD = COMMON.comment("Allow Mekaplate can use shield of electricity").define("mekaplateUseShield", true);
         COMMON.pop();
 
         CLIENT.comment("Client Settings").push("client");

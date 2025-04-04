@@ -53,6 +53,7 @@ import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.ToolDamageModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeHitModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.RequirementsModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
@@ -68,7 +69,7 @@ import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 
-public class ModifierEvolved extends Modifier implements ToolDamageModifierHook, TooltipModifierHook, MeleeHitModifierHook, BlockBreakModifierHook, RequirementsModifierHook{
+public class ModifierEvolved extends Modifier implements ToolDamageModifierHook, TooltipModifierHook, MeleeHitModifierHook, BlockBreakModifierHook, RequirementsModifierHook, ValidateModifierHook{
 
     public static final ResourceLocation MODULE_HOST_LOCATION = new ResourceLocation(TicEX.MODID, "module_host");
     public static final ResourceLocation OP_STORAGE_LOCATION = new ResourceLocation(TicEX.MODID, "op_storage");
@@ -80,7 +81,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.TOOL_DAMAGE, ModifierHooks.TOOLTIP, ModifierHooks.MELEE_HIT, ModifierHooks.BLOCK_BREAK, ModifierHooks.REQUIREMENTS);
+        hookBuilder.addHook(this, ModifierHooks.TOOL_DAMAGE, ModifierHooks.TOOLTIP, ModifierHooks.MELEE_HIT, ModifierHooks.BLOCK_BREAK, ModifierHooks.REQUIREMENTS, ModifierHooks.VALIDATE);
     }
 
     @Override
@@ -378,6 +379,8 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
         return stack.isCorrectToolForDrops(state);
     }
 
+    
+
     @Override
     public List<ModifierEntry> displayModifiers(ModifierEntry entry) {
         List<ModifierEntry> entries = new ArrayList<>();
@@ -386,6 +389,14 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
             entries.add(new ModifierEntry(ModifierIds.netherite, 1));
         }
         return entries;
+    }
+
+    @Override
+    public Component validate(IToolStackView tool, ModifierEntry entry) {
+        if(entry.getLevel() == 1 && (tool.getModifierLevel(ModifierIds.reinforced) < 5 || tool.getModifierLevel(ModifierIds.netherite) < 1)){
+            return Component.translatable("recipe.ticex.modifier.evolved_requirements_1");
+        }
+        return null;
     }
 
     

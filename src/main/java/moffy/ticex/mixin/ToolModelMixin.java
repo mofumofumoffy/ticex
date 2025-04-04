@@ -33,10 +33,12 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.client.model.BakedModelWrapper;
 import net.minecraftforge.client.model.IModelBuilder;
 import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.mantle.client.model.util.MantleItemLayerModel;
 import slimeknights.mantle.util.ItemLayerPixels;
 import slimeknights.mantle.util.ReversedListBuilder;
@@ -71,8 +73,8 @@ public class ToolModelMixin {
         cancellable = true,
         remap = false
     )
-    private static void bakeInternalExtension(IGeometryBakingContext owner, Function<Material, TextureAtlasSprite> spriteGetter, @Nullable Transformation largeTransforms, List<?> parts, Map<ModifierId, IBakedModifierModel> modifierModels, List<?> firstModifiers, List<MaterialVariantId> materials, @Nullable IToolStackView tool, ItemOverrides overrides, CallbackInfoReturnable<BakedModel> cb){
-        if(tool != null && TicEXRegistry.TOOL_SHADERS.isToolTarget(tool)){
+    private static void bakeInternalWithShader(IGeometryBakingContext owner, Function<Material, TextureAtlasSprite> spriteGetter, @Nullable Transformation largeTransforms, List<?> parts, Map<ModifierId, IBakedModifierModel> modifierModels, List<?> firstModifiers, List<MaterialVariantId> materials, @Nullable IToolStackView tool, ItemOverrides overrides, CallbackInfoReturnable<BakedModel> cb){
+        if(tool != null && (TicEXRegistry.TOOL_SHADERS.isToolTarget(tool))){
             Transformation smallTransforms = Transformation.identity();
 
             
@@ -135,12 +137,22 @@ public class ToolModelMixin {
             }
             }));
             if (largeTransforms == null) {
-                cb.setReturnValue(new UniqueGuiModel.Baked(smallModelBuilder.build(), guiModelBuilder.build()));
+                cb.setReturnValue(wrapModel(tool, new UniqueGuiModel.Baked(smallModelBuilder.build(), guiModelBuilder.build())));
             }
             IModelBuilder<?> largeModelBuilder = makeModelBuilder(owner, overrides, particle);
             largeQuads.build(quads -> quads.forEach(largeModelBuilder::addUnculledFace));
-            cb.setReturnValue(new BakedLargeToolModel(largeModelBuilder.build(), smallModelBuilder.build(), guiModelBuilder.build()));
+            cb.setReturnValue(wrapModel(tool, new BakedLargeToolModel(largeModelBuilder.build(), smallModelBuilder.build(), guiModelBuilder.build())));
         }
+    }
+
+    @Inject(
+        at = @At("return"),
+        method = "bakeInternal",
+        cancellable = true,
+        remap = false
+    )
+    private static void bakeInternalWithCustomModel(IGeometryBakingContext owner, Function<Material, TextureAtlasSprite> spriteGetter, @Nullable Transformation largeTransforms, List<?> parts, Map<ModifierId, IBakedModifierModel> modifierModels, List<?> firstModifiers, List<MaterialVariantId> materials, @Nullable IToolStackView tool, ItemOverrides overrides, CallbackInfoReturnable<BakedModel> cb){
+        cb.setReturnValue(wrapModel(tool, cb.getReturnValue()));
     }
 
     private static void addShaderQuads(MaterialVariantId id, List<BakedQuad> quads, Consumer<Collection<BakedQuad>>addFn){
@@ -186,6 +198,17 @@ public class ToolModelMixin {
             };
         }
         return target.isAssignableFrom(actual);
+    }
+
+    private static BakedModel wrapModel(IToolStackView tool, BakedModel originalModel){
+        if(tool != null){
+            for(Item predicate : TicEXRegistry.CUSTOM_MODELS.keySet()){
+                if(ForgeRegistries.ITEMS.getKey(tool.getItem()).equals(ForgeRegistries.ITEMS.getKey(predicate))){
+                    return TicEXRegistry.CUSTOM_MODELS.get(predicate).apply(originalModel);
+                }
+            }
+        }
+        return originalModel;
     }
 
     private static class BakedLargeToolModel extends BakedModelWrapper<BakedModel> {

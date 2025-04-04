@@ -22,6 +22,8 @@ import mekanism.common.content.gear.mekasuit.ModuleLocomotiveBoostingUnit;
 import mekanism.common.item.gear.ItemFreeRunners;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.StorageUtils;
+import moffy.ticex.TicEX;
+import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.mekanism.MekaPlateModelCache;
 import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
 import net.minecraft.core.BlockPos;
@@ -40,37 +42,33 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class TicEXMekanismEvent {
 
+    @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
-        LivingEntity entity = event.getEntity();
-        if (event.getAmount() <= 0 || !entity.isAlive()) {
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            return;
-        }
-        if (event.getSource().is(DamageTypeTags.IS_FALL)) {
-            FallEnergyInfo info = getFallAbsorptionEnergyInfo(entity);
-            if (info != null && handleDamage(event, info.container, info.damageRatio, info.energyCost)) {
+        if(TicEXConfig.MEKAPLATE_USE_POWER_SHIELD.get()){
+            LivingEntity entity = event.getEntity();
+            if (event.getAmount() <= 0 || !entity.isAlive()) {
                 return;
             }
-        }
-        if (entity instanceof Player player) {
-            float ratioAbsorbed = ItemModifiableMekaSuitArmor.getDamageAbsorbed(player, event.getSource(), event.getAmount());
-            if (ratioAbsorbed > 0) {
-                float damageRemaining = event.getAmount() * Math.max(0, 1 - ratioAbsorbed);
-                if (damageRemaining <= 0) {
-                    event.setCanceled(true);
-                } else {
-                    event.setAmount(damageRemaining);
+            if (event.getSource().is(DamageTypeTags.IS_FALL)) {
+                FallEnergyInfo info = getFallAbsorptionEnergyInfo(entity);
+                if (info != null && handleDamage(event, info.container, info.damageRatio, info.energyCost)) {
+                    return;
+                }
+            }
+            if (entity instanceof Player player) {
+                float ratioAbsorbed = ItemModifiableMekaSuitArmor.getDamageAbsorbed(player, event.getSource(), event.getAmount());
+                TicEX.LOGGER.info("{}",ratioAbsorbed);
+                if (ratioAbsorbed > 0) {
+                    float damageRemaining = event.getAmount() * Math.max(0, 1 - ratioAbsorbed);
+                    if (damageRemaining <= 0) {
+                        event.setCanceled(true);
+                    } else {
+                        event.setAmount(damageRemaining);
+                    }
                 }
             }
         }
@@ -102,6 +100,7 @@ public class TicEXMekanismEvent {
         return false;
     }
 
+    @SubscribeEvent
     public void onLivingJump(LivingJumpEvent event) {
         if (event.getEntity() instanceof Player player) {
             IModule<ModuleHydraulicPropulsionUnit> module = IModuleHelper.INSTANCE.load(player.getItemBySlot(EquipmentSlot.FEET), MekanismModules.HYDRAULIC_PROPULSION_UNIT);
@@ -142,6 +141,7 @@ public class TicEXMekanismEvent {
     private record FallEnergyInfo(@Nullable IEnergyContainer container, FloatSupplier damageRatio, FloatingLongSupplier energyCost) {
     }
 
+    @SubscribeEvent
     public void getBreakSpeed(BreakSpeed event) {
         Player player = event.getEntity();
         float speed = event.getNewSpeed();

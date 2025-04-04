@@ -39,7 +39,7 @@ public class TicEXToolDefinitionsDataGen extends AbstractToolDefinitionDataProvi
             .modules(slots -> PartStatsModule.armor(slots)
                 .part(TinkerToolParts.plating, 1)
                 .part(TinkerToolParts.maille, 1)
-                .part(TicEXRegistry.CATALYST_MEKAPLATE, 1))
+                .part(TicEXRegistry.CATALYST_MEKASUIT, 1))
             .module(plateMaterials)
             .module(ArmorItem.Type.HELMET, new MultiplyStatsModule(MultiplierNBT.builder().set(ToolStats.ATTACK_DAMAGE, 0.4f).build()))
             .module(plateSlots);

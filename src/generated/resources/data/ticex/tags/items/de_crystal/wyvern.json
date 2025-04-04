@@ -1,0 +1,9 @@
+{
+  "replace": false,
+    "values": [
+      {
+        "id": "ticex:wyvern_crystal",
+        "required": false
+      }
+    ]
+  }

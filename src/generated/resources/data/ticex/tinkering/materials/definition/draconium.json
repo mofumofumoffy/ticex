@@ -1,0 +1,22 @@
+{
+    "condition": {
+      "values": [
+        {
+          "prop": "force_integration_materials",
+          "type": "tconstruct:config"
+        },
+        {
+          "value": {
+            "tag": "ticex:de_crystal/draconium",
+            "type": "forge:tag_empty"
+          },
+          "type": "forge:not"
+        }
+      ],
+      "type": "forge:or"
+    },
+    "craftable": true,
+    "tier": 3,
+    "sortOrder": 1,
+    "hidden": false
+  }
