@@ -7,10 +7,12 @@
         "ModuleHelperMixin",
         "MekanismIMCMixin"
     ],
+    "client": [
+        "HUDHandlerMixin"
+    ],
+    "server": [],
     "injectors": {
         "defaultRequire": 1
     },
-    "client": [],
-    "server": [],
     "minVersion": 0.7
 }

@@ -1,11 +1,9 @@
 package moffy.ticex.modifier;
 
 import com.brandon3055.draconicevolution.DEConfig;
-import com.brandon3055.draconicevolution.api.IReaperItem;
 import com.brandon3055.draconicevolution.init.DEContent;
 
 import moffy.ticex.modules.TicEXRegistry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;

@@ -10,7 +10,6 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.util.InputCommand;
 import mods.flammpfeil.slashblade.util.RayTraceHelper;
 import mods.flammpfeil.slashblade.util.TargetSelector;
-import moffy.ticex.TicEX;
 import moffy.ticex.client.slashblade.LayerSBToolMainBlade;
 import moffy.ticex.client.slashblade.SBToolBladeItemRenderer;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;

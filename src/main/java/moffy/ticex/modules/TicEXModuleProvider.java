@@ -16,7 +16,7 @@ public class TicEXModuleProvider extends AddonModuleProvider{
         addRawModule(new ResourceLocation(TicEX.MODID, "avaritia_compat"), "Avaritia Compat", TicEXAvaritiaModule.class, new String[]{"tconstruct", "avaritia"});
         addRawModule(new ResourceLocation(TicEX.MODID, "mekanism_compat"), "Mekanism Compat", TicEXMekanismModule.class, new String[]{"tconstruct", "mekanism"});
         addRawModule(new ResourceLocation(TicEX.MODID, "draconicevolution_compat"), "Draconic Evolution Compat", TicEXDEModule.class, new String[]{"tconstruct", "draconicevolution"});
-        addRawModule(new ResourceLocation(TicEX.MODID, "slashblade_compat"), "SlashBlade Compat", TicEXSlashBladeModule.class, new String[]{"tconstruct", "slashblade"});
+        //addRawModule(new ResourceLocation(TicEX.MODID, "slashblade_compat"), "SlashBlade Compat", TicEXSlashBladeModule.class, new String[]{"tconstruct", "slashblade"});
     }
     
 
