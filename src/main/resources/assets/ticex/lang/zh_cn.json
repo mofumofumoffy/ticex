@@ -1,11 +1,11 @@
 {
     "itemGroup.tab.ticex": "TiCEX",
 
-    "item.ticex.reconstruction_core": "重构核心",
+    "item.ticex.reconstruction_core": "星构核心",
     "item.ticex.reconstruction_core.desc": "群星的召唤",
     "item.ticex.etheric_ingot":"以太锭",
-    "item.ticex.molten_reconstruction_core_bucket": "重构之流桶",
-    "item.ticex.molten_infinity_bucket": "无限之流桶",
+    "item.ticex.molten_reconstruction_core_bucket": "星构之流桶",
+    "item.ticex.molten_infinity_bucket": "无尽之流桶",
     "item.ticex.molten_neutron_bucket": "超密中子流体桶",
     "item.ticex.molten_crystal_matrix_bucket": "非晶水晶矩阵桶",
     "item.ticex.molten_etheric_bucket": "以太之泪桶",
@@ -56,13 +56,13 @@
     "fluid.tconstruct.rf_furnace_fuel_17": "终极级RF熔炉燃料",
     "fluid.tconstruct.rf_furnace_fuel_18": "神级RF熔炉燃料",
     "fluid.tconstruct.rf_furnace_fuel_19": "全能级RF熔炉燃料",
-    "fluid.tconstruct.reconstruction_core": "重构之流",
-    "fluid.tconstruct.molten_infinity": "无限之流",
+    "fluid.tconstruct.reconstruction_core": "星构之流",
+    "fluid.tconstruct.molten_infinity": "无尽之流",
     "fluid_type.ticex.molten_neutronium": "超密中子流体",
     "fluid_type.ticex.molten_crystal_matrix": "非晶水晶矩阵",
     "fluid.tconstruct.molten_etheric": "以太之泪",
 
-    "material.ticex.infinity": "无限",
+    "material.ticex.infinity": "无尽",
     "material.ticex.neutronium": "中子素",
     "material.ticex.crystal_matrix": "水晶矩阵",
     "material.ticex.etheric": "以太",
@@ -126,7 +126,7 @@
 
 
     
-    "stat.tconstruct.harvest_tier.ticex.infinity": "无限",
+    "stat.tconstruct.harvest_tier.ticex.infinity": "无尽",
     "stat.ticex.catalyst_mekasuit_helmet": "催化剂(MekaSuit头盔)",
     "stat.ticex.catalyst_mekasuit_chestplate": "催化剂(MekaSuit胸甲)",
     "stat.ticex.catalyst_mekasuit_leggings": "催化剂(MekaSuit护腿)",
