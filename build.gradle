@@ -117,7 +117,7 @@ mixin {
     config 'ticex.mixins.json'
     config 'ticex.mekanism.mixins.json'
     config 'ticex.draconicevolution.mixins.json'
-    //config 'ticex.slashblade.mixin.json'
+    config 'ticex.slashblade.mixin.json'
 
     debug.verbose = true
     debug.export = true
@@ -149,8 +149,6 @@ dependencies {
     // The "userdev" classifier will be requested and setup by ForgeGradle.
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation fg.deobf("blank:addonapi-mc1.20.1:1.2.0")
 
@@ -165,9 +163,10 @@ dependencies {
     implementation fg.deobf("curse.maven:codechicken-lib-1-8-242818:5753868")
     implementation fg.deobf("curse.maven:draconic-evolution-223565:6065044")
     
-    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6313956")
+    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6369320")
 
-    runtimeOnly fg.deobf("curse.maven:jei-238222:6075247")
+    implementation fg.deobf("curse.maven:jei-238222:6075247")
+    
     runtimeOnly fg.deobf("curse.maven:mouse-tweaks-60089:5338457")
     //runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
     //runtimeOnly fg.deobf("curse.maven:radium-reforged-570017:5706069")
@@ -178,12 +177,11 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:fps-reducer-280294:4586784")
     runtimeOnly fg.deobf("curse.maven:curios-309927:6238756")
 
-    //runtimeOnly fg.deobf("curse.maven:the-twilight-forest-227639:5468648")
-    //runtimeOnly fg.deobf("curse.maven:the-god-1199808:6285723")
-    //runtimeOnly fg.deobf("curse.maven:geckolib-388172:6312918")
-    //runtimeOnly fg.deobf("curse.maven:mekanism-spectator-module-1230595:6359571")
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:6237015")
     runtimeOnly fg.deobf("curse.maven:selene-499980:6321048")
+
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

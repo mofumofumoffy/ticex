@@ -39,6 +39,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -69,11 +71,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.GeneralInteractionModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InteractionSource;
+import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
+import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.nbt.StatsNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
@@ -126,22 +131,17 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
         return ImmutableMultimap.copyOf(toolMultimap);
     }
 
-	public boolean isWitched(ItemStack stack){
-		boolean hasCustomName = stack.hasCustomHoverName();
-		return isEnchanted(stack) && hasCustomName;
-	}
-
-	public boolean isEnchanted(ItemStack stack){
-		ToolStack tool = ToolStack.from(stack);
-        boolean hasEnchant = tool.getModifierLevel(TicEXRegistry.KONPAKU_MODIFIER.get()) > 0;
-		return hasEnchant;
+	@Override
+	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
+		return new ToolCapabilityProvider(stack);
 	}
 
     @Override
 	public Rarity getRarity(ItemStack stack) {
-		if (isWitched(stack))
+		EnumSet<SwordType> swordType = SwordType.from(stack);
+		if (swordType.contains(SwordType.BEWITCHED))
 			return Rarity.EPIC;
-		if (isEnchanted(stack))
+		if (swordType.contains(SwordType.ENCHANTED))
 			return Rarity.RARE;
 		return Rarity.COMMON;
 	}
@@ -194,21 +194,32 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 			playerIn.getCapability(ItemSlashBlade.INPUT_STATE).ifPresent((s) -> s.getCommands().remove(InputCommand.L_CLICK));
 		});
 
-		return stateHolder.isPresent() && super.onLeftClickEntity(itemstack, playerIn, entity) && stateHolder.isPresent();
+		return super.onLeftClickEntity(itemstack, playerIn, entity) && stateHolder.isPresent();
 	}
 
 	@Override
 	public void setDamage(ItemStack stack, int damage) {
-		int maxDamage = stack.getMaxDamage();
-		var state = stack.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
-		if (state.isBroken()) {
-			if (damage <= 0 && !state.isSealed()) {
-				state.setBroken(false);
-			} else if (maxDamage < damage) {
-				damage = Math.min(damage, maxDamage - 1);
-			}
+
+		ToolStack tool = ToolStack.from(stack);
+		super.setDamage(stack, damage);
+		
+		if(tool.getPersistentData().contains(BLADE_STATE_LOCATION, Tag.TAG_COMPOUND)){
+			stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(state->{
+				if(tool.getCurrentDurability() <= 0){
+					state.setBroken(true);
+				} else if(state.isBroken()){
+					state.setBroken(false);
+				}
+			});
+		
+			
 		}
-        super.setDamage(stack, maxDamage);
+        
+	}
+
+	@Override
+	public ItemStack getDefaultInstance() {
+		return super.getDefaultInstance();
 	}
 
 	@Override
@@ -216,7 +227,6 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 		return !stack.getCapability(ItemSlashBlade.BLADESTATE).filter(s -> s.getLastActionTime() == entity.level().getGameTime())
 				.isPresent();
 	}
-	
 
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T damager, Consumer<T> onBroken) {
@@ -224,6 +234,7 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
         var cap = stack.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
 		boolean current = cap.isBroken();
 
+		amount = super.damageItem(stack, amount, damager, onBroken);
 		if (stack.getDamageValue() + amount >= stack.getMaxDamage()) {
 			amount = 0;
 			stack.setDamageValue(stack.getMaxDamage() - 1);
@@ -240,7 +251,7 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 				player.awardStat(Stats.ITEM_BROKEN.get(stack.getItem()));
 		}
 
-        return super.damageItem(stack, amount, damager, onBroken);
+        return amount;
     }
 
     @Override
@@ -248,20 +259,22 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 
         boolean result = super.hurtEnemy(stack, target, attacker);
 
-		if(result){
-            stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent((state) -> {
-                ResourceLocation loc = state.resolvCurrentComboState(attacker);
-                ComboState cs = ComboStateRegistry.REGISTRY.get().getValue(loc) != null
-                        ? ComboStateRegistry.REGISTRY.get().getValue(loc)
-                        : ComboStateRegistry.NONE.get();
-    
-                if (MinecraftForge.EVENT_BUS.post(new SlashBladeEvent.HitEvent(stack, state, target, attacker)))
-                    return;
-    
-                cs.hitEffect(target, attacker);
-                stack.hurtAndBreak(1, attacker, ItemSlashBlade.getOnBroken(stack));
-            });
-        }
+		stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent((state) -> {
+			ResourceLocation loc = state.resolvCurrentComboState(attacker);
+			ComboState cs = ComboStateRegistry.REGISTRY.get().getValue(loc) != null
+					? ComboStateRegistry.REGISTRY.get().getValue(loc)
+					: ComboStateRegistry.NONE.get();
+
+			if (MinecraftForge.EVENT_BUS.post(new SlashBladeEvent.HitEvent(stack, state, target, attacker)))
+				return;
+
+			if(attacker instanceof Player){
+				ToolAttackUtil.attackEntity(stack, (Player)attacker, target);
+			} else {
+				cs.hitEffect(target, attacker);
+			}
+			stack.hurtAndBreak(1, attacker, ItemSlashBlade.getOnBroken(stack));
+		});
 
 		return result;
 	}
@@ -289,9 +302,8 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 		if (!worldIn.isClientSide()) {
 
 			stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent((state) -> {
-
-				ToolStack tool = ToolStack.from(stack);
-				if (state.isBroken() || state.isSealed() || tool.getModifierLevel(TicEXRegistry.KONPAKU_MODIFIER.get()) == 0)
+				EnumSet<SwordType> swordType = SwordType.from(stack);
+				if (state.isBroken() || !swordType.contains(SwordType.ENCHANTED))
 					return;
 
 				ResourceLocation sa = state.doChargeAction(entityLiving, elapsed);
@@ -339,14 +351,13 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 
     @Override
 	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-
 		if (stack == null)
 			return;
 		if (entityIn == null)
 			return;
 
 		stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent((state) -> {
+
 			if (MinecraftForge.EVENT_BUS
 					.post(new SlashBladeEvent.UpdateEvent(stack, state, worldIn, entityIn, itemSlot, isSelected)))
 				return;
@@ -354,7 +365,8 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 			if (!isSelected) {
 				if (entityIn instanceof Player player) {
 					boolean hasHunger = player.hasEffect(MobEffects.HUNGER) && SlashBladeConfig.HUNGER_CAN_REPAIR.get();
-					if (isWitched(stack) || hasHunger) {
+					EnumSet<SwordType> swordType = SwordType.from(stack);
+					if (swordType.contains(SwordType.BEWITCHED) || hasHunger) {
 						if (stack.getDamageValue() > 0 && player.getFoodData().getFoodLevel() > 0) {
 							int hungerAmplifier = hasHunger ? player.getEffect(MobEffects.HUNGER).getAmplifier() : 0;
 							int level = 1 + Math.abs(hungerAmplifier);
@@ -376,10 +388,12 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 						: ComboStateRegistry.NONE.get();
 				if(isSelected)
 					cs.tickAction(living);
-				
+
 				state.sendChanges(living);
 			}
 		});
+
+		super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 
     private String stackDefaultDescriptionId(ItemStack stack) {
@@ -396,13 +410,12 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
     @OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        
 		stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(s -> {
 			this.appendSwordType(stack, worldIn, tooltip, flagIn);
-			this.appendProudSoulCount(tooltip, stack);
-			this.appendKillCount(tooltip, stack);
+			this.appendProudSoulCount(tooltip, stack, s);
+			this.appendKillCount(tooltip, stack, s);
 			this.appendSlashArt(stack, tooltip, s);
-			this.appendRefineCount(tooltip, stack);
+			this.appendRefineCount(tooltip, stack, s);
 			this.appendSpecialEffects(tooltip, s);
 		});
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
@@ -411,7 +424,7 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
     @OnlyIn(Dist.CLIENT)
 	public void appendSlashArt(ItemStack stack, List<Component> tooltip, @NotNull ISlashBladeState s) {
 		EnumSet<SwordType> swordType = SwordType.from(stack);
-		if (isWitched(stack) && !swordType.contains(SwordType.SEALED)) {
+		if (swordType.contains(SwordType.BEWITCHED)) {
 			tooltip.add(Component.translatable("slashblade.tooltip.slash_art", s.getSlashArts().getDescription())
 					.withStyle(ChatFormatting.GRAY));
 		}
@@ -424,8 +437,8 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 			.build();
 
 	@OnlyIn(Dist.CLIENT)
-	public void appendRefineCount(List<Component> tooltip, @NotNull ItemStack stack) {
-		int refine = stack.getOrCreateTagElement("bladeState").getInt("RepairCounter");
+	public void appendRefineCount(List<Component> tooltip, @NotNull ItemStack stack, @NotNull ISlashBladeState s) {
+		int refine = s.getRefine();
 		if (refine > 0) {
 			tooltip.add(Component.translatable("slashblade.tooltip.refine", refine)
 					.withStyle((ChatFormatting) refineColor.get(refine)));
@@ -433,8 +446,8 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 	}
 
     @OnlyIn(Dist.CLIENT)
-	public void appendProudSoulCount(List<Component> tooltip, @NotNull ItemStack stack) {
-		int proudsoul = stack.getOrCreateTagElement("bladeState").getInt("proudSoul");
+	public void appendProudSoulCount(List<Component> tooltip, @NotNull ItemStack stack, @NotNull ISlashBladeState s) {
+		int proudsoul = s.getProudSoulCount();
 		if (proudsoul > 0) {
 			MutableComponent countComponent = Component
 					.translatable("slashblade.tooltip.proud_soul", proudsoul)
@@ -446,8 +459,8 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void appendKillCount(List<Component> tooltip, @NotNull ItemStack stack) {
-		int killCount =  stack.getOrCreateTagElement("bladeState").getInt("killCount");
+	public void appendKillCount(List<Component> tooltip, @NotNull ItemStack stack, @NotNull ISlashBladeState s) {
+		int killCount =  s.getKillCount();
 		if (killCount > 0) {
 			MutableComponent killCountComponent = Component
 					.translatable("slashblade.tooltip.killcount", killCount).withStyle(ChatFormatting.GRAY);
@@ -476,10 +489,11 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 
 	@OnlyIn(Dist.CLIENT)
 	public void appendSwordType(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		if (isWitched(stack)) {
+		EnumSet<SwordType> swordType = SwordType.from(stack);
+		if (swordType.contains(SwordType.BEWITCHED)) {
 			tooltip.add(
 					Component.translatable("slashblade.sword_type.bewitched").withStyle(ChatFormatting.DARK_PURPLE));
-		} else if (isEnchanted(stack)) {
+		} else if (swordType.contains(SwordType.ENCHANTED)) {
 			tooltip.add(Component.translatable("slashblade.sword_type.enchanted").withStyle(ChatFormatting.DARK_AQUA));
 		} else {
 			tooltip.add(Component.translatable("slashblade.sword_type.noname").withStyle(ChatFormatting.DARK_GRAY));

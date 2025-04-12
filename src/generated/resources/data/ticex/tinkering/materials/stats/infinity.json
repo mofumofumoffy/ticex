@@ -10,7 +10,7 @@
         "durability": 9999,
         "mining_speed": 999.0,
         "mining_tier": "ticex:infinity",
-        "melee_attack": 99.1
+        "melee_attack": 4995.5
       },
       "tconstruct:limb": {
         "durability": 9999,
@@ -21,7 +21,7 @@
       "tconstruct:grip": {
         "durability": 9.99,
         "accuracy": 1.0,
-        "melee_damage": 99.0
+        "melee_damage": 4995.5
       },
       "tconstruct:maille": {},
       "tconstruct:plating_boots": {

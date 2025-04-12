@@ -350,21 +350,30 @@ public class SBToolISTER extends BlockEntityWithoutLevelRenderer {
         ResourceLocation modelLocation = stack.getCapability(ItemSlashBlade.BLADESTATE)
                 .filter(s -> s.getModel().isPresent()).map(s -> s.getModel().get())
                 .orElseGet(() -> stackDefaultModel(stack));
-        WavefrontObject model = BladeModelManager.getInstance().getModel(modelLocation);
+        WavefrontObject model;
 
         ResourceLocation textureLocation;
         if(tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0){
-            textureLocation = stack.getCapability(ItemSlashBlade.BLADESTATE)
+            CompoundTag persistentTag = tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION);
+            if(persistentTag.contains("ModelName")){
+                model = BladeModelManager.getInstance().getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
+                textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));
+            } else {
+                model = BladeModelManager.getInstance().getModel(modelLocation);
+                textureLocation = stack.getCapability(ItemSlashBlade.BLADESTATE)
                     .filter(s -> s.getTexture().isPresent()).map(s -> s.getTexture().get())
                     .orElseGet(() -> stackDefaultTexture(stack));
+            }
             BladeRenderState.renderOverrided(stack, model, target, textureLocation, matrixStackIn, bufferIn,
                     packedLightIn);
             BladeRenderState.renderOverridedLuminous(stack, model, target + "_luminous", textureLocation,
                     matrixStackIn, bufferIn, packedLightIn);
         } else if(tool.getMaterials().size() > 0){
+            model = BladeModelManager.getInstance().getModel(modelLocation);
             SBToolRenderState.renderOverrided(stack, model, target, matrixStackIn, bufferIn, packedLightIn);
             SBToolRenderState.renderOverridedLuminous(stack, model, target + "_luminous", matrixStackIn, bufferIn, packedLightIn);
         } else {
+            model = BladeModelManager.getInstance().getModel(modelLocation);
             textureLocation = stack.getCapability(ItemSlashBlade.BLADESTATE)
                     .filter(s -> s.getTexture().isPresent()).map(s -> s.getTexture().get())
                     .orElseGet(() -> stackDefaultTexture(stack));

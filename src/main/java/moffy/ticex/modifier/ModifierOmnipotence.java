@@ -108,19 +108,23 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
                 if(victim != null){        
                     ServerLevel serverLevel = (ServerLevel)level;
                     
-                    ToolUtils.sweepAttack(level, attackerEntity, targetEntity);
+                    try{
+                        ToolUtils.class.getDeclaredMethod("sweepAttack", Level.class, LivingEntity.class, Entity.class);
+                        ToolUtils.sweepAttack(level, attackerEntity, targetEntity);
+                    }catch(Exception e){}
 
                     victim.setHealth(0);
                     victim.die(new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ModDamageTypes.INFINITY), victim, attackerEntity));
 
                     victim.level().addFreshEntity(new ExperienceOrb(victim.level(), victim.getX(), victim.getY(), victim.getZ(), victim.getExperienceReward()));
-
+                    
                     serverLevel.broadcastEntityEvent(victim, (byte)3);
                 } else {
                 
                     ServerLevel serverLevel = (ServerLevel)level;
+                    targetEntity.killedEntity(serverLevel, attackerEntity);
                     targetEntity.kill();
-                    serverLevel.broadcastEntityEvent(victim, (byte)3);
+                    serverLevel.broadcastEntityEvent(targetEntity, (byte)3);
                 } 
             }
             if(victim != null)victim.setPose(Pose.DYING);

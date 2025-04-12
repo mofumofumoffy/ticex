@@ -1,10 +1,12 @@
 package moffy.ticex.event;
 
+import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.modules.TicEXRegistry;
 import moffy.ticex.utils.TicEXAvaritiaUtils;
 import moffy.ticex.utils.TicEXUtils;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -60,5 +62,9 @@ public class TicEXEvent {
                 player.onUpdateAbilities();
             }
         }
+    }
+
+    public static void onRegisterCaps(RegisterCapabilitiesEvent event){
+        event.register(EmbossmentMaterialCapability.class);
     }
 }

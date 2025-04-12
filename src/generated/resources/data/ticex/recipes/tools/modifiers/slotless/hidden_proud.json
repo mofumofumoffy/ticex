@@ -1,0 +1,8 @@
+{
+    "type": "ticex:single_embossment_modifier",
+    "emboss_input": [
+      { "tag":"slashblade:proudsouls" }
+    ],
+    "tools": { "tag": "ticex:tool/slashblade_tool" },
+    "result": "ticex:hidden_proud"
+}

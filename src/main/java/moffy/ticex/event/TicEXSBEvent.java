@@ -4,6 +4,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import mods.flammpfeil.slashblade.SlashBladeConfig;
+import mods.flammpfeil.slashblade.capability.concentrationrank.ConcentrationRankCapabilityProvider;
+import mods.flammpfeil.slashblade.capability.concentrationrank.IConcentrationRank;
 import mods.flammpfeil.slashblade.capability.inputstate.CapabilityInputState;
 import mods.flammpfeil.slashblade.event.InputCommandEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -34,6 +37,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.entity.PartEntity;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 
 public class TicEXSBEvent {
 
@@ -51,10 +56,8 @@ public class TicEXSBEvent {
             return;
         
         if ((event.getOld().contains(InputCommand.SNEAK) && !event.getCurrent().contains(InputCommand.SNEAK))) {
-            // remove target
             targetEntity = null;
         } else {
-            // search target
 
             Optional<HitResult> result = RayTraceHelper.rayTrace(player.level(), player, player.getEyePosition(1.0f),
                     player.getLookAngle(), 40, 40, (e) -> true);
@@ -90,6 +93,46 @@ public class TicEXSBEvent {
         stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(s -> {
             s.setTargetEntityId(targetEntity);
         });
+    }
+
+    public static void onLivingDeathEvent(LivingDeathEvent event) {
+        Entity trueSource = event.getSource().getEntity();
+
+        if (!(trueSource instanceof LivingEntity))
+            return;
+
+        ItemStack stack = ((LivingEntity) trueSource).getMainHandItem();
+        if (stack.isEmpty())
+            return;
+        if (!(stack.getItem() instanceof ModifiableSlashBladeItem))
+            return;
+
+        stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(state -> {
+            state.setKillCount(state.getKillCount() + 1);
+        });
+    }
+
+    public static void onXPDropping(LivingExperienceDropEvent event) {
+        Player player = event.getAttackingPlayer();
+        if (player == null)
+            return;
+        ItemStack stack = player.getMainHandItem();
+        if (stack.isEmpty())
+            return;
+        if (!(stack.getItem() instanceof ModifiableSlashBladeItem))
+            return;
+
+        IConcentrationRank.ConcentrationRanks rankBonus = player
+                .getCapability(ConcentrationRankCapabilityProvider.RANK_POINT)
+                .map(rp -> rp.getRank(player.getCommandSenderWorld().getGameTime()))
+                .orElse(IConcentrationRank.ConcentrationRanks.NONE);
+        int souls = (int) Math.floor(event.getDroppedExperience() * (1.0F + (rankBonus.level * 0.1F)));
+
+        stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(state -> {
+            state.setProudSoulCount(
+                    state.getProudSoulCount() + Math.min(SlashBladeConfig.MAX_PROUD_SOUL_GOT.get(), souls));
+        });
+        
     }
 
     @OnlyIn(Dist.CLIENT)

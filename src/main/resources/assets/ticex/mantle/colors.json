@@ -14,7 +14,11 @@
         "deflection": "#398f4d",
         "evolved": "#8a0404",
         "inject": "#555555",
-        "soul_rending": "#9A5CC6"
+        "soul_rending": "#9A5CC6",
+        "konpaku": "#32a852",
+        "koshirae": "#66543a",
+        "hidden_proud": "#552885",
+        "lamellar": "#966b29"
     },
     "material.ticex": {
         "infinity": "#FF5555",

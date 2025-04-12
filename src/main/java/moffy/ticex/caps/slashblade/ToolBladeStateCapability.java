@@ -14,7 +14,6 @@ import mods.flammpfeil.slashblade.registry.ComboStateRegistry;
 import mods.flammpfeil.slashblade.registry.SpecialEffectsRegistry;
 import mods.flammpfeil.slashblade.registry.combo.ComboState;
 import mods.flammpfeil.slashblade.registry.specialeffects.SpecialEffect;
-import moffy.ticex.TicEX;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -28,47 +27,51 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 public class ToolBladeStateCapability implements ISlashBladeState{
 
-    protected long lastActionTime;
-    protected int targetEntityId;
-    protected boolean _onClick;
-    protected float fallDecreaseRate;
-    protected boolean isCharged;
-    protected float attackAmplifier;
-    protected ResourceLocation comboSeq;
-    protected String lastPosHash;
-    protected boolean isBroken;
-    protected boolean isNoScabbard;
-    protected boolean isSealed;
-    protected float baseAttackModifier = 4.0F;
-    protected int killCount;
-    protected int refine;
-    protected UUID owner;
-    protected UUID uniqueId = UUID.randomUUID();
-    protected String translationKey = "";
-    protected ResourceLocation slashArtsKey;
-    protected boolean isDefaultBewitched = false;
-    protected ResourceLocation comboRootName;
-    protected Optional<CarryType> carryType = Optional.empty();
-    protected Optional<Color> effectColor = Optional.empty();
-    protected boolean effectColorInverse;
-    protected Optional<Vec3> adjust = Optional.empty();
-    protected Optional<ResourceLocation> texture = Optional.empty();
-    protected Optional<ResourceLocation> model = Optional.empty();
-    protected LazyOptional<ResourceLocation> rootCombo = this.instantiateRootComboHolder();
-    protected int maxDamage = 40;
-    protected int damage = 0;
-    protected int proudSoul = 0;
-    protected boolean isChangedActiveState = false;
-    protected List<ResourceLocation> specialEffects = new ArrayList<>();
+   public static final UUID SLASHBLADE_TOOL_UUID = UUID.fromString("2fee599e-b407-4cc5-a7be-e5a1a5be6ed9");
 
-    protected IToolStackView tool;
+      protected long lastActionTime;
+      protected int targetEntityId;
+      protected boolean _onClick;
+      protected float fallDecreaseRate;
+      protected boolean isCharged;
+      protected float attackAmplifier;
+      protected ResourceLocation comboSeq;
+      protected String lastPosHash;
+      protected boolean isBroken;
+      protected boolean isNoScabbard;
+      protected boolean isSealed;
+      protected float baseAttackModifier = 4.0F;
+      protected int killCount;
+      protected int refine;
+      protected UUID owner;
+      protected UUID uniqueId = SLASHBLADE_TOOL_UUID;
+      protected String translationKey = "";
+      protected ResourceLocation slashArtsKey;
+      protected boolean isDefaultBewitched = false;
+      protected ResourceLocation comboRootName;
+      protected Optional<CarryType> carryType = Optional.empty();
+      protected Optional<Color> effectColor = Optional.empty();
+      protected boolean effectColorInverse;
+      protected Optional<Vec3> adjust = Optional.empty();
+      protected Optional<ResourceLocation> texture = Optional.empty();
+      protected Optional<ResourceLocation> model = Optional.empty();
+      protected LazyOptional<ResourceLocation> rootCombo = this.instantiateRootComboHolder();
+      protected int maxDamage = 40;
+      protected int damage = 0;
+      protected int proudSoul = 0;
+      protected boolean isChangedActiveState = false;
+      protected List<ResourceLocation> specialEffects = new ArrayList<>();
+      protected boolean isEmpty = true;
 
-    public ToolBladeStateCapability(ItemStack blade, IToolStackView tool) {
-        this.tool = tool;
-        if(tool.getPersistentData().contains(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, 10)){
-            deserializeNBT(tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION));
-        }
-    }
+      protected IToolStackView tool;
+
+      public ToolBladeStateCapability(ItemStack blade, IToolStackView tool) {
+         this.tool = tool;
+         CompoundTag persistentTag = tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION);
+         if(persistentTag != null && !persistentTag.isEmpty()){
+            deserializeNBT(persistentTag);
+         }
+      }
 
     public long getLastActionTime() {
       return this.lastActionTime;
@@ -131,7 +134,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setSealed(boolean sealed) {
       this.isSealed = sealed;
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public float getBaseAttackModifier() {
@@ -140,7 +143,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setBaseAttackModifier(float baseAttackModifier) {
       this.baseAttackModifier = baseAttackModifier;
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public int getKillCount() {
@@ -167,7 +170,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setSlashArtsKey(ResourceLocation key) {
       this.slashArtsKey = key;
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public boolean isDefaultBewitched() {
@@ -176,7 +179,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setDefaultBewitched(boolean defaultBewitched) {
       this.isDefaultBewitched = defaultBewitched;
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public String getTranslationKey() {
@@ -185,7 +188,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setTranslationKey(String translationKey) {
       this.translationKey = (String)Optional.ofNullable(translationKey).orElse("");
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    @Nonnull
@@ -195,18 +198,18 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setCarryType(CarryType carryType) {
       this.carryType = Optional.ofNullable(carryType);
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public Color getEffectColor() {
       return (Color)this.effectColor.orElseGet(() -> {
-         return new Color(3355647);
+         return new Color(0x3333FF);
       });
    }
 
    public void setEffectColor(Color effectColor) {
       this.effectColor = Optional.ofNullable(effectColor);
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public boolean isEffectColorInverse() {
@@ -215,7 +218,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setEffectColorInverse(boolean effectColorInverse) {
       this.effectColorInverse = effectColorInverse;
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public Vec3 getAdjust() {
@@ -226,7 +229,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setAdjust(Vec3 adjust) {
       this.adjust = Optional.ofNullable(adjust);
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public Optional<ResourceLocation> getTexture() {
@@ -235,7 +238,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setTexture(ResourceLocation texture) {
       this.texture = Optional.ofNullable(texture);
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public Optional<ResourceLocation> getModel() {
@@ -244,7 +247,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setModel(ResourceLocation model) {
       this.model = Optional.ofNullable(model);
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public int getTargetEntityId() {
@@ -265,7 +268,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
    public void setComboRoot(ResourceLocation rootLoc) {
       this.comboRootName = ((IForgeRegistry<ComboState>)ComboStateRegistry.REGISTRY.get()).containsKey(rootLoc) ? rootLoc : ComboStateRegistry.STANDBY.getId();
       this.rootCombo = this.instantiateRootComboHolder();
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    private LazyOptional<ResourceLocation> instantiateRootComboHolder() {
@@ -280,7 +283,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setHasChangedActiveState(boolean isChanged) {
       this.isChangedActiveState = isChanged;
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public UUID getUniqueId() {
@@ -289,7 +292,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setUniqueId(UUID uniqueId) {
       this.uniqueId = uniqueId;
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public int getMaxDamage() {
@@ -298,7 +301,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
    public void setMaxDamage(int damage) {
       this.maxDamage = damage;
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public int getDamage() {
@@ -308,7 +311,6 @@ public class ToolBladeStateCapability implements ISlashBladeState{
    public void setDamage(int damage) {
       this.damage = Math.max(0, damage);
       this.setHasChangedActiveState(true);
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
    }
 
    public int getProudSoulCount() {
@@ -318,7 +320,6 @@ public class ToolBladeStateCapability implements ISlashBladeState{
    public void setProudSoulCount(int psCount) {
       this.proudSoul = Math.max(0, psCount);
       this.setHasChangedActiveState(true);
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
    }
 
    public List<ResourceLocation> getSpecialEffects() {
@@ -335,13 +336,13 @@ public class ToolBladeStateCapability implements ISlashBladeState{
 
       });
       this.specialEffects = result;
-      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+      writeToPersistentData();
    }
 
    public boolean addSpecialEffect(ResourceLocation se) {
         boolean result = ((IForgeRegistry<SpecialEffect>)SpecialEffectsRegistry.REGISTRY.get()).containsKey(se) ? this.specialEffects.add(se) : false;
         if(result){
-            tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+            writeToPersistentData();
         }
         return result;
    }
@@ -349,7 +350,7 @@ public class ToolBladeStateCapability implements ISlashBladeState{
    public boolean removeSpecialEffect(ResourceLocation se) {
         boolean result = this.specialEffects.remove(se);
         if(result){
-            tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+            writeToPersistentData();
         }
         return result;
    }
@@ -368,9 +369,18 @@ public class ToolBladeStateCapability implements ISlashBladeState{
         return !(user.getMainHandItem().getItem() instanceof ModifiableSlashBladeItem) ? ComboStateRegistry.NONE.getId() : (ResourceLocation)this.resolvCurrentComboStateTicks(user).getValue();
     }
 
+    public void writeToPersistentData(){
+      tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
+    }
+
     @Override
-    public void deserializeNBT(CompoundTag arg0) {
-      TicEX.LOGGER.info("{}",arg0);
-        ISlashBladeState.super.deserializeNBT(arg0);
+    public boolean isEmpty() {
+      return isEmpty;
+    }
+
+    @Override
+    public void setNonEmpty() {
+         this.isEmpty = false;
+         tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, serializeNBT());
     }
 }

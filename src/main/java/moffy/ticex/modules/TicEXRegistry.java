@@ -12,6 +12,8 @@ import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.client.ShaderInstanceMap;
 import moffy.ticex.client.ToolShaderMap;
+import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -21,6 +23,8 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -38,12 +42,14 @@ import slimeknights.mantle.registration.object.EnumObject;
 import slimeknights.mantle.registration.object.FlowingFluidObject;
 import slimeknights.mantle.registration.object.FluidObject;
 import slimeknights.mantle.registration.object.ItemObject;
-import slimeknights.tconstruct.common.registration.ItemDeferredRegisterExtension;
+import slimeknights.tconstruct.common.registration.CastItemObject;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.util.DynamicModifier;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
+import slimeknights.tconstruct.library.module.ModuleHook;
 import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
+import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
@@ -71,15 +77,15 @@ public class TicEXRegistry {
     }
 
     public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
+    public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "reforged_slashblade")); 
 
     public static final Map<Item, Function<BakedModel, BakedModel>> CUSTOM_MODELS = new HashMap<>();
     public static final ToolShaderMap.Tool TOOL_SHADERS = new ToolShaderMap.Tool();
     public static final ToolShaderMap.Armor ARMOR_SHADERS = new ToolShaderMap.Armor();
     public static final ShaderInstanceMap SHADER_INSTANCE_MAP = new ShaderInstanceMap();
     
-
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
-    public static final ItemDeferredRegisterExtension ITEMS_EXTENDED = new ItemDeferredRegisterExtension(TicEX.MODID);
+    public static final TicEXItemDeferredRegisterExtension ITEMS_EXTENDED = new TicEXItemDeferredRegisterExtension(ITEMS, TicEX.MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TicEX.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TicEX.MODID);
     public static final FluidDeferredRegister FLUIDS = new FluidDeferredRegister(TicEX.MODID);
@@ -87,9 +93,16 @@ public class TicEXRegistry {
     public static final ModifierDeferredRegister MODIFIERS = ModifierDeferredRegister.create(TicEX.MODID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, TicEX.MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TicEX.MODID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, TicEX.MODID);
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, TicEX.MODID);
 
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
+
+    public static RegistryObject<RecipeSerializer<?>> EMBOSSMENT_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<?>> SINGLE_EMBOSSMENT_RECIPE_SERIALIZER = null;
+
+    public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
 
     public static RegistryObject<Item> ETHERIC_INGOT = null;
     public static RegistryObject<Item> DRACONIUM_CRYSTAL = null;
@@ -104,17 +117,20 @@ public class TicEXRegistry {
     public static RegistryObject<Item> DRACONIC_EVOLVED_CORE = null;
     public static RegistryObject<Item> CHAOTIC_EVOLVED_CORE = null;
     public static RegistryObject<Item> INJECT_CORE = null;
-    
+    public static RegistryObject<Item> KONPAKU_CORE = null;
+    public static RegistryObject<Item> KOSHIRAE_CORE = null;
+    public static RegistryObject<Item> LAMELLAR_CORE = null;
 
     public static ItemObject<ToolPartItem> SLASHBLADE_BLADE = null;
     public static ItemObject<ToolPartItem> SLASHBLADE_SAYA = null;
 
+    public static CastItemObject SLASHBLADE_BLADE_CAST;
+    public static CastItemObject SLASHBLADE_SAYA_CAST;
+
     public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKASUIT = null; 
-    public static ItemObject<ToolPartItem> CATALYST_SLASHBLADE = null;
+    public static ItemObject<ToolPartItem> CATALYST_SLASHBLADE = null; 
 
-    public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKAPLATE = null; 
-
-    public static ItemObject<ModifiableItem> SLASHBLADE_TOOL = null;
+    public static ItemObject<ModifiableItem> REFORGED_SLASHBLADE = null;
 
     public static EnumObject<ArmorItem.Type, MultilayerArmorItem> MEKAPLATE_ARMOR = null;
 
@@ -156,10 +172,15 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> SOUL_RENDING_MODIFIER = null;
     public static StaticModifier<Modifier> KONPAKU_MODIFIER = null;
     public static StaticModifier<Modifier> KOSHIRAE_MODIFIER = null;
+    public static StaticModifier<Modifier> PROUD_MODIFIER = null;
+    public static StaticModifier<Modifier> LAMELLAR_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){
-            output.accept(itemObject.get());
+            Item item = itemObject.get();
+            if(!(item instanceof ToolPartItem || item instanceof IModifiable)){
+                output.accept(itemObject.get());
+            }
         }
 
         for(RegistryObject<Block> blockObject : BLOCKS.getEntries()){
@@ -172,9 +193,12 @@ public class TicEXRegistry {
         acceptPart(output, SLASHBLADE_BLADE);
         acceptPart(output, SLASHBLADE_SAYA);
 
-        acceptTool(output, SLASHBLADE_TOOL);
+        acceptTool(output, REFORGED_SLASHBLADE);
 
         acceptArmor(output, MEKAPLATE_ARMOR);
+
+        acceptCast(output, SLASHBLADE_BLADE_CAST);
+        acceptCast(output, SLASHBLADE_SAYA_CAST);
     }
 
     private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends IModifiable> toolObject){
@@ -200,6 +224,15 @@ public class TicEXRegistry {
             partObject.get().addVariants(output::accept, "");
         }
     }
+
+    private static void acceptCast(CreativeModeTab.Output output, CastItemObject castObject){
+        if(castObject != null){
+            output.accept(castObject.get());
+            output.accept(castObject.getRedSand());
+            output.accept(castObject.getSand());
+        }
+    }
+
 
     private static BlockBehaviour.Properties builder(MapColor color, SoundType soundType) {
         return BlockBehaviour.Properties.of().sound(soundType).mapColor(color);

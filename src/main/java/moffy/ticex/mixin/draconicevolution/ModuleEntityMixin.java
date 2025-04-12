@@ -30,7 +30,7 @@ public class ModuleEntityMixin {
     public boolean clientModuleClickedExtension(GuiElement<?> parent, Player player, int x, int y, int width, int height, double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cb){
         if((ModuleEntity<?>)((Object)this) instanceof  FilteredModuleEntity && host instanceof EvolvedModuleHost){
             EvolvedModuleHost evolvedModuleHost = (EvolvedModuleHost)host;
-            evolvedModuleHost.getTool().getPersistentData().put(ModifierEvolved.MODULE_HOST_LOCATION, evolvedModuleHost.serializeNBT());
+            evolvedModuleHost.getToolSupplier().getPersistentData().put(ModifierEvolved.MODULE_HOST_LOCATION, evolvedModuleHost.serializeNBT());
         }
         return cb.getReturnValue();
     }

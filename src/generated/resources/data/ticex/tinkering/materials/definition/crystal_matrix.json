@@ -1,19 +1,28 @@
 {
     "condition": {
-      "values": [
+      "type":"forge:and",
+      "values":[
         {
-          "prop": "force_integration_materials",
-          "type": "tconstruct:config"
+          "values": [
+            {
+              "prop": "force_integration_materials",
+              "type": "tconstruct:config"
+            },
+            {
+              "value": {
+                "tag": "forge:ingots/crystal_matrix",
+                "type": "forge:tag_empty"
+              },
+              "type": "forge:not"
+            }
+          ],
+          "type": "forge:or"
         },
         {
-          "value": {
-            "tag": "forge:ingots/crystal_matrix",
-            "type": "forge:tag_empty"
-          },
-          "type": "forge:not"
+          "type": "addonapi:mods_available",
+          "required_raw_module": "ticex:avaritia_compat"
         }
-      ],
-      "type": "forge:or"
+      ]
     },
     "craftable": false,
     "tier": 4,

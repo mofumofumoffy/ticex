@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.network.ActiveStateSyncMessage;
-import moffy.ticex.TicEX;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,23 +45,17 @@ public class ActiveStateSyncMessageMixin {
                 if (stack.isEmpty())
                     return;
                 
-                
-                
-                stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(state->{
-                    TicEX.LOGGER.info("{},{}", state.getUniqueId(), msg.activeTag.getUUID("BladeUniqueId"));
-                });
                 stack.getCapability(ItemSlashBlade.BLADESTATE)
                         .filter((state) -> state.getUniqueId().equals(msg.activeTag.getUUID("BladeUniqueId")))
                         .ifPresent((state) -> {
                         	state.setActiveState(msg.activeTag);
-                            
                             if(stack.getItem() instanceof IModifiable){
                                 ToolStack.from(stack).getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, state.serializeNBT());
                             } else {
                                 var tag = stack.getOrCreateTag();
-                        	    tag.put("bladeState", state.serializeNBT());
+                                tag.put("bladeState", state.serializeNBT());
                             }
-                        	});
+                        });
             }
         });
         ctx.get().setPacketHandled(true);

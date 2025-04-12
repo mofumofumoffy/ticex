@@ -1,7 +1,13 @@
 {
     "type": "tconstruct:melting",
+    "conditions": [
+      {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:avaritia_compat"
+      }
+    ],
     "ingredient": {
-      "tag": "forge:storage_blocks/etheric"
+      "tag": "forge:storage_blocks/crystal_matrix"
     },
     "result": {
       "fluid": "ticex:molten_crystal_matrix",

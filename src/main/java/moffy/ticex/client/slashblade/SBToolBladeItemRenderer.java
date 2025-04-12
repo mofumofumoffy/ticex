@@ -15,9 +15,11 @@ import mods.flammpfeil.slashblade.client.renderer.util.MSAutoCloser;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
+import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -173,6 +175,11 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer{
 
 
         if(tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0){
+            CompoundTag persistentTag = tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION);
+            if(persistentTag.contains("ModelName")){
+               model = BladeModelManager.getInstance().getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
+               textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));
+            }
             BladeRenderState.renderOverrided(stack, model, target, textureLocation, matrixStackIn, bufferIn,
                     packedLightIn);
             BladeRenderState.renderOverridedLuminous(stack, model, target + "_luminous", textureLocation,

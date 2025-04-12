@@ -6,8 +6,12 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.RFFurnaceBlock;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
+import moffy.ticex.caps.TiCEXToolCapabilityProvider;
 import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
+import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.recipe.EmbossmentRecipe;
+import moffy.ticex.lib.recipe.SingleEmbossmentRecipe;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.modifier.ModifierSassy;
 import moffy.ticex.modules.avaritia.InfinityTier;
@@ -29,13 +33,27 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import slimeknights.mantle.recipe.helper.LoadableRecipeSerializer;
+import slimeknights.tconstruct.library.modifiers.ModifierHooks;
+import slimeknights.tconstruct.library.module.ModuleHook;
+import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 
 
 public class TicEXModule extends AddonModule{
 
     public TicEXModule(){
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ToolCapabilityProvider.register(TiCEXToolCapabilityProvider::new);
+
+        TicEXRegistry.EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("embossment_modifier", ()->LoadableRecipeSerializer.of(EmbossmentRecipe.LOADER));
+        TicEXRegistry.SINGLE_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("single_embossment_modifier", ()->LoadableRecipeSerializer.of(SingleEmbossmentRecipe.LOADER));
+
+        TicEXRegistry.EMBOSSMENT_HOOK = ModifierHooks.LOADER.register(new ModuleHook<>(new ResourceLocation(TicEX.MODID, "embossment"), EmbossmentModifierHook.class, EmbossmentModifierHook.AllMerger::new, new EmbossmentModifierHook.DefaultClass()));
+
         TicEXRegistry.RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register("reconstruction_core", ()->new ItemReconstCore(new Item.Properties(), null));
         TicEXRegistry.ETHERIC_INGOT = TicEXRegistry.ITEMS.register("etheric_ingot", ()->new Item(new Item.Properties()));
 
@@ -81,8 +99,9 @@ public class TicEXModule extends AddonModule{
         TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
         TicEXRegistry.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
 
+        bus.addListener(TicEXEvent::onRegisterCaps);
+
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onPlayerTick);
-        //MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onMaterialsLoaded);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHeal);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHurt);
     }
@@ -95,10 +114,5 @@ public class TicEXModule extends AddonModule{
         } else {
             TierSortingRegistry.registerTier(InfinityTier.instance, new ResourceLocation(TicEX.MODID, "infinity"), List.of(Tiers.NETHERITE), List.of());
         }
-    }
-
-    @Override
-    public void clientSetup(FMLClientSetupEvent event) {
-        
     }
 }

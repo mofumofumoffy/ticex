@@ -1,0 +1,11 @@
+{
+    "type": "ticex:embossment_modifier",
+    "inputs": [
+      { "item":"ticex:koshirae_core" }
+    ],
+    "emboss_inputs": [
+      { "item":"slashblade:slashblade" }
+    ],
+    "tools": { "tag": "ticex:tool/slashblade_tool" },
+    "result": "ticex:koshirae"
+  }

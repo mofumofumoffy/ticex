@@ -21,13 +21,13 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 public class EvolvedModuleHost extends ModuleHostImpl{
 
-    private IToolStackView tool;
+    private IToolStackView toolSupplier;
 
-    public EvolvedModuleHost(IToolStackView tool) {
+    public EvolvedModuleHost(IToolStackView toolSupplier) {
         super(
-            TechLevel.byIndex(tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) - 1),
-            ModuleCfg.staffWidth(TechLevel.byIndex(tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) - 1)),
-            ModuleCfg.staffHeight(TechLevel.byIndex(tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) - 1)),
+            TechLevel.byIndex(toolSupplier.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) - 1),
+            ModuleCfg.staffWidth(TechLevel.byIndex(toolSupplier.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) - 1)),
+            ModuleCfg.staffHeight(TechLevel.byIndex(toolSupplier.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) - 1)),
             "TiC Tools",
             false,
             new ModuleCategory[]{
@@ -50,7 +50,7 @@ public class EvolvedModuleHost extends ModuleHostImpl{
         });
 
 
-        this.tool = tool;
+        this.toolSupplier = toolSupplier;
     }
 
     @Override
@@ -72,11 +72,11 @@ public class EvolvedModuleHost extends ModuleHostImpl{
     }
 
     private void writeToPersistentData(){
-        tool.getPersistentData().put(ModifierEvolved.MODULE_HOST_LOCATION, serializeNBT());
+        toolSupplier.getPersistentData().put(ModifierEvolved.MODULE_HOST_LOCATION, serializeNBT());
     }
 
     private void readFromPersistentData(){
-        deserializeNBT(tool.getPersistentData().getCompound(ModifierEvolved.MODULE_HOST_LOCATION));
+        deserializeNBT(toolSupplier.getPersistentData().getCompound(ModifierEvolved.MODULE_HOST_LOCATION));
         getProperties().forEach(property->{
             if(property instanceof BooleanProperty){
                 ((BooleanProperty)property).setChangeListener(this::writeToPersistentData);
@@ -88,7 +88,7 @@ public class EvolvedModuleHost extends ModuleHostImpl{
         });
     }
 
-    public IToolStackView getTool() {
-        return tool;
+    public IToolStackView getToolSupplier() {
+        return toolSupplier;
     }
 }

@@ -1,0 +1,15 @@
+{
+    "type": "tconstruct:table_casting_material",
+    "conditions": [
+      {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:slashblade_compat"
+      }
+    ],
+    "cast": {
+      "item": "slashblade:slashblade"
+    },
+    "cast_consumed": true,
+    "item_cost": 9,
+    "result": "ticex:catalyst_slashblade"
+}

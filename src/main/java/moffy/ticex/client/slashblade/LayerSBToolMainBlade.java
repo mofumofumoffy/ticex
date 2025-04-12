@@ -26,12 +26,14 @@ import mods.flammpfeil.slashblade.registry.ComboStateRegistry;
 import mods.flammpfeil.slashblade.registry.combo.ComboState;
 import mods.flammpfeil.slashblade.util.TimeValueHelper;
 import mods.flammpfeil.slashblade.util.VectorHelper;
+import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -289,20 +291,29 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
     public void renderToolSlashBlade(ItemStack stack, ISlashBladeState state, String target, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn){
         ToolStack tool = ToolStack.from(stack);
 
-        WavefrontObject model = BladeModelManager.getInstance().getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
+        WavefrontObject model;
 
         ResourceLocation textureLocation;
         if(tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0){
             
+            CompoundTag persistentTag = tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION);
+            if(persistentTag.contains("ModelName")){
+               model = BladeModelManager.getInstance().getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
+               textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));
+            } else {
+                model = BladeModelManager.getInstance().getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
+            }
             textureLocation = state.getTexture().orElse(DefaultResources.resourceDefaultTexture);
             BladeRenderState.renderOverrided(stack, model, target, textureLocation, matrixStackIn, bufferIn,
                     packedLightIn);
             BladeRenderState.renderOverridedLuminous(stack, model, target + "_luminous", textureLocation,
                     matrixStackIn, bufferIn, packedLightIn);
         } else if(tool.getMaterials().size() > 0){
+            model = BladeModelManager.getInstance().getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
             SBToolRenderState.renderOverrided(stack, model, target, matrixStackIn, bufferIn, packedLightIn);
             SBToolRenderState.renderOverridedLuminous(stack, model, target, matrixStackIn, bufferIn, packedLightIn);
         } else {
+            model = BladeModelManager.getInstance().getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
             textureLocation = state.getTexture().orElse(DefaultResources.resourceDefaultTexture);
             BladeRenderState.renderOverrided(stack, model, target, textureLocation, matrixStackIn, bufferIn,
                     packedLightIn);

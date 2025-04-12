@@ -30,8 +30,8 @@ public class TicEX {
     public TicEX(){
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        //TicEXRegistry.ITEMS_EXTENDED.register(bus);
         TicEXRegistry.ITEMS.register(bus);
-        TicEXRegistry.ITEMS_EXTENDED.register(bus);
         TicEXRegistry.BLOCKS.register(bus);
         TicEXRegistry.BLOCK_ENTITIES.register(bus);
         TicEXRegistry.FLUIDS.register(bus);
@@ -39,6 +39,8 @@ public class TicEX {
         TicEXRegistry.MODIFIERS.register(bus);
         TicEXRegistry.ATTRIBUTES.register(bus);
         TicEXRegistry.CREATIVE_TABS.register(bus);
+        TicEXRegistry.RECIPE_SERIALIZERS.register(bus);
+        TicEXRegistry.RECIPE_TYPES.register(bus);
 
         TicEXConfig.registerConfig();
     }
