@@ -120,6 +120,8 @@ public class TicEXRegistry {
     public static RegistryObject<Item> KONPAKU_CORE = null;
     public static RegistryObject<Item> KOSHIRAE_CORE = null;
     public static RegistryObject<Item> LAMELLAR_CORE = null;
+    public static RegistryObject<Item> OVERLOAD_CORE = null;
+    public static RegistryObject<Item> OVERRIDE_CORE = null;
 
     public static ItemObject<ToolPartItem> SLASHBLADE_BLADE = null;
     public static ItemObject<ToolPartItem> SLASHBLADE_SAYA = null;
@@ -174,6 +176,9 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> KOSHIRAE_MODIFIER = null;
     public static StaticModifier<Modifier> PROUD_MODIFIER = null;
     public static StaticModifier<Modifier> LAMELLAR_MODIFIER = null;
+    public static StaticModifier<Modifier> OVERLOAD_MODIFIER = null;
+    public static StaticModifier<Modifier> OVERRIDE_MODIFIER = null;
+    public static StaticModifier<Modifier> INCOMPARABLE_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){

@@ -18,7 +18,9 @@
         "konpaku": "#32a852",
         "koshirae": "#66543a",
         "hidden_proud": "#552885",
-        "lamellar": "#966b29"
+        "lamellar": "#966b29",
+        "overload": "#74ff4a",
+        "override": "#de7631"
     },
     "material.ticex": {
         "infinity": "#FF5555",

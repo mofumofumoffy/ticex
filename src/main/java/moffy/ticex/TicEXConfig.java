@@ -8,9 +8,10 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 
 public class TicEXConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
+    public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
     public static ForgeConfigSpec.ConfigValue<Float> CONDENSING_DROP_PROBABILITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> MEKAPLATE_USE_POWER_SHIELD;
-    public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
+    public static ForgeConfigSpec.ConfigValue<Integer> OVERRIDE_LIMIT;
 
     public static void registerConfig(){
         final ForgeConfigSpec.Builder COMMON = new ForgeConfigSpec.Builder();
@@ -26,6 +27,10 @@ public class TicEXConfig {
 
         COMMON.push("mekanism");
         MEKAPLATE_USE_POWER_SHIELD = COMMON.comment("Allow Mekaplate can use shield of electricity").define("mekaplateUseShield", true);
+        COMMON.pop();
+
+        COMMON.push("apotheosis");
+        OVERRIDE_LIMIT = COMMON.comment("Maximum level of enchantments granted by override").define("overrideLevelLimit", 255);
         COMMON.pop();
 
         CLIENT.comment("Client Settings").push("client");

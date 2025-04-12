@@ -165,6 +165,8 @@ dependencies {
     
     implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6369320")
 
+    implementation fg.deobf("curse.maven:curios-309927:6238756")
+
     implementation fg.deobf("curse.maven:jei-238222:6075247")
     
     runtimeOnly fg.deobf("curse.maven:mouse-tweaks-60089:5338457")

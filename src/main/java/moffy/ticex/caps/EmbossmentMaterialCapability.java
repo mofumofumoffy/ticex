@@ -56,6 +56,8 @@ public class EmbossmentMaterialCapability {
         ToolStack tool = ToolStack.from(toolStack);
 
         embossedMaterials.remove(stat.toString());
+
+        if(materialId == null)return;
         
         for(ModifierEntry modifierEntry : MaterialRegistry.getInstance().getTraits(materialId, part.getStatType())){
             tool.removeModifier(modifierEntry.getId(), modifierEntry.getLevel());
