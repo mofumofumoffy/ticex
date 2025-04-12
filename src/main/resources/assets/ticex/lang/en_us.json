@@ -160,7 +160,7 @@
     "stat.ticex.catalyst_mekasuit_boots": "Catalyst(MekaSuit Boots)",
     "stat.ticex.catalyst_slashblade": "Catalyst(SlashBlade)",
 
-    "recipe.ticex.recipe.ticex.embossment_not_allowed": "The item to be embossed does not meet the conditions for applying",
+    "recipe.ticex.embossment_not_allowed": "The item to be embossed does not meet the conditions for applying",
     "recipe.ticex.modifier.evolved_requirements_1": "§9Draconium§r-Evolved requires Netherite and Reinforced V to apply",
     "recipe.ticex.modifier.evolved_requirements_2": "§5Wyvern§r-Evolved requires §9Draconium§r-Evolved to apply",
     "recipe.ticex.modifier.evolved_requirements_3": "§eDraconic§r-Evolved requires §5Wyvern§r-Evolved to apply",
