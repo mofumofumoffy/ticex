@@ -170,5 +170,13 @@
     "recipe.ticex.modifier.evolved_requirements_1": "§9ドラコニウム§r-エボルトには、ネザライトと補強Vが必要です",
     "recipe.ticex.modifier.evolved_requirements_2": "§5ワイバーン§r-エボルトには、§9ドラコニウム§r-エボルトが必要です",
     "recipe.ticex.modifier.evolved_requirements_3": "§eドラコニック§r-エボルトには、§5ワイバーン§r-エボルトが必要です",
-    "recipe.ticex.modifier.evolved_requirements_4": "§8カオティック§r-エボルトには、§eドラコニック§r-エボルトが必要です"
+    "recipe.ticex.modifier.evolved_requirements_4": "§8カオティック§r-エボルトには、§eドラコニック§r-エボルトが必要です",
+
+    "gui.ticex.seram_gear": "セラムギア",
+    "gui.ticex.seram_gear.description": "セラムギアは、星の力で再構築された新時代のアーマーです。",
+    "gui.ticex.reforged_slashblade": "Reforged SlashBlade",
+    "gui.ticex.reforged_slashblade.description": "再鍛抜刀剣は、星の力で再構築された武の遺志を宿したツールです。",
+
+    "attribute.ticex.damage_taken": "被ダメージ軽減",
+    "attribute.ticex.healing_received": "回復量"
 }
