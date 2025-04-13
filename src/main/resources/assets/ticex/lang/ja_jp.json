@@ -158,7 +158,7 @@
     "modifier.ticex.override.description": "ツールに限界突破したエンチャントを付与できるようになる",
     "modifier.ticex.incomparable": "桁違い",
     "modifier.ticex.incomparable.flavor": "最大すら、最強すら、超えて行け。",
-    "modifier.ticex.incomparable.description": "ツールやアーマーはCuriosスロットに装備可能になる",
+    "modifier.ticex.incomparable.description": "ツールやアーマーは、性能を落とし、Curiosスロットに装備可能になる",
 
     "stat.tconstruct.harvest_tier.ticex.infinity": "インフィニティ",
 
@@ -178,6 +178,13 @@
     "gui.ticex.seram_gear.description": "セラムギアは、星の力で再構築された新時代のアーマーです。",
     "gui.ticex.reforged_slashblade": "Reforged SlashBlade",
     "gui.ticex.reforged_slashblade.description": "再鍛抜刀剣は、星の力で再構築された武の遺志を宿したツールです。",
+
+    "curios.identifier.incomparable_head": "比類なきヘルメット",
+    "curios.identifier.incomparable_chest": "比類なきチェストプレート",
+    "curios.identifier.incomparable_legs": "比類なきレギンス",
+    "curios.identifier.incomparable_feet": "比類なきブーツ",
+    "curios.identifier.incomparable_mainhand": "比類なきメインツール",
+    "curios.identifier.incomparable_offhand": "比類なきサブツール",
 
     "attribute.ticex.damage_taken": "被ダメージ軽減",
     "attribute.ticex.healing_received": "回復量"

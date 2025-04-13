@@ -118,6 +118,7 @@ mixin {
     config 'ticex.mekanism.mixins.json'
     config 'ticex.draconicevolution.mixins.json'
     config 'ticex.slashblade.mixin.json'
+    config 'ticex.curios.mixin.json'
 
     debug.verbose = true
     debug.export = true

@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "conditions": [
+      {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:curios_compat"
+      }
+    ],
+    "pattern": [
+      "SSS",
+      "SCS",
+      "SSS"
+    ],
+    "key": {
+      "S": {
+        "tag": "ticex:catalyst"
+      },
+      "C": {
+        "item": "ticex:reconstruction_core"
+      }
+    },
+    "result": {
+        "item": "ticex:incomparable_core"
+    }
+  }
+  

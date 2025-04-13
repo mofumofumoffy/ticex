@@ -11,7 +11,7 @@
         }
     ],
 	"input": {
-		"item": "ticex:reconstruction_core"
+		"item": "ticex:overload_core"
 	},
 	"requirements": {
 		"eterna": 50,

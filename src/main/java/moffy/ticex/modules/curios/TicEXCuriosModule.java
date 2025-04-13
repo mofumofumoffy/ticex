@@ -2,12 +2,19 @@ package moffy.ticex.modules.curios;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
-import moffy.ticex.modifier.ModifierIncomparable;
+import moffy.ticex.caps.curios.CuriosCapProvider;
+import moffy.ticex.event.TicEXCuriosEvent;
+import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -15,9 +22,18 @@ import top.theillusivec4.curios.api.SlotResult;
 
 public class TicEXCuriosModule extends AddonModule{
     public TicEXCuriosModule(){
-        TicEXRegistry.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.register("incomparable", ModifierIncomparable::new);
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ToolCapabilityProvider.register(CuriosCapProvider::new);
+
+        TicEXRegistry.INCOMPARABLE_CORE = TicEXRegistry.ITEMS.register("incomparable_core", () -> new ItemReconstCore(new Properties(), "incomparable"));
+
+        TicEXRegistry.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("incomparable");
 
         CuriosApi.registerCurioPredicate(new ResourceLocation(TicEX.MODID, "incomparable"), (result)->validate(result));
+
+        bus.addListener(TicEXCuriosEvent::onRegisterCaps);
+        MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onItemSwap);
     }
 
     public boolean validate(SlotResult result){
@@ -42,7 +58,7 @@ public class TicEXCuriosModule extends AddonModule{
                         return result.slotContext().identifier().equals("incomparable_feet");
                     }
                 } else {
-                    return true;
+                    return result.slotContext().identifier().equals("incomparable_mainhand") || result.slotContext().identifier().equals("incomparable_offhand");
                 }
             }
         }

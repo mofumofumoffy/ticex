@@ -3,7 +3,7 @@
     "conditions": [
       {
         "type": "addonapi:mods_available",
-        "required_raw_module": "ticex:draconicevolution"
+        "required_raw_module": "ticex:draconicevolution_compat"
       }
     ],
     "result": {

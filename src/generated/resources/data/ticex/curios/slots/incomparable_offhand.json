@@ -1,3 +1,5 @@
 {
-    "size": 1
+    "size": 1,
+    "icon":"ticex:slot/offhand",
+    "validators": ["ticex:incomparable"]
 }

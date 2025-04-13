@@ -122,6 +122,7 @@ public class TicEXRegistry {
     public static RegistryObject<Item> LAMELLAR_CORE = null;
     public static RegistryObject<Item> OVERLOAD_CORE = null;
     public static RegistryObject<Item> OVERRIDE_CORE = null;
+    public static RegistryObject<Item> INCOMPARABLE_CORE = null;
 
     public static ItemObject<ToolPartItem> SLASHBLADE_BLADE = null;
     public static ItemObject<ToolPartItem> SLASHBLADE_SAYA = null;
@@ -178,7 +179,7 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> LAMELLAR_MODIFIER = null;
     public static StaticModifier<Modifier> OVERLOAD_MODIFIER = null;
     public static StaticModifier<Modifier> OVERRIDE_MODIFIER = null;
-    public static StaticModifier<Modifier> INCOMPARABLE_MODIFIER = null;
+    public static DynamicModifier INCOMPARABLE_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){

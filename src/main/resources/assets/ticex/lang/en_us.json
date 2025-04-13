@@ -151,7 +151,7 @@
     "modifier.ticex.override.description": "Tool can be enchanted beyond normal limits",
     "modifier.ticex.incomparable": "Incomparable",
     "modifier.ticex.incomparable.flavor": "Go beyond. Even the ultimate. Even the strongest.",
-    "modifier.ticex.incomparable.description": "Tool or armor can be equipped in Curios slots",
+    "modifier.ticex.incomparable.description": "Tool or armor have reduced stats, but can be equipped in Curios slots",
 
     "stat.tconstruct.harvest_tier.ticex.infinity": "Infinity",
     "stat.ticex.catalyst_mekasuit_helmet": "Catalyst(MekaSuit Helmet)",
@@ -170,6 +170,13 @@
     "gui.ticex.seram_gear.description": "Seram gear is the armor of a new era which has been reconstructed with the power of the star clusters.",
     "gui.ticex.reforged_slashblade": "Reforged SlashBlade",
     "gui.ticex.reforged_slashblade.description": "Reforged SlashBlade is the tool of samrai's relic which has been reconstructed with the power of the star clusters.",
+
+    "curios.identifier.incomparable_head": "Incomparable Helmet",
+    "curios.identifier.incomparable_chest": "Incomparable Chestplate",
+    "curios.identifier.incomparable_legs": "Incomparable Leggings",
+    "curios.identifier.incomparable_feet": "Incomparable Boots",
+    "curios.identifier.incomparable_mainhand": "Incomparable Main Hand Tool",
+    "curios.identifier.incomparable_offhand": "Incomparable Off Hand Tool",
 
     "attribute.ticex.damage_taken": "Damage Taken",
     "attribute.ticex.healing_received": "Healing Received"
