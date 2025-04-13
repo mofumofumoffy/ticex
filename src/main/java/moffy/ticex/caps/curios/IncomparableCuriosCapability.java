@@ -34,24 +34,26 @@ public class IncomparableCuriosCapability implements ICurio{
 
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack) {
-        ICurio.super.onEquip(slotContext, prevStack);
+        
         if (slotContext.entity() instanceof Player player) {
             Multimap<Attribute, AttributeModifier> modifiers = stack.getAttributeModifiers(resolveSlot(slotContext));
             for (Map.Entry<Attribute, AttributeModifier> entry : modifiers.entries()) {
                 player.getAttribute(entry.getKey()).addTransientModifier(entry.getValue());
             }
         }
+        ICurio.super.onEquip(slotContext, prevStack);
     }
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack) {
-        ICurio.super.onUnequip(slotContext, newStack);
+        
         if (slotContext.entity() instanceof Player player) {
             Multimap<Attribute, AttributeModifier> modifiers = stack.getAttributeModifiers(resolveSlot(slotContext));
             for (Map.Entry<Attribute, AttributeModifier> entry : modifiers.entries()) {
                 player.getAttribute(entry.getKey()).removeModifier(entry.getValue());
             }
         }
+        ICurio.super.onUnequip(slotContext, newStack);
     }
 
     public EquipmentSlot resolveSlot(SlotContext context){
