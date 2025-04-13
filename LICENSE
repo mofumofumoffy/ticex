@@ -1,21 +1,32 @@
-MIT License
+# License Notice
 
-Copyright (c) 2025 Moffy
+This project contains multiple source code modules and assets with different licenses.  
+Please refer to the license comments within each file for specific terms.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+---
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+## 🔹 General Licensing Policy
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+- If a file contains a license comment header (e.g., in `.java` or `.json` files), **the license stated in the comment takes precedence**.
+- If no license is specified in a file, it is licensed under the MIT License by default.
+
+---
+
+## 🔸 License Breakdown (Module-Based Overview)
+
+| Module                 | License             |
+|------------------------|---------------------|
+| `TicEXTaczModule`      | GPL-3.0-only        |
+| Other Modules          | MIT                 |
+
+Please see each source file or directory for specific license headers.
+
+---
+
+## 📚 Included License Texts
+
+All license texts are available under the `LICENSES/` directory:
+- `LICENSES/MIT.md`
+- `LICENSES/GPL-3.0.md`
+---
+*Note: This license structure applies only to this project and does not grant rights to any third-party dependencies or assets.*
