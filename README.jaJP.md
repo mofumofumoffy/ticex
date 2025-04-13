@@ -7,12 +7,12 @@
 
 ## 前提mod
 ### 全てのバージョン
-[Tinkers' Construct](https://www.curseforge.com/minecraft/mc-mods/tinkers-construct)
+[Tinkers' Construct](https://modrinth.com/mod/tinkers-construct)
 
 ### その他
 |version|mods|
 |--|--|
-|mc1.20.1|AddonAPI v1.1.0(リンク準備中)|
+|mc1.20.1|AddonAPI v1.2.0(https://modrinth.com/mod/addonapi)|
 
 ## 対応バージョン
 - forge mc1.20.1
@@ -32,16 +32,16 @@
  - モブのソウルを刈り取る4種のマテリアル
  - 渦巻く混沌のシェーダー
 - SlashBlade
- - アレンジを加えた、TiC素材で作る抜刀剣
- - 一部のエンチャントを可能にする 魂魄 モディファイア
- - お気に入りの刀の姿を継承する 拵 モディファイア
+ - アレンジを加えた、TiC素材で作るSlashBlade
+ - 一部のエンチャントを可能にする Konpaku モディファイア
+ - お気に入りの刀の姿を継承する Koshirae モディファイア
 - Apotheosis
- - TiCツールに特殊な方法でエンチャントを施す オーバーロード モディファイア
- - ハイコストだが、限界値を超えたエンチャントを施す オーバーライド モディファイア
+ - TiCツールに特殊な方法でエンチャントを施す Overload モディファイア
+ - ハイコストだが、限界値を超えたエンチャントを施す Override モディファイア
 - Tinkers' Things
- - 追加防具をシールドコアやプレートで強化する 多層 モディファイア
+ - 追加防具をシールドコアやプレートで強化する Lamellar モディファイア
 - Curios
- - TiC装備をCuriosスロットに装備できるようになる 桁違い モディファイア
+ - 一部の機能を残しつつ、TiC装備をCuriosスロットに装備できるようになる Incomparable モディファイア
 
 ## その他の追加要素
 - 星の力

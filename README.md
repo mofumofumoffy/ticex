@@ -7,12 +7,12 @@
 ## Required Mods
 
 ### For All Versions
-- [Tinkers' Construct](https://www.curseforge.com/minecraft/mc-mods/tinkers-construct)
+- [Tinkers' Construct](https://modrinth.com/mod/tinkers-construct)
 
 ### Additional
 | Version | Mods |
 |--------|------|
-| mc1.20.1 | AddonAPI v1.1.0 (Link coming soon) |
+| mc1.20.1 | AddonAPI v1.2.0 (https://modrinth.com/mod/addonapi) |
 
 ## Supported Minecraft Version
 - Forge for Minecraft 1.20.1
@@ -34,6 +34,21 @@
   - *Evolved Modifier* supporting Draconic Evolution modules
   - Tiered materials which can steal mobs' soul  
   - A chaotic, swirling shader  
+
+- **SlashBlade**
+  - SlashBlades crafted using TiC materials with custom enhancements
+  - *Konpaku* modifier allows select enchantments
+  - *Koshirae* modifier inherits the appearance of your favorite blade
+
+- **Apotheosis**
+  - *Overload* modifier allows enchanting TiC tools through special methods
+  - *Override* modifier enables enchantments beyond the normal limits, albeit at a high cost
+
+- **Tinkers' Things**
+  - *Lamellar* modifier enhances additional armor with shield cores and plates
+
+- **Curios**
+  - *Incomparable* modifier allows TiC gear to be equipped in Curios slots while retaining some of their functionality
 
 ## Other Additions
 
