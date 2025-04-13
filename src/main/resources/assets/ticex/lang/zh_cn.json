@@ -170,6 +170,13 @@
     "gui.ticex.reforged_slashblade": "重铸拔刀剑",
     "gui.ticex.reforged_slashblade.description": "重铸拔刀剑是借星团之力重构的武士遗物之刃",
 
+    "curios.identifier.incomparable_head": "无与伦比头盔",
+    "curios.identifier.incomparable_chest": "无与伦比胸甲",
+    "curios.identifier.incomparable_legs": "无与伦比护腿",
+    "curios.identifier.incomparable_feet": "无与伦比靴子",
+    "curios.identifier.incomparable_mainhand": "无与伦比主手工具",
+    "curios.identifier.incomparable_offhand": "无与伦比副手工具",
+
     "attribute.ticex.damage_taken": "承受伤害",
     "attribute.ticex.healing_received": "获得治疗"
 }
