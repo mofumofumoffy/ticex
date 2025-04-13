@@ -35,7 +35,7 @@
   - Tiered materials which can steal mobs' soul  
   - A chaotic, swirling shader  
 
-- **SlashBlade**
+- **SlashBlade Resharped**
   - SlashBlades crafted using TiC materials with custom enhancements
   - *Konpaku* modifier allows select enchantments
   - *Koshirae* modifier inherits the appearance of your favorite blade
