@@ -52,6 +52,16 @@ public class EvolvedOPStorage extends ModularOPStorage{
         return extracted;
     }
 
+    @Override
+    public boolean canExtract() {
+        return true;
+    }
+
+    @Override
+    public boolean canReceive() {
+        return true;
+    }
+
     private void writeToPersistentData(){
         tool.getPersistentData().put(ModifierEvolved.OP_STORAGE_LOCATION, serializeNBT());
     }

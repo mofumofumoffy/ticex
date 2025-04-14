@@ -133,6 +133,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
 
     private int getDamageBonus(ModuleHost host, IOPStorage opStorage){
         double damage = host.getModuleData(ModuleTypes.DAMAGE, new DamageData(0)).damagePoints();
+        
         if (opStorage.getEnergyStored() < EquipCfg.energyAttack * damage) {
             damage = 0;
         }
@@ -199,7 +200,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
         boolean result;
         IOPStorage opStorage = stack.getCapability(DECapabilities.OP_STORAGE).orElseThrow(IllegalStateException::new);
 
-        int dealDamage = Math.min((EquipCfg.energyAttack * damage), opStorage.getEnergyStored());
+        int dealDamage = Math.min((EquipCfg.energyAttack * damage), opStorage.getEnergyStored()) / EquipCfg.energyAttack;
         result = target.hurt(new DamageSource(target.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(TicEXDEUtils.getDamageTag(ToolStack.from(stack)))), dealDamage);
 
         if(!result){

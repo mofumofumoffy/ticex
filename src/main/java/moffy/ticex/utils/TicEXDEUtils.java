@@ -44,7 +44,7 @@ public class TicEXDEUtils {
             case 2:
                 return TOOL_WYVERN;
             case 3:
-                return TOOL_DRACONIUM;
+                return TOOL_DRACONIC;
             case 4:
                 return TOOL_CHAOTIC;
             default:
