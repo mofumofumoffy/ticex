@@ -28,19 +28,19 @@ import slimeknights.tconstruct.library.tools.SlotType.SlotCount;
 import slimeknights.tconstruct.library.tools.nbt.LazyToolStack;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class SingleEmbossmentRecipe extends AbstractModifierRecipe{
+public class SingleEmbossmentModifierRecipe extends AbstractModifierRecipe{
 
-    public static final RecordLoadable<SingleEmbossmentRecipe> LOADER = RecordLoadable.create(
+    public static final RecordLoadable<SingleEmbossmentModifierRecipe> LOADER = RecordLoadable.create(
     ContextKey.ID.requiredField(),
     IngredientLoadable.DISALLOW_EMPTY.requiredField("emboss_input", r -> r.input),
     TOOLS_FIELD, MAX_TOOL_SIZE_FIELD, RESULT_FIELD, LEVEL_FIELD, SLOTS_FIELD,
-    SingleEmbossmentRecipe::new);
+    SingleEmbossmentModifierRecipe::new);
 
     private final Ingredient input;
 
     private List<List<ItemStack>> slotCache;
 
-    public SingleEmbossmentRecipe(ResourceLocation id, Ingredient input, 
+    public SingleEmbossmentModifierRecipe(ResourceLocation id, Ingredient input, 
             Ingredient toolRequirement, int maxToolSize, ModifierId result, IntRange level, SlotCount slots) {
         super(id, toolRequirement, maxToolSize, result, level, slots, false, false);
         this.input = input;
@@ -94,7 +94,7 @@ public class SingleEmbossmentRecipe extends AbstractModifierRecipe{
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return TicEXRegistry.SINGLE_EMBOSSMENT_RECIPE_SERIALIZER.get();
+        return TicEXRegistry.SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER.get();
     }
 
     @Override

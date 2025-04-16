@@ -4,6 +4,7 @@ import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.modules.TicEXRegistry;
 import moffy.ticex.utils.TicEXAvaritiaUtils;
 import moffy.ticex.utils.TicEXUtils;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -20,13 +21,17 @@ public class TicEXEvent {
         if (damage <= 0F || TicEXUtils.isPureDamage(event.getSource(), damage)) {
             return;
         }
-        AttributeInstance attributeInstance = event.getEntity().getAttribute(TicEXRegistry.DAMAGE_TAKEN.get());
+        LivingEntity entity = event.getEntity();
+        AttributeInstance attributeInstance = entity.getAttribute(TicEXRegistry.DAMAGE_TAKEN.get());
         if(attributeInstance != null){
             double multiplier = attributeInstance.getValue();
             if (multiplier != 1D) {
                 float newAmount = Math.max(damage * (float)multiplier, 0F);
                 event.setAmount(newAmount);
                 if(newAmount < 0.0001){
+                    entity.setDeltaMovement(0, 0, 0);
+                    entity.hurtTime = 0;
+                    entity.hurtDuration = 0;
                     event.setCanceled(true);
                 }
             }
@@ -38,7 +43,8 @@ public class TicEXEvent {
         if (amount <= 0F) {
             return;
         }
-        AttributeInstance attributeInstance = event.getEntity().getAttribute(TicEXRegistry.HEALING_RECEIVED.get());
+        LivingEntity entity = event.getEntity();
+        AttributeInstance attributeInstance = entity.getAttribute(TicEXRegistry.HEALING_RECEIVED.get());
         if(attributeInstance != null){
             double multiplier = attributeInstance.getValue();
             if (multiplier != 1D) {

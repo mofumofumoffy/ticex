@@ -5,10 +5,6 @@
       {"id":"ticex:catalyst_mekasuit_leggings", "required":false},
       {"id":"ticex:catalyst_mekasuit_boots", "required":false},
       {"id":"ticex:catalyst_slashblade", "required":false},
-
-      {"id":"ticex:catalyst_mekaplate_helmet", "required":false},
-      {"id":"ticex:catalyst_mekaplate_chestplate", "required":false},
-      {"id":"ticex:catalyst_mekaplate_leggings", "required":false},
-      {"id":"ticex:catalyst_mekaplate_boots", "required":false}
+      {"id":"ticex:catalyst_kinetic_gun", "required":false}
     ]
   }

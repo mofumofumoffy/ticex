@@ -1,0 +1,15 @@
+{
+    "type": "ticex:embossment_casting",
+    "conditions": [
+      {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:tacz_compat"
+      }
+    ],
+    "cast": {
+      "item": "tacz:modern_kinetic_gun"
+    },
+    "cast_consumed": true,
+    "item_cost": 9,
+    "result": "ticex:catalyst_kinetic_gun"
+  }

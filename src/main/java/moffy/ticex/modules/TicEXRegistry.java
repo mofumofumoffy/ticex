@@ -78,6 +78,7 @@ public class TicEXRegistry {
 
     public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
     public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "reforged_slashblade")); 
+    public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "blitz_gun")); 
 
     public static final Map<Item, Function<BakedModel, BakedModel>> CUSTOM_MODELS = new HashMap<>();
     public static final ToolShaderMap.Tool TOOL_SHADERS = new ToolShaderMap.Tool();
@@ -99,8 +100,11 @@ public class TicEXRegistry {
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
 
-    public static RegistryObject<RecipeSerializer<?>> EMBOSSMENT_RECIPE_SERIALIZER = null;
-    public static RegistryObject<RecipeSerializer<?>> SINGLE_EMBOSSMENT_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<?>> CASTING_EMBOSSMENT_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<?>> BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<?>> MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<?>> SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
+    
 
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
 
@@ -132,8 +136,10 @@ public class TicEXRegistry {
 
     public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKASUIT = null; 
     public static ItemObject<ToolPartItem> CATALYST_SLASHBLADE = null; 
+    public static ItemObject<ToolPartItem> CATALYST_KINETIC_GUN = null; 
 
     public static ItemObject<ModifiableItem> REFORGED_SLASHBLADE = null;
+    public static ItemObject<? extends Item> BLITZ_GUN = null; 
 
     public static EnumObject<ArmorItem.Type, MultilayerArmorItem> MEKAPLATE_ARMOR = null;
 
@@ -195,11 +201,13 @@ public class TicEXRegistry {
 
         acceptCatalystArmor(output, CATALYST_MEKASUIT);
         acceptPart(output, CATALYST_SLASHBLADE);
+        acceptPart(output, CATALYST_KINETIC_GUN);
 
         acceptPart(output, SLASHBLADE_BLADE);
         acceptPart(output, SLASHBLADE_SAYA);
 
         acceptTool(output, REFORGED_SLASHBLADE);
+        //acceptTool(output, BLITZ_GUN);
 
         acceptArmor(output, MEKAPLATE_ARMOR);
 
@@ -207,9 +215,12 @@ public class TicEXRegistry {
         acceptCast(output, SLASHBLADE_SAYA_CAST);
     }
 
-    private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends IModifiable> toolObject){
+    private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends Item> toolObject){
         if(toolObject != null){
-            ToolBuildHandler.addVariants(output::accept, toolObject.get(), "");
+            Item item = toolObject.get();
+            if(item instanceof IModifiable){
+                ToolBuildHandler.addVariants(output::accept, (IModifiable)item, "");
+            }
         }
     }
 

@@ -259,6 +259,10 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 
         boolean result = super.hurtEnemy(stack, target, attacker);
 
+		if(target.invulnerableTime < 1){
+			target.invulnerableTime = 1;
+		}
+
 		stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent((state) -> {
 			ResourceLocation loc = state.resolvCurrentComboState(attacker);
 			ComboState cs = ComboStateRegistry.REGISTRY.get().getValue(loc) != null

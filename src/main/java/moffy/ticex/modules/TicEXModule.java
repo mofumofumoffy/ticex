@@ -10,8 +10,10 @@ import moffy.ticex.caps.TiCEXToolCapabilityProvider;
 import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.lib.recipe.EmbossmentRecipe;
-import moffy.ticex.lib.recipe.SingleEmbossmentRecipe;
+import moffy.ticex.lib.recipe.EmbossmentBuildingRecipe;
+import moffy.ticex.lib.recipe.EmbossmentCastingRecipe;
+import moffy.ticex.lib.recipe.EmbossmentModifierRecipe;
+import moffy.ticex.lib.recipe.SingleEmbossmentModifierRecipe;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.modifier.ModifierSassy;
 import moffy.ticex.modules.avaritia.InfinityTier;
@@ -39,6 +41,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.mantle.recipe.helper.LoadableRecipeSerializer;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.module.ModuleHook;
+import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 
 
@@ -49,8 +52,10 @@ public class TicEXModule extends AddonModule{
 
         ToolCapabilityProvider.register(TiCEXToolCapabilityProvider::new);
 
-        TicEXRegistry.EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("embossment_modifier", ()->LoadableRecipeSerializer.of(EmbossmentRecipe.LOADER));
-        TicEXRegistry.SINGLE_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("single_embossment_modifier", ()->LoadableRecipeSerializer.of(SingleEmbossmentRecipe.LOADER));
+        TicEXRegistry.MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("embossment_modifier", ()->LoadableRecipeSerializer.of(EmbossmentModifierRecipe.LOADER));
+        TicEXRegistry.SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("single_embossment_modifier", ()->LoadableRecipeSerializer.of(SingleEmbossmentModifierRecipe.LOADER));
+        TicEXRegistry.CASTING_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("embossment_casting", ()->LoadableRecipeSerializer.of(EmbossmentCastingRecipe.LOADER, TinkerRecipeTypes.CASTING_TABLE));
+        TicEXRegistry.BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("embossment_building", ()->LoadableRecipeSerializer.of(EmbossmentBuildingRecipe.LOADER));
 
         TicEXRegistry.EMBOSSMENT_HOOK = ModifierHooks.LOADER.register(new ModuleHook<>(new ResourceLocation(TicEX.MODID, "embossment"), EmbossmentModifierHook.class, EmbossmentModifierHook.AllMerger::new, new EmbossmentModifierHook.DefaultClass()));
 

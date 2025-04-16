@@ -1,9 +1,9 @@
 package moffy.ticex.modules.slashblade;
 
-import mods.flammpfeil.slashblade.client.renderer.model.BladeModel;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.slashblade.SBItemCapabilityProvider;
+import moffy.ticex.client.CustomModel;
 import moffy.ticex.client.slashblade.SBToolRenderType;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.event.TicEXSBEvent;
@@ -14,7 +14,6 @@ import moffy.ticex.modifier.ModifierKoshirae;
 import moffy.ticex.modifier.ModifierHiddenProud;
 import moffy.ticex.modules.CatalystMaterialStatsType;
 import moffy.ticex.modules.TicEXRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
@@ -77,7 +76,7 @@ public class TicEXSlashBladeModule extends AddonModule{
     public void clientSetup(FMLClientSetupEvent event) {
         SBToolRenderType.init();
         TicEXRegistry.CUSTOM_MODELS.put(TicEXRegistry.REFORGED_SLASHBLADE.get(), (originalModel)->{
-            return new BladeModel(originalModel, Minecraft.getInstance().getModelManager().getModelBakery());
+            return new CustomModel(originalModel);
         });
     }
 }

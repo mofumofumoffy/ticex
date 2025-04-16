@@ -22,7 +22,6 @@ import mekanism.common.content.gear.mekasuit.ModuleLocomotiveBoostingUnit;
 import mekanism.common.item.gear.ItemFreeRunners;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.StorageUtils;
-import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.mekanism.MekaPlateModelCache;
 import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
@@ -61,10 +60,12 @@ public class TicEXMekanismEvent {
             }
             if (entity instanceof Player player) {
                 float ratioAbsorbed = ItemModifiableMekaSuitArmor.getDamageAbsorbed(player, event.getSource(), event.getAmount());
-                TicEX.LOGGER.info("{}",ratioAbsorbed);
                 if (ratioAbsorbed > 0) {
                     float damageRemaining = event.getAmount() * Math.max(0, 1 - ratioAbsorbed);
                     if (damageRemaining <= 0) {
+                        entity.setDeltaMovement(0, 0, 0);
+                        entity.hurtTime = 0;
+                        entity.hurtDuration = 0;
                         event.setCanceled(true);
                     } else {
                         event.setAmount(damageRemaining);

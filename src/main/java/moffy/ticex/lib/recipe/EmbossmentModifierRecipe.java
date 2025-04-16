@@ -28,21 +28,21 @@ import slimeknights.tconstruct.library.tools.SlotType.SlotCount;
 import slimeknights.tconstruct.library.tools.nbt.LazyToolStack;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class EmbossmentRecipe extends AbstractModifierRecipe{
+public class EmbossmentModifierRecipe extends AbstractModifierRecipe{
 
-    public static final RecordLoadable<EmbossmentRecipe>LOADER = RecordLoadable.create(
+    public static final RecordLoadable<EmbossmentModifierRecipe>LOADER = RecordLoadable.create(
         ContextKey.ID.requiredField(), 
         SizedIngredient.LOADABLE.list(1).requiredField("inputs", r -> r.inputs),
         SizedIngredient.LOADABLE.list(1).requiredField("emboss_inputs", r -> r.embossItem),
         TOOLS_FIELD, MAX_TOOL_SIZE_FIELD, RESULT_FIELD, LEVEL_FIELD, SLOTS_FIELD,
-    EmbossmentRecipe::new);
+    EmbossmentModifierRecipe::new);
 
     private final List<SizedIngredient> embossItem;
     private final List<SizedIngredient> inputs;
 
     private List<SizedIngredient> ingredientsCache;
 
-    public EmbossmentRecipe(ResourceLocation id, List<SizedIngredient> inputs, List<SizedIngredient> embossItem, Ingredient toolRequirement, int maxToolSize, ModifierId result, IntRange level, @Nullable SlotCount slots){
+    public EmbossmentModifierRecipe(ResourceLocation id, List<SizedIngredient> inputs, List<SizedIngredient> embossItem, Ingredient toolRequirement, int maxToolSize, ModifierId result, IntRange level, @Nullable SlotCount slots){
         super(id, toolRequirement, maxToolSize, result, level, slots, false, false);
         this.inputs = inputs;
         this.embossItem = embossItem;
@@ -67,7 +67,7 @@ public class EmbossmentRecipe extends AbstractModifierRecipe{
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return TicEXRegistry.EMBOSSMENT_RECIPE_SERIALIZER.get();
+        return TicEXRegistry.MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER.get();
     }
 
     @Override

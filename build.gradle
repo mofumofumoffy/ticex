@@ -166,13 +166,15 @@ dependencies {
     
     implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6369320")
 
+    implementation fg.deobf("curse.maven:timeless-and-classics-zero-1028108:6069384")
+
     implementation fg.deobf("curse.maven:curios-309927:6238756")
 
     implementation fg.deobf("curse.maven:jei-238222:6075247")
     
     runtimeOnly fg.deobf("curse.maven:mouse-tweaks-60089:5338457")
-    //runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
-    //runtimeOnly fg.deobf("curse.maven:radium-reforged-570017:5706069")
+    runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
+    runtimeOnly fg.deobf("curse.maven:radium-reforged-570017:5706069")
     runtimeOnly fg.deobf("curse.maven:bookshelf-228525:5423987")
     runtimeOnly fg.deobf("curse.maven:modernfix-790626:6125143")
     runtimeOnly fg.deobf("curse.maven:ferritecore-429235:4810975")

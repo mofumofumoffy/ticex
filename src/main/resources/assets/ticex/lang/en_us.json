@@ -19,6 +19,7 @@
     "item.ticex.mekaplate_leggings": "MekaPlate Leggings",
     "item.ticex.mekaplate_boots": "MekaPlate Boots",
     "item.ticex.reforged_slashblade": "Reforged SlashBlade",
+    "item.ticex.blitz_gun": "Blitz Gun",
 
     "tagtype.ticex.catalyst": "Seram Catalyst",
 
@@ -27,6 +28,7 @@
     "item.ticex.catalyst_mekasuit_leggings": "Seram Catalyst - MekaSuit Pants",
     "item.ticex.catalyst_mekasuit_boots": "Seram Catalyst - MekaSuit Boots",
     "item.ticex.catalyst_slashblade": "Seram Catalyst - SlashBlade",
+    "item.ticex.catalyst_kinetic_gun": "Seram Catalyst - Modern Kinetic Gun",
 
     "item.ticex.slashblade_blade": "Blade",
     "item.ticex.slashblade_saya": "Saya",
@@ -159,6 +161,7 @@
     "stat.ticex.catalyst_mekasuit_leggings": "Catalyst(MekaSuit Pants)",
     "stat.ticex.catalyst_mekasuit_boots": "Catalyst(MekaSuit Boots)",
     "stat.ticex.catalyst_slashblade": "Catalyst(SlashBlade)",
+    "stat.ticex.catalyst_kinetic_gun": "Catalyst(Modern Kinetic Gun)",
 
     "recipe.ticex.embossment_not_allowed": "The item to be embossed does not meet the conditions for applying",
     "recipe.ticex.modifier.evolved_requirements_1": "§9Draconium§r-Evolved requires Netherite and Reinforced V to apply",
@@ -167,9 +170,11 @@
     "recipe.ticex.modifier.evolved_requirements_4": "§8Chaotic§r-Evolved requires §eDraconic§r-Evolved to apply",
 
     "gui.ticex.seram_gear": "Seram Gear",
-    "gui.ticex.seram_gear.description": "Seram gear is the armor of a new era which has been reconstructed with the power of the star clusters.",
+    "gui.ticex.seram_gear.description": "Seram gear is the armor of a new era, which has been reconstructed with the power of the star clusters.",
     "gui.ticex.reforged_slashblade": "Reforged SlashBlade",
-    "gui.ticex.reforged_slashblade.description": "Reforged SlashBlade is the tool of samrai's relic which has been reconstructed with the power of the star clusters.",
+    "gui.ticex.reforged_slashblade.description": "Reforged SlashBlade is the tool of samrai's relic, which has been reconstructed with the power of the star clusters.",
+    "gui.ticex.blitz_gun": "Blitz Gun",
+    "gui.ticex.blitz_gun.description": "Blitz Gun is the tool of precision and swiftness, which has been reconstructed with the power of the star clusters.",
 
     "curios.identifier.incomparable_head": "Incomparable Helmet",
     "curios.identifier.incomparable_chest": "Incomparable Chestplate",
