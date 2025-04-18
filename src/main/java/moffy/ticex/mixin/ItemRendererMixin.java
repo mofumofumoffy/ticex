@@ -38,7 +38,7 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-@Mixin(ItemRenderer.class)
+@Mixin(value = ItemRenderer.class, priority = 1700)
 public abstract class ItemRendererMixin {
 
     @Shadow
@@ -49,7 +49,7 @@ public abstract class ItemRendererMixin {
 
     @SuppressWarnings("deprecation")
     @Inject(
-        at = @At("invoke"),
+        at = @At("head"),
         method = "render",
         cancellable = true
     )

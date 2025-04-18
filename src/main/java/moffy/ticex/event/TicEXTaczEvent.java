@@ -9,7 +9,6 @@ package moffy.ticex.event;
 
 import com.tacz.guns.api.event.common.EntityHurtByGunEvent;
 
-import moffy.ticex.TicEX;
 import moffy.ticex.item.modifiable.ModifiableGunItem;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +26,6 @@ public class TicEXTaczEvent {
         Entity target = event.getHurtEntity();
         ItemStack mainHandStack = attacker.getMainHandItem();
         if(mainHandStack.getItem() instanceof ModifiableGunItem){
-            TicEX.LOGGER.info("a");
             ToolStack tool = ToolStack.from(mainHandStack);
             ToolAttackContext context = new ToolAttackContext(attacker, attacker instanceof Player ? (Player)attacker : null, InteractionHand.MAIN_HAND, target, target instanceof LivingEntity ? (LivingEntity)target : null, event.isHeadShot(), 0, false);
             for(ModifierEntry modifier : tool.getModifierList()){

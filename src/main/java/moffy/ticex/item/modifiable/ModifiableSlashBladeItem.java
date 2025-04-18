@@ -77,6 +77,7 @@ import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.GeneralInteractionModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InteractionSource;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.nbt.StatsNBT;
@@ -273,10 +274,41 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 				return;
 
 			if(attacker instanceof Player){
+				ToolStack tool = ToolStack.from(stack);
+				ToolAttackContext context = new ToolAttackContext(attacker, (Player)attacker, InteractionHand.MAIN_HAND, target, target, false, 0, false);
+
+				float damage = ToolAttackUtil.getAttributeAttackDamage(tool, target, EquipmentSlot.MAINHAND);
+				float damageTmp = damage;
+				for(ModifierEntry entry : tool.getModifierList()){
+					entry.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, entry, context, damageTmp, damage);
+				}
+
+				if(damage <= 0){
+					return;
+				}
+
+				for(ModifierEntry entry : tool.getModifierList()){
+					entry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, entry, context, damage, 0, 0);
+				}
+
+				cs.hitEffect(target, attacker);
+
+				if(result){
+					for(ModifierEntry entry : tool.getModifierList()){
+						entry.getHook(ModifierHooks.MELEE_HIT).failedMeleeHit(tool, entry, context, damage);
+					}
+				} else {
+					for(ModifierEntry entry : tool.getModifierList()){
+						entry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, entry, context, damage);
+					}
+				}
+			}
+
+			/* if(attacker instanceof Player){
 				ToolAttackUtil.attackEntity(stack, (Player)attacker, target);
 			} else {
 				cs.hitEffect(target, attacker);
-			}
+			} */
 			stack.hurtAndBreak(1, attacker, ItemSlashBlade.getOnBroken(stack));
 		});
 
