@@ -10,11 +10,13 @@ package moffy.ticex.event;
 import com.tacz.guns.api.event.common.EntityHurtByGunEvent;
 
 import moffy.ticex.item.modifiable.ModifiableGunItem;
+import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
@@ -27,9 +29,35 @@ public class TicEXTaczEvent {
         ItemStack mainHandStack = attacker.getMainHandItem();
         if(mainHandStack.getItem() instanceof ModifiableGunItem){
             ToolStack tool = ToolStack.from(mainHandStack);
+            int highestTier = 0;
+            for(MaterialVariant materialVariant : tool.getMaterials()){
+                int tier = materialVariant.get().getTier();
+                if(highestTier < tier){
+                    highestTier = tier;
+                }
+            }
+            float damage = event.getBaseAmount() * 0.04f * (4 - highestTier);
+            float damageTmp = damage;
+
             ToolAttackContext context = new ToolAttackContext(attacker, attacker instanceof Player ? (Player)attacker : null, InteractionHand.MAIN_HAND, target, target instanceof LivingEntity ? (LivingEntity)target : null, event.isHeadShot(), 0, false);
+
+            int lostStability = 10;
             for(ModifierEntry modifier : tool.getModifierList()){
-                modifier.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifier, context, event.getAmount(), 0, 0);
+                lostStability = modifier.getHook(ModifierHooks.TOOL_DAMAGE).onDamageTool(tool, modifier, lostStability, attacker);
+            }
+
+            tool.setDamage(tool.getDamage() + lostStability);
+
+            if(!mainHandStack.is(TicEXRegistry.KEY_MODIFIER_UNSTABLE) || !tool.isBroken()){
+                for(ModifierEntry modifier : tool.getModifierList()){
+                    damage = modifier.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, modifier, context, damageTmp, damage);
+                }
+    
+                event.setBaseAmount(damage);
+                
+                for(ModifierEntry modifier : tool.getModifierList()){
+                    modifier.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifier, context, event.getBaseAmount(), 0, 0);
+                }
             }
         }
     }
@@ -41,8 +69,10 @@ public class TicEXTaczEvent {
         if(mainHandStack.getItem() instanceof ModifiableGunItem){
             ToolStack tool = ToolStack.from(mainHandStack);
             ToolAttackContext context = new ToolAttackContext(attacker, attacker instanceof Player ? (Player)attacker : null, InteractionHand.MAIN_HAND, target, target instanceof LivingEntity ? (LivingEntity)target : null, event.isHeadShot(), 0, false);
-            for(ModifierEntry modifier : tool.getModifierList()){
-                modifier.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifier, context, event.getAmount());
+            if(!tool.isBroken()){
+                for(ModifierEntry modifier : tool.getModifierList()){
+                    modifier.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifier, context, event.getAmount());
+                }
             }
         }
     }
