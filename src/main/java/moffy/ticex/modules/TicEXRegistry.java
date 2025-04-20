@@ -18,6 +18,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.ArmorItem;
@@ -76,6 +77,8 @@ public class TicEXRegistry {
         SCORCHED = solidProps.apply(1);
     }
 
+    public static final TagKey<Item> KEY_MODIFIER_UNSTABLE = TagKey.create(Registries.ITEM, new ResourceLocation(TicEX.MODID, "tool/unstable_modifier"));
+
     public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
     public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "reforged_slashblade")); 
     public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "blitz_gun")); 
@@ -104,6 +107,7 @@ public class TicEXRegistry {
     public static RegistryObject<RecipeSerializer<?>> BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = null;
     public static RegistryObject<RecipeSerializer<?>> MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
     public static RegistryObject<RecipeSerializer<?>> SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<?>> MODIFIER_REPAIR_RECIPE_SERIALIZER = null;
     
 
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;

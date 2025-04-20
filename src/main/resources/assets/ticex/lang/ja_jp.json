@@ -190,6 +190,9 @@
     "curios.identifier.incomparable_mainhand": "比類なきメインツール",
     "curios.identifier.incomparable_offhand": "比類なきサブツール",
 
+    "tooltip.ticex.modifier_stability":"特性安定度: %s",
+    "tooltip.ticex.modifier_stability.lost":"§4§lロスト",
+
     "attribute.ticex.damage_taken": "被ダメージ軽減",
     "attribute.ticex.healing_received": "回復量"
 }

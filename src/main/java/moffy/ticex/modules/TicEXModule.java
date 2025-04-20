@@ -13,6 +13,7 @@ import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.recipe.EmbossmentBuildingRecipe;
 import moffy.ticex.lib.recipe.EmbossmentCastingRecipe;
 import moffy.ticex.lib.recipe.EmbossmentModifierRecipe;
+import moffy.ticex.lib.recipe.ModifierRepairRecipe;
 import moffy.ticex.lib.recipe.SingleEmbossmentModifierRecipe;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.modifier.ModifierSassy;
@@ -39,6 +40,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.mantle.recipe.helper.LoadableRecipeSerializer;
+import slimeknights.mantle.recipe.helper.SimpleRecipeSerializer;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.module.ModuleHook;
 import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
@@ -56,6 +58,7 @@ public class TicEXModule extends AddonModule{
         TicEXRegistry.SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("single_embossment_modifier", ()->LoadableRecipeSerializer.of(SingleEmbossmentModifierRecipe.LOADER));
         TicEXRegistry.CASTING_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("embossment_casting", ()->LoadableRecipeSerializer.of(EmbossmentCastingRecipe.LOADER, TinkerRecipeTypes.CASTING_TABLE));
         TicEXRegistry.BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("embossment_building", ()->LoadableRecipeSerializer.of(EmbossmentBuildingRecipe.LOADER));
+        TicEXRegistry.MODIFIER_REPAIR_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("repair_modifier", ()->new SimpleRecipeSerializer<>(ModifierRepairRecipe::new));
 
         TicEXRegistry.EMBOSSMENT_HOOK = ModifierHooks.LOADER.register(new ModuleHook<>(new ResourceLocation(TicEX.MODID, "embossment"), EmbossmentModifierHook.class, EmbossmentModifierHook.AllMerger::new, new EmbossmentModifierHook.DefaultClass()));
 

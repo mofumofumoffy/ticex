@@ -17,6 +17,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Sets;
 import com.tacz.guns.item.ModernKineticGunItem;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -59,6 +60,7 @@ import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.MaterialNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.library.utils.Util;
 
 public class ModifiableGunItem extends ModernKineticGunItem implements IModifiableDisplay{
@@ -161,27 +163,12 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
 
     @Override
     public boolean canBeDepleted() {
-        return true;
+        return false;
     }
 
     @Override
     public int getMaxDamage(ItemStack stack) {
         return ToolDamageUtil.getFakeMaxDamage(stack);
-    }
-
-    @Override
-    public int getDamage(ItemStack stack) {
-        if (!canBeDepleted()) {
-        return 0;
-        }
-        return ToolStack.from(stack).getDamage();
-    }
-
-    @Override
-    public void setDamage(ItemStack stack, int damage) {
-        if (canBeDepleted()) {
-        ToolStack.from(stack).setDamage(damage);
-        }
     }
 
     @Override
@@ -191,18 +178,8 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
     }
 
     @Override
-    public boolean isBarVisible(ItemStack stack) {
-        return stack.getCount() == 1 && DurabilityDisplayModifierHook.showDurabilityBar(stack);
-    }
-
-    @Override
     public int getBarColor(ItemStack pStack) {
         return DurabilityDisplayModifierHook.getDurabilityRGB(pStack);
-    }
-
-    @Override
-    public int getBarWidth(ItemStack pStack) {
-        return DurabilityDisplayModifierHook.getDurabilityWidth(pStack);
     }
 
     @Override
@@ -313,10 +290,12 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
         return component != null ? component : itemName;
      }
 
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        TooltipUtil.addInformation(this, stack, level, tooltip, SafeClientAccess.getTooltipKey(), flag);
-    }
+     @Override
+     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+         ToolStack tool = ToolStack.from(stack);
+         tooltip.add(Component.translatable("tooltip.ticex.modifier_stability", tool.isBroken() ? Component.translatable("tooltip.ticex.modifier_stability.lost").getString() : String.format(" %d %%", 100 - (int)Math.ceil(tool.getDamage()/tool.getStats().get(ToolStats.DURABILITY)*100))).withStyle(ChatFormatting.GREEN));
+         TooltipUtil.addInformation(this, stack, level, tooltip, SafeClientAccess.getTooltipKey(), flag);
+     }
 
     @Override
     public int getDefaultTooltipHideFlags(ItemStack stack) {

@@ -183,6 +183,9 @@
     "curios.identifier.incomparable_mainhand": "Incomparable Main Hand Tool",
     "curios.identifier.incomparable_offhand": "Incomparable Off Hand Tool",
 
+    "tooltip.ticex.modifier_stability":"Modifier Stability: %s",
+    "tooltip.ticex.modifier_stability.lost":"§4§lLOST",
+
     "attribute.ticex.damage_taken": "Damage Taken",
     "attribute.ticex.healing_received": "Healing Received"
 }
