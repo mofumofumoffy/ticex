@@ -4,6 +4,13 @@
       {
         "type": "addonapi:mods_available",
         "required_raw_module": "ticex:avaritia_compat"
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:mod_loaded",
+          "modid": "sakuratinker"
+        }
       }
     ],
     "ingredient": {

@@ -2,7 +2,7 @@
     "type": "tconstruct:material_fluid",
     "fluid": {
       "amount": 90,
-      "tag": "forge:molten_neutronium"
+      "tag": "forge:molten_neutron"
     },
     "output": "ticex:neutronium",
     "temperature": 1400

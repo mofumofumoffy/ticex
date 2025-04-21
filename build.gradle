@@ -138,6 +138,8 @@ repositories {
         url = "https://cursemaven.com"
     }
 
+    maven { url = "https://maven.createmod.net" }
+
     
     flatDir {
         dir './libs'
@@ -151,7 +153,7 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
 
-    implementation fg.deobf("blank:addonapi-mc1.20.1:1.2.0")
+    implementation fg.deobf("curse.maven:moffs-addonapi-dynload-1242459:6420515")
 
     implementation fg.deobf("curse.maven:mantle-74924:6258424")
     implementation fg.deobf("curse.maven:tinkers-construct-74072:6266282")
@@ -167,6 +169,16 @@ dependencies {
     implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6428724")
 
     implementation fg.deobf("curse.maven:timeless-and-classics-zero-1028108:6069384")
+
+    implementation fg.deobf("curse.maven:create-328085:6323270")
+    implementation fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
+    compileOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-api-${minecraft_version}:${flywheel_version}")
+    runtimeOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}") {
+        version {
+            strictly "[1.0,2.0)"
+            prefer flywheel_version
+        }
+    }
 
     implementation fg.deobf("curse.maven:curios-309927:6238756")
 

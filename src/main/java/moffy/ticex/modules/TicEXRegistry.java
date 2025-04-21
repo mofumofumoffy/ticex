@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
+import moffy.ticex.client.PartPredicate;
 import moffy.ticex.client.ShaderInstanceMap;
 import moffy.ticex.client.ToolShaderMap;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
@@ -33,6 +34,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -87,6 +89,7 @@ public class TicEXRegistry {
     public static final ToolShaderMap.Tool TOOL_SHADERS = new ToolShaderMap.Tool();
     public static final ToolShaderMap.Armor ARMOR_SHADERS = new ToolShaderMap.Armor();
     public static final ShaderInstanceMap SHADER_INSTANCE_MAP = new ShaderInstanceMap();
+    public static final Map<PartPredicate, IClientItemExtensions> RENDER_OVERRIDES = new HashMap<>();
     
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
     public static final TicEXItemDeferredRegisterExtension ITEMS_EXTENDED = new TicEXItemDeferredRegisterExtension(ITEMS, TicEX.MODID);
@@ -191,6 +194,8 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> OVERLOAD_MODIFIER = null;
     public static StaticModifier<Modifier> OVERRIDE_MODIFIER = null;
     public static DynamicModifier INCOMPARABLE_MODIFIER = null;
+    public static DynamicModifier CARDBOARD_MODIFIER = null;
+    public static StaticModifier<Modifier> FLOWERSTORM_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){

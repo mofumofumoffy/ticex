@@ -156,6 +156,9 @@
     "modifier.ticex.incomparable": "Incomparable",
     "modifier.ticex.incomparable.flavor": "Go beyond. Even the ultimate. Even the strongest.",
     "modifier.ticex.incomparable.description": "Tool or armor have reduced stats, but can be equipped in Curios slots",
+    "modifier.ticex.flowerstorm": "Flower Storm",
+    "modifier.ticex.flowerstorm.flavor": "As the snow melts, the buds begin to sprout.",
+    "modifier.ticex.flowerstorm.description": "Modifiers provided by TiCEX will attach.",
 
     "stat.tconstruct.harvest_tier.ticex.infinity": "Infinity",
     "stat.ticex.catalyst_mekasuit_helmet": "Catalyst(MekaSuit Helmet)",

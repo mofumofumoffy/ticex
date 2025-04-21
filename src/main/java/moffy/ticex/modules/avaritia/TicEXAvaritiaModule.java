@@ -21,6 +21,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import slimeknights.tconstruct.fluids.block.BurningLiquidBlock;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
@@ -67,6 +68,29 @@ public class TicEXAvaritiaModule extends AddonModule{
             );
 
             TicEXRegistry.SHADER_INSTANCE_MAP.addShader(infinityMaterial, TicEXCosmicShader.instance::getCosmicShader, TicEXCosmicShader.instance::setupCosmic);
+            
+            //Sakura Tinker Compats
+            if(ModList.get().isLoaded("sakuratinker")){
+                MaterialVariantId sakuraInfinityMaterial = new MaterialId(new ResourceLocation("sakuratinker", "infinity"));
+
+                TicEXRegistry.TOOL_SHADERS.addShader(sakuraInfinityMaterial, 
+                    (wrapper)->{
+                        TicEXCosmicShader.instance.setupCosmic(wrapper.getDisplayContext());
+                        RenderType cosmicRenderType = TicEXCosmicShader.instance.getCosmicRenderTypeTool();
+                        wrapper.renderQuadsWithConsumer(cosmicRenderType);
+                    }
+                );
+
+                TicEXRegistry.ARMOR_SHADERS.addShader(sakuraInfinityMaterial,
+                    (wrapper)->{
+                        TicEXCosmicShader.instance.setupCosmic();
+                        Material material = new Material(InventoryMenu.BLOCK_ATLAS, wrapper.getTexture());
+                        wrapper.renderArmorWithConsumer(material.buffer(wrapper.getBufferSource(), TicEXCosmicShader.instance::getCosmicRenderTypeArmor));
+                    }
+                );
+
+                TicEXRegistry.SHADER_INSTANCE_MAP.addShader(sakuraInfinityMaterial, TicEXCosmicShader.instance::getCosmicShader, TicEXCosmicShader.instance::setupCosmic);
+            }
         }); 
     }
 }
