@@ -3,6 +3,8 @@
 
     "item.ticex.reconstruction_core": "Reconstruction Core",
     "item.ticex.reconstruction_core.desc": "Call of the stars",
+    "item.ticex.flickering_reconstruction_core": "Flickering Reconstruction Core",
+    "item.ticex.flickering_reconstruction_core.desc": "Signal of the stars",
     "item.ticex.etheric_ingot":"Etheric Ingot",
     "item.ticex.molten_reconstruction_core_bucket": "Stream of Reconstruction Bucket",
     "item.ticex.molten_infinity_bucket": "Flow of Infinity Bucket",

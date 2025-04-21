@@ -1,5 +1,7 @@
 package moffy.ticex.utils;
 
+import java.util.function.Predicate;
+
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -33,15 +35,21 @@ public class TicEXUtils {
     }
 
     public static ItemStack getToolStack(LivingEntity entity, Modifier modifier){
+        return getToolStack(entity, (stack)->ToolStack.from(stack).getModifierLevel(modifier) > 0);
+    }
+
+    public static ItemStack getToolStack(LivingEntity entity, Predicate<ItemStack> predicate){
         ItemStack mainHandStack = entity.getMainHandItem();
-        if(mainHandStack.getItem() instanceof IModifiable && ToolStack.from(mainHandStack).getModifierLevel(modifier) > 0){
+        if(mainHandStack.getItem() instanceof IModifiable && predicate.test(mainHandStack)){
             return mainHandStack;
         } else {
             ItemStack offHandStack = entity.getOffhandItem();
-            if(offHandStack.getItem() instanceof IModifiable && ToolStack.from(offHandStack).getModifierLevel(modifier) > 0){
+            if(offHandStack.getItem() instanceof IModifiable && predicate.test(offHandStack)){
                 return offHandStack;
             }
         }
         return ItemStack.EMPTY;
     }
+
+    
 }

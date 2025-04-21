@@ -4,7 +4,6 @@
     "refmap": "ticex.refmap.json",
     "plugin": "moffy.ticex.modules.slashblade.TicEXSlashBladeMixinPlugin",
     "mixins": [
-        "MoveCommandMessageMixin",
         "ActiveStateSyncMessageMixin",
         "AttackManagerMixin",
         "TargetSelectorMixin",

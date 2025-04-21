@@ -8,6 +8,7 @@ import moffy.ticex.block.RFFurnaceBlock;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.caps.TiCEXToolCapabilityProvider;
 import moffy.ticex.event.TicEXEvent;
+import moffy.ticex.item.cores.ItemFlickeringCore;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.recipe.EmbossmentBuildingRecipe;
@@ -63,6 +64,7 @@ public class TicEXModule extends AddonModule{
         TicEXRegistry.EMBOSSMENT_HOOK = ModifierHooks.LOADER.register(new ModuleHook<>(new ResourceLocation(TicEX.MODID, "embossment"), EmbossmentModifierHook.class, EmbossmentModifierHook.AllMerger::new, new EmbossmentModifierHook.DefaultClass()));
 
         TicEXRegistry.RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register("reconstruction_core", ()->new ItemReconstCore(new Item.Properties(), null));
+        TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register("flickering_reconstruction_core", ()->new ItemFlickeringCore(new Item.Properties()));
         TicEXRegistry.ETHERIC_INGOT = TicEXRegistry.ITEMS.register("etheric_ingot", ()->new Item(new Item.Properties()));
 
         TicEXRegistry.ETHERIC_BLOCK = TicEXRegistry.BLOCKS.register("etheric_block", () -> new GlassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).noOcclusion()));

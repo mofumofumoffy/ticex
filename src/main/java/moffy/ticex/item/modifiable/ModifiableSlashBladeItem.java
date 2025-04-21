@@ -100,7 +100,7 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> toolMultimap = ArrayListMultimap.create(super.getAttributeModifiers(slot, stack));
-        if (slot == EquipmentSlot.MAINHAND) {
+        if (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) {
             stack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(bladeState -> {
                 StatsNBT stats = ToolStack.from(stack).getStats();
                 EnumSet<SwordType> swordType = SwordType.from(stack);
@@ -154,9 +154,6 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		if (handIn == InteractionHand.OFF_HAND && !(playerIn.getMainHandItem().getItem() instanceof ModifiableSlashBladeItem)) {
-			return InteractionResultHolder.pass(itemstack);
-		}
 		boolean result = itemstack.getCapability(ItemSlashBlade.BLADESTATE).map((state) -> {
 
 			playerIn.getCapability(ItemSlashBlade.INPUT_STATE).ifPresent((s) -> s.getCommands().add(InputCommand.R_CLICK));

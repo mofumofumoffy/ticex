@@ -4,6 +4,7 @@
       {
         "id": "ticex:reconstruction_core",
         "required": false
-      }
+      },
+      "#ticex:flickering_reconstruction"
     ]
   }

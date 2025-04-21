@@ -30,13 +30,17 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
     @Override
     public float getMeleeDamage(IToolStackView tool, ModifierEntry modifierEntry, ToolAttackContext context, float baseDamage,
             float damage) {
-        for(ModifierEntry toolEntry:tool.getModifierList()){
-            toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, context, damage * (2f + modifierEntry.getLevel() * 0.25f), baseDamage, damage);
+        if(!context.isExtraAttack()){
+            for(ModifierEntry toolEntry:tool.getModifierList()){
+                toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, context, damage * (2f + modifierEntry.getLevel() * 0.25f), baseDamage, damage);
+            }
+            for(ModifierEntry toolEntry:tool.getModifierList()){
+                toolEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, context, damage * (2f + modifierEntry.getLevel() * 0.25f));
+            }
+
+            return 0;
         }
-        for(ModifierEntry toolEntry:tool.getModifierList()){
-            toolEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, context, damage * (2f + modifierEntry.getLevel() * 0.25f));
-        }
-        return 0;
+        return damage;
     }
 
     @Override

@@ -59,9 +59,9 @@ public class TicEXSlashBladeModule extends AddonModule{
         TicEXRegistry.KOSHIRAE_MODIFIER = TicEXRegistry.MODIFIERS.register("koshirae", ModifierKoshirae::new);
         TicEXRegistry.PROUD_MODIFIER = TicEXRegistry.MODIFIERS.register("hidden_proud", ModifierHiddenProud::new);
 
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, false, TicEXSBEvent::onInputChange);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, false, TicEXSBEvent::onLivingDeathEvent);
-        MinecraftForge.EVENT_BUS.addListener(TicEXSBEvent::onXPDropping);
+        //MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, false, TicEXSBEvent::onInputChange);
+        //MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, false, TicEXSBEvent::onLivingDeathEvent);
+        //MinecraftForge.EVENT_BUS.addListener(TicEXSBEvent::onXPDropping);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
             IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

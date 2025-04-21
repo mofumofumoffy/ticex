@@ -10,6 +10,6 @@
       "item": "slashblade:slashblade"
     },
     "cast_consumed": true,
-    "item_cost": 9,
+    "item_cost": 1,
     "result": "ticex:catalyst_slashblade"
 }

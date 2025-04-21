@@ -6,7 +6,7 @@
     "cast_consumed": true,
     "cooling_time": 100,
     "fluid": {
-      "amount": 1500,
+      "amount": 2000,
       "tag": "forge:molten_reconstruction_core"
     },
     "result": "ticex:scorched_rf_furnace"

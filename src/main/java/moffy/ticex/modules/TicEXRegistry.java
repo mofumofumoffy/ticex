@@ -118,6 +118,7 @@ public class TicEXRegistry {
     public static RegistryObject<Item> DRACONIC_CRYSTAL = null;
     public static RegistryObject<Item> CHAOTIC_CRYSTAL = null;
     public static RegistryObject<Item> RECONSTRUCTION_CORE = null;
+    public static RegistryObject<Item> FLICKERING_RECONSTRUCTION_CORE = null;
     public static RegistryObject<Item> CELESTIAL_CORE = null;
     public static RegistryObject<Item> RADIATION_SHELDING_CORE = null;
     public static RegistryObject<Item> DRACONIUM_EVOLVED_CORE = null;

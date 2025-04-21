@@ -7,7 +7,7 @@
         },
         {
           "value": {
-            "tag": "ticex:reconstruction",
+            "tag": "ticex:flickering_reconstruction",
             "type": "forge:tag_empty"
           },
           "type": "forge:not"

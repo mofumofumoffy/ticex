@@ -16,7 +16,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
@@ -29,24 +28,17 @@ public class TicEXTaczEvent {
         ItemStack mainHandStack = attacker.getMainHandItem();
         if(mainHandStack.getItem() instanceof ModifiableGunItem){
             ToolStack tool = ToolStack.from(mainHandStack);
-            int highestTier = 0;
-            for(MaterialVariant materialVariant : tool.getMaterials()){
-                int tier = materialVariant.get().getTier();
-                if(highestTier < tier){
-                    highestTier = tier;
-                }
-            }
-            float damage = event.getBaseAmount() * 0.04f * (4 - highestTier);
+            float damage = event.getBaseAmount() * 0.9f;
             float damageTmp = damage;
 
             ToolAttackContext context = new ToolAttackContext(attacker, attacker instanceof Player ? (Player)attacker : null, InteractionHand.MAIN_HAND, target, target instanceof LivingEntity ? (LivingEntity)target : null, event.isHeadShot(), 0, false);
 
-            int lostStability = 10;
+            /* int lostStability = 10;
             for(ModifierEntry modifier : tool.getModifierList()){
                 lostStability = modifier.getHook(ModifierHooks.TOOL_DAMAGE).onDamageTool(tool, modifier, lostStability, attacker);
             }
 
-            tool.setDamage(tool.getDamage() + lostStability);
+            tool.setDamage(tool.getDamage() + lostStability); */
 
             if(!mainHandStack.is(TicEXRegistry.KEY_MODIFIER_UNSTABLE) || !tool.isBroken()){
                 for(ModifierEntry modifier : tool.getModifierList()){

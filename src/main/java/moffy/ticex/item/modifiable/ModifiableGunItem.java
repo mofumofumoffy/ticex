@@ -17,7 +17,6 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Sets;
 import com.tacz.guns.item.ModernKineticGunItem;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -60,7 +59,6 @@ import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.MaterialNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
-import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.library.utils.Util;
 
 public class ModifiableGunItem extends ModernKineticGunItem implements IModifiableDisplay{
@@ -292,8 +290,8 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
 
      @Override
      public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-         ToolStack tool = ToolStack.from(stack);
-         tooltip.add(Component.translatable("tooltip.ticex.modifier_stability", tool.isBroken() ? Component.translatable("tooltip.ticex.modifier_stability.lost").getString() : String.format(" %d %%", 100 - (int)Math.ceil(tool.getDamage()/tool.getStats().get(ToolStats.DURABILITY)*100))).withStyle(ChatFormatting.GREEN));
+         /* ToolStack tool = ToolStack.from(stack);
+         tooltip.add(Component.translatable("tooltip.ticex.modifier_stability", tool.isBroken() ? Component.translatable("tooltip.ticex.modifier_stability.lost").getString() : String.format(" %d %%", 100 - (int)Math.ceil(tool.getDamage()/tool.getStats().get(ToolStats.DURABILITY)*100))).withStyle(ChatFormatting.GREEN)); */
          TooltipUtil.addInformation(this, stack, level, tooltip, SafeClientAccess.getTooltipKey(), flag);
      }
 

@@ -42,6 +42,7 @@ import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 
 public class TicEXSBEvent {
 
+    @Deprecated
     public static void onInputChange(InputCommandEvent event) {
         ServerPlayer player = event.getEntity();
         ItemStack stack = event.getEntity().getMainHandItem();
@@ -95,6 +96,7 @@ public class TicEXSBEvent {
         });
     }
 
+    @Deprecated
     public static void onLivingDeathEvent(LivingDeathEvent event) {
         Entity trueSource = event.getSource().getEntity();
 
@@ -112,6 +114,7 @@ public class TicEXSBEvent {
         });
     }
 
+    @Deprecated
     public static void onXPDropping(LivingExperienceDropEvent event) {
         Player player = event.getAttackingPlayer();
         if (player == null)
@@ -199,7 +202,6 @@ public class TicEXSBEvent {
             entity.xRotO = prevPitch;
         });
     }
-
 
     @OnlyIn(Dist.CLIENT)
     public static void addLayers(EntityRenderersEvent.AddLayers event) {
