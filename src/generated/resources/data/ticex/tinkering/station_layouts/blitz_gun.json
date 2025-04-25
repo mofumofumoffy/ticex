@@ -26,7 +26,7 @@
                 "item":"ticex:catalyst_kinetic_gun"
             },
             "icon": "ticex:catalyst",
-            "translation_key": "tagtype.ticex.catalyst",
+            "translation_key": "item.ticex.catalyst_kinetic_gun",
             "x": 24,
             "y": 34
         }

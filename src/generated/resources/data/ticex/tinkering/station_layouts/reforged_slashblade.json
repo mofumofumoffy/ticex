@@ -35,7 +35,7 @@
                 "item":"ticex:catalyst_slashblade"
             },
             "icon": "ticex:catalyst",
-            "translation_key": "tagtype.ticex.catalyst",
+            "translation_key": "item.ticex.catalyst_slashblade",
             "x": 30,
             "y": 44
         }
