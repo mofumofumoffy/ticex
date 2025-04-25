@@ -22,6 +22,7 @@
     "item.ticex.mekaplate_boots": "MekaPlate Boots",
     "item.ticex.reforged_slashblade": "Reforged SlashBlade",
     "item.ticex.blitz_gun": "Blitz Gun",
+    "item.ticex.revival_spellbook_irons": "Iron's Revival Spellbook",
 
     "tagtype.ticex.catalyst": "Seram Catalyst",
 
@@ -31,6 +32,7 @@
     "item.ticex.catalyst_mekasuit_boots": "Seram Catalyst - MekaSuit Boots",
     "item.ticex.catalyst_slashblade": "Seram Catalyst - SlashBlade",
     "item.ticex.catalyst_kinetic_gun": "Seram Catalyst - Modern Kinetic Gun",
+    "item.ticex.catalyst_irons_spellbook": "Seram Catalyst - Iron's Spellbook",
 
     "item.ticex.slashblade_blade": "Blade",
     "item.ticex.slashblade_saya": "Saya",
@@ -156,9 +158,15 @@
     "modifier.ticex.incomparable": "Incomparable",
     "modifier.ticex.incomparable.flavor": "Go beyond. Even the ultimate. Even the strongest.",
     "modifier.ticex.incomparable.description": "Tool or armor have reduced stats, but can be equipped in Curios slots",
-    "modifier.ticex.flowerstorm": "Flower Storm",
+    "modifier.ticex.flowerstorm": "Flowerstorm",
     "modifier.ticex.flowerstorm.flavor": "As the snow melts, the buds begin to sprout.",
-    "modifier.ticex.flowerstorm.description": "Modifiers provided by TiCEX will attach.",
+    "modifier.ticex.flowerstorm.description": "Attach modifiers provided exclusively by TiCEX",
+    "modifier.ticex.cardboard": "Cardboard",
+    "modifier.ticex.cardboard.flavor": "!",
+    "modifier.ticex.cardboard.description": "When applied to the whole body, it gives the ability to hide in cardboard",
+    "modifier.ticex.overcasting": "Over-Casting",
+    "modifier.ticex.overcasting.flavor": "My goodness, and the scarlet bird...",
+    "modifier.ticex.overcasting.description": "The mana cost increases, but can add the effect of modifiers to the spell.",
 
     "stat.tconstruct.harvest_tier.ticex.infinity": "Infinity",
     "stat.ticex.catalyst_mekasuit_helmet": "Catalyst(MekaSuit Helmet)",
@@ -167,6 +175,7 @@
     "stat.ticex.catalyst_mekasuit_boots": "Catalyst(MekaSuit Boots)",
     "stat.ticex.catalyst_slashblade": "Catalyst(SlashBlade)",
     "stat.ticex.catalyst_kinetic_gun": "Catalyst(Modern Kinetic Gun)",
+    "stat.ticex.catalyst_irons_spellbook": "Catalyst(Iron's Spellbook)",
 
     "recipe.ticex.embossment_not_allowed": "The item to be embossed does not meet the conditions for applying",
     "recipe.ticex.modifier.evolved_requirements_1": "§9Draconium§r-Evolved requires Netherite and Reinforced V to apply",
@@ -180,6 +189,8 @@
     "gui.ticex.reforged_slashblade.description": "Reforged SlashBlade is the tool of samrai's relic, which has been reconstructed with the power of the star clusters.",
     "gui.ticex.blitz_gun": "Blitz Gun",
     "gui.ticex.blitz_gun.description": "Blitz Gun is the tool of precision and swiftness, which has been reconstructed with the power of the star clusters.",
+    "gui.ticex.revival_spellbook_irons": "Iron's Revival Spellbook",
+    "gui.ticex.revival_spellbook_irons.description": "Blitz Gun is the mystic tool, which has been reconstructed with the power of the star clusters.",
 
     "curios.identifier.incomparable_head": "Incomparable Helmet",
     "curios.identifier.incomparable_chest": "Incomparable Chestplate",
@@ -187,9 +198,6 @@
     "curios.identifier.incomparable_feet": "Incomparable Boots",
     "curios.identifier.incomparable_mainhand": "Incomparable Main Hand Tool",
     "curios.identifier.incomparable_offhand": "Incomparable Off Hand Tool",
-
-    "tooltip.ticex.modifier_stability":"Modifier Stability: %s",
-    "tooltip.ticex.modifier_stability.lost":"§4§lLOST",
 
     "attribute.ticex.damage_taken": "Damage Taken",
     "attribute.ticex.healing_received": "Healing Received"

@@ -1,0 +1,17 @@
+{
+    "type": "ticex:embossment_casting",
+    "conditions": [
+      {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:irons_spellbooks_compat"
+      }
+    ],
+    "cast": {
+        "type": "forge:difference",
+        "base": { "tag": "curios:spellbook" },
+        "subtracted": { "tag": "tconstruct:modifiable" }
+    },
+    "cast_consumed": true,
+    "item_cost": 1,
+    "result": "ticex:catalyst_irons_spellbook"
+  }

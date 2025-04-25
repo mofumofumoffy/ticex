@@ -1,5 +1,5 @@
 {
-    "type": "tconstruct:table_casting_material",
+    "type": "ticex:embossment_casting",
     "conditions": [
       {
         "type": "addonapi:mods_available",

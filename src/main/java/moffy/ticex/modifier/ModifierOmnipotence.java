@@ -91,7 +91,7 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
     }
 
     private void dealInfinityDamage(Level level, LivingEntity attackerEntity, Entity targetEntity){
-        if(targetEntity.isAlive()){
+        if(targetEntity != null && targetEntity.isAlive()){
             LivingEntity victim = null;
 
             if(targetEntity instanceof LivingEntity){

@@ -22,16 +22,17 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.tools.stats.HeadMaterialStats;
-import slimeknights.tconstruct.tools.stats.LimbMaterialStats;
 
 public class TicEXSlashBladeModule extends AddonModule{
 
+    @SuppressWarnings("deprecation")
     public TicEXSlashBladeModule(){
 
         TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY = TicEXRegistry.ENTITIES.register("reforged_slashblade", ()->EntityType.Builder.of(SBToolItemEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).setTrackingRange(10)
@@ -50,7 +51,7 @@ public class TicEXSlashBladeModule extends AddonModule{
         TicEXRegistry.REFORGED_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("reforged_slashblade", ()->new ModifiableSlashBladeItem(new Item.Properties().stacksTo(1), TicEXRegistry.SLASHBLADE_DEFINITION));
 
         TicEXRegistry.SLASHBLADE_BLADE = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_blade", ()->new ToolPartItem(defaultProperties, HeadMaterialStats.ID));
-        TicEXRegistry.SLASHBLADE_SAYA = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_saya", ()->new ToolPartItem(defaultProperties, LimbMaterialStats.ID));
+        TicEXRegistry.SLASHBLADE_SAYA = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_saya", ()->new ToolPartItem(defaultProperties, HeadMaterialStats.ID));
 
         TicEXRegistry.SLASHBLADE_BLADE_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast("slashblade_blade", defaultProperties);
         TicEXRegistry.SLASHBLADE_SAYA_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast("slashblade_saya", defaultProperties);
@@ -59,9 +60,11 @@ public class TicEXSlashBladeModule extends AddonModule{
         TicEXRegistry.KOSHIRAE_MODIFIER = TicEXRegistry.MODIFIERS.register("koshirae", ModifierKoshirae::new);
         TicEXRegistry.PROUD_MODIFIER = TicEXRegistry.MODIFIERS.register("hidden_proud", ModifierHiddenProud::new);
 
-        //MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, false, TicEXSBEvent::onInputChange);
-        //MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, false, TicEXSBEvent::onLivingDeathEvent);
-        //MinecraftForge.EVENT_BUS.addListener(TicEXSBEvent::onXPDropping);
+        if(isPreviousVersion()){
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, false, TicEXSBEvent::onInputChange);
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, false, TicEXSBEvent::onLivingDeathEvent);
+            MinecraftForge.EVENT_BUS.addListener(TicEXSBEvent::onXPDropping);
+        }
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
             IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -78,5 +81,9 @@ public class TicEXSlashBladeModule extends AddonModule{
         TicEXRegistry.CUSTOM_MODELS.put(TicEXRegistry.REFORGED_SLASHBLADE.get(), (originalModel)->{
             return new CustomModel(originalModel);
         });
+    }
+
+    public static boolean isPreviousVersion(){
+        return ModList.get().getModFileById("slashblade").versionString().compareTo("1.2.0") < 0;
     }
 }

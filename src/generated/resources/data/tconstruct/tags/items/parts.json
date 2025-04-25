@@ -5,6 +5,9 @@
       {"id":"ticex:catalyst_mekasuit_leggings", "required":false},
       {"id":"ticex:catalyst_mekasuit_boots", "required":false},
       {"id":"ticex:catalyst_slashblade", "required":false},
-      {"id":"ticex:catalyst_kinetic_gun", "required":false}
+      {"id":"ticex:catalyst_kinetic_gun", "required":false},
+
+      {"id":"ticex:slashblade_blade", "required":false},
+      {"id":"ticex:slashblade_saya", "required":false}
     ]
   }

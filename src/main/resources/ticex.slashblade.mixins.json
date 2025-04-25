@@ -4,16 +4,18 @@
     "refmap": "ticex.refmap.json",
     "plugin": "moffy.ticex.modules.slashblade.TicEXSlashBladeMixinPlugin",
     "mixins": [
-        "ActiveStateSyncMessageMixin",
         "AttackManagerMixin",
         "TargetSelectorMixin",
         "SummonedSwordMixin",
         "PlayerAttackHelperMixin"
     ],
     "client": [
+        "ActiveStateSyncMessageMixin",
         "ClientHandlerMixin"
     ],
-    "server": [],
+    "server": [
+        
+    ],
     "injectors": {
         "defaultRequire": 1
     },

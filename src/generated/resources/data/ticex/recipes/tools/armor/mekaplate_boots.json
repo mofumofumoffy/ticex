@@ -1,5 +1,5 @@
 {
-    "type": "tconstruct:tool_building",
+    "type": "ticex:embossment_building",
     "result": "ticex:mekaplate_boots",
     "result_count": 1,
     "slot_layout": "ticex:seram_gear"

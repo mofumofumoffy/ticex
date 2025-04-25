@@ -29,6 +29,7 @@ public class TicEXTaczModule extends AddonModule{
 
         MinecraftForge.EVENT_BUS.addListener(TicEXTaczEvent::onBeforeHit);
         MinecraftForge.EVENT_BUS.addListener(TicEXTaczEvent::onAfterHit);
+        MinecraftForge.EVENT_BUS.addListener(TicEXTaczEvent::onMelee);
     }
 
     @Override

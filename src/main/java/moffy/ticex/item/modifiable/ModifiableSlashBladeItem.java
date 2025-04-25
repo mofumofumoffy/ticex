@@ -274,7 +274,7 @@ public class ModifiableSlashBladeItem extends ModifiableSwordItem{
 				ToolStack tool = ToolStack.from(stack);
 				ToolAttackContext context = new ToolAttackContext(attacker, (Player)attacker, InteractionHand.MAIN_HAND, target, target, false, 0, false);
 
-				float damage = ToolAttackUtil.getAttributeAttackDamage(tool, target, EquipmentSlot.MAINHAND);
+				float damage = ToolAttackUtil.getAttributeAttackDamage(tool, (Player)attacker, EquipmentSlot.MAINHAND);
 				float damageTmp = damage;
 				for(ModifierEntry entry : tool.getModifierList()){
 					entry.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, entry, context, damageTmp, damage);

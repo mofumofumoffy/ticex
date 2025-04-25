@@ -1,0 +1,20 @@
+{
+    "type": "tconstruct:modifier",
+    "inputs": [
+      {
+        "item": "ticex:catalyst_irons_spellbook"
+      }
+    ],
+    "tools": [
+      {
+        "type": "forge:difference",
+        "base": { "tag": "tconstruct:modifiable/durability" },
+        "subtracted": { "tag": "ticex:tool/spellbook_tool" }
+      }
+    ],
+    "slots": {
+      "upgrades": 1
+    },
+    "allow_crystal": true,
+    "result": "ticex:overcasting"
+}

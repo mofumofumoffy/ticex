@@ -58,7 +58,7 @@
 
 ## Credits
 
-Some assets in this mod were based on materials from the mods listed in the [Integrated Mods & Features](#integrated-mods--features) section.  
+Some resources in this mod were based on materials from the mods listed in the [Integrated Mods & Features](#integrated-mods--features) section.  
 Additionally, it draws inspiration from the following mods:
 
 - Materialis

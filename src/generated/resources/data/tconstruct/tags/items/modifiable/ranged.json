@@ -1,5 +1,5 @@
 {
     "values": [
-        {"id":"ticex:reforged_slashblade", "required":false}
+      {"id":"ticex:blitz_gun", "required":false}
     ]
-}
+  }

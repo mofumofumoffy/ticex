@@ -47,8 +47,11 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
     public boolean onProjectileHitEntity(ModifierNBT modifiers, ModDataNBT persistentData, ModifierEntry modifier,
             Projectile projectile, EntityHitResult hit, LivingEntity attacker, LivingEntity target) {
         for(ModifierEntry toolEntry:modifiers.getModifiers()){
-            toolEntry.getHook(ModifierHooks.PROJECTILE_HIT).onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit, attacker, target);
+            if(!toolEntry.matches(this)){
+                toolEntry.getHook(ModifierHooks.PROJECTILE_HIT).onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit, attacker, target);
+            };
+            
         }
-        return true;
+        return false;
     }
 }

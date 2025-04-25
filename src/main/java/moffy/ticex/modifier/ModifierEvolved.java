@@ -119,14 +119,16 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
         if(player != null){
             Entity target = context.getTarget();
             ItemStack stack = player.getItemInHand(context.getHand());
-            ModuleHost host = stack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).orElseThrow(IllegalStateException::new);
-            IOPStorage opStorage = stack.getCapability(DECapabilities.OP_STORAGE).orElseThrow(IllegalStateException::new);
-            int attackDamage = getDamageBonus(host, opStorage);
-            int extracted = opStorage.extractEnergy(tool.getStats().getInt(ToolStats.ATTACK_DAMAGE) + attackDamage, false);
-            hurt(player, target, stack, Math.min(extracted, attackDamage));
-            double aoe = getAttackAoe(host);
-            if (!context.isExtraAttack() && aoe > 0 && target instanceof LivingEntity) {
-                dealAOEDamage(tool, context, player, (LivingEntity)target, stack, Math.min(extracted, attackDamage) * 0.8F, aoe);
+            if(stack != null && !stack.isEmpty() && ToolStack.from(stack).getModifierLevel(this) > 0){
+                ModuleHost host = stack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).orElseThrow(IllegalStateException::new);
+                IOPStorage opStorage = stack.getCapability(DECapabilities.OP_STORAGE).orElseThrow(IllegalStateException::new);
+                int attackDamage = getDamageBonus(host, opStorage);
+                int extracted = opStorage.extractEnergy(tool.getStats().getInt(ToolStats.ATTACK_DAMAGE) + attackDamage, false);
+                hurt(player, target, stack, Math.min(extracted, attackDamage));
+                double aoe = getAttackAoe(host);
+                if (!context.isExtraAttack() && aoe > 0 && target instanceof LivingEntity) {
+                    dealAOEDamage(tool, context, player, (LivingEntity)target, stack, Math.min(extracted, attackDamage) * 0.8F, aoe);
+                }
             }
         }
     }

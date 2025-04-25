@@ -1,0 +1,28 @@
+
+{
+    "type": "create:mechanical_crafting",
+    "conditions": [
+      {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:create_compat"
+      }
+    ],
+    "pattern": [
+        "CCCCC",
+        "CCCCC",
+        "CCRCC",
+        "CCCCC",
+        "CCCCC"
+    ],
+    "key": {
+        "C": {
+        "item": "create:cardboard"
+        },
+        "R": {
+        "item": "ticex:reconstruction_core"
+        }
+    },
+    "result": {
+        "item": "ticex:cardboard_core"
+    }
+}

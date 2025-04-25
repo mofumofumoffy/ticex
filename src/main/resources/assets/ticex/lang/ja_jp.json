@@ -25,6 +25,7 @@
     "item.ticex.mekaplate_boots": "Mekaプレート ブーツ",
     "item.ticex.reforged_slashblade": "再鍛抜刀剣",
     "item.ticex.blitz_gun": "ブリッツガン",
+    "item.ticex.revival_spellbook_irons": "リバイバル スペルブック(Iron's)",
 
     "tagtype.ticex.catalyst": "セラムカタリスト",
 
@@ -34,6 +35,7 @@
     "item.ticex.catalyst_mekasuit_boots": "セラムカタリスト - MekaSuit ブーツ",
     "item.ticex.catalyst_slashblade": "セラムカタリスト - 抜刀剣",
     "item.ticex.catalyst_kinetic_gun": "セラムカタリスト - 現代式実体弾銃",
+    "item.ticex.catalyst_irons_spellbook": "セラムカタリスト - Iron's スペルブック",
 
     "item.ticex.slashblade_blade": "刀身",
     "item.ticex.slashblade_saya": "鞘",
@@ -162,6 +164,15 @@
     "modifier.ticex.incomparable": "桁違い",
     "modifier.ticex.incomparable.flavor": "最大すら、最強すら、超えて行け。",
     "modifier.ticex.incomparable.description": "ツールやアーマーは、性能を落とし、Curiosスロットに装備可能になる",
+    "modifier.ticex.flowerstorm": "花吹雪",
+    "modifier.ticex.flowerstorm.flavor": "雪が解け、つぼみは芽吹く",
+    "modifier.ticex.flowerstorm.description": "TiCEXが独自に提供するモディファイアを付与する",
+    "modifier.ticex.cardboard": "ダンボール",
+    "modifier.ticex.cardboard.flavor": "!",
+    "modifier.ticex.cardboard.description": "全身に付与すると、ダンボールに身を隠せるようになる",
+    "modifier.ticex.overcasting": "オーバー詠唱",
+    "modifier.ticex.overcasting.flavor": "緋色の鳥よ...",
+    "modifier.ticex.overcasting.description": "消費マナコストが上昇するが、スペルに特性の効果を乗せることができる",
 
     "stat.tconstruct.harvest_tier.ticex.infinity": "インフィニティ",
 
@@ -171,6 +182,7 @@
     "stat.ticex.catalyst_mekasuit_boots": "カタリスト（MekaSuit ブーツ）",
     "stat.ticex.catalyst_slashblade": "カタリスト（抜刀剣）",
     "stat.ticex.catalyst_kinetic_gun": "カタリスト（現代式実体弾銃）",
+    "stat.ticex.catalyst_irons_spellbook": "カタリスト（Iron's スペルブック）",
 
     "recipe.ticex.embossment_not_allowed": "エンボスの条件を満たしていません",
     "recipe.ticex.modifier.evolved_requirements_1": "§9ドラコニウム§r-エボルトには、ネザライトと補強Vが必要です",
@@ -184,6 +196,8 @@
     "gui.ticex.reforged_slashblade.description": "再鍛抜刀剣は、星の力で再構築された武の遺志を宿したツールです。",
     "gui.ticex.blitz_gun": "ブリッツガン",
     "gui.ticex.blitz_gun.description": "ブリッツガンは、星の力で再構築された精密さと迅速さを備えたツールです。",
+    "gui.ticex.revival_spellbook_irons": "リバイバル スペルブック（Iron's）",
+    "gui.ticex.revival_spellbook_irons.description": "リバイバル スペルブックは、星の力で再構築された神秘的なツールです。",
 
     "curios.identifier.incomparable_head": "比類なきヘルメット",
     "curios.identifier.incomparable_chest": "比類なきチェストプレート",
@@ -191,9 +205,6 @@
     "curios.identifier.incomparable_feet": "比類なきブーツ",
     "curios.identifier.incomparable_mainhand": "比類なきメインツール",
     "curios.identifier.incomparable_offhand": "比類なきサブツール",
-
-    "tooltip.ticex.modifier_stability":"特性安定度: %s",
-    "tooltip.ticex.modifier_stability.lost":"§4§lロスト",
 
     "attribute.ticex.damage_taken": "被ダメージ軽減",
     "attribute.ticex.healing_received": "回復量"

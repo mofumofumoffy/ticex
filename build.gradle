@@ -117,8 +117,9 @@ mixin {
     config 'ticex.mixins.json'
     config 'ticex.mekanism.mixins.json'
     config 'ticex.draconicevolution.mixins.json'
-    config 'ticex.slashblade.mixin.json'
-    config 'ticex.curios.mixin.json'
+    config 'ticex.slashblade.mixins.json'
+    config 'ticex.create.mixins.json'
+    config 'ticex.curios.mixins.json'
 
     debug.verbose = true
     debug.export = true
@@ -180,9 +181,15 @@ dependencies {
         }
     }
 
+    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:6371701")
+    implementation fg.deobf("curse.maven:caelus-308989:5281700")
+    implementation fg.deobf("curse.maven:geckolib-388172:6333474")
+    implementation fg.deobf("curse.maven:playeranimator-658587:4587214")
+
     implementation fg.deobf("curse.maven:curios-309927:6238756")
 
     implementation fg.deobf("curse.maven:jei-238222:6075247")
+    implementation fg.deobf("curse.maven:tconjei-974154:6442609")
     
     runtimeOnly fg.deobf("curse.maven:mouse-tweaks-60089:5338457")
     runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")

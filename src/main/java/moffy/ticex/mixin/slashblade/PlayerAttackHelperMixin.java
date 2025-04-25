@@ -54,7 +54,7 @@ public class PlayerAttackHelperMixin {
             cb.cancel();
         }
         ItemStack mainHandStack = attacker.getMainHandItem();
-        if(mainHandStack.getItem() instanceof IModifiable){
+        if(mainHandStack != null && mainHandStack.getItem() instanceof IModifiable){
             boolean isCritical = attacker.fallDistance > 0.0F && !attacker.onGround() &&
                             !attacker.onClimbable() && !attacker.isInWater() &&
                             !attacker.hasEffect(MobEffects.BLINDNESS) &&
@@ -167,7 +167,7 @@ public class PlayerAttackHelperMixin {
                             entity = ((net.minecraftforge.entity.PartEntity<?>) target).getParent();
                         }
 
-                        if (!attacker.level().isClientSide() && !itemstack1.isEmpty() && entity instanceof LivingEntity) {
+                        if (itemstack1 != null && !attacker.level().isClientSide() && !itemstack1.isEmpty() && entity instanceof LivingEntity) {
                             itemstack1.hurtEnemy((LivingEntity) entity, attacker);
                         }
 

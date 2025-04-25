@@ -5,6 +5,7 @@
         {"id":"ticex:mekaplate_leggings", "required":false},
         {"id":"ticex:mekaplate_boots", "required":false},
         {"id":"ticex:reforged_slashblade", "required":false},
-        {"id":"ticex:blitz_gun", "required":false}
+        {"id":"ticex:blitz_gun", "required":false},
+        {"id":"ticex:revival_spellbook_irons", "required":false}
     ]
 }

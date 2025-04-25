@@ -7,6 +7,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.block.RFFurnaceBlock;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.caps.TiCEXToolCapabilityProvider;
+import moffy.ticex.entity.FakeLivingEntity;
 import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.cores.ItemFlickeringCore;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -23,6 +24,8 @@ import moffy.ticex.utils.TicEXFluidUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -54,6 +57,10 @@ public class TicEXModule extends AddonModule{
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ToolCapabilityProvider.register(TiCEXToolCapabilityProvider::new);
+
+        TicEXRegistry.FAKE_LIVING_ENTITY = TicEXRegistry.ENTITIES.register("fake_living_entity", ()->EntityType.Builder.of(FakeLivingEntity::new, MobCategory.MONSTER).sized(0.5F, 0.5F).setTrackingRange(10)
+        .setUpdateInterval(20).setShouldReceiveVelocityUpdates(false)
+        .build(TicEX.MODID+":fake_living_entity"));
 
         TicEXRegistry.MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("embossment_modifier", ()->LoadableRecipeSerializer.of(EmbossmentModifierRecipe.LOADER));
         TicEXRegistry.SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("single_embossment_modifier", ()->LoadableRecipeSerializer.of(SingleEmbossmentModifierRecipe.LOADER));
@@ -108,7 +115,10 @@ public class TicEXModule extends AddonModule{
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
         TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
         TicEXRegistry.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
+        //TicEXRegistry.DEFINE_MODIFIER = TicEXRegistry.MODIFIERS.register("define", ModifierDefine::new);
 
+        bus.addListener(TicEXEvent::onEntityAttributeCreation);
+        bus.addListener(TicEXEvent::onEntityAttributeModification);
         bus.addListener(TicEXEvent::onRegisterCaps);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onPlayerTick);

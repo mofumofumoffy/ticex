@@ -1,0 +1,13 @@
+{
+    "type": "tconstruct:modifier",
+    "inputs": [
+      { "item":"ticex:cardboard_core" }
+    ],
+    "tools": { "tag": "tconstruct:modifiable/armor/worn" }
+    ,
+    "slots": {
+      "upgrades": 1
+    },
+    "allow_crystal": true,
+    "result": "ticex:cardboard"
+  }

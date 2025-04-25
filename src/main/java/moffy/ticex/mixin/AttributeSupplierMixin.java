@@ -8,14 +8,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 
+@Deprecated
 @Mixin(AttributeSupplier.Builder.class)
-public class TicEXEntityMixin {
+public class AttributeSupplierMixin {
     @Inject(
-        at = {@At("INVOKE")},
+        at = {@At("head")},
         method = {"build"},
         cancellable = true
     )
     public void addExtraAttribute(CallbackInfoReturnable<AttributeSupplier> info){
-        ((AttributeSupplier.Builder)((Object)this)).add(TicEXRegistry.HEALING_RECEIVED.get()).add(TicEXRegistry.DAMAGE_TAKEN.get());
+        if(TicEXRegistry.DAMAGE_TAKEN != null && TicEXRegistry.HEALING_RECEIVED != null){
+            ((AttributeSupplier.Builder)((Object)this)).add(TicEXRegistry.HEALING_RECEIVED.get()).add(TicEXRegistry.DAMAGE_TAKEN.get());
+        }
     }
 }

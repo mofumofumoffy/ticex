@@ -22,7 +22,8 @@
         "overload": "#74ff4a",
         "override": "#de7631",
         "incomparable": "#FF5555",
-        "cardboard": "#e69f6a"
+        "cardboard": "#e69f6a",
+        "overcasting": "#d3381c"
     },
     "material.ticex": {
         "infinity": "#FF5555",

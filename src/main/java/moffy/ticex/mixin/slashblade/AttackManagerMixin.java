@@ -42,7 +42,7 @@ public class AttackManagerMixin {
     private static <E extends Entity & IShootable> void areaAttack(E owner, Consumer<LivingEntity> beforeHit, double reach, boolean forceHit, boolean resetHit, float comboRatio, List<Entity> exclude, CallbackInfoReturnable<List<Entity>> cb){
         if(owner.getShooter() instanceof LivingEntity livingAttacker){
             ItemStack mainHandStack = livingAttacker.getMainHandItem();
-            if(mainHandStack.getItem() instanceof IModifiable){
+            if(mainHandStack != null && mainHandStack.getItem() instanceof IModifiable){
                 List<Entity> founds = Lists.newArrayList();
 
                 if (!owner.level().isClientSide()) {
@@ -79,7 +79,7 @@ public class AttackManagerMixin {
         Entity attacker = src.getEntity();
         if(attacker instanceof LivingEntity livingAttacker){
             ItemStack mainHandStack = livingAttacker.getMainHandItem();
-            if(mainHandStack.getItem() instanceof IModifiable){
+            if(mainHandStack != null && mainHandStack.getItem() instanceof IModifiable){
                 ToolStack tool = ToolStack.from(mainHandStack);
                 ToolAttackContext context = new ToolAttackContext(livingAttacker, livingAttacker instanceof Player player ? player : null, InteractionHand.MAIN_HAND, target, target instanceof LivingEntity livingTarget ? livingTarget : null, false, 0, false);
 
