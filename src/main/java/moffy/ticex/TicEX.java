@@ -28,6 +28,11 @@ public class TicEX {
     private static int packetHandlerId = 0;
 
     public TicEX(){
+        this(FMLJavaModLoadingContext.get());
+    }
+
+    public TicEX(FMLJavaModLoadingContext context){
+        TicEXConfig.registerConfig();
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         //TicEXRegistry.ITEMS_EXTENDED.register(bus);
@@ -41,8 +46,6 @@ public class TicEX {
         TicEXRegistry.CREATIVE_TABS.register(bus);
         TicEXRegistry.RECIPE_SERIALIZERS.register(bus);
         TicEXRegistry.RECIPE_TYPES.register(bus);
-
-        TicEXConfig.registerConfig();
     }
 
     public static int getPacketHandlerId(){

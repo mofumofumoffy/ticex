@@ -3,8 +3,6 @@ package moffy.ticex.modules.slashblade;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.slashblade.SBItemCapabilityProvider;
-import moffy.ticex.client.CustomModel;
-import moffy.ticex.client.slashblade.SBToolRenderType;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.event.TicEXSBEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -18,6 +16,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -75,11 +74,12 @@ public class TicEXSlashBladeModule extends AddonModule{
         });
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        SBToolRenderType.init();
+        moffy.ticex.client.slashblade.SBToolRenderType.init();
         TicEXRegistry.CUSTOM_MODELS.put(TicEXRegistry.REFORGED_SLASHBLADE.get(), (originalModel)->{
-            return new CustomModel(originalModel);
+            return new moffy.ticex.client.CustomModel(originalModel);
         });
     }
 

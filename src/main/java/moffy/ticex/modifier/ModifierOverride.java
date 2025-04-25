@@ -31,7 +31,7 @@ public class ModifierOverride extends NoLevelsModifier implements EmbossmentModi
             Map<Enchantment, Integer> bookEnchantments = EnchantmentHelper.getEnchantments(stack);
             
             for(Entry<Enchantment, Integer> entry : bookEnchantments.entrySet()){
-                if(toolStack.getEnchantmentLevel(entry.getKey()) >= entry.getKey().getMaxLevel() && entry.getValue() >= entry.getValue()){
+                if(toolStack.getEnchantmentLevel(entry.getKey()) >= entry.getKey().getMaxLevel()){
                     CompoundTag nbt = toolStack.getOrCreateTag();
 
                     ListTag listTag = nbt.getList("Enchantments", Tag.TAG_COMPOUND);
