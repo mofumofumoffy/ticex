@@ -9,12 +9,13 @@ package moffy.ticex.modules.tacz;
 */
 
 import moffy.addonapi.AddonModule;
-import moffy.ticex.client.CustomModel;
 import moffy.ticex.event.TicEXTaczEvent;
 import moffy.ticex.item.modifiable.ModifiableGunItem;
 import moffy.ticex.modules.CatalystMaterialStatsType;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
@@ -32,10 +33,11 @@ public class TicEXTaczModule extends AddonModule{
         MinecraftForge.EVENT_BUS.addListener(TicEXTaczEvent::onMelee);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
         TicEXRegistry.CUSTOM_MODELS.put(TicEXRegistry.BLITZ_GUN.get(), (originalModel)->{
-            return new CustomModel(originalModel);
+            return new moffy.ticex.client.CustomModel(originalModel);
         });
     }
 }

@@ -5,8 +5,6 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.mekanism.MekItemCapabilityProvider;
 import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
-import moffy.ticex.client.mekanism.MekaPlateModelCache;
-import moffy.ticex.client.mekanism.MekaPlateMultilayerModel;
 import moffy.ticex.event.TicEXMekanismEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
@@ -18,6 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -59,12 +58,13 @@ public class TicEXMekanismModule extends AddonModule{
         });
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        MekaPlateModelCache.INSTANCE.registerMekaSuitModuleModel(new ResourceLocation(TicEX.MODID, "models/entity/modifiable_mekasuit_modules.obj"));
+        moffy.ticex.client.mekanism.MekaPlateModelCache.INSTANCE.registerMekaSuitModuleModel(new ResourceLocation(TicEX.MODID, "models/entity/modifiable_mekasuit_modules.obj"));
         
-        MekaPlateMultilayerModel.registerModule("jetpack", MekanismModules.JETPACK_UNIT, EquipmentSlot.CHEST, (entity)->true);
-        MekaPlateMultilayerModel.registerModule("modulator", MekanismModules.GRAVITATIONAL_MODULATING_UNIT, EquipmentSlot.CHEST, (entity)->true);
-        MekaPlateMultilayerModel.registerModule("elytra", MekanismModules.ELYTRA_UNIT, EquipmentSlot.CHEST, LivingEntity::isFallFlying);
+        moffy.ticex.client.mekanism.MekaPlateMultilayerModel.registerModule("jetpack", MekanismModules.JETPACK_UNIT, EquipmentSlot.CHEST, (entity)->true);
+        moffy.ticex.client.mekanism.MekaPlateMultilayerModel.registerModule("modulator", MekanismModules.GRAVITATIONAL_MODULATING_UNIT, EquipmentSlot.CHEST, (entity)->true);
+        moffy.ticex.client.mekanism.MekaPlateMultilayerModel.registerModule("elytra", MekanismModules.ELYTRA_UNIT, EquipmentSlot.CHEST, LivingEntity::isFallFlying);
     }
 }

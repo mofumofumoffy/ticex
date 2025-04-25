@@ -4,7 +4,6 @@ import com.brandon3055.brandonscore.api.TechLevel;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.caps.draconicevolution.DEItemCapabilityProvider;
-import moffy.ticex.client.draconicevolution.TicEXDEShader;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierEvolved;
 import moffy.ticex.modifier.ModifierSoulRending;
@@ -12,6 +11,7 @@ import moffy.ticex.modules.TicEXRegistry;
 import moffy.ticex.utils.TicEXDEUtils;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -22,7 +22,7 @@ public class TicEXDEModule extends AddonModule{
 
     public TicEXDEModule(){
 
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        
 
         ToolCapabilityProvider.register(DEItemCapabilityProvider::new);
 
@@ -44,19 +44,26 @@ public class TicEXDEModule extends AddonModule{
         TicEXRegistry.EVOLVED_MODIFIER = TicEXRegistry.MODIFIERS.register("evolved", ModifierEvolved::new);
         
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
-            TicEXDEShader.init(bus);
+            
+        });
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    void initClient(){
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        moffy.ticex.client.draconicevolution.TicEXDEShader.init(bus);
 
             TicEXRegistry.TOOL_SHADERS.addShader(
                 ModifierIds.reinforced,
                 (wrapper)->{
                     TechLevel techLevel = TicEXDEUtils.getTechLevel(wrapper.getTool());
-                    if(techLevel != null && TicEXDEShader.instance != null){
-                        TicEXDEShader.glUniformBaseColor(TicEXDEShader.instance, techLevel, 1F);
-                        wrapper.renderQuadsWithConsumer(TicEXDEShader.instance.getRenderType(), wrapper.getQuad(), techLevel == TechLevel.CHAOTIC ? 0.9f : wrapper.getRed(), wrapper.getGreen(), wrapper.getBlue());
+                    if(techLevel != null && moffy.ticex.client.draconicevolution.TicEXDEShader.instance != null){
+                        moffy.ticex.client.draconicevolution.TicEXDEShader.glUniformBaseColor(moffy.ticex.client.draconicevolution.TicEXDEShader.instance, techLevel, 1F);
+                        wrapper.renderQuadsWithConsumer(moffy.ticex.client.draconicevolution.TicEXDEShader.instance.getRenderType(), wrapper.getQuad(), techLevel == TechLevel.CHAOTIC ? 0.9f : wrapper.getRed(), wrapper.getGreen(), wrapper.getBlue());
                     }
                 }
             );
-            TicEXRegistry.SHADER_INSTANCE_MAP.addShader(ModifierIds.reinforced, TicEXDEShader.instance::getShaderInstance);
-        });
+            TicEXRegistry.SHADER_INSTANCE_MAP.addShader(ModifierIds.reinforced, moffy.ticex.client.draconicevolution.TicEXDEShader.instance::getShaderInstance);
     }
 }
