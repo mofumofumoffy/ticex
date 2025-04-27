@@ -17,38 +17,20 @@
 ## Supported Minecraft Version
 - Forge for Minecraft 1.20.1
 
-## Integrated Mods & Features
+## Integrated Mods 
+- Re-Avaritia
+- Mekanism
+- Draconic Evolution
+- SlashBlade:Resharped
+- Apotheosis
+- Create (v6 only, though compatible with v5)
+- Iron's Spells n' SpellBook(Can be used with other TiC addons)
+- Curios
+- Tinkers' Things
+- Sakura Tinker
 
-- **Avaritia** (Re-Avaritia-forged recommended)  
-  - Infinity Material  
-  - Neutronium Material  
-  - Crystal Matrix Material  
-  - *Celestial Modifier* for creative flight  
-  - A shimmering galaxy-themed shader  
-
-- **Mekanism**  
-  - *Radiation Shielding Modifier* to protect from radiation  
-  - *MekaPlate Armor*: Plate armor supporting MekaSuit modules  
-
-- **Draconic Evolution**  
-  - *Evolved Modifier* supporting Draconic Evolution modules
-  - Tiered materials which can steal mobs' soul  
-  - A chaotic, swirling shader  
-
-- **SlashBlade Resharped**
-  - SlashBlades crafted using TiC materials with custom enhancements
-  - *Konpaku* modifier allows select enchantments
-  - *Koshirae* modifier inherits the appearance of your favorite blade
-
-- **Apotheosis**
-  - *Overload* modifier allows enchanting TiC tools through special methods
-  - *Override* modifier enables enchantments beyond the normal limits, albeit at a high cost
-
-- **Tinkers' Things**
-  - *Lamellar* modifier enhances additional armor with shield cores and plates
-
-- **Curios**
-  - *Incomparable* modifier allows TiC gear to be equipped in Curios slots while retaining some of their functionality
+## Features
+[https://github.com/mofumofumoffy/ticex/wiki/Modifiers-&-Traits](https://github.com/mofumofumoffy/ticex/wiki/Modifiers-&-Traits)
 
 ## Other Additions
 
@@ -58,7 +40,7 @@
 
 ## Credits
 
-Some resources in this mod were based on materials from the mods listed in the [Integrated Mods & Features](#integrated-mods--features) section.  
+Some resources in this mod were based on materials from the mods listed in [this wiki page](https://github.com/mofumofumoffy/ticex/wiki/Modifiers-&-Traits) section.  
 Additionally, it draws inspiration from the following mods:
 
 - Materialis

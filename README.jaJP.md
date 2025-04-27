@@ -17,31 +17,21 @@
 ## 対応バージョン
 - forge mc1.20.1
 
-## 連携要素
-- Avaritia(Re-Avaritia-forged推奨)
- - インフィニティ マテリアル
- - ニュートロニウム マテリアル
- - クリスタルマトリックス マテリアル
- - クリエイティブ飛行が可能になる 天翔 モディファイア
- - 煌めく銀河のシェーダー
+## 連携mod
+- Re-Avaritia
 - Mekanism
- - 放射線から身を守る 放射線防護 モディファイア
- - Mekaプレート アーマー: MekaSuit モジュールをサポートするプレートアーマー
 - Draconic Evolution
- - Draconic Evolution モジュールをサポートする エボルト モディファイア
- - モブのソウルを刈り取る4種のマテリアル
- - 渦巻く混沌のシェーダー
-- SlashBlade
- - アレンジを加えた、TiC素材で作るSlashBlade
- - 一部のエンチャントを可能にする Konpaku モディファイア
- - お気に入りの刀の姿を継承する Koshirae モディファイア
+- SlashBlade:Resharped
 - Apotheosis
- - TiCツールに特殊な方法でエンチャントを施す Overload モディファイア
- - ハイコストだが、限界値を超えたエンチャントを施す Override モディファイア
-- Tinkers' Things
- - 追加防具をシールドコアやプレートで強化する Lamellar モディファイア
+- Create (v6 only, though compatible with v5)
+- Iron's Spells n' SpellBook(Can be used with other TiC addons)
 - Curios
- - 一部の機能を残しつつ、TiC装備をCuriosスロットに装備できるようになる Incomparable モディファイア
+- Tinkers' Things
+- Sakura Tinker
+
+## 要素の詳細
+[https://github.com/mofumofumoffy/ticex/wiki/Modifiers-&-Traits](https://github.com/mofumofumoffy/ticex/wiki/Modifiers-&-Traits)
+
 
 ## その他の追加要素
 - 星の力
