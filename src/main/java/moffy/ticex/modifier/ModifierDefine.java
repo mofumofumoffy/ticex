@@ -1,8 +1,12 @@
 package moffy.ticex.modifier;
 
+import java.lang.reflect.Field;
+
+import moffy.ticex.TicEX;
 import moffy.ticex.entity.FakeLivingEntity;
-import moffy.ticex.mixin.HealthAccessor;
+import moffy.ticex.lib.IEntityDataAccessor;
 import moffy.ticex.modules.TicEXRegistry;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -43,21 +47,35 @@ public class ModifierDefine extends NoLevelsModifier implements MeleeDamageModif
     
                 ToolAttackContext newContext = new ToolAttackContext(attacker, attacker, context.getHand(), fakeLivingEntity, fakeLivingEntity, true, context.getCooldown(), false);
                 
-                for(ModifierEntry toolEntry:tool.getModifierList()){
-                    toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, newContext, damage, baseDamage, damage);
+                if(tool.getModifierLevel(TicEXRegistry.DEFLECTION_MODIFIER.get()) > 0){
+                    for(ModifierEntry toolEntry:tool.getModifierList()){
+                        toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, newContext, damage, baseDamage, damage);
+                    }
                 }
 
                 fakeLivingEntity.hurt(null, damage);
                 fakeLivingEntity.invulnerableTime = 0;
                 
-                for(ModifierEntry toolEntry:tool.getModifierList()){
-                    toolEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, newContext, damage);
+                if(tool.getModifierLevel(TicEXRegistry.DEFLECTION_MODIFIER.get()) > 0){
+                    for(ModifierEntry toolEntry:tool.getModifierList()){
+                        toolEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, newContext, damage);
+                    }
                 }
 
                 float absoluteHealth = fakeLivingEntity.getFakeHealth();
-
-                HealthAccessor accessor = (HealthAccessor)target;
-                target.getEntityData().set(accessor.getTicEXHealthDataKey(), absoluteHealth);
+                IEntityDataAccessor accessor = (IEntityDataAccessor)target;
+                Field key = accessor.getField("DATA_HEALTH_ID");
+                if(key != null){
+                    try {
+                        if(float.class.isAssignableFrom(key.getType())){
+                            key.setFloat(target, absoluteHealth);
+                        } else if(EntityDataAccessor.class.isAssignableFrom(key.getType())){
+                            target.getEntityData().set((EntityDataAccessor<Float>)key.get(target), absoluteHealth);
+                        }
+                    } catch (Exception e) {
+                        TicEX.LOGGER.error("", e);
+                    }
+                }
             }
 
             return 0;

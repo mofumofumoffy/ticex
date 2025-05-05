@@ -185,6 +185,13 @@ dependencies {
     implementation fg.deobf("curse.maven:geckolib-388172:6333474")
     implementation fg.deobf("curse.maven:playeranimator-658587:4587214")
 
+    implementation fg.deobf("curse.maven:apotheosis-313970:6461960")
+    implementation fg.deobf("curse.maven:placebo-283644:6274231")
+    implementation fg.deobf("curse.maven:patchouli-306770:6164575")
+    implementation fg.deobf("curse.maven:apothic-attributes-898963:5634071")
+
+    implementation fg.deobf("curse.maven:projecte-226410:4901949")
+
     implementation fg.deobf("curse.maven:curios-309927:6238756")
 
     implementation fg.deobf("curse.maven:jei-238222:6075247")

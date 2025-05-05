@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -93,6 +94,7 @@ public abstract class ItemRendererMixin {
     }
 
 
+    @Unique
     private void addShaderQuadToQueue(RenderType renderType, PoseStack pPoseStack, MultiBufferSource pBuffer, List<BakedQuad> pQuads, ItemStack pItemStack, int pCombinedLight, int pCombinedOverlay, ItemDisplayContext pDisplayContext, IToolStackView tool, Consumer<ShaderToolRenderUtils.RenderTask> addTaskFn, Set<PartPredicate> seenList){
         boolean flag = !pItemStack.isEmpty();
 

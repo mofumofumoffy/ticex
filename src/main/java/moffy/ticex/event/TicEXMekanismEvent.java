@@ -24,7 +24,7 @@ import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.StorageUtils;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.mekanism.MekaPlateModelCache;
-import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
+import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -59,7 +59,7 @@ public class TicEXMekanismEvent {
                 }
             }
             if (entity instanceof Player player) {
-                float ratioAbsorbed = ItemModifiableMekaSuitArmor.getDamageAbsorbed(player, event.getSource(), event.getAmount());
+                float ratioAbsorbed = ModifiableMekaSuitArmor.getDamageAbsorbed(player, event.getSource(), event.getAmount());
                 if (ratioAbsorbed > 0) {
                     float damageRemaining = event.getAmount() * Math.max(0, 1 - ratioAbsorbed);
                     if (damageRemaining <= 0) {
@@ -131,7 +131,7 @@ public class TicEXMekanismEvent {
                     return new FallEnergyInfo(StorageUtils.getEnergyContainer(feetStack, 0), MekanismConfig.gear.freeRunnerFallDamageRatio,
                           MekanismConfig.gear.freeRunnerFallEnergyCost);
                 }
-            } else if (feetStack.getItem() instanceof ItemModifiableMekaSuitArmor) {
+            } else if (feetStack.getItem() instanceof ModifiableMekaSuitArmor) {
                 return new FallEnergyInfo(StorageUtils.getEnergyContainer(feetStack, 0), MekanismConfig.gear.mekaSuitFallDamageRatio,
                       MekanismConfig.gear.mekaSuitEnergyUsageFall);
             }

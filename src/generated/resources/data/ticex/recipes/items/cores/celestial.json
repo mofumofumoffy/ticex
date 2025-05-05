@@ -1,29 +1,37 @@
 {
-    "type": "avaritia:extreme_smithing",
+    "type": "avaritia:shaped_table",
     "conditions": [
       {
         "type": "addonapi:mods_available",
         "required_raw_module": "ticex:avaritia_compat"
       }
     ],
-    "addition": [
-      {
+    "category": "misc",
+    "key": {
+      "c": {
+        "item": "ticex:reconstruction_core"
+      },
+      "d": {
         "item": "minecraft:dragon_head"
       },
-      {
+      "e": {
         "item": "minecraft:elytra"
       },
-      {
-        "item": "avaritia:enhancement_core"
+      "i": {
+        "item": "avaritia:infinity_catalyst"
+      },
+      "p": {
+        "item": "avaritia:endest_pearl"
       }
-    ],
-    "base": {
-      "item": "ticex:reconstruction_core"
     },
+    "pattern": [
+      " d ",
+      "ice",
+      " p "
+    ],
     "result": {
       "item": "ticex:celestial_core"
     },
-    "template": {
-      "item": "avaritia:upgrade_smithing_template"
-    }
+    "show_notification": true,
+    "tier": 1
   }

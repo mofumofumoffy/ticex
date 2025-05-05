@@ -1,0 +1,15 @@
+{
+    "layers": [
+      {
+        "type": "tconstruct:material",
+        "index": 0,
+        "prefix": "ticex:singular_gem/plating_"
+      },
+      {
+        "type": "tconstruct:material",
+        "index": 1,
+        "prefix": "ticex:singular_gem/maille_"
+      },
+      "tconstruct:trim"
+    ]
+  }

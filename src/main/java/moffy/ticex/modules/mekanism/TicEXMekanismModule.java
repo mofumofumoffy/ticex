@@ -7,7 +7,7 @@ import moffy.ticex.caps.mekanism.MekItemCapabilityProvider;
 import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
 import moffy.ticex.event.TicEXMekanismEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
-import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
+import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import moffy.ticex.modules.CatalystMaterialStatsType;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.resources.ResourceLocation;
@@ -44,7 +44,7 @@ public class TicEXMekanismModule extends AddonModule{
 
         TicEXRegistry.RADIATION_SHELDING_CORE = TicEXRegistry.ITEMS.register("radiation_shielding_core", ()->new ItemReconstCore(PROPS, "radiation_shielding"));
 
-        TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum("mekaplate", ArmorItem.Type.values(), type -> new ItemModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE_DEFINITION, type, new Item.Properties().stacksTo(1)));
+        TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum("mekaplate", ArmorItem.Type.values(), type -> new ModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE_DEFINITION, type, new Item.Properties().stacksTo(1)));
     
         TicEXRegistry.CATALYST_MEKASUIT = TicEXRegistry.ITEMS_EXTENDED.registerEnum("catalyst_mekasuit", ArmorItem.Type.values(), type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId()));
 

@@ -44,7 +44,7 @@ public class TicEXDEModule extends AddonModule{
         TicEXRegistry.EVOLVED_MODIFIER = TicEXRegistry.MODIFIERS.register("evolved", ModifierEvolved::new);
         
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
-            
+            initClient();
         });
     }
 

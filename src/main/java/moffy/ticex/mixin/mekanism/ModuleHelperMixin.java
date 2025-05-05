@@ -21,6 +21,7 @@ import moffy.ticex.modules.mekanism.TicEXMekanismModule;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
 
 @Mixin(value = ModuleHelper.class, remap = false, priority = 900)
 public abstract class ModuleHelperMixin {
@@ -48,7 +49,7 @@ public abstract class ModuleHelperMixin {
         mixinMapSupportedModules(event, TicEXMekanismModule.ADD_MEKAPLATE_BOOTS_MODULES, TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.BOOTS), supportedContainersBuilderMap);
     }
 
-    private void mixinMapSupportedModules(InterModProcessEvent event, String imcMethod, Item item, Map<ModuleData<?>, ImmutableSet.Builder<Item>> supportedContainersBuilderMap){
+    private void mixinMapSupportedModules(InterModProcessEvent event, String imcMethod, IModifiable item, Map<ModuleData<?>, ImmutableSet.Builder<Item>> supportedContainersBuilderMap){
         ImmutableSet.Builder<ModuleData<?>> supportedModulesBuilder = ImmutableSet.builder();
         event.getIMCStream(imcMethod::equals).forEach(message -> {
             Object body = message.messageSupplier().get();
@@ -65,10 +66,10 @@ public abstract class ModuleHelperMixin {
             }
         });
         Set<ModuleData<?>> supported = supportedModulesBuilder.build();
-        if (!supported.isEmpty()) {
-            supportedModules.put(item, supported);
+        if (!supported.isEmpty() && item instanceof Item) {
+            supportedModules.put((Item)item, supported);
             for (ModuleData<?> data : supported) {
-                supportedContainersBuilderMap.computeIfAbsent(data, d -> ImmutableSet.builder()).add(item);
+                supportedContainersBuilderMap.computeIfAbsent(data, d -> ImmutableSet.builder()).add((Item)item);
             }
         }
     }

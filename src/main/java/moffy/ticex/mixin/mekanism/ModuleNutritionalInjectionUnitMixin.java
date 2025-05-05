@@ -19,7 +19,7 @@ import mekanism.common.content.gear.mekasuit.ModuleNutritionalInjectionUnit;
 import mekanism.common.registries.MekanismFluids;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
-import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
+import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +46,7 @@ public class ModuleNutritionalInjectionUnitMixin {
         if(container.getItem() instanceof IModifiable){
             FloatingLong usage = (FloatingLong)MekanismConfig.gear.mekaSuitEnergyUsageNutritionalInjection.get();
             if (MekanismUtils.isPlayingMode(player) && player.canEat(false)) {
-                ItemModifiableMekaSuitArmor item = (ItemModifiableMekaSuitArmor)container.getItem();
+                ModifiableMekaSuitArmor item = (ModifiableMekaSuitArmor)container.getItem();
                 int needed = Math.min(20 - player.getFoodData().getFoodLevel(), item.getContainedFluid(container, MekanismFluids.NUTRITIONAL_PASTE.getFluidStack(1)).getAmount() / MekanismConfig.general.nutritionalPasteMBPerFood.get());
                 int toFeed = Math.min(module.getContainerEnergy().divideToInt(usage), needed);
                 if (toFeed > 0) {
@@ -76,7 +76,7 @@ public class ModuleNutritionalInjectionUnitMixin {
                 handler.drain(MekanismFluids.NUTRITIONAL_PASTE.getFluidStack(max), FluidAction.SIMULATE);
             }
 
-            FluidStack stored = ((ItemModifiableMekaSuitArmor)container.getItem()).getContainedFluid(container, MekanismFluids.NUTRITIONAL_PASTE.getFluidStack(1));
+            FluidStack stored = ((ModifiableMekaSuitArmor)container.getItem()).getContainedFluid(container, MekanismFluids.NUTRITIONAL_PASTE.getFluidStack(1));
             double ratio = StorageUtils.getRatio((long)stored.getAmount(), (long)MekanismConfig.gear.mekaSuitNutritionalMaxStorage.get());
             hudElementAdder.accept(IModuleHelper.INSTANCE.hudElementPercent(icon, ratio));
             cb.cancel();

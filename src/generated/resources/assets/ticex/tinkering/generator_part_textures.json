@@ -22,6 +22,26 @@
         "allow_animated": false,
         "path": "ticex:obj_tool/slashblade_tool/saya",
         "stat_type": "tconstruct:handle"
+      },
+      {
+        "allow_animated": false,
+        "path": "ticex:tinker_armor/singular_gem/plating_armor",
+        "stat_type": "tconstruct:armor_plating"
+      },
+      {
+        "allow_animated": false,
+        "path": "ticex:tinker_armor/singular_gem/plating_leggings",
+        "stat_type": "tconstruct:armor_plating"
+      },
+      {
+        "allow_animated": false,
+        "path": "ticex:tinker_armor/singular_gem/maille_armor",
+        "stat_type": "tconstruct:armor_maille"
+      },
+      {
+        "allow_animated": false,
+        "path": "ticex:tinker_armor/singular_gem/maille_leggings",
+        "stat_type": "tconstruct:armor_maille"
       }
     ]
 }

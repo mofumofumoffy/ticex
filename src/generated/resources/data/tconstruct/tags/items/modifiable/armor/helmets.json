@@ -1,5 +1,6 @@
 {
     "values": [
-      {"id":"ticex:mekaplate_helmet", "required":false}
+      {"id":"ticex:mekaplate_helmet", "required":false},
+      {"id":"ticex:singular_gem_helmet", "required":false}
     ]
   }

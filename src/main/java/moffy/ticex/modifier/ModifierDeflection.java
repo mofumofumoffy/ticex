@@ -1,5 +1,6 @@
 package moffy.ticex.modifier;
 
+import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.EntityHitResult;
@@ -30,7 +31,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
     @Override
     public float getMeleeDamage(IToolStackView tool, ModifierEntry modifierEntry, ToolAttackContext context, float baseDamage,
             float damage) {
-        if(!context.isExtraAttack()){
+        if(!context.isExtraAttack() && tool.getModifierLevel(TicEXRegistry.DEFINE_MODIFIER.get()) <= 0){
             for(ModifierEntry toolEntry:tool.getModifierList()){
                 toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, context, damage * (2f + modifierEntry.getLevel() * 0.25f), baseDamage, damage);
             }

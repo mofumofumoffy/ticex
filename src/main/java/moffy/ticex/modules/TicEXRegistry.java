@@ -58,7 +58,7 @@ import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
-import slimeknights.tconstruct.library.tools.item.armor.MultilayerArmorItem;
+
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
 
@@ -84,6 +84,7 @@ public class TicEXRegistry {
     public static final TagKey<Item> KEY_MODIFIER_UNSTABLE = TagKey.create(Registries.ITEM, new ResourceLocation(TicEX.MODID, "tool/unstable_modifier"));
 
     public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
+    public static final ModifiableArmorMaterial SINGULAR_GEM_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "singular_gem"), SoundEvents.ARMOR_EQUIP_NETHERITE);
     public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "reforged_slashblade")); 
     public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "blitz_gun")); 
     public static final ToolDefinition SPELLBOOK_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "revival_spellbook")); 
@@ -146,6 +147,7 @@ public class TicEXRegistry {
     public static CastItemObject SLASHBLADE_SAYA_CAST;
 
     public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKASUIT = null; 
+    public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_GEM = null; 
     public static ItemObject<ToolPartItem> CATALYST_SLASHBLADE = null; 
     public static ItemObject<ToolPartItem> CATALYST_KINETIC_GUN = null; 
     public static ItemObject<ToolPartItem> CATALYST_IRONS_SPELLBOOK = null; 
@@ -154,7 +156,8 @@ public class TicEXRegistry {
     public static ItemObject<? extends Item> BLITZ_GUN = null; 
     public static ItemObject<? extends Item> REVIVAL_SPELLBOOK_IRONS = null; 
 
-    public static EnumObject<ArmorItem.Type, MultilayerArmorItem> MEKAPLATE_ARMOR = null;
+    public static EnumObject<ArmorItem.Type, ? extends IModifiable> MEKAPLATE_ARMOR = null;
+    public static EnumObject<ArmorItem.Type, ? extends IModifiable> SINGULAR_GEM_ARMOR = null;
 
     public static RegistryObject<Block> ETHERIC_BLOCK = null;
     public static RegistryObject<Block> SEARED_RF_FURNACE = null;
@@ -203,6 +206,10 @@ public class TicEXRegistry {
     public static DynamicModifier CARDBOARD_MODIFIER = null;
     public static StaticModifier<Modifier> FLOWERSTORM_MODIFIER = null;
     public static DynamicModifier OVERCASTING_MODIFIER = null;
+    public static StaticModifier<Modifier> ABYSSAL_MODIFIER = null;
+    public static StaticModifier<Modifier> INFERNAL_MODIFIER = null;
+    public static StaticModifier<Modifier> GRAVITY_MODIFIER = null;
+    public static StaticModifier<Modifier> HURRICANE_MODIFIER = null;
     public static StaticModifier<Modifier> DEFINE_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
@@ -218,6 +225,7 @@ public class TicEXRegistry {
         }
 
         acceptCatalystArmor(output, CATALYST_MEKASUIT);
+        acceptCatalystArmor(output, CATALYST_GEM);
         acceptPart(output, CATALYST_SLASHBLADE);
         //acceptPart(output, CATALYST_KINETIC_GUN);
         //acceptPart(output, CATALYST_IRONS_SPELLBOOK);
@@ -230,6 +238,7 @@ public class TicEXRegistry {
         //acceptTool(output, REVIVAL_SPELLBOOK_IRONS);
 
         acceptArmor(output, MEKAPLATE_ARMOR);
+        acceptArmor(output, SINGULAR_GEM_ARMOR);
 
         acceptCast(output, SLASHBLADE_BLADE_CAST);
         acceptCast(output, SLASHBLADE_SAYA_CAST);

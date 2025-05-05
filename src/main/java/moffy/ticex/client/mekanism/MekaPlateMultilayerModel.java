@@ -52,7 +52,7 @@ import mekanism.common.lib.effect.BoltEffect.SpawnFunction;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.EnumUtils;
 import mekanism.common.util.MekanismUtils;
-import moffy.ticex.item.modifiable.ItemModifiableMekaSuitArmor;
+import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
@@ -198,7 +198,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel{
         IModuleHelper moduleHelper = IModuleHelper.INSTANCE;
         for (EquipmentSlot slotType : EnumUtils.ARMOR_SLOTS) {
             ItemStack wornItem = player.getItemBySlot(slotType);
-            if (!wornItem.isEmpty() && wornItem.getItem() instanceof ItemModifiableMekaSuitArmor) {
+            if (!wornItem.isEmpty() && wornItem.getItem() instanceof ModifiableMekaSuitArmor) {
                 wornParts.add(slotType);
                 for (Map.Entry<ModuleData<?>, ModuleModelSpec> entry : moduleModelSpec.row(slotType).entrySet()) {
                     if (moduleHelper.isEnabled(wornItem, entry.getKey())) {
