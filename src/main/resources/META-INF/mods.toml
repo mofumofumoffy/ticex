@@ -95,7 +95,7 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
     modId="mekanism"
     mandatory=false
-    versionRange="[10.4.15,)"
+    versionRange="[10.4.10,)"
     ordering="AFTER"
     side="BOTH"
 
@@ -123,7 +123,7 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
     modId="curios"
     mandatory=false
-    versionRange="[5.12.1,)"
+    versionRange="[5.11.1,)"
     ordering="AFTER"
     side="BOTH"
 

@@ -1,9 +1,9 @@
 package moffy.ticex.event;
 
 import moffy.ticex.caps.EmbossmentMaterialCapability;
+import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.TicEXRegistry;
-import moffy.ticex.utils.TicEXAvaritiaUtils;
-import moffy.ticex.utils.TicEXUtils;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;

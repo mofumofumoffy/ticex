@@ -192,6 +192,7 @@ public class TicEXRegistry {
     public static DynamicModifier DENSE_MODIFIER = null;
     public static StaticModifier<Modifier> AFTERSHOCK_MODIFIER = null;
     public static StaticModifier<Modifier> DEFLECTION_MODIFIER = null;
+    public static StaticModifier<Modifier> MEKANIC_MODIFIER = null;
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
     public static StaticModifier<Modifier> SASSY_MODIFIER = null;
     public static StaticModifier<Modifier> EVOLVED_MODIFIER = null;

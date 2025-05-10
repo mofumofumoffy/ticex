@@ -1,4 +1,4 @@
-package moffy.ticex.utils;
+package moffy.ticex.lib.utils;
 
 import committee.nova.mods.avaritia.init.registry.ModDamageTypes;
 import moffy.ticex.modifier.ModifierCelestial;

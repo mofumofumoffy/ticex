@@ -1,4 +1,4 @@
-package moffy.ticex.utils;
+package moffy.ticex.lib.utils;
 
 import com.brandon3055.brandonscore.api.TechLevel;
 import com.brandon3055.draconicevolution.init.DEContent;

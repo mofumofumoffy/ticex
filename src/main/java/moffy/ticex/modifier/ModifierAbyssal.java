@@ -82,7 +82,7 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
     public void onInventoryTick(IToolStackView tool, ModifierEntry entry, Level level, LivingEntity entity, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack) {
         Item item = tool.getItem();
 
-        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.HELMET && entity instanceof Player){
+        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.HELMET && entity instanceof Player && isCorrectSlot){
             if (!level.isClientSide) {
                 entity.getCapability(InternalTimers.CAPABILITY).ifPresent(handler -> {
                     handler.activateHeal();

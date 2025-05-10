@@ -1,0 +1,19 @@
+{
+    "type": "tconstruct:modifier",
+    "inputs": [
+      {
+        "item": "ticex:catalyst_gem_boots"
+      }
+    ],
+    "tools": [
+      {
+        "type": "forge:difference",
+        "base": { "tag": "tconstruct:modifiable/armor/boots" },
+        "subtracted": { "tag": "ticex:armor/singular_gem" }
+      }
+    ],
+    "slots": {
+      "defense": 1
+    },
+    "result": "ticex:hurricane"
+  }

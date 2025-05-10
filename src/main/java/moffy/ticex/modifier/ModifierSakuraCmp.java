@@ -20,9 +20,11 @@ public class ModifierSakuraCmp extends NoLevelsModifier implements EmbossmentMod
     }
 
     @Override
-    public boolean applyItem(ItemStack toolStack, ItemStack input, boolean simulate) {
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
         
         boolean succeed = false;
+
+        ItemStack toolStack = context.getToolStack();
 
         //ticex to sakuratinker
         if(!(toolStack.getItem() instanceof ArmorItem)){

@@ -1,0 +1,15 @@
+{
+    "type": "tconstruct:table_casting_material",
+    "conditions": [
+      {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:projecte_compat"
+      }
+    ],
+    "cast": {
+      "item": "projecte:gem_boots"
+    },
+    "cast_consumed": true,
+    "item_cost": 1,
+    "result": "ticex:catalyst_gem_boots"
+}

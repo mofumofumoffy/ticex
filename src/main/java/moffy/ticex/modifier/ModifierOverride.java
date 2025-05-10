@@ -25,8 +25,12 @@ public class ModifierOverride extends NoLevelsModifier implements EmbossmentModi
     }
 
     @Override
-    public boolean applyItem(ItemStack toolStack, ItemStack stack, boolean simulate) {
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
         boolean result = false;
+
+        ItemStack toolStack = context.getToolStack();
+        ItemStack stack = context.getInputStack(inputIndex);
+
         if(stack.getItem().equals(Items.ENCHANTED_BOOK)){
             Map<Enchantment, Integer> bookEnchantments = EnchantmentHelper.getEnchantments(stack);
             

@@ -73,7 +73,7 @@ public class ModifierHurricane extends NoLevelsModifier implements InventoryTick
     public void onInventoryTick(IToolStackView tool, ModifierEntry entry, Level level, LivingEntity entity, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack) {
         Item item = tool.getItem();
 
-        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.BOOTS && entity instanceof Player player){
+        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.BOOTS && entity instanceof Player player && isCorrectSlot){
             if (!level.isClientSide) {
                 ServerPlayer playerMP = (ServerPlayer) player;
                 playerMP.fallDistance = 0;

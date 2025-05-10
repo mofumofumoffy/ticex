@@ -19,7 +19,10 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
     }
 
     @Override
-    public boolean applyItem(ItemStack toolStack, ItemStack input, boolean simulate) {
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
+        ItemStack input = context.getInputStack(inputIndex);
+        ItemStack toolStack = context.getToolStack();
+
         ToolStack resultTool = ToolStack.from(toolStack);
         EnumSet<SwordType> swordTypes = SwordType.from(toolStack);
         if(swordTypes.contains(SwordType.BEWITCHED)){

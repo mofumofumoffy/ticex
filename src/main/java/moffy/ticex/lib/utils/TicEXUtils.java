@@ -1,4 +1,4 @@
-package moffy.ticex.utils;
+package moffy.ticex.lib.utils;
 
 import java.util.function.Predicate;
 

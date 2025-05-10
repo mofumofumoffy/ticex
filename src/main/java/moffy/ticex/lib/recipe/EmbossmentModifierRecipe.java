@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import moffy.ticex.lib.hook.EmbossmentModifierHook.EmbossmentContext;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -113,16 +113,19 @@ public class EmbossmentModifierRecipe extends AbstractModifierRecipe{
         tool.addModifier(modifier, 1);
         boolean result = false;
         ItemStack resultStack = tool.createStack();
+
+        EmbossmentContext context = new EmbossmentContext(resultStack, inv);
+
         for(int i = 0; i < inv.getInputCount(); i++){
             ItemStack input = inv.getInput(i);
             if(embossItem.get(0).test(input)){
-                result = tool.getModifier(modifier).getHook(TicEXRegistry.EMBOSSMENT_HOOK).applyItem(resultStack, input, false);
+                result = tool.getModifier(modifier).getHook(TicEXRegistry.EMBOSSMENT_HOOK).applyItem(context, i, false);
             }
         }
         
         if(result){
-            return LazyToolStack.success(resultStack);
+            return LazyToolStack.success(context.getToolStack());
         }
-        return RecipeResult.failure(Component.translatable("recipe.ticex.embossment_not_allowed"));
+        return RecipeResult.failure(context.getErrorMsg());
     }
 }

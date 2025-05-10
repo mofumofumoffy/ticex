@@ -1,6 +1,8 @@
-package moffy.ticex.utils;
+package moffy.ticex.lib.utils;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import org.joml.Matrix3f;
@@ -32,12 +34,33 @@ import net.minecraft.client.renderer.RenderStateShard.ShaderStateShard;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 
 public class TicEXSBUtil {
+
+    public static Set<Enchantment> disallowedEnchantments = new HashSet<>();
+
+    static {
+        disallowedEnchantments.add(Enchantments.UNBREAKING);
+        disallowedEnchantments.add(Enchantments.MENDING);
+        disallowedEnchantments.add(Enchantments.SHARPNESS);
+        disallowedEnchantments.add(Enchantments.BANE_OF_ARTHROPODS);
+        disallowedEnchantments.add(Enchantments.SMITE);
+        disallowedEnchantments.add(Enchantments.FIRE_ASPECT);
+        disallowedEnchantments.add(Enchantments.KNOCKBACK);
+        disallowedEnchantments.add(Enchantments.MOB_LOOTING);
+    }
 
     public static Supplier<Matrix4f> defaultTransform = Suppliers.memoize(() -> {
          Matrix4f m = new Matrix4f();
@@ -160,5 +183,44 @@ public class TicEXSBUtil {
     public static RenderType getRenderType(Supplier<ShaderInstance> instanceSupplier){
         RenderType.CompositeState state = CompositeState.builder().setShaderState(new ShaderStateShard(instanceSupplier)).setOutputState(RenderStateShard.ITEM_ENTITY_TARGET).setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, true)).setTransparencyState(RenderStateShard.NO_TRANSPARENCY).setLightmapState(RenderType.LIGHTMAP).setOverlayState(RenderType.OVERLAY).setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE).createCompositeState(true);
         return RenderType.create("slashblade_tool_shader_blend", DefaultVertexFormat.NEW_ENTITY, Mode.TRIANGLES, 256, true, false, state);
+    }
+
+    public static boolean applyEnchantment(ItemStack toolStack, Enchantment enchantment, int level){
+        for(Enchantment disallowed : TicEXSBUtil.disallowedEnchantments){
+            if(!enchantment.getDescriptionId().equals(disallowed.getDescriptionId())){
+                if(toolStack.getEnchantmentLevel(enchantment) > 0){
+                    CompoundTag nbt = toolStack.getOrCreateTag();
+                    if (!nbt.contains("Enchantments", Tag.TAG_LIST)) {
+                        nbt.put("Enchantments", new ListTag());
+                    }
+        
+                    ListTag listTag = nbt.getList("Enchantments", Tag.TAG_COMPOUND);
+                    ListTag newListTag = new ListTag();
+                    for(int i = 0; i < listTag.size(); i++){
+                        CompoundTag enchantmentTag = listTag.getCompound(i);
+                        if(enchantmentTag.getString("id").equals(ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString())){
+                            newListTag.add(EnchantmentHelper.storeEnchantment(ResourceLocation.tryParse(enchantmentTag.getString("id")), calcEnchLevel(toolStack, enchantment, level)));
+                        } else {
+                            newListTag.add(enchantmentTag);
+                        }
+                    }
+                    nbt.put("Enchantments", newListTag);
+                    
+                } else {
+                    toolStack.enchant(enchantment, Math.min(enchantment.getMaxLevel(), level));
+                }
+                return true;   
+            }
+        }
+        return false;
+    }
+
+    public static int calcEnchLevel(ItemStack stack, Enchantment key, int value){
+        int currentLv = stack.getEnchantmentLevel(key);
+        int levelCap = key.getMaxLevel();
+        if(value == currentLv){
+            return Math.min(value + 1, levelCap);
+        } 
+        return Math.min(Math.max(value, currentLv), levelCap);
     }
 }

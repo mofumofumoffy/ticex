@@ -78,6 +78,9 @@
     "material.ticex.draconic": "神龍",
     "material.ticex.chaotic": "混沌",
 
+    "pattern.ticex.slashblade_blade": "刀身",
+    "pattern.ticex.slashblade_saya": "刀鞘",
+
     "modifier.ticex.omnipotence": "全能",
     "modifier.ticex.omnipotence.flavor": "萬物終將歸一！",
     "modifier.ticex.omnipotence.description": "工具獲得秒殺與瞬間挖掘能力",
@@ -108,6 +111,9 @@
     "modifier.ticex.rebirth": "重生",
     "modifier.ticex.rebirth.flavor": "你好，世界！",
     "modifier.ticex.rebirth.description": "工具繼承材料的基礎能力",
+
+    "modifier.ticex.mekanic": "Mekanic",
+
     "modifier.ticex.radiation_shielding": "輻射防護",
     "modifier.ticex.radiation_shielding.flavor": "星辰隕落之地的最終戰役",
     "modifier.ticex.radiation_shielding.description": "護甲抵禦輻射傷害",

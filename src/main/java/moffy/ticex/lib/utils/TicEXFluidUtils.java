@@ -1,4 +1,4 @@
-package moffy.ticex.utils;
+package moffy.ticex.lib.utils;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;

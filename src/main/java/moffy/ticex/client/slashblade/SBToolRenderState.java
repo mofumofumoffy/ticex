@@ -10,7 +10,7 @@ import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
 import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
 import mods.flammpfeil.slashblade.event.client.RenderOverrideEvent;
 import moffy.ticex.client.slashblade.SBToolRenderType.PartType;
-import moffy.ticex.utils.TicEXSBUtil;
+import moffy.ticex.lib.utils.TicEXSBUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.ItemStack;
