@@ -87,42 +87,20 @@ public class TicEXEvent {
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        AttributeInstance attr = null;
         AttributeModifier modifier = null;
         if(ModList.get().isLoaded("attributeslib")){
-            attr = player.getAttributes().getInstance(TicEXApotheosisUtils.ApothicAttributes.CREATIVE_FLIGHT.get());
             modifier = new AttributeModifier(modifierUUID, "celestial", 1, AttributeModifier.Operation.ADDITION);
         }
         if(!(player.isCreative() || player.isSpectator()) && TicEXAvaritiaUtils.hasCelestial(player)){
             if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
-                player.getAbilities().mayfly = true;
-                if(ModList.get().isLoaded("attributeslib")){
-                    if(!attr.hasModifier(modifier)){
-                        attr.addPermanentModifier(modifier);
-                    }
-                }
-                player.onUpdateAbilities();
+                TicEXApotheosisUtils.enableCreativeFlight(player,modifier);
             } else if(!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly){
-                player.getAbilities().mayfly = false;
-                if(ModList.get().isLoaded("attributeslib")){
-                    attr.removeModifier(modifierUUID);
-                }
-                player.onUpdateAbilities();
+                TicEXApotheosisUtils.disableCreativeFlight(player,modifierUUID);
             }
         }else if(player.isCreative() || player.isSpectator()){
-            player.getAbilities().mayfly = true;
-            if(ModList.get().isLoaded("attributeslib")){
-                if(!attr.hasModifier(modifier)){
-                    attr.addPermanentModifier(modifier);
-                }
-            }
-            player.onUpdateAbilities();
+            TicEXApotheosisUtils.enableCreativeFlight(player,modifier);
         }else{
-            player.getAbilities().mayfly = false;
-            if(ModList.get().isLoaded("attributeslib")){
-                attr.removeModifier(modifierUUID);
-            }
-            player.onUpdateAbilities();
+            TicEXApotheosisUtils.disableCreativeFlight(player,modifierUUID);
         }
     }
 
