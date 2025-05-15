@@ -108,7 +108,7 @@ public abstract class ItemRendererMixin {
             float f1 = (float)(i >> 8 & 255) / 255.0F;
             float f2 = (float)(i & 255) / 255.0F;
 
-            RenderQuadArgsWrapper defaultWrapper = new RenderQuadArgsWrapper(renderType, pPoseStack, bakedquad, pCombinedOverlay, f, f1, f2, pCombinedLight, pCombinedOverlay, flag, pBuffer, pDisplayContext, tool);
+            RenderQuadArgsWrapper defaultWrapper = new RenderQuadArgsWrapper(renderType, pPoseStack, bakedquad, f, f1, f2,  0.5f, pCombinedLight, pCombinedOverlay, flag, pBuffer, pDisplayContext, tool);
 
             if(bakedquad instanceof ShaderToolQuad){
                 PartPredicate predicate = ((ShaderToolQuad)bakedquad).getPredicate();
