@@ -1,12 +1,16 @@
 package moffy.ticex.event;
 
+import java.util.UUID;
+
 import moffy.ticex.caps.EmbossmentMaterialCapability;
+import moffy.ticex.lib.utils.TicEXApotheosisUtils;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +20,7 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class TicEXEvent {
@@ -80,14 +85,16 @@ public class TicEXEvent {
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if(!player.isCreative() && TicEXAvaritiaUtils.hasCelestial(player)){
+        if(!(player.isCreative() || player.isSpectator()) && TicEXAvaritiaUtils.hasCelestial(player)){
             if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
-                player.getAbilities().mayfly = true;
-                player.onUpdateAbilities();
+                TicEXApotheosisUtils.enableCreativeFlight(player);
             } else if(!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly){
-                player.getAbilities().mayfly = false;
-                player.onUpdateAbilities();
+                TicEXApotheosisUtils.disableCreativeFlight(player);
             }
+        }else if(player.isCreative() || player.isSpectator()){
+            TicEXApotheosisUtils.enableCreativeFlight(player);
+        }else{
+            TicEXApotheosisUtils.disableCreativeFlight(player);
         }
     }
 
