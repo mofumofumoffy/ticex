@@ -1,0 +1,61 @@
+name: バグ報告
+description: バグを報告する
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        バグ報告ありがとうございます。以下の情報を記入してください。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: バグの説明
+      description: バグの内容を詳しく説明してください
+      placeholder: できるだけ具体的に記述してください
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 再現手順
+      description: バグを再現するための手順を記述してください
+      placeholder: |
+        1. '...' を使用
+        2. '....' をクリック
+        3. エラーが発生
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待する動作
+      description: 本来期待される動作を記述してください
+    validations:
+      required: true
+
+  - type: input
+    id: forgeversion
+    attributes:
+      label: Forgeのバージョン
+      placeholder: 47.4.0
+    validations:
+      required: true
+
+  - type: input
+    id: ticexversion
+    attributes:
+      label: TiCEXのバージョン
+      placeholder: 0.x.x
+    validations:
+      required: true
+
+  - type: textarea
+    id: modlist
+    attributes:
+      label: Mod一覧
+      description: 導入しているModの一覧を記入して下さい
+    validations:
+      required: true
