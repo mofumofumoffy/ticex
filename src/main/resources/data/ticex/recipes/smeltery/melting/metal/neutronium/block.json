@@ -14,10 +14,10 @@
       }
     ],
     "ingredient": {
-      "tag": "forge:storage_blocks/neutronium"
+      "tag": "forge:storage_blocks/neutron"
     },
     "result": {
-      "fluid": "ticex:molten_neutronium",
+      "fluid": "ticex:molten_neutron",
       "amount": 810
     },
     "temperature": 6360,

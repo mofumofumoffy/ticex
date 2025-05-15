@@ -1,6 +1,0 @@
-{
-    "replace": false,
-    "values": [
-      {"id":"ticex:molten_crystal_matrix", "required":false}
-    ]
-  }

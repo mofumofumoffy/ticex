@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "ticex:mekaplate_boots",
+      "required": false
+    },
+    {
+      "id": "ticex:singular_gem_boots",
+      "required": false
+    }
+  ]
+}

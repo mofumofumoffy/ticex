@@ -3,7 +3,7 @@
     "conditions": [
       {
         "value": {
-          "tag": "forge:storage_blocks/neutronium",
+          "tag": "forge:storage_blocks/neutron",
           "type": "forge:tag_empty"
         },
         "type": "forge:not"
@@ -17,9 +17,9 @@
       }
     ],
     "ingredient": {
-      "tag": "forge:storage_blocks/neutronium"
+      "tag": "forge:storage_blocks/neutron"
     },
     "value": 1,
     "needed": 1,
-    "material": "ticex:neutronium"
+    "material": "ticex:neutron"
   }

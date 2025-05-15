@@ -1,0 +1,8 @@
+// 1.20.1	2025-05-15T11:07:42.1684016	Tags for minecraft:block mod id ticex
+d01772499c62cb11fe973145cda379b9da7c46df data/forge/tags/blocks/storage_blocks/crystal_matrix.json
+5fa9649089794a719c2d1d4f18fb6c676ad5e5de data/forge/tags/blocks/storage_blocks/etheric.json
+7b1526d9db5712652951fd6dd6b1af2a49149444 data/forge/tags/blocks/storage_blocks/infinity.json
+54d0b2246edaf8ca724e663d1305213b2ad7fe68 data/forge/tags/blocks/storage_blocks/neutron.json
+050c4bb99c85e10929d161fbfb5001a1e318a8c8 data/minecraft/tags/blocks/beacon_base_blocks.json
+66a6e470f9822c5129294e1fe11cf3be03c8c597 data/tconstruct/tags/blocks/scorched_tanks.json
+c8a68a5279544bac7b38918c7d6ba499e8a7ed37 data/tconstruct/tags/blocks/seared_tanks.json

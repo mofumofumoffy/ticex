@@ -3,7 +3,7 @@
     "conditions": [
       {
         "value": {
-          "tag": "forge:ingots/neutronium",
+          "tag": "forge:ingots/neutron",
           "type": "forge:tag_empty"
         },
         "type": "forge:not"
@@ -14,11 +14,11 @@
     },
     "cast_consumed": true,
     "fluid": {
-      "tag": "forge:molten_neutronium",
+      "tag": "forge:molten_neutron",
       "amount": 90
     },
     "result": {
-      "tag": "forge:ingots/neutronium"
+      "tag": "forge:ingots/neutron"
     },
     "cooling_time": 60
   }

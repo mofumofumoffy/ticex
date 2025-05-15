@@ -19,11 +19,11 @@
           },
           {
             "grey": 63,
-            "path": "ticex:material/neutronium_outline_dark"
+            "path": "ticex:material/neutron_outline_dark"
           },
           {
             "grey": 102,
-            "path": "ticex:material/neutronium_outline"
+            "path": "ticex:material/neutron_outline"
           },
           {
             "grey": 140,

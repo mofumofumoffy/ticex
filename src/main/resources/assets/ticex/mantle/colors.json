@@ -27,7 +27,7 @@
     },
     "material.ticex": {
         "infinity": "#FF5555",
-        "neutronium": "#0d0d0d",
+        "neutron": "#0d0d0d",
         "crystal_matrix": "#42e0f5",
         "reconstruction": "#3483eb",
         "etheric": "#2deb59",

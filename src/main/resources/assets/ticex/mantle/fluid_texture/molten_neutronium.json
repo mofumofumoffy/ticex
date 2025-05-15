@@ -1,5 +1,5 @@
 {
     "color": "FFFFFFFF",
-    "flowing": "ticex:fluid/molten/neutronium/flowing",
-    "still": "ticex:fluid/molten/neutronium/still"
+    "flowing": "ticex:fluid/molten/neutron/flowing",
+    "still": "ticex:fluid/molten/neutron/still"
   }

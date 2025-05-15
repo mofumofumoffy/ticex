@@ -3,7 +3,7 @@
     "conditions": [
       {
         "value": {
-          "tag": "forge:ingots/neutronium",
+          "tag": "forge:ingots/neutron",
           "type": "forge:tag_empty"
         },
         "type": "forge:not"
@@ -17,9 +17,9 @@
       }
     ],
     "ingredient": {
-      "tag": "forge:ingots/neutronium"
+      "tag": "forge:ingots/neutron"
     },
     "value": 1,
     "needed": 9,
-    "material": "ticex:neutronium"
+    "material": "ticex:neutron"
   }

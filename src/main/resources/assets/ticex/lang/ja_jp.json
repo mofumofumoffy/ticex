@@ -78,12 +78,12 @@
 
     "fluid.tconstruct.reconstruction_core": "再構築のせせらぎ",
     "fluid.tconstruct.molten_infinity": "無限の流れ",
-    "fluid_type.ticex.molten_neutronium": "超高密度中性子流体",
+    "fluid_type.ticex.molten_neutron": "超高密度中性子流体",
     "fluid_type.ticex.molten_crystal_matrix": "不定形クリスタルマトリックス",
     "fluid.tconstruct.molten_etheric": "エーテルの涙",
 
     "material.ticex.infinity": "インフィニティ",
-    "material.ticex.neutronium": "ニュートロニウム",
+    "material.ticex.neutron": "ニュートロニウム",
     "material.ticex.crystal_matrix": "クリスタルマトリックス",
     "material.ticex.etheric": "エーテル",
     "material.ticex.draconium": "ドラコニウム",

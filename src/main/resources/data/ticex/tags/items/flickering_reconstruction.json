@@ -1,9 +1,0 @@
-{
-    "replace": false,
-    "values": [
-      {
-        "id": "ticex:flickering_reconstruction_core",
-        "required": false
-      }
-    ]
-  }

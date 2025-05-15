@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "ticex:mekaplate_leggings",
+      "required": false
+    },
+    {
+      "id": "ticex:singular_gem_leggings",
+      "required": false
+    }
+  ]
+}

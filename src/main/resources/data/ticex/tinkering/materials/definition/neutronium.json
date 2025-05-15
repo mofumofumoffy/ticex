@@ -10,7 +10,7 @@
             },
             {
               "value": {
-                "tag": "forge:ingots/neutronium",
+                "tag": "forge:ingots/neutron",
                 "type": "forge:tag_empty"
               },
               "type": "forge:not"

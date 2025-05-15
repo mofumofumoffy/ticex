@@ -138,6 +138,10 @@ repositories {
         url = "https://cursemaven.com"
     }
 
+    maven {
+        url = "https://api.modrinth.com/maven"
+    }
+
     maven { url = "https://maven.createmod.net" }
 
     
@@ -192,19 +196,23 @@ dependencies {
 
     implementation fg.deobf("curse.maven:projecte-226410:4901949")
 
+    implementation fg.deobf("maven.modrinth:gu7yAYhd:1.115.1")
+
     implementation fg.deobf("curse.maven:curios-309927:6238756")
 
     implementation fg.deobf("curse.maven:jei-238222:6075247")
     implementation fg.deobf("curse.maven:tconjei-974154:6442609")
     
-    runtimeOnly fg.deobf("curse.maven:mouse-tweaks-60089:5338457")
+    /* runtimeOnly fg.deobf("curse.maven:mouse-tweaks-60089:5338457")
     runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
     runtimeOnly fg.deobf("curse.maven:radium-reforged-570017:5706069")
+    runtimeOnly fg.deobf("curse.maven:fps-reducer-280294:4586784") */
+
     runtimeOnly fg.deobf("curse.maven:bookshelf-228525:5423987")
     runtimeOnly fg.deobf("curse.maven:modernfix-790626:6125143")
     runtimeOnly fg.deobf("curse.maven:ferritecore-429235:4810975")
     runtimeOnly fg.deobf("curse.maven:jade-324717:6271651")
-    runtimeOnly fg.deobf("curse.maven:fps-reducer-280294:4586784")
+    
     runtimeOnly fg.deobf("curse.maven:curios-309927:6238756")
 
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:6237015")

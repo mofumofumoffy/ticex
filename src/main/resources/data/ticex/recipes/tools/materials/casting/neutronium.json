@@ -4,6 +4,6 @@
       "amount": 90,
       "tag": "forge:molten_neutron"
     },
-    "output": "ticex:neutronium",
+    "output": "ticex:neutron",
     "temperature": 1400
   }

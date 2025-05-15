@@ -5,6 +5,9 @@
         "id": "ticex:reconstruction_core",
         "required": false
       },
-      "#ticex:flickering_reconstruction"
+      {
+        "id": "ticex:flickering_reconstruction_core",
+        "required": false
+      }
     ]
   }

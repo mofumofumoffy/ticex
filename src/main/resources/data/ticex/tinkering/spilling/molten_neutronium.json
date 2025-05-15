@@ -4,7 +4,7 @@
       "type": "forge:mod_loaded"
     },
     "fluid": {
-      "tag": "ticex:molten_neutronium",
+      "tag": "ticex:molten_neutron",
       "amount": 10
     },
     "effects": [

@@ -3,18 +3,18 @@
     "conditions": [
       {
         "value": {
-          "tag": "forge:storage_blocks/neutronium",
+          "tag": "forge:storage_blocks/neutron",
           "type": "forge:tag_empty"
         },
         "type": "forge:not"
       }
     ],
     "fluid": {
-      "tag": "forge:molten_neutronium",
+      "tag": "forge:molten_neutron",
       "amount": 810
     },
     "result": {
-      "tag": "forge:storage_blocks/neutronium"
+      "tag": "forge:storage_blocks/neutron"
     },
     "cooling_time": 179
   }

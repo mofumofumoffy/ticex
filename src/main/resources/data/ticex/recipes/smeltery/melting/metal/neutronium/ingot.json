@@ -14,10 +14,10 @@
       }
     ],
     "ingredient": {
-      "tag": "forge:ingots/neutronium"
+      "tag": "forge:ingots/neutron"
     },
     "result": {
-      "fluid": "ticex:molten_neutronium",
+      "fluid": "ticex:molten_neutron",
       "amount": 90
     },
     "temperature": 3180,
