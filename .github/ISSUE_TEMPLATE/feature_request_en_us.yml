@@ -1,0 +1,59 @@
+name: Feature Request
+description: Suggest an idea for a new feature
+labels: ["suggestion - 要望・提案"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a feature. Please fill out the following information.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Related problem
+      description: Describe the problem this feature request is related to
+      placeholder: e.g., The operation of ~ is cumbersome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe the solution you'd like
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: Describe any alternative solutions or features you've considered
+    validations:
+      required: false
+
+  - type: input
+    id: forgeversion
+    attributes:
+      label: Forge Version
+      description: Please enter the version of Forge you are currently using
+      placeholder: 47.4.0
+    validations:
+      required: true
+
+  - type: input
+    id: ticexversion
+    attributes:
+      label: TiCEX Version
+      description: Please enter the version of TiCEX you are currently using
+      placeholder: 0.x.x
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the feature request here.
+    validations:
+      required: false

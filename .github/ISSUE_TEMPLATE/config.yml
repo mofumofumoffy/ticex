@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 質問・相談
+  - name: 質問・相談 Questions & Discussions
     url: https://github.com/mofumofumoffy/ticex/discussions
-    about: バグ報告や機能リクエスト以外の質問・相談はDiscussionsをご利用ください。
+    about: バグ報告や機能リクエスト以外の質問・相談はDiscussionsをご利用ください。For questions and discussions other than bug reports or feature requests, please use Discussions.
 
 # Issue作成時のテンプレート設定
 defaults:
@@ -12,3 +12,10 @@ defaults:
   - template: "feature_request.yml"
     name: "機能リクエスト"
     about: "新機能のアイデアを提案する"
+
+  - template: "bug_report_en_us.yml"
+    name: "Bug Report(English)"
+    about: "Report a bug"
+  - template: "feature_request_en_us.yml"
+    name: "Feature Request(English)"
+    about: "Suggest an idea for a new feature"
