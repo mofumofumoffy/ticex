@@ -47,7 +47,7 @@ public class ModifierBedrockBreaker extends NoLevelsModifier{
         BlockState state = event.getEntity().level().getBlockState(event.getPos());
 		if (!event.getEntity().isCreative()) {
 			ToolStack tool = getHeldTool(event.getEntity(), InteractionHand.MAIN_HAND);
-			if (tool == null || tool.isBroken() || tool.getModifierLevel(this) < 1 && state.getDestroySpeed(event.getEntity().level(), event.getPos()) > 0)
+			if (tool == null || tool.isBroken() || tool.getModifierLevel(this) < 1 || state.getDestroySpeed(event.getEntity().level(), event.getPos()) > 0)
 				return;
 
 			Player player = event.getEntity();
