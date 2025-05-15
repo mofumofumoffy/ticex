@@ -27,6 +27,12 @@ body:
         3. エラーが発生
     validations:
       required: true
+  
+  - type: input
+    id: crashreport
+    attributes:
+      label: クラッシュレポート
+      description: mclo.gsで変換したクラッシュレポートのURLを記入してください
 
   - type: textarea
     id: expected

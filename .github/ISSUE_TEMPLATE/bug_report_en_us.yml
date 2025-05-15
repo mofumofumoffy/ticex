@@ -27,6 +27,12 @@ body:
         3. Error occurs
     validations:
       required: true
+  
+  - type: input
+    id: crashreport
+    attributes:
+      label: CrashReport
+      description: Please enter the URL of the crash report converted by mclo.gs.
 
   - type: textarea
     id: expected
