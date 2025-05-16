@@ -20,7 +20,7 @@ public class ModifierSakuraCmp extends NoLevelsModifier implements EmbossmentMod
     }
 
     @Override
-    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
         
         boolean succeed = false;
 

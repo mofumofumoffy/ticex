@@ -116,11 +116,13 @@ public class EmbossmentModifierRecipe extends AbstractModifierRecipe{
 
         EmbossmentContext context = new EmbossmentContext(resultStack, inv);
 
+        boolean secondary = false;
         for(int i = 0; i < inv.getInputCount(); i++){
             ItemStack input = inv.getInput(i);
             if(embossItem.get(0).test(input)){
-                result = tool.getModifier(modifier).getHook(TicEXRegistry.EMBOSSMENT_HOOK).applyItem(context, i, false);
+                result = tool.getModifier(modifier).getHook(TicEXRegistry.EMBOSSMENT_HOOK).applyItem(context, i, secondary);
             }
+            secondary = true;
         }
         
         if(result){

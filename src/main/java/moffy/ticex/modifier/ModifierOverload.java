@@ -25,7 +25,7 @@ public class ModifierOverload extends NoLevelsModifier implements EmbossmentModi
     }
 
     @Override
-    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
         boolean result = false;
 
         ItemStack toolStack = context.getToolStack();

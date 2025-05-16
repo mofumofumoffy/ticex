@@ -7,20 +7,20 @@ import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.recipe.tinkerstation.ITinkerStationContainer;
 
 public interface EmbossmentModifierHook {
-    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate);
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary);
 
     public static class DefaultClass implements EmbossmentModifierHook{
         @Override
-        public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
+        public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
             return false;
         }
     }
 
     record AllMerger(Collection<EmbossmentModifierHook> modules) implements EmbossmentModifierHook{
         @Override
-        public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
+        public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
             for(EmbossmentModifierHook module : modules){
-                boolean result = module.applyItem(context, inputIndex, simulate);
+                boolean result = module.applyItem(context, inputIndex, secondary);
                 if(result){
                     return true;
                 }

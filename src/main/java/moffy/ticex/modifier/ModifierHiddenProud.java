@@ -33,7 +33,7 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
     }
 
     @Override
-    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
         ItemStack input = context.getInputStack(inputIndex);
         ItemStack toolStack = context.getToolStack();
 
@@ -55,7 +55,7 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
                 }
             }
 
-            if (s.getRefine() < refineLimit) {
+            if (s.getRefine() < refineLimit && !secondary) {
                 s.setRefine(s.getRefine() + 1);
                 if(s.getRefine() < 200)
                     s.setMaxDamage(s.getMaxDamage() + 1);

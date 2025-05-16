@@ -20,7 +20,7 @@ public class ModifierLamellar extends NoLevelsModifier implements EmbossmentModi
     }
 
     @Override
-    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
         ItemStack toolStack = context.getToolStack();
         ItemStack input = context.getInputStack(inputIndex);
         if(input.getItem() instanceof ToolPartItem part){

@@ -18,7 +18,7 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
     }
 
     @Override
-    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
         ItemStack toolStack = context.getToolStack().copy();
         ItemStack inputStack = context.getInputStack(inputIndex);
 

@@ -4,6 +4,7 @@ import moffy.addonapi.AddonModuleProvider;
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.apotheosis.TicEXApotheosisModule;
 import moffy.ticex.modules.avaritia.TicEXAvaritiaModule;
+import moffy.ticex.modules.cc_tweaked.TicEXCCModule;
 import moffy.ticex.modules.create.TicEXCreateModule;
 import moffy.ticex.modules.curios.TicEXCuriosModule;
 import moffy.ticex.modules.draconicevolution.TicEXDEModule;
@@ -30,6 +31,7 @@ public class TicEXModuleProvider extends AddonModuleProvider{
         addRawModule(new ResourceLocation(TicEX.MODID, "create_compat"), "Create Compat", TicEXCreateModule.class, new String[]{"tconstruct", "create"});
         addRawModule(new ResourceLocation(TicEX.MODID, "irons_spellbooks_compat"), "Iron's Spells n' Spellbooks Compat", TicEXIronsModule.class, new String[]{"tconstruct", "irons_spellbooks"});
         addRawModule(new ResourceLocation(TicEX.MODID, "projecte_compat"), "ProjectE Compat", TicEXPEModule.class, new String[]{"tconstruct", "projecte"});
+        addRawModule(new ResourceLocation(TicEX.MODID, "computercraft_compat"), "CC:Tweaked Compat", TicEXCCModule.class, new String[]{"tconstruct", "computercraft"});
         addRawModule(new ResourceLocation(TicEX.MODID, "curios_compat"), "Curios API Compat", TicEXCuriosModule.class, new String[]{"tconstruct", "curios"});
         addRawModule(new ResourceLocation(TicEX.MODID, "sakura_compat"), "Sakura Tinker Compat", TicEXSakuraModule.class, new String[]{"tconstruct", "sakuratinker"});
         addRawModule(new ResourceLocation(TicEX.MODID, "things_compat"), "Tinkers' Things Compat", TicEXThingsModule.class, new String[]{"tconstruct", "tinkers_things"});

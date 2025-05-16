@@ -19,7 +19,7 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
     }
 
     @Override
-    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean simulate) {
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
         ItemStack input = context.getInputStack(inputIndex);
         ItemStack toolStack = context.getToolStack();
 
