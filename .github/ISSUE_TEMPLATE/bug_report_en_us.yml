@@ -1,0 +1,67 @@
+name: Bug Report
+description: Report a bug
+labels: ["bugs"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug. Please fill out the following information.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug description
+      description: Describe the bug in detail
+      placeholder: Please describe it as specifically as possible
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Describe the steps to reproduce the bug
+      placeholder: |
+        1. Use '...'
+        2. Click '....'
+        3. Error occurs
+    validations:
+      required: true
+  
+  - type: input
+    id: crashreport
+    attributes:
+      label: CrashReport
+      description: Please enter the URL of the crash report converted by mclo.gs.
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Describe what you expected to happen
+    validations:
+      required: true
+
+  - type: input
+    id: forgeversion
+    attributes:
+      label: Forge Version
+      placeholder: 47.4.0
+    validations:
+      required: true
+
+  - type: input
+    id: ticexversion
+    attributes:
+      label: TiCEX Version
+      placeholder: 0.x.x
+    validations:
+      required: true
+
+  - type: textarea
+    id: modlist
+    attributes:
+      label: Mod List
+      description: Please list the mods you have installed
+    validations:
+      required: true
