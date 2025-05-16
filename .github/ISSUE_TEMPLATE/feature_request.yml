@@ -1,6 +1,6 @@
 name: 機能リクエスト
 description: 新機能のアイデアを提案する
-labels: ["suggestion - 要望・提案"]
+labels: ["question/suggenstion"]
 body:
   - type: markdown
     attributes:

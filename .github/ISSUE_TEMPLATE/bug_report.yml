@@ -1,6 +1,6 @@
 name: バグ報告
 description: バグを報告する
-labels: ["bug"]
+labels: ["bugs"]
 body:
   - type: markdown
     attributes:

@@ -1,6 +1,6 @@
 name: Feature Request
 description: Suggest an idea for a new feature
-labels: ["suggestion - 要望・提案"]
+labels: ["question/suggenstion"]
 body:
   - type: markdown
     attributes:
