@@ -1,7 +1,5 @@
 package moffy.ticex.event;
 
-import java.util.UUID;
-
 import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.lib.utils.TicEXApotheosisUtils;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
@@ -10,7 +8,6 @@ import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +17,6 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class TicEXEvent {
