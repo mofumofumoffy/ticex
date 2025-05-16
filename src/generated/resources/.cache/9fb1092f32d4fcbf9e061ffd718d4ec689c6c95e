@@ -1,7 +1,9 @@
-// 1.20.1	2025-05-15T11:13:11.6642087	Recipes
+// 1.20.1	2025-05-16T18:56:27.5160829	Recipes
 9ebf6b48b3d12cde381ae855550f70bc11496d46 data/minecraft/advancements/recipes/decorations/cores/flickering_reconstruction_core.json
 9ba70ba74a2241403228a1e4587115182a7afe64 data/minecraft/advancements/recipes/decorations/cores/reconstruction_core.json
 e3f6223df0f56f7d247256f47e9d712fd791edad data/minecraft/recipes/cores/flickering_reconstruction_core.json
 b79fc71ca9b90cdbc2b2b7e6fd1261a029cd8fda data/minecraft/recipes/cores/reconstruction_core.json
+9acf723a1e525400b7631f5dddd94a16a7b3d5d5 data/ticex/recipes/tools/modifiers/ability/endestshot.json
+c2a4126f039f914db4b56256ce1b74c48b16be64 data/ticex/recipes/tools/modifiers/salvage/ability/endestshot.json
 0238b1bf6298d34beb3710dcfcd7f58a9587d287 data/ticex/recipes/tools/modifiers/salvage/upgrade/modem.json
 7ce0cc4a09b16e97b2fc20fa0e73e1cd8f96b8bd data/ticex/recipes/tools/modifiers/upgrade/modem.json

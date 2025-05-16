@@ -9,6 +9,7 @@ import moffy.ticex.modifier.ModifierAftershock;
 import moffy.ticex.modifier.ModifierBedrockBreaker;
 import moffy.ticex.modifier.ModifierCelestial;
 import moffy.ticex.modifier.ModifierCondensing;
+import moffy.ticex.modifier.ModifierEndestShot;
 import moffy.ticex.modifier.ModifierOmnipotence;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +37,7 @@ public class TicEXAvaritiaModule extends AddonModule{
         TicEXRegistry.CELESTIAL_MODIFIER = TicEXRegistry.MODIFIERS.register("celestial", ModifierCelestial::new);
         TicEXRegistry.CONDENSING_MODIFIER = TicEXRegistry.MODIFIERS.register("condensing", ModifierCondensing::new);
         TicEXRegistry.AFTERSHOCK_MODIFIER = TicEXRegistry.MODIFIERS.register("aftershock", ModifierAftershock::new);
+        TicEXRegistry.ENDESTSHOT_MODIFIER = TicEXRegistry.MODIFIERS.register("endestshot",ModifierEndestShot::new);
 
         TicEXRegistry.MOLTEN_INFINITY = TicEXRegistry.FLUIDS.register("molten_infinity").type(TicEXFluidUtils.hot("molten_infinity").temperature(6360).lightLevel(15)).block(BurningLiquidBlock.createBurning(MapColor.EMERALD, 15, 20, 20f)).bucket().commonTag().flowing();
         TicEXRegistry.MOLTEN_NEUTRON = TicEXRegistry.FLUIDS.register("molten_neutron").type(TicEXFluidUtils.cool().temperature(1000)).block(MapColor.COLOR_BLACK, 0).bucket().commonTag().flowing();        
