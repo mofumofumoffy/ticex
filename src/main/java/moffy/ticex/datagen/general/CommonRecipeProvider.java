@@ -3,6 +3,7 @@ package moffy.ticex.datagen.general;
 import java.util.function.Consumer;
 
 import dan200.computercraft.shared.ModRegistry;
+import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.addonapi.AddonAPI;
 import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
@@ -38,6 +39,7 @@ public class CommonRecipeProvider extends RecipeProvider implements ICommonRecip
     protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         common(pWriter);
         computerCraft(pWriter);
+        avaritia(pWriter);
     }
 
     public void common(Consumer<FinishedRecipe> pWriter){
@@ -84,6 +86,31 @@ public class CommonRecipeProvider extends RecipeProvider implements ICommonRecip
                 .setMaxLevel(1).checkTraitLevel()
                 .saveSalvage(topConsumer, prefix(TicEXRegistry.MODEM_MODIFIER.getId(), upgradeSalvage))
                 .save(topConsumer, prefix(TicEXRegistry.MODEM_MODIFIER.getId(), upgradeFolder));
+        }
+    }
+
+    public void avaritia(Consumer<FinishedRecipe> pWriter){
+        String upgradeFolder = "tools/modifiers/upgrade/";
+        String abilityFolder = "tools/modifiers/ability/";
+        String slotlessFolder = "tools/modifiers/slotless/";
+        String upgradeSalvage = "tools/modifiers/salvage/upgrade/";
+        String abilitySalvage = "tools/modifiers/salvage/ability/";
+        String defenseFolder = "tools/modifiers/defense/";
+        String defenseSalvage = "tools/modifiers/salvage/defense/";
+        String compatFolder = "tools/modifiers/compat/";
+        String compatSalvage = "tools/modifiers/salvage/compat/";
+        String worktableFolder = "tools/modifiers/worktable/";
+
+        Consumer<FinishedRecipe> topConsumer = withCondition(pWriter, modsAvailable(new ResourceLocation(TicEX.MODID, "avaritia_compat")));
+
+        if(TicEXRegistry.ENDESTSHOT_MODIFIER!= null){
+            ModifierRecipeBuilder.modifier(TicEXRegistry.ENDESTSHOT_MODIFIER)
+                .setTools(TinkerTags.Items.RANGED)
+                .addInput(ModItems.endest_pearl.get())
+                .setSlots(SlotType.ABILITY, 2)
+                .setMaxLevel(1).checkTraitLevel()
+                .saveSalvage(topConsumer, prefix(TicEXRegistry.ENDESTSHOT_MODIFIER.getId(), abilitySalvage))
+                .save(topConsumer, prefix(TicEXRegistry.ENDESTSHOT_MODIFIER.getId(), abilityFolder));
         }
     }
 

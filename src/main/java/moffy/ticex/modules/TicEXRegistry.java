@@ -213,6 +213,7 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> HURRICANE_MODIFIER = null;
     public static StaticModifier<Modifier> DEFINE_MODIFIER = null;
     public static DynamicModifier MODEM_MODIFIER = null;
+    public static StaticModifier<Modifier> ENDESTSHOT_MODIFIER = null;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){
