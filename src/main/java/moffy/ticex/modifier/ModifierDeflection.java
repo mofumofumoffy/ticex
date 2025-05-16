@@ -1,7 +1,16 @@
 package moffy.ticex.modifier;
 
+import java.lang.reflect.Field;
+
+import moffy.ticex.TicEX;
+import moffy.ticex.entity.FakeLivingEntity;
+import moffy.ticex.lib.IEntityDataAccessor;
 import moffy.ticex.modules.TicEXRegistry;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.EntityHitResult;
 import slimeknights.tconstruct.library.modifiers.Modifier;
@@ -17,6 +26,8 @@ import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
 public class ModifierDeflection extends Modifier implements MeleeDamageModifierHook, ProjectileHitModifierHook{
 
+    private FakeLivingEntity fakeLivingEntity = null;
+
     @Override
     public int getPriority() {
         return 1000;
@@ -31,12 +42,50 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
     @Override
     public float getMeleeDamage(IToolStackView tool, ModifierEntry modifierEntry, ToolAttackContext context, float baseDamage,
             float damage) {
-        if(!context.isExtraAttack() && tool.getModifierLevel(TicEXRegistry.DEFINE_MODIFIER.get()) <= 0){
-            for(ModifierEntry toolEntry:tool.getModifierList()){
-                toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, context, damage * (2f + modifierEntry.getLevel() * 0.25f), baseDamage, damage);
+        if(!context.isExtraAttack()){
+            if(fakeLivingEntity == null){
+                fakeLivingEntity = new FakeLivingEntity((EntityType<? extends LivingEntity>)TicEXRegistry.FAKE_LIVING_ENTITY.get(), context.getLevel());
             }
-            for(ModifierEntry toolEntry:tool.getModifierList()){
-                toolEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, context, damage * (2f + modifierEntry.getLevel() * 0.25f));
+    
+            LivingEntity target = context.getLivingTarget();
+            Player attacker = context.getPlayerAttacker();
+            
+            if(target != null && attacker != null){
+                fakeLivingEntity.setHealth(target.getHealth());
+    
+                ToolAttackContext newContext = new ToolAttackContext(attacker, attacker, context.getHand(), fakeLivingEntity, fakeLivingEntity, true, context.getCooldown(), false);
+                
+                for(ModifierEntry toolEntry:tool.getModifierList()){
+                    toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, newContext, damage, baseDamage, damage);
+                }
+
+                fakeLivingEntity.hurt(null, damage);
+                fakeLivingEntity.invulnerableTime = 0;
+                
+                for(ModifierEntry toolEntry:tool.getModifierList()){
+                    toolEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, newContext, damage);
+                }
+
+                float absoluteHealth = fakeLivingEntity.getFakeHealth();
+                IEntityDataAccessor accessor = (IEntityDataAccessor)target;
+                Field key = accessor.getField("DATA_HEALTH_ID");
+                if(key != null){
+                    try {
+                        if(float.class.isAssignableFrom(key.getType())){
+                            key.setFloat(target, absoluteHealth);
+                        } else if(EntityDataAccessor.class.isAssignableFrom(key.getType())){
+                            target.getEntityData().set((EntityDataAccessor<Float>)key.get(target), absoluteHealth);
+                        }
+                    } catch (Exception e) {
+                        TicEX.LOGGER.error("", e);
+                    }
+                }
+
+                for(MobEffectInstance effect : fakeLivingEntity.getActiveEffects()){
+                    target.addEffect(effect);
+                }
+                
+                fakeLivingEntity.removeAllEffects();
             }
 
             return 0;

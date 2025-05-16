@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import slimeknights.mantle.registration.object.FluidObject;
+import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.data.recipe.CostTagAppender;
 
@@ -115,20 +116,32 @@ public class ItemTagProvider extends ItemTagsProvider{
 
     private void addTools() {
         //tools
-        addToolTags(new ResourceLocation(TicEX.MODID, "reforged_slashblade"), MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, ItemTags.SWORDS, UNSALVAGABLE);
-        addToolTags(new ResourceLocation(TicEX.MODID, "blitz_gun"), MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, UNSALVAGABLE);
-        addToolTags(new ResourceLocation(TicEX.MODID, "revival_spellbook_irons"), MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, UNSALVAGABLE);
+        addToolTags(new ResourceLocation(TicEX.MODID, "reforged_slashblade"), TicEXTags.Items.SLASHBLADE_TOOL, MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, ItemTags.SWORDS, UNSALVAGABLE);
+        addToolTags(new ResourceLocation(TicEX.MODID, "blitz_gun"), TicEXTags.Items.KINETIC_GUN_TOOL, MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, UNSALVAGABLE);
+        addToolTags(new ResourceLocation(TicEX.MODID, "revival_spellbook_irons"), TicEXTags.Items.IRONS_SPELLBOOK_TOOL, MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, UNSALVAGABLE);
 
         //armors
-        addArmorTags(new ResourceLocation(TicEX.MODID,"mekaplate"), MULTIPART_TOOL, DURABILITY, BONUS_SLOTS, TRIM);
-        addArmorTags(new ResourceLocation(TicEX.MODID,"singular_gem"), MULTIPART_TOOL, DURABILITY, BONUS_SLOTS, TRIM);
+        addArmorTags(new ResourceLocation(TicEX.MODID,"mekaplate"), TicEXTags.Items.MEKASUIT_ARMOR, MULTIPART_TOOL, DURABILITY, BONUS_SLOTS, TRIM);
+        addArmorTags(new ResourceLocation(TicEX.MODID,"singular_gem"), TicEXTags.Items.GEM_ARMOR, MULTIPART_TOOL, DURABILITY, BONUS_SLOTS, TRIM);
+
+        this.tag(TicEXTags.Items.SERAM).addTags(
+            TicEXTags.Items.SLASHBLADE_TOOL, 
+            TicEXTags.Items.KINETIC_GUN_TOOL, 
+            TicEXTags.Items.IRONS_SPELLBOOK_TOOL, 
+            TicEXTags.Items.MEKASUIT_ARMOR, 
+            TicEXTags.Items.GEM_ARMOR
+        );
+    }
+
+    private void addTag(TagKey<Item> tagKey, ResourceLocation coreItem){
+        this.tag(tagKey).addOptional(coreItem);
     }
 
     @SafeVarargs
     private void addCores(ResourceLocation... coreItems){
         for(ResourceLocation coreItem : coreItems){
             if(coreItem != null){
-                this.tag(TicEXTags.Items.CORES).addOptional(coreItem);
+                addTag(TicEXTags.Items.CORES, coreItem);
             }
         }
     }

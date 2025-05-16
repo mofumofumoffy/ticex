@@ -27,7 +27,6 @@ public class TicEXTags {
         public static final TagKey<Item> CORES = local("cores");
         public static final TagKey<Item> CATALYSTS = local("catalysts");
 
-
         public static final TagKey<Item> INFINITY_INGOT = common("ingots/infinity");
         public static final TagKey<Item> NEUTRON_INGOT = common("ingots/neutron");
         public static final TagKey<Item> CRYSTAL_MATRIX_INGOT = common("ingots/crystal_matrix");
@@ -37,7 +36,14 @@ public class TicEXTags {
         public static final TagKey<Item> NEUTRON_BLOCK = common("storage_blocks/neutron");
         public static final TagKey<Item> CRYSTAL_MATRIX_BLOCK = common("storage_blocks/crystal_matrix");
         public static final TagKey<Item> ETHERIC_BLOCK = common("storage_blocks/etheric");
-    
+
+        public static final TagKey<Item> SERAM =  local("seram");
+        public static final TagKey<Item> MEKASUIT_ARMOR = local("seram/mekasuit");
+        public static final TagKey<Item> GEM_ARMOR = local("seram/gem");
+        public static final TagKey<Item> SLASHBLADE_TOOL = local("seram/slashblade");
+        public static final TagKey<Item> KINETIC_GUN_TOOL = local("seram/kinetic_gun");
+        public static final TagKey<Item> IRONS_SPELLBOOK_TOOL = local("seram/irons_spellbook");
+
         private static TagKey<Item> local(String name) {
             return TagKey.create(Registries.ITEM, getResource(name));
         }

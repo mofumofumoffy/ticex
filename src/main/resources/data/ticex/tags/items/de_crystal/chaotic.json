@@ -1,9 +1,0 @@
-{
-  "replace": false,
-    "values": [
-      {
-        "id": "ticex:chaotic_crystal",
-        "required": false
-      }
-    ]
-  }

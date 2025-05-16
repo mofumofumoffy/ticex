@@ -30,15 +30,19 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
             
                 ItemStack mekaPlateStack = new ItemStack(TicEXRegistry.MEKAPLATE_ARMOR.get(type));
 
-                if(toolStack.hasTag()){
-                    mekaPlateStack.setTag(toolStack.getTag().copy());
-                }
-
                 if(inputStack.hasTag() && inputStack.getTag().contains("embossed")){
-                    CompoundTag resultNBT = toolStack.getOrCreateTag();
+                    CompoundTag resultNBT = mekaPlateStack.getOrCreateTag();
                     CompoundTag embossedTag = inputStack.getTag().getCompound("embossed");
                     for(String key : embossedTag.getAllKeys()){
                         resultNBT.put(key, embossedTag.get(key));
+                    }
+                }
+
+                if(toolStack.hasTag()){
+                    CompoundTag resultNBT = mekaPlateStack.getOrCreateTag();
+                    CompoundTag toolTag = toolStack.getTag();
+                    for(String key : toolTag.getAllKeys()){
+                        resultNBT.put(key, toolTag.get(key));
                     }
                 }
 

@@ -1,4 +1,4 @@
-// 1.20.1	2025-05-15T11:07:42.1684016	TiCEX Item Tags
+// 1.20.1	2025-05-16T16:00:51.8835959	TiCEX Item Tags
 2b97e3f8bce805e3a350f0a5aba2713176711118 data/forge/tags/items/armors/boots.json
 d9ed14eb22e184b204e255cb5b7f163c02f918cc data/forge/tags/items/armors/chestplates.json
 52917954d62196345b6bae902162452eec768f6c data/forge/tags/items/armors/helmets.json
@@ -31,3 +31,9 @@ ffbad857b81512ba83096167d43b6f9ec26c0cb6 data/tconstruct/tags/items/parts.json
 c8a68a5279544bac7b38918c7d6ba499e8a7ed37 data/tconstruct/tags/items/seared_tanks.json
 ffbad857b81512ba83096167d43b6f9ec26c0cb6 data/ticex/tags/items/catalysts.json
 a048601e73112726dce5b446e163679e671ee1e6 data/ticex/tags/items/cores.json
+8079decbbd6840321e7920375fe6d95bb5a95a3e data/ticex/tags/items/seram.json
+17bb7a73717466149a05eb6ae139b5c9d5510602 data/ticex/tags/items/seram/gem.json
+61a9ef4ee2385210e90760c836896427b953e663 data/ticex/tags/items/seram/irons_spellbook.json
+212ac2139e17e058870a7de086b017b2157fc869 data/ticex/tags/items/seram/kinetic_gun.json
+f8afe7fc13e98c4739d4a4ce2dd095b27056965d data/ticex/tags/items/seram/mekasuit.json
+eda8bac7faa80b90e9f7abbb1bdd37bd0fb77320 data/ticex/tags/items/seram/slashblade.json
