@@ -25,8 +25,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class TicEXEvent {
 
-    private static UUID modifierUUID = UUID.fromString("841a954a-1deb-4c01-925f-973d9e265bf5");
-
     public static void onEntityAttributeCreation(EntityAttributeCreationEvent event){
         event.put((EntityType<? extends LivingEntity>)TicEXRegistry.FAKE_LIVING_ENTITY.get(), AttributeSupplier.builder().add(Attributes.MAX_HEALTH, Float.MAX_VALUE).build());
     }
@@ -87,20 +85,16 @@ public class TicEXEvent {
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        AttributeModifier modifier = null;
-        if(ModList.get().isLoaded("attributeslib")){
-            modifier = new AttributeModifier(modifierUUID, "celestial", 1, AttributeModifier.Operation.ADDITION);
-        }
         if(!(player.isCreative() || player.isSpectator()) && TicEXAvaritiaUtils.hasCelestial(player)){
             if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
-                TicEXApotheosisUtils.enableCreativeFlight(player,modifier);
+                TicEXApotheosisUtils.enableCreativeFlight(player);
             } else if(!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly){
-                TicEXApotheosisUtils.disableCreativeFlight(player,modifierUUID);
+                TicEXApotheosisUtils.disableCreativeFlight(player);
             }
         }else if(player.isCreative() || player.isSpectator()){
-            TicEXApotheosisUtils.enableCreativeFlight(player,modifier);
+            TicEXApotheosisUtils.enableCreativeFlight(player);
         }else{
-            TicEXApotheosisUtils.disableCreativeFlight(player,modifierUUID);
+            TicEXApotheosisUtils.disableCreativeFlight(player);
         }
     }
 
