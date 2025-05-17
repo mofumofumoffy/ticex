@@ -5,13 +5,17 @@ import java.util.concurrent.CompletableFuture;
 import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.fluid.FluidTextureProvider;
-import moffy.ticex.datagen.general.CommonRecipeProvider;
 import moffy.ticex.datagen.general.LootProvider;
+import moffy.ticex.datagen.general.recipes.AvaritiaRecipeProvider;
+import moffy.ticex.datagen.general.recipes.CCRecipeProvider;
+import moffy.ticex.datagen.general.recipes.CommonRecipeProvider;
+import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.datagen.general.tag.BlockTagProvider;
 import moffy.ticex.datagen.general.tag.FluidTagProvider;
 import moffy.ticex.datagen.general.tag.ItemTagProvider;
 import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
+import moffy.ticex.datagen.tool.MaterialDefinitionProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -19,6 +23,7 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = TicEX.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -44,13 +49,14 @@ public class TicEXGatherDataEvent {
 
         //common
         generator.addProvider(client, new FluidTextureProvider(packOutput));
-        generator.addProvider(server, new CommonRecipeProvider(packOutput));
-        generator.addProvider(server, new LootProvider(packOutput));
+        generator.addProvider(server, new TicEXRecipeProvider(packOutput));
+        generator.addProvider(server, new LootProvider(packOutput));        
 
         //modifiers
         generator.addProvider(server, new ModifierProvider(packOutput));
         generator.addProvider(server, new ModifierTagProvider(packOutput, existingFileHelper));
         
-
+        //materials
+        generator.addProvider(server, new MaterialDefinitionProvider(packOutput));
     }
 }

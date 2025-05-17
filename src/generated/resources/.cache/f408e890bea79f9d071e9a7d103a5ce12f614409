@@ -1,2 +1,5 @@
-// 1.20.1	2025-05-15T11:13:11.6652173	TiCEX Modifiers
+// 1.20.1	2025-05-17T11:13:28.9922061	TiCEX Modifiers
+d0fc27229aac92c53b66dd86fef5d306e779b62c data/ticex/tinkering/modifiers/cosmic_luck.json
+def9484b63174d229d9ac1d5e1a0a7ac0dcafe25 data/ticex/tinkering/modifiers/cosmic_unbreakable.json
 dd3ce2aef49cffedc677932344d28eea6f32addf data/ticex/tinkering/modifiers/modem.json
+358afc506ee952dc6e3c09cf51efafff7b3b55a4 data/ticex/tinkering/modifiers/rebirth.json

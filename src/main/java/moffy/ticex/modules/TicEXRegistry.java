@@ -37,6 +37,7 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -214,6 +215,8 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> DEFINE_MODIFIER = null;
     public static DynamicModifier MODEM_MODIFIER = null;
     public static StaticModifier<Modifier> ENDESTSHOT_MODIFIER = null;
+
+    public static Tier INFINITY_TIER;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for(RegistryObject<Item> itemObject : ITEMS.getEntries()){

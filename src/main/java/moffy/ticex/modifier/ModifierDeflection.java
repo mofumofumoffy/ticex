@@ -68,7 +68,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
 
                 float absoluteHealth = fakeLivingEntity.getFakeHealth();
                 IEntityDataAccessor accessor = (IEntityDataAccessor)target;
-                Field key = accessor.getField("DATA_HEALTH_ID");
+                Field key = accessor.getField("field_6247");
                 if(key != null){
                     try {
                         if(float.class.isAssignableFrom(key.getType())){
@@ -84,8 +84,6 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
                 for(MobEffectInstance effect : fakeLivingEntity.getActiveEffects()){
                     target.addEffect(effect);
                 }
-                
-                fakeLivingEntity.removeAllEffects();
             }
 
             return 0;

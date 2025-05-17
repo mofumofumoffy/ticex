@@ -11,6 +11,7 @@ import moffy.ticex.entity.FakeLivingEntity;
 import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.cores.ItemFlickeringCore;
 import moffy.ticex.item.cores.ItemReconstCore;
+import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.recipe.EmbossmentBuildingRecipe;
 import moffy.ticex.lib.recipe.EmbossmentCastingRecipe;
@@ -131,9 +132,9 @@ public class TicEXModule extends AddonModule{
     public void setup(FMLCommonSetupEvent event) {
         event.enqueueWork(()->CatalystMaterialStatsType.RegisterStats());
         if(TierSortingRegistry.isTierSorted(InfinityTier.instance)){
-            TierSortingRegistry.registerTier(InfinityTier.instance, new ResourceLocation(TicEX.MODID, "infinity"), List.of(TierSortingRegistry.getSortedTiers().get(TierSortingRegistry.getSortedTiers().size() - 1)), List.of());
+            TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(InfinityTier.instance, new ResourceLocation(TicEX.MODID, "infinity"), List.of(TierSortingRegistry.getSortedTiers().get(TierSortingRegistry.getSortedTiers().size() - 1)), List.of());
         } else {
-            TierSortingRegistry.registerTier(InfinityTier.instance, new ResourceLocation(TicEX.MODID, "infinity"), List.of(Tiers.NETHERITE), List.of());
+            TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(InfinityTier.instance, new ResourceLocation(TicEX.MODID, "infinity"), List.of(Tiers.NETHERITE), List.of());
         }
     }
 }

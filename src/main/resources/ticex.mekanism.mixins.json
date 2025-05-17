@@ -5,6 +5,7 @@
     "plugin": "moffy.ticex.modules.mekanism.TicEXMekanismMixinPlugin",
     "mixins": [
         "ModuleNutritionalInjectionUnitMixin",
+        "ModuleJetpackUnitMixin",
         "ModuleHelperMixin",
         "MekanismIMCMixin"
     ],

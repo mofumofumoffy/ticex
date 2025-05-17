@@ -3,7 +3,7 @@ package moffy.ticex.modules.irons;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.event.TicEXIronsEvent;
 import moffy.ticex.item.modifiable.ModifiableIronsSpellbookItem;
-import moffy.ticex.modules.CatalystMaterialStatsType;
+import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;

@@ -21,6 +21,14 @@ public class MaterialDefinitionProvider extends AbstractMaterialDataProvider  {
     @Override
     protected void addMaterials() {
         addMaterial(TicEXMaterials.INFINITY, 6, ORDER_COMPAT + ORDER_WEAPON, false, false, availableCondition("avaritia_compat"));
+        addMaterial(TicEXMaterials.NEUTRON, 5, ORDER_COMPAT + ORDER_SPECIAL, false, false, availableCondition("avaritia_compat"));
+        addMaterial(TicEXMaterials.CRYSTAL_MATRIX, 5, ORDER_COMPAT + ORDER_WEAPON, false, false, availableCondition("avaritia_compat"));
+        addMaterial(TicEXMaterials.DRACONIUM, 3, ORDER_COMPAT + ORDER_WEAPON, true, false, availableCondition("draconicevolution_compat"));
+        addMaterial(TicEXMaterials.WYVERN, 3, ORDER_COMPAT + ORDER_WEAPON, true, false, availableCondition("draconicevolution_compat"));
+        addMaterial(TicEXMaterials.DRACONIC, 4, ORDER_COMPAT + ORDER_WEAPON, true, false, availableCondition("draconicevolution_compat"));
+        addMaterial(TicEXMaterials.CHAOTIC, 4, ORDER_COMPAT + ORDER_WEAPON, true, false, availableCondition("draconicevolution_compat"));
+        addMaterial(TicEXMaterials.ETHERIC, 6, ORDER_COMPAT + ORDER_WEAPON, false);
+        addMaterial(TicEXMaterials.RECONSTRUCTION, 3, ORDER_COMPAT, false);
     }
     
     public ModsAvailableCondition availableCondition(String path){

@@ -11,7 +11,7 @@ package moffy.ticex.modules.tacz;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.event.TicEXTaczEvent;
 import moffy.ticex.item.modifiable.ModifiableGunItem;
-import moffy.ticex.modules.CatalystMaterialStatsType;
+import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;

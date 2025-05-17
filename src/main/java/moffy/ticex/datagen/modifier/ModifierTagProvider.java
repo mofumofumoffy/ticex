@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import slimeknights.tconstruct.library.data.tinkering.AbstractModifierTagProvider;
 
+import static slimeknights.tconstruct.common.TinkerTags.Modifiers.DEFENSE;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.GENERAL_UPGRADES;
 
 public class ModifierTagProvider extends AbstractModifierTagProvider {
@@ -23,6 +24,10 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
     protected void addTags() {
         this.tag(GENERAL_UPGRADES).addOptional(
             new ResourceLocation(TicEX.MODID,"modem")
+        );
+
+        this.tag(DEFENSE).addOptional(
+            new ResourceLocation(TicEX.MODID, "celestial")
         );
     }
     
