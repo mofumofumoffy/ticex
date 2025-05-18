@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -82,7 +83,7 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
     public void onInventoryTick(IToolStackView tool, ModifierEntry entry, Level level, LivingEntity entity, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack) {
         Item item = tool.getItem();
 
-        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.HELMET && entity instanceof Player && isCorrectSlot){
+        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.HELMET && entity instanceof Player && itemSlot == 39){
             if (!level.isClientSide) {
                 entity.getCapability(InternalTimers.CAPABILITY).ifPresent(handler -> {
                     handler.activateHeal();
@@ -115,4 +116,9 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
 			}
 		}
 	}
+
+	@Override
+    public boolean shouldDisplay(boolean advanced) {
+        return advanced;
+    }
 }

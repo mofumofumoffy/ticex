@@ -1,4 +1,4 @@
-package moffy.ticex.modules.avaritia;
+package moffy.ticex.lib;
 
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;

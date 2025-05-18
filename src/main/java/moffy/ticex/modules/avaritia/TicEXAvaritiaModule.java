@@ -37,6 +37,8 @@ public class TicEXAvaritiaModule extends AddonModule{
         TicEXRegistry.CELESTIAL_MODIFIER = TicEXRegistry.MODIFIERS.register("celestial", ModifierCelestial::new);
         TicEXRegistry.CONDENSING_MODIFIER = TicEXRegistry.MODIFIERS.register("condensing", ModifierCondensing::new);
         TicEXRegistry.AFTERSHOCK_MODIFIER = TicEXRegistry.MODIFIERS.register("aftershock", ModifierAftershock::new);
+        TicEXRegistry.TRANSCENDENTAL_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("transcendental");
+        TicEXRegistry.DENSE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("dense");
         TicEXRegistry.ENDESTSHOT_MODIFIER = TicEXRegistry.MODIFIERS.register("endestshot",ModifierEndestShot::new);
 
         TicEXRegistry.MOLTEN_INFINITY = TicEXRegistry.FLUIDS.register("molten_infinity").type(TicEXFluidUtils.hot("molten_infinity").temperature(6360).lightLevel(15)).block(BurningLiquidBlock.createBurning(MapColor.EMERALD, 15, 20, 20f)).bucket().commonTag().flowing();

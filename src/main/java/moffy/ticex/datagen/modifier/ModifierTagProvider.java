@@ -8,6 +8,7 @@ import slimeknights.tconstruct.library.data.tinkering.AbstractModifierTagProvide
 
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.DEFENSE;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.GENERAL_UPGRADES;
+import static slimeknights.tconstruct.common.TinkerTags.Modifiers.BONUS_SLOTLESS;
 
 public class ModifierTagProvider extends AbstractModifierTagProvider {
 
@@ -28,6 +29,10 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
 
         this.tag(DEFENSE).addOptional(
             new ResourceLocation(TicEX.MODID, "celestial")
+        );
+
+        this.tag(BONUS_SLOTLESS).addOptional(
+            new ResourceLocation(TicEX.MODID, "inject")
         );
     }
     

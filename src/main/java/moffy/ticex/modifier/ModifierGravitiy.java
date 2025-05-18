@@ -48,7 +48,7 @@ public class ModifierGravitiy extends NoLevelsModifier implements InventoryTickM
     public void onInventoryTick(IToolStackView tool, ModifierEntry entry, Level level, LivingEntity entity, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack) {
         Item item = tool.getItem();
 
-        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.LEGGINGS && entity instanceof Player player && isCorrectSlot){
+        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.LEGGINGS && entity instanceof Player player  && itemSlot == 37){
             if (level.isClientSide) {
                 if (player.isSecondaryUseActive() && !player.onGround() && player.getDeltaMovement().y() > -8 && !jumpedRecently(player)) {
                     player.setDeltaMovement(player.getDeltaMovement().add(0, -0.32F, 0));
@@ -73,5 +73,10 @@ public class ModifierGravitiy extends NoLevelsModifier implements InventoryTickM
 
     public Map<Integer, Long> getLastJumpTracker() {
         return lastJumpTracker;
+    }
+
+    @Override
+    public boolean shouldDisplay(boolean advanced) {
+        return advanced;
     }
 }

@@ -192,11 +192,13 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> CONDENSING_MODIFIER = null;
     public static DynamicModifier DENSE_MODIFIER = null;
     public static StaticModifier<Modifier> AFTERSHOCK_MODIFIER = null;
+    public static StaticModifier<Modifier> ENDESTSHOT_MODIFIER = null;
     public static StaticModifier<Modifier> DEFLECTION_MODIFIER = null;
     public static StaticModifier<Modifier> MEKANIC_MODIFIER = null;
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
     public static StaticModifier<Modifier> SASSY_MODIFIER = null;
     public static StaticModifier<Modifier> EVOLVED_MODIFIER = null;
+    public static DynamicModifier INJECT_MODIFIER = null;
     public static StaticModifier<Modifier> SOUL_RENDING_MODIFIER = null;
     public static StaticModifier<Modifier> KONPAKU_MODIFIER = null;
     public static StaticModifier<Modifier> KOSHIRAE_MODIFIER = null;
@@ -214,7 +216,6 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> HURRICANE_MODIFIER = null;
     public static StaticModifier<Modifier> DEFINE_MODIFIER = null;
     public static DynamicModifier MODEM_MODIFIER = null;
-    public static StaticModifier<Modifier> ENDESTSHOT_MODIFIER = null;
 
     public static Tier INFINITY_TIER;
 

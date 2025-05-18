@@ -12,6 +12,7 @@ import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.cores.ItemFlickeringCore;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.CatalystMaterialStatsType;
+import moffy.ticex.lib.InfinityTier;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.recipe.EmbossmentBuildingRecipe;
 import moffy.ticex.lib.recipe.EmbossmentCastingRecipe;
@@ -22,7 +23,6 @@ import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.ModifierDefine;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.modifier.ModifierSassy;
-import moffy.ticex.modules.avaritia.InfinityTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -126,15 +126,16 @@ public class TicEXModule extends AddonModule{
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHeal);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHurt);
-    }
 
-    @Override
-    public void setup(FMLCommonSetupEvent event) {
-        event.enqueueWork(()->CatalystMaterialStatsType.RegisterStats());
         if(TierSortingRegistry.isTierSorted(InfinityTier.instance)){
             TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(InfinityTier.instance, new ResourceLocation(TicEX.MODID, "infinity"), List.of(TierSortingRegistry.getSortedTiers().get(TierSortingRegistry.getSortedTiers().size() - 1)), List.of());
         } else {
             TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(InfinityTier.instance, new ResourceLocation(TicEX.MODID, "infinity"), List.of(Tiers.NETHERITE), List.of());
         }
+    }
+
+    @Override
+    public void setup(FMLCommonSetupEvent event) {
+        event.enqueueWork(()->CatalystMaterialStatsType.RegisterStats());
     }
 }

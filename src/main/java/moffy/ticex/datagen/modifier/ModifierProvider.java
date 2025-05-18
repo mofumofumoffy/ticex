@@ -2,6 +2,7 @@ package moffy.ticex.datagen.modifier;
 
 import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -15,10 +16,12 @@ import slimeknights.tconstruct.library.modifiers.modules.behavior.ReduceToolDama
 import slimeknights.tconstruct.library.modifiers.modules.build.EnchantmentModule;
 import slimeknights.tconstruct.library.modifiers.modules.build.ModifierRequirementsModule;
 import slimeknights.tconstruct.library.modifiers.modules.build.ModifierSlotModule;
+import slimeknights.tconstruct.library.modifiers.modules.build.StatBoostModule;
 import slimeknights.tconstruct.library.modifiers.modules.combat.LootingModule;
 import slimeknights.tconstruct.library.modifiers.modules.display.DurabilityBarColorModule;
 import slimeknights.tconstruct.library.modifiers.util.ModifierLevelDisplay;
 import slimeknights.tconstruct.library.tools.SlotType;
+import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 
@@ -63,10 +66,26 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
             .addModule(ModifierRequirementsModule.builder().requireModifier(ModifierIds.netherite, 1).requireModifier(ModifierIds.reinforced, 5).modifierKey(TinkerModifiers.unbreakable).build())
             .addModule(new DurabilityBarColorModule(0xffffff))
             .addModule(ReduceToolDamageModule.builder().flat(1.0f));
-        if(TicEXRegistry.TRANSCENDENTAL_MODIFIER != null)buildModifier(TicEXRegistry.TRANSCENDENTAL_MODIFIER).addModule(AttributeModule.builder(TicEXRegistry.DAMAGE_TAKEN.get(), Operation.ADDITION).eachLevel(-0.25f)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
-        
+        if(TicEXRegistry.TRANSCENDENTAL_MODIFIER != null)buildModifier(TicEXRegistry.TRANSCENDENTAL_MODIFIER).addModule(AttributeModule.builder(TicEXRegistry.DAMAGE_TAKEN.get(), Operation.ADDITION).unique("1dc2b568-1b38-47a0-97d6-ac83a390c67c").eachLevel(-0.25f)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        if(TicEXRegistry.DENSE_MODIFIER != null)buildModifier(TicEXRegistry.DENSE_MODIFIER).addModule(StatBoostModule.add(ToolStats.KNOCKBACK_RESISTANCE).eachLevel(0.25f)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+
+        //mekanism
+        if(TicEXRegistry.RADIATION_SHIELDING_MODIFIER != null)buildModifier(TicEXRegistry.RADIATION_SHIELDING_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+
+        //draconicevolution
+        if(TicEXRegistry.INJECT_MODIFIER != null)buildModifier(TicEXRegistry.INJECT_MODIFIER).addModules(new ModifierSlotModule(SlotType.ABILITY, 1), new ModifierSlotModule(SlotType.UPGRADE, 3)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+
+        //irons_spellbook
+        if(TicEXRegistry.OVERCASTING_MODIFIER != null)buildModifier(TicEXRegistry.OVERCASTING_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+
+        //create
+        if(TicEXRegistry.CARDBOARD_MODIFIER != null)buildModifier(TicEXRegistry.CARDBOARD_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+
         //computercraft
         if(TicEXRegistry.MODEM_MODIFIER != null)buildModifier(TicEXRegistry.MODEM_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(UPGRADE);
+    
+        //curios
+        if(TicEXRegistry.INCOMPARABLE_MODIFIER != null)buildModifier(TicEXRegistry.INCOMPARABLE_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
     }
     
 }

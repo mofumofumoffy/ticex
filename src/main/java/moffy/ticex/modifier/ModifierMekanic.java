@@ -64,6 +64,6 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
 
     @Override
     public boolean shouldDisplay(boolean advanced) {
-        return false;
+        return advanced;
     }
 }

@@ -17,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -38,6 +39,9 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
 public class ModifierHurricane extends NoLevelsModifier implements InventoryTickModifierHook, TooltipModifierHook, AttributesModifierHook{
+
+    private static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("A4334312-DFF8-4582-9F4F-62AD0C070475");
+    
     private static final UUID STEP_ASSIST_MODIFIER_UUID = UUID.fromString("4726C09D-FD86-46D0-92DD-49ED952A12D2");
 	private static final AttributeModifier STEP_ASSIST = new AttributeModifier(STEP_ASSIST_MODIFIER_UUID, "Step Assist", 0.4, Operation.ADDITION);
 
@@ -73,7 +77,7 @@ public class ModifierHurricane extends NoLevelsModifier implements InventoryTick
     public void onInventoryTick(IToolStackView tool, ModifierEntry entry, Level level, LivingEntity entity, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack) {
         Item item = tool.getItem();
 
-        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.BOOTS && entity instanceof Player player && isCorrectSlot){
+        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.BOOTS && entity instanceof Player player  && itemSlot == 36){
             if (!level.isClientSide) {
                 ServerPlayer playerMP = (ServerPlayer) player;
                 playerMP.fallDistance = 0;
@@ -124,7 +128,14 @@ public class ModifierHurricane extends NoLevelsModifier implements InventoryTick
 
     @Override
     public void addAttributes(IToolStackView tool, ModifierEntry entry, EquipmentSlot slot,
-            BiConsumer<Attribute, AttributeModifier> modifierGetter) {
-            
+            BiConsumer<Attribute, AttributeModifier> modifierGetter) {  
+        if(tool.getPersistentData().getBoolean(HURRICANE_DATA) && slot == EquipmentSlot.FEET){
+            modifierGetter.accept(Attributes.MOVEMENT_SPEED, new AttributeModifier(MOVEMENT_SPEED_MODIFIER_UUID, "Armor modifier", 1.0, Operation.MULTIPLY_TOTAL));
+        }  
+    }
+
+    @Override
+    public boolean shouldDisplay(boolean advanced) {
+        return advanced;
     }
 }

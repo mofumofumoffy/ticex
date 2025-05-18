@@ -40,7 +40,7 @@ public class TicEXDEModule extends AddonModule{
         TicEXRegistry.INJECT_CORE = TicEXRegistry.ITEMS.register("inject_core", ()->new ItemReconstCore(defaultProps, "inject"));
 
         TicEXRegistry.SOUL_RENDING_MODIFIER = TicEXRegistry.MODIFIERS.register("soul_rending", ModifierSoulRending::new);
-
+        TicEXRegistry.INJECT_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("inject");
         TicEXRegistry.EVOLVED_MODIFIER = TicEXRegistry.MODIFIERS.register("evolved", ModifierEvolved::new);
         
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{

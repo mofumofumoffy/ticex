@@ -16,6 +16,9 @@ import moffy.ticex.datagen.general.tag.ItemTagProvider;
 import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
 import moffy.ticex.datagen.tool.MaterialDefinitionProvider;
+import moffy.ticex.datagen.tool.MaterialStatsProvider;
+import moffy.ticex.datagen.tool.MaterialTraitsProvider;
+import moffy.ticex.datagen.tool.ToolDefinitionProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -57,6 +60,12 @@ public class TicEXGatherDataEvent {
         generator.addProvider(server, new ModifierTagProvider(packOutput, existingFileHelper));
         
         //materials
-        generator.addProvider(server, new MaterialDefinitionProvider(packOutput));
+        MaterialDefinitionProvider materialDefinitionProvider = new MaterialDefinitionProvider(packOutput);
+        generator.addProvider(server, materialDefinitionProvider);
+        generator.addProvider(server, new MaterialStatsProvider(packOutput, materialDefinitionProvider));
+        generator.addProvider(server, new MaterialTraitsProvider(packOutput, materialDefinitionProvider));
+
+        //tools
+        generator.addProvider(server, new ToolDefinitionProvider(packOutput));
     }
 }
