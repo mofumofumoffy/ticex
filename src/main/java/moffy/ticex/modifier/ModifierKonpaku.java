@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.utils.TicEXSBUtil;
 import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -34,6 +35,9 @@ public class ModifierKonpaku extends NoLevelsModifier implements EmbossmentModif
                     return true;
                 }
             }
+            context.setErrorMsg(Component.translatable("recipe.ticex.not_allowed_enchantment_slashblade"));
+        } else {
+            context.setErrorMsg(Component.translatable("recipe.ticex.required_enchanted_book"));
         }
         return result;
     }

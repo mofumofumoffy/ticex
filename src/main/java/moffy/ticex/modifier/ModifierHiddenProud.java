@@ -1,6 +1,7 @@
 package moffy.ticex.modifier;
 
 import java.util.Random;
+import java.util.Map.Entry;
 
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.init.SBItems;
@@ -11,10 +12,12 @@ import moffy.ticex.lib.utils.TicEXSBUtil;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
@@ -42,6 +45,26 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
 
         ToolStack tool = ToolStack.from(toolStack);
 
+        if(input.isEnchanted()){
+            Random random = new Random();
+            for(Entry<Enchantment, Integer> enchantmentEntry : input.getAllEnchantments().entrySet()){
+                if(TicEXSBUtil.disallowedEnchantments.contains(enchantmentEntry.getKey())){
+                    context.setErrorMsg(Component.translatable("recipe.ticex.not_allowed_enchantment_slashblade"));
+                    return false;
+                }
+                var probability = 1.0F;
+                if (input.is(SBItems.proudsoul_tiny))
+                    probability = 0.25F;
+                if (input.is(SBItems.proudsoul))
+                    probability = 0.5F;
+                if (input.is(SBItems.proudsoul_ingot))
+                    probability = 0.75F;
+                if (random.nextFloat() <= probability) {
+                    TicEXSBUtil.applyEnchantment(toolStack, enchantmentEntry.getKey(), enchantmentLevel);
+                }
+            }
+        }
+        
         toolStack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(s -> {
             s.deserializeNBT(tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION));
             s.setProudSoulCount(s.getProudSoulCount() + input.getCount() * Math.min(5000, enchantmentLevel * 10));
@@ -59,23 +82,6 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
                 s.setRefine(s.getRefine() + 1);
                 if(s.getRefine() < 200)
                     s.setMaxDamage(s.getMaxDamage() + 1);
-            }
-
-            if(input.isEnchanted()){
-                Random random = new Random();
-                input.getAllEnchantments().forEach((enchantment, level) -> {
-
-                var probability = 1.0F;
-                if (input.is(SBItems.proudsoul_tiny))
-                    probability = 0.25F;
-                if (input.is(SBItems.proudsoul))
-                    probability = 0.5F;
-                if (input.is(SBItems.proudsoul_ingot))
-                    probability = 0.75F;
-                if (random.nextFloat() <= probability) {
-                    TicEXSBUtil.applyEnchantment(toolStack, enchantment, enchantmentLevel);
-                }
-            });
             }
 
             tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, s.serializeNBT());

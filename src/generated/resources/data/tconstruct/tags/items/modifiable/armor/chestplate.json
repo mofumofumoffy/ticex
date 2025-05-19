@@ -1,6 +1,10 @@
 {
   "values": [
     {
+      "id": "tconstruct:plate_chestplate",
+      "required": false
+    },
+    {
       "id": "ticex:mekaplate_chestplate",
       "required": false
     },

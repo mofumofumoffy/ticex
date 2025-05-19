@@ -7,9 +7,7 @@
         {"item":"ticex:catalyst_mekasuit_boots"}
     ],
     "tools": {
-        "type": "forge:difference",
-        "base": { "tag": "tconstruct:modifiable/armor/worn" },
-        "subtracted": { "tag": "ticex:armor/mekaplate" }
+        "tag": "ticex:plate"
     },
     "result": "ticex:mekanic"
 }

@@ -38,6 +38,7 @@ public class TicEXTags {
         public static final TagKey<Item> ETHERIC_BLOCK = common("storage_blocks/etheric");
 
         public static final TagKey<Item> SERAM =  local("seram");
+        public static final TagKey<Item> PLATE = local("plate");
         public static final TagKey<Item> MEKASUIT_ARMOR = local("seram/mekasuit");
         public static final TagKey<Item> GEM_ARMOR = local("seram/gem");
         public static final TagKey<Item> SLASHBLADE_TOOL = local("seram/slashblade");

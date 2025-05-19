@@ -1,8 +1,8 @@
-// 1.20.1	2025-05-16T16:00:51.8835959	TiCEX Item Tags
-2b97e3f8bce805e3a350f0a5aba2713176711118 data/forge/tags/items/armors/boots.json
-d9ed14eb22e184b204e255cb5b7f163c02f918cc data/forge/tags/items/armors/chestplates.json
-52917954d62196345b6bae902162452eec768f6c data/forge/tags/items/armors/helmets.json
-23cdbb4b5ed40542feb4d1d0f3fdad2aa468402f data/forge/tags/items/armors/leggings.json
+// 1.20.1	2025-05-19T10:43:38.056525	TiCEX Item Tags
+e6dd16afa69cdb72cce8c31b90e27a4932ad9ee7 data/forge/tags/items/armors/boots.json
+bf7c9cb16ac93a4f4920126765cff10080a6faa4 data/forge/tags/items/armors/chestplates.json
+0651aaaa1e65d69705681720a7418fb91a744770 data/forge/tags/items/armors/helmets.json
+bc4c55c1edf725452376fcec58e6fbf0dfbfc431 data/forge/tags/items/armors/leggings.json
 87f64b39f90a5d5dff8009de385e6ea397b34319 data/forge/tags/items/ingots/crystal_matrix.json
 8604b4e2b2378f8cde0e8e93eb258e0d90338ff1 data/forge/tags/items/ingots/etheric.json
 c248f9dfe8adac80da83b61d55ec4f866dca0b41 data/forge/tags/items/ingots/infinity.json
@@ -12,10 +12,10 @@ d01772499c62cb11fe973145cda379b9da7c46df data/forge/tags/items/storage_blocks/cr
 7b1526d9db5712652951fd6dd6b1af2a49149444 data/forge/tags/items/storage_blocks/infinity.json
 54d0b2246edaf8ca724e663d1305213b2ad7fe68 data/forge/tags/items/storage_blocks/neutron.json
 eda8bac7faa80b90e9f7abbb1bdd37bd0fb77320 data/minecraft/tags/items/swords.json
-2b97e3f8bce805e3a350f0a5aba2713176711118 data/tconstruct/tags/items/modifiable/armor/boots.json
-d9ed14eb22e184b204e255cb5b7f163c02f918cc data/tconstruct/tags/items/modifiable/armor/chestplate.json
-52917954d62196345b6bae902162452eec768f6c data/tconstruct/tags/items/modifiable/armor/helmets.json
-23cdbb4b5ed40542feb4d1d0f3fdad2aa468402f data/tconstruct/tags/items/modifiable/armor/leggings.json
+e6dd16afa69cdb72cce8c31b90e27a4932ad9ee7 data/tconstruct/tags/items/modifiable/armor/boots.json
+bf7c9cb16ac93a4f4920126765cff10080a6faa4 data/tconstruct/tags/items/modifiable/armor/chestplate.json
+0651aaaa1e65d69705681720a7418fb91a744770 data/tconstruct/tags/items/modifiable/armor/helmets.json
+bc4c55c1edf725452376fcec58e6fbf0dfbfc431 data/tconstruct/tags/items/modifiable/armor/leggings.json
 a620d19603b5dc5ca2308289cd79e7c3e8047bdf data/tconstruct/tags/items/modifiable/armor/trim.json
 8d8814f2e3fd187cde25e80bb2e1d11f75d87a17 data/tconstruct/tags/items/modifiable/bonus_slots.json
 8d8814f2e3fd187cde25e80bb2e1d11f75d87a17 data/tconstruct/tags/items/modifiable/durability.json
@@ -31,6 +31,7 @@ ffbad857b81512ba83096167d43b6f9ec26c0cb6 data/tconstruct/tags/items/parts.json
 c8a68a5279544bac7b38918c7d6ba499e8a7ed37 data/tconstruct/tags/items/seared_tanks.json
 ffbad857b81512ba83096167d43b6f9ec26c0cb6 data/ticex/tags/items/catalysts.json
 a048601e73112726dce5b446e163679e671ee1e6 data/ticex/tags/items/cores.json
+f81160f655f465df3a2d9896def0270dba4dbf1a data/ticex/tags/items/plate.json
 8079decbbd6840321e7920375fe6d95bb5a95a3e data/ticex/tags/items/seram.json
 17bb7a73717466149a05eb6ae139b5c9d5510602 data/ticex/tags/items/seram/gem.json
 61a9ef4ee2385210e90760c836896427b953e663 data/ticex/tags/items/seram/irons_spellbook.json

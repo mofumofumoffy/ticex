@@ -1,6 +1,10 @@
 {
   "values": [
     {
+      "id": "tconstruct:plate_helmet",
+      "required": false
+    },
+    {
       "id": "ticex:mekaplate_helmet",
       "required": false
     },

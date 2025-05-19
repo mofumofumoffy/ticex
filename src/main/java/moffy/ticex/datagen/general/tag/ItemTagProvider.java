@@ -121,6 +121,7 @@ public class ItemTagProvider extends ItemTagsProvider{
         addToolTags(new ResourceLocation(TicEX.MODID, "revival_spellbook_irons"), TicEXTags.Items.IRONS_SPELLBOOK_TOOL, MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, UNSALVAGABLE);
 
         //armors
+        addArmorTags(new ResourceLocation(TConstruct.MOD_ID, "plate"), TicEXTags.Items.PLATE);
         addArmorTags(new ResourceLocation(TicEX.MODID,"mekaplate"), TicEXTags.Items.MEKASUIT_ARMOR, MULTIPART_TOOL, DURABILITY, BONUS_SLOTS, TRIM);
         addArmorTags(new ResourceLocation(TicEX.MODID,"singular_gem"), TicEXTags.Items.GEM_ARMOR, MULTIPART_TOOL, DURABILITY, BONUS_SLOTS, TRIM);
 
