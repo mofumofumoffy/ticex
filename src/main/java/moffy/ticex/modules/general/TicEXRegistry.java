@@ -178,6 +178,7 @@ public class TicEXRegistry {
 
     public static RegistryObject<EntityType<?>>FAKE_LIVING_ENTITY = null;
     public static RegistryObject<EntityType<?>>SLASHBLADE_TOOL_ITEM_ENTITY = null;
+    public static RegistryObject<EntityType<?>>ENDESTSHOT_PROJECTILE = null;
 
     public static RegistryObject<Attribute> HEALING_RECEIVED = null;
     public static RegistryObject<Attribute> DAMAGE_TAKEN = null;

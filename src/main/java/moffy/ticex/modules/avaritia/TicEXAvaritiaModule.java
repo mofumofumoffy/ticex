@@ -2,6 +2,7 @@ package moffy.ticex.modules.avaritia;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
+import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.event.TicEXAvaritiaEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
@@ -13,6 +14,8 @@ import moffy.ticex.modifier.ModifierEndestShot;
 import moffy.ticex.modifier.ModifierOmnipotence;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.MapColor;
@@ -45,6 +48,10 @@ public class TicEXAvaritiaModule extends AddonModule{
         TicEXRegistry.MOLTEN_NEUTRON = TicEXRegistry.FLUIDS.register("molten_neutron").type(TicEXFluidUtils.cool().temperature(1000)).block(MapColor.COLOR_BLACK, 0).bucket().commonTag().flowing();        
         TicEXRegistry.MOLTEN_CRYSTAL_MATRIX = TicEXRegistry.FLUIDS.register("molten_crystal_matrix").type(TicEXFluidUtils.cool().temperature(1000)).block(MapColor.COLOR_LIGHT_BLUE, 0).bucket().commonTag().flowing();    
     
+        TicEXRegistry.ENDESTSHOT_PROJECTILE = TicEXRegistry.ENTITIES.register("endestshot",()->EntityType.Builder.of(EndestShotProjectile::new, MobCategory.MISC).sized(0.5f, 0.5f).setTrackingRange(10)
+        .setUpdateInterval(20).setShouldReceiveVelocityUpdates(false)
+        .build(TicEX.MODID+":endestshot"));
+
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onGetHurt);
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onDeath);
 
