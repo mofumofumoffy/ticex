@@ -1,25 +1,39 @@
 package moffy.ticex.event;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
 import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.lib.utils.TicEXApotheosisUtils;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.TicEXRegistry;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
 
 public class TicEXEvent {
+    public static UUID EXTRA_DAMAGE_UUID = UUID.fromString("39f1e204-7c3b-4d51-9a3c-65e1db213f08");
 
     public static void onEntityAttributeCreation(EntityAttributeCreationEvent event){
         event.put((EntityType<? extends LivingEntity>)TicEXRegistry.FAKE_LIVING_ENTITY.get(), AttributeSupplier.builder().add(Attributes.MAX_HEALTH, Float.MAX_VALUE).build());
@@ -38,25 +52,52 @@ public class TicEXEvent {
 
     public static void onEntityHurt(LivingHurtEvent event){
 
-        //attribute
-        float damage = event.getAmount();
-        if (damage <= 0F || TicEXUtils.isPureDamage(event.getSource(), damage)) {
+        float amount = event.getAmount();
+        if (amount <= 0F) {
             return;
         }
-        LivingEntity entity = event.getEntity();
-        AttributeInstance attributeInstance = entity.getAttribute(TicEXRegistry.DAMAGE_TAKEN.get());
+        float newAmount = amount;
+
+        Entity source = event.getSource().getEntity();
+        LivingEntity target = event.getEntity();
+
+        //damage bonus
+        if(source instanceof LivingEntity livingSource){
+            ItemStack weapon = livingSource.getMainHandItem();
+            float bonus = EnchantmentHelper.getDamageBonus(weapon, target.getMobType());
+            newAmount += bonus;
+        }
+
+        //armor protection
+        List<ItemStack> modifiableArmors = new ArrayList<>();
+        Iterator<ItemStack> armors = target.getArmorSlots().iterator();
+        while(armors.hasNext()){
+            ItemStack armor = armors.next();
+            if(armor.getItem() instanceof IModifiable){
+                modifiableArmors.add(armor);
+            }
+        }
+        int protection = EnchantmentHelper.getDamageProtection(modifiableArmors, event.getSource());
+        if(protection > 0){
+            newAmount *= (1 - Math.min(20, protection) / 25.0f);
+        }
+
+        //attribute reduce
+        AttributeInstance attributeInstance = target.getAttribute(TicEXRegistry.DAMAGE_TAKEN.get());
         if(attributeInstance != null){
             double multiplier = attributeInstance.getValue();
             if (multiplier != 1D) {
-                float newAmount = Math.max(damage * (float)multiplier, 0F);
-                event.setAmount(newAmount);
-                if(newAmount < 0.0001){
-                    entity.setDeltaMovement(0, 0, 0);
-                    entity.hurtTime = 0;
-                    entity.hurtDuration = 0;
-                    event.setCanceled(true);
-                }
+                newAmount = Math.max(newAmount * (float)multiplier, 0F);
+                
             }
+        }
+
+        event.setAmount(newAmount);
+        if(newAmount < 0.01){
+            target.setDeltaMovement(0, 0, 0);
+            target.hurtTime = 0;
+            target.hurtDuration = 0;
+            event.setCanceled(true);
         }
     }
 
@@ -91,6 +132,22 @@ public class TicEXEvent {
             TicEXApotheosisUtils.enableCreativeFlight(player);
         }else{
             TicEXApotheosisUtils.disableCreativeFlight(player);
+        }
+    }
+
+    public static void modifyAttribute(ItemAttributeModifierEvent event) {
+        ItemStack stack = event.getItemStack();
+        EquipmentSlot slot = event.getSlotType();
+        if(stack.getItem() instanceof IModifiable){
+            if (slot == EquipmentSlot.MAINHAND) {
+                AttributeModifier modifier =new AttributeModifier(EXTRA_DAMAGE_UUID,"Enchantment Bonus for Modifiable Item", 0, Operation.ADDITION);
+
+                if(!event.getModifiers().containsValue(modifier)){
+                    event.addModifier(Attributes.ATTACK_DAMAGE, modifier);
+                } else {
+                    event.removeModifier(Attributes.ATTACK_DAMAGE, modifier);
+                }
+            }
         }
     }
 

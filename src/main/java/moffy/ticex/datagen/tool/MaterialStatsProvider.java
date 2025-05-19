@@ -34,12 +34,12 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
 
     private void addMeleeHarvest() {
         addMaterialStats(TicEXMaterials.INFINITY, 
-            new HeadMaterialStats(3200, 13f, TicEXRegistry.INFINITY_TIER, 4.5f),
+            new HeadMaterialStats(9999, 999.0f, TicEXRegistry.INFINITY_TIER, 999.1f),
             HandleMaterialStats.multipliers().attackDamage(9.99f).attackSpeed(9.99f).durability(9.99f).miningSpeed(9.99f).build(),
             StatlessMaterialStats.BINDING
         );
         addMaterialStats(TicEXMaterials.CRYSTAL_MATRIX, 
-            new HeadMaterialStats(9999, 999.0f, Tiers.NETHERITE, 999.1f),
+            new HeadMaterialStats(3200, 13f, Tiers.NETHERITE, 4.5f),
             HandleMaterialStats.multipliers().attackDamage(1.5f).attackSpeed(1.5f).durability(1.25f).miningSpeed(1.5f).build(),
             StatlessMaterialStats.BINDING
         );

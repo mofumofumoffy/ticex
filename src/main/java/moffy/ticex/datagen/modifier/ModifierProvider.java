@@ -63,8 +63,7 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
         if(TicEXRegistry.COSMIC_LUCK_MODIFIER != null)buildModifier(TicEXRegistry.COSMIC_LUCK_MODIFIER).addModules(WEAPON_LOOTING, CONSTANT_FORTUNE).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
         if(TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER != null)buildModifier(TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER)
             .levelDisplay(ModifierLevelDisplay.NO_LEVELS).priority(125)
-            .addModule(ModifierRequirementsModule.builder().requireModifier(ModifierIds.netherite, 1).requireModifier(ModifierIds.reinforced, 5).modifierKey(TinkerModifiers.unbreakable).build())
-            .addModule(new DurabilityBarColorModule(0xffffff))
+            .addModule(new DurabilityBarColorModule(0xff0000))
             .addModule(ReduceToolDamageModule.builder().flat(1.0f));
         if(TicEXRegistry.TRANSCENDENTAL_MODIFIER != null)buildModifier(TicEXRegistry.TRANSCENDENTAL_MODIFIER).addModule(AttributeModule.builder(TicEXRegistry.DAMAGE_TAKEN.get(), Operation.ADDITION).unique("1dc2b568-1b38-47a0-97d6-ac83a390c67c").eachLevel(-0.25f)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
         if(TicEXRegistry.DENSE_MODIFIER != null)buildModifier(TicEXRegistry.DENSE_MODIFIER).addModule(StatBoostModule.add(ToolStats.KNOCKBACK_RESISTANCE).eachLevel(0.25f)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);

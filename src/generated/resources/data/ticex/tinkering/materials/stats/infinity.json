@@ -13,9 +13,9 @@
       "mining_speed": 8.99
     },
     "tconstruct:head": {
-      "durability": 3200,
-      "melee_attack": 4.5,
-      "mining_speed": 13.0,
+      "durability": 9999,
+      "melee_attack": 999.1,
+      "mining_speed": 999.0,
       "mining_tier": "ticex:infinity"
     },
     "tconstruct:limb": {

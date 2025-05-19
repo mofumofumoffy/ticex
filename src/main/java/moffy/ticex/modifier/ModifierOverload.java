@@ -52,7 +52,6 @@ public class ModifierOverload extends NoLevelsModifier implements EmbossmentModi
                         }
                     }
                     nbt.put("Enchantments", newListTag);
-                    
                 } else {
                     toolStack.enchant(entry.getKey(), entry.getValue());
                 }

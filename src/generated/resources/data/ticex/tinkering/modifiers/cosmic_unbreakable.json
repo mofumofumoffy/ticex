@@ -2,46 +2,8 @@
   "level_display": "tconstruct:no_levels",
   "modules": [
     {
-      "type": "tconstruct:requirements",
-      "display_modifiers": [
-        {
-          "level": 1,
-          "name": "tconstruct:netherite"
-        },
-        {
-          "level": 5,
-          "name": "tconstruct:reinforced"
-        }
-      ],
-      "requirement": {
-        "type": "mantle:and",
-        "predicates": [
-          {
-            "type": "tconstruct:has_modifier",
-            "check": "all",
-            "modifier": {
-              "type": "tconstruct:single",
-              "modifier": "tconstruct:netherite"
-            }
-          },
-          {
-            "type": "tconstruct:has_modifier",
-            "check": "all",
-            "level": {
-              "min": 5
-            },
-            "modifier": {
-              "type": "tconstruct:single",
-              "modifier": "tconstruct:reinforced"
-            }
-          }
-        ]
-      },
-      "translation_key": "modifier.tconstruct.unbreakable.requirements"
-    },
-    {
       "type": "tconstruct:durability_color",
-      "color": "FFFFFF"
+      "color": "FF0000"
     },
     {
       "type": "tconstruct:reduce_tool_damage",
