@@ -31,11 +31,14 @@ public class ModifierKonpaku extends NoLevelsModifier implements EmbossmentModif
             Map<Enchantment, Integer> bookEnchantments = EnchantmentHelper.getEnchantments(input);
             
             for(Entry<Enchantment, Integer> entry : bookEnchantments.entrySet()){
-                if(TicEXSBUtil.applyEnchantment(toolStack, entry.getKey(), entry.getValue())){
-                    return true;
+                if(TicEXSBUtil.disallowedEnchantments.contains(entry.getKey())){
+                    context.setErrorMsg(Component.translatable("recipe.ticex.not_allowed_enchantment_slashblade"));
+                    return false;
                 }
-            }
-            context.setErrorMsg(Component.translatable("recipe.ticex.not_allowed_enchantment_slashblade"));
+                if(TicEXSBUtil.applyEnchantment(toolStack, entry.getKey(), entry.getValue())){
+                    result = true;
+                }
+            }  
         } else {
             context.setErrorMsg(Component.translatable("recipe.ticex.required_enchanted_book"));
         }

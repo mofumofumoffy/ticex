@@ -7,6 +7,7 @@ import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
@@ -33,6 +34,8 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
                 });
             }});
             return true;
+        } else {
+            context.setErrorMsg(Component.translatable("recipe.ticex.not_be_witched"));
         }
         return false;
         

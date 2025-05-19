@@ -9,6 +9,7 @@ import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -35,7 +36,7 @@ public class ModifierOverride extends NoLevelsModifier implements EmbossmentModi
             Map<Enchantment, Integer> bookEnchantments = EnchantmentHelper.getEnchantments(stack);
             
             for(Entry<Enchantment, Integer> entry : bookEnchantments.entrySet()){
-                if(toolStack.getEnchantmentLevel(entry.getKey()) >= entry.getKey().getMaxLevel()){
+                if(toolStack.getEnchantmentLevel(entry.getKey()) >= entry.getKey().getMaxLevel() && entry.getValue() >= entry.getKey().getMaxLevel()){
                     CompoundTag nbt = toolStack.getOrCreateTag();
 
                     ListTag listTag = nbt.getList("Enchantments", Tag.TAG_COMPOUND);
@@ -50,6 +51,8 @@ public class ModifierOverride extends NoLevelsModifier implements EmbossmentModi
                     }
                     nbt.put("Enchantments", newListTag);
                     result = true;
+                } else {
+                    context.setErrorMsg(Component.translatable("recipe.ticex.needed_max_level"));
                 }
             }
         }
