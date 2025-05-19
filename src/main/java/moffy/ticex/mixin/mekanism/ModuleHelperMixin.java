@@ -16,7 +16,7 @@ import mekanism.api.gear.ModuleData;
 import mekanism.api.providers.IModuleDataProvider;
 import mekanism.common.Mekanism;
 import mekanism.common.content.gear.ModuleHelper;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.modules.mekanism.TicEXMekanismModule;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;

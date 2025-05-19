@@ -8,7 +8,7 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.utils.TicEXSBUtil;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;

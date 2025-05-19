@@ -10,7 +10,7 @@ import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.ModifierMekanic;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;

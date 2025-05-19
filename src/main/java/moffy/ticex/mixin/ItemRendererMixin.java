@@ -23,7 +23,7 @@ import moffy.ticex.client.ShaderProvider;
 import moffy.ticex.client.ShaderToolQuad;
 import moffy.ticex.client.ShaderToolRenderUtils;
 import moffy.ticex.client.ShaderProvider.RenderQuadArgsWrapper;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

@@ -23,7 +23,7 @@ import codechicken.lib.math.MathHelper;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -17,7 +17,7 @@ import com.mojang.math.Transformation;
 
 import moffy.ticex.client.PartPredicate;
 import moffy.ticex.client.ShaderToolQuad;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;

@@ -1,4 +1,4 @@
-package moffy.ticex.modules;
+package moffy.ticex.modules.general;
 
 import moffy.addonapi.AddonModuleProvider;
 import moffy.ticex.TicEX;

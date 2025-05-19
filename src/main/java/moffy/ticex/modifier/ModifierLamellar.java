@@ -2,7 +2,7 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.mantle.registration.object.EnumObject;

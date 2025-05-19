@@ -9,7 +9,7 @@ import static slimeknights.tconstruct.library.materials.MaterialRegistry.ARMOR;
 import static slimeknights.tconstruct.library.materials.MaterialRegistry.MELEE_HARVEST;
 
 import moffy.ticex.lib.TicEXMaterials;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 
 public class MaterialTraitsProvider extends AbstractMaterialTraitDataProvider {

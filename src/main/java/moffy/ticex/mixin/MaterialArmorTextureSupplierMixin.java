@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.PartPredicate;
 import moffy.ticex.client.TintedShaderArmorTexture;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import slimeknights.tconstruct.library.client.armor.texture.ArmorTextureSupplier;

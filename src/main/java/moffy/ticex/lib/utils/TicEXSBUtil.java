@@ -24,7 +24,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.ShaderInstanceMap.InstanceProvider;
 import moffy.ticex.client.slashblade.SBToolRenderType.PartType;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;

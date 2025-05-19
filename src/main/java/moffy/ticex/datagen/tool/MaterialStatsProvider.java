@@ -2,7 +2,7 @@ package moffy.ticex.datagen.tool;
 
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.TicEXMaterials;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Tiers;
 import slimeknights.tconstruct.library.data.material.AbstractMaterialDataProvider;

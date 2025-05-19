@@ -3,7 +3,7 @@ package moffy.ticex.block;
 import javax.annotation.Nullable;
 
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;

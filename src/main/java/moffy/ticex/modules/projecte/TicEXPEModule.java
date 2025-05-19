@@ -9,7 +9,7 @@ import moffy.ticex.modifier.ModifierAbyssal;
 import moffy.ticex.modifier.ModifierGravitiy;
 import moffy.ticex.modifier.ModifierHurricane;
 import moffy.ticex.modifier.ModifierInfernal;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.projecte.TicEXPEKeyHandler;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;

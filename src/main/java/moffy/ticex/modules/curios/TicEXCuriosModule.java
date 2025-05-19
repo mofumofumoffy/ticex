@@ -5,7 +5,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.caps.curios.CuriosCapProvider;
 import moffy.ticex.event.TicEXCuriosEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;

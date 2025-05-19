@@ -1,7 +1,7 @@
 package moffy.ticex.event;
 
 import moffy.ticex.caps.curios.IncomparableCuriosCapability;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingSwapItemsEvent;

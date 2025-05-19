@@ -4,7 +4,7 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.event.TicEXIronsEvent;
 import moffy.ticex.item.modifiable.ModifiableIronsSpellbookItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;

@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import moffy.ticex.TicEX;
 import moffy.ticex.entity.FakeLivingEntity;
 import moffy.ticex.lib.IEntityDataAccessor;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;

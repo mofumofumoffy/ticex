@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXMaterials;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import slimeknights.tconstruct.common.TinkerTags;

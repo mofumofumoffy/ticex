@@ -16,7 +16,7 @@ import com.brandon3055.draconicevolution.api.modules.lib.ModuleHostImpl;
 import com.brandon3055.draconicevolution.init.ModuleCfg;
 
 import moffy.ticex.modifier.ModifierEvolved;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 public class EvolvedModuleHost extends ModuleHostImpl{

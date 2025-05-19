@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 import moffy.ticex.modifier.ModifierAbyssal;
 import moffy.ticex.modifier.ModifierHurricane;
 import moffy.ticex.modifier.ModifierInfernal;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.api.capabilities.PECapabilities;
 import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.handlers.InternalAbilities;

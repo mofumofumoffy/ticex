@@ -21,7 +21,7 @@ import mods.flammpfeil.slashblade.item.ItemSlashBladeDetune;
 import mods.flammpfeil.slashblade.item.SwordType;
 import mods.flammpfeil.slashblade.registry.slashblade.SlashBladeDefinition;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;

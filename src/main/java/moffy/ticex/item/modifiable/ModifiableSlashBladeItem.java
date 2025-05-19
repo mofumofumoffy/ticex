@@ -3,6 +3,7 @@ package moffy.ticex.item.modifiable;
 import moffy.ticex.TicEX;
 import moffy.ticex.client.slashblade.SBToolISTER;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
+import moffy.ticex.modules.general.TicEXRegistry;
 
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -32,7 +33,6 @@ import mods.flammpfeil.slashblade.registry.ComboStateRegistry;
 import mods.flammpfeil.slashblade.registry.combo.ComboState;
 import mods.flammpfeil.slashblade.registry.specialeffects.SpecialEffect;
 import mods.flammpfeil.slashblade.util.InputCommand;
-import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;

@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.utils.TicEXSBUtil;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;

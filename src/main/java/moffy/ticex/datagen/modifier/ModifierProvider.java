@@ -1,6 +1,5 @@
 package moffy.ticex.datagen.modifier;
 
-import moffy.ticex.modules.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -34,6 +33,8 @@ import static slimeknights.tconstruct.library.json.math.ModifierFormula.MULTIPLI
 import static slimeknights.tconstruct.library.json.math.ModifierFormula.VALUE;
 import static slimeknights.tconstruct.library.modifiers.modules.behavior.RepairModule.FACTOR;
 import static slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial.ARMOR_SLOTS;
+
+import moffy.ticex.modules.general.TicEXRegistry;
 
 public class ModifierProvider extends AbstractModifierProvider implements IConditionBuilder {
 

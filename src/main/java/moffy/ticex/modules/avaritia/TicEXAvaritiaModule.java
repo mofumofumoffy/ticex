@@ -11,7 +11,7 @@ import moffy.ticex.modifier.ModifierCelestial;
 import moffy.ticex.modifier.ModifierCondensing;
 import moffy.ticex.modifier.ModifierEndestShot;
 import moffy.ticex.modifier.ModifierOmnipotence;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;

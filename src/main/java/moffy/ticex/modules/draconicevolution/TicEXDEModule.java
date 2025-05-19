@@ -8,7 +8,7 @@ import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import moffy.ticex.modifier.ModifierEvolved;
 import moffy.ticex.modifier.ModifierSoulRending;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

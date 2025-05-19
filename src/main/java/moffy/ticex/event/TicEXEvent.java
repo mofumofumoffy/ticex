@@ -9,7 +9,7 @@ import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.lib.utils.TicEXApotheosisUtils;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;

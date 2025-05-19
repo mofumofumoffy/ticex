@@ -3,7 +3,7 @@ package moffy.ticex.modules.things;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierLamellar;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.Item;
 
 public class TicEXThingsModule extends AddonModule{

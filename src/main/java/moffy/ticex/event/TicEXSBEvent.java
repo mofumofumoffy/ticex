@@ -17,7 +17,7 @@ import moffy.ticex.client.slashblade.LayerSBToolMainBlade;
 import moffy.ticex.client.slashblade.SBToolBladeItemRenderer;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;

@@ -2,7 +2,7 @@ package moffy.ticex.caps.curios;
 
 import java.util.function.Supplier;
 
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;

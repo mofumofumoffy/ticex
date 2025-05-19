@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXMaterials;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;

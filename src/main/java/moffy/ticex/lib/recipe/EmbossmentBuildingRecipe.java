@@ -3,7 +3,7 @@ package moffy.ticex.lib.recipe;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;

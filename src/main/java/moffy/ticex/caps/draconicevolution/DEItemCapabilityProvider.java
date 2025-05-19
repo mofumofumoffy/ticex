@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.brandon3055.draconicevolution.api.capability.DECapabilities;
 
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;

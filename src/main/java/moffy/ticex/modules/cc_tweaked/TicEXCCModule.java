@@ -1,7 +1,7 @@
 package moffy.ticex.modules.cc_tweaked;
 
 import moffy.addonapi.AddonModule;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 
 public class TicEXCCModule extends AddonModule{
     public TicEXCCModule(){

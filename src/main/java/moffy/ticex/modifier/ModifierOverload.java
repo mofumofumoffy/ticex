@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;

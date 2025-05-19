@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;

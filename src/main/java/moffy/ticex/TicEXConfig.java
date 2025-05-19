@@ -1,7 +1,7 @@
 package moffy.ticex;
 
 import moffy.addonapi.AddonModuleRegistry;
-import moffy.ticex.modules.TicEXModuleProvider;
+import moffy.ticex.modules.general.TicEXModuleProvider;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig.Type;

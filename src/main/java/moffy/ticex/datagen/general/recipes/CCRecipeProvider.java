@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import dan200.computercraft.shared.ModRegistry;
 import moffy.ticex.TicEX;
-import moffy.ticex.modules.TicEXRegistry;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import slimeknights.tconstruct.common.TinkerTags;

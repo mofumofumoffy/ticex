@@ -1,4 +1,4 @@
-package moffy.ticex.modules;
+package moffy.ticex.modules.general;
 
 import java.util.ArrayList;
 import java.util.HashMap;
