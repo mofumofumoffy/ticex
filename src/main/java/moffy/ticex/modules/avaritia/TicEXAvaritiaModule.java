@@ -5,6 +5,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.event.TicEXAvaritiaEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
+import moffy.ticex.item.projectile.EndestShotItem;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.ModifierAftershock;
 import moffy.ticex.modifier.ModifierBedrockBreaker;
@@ -32,6 +33,7 @@ public class TicEXAvaritiaModule extends AddonModule{
 
     public TicEXAvaritiaModule(){
         TicEXRegistry.CELESTIAL_CORE = TicEXRegistry.ITEMS.register("celestial_core", ()->new ItemReconstCore(new Item.Properties(), "celestial"));
+        TicEXRegistry.ENDESTSHOT_ARROW = TicEXRegistry.ITEMS.register("endestshot", ()->new EndestShotItem(new Item.Properties()));
 
         TicEXRegistry.OMNIPOTEMCE_MODIFIER = TicEXRegistry.MODIFIERS.register("omnipotence", ModifierOmnipotence::new);
         TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_unbreakable");
@@ -48,7 +50,7 @@ public class TicEXAvaritiaModule extends AddonModule{
         TicEXRegistry.MOLTEN_NEUTRON = TicEXRegistry.FLUIDS.register("molten_neutron").type(TicEXFluidUtils.cool().temperature(1000)).block(MapColor.COLOR_BLACK, 0).bucket().commonTag().flowing();        
         TicEXRegistry.MOLTEN_CRYSTAL_MATRIX = TicEXRegistry.FLUIDS.register("molten_crystal_matrix").type(TicEXFluidUtils.cool().temperature(1000)).block(MapColor.COLOR_LIGHT_BLUE, 0).bucket().commonTag().flowing();    
     
-        TicEXRegistry.ENDESTSHOT_PROJECTILE = TicEXRegistry.ENTITIES.register("endestshot",()->EntityType.Builder.of(EndestShotProjectile::new, MobCategory.MISC).sized(0.5f, 0.5f).setTrackingRange(10)
+        TicEXRegistry.ENDESTSHOT_PROJECTILE = TicEXRegistry.ENTITIES.register("endestshot",()->EntityType.Builder.<EndestShotProjectile>of(EndestShotProjectile::new, MobCategory.MISC).sized(0.5f, 0.5f).setTrackingRange(10)
         .setUpdateInterval(20).setShouldReceiveVelocityUpdates(false)
         .build(TicEX.MODID+":endestshot"));
 

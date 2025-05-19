@@ -140,6 +140,7 @@ public class TicEXRegistry {
     public static RegistryObject<Item> OVERRIDE_CORE = null;
     public static RegistryObject<Item> INCOMPARABLE_CORE = null;
     public static RegistryObject<Item> CARDBOARD_CORE = null;
+    public static RegistryObject<Item> ENDESTSHOT_ARROW = null;
 
     public static ItemObject<ToolPartItem> SLASHBLADE_BLADE = null;
     public static ItemObject<ToolPartItem> SLASHBLADE_SAYA = null;

@@ -14,8 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import slimeknights.tconstruct.tools.TinkerTools;
-import slimeknights.tconstruct.tools.item.CrystalshotItem.CrystalshotEntity;
 
 public class EndestShotProjectile extends ItemArrow{
 
@@ -26,7 +24,7 @@ public class EndestShotProjectile extends ItemArrow{
     }
 
     public EndestShotProjectile(Level level, LivingEntity shooter) {
-        this(TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), shooter, level);
+        super(level, shooter);
     }
 
     public void setShooter(LivingEntity shooter){
