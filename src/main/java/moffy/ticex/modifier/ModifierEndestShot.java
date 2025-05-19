@@ -3,6 +3,7 @@ package moffy.ticex.modifier;
 import java.util.function.Predicate;
 
 import committee.nova.mods.avaritia.init.registry.ModItems;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -27,7 +28,7 @@ public class ModifierEndestShot extends NoLevelsModifier implements BowAmmoModif
 
     @Override
     public ItemStack findAmmo(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, ItemStack standardAmmo, Predicate<ItemStack> ammoPredicate) {
-        ItemStack itemstack = new ItemStack(ModItems.endest_pearl.get());
+        ItemStack itemstack = new ItemStack(TicEXRegistry.ENDESTSHOT_ARROW.get());
         itemstack.setCount(64);
         return itemstack;
     }
