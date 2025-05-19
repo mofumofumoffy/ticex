@@ -30,7 +30,7 @@ public class AvaritiaRecipeProvider implements ITicEXRecipeHelper, IMaterialReci
                 .setSlots(SlotType.DEFENSE, 2)
                 .setMaxLevel(1).checkTraitLevel()
                 .saveSalvage(topConsumer, prefix(TicEXRegistry.CELESTIAL_MODIFIER.getId(), defenseSalvage))
-                .save(topConsumer, prefix(TicEXRegistry.CELESTIAL_CORE.getId(), defenseFolder));
+                .save(topConsumer, prefix(TicEXRegistry.CELESTIAL_MODIFIER.getId(), defenseFolder));
         }
         if(TicEXRegistry.ENDESTSHOT_MODIFIER != null){
             ModifierRecipeBuilder.modifier(TicEXRegistry.ENDESTSHOT_MODIFIER)

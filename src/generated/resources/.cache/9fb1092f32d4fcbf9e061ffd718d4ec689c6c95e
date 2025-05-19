@@ -1,4 +1,4 @@
-// 1.20.1	2025-05-17T11:09:19.7038404	Recipes
+// 1.20.1	2025-05-19T10:16:28.7109135	Recipes
 9ebf6b48b3d12cde381ae855550f70bc11496d46 data/minecraft/advancements/recipes/misc/cores/flickering_reconstruction_core.json
 9ba70ba74a2241403228a1e4587115182a7afe64 data/minecraft/advancements/recipes/misc/cores/reconstruction_core.json
 e3f6223df0f56f7d247256f47e9d712fd791edad data/minecraft/recipes/cores/flickering_reconstruction_core.json
@@ -16,7 +16,7 @@ f7b025dd1e428149cbcdc91509fb916210ac22db data/ticex/recipes/tools/materials/infi
 26ada3310fd81c5ce30e83f1921420ac499d65df data/ticex/recipes/tools/materials/neutron/ingot.json
 b55504dee9b2735ca585f0e058058a7fce88210e data/ticex/recipes/tools/materials/neutron/nugget.json
 9acf723a1e525400b7631f5dddd94a16a7b3d5d5 data/ticex/recipes/tools/modifiers/ability/endestshot.json
-6705ecdd611722fe9bc4cf6c18b83b2a510f2a5b data/ticex/recipes/tools/modifiers/defense/celestial_core.json
+6705ecdd611722fe9bc4cf6c18b83b2a510f2a5b data/ticex/recipes/tools/modifiers/defense/celestial.json
 c2a4126f039f914db4b56256ce1b74c48b16be64 data/ticex/recipes/tools/modifiers/salvage/ability/endestshot.json
 63b8ac30c7a004880f0e8dad577afb4e9838bed2 data/ticex/recipes/tools/modifiers/salvage/defense/celestial.json
 0238b1bf6298d34beb3710dcfcd7f58a9587d287 data/ticex/recipes/tools/modifiers/salvage/upgrade/modem.json
