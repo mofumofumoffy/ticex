@@ -1,10 +1,10 @@
-// 1.20.1	2025-05-17T11:02:22.144058	TiCEX Material Definitions
+// 1.20.1	2025-05-19T17:39:46.684223	TiCEX Material Definitions
 43e55badd9d6bf4f6ee1eb60347d2e998cd93fef data/ticex/tinkering/materials/definition/chaotic.json
 ee7f64f28841463e65df88e4df6aed81d46d8165 data/ticex/tinkering/materials/definition/crystal_matrix.json
 43e55badd9d6bf4f6ee1eb60347d2e998cd93fef data/ticex/tinkering/materials/definition/draconic.json
 031df94fb65c2e69933f565b3e643b12af9e2293 data/ticex/tinkering/materials/definition/draconium.json
-56ef86f8363b0007d00495c65a87b8ca1b108df5 data/ticex/tinkering/materials/definition/etheric.json
-d9ea21c0f32155fa80fdc8f516f0cd5c46fdf6c4 data/ticex/tinkering/materials/definition/infinity.json
+b79026a334454ef5652c5f196420569841033640 data/ticex/tinkering/materials/definition/etheric.json
+fa6dc93fa70086c4492dddabb23e8ca6603a2e23 data/ticex/tinkering/materials/definition/infinity.json
 c676c30a65c06418f8768c8c12910894f79b8f27 data/ticex/tinkering/materials/definition/neutron.json
 5976b1ec84a0ad185da2ccbaeb692434685a6642 data/ticex/tinkering/materials/definition/reconstruction.json
 031df94fb65c2e69933f565b3e643b12af9e2293 data/ticex/tinkering/materials/definition/wyvern.json

@@ -3,6 +3,6 @@
     "emboss_input": [
       { "tag":"slashblade:proudsouls" }
     ],
-    "tools": { "tag": "ticex:tool/slashblade_tool" },
+    "tools": { "tag": "ticex:seram/slashblade" },
     "result": "ticex:hidden_proud"
 }

@@ -6,7 +6,7 @@
     "emboss_inputs": [
       { "item":"minecraft:enchanted_book" }
     ],
-    "tools": { "tag": "ticex:tool/slashblade_tool" },
+    "tools": { "tag": "ticex:seram/slashblade" },
     "slots": {
       "upgrades": 1
     },

@@ -5,7 +5,9 @@
     "refmap": "ticex.refmap.json",
     "mixins": [
         "MeleeAttributeModuleMixin",
-        "EntityMixin"
+        "EntityMixin",
+        "RandomBuilderAccessor",
+        "RandomMaterialMixin"
     ],
     "client": [
         "NormalModifierModelMixin",

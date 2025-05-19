@@ -9,7 +9,7 @@
       {
         "type": "forge:difference",
         "base": { "tag": "tconstruct:modifiable/armor/leggings" },
-        "subtracted": { "tag": "ticex:armor/singular_gem" }
+        "subtracted": { "tag": "ticex:seram/gem" }
       }
     ],
     "slots": {

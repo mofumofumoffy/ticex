@@ -6,6 +6,6 @@
     "emboss_inputs": [
       { "item":"slashblade:slashblade" }
     ],
-    "tools": { "tag": "ticex:tool/slashblade_tool" },
+    "tools": { "tag": "ticex:seram/slashblade" },
     "result": "ticex:koshirae"
   }

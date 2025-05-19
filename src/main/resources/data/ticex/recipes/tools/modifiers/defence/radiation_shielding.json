@@ -9,7 +9,7 @@
       {
         "type": "forge:difference",
         "base": { "tag": "tconstruct:modifiable/armor/worn" },
-        "subtracted": { "tag": "ticex:armor/mekaplate" }
+        "subtracted": { "tag": "ticex:seram/mekasuit" }
       }
     ],
     "slots": {

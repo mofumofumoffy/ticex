@@ -6,6 +6,6 @@
     "emboss_inputs": [
       { "tag":"tconstruct:parts" }
     ],
-    "tools": { "tag": "ticex:armor/seram_gear" },
+    "tools": { "tag": "ticex:seram" },
     "result": "ticex:lamellar"
 }

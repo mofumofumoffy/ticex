@@ -7,6 +7,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import slimeknights.tconstruct.library.data.tinkering.AbstractModifierTagProvider;
 
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.DEFENSE;
+import static slimeknights.tconstruct.common.TinkerTags.Modifiers.EXTRACT_MODIFIER_BLACKLIST;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.GENERAL_UPGRADES;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.BONUS_SLOTLESS;
 
@@ -33,6 +34,17 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
 
         this.tag(BONUS_SLOTLESS).addOptional(
             new ResourceLocation(TicEX.MODID, "inject")
+        );
+
+        this.tag(EXTRACT_MODIFIER_BLACKLIST).addOptional(
+            new ResourceLocation(TicEX.MODID, "mekanic"),
+            new ResourceLocation(TicEX.MODID, "konpaku"),
+            new ResourceLocation(TicEX.MODID, "koshirae"),
+            new ResourceLocation(TicEX.MODID, "hidden_proud"),
+            new ResourceLocation(TicEX.MODID, "overload"),
+            new ResourceLocation(TicEX.MODID, "override"),
+            new ResourceLocation(TicEX.MODID, "lamellar"),
+            new ResourceLocation(TicEX.MODID, "flowerstorm")
         );
     }
     

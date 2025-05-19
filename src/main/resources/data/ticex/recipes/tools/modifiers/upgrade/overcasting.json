@@ -9,7 +9,7 @@
       {
         "type": "forge:difference",
         "base": { "tag": "tconstruct:modifiable/durability" },
-        "subtracted": { "tag": "ticex:tool/spellbook_tool" }
+        "subtracted": { "tag": "ticex:seram/irons_spellbook" }
       }
     ],
     "slots": {
