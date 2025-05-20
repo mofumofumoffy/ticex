@@ -34,7 +34,7 @@
       },
       {
         "filter": {
-          "tag": "ticex:catalyst"
+          "tag": "ticex:catalysts"
         },
         "icon": "ticex:catalyst",
         "translation_key": "tagtype.ticex.catalyst",

@@ -1,10 +1,12 @@
 package moffy.ticex.lib.utils;
 
 import committee.nova.mods.avaritia.init.registry.ModDamageTypes;
-import moffy.ticex.modifier.ModifierCelestial;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
-import slimeknights.tconstruct.library.modifiers.modules.technical.ArmorLevelModule;
+import net.minecraft.world.item.ItemStack;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class TicEXAvaritiaUtils {
     public static boolean isInfinityDamage(DamageSource source){
@@ -12,6 +14,14 @@ public class TicEXAvaritiaUtils {
     }
 
     public static boolean hasCelestial(Player player){
-        return ArmorLevelModule.getLevel(player, ModifierCelestial.CELESTIAL_KEY) > 0;
+        for(ItemStack armorStack : player.getArmorSlots()){
+            if(armorStack.getItem() instanceof IModifiable){
+                ToolStack armor = ToolStack.from(armorStack);
+                if(armor.getModifierLevel(TicEXRegistry.CELESTIAL_MODIFIER.get()) > 0){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

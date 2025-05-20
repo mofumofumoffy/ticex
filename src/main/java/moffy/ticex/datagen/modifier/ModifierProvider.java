@@ -85,7 +85,7 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
         if(TicEXRegistry.MODEM_MODIFIER != null)buildModifier(TicEXRegistry.MODEM_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(UPGRADE);
     
         //curios
-        if(TicEXRegistry.INCOMPARABLE_MODIFIER != null)buildModifier(TicEXRegistry.INCOMPARABLE_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        if(TicEXRegistry.INCOMPARABLE_MODIFIER != null)buildModifier(TicEXRegistry.INCOMPARABLE_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(CONSTANT_FORTUNE);
     }
     
 }

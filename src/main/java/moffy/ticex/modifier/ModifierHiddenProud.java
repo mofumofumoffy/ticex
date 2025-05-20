@@ -78,8 +78,8 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
                 }
             }
 
-            if (s.getRefine() < refineLimit && !secondary) {
-                s.setRefine(s.getRefine() + 1);
+            if (s.getRefine() < refineLimit) {
+                s.setRefine(s.getRefine() + input.getCount());
                 if(s.getRefine() < 200)
                     s.setMaxDamage(s.getMaxDamage() + 1);
             }
