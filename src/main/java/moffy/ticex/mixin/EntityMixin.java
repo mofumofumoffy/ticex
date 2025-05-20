@@ -3,11 +3,13 @@ package moffy.ticex.mixin;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.spongepowered.asm.mixin.Mixin;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.IEntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -28,6 +30,27 @@ public abstract class EntityMixin implements IEntityDataAccessor{
             field.setAccessible(true);
             accessorMap.put(field.getName(), field);
         }
+    }
+
+    @Override
+    public Map<String, Object> getAllFields() {
+        if (accessorMap == null) {
+            initializeAccessorMap((Entity)((Object)this));
+        }
+        Map<String, Object> fields = new HashMap<>();
+        for(Entry<String, Field> entry : accessorMap.entrySet()){
+            Field key = entry.getValue();
+            try {
+                if(EntityDataAccessor.class.isAssignableFrom(key.getType())){
+                    fields.put(entry.getKey(),((Entity)((Object)this)).getEntityData().get(((EntityDataAccessor<?>)key.get(this))));
+                } else {
+                    fields.put(entry.getKey(), key.get(this));
+                }
+            } catch (Exception e) {
+                TicEX.LOGGER.error("", e);
+            }
+        }
+        return fields;
     }
     
     @Override

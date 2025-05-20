@@ -35,7 +35,7 @@ public class ModifierInfernal extends NoLevelsModifier implements InventoryTickM
     public void onInventoryTick(IToolStackView tool, ModifierEntry entry, Level level, LivingEntity entity, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack) {
         Item item = tool.getItem();
 
-        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.CHESTPLATE && entity instanceof Player player  && itemSlot == 38){
+        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.CHESTPLATE && entity instanceof Player player  && itemSlot == 2){
             if (!level.isClientSide) {
                 player.getCapability(InternalTimers.CAPABILITY).ifPresent(timers -> {
                     timers.activateFeed();
