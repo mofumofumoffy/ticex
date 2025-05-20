@@ -5,7 +5,7 @@
       "parts": [
         "tconstruct:large_plate",
         {
-          "item": "tconstruct:tough_handle",
+          "item": "tconstruct:tool_binding",
           "scale": 0.5
         },
         "ticex:catalyst_irons_spellbook"

@@ -102,7 +102,7 @@ public class ToolDefinitionProvider  extends AbstractToolDefinitionDataProvider 
         if(TicEXRegistry.SPELLBOOK_DEFINITION != null){
             define(TicEXRegistry.SPELLBOOK_DEFINITION).module(PartStatsModule.parts()
                 .part(largePlate)
-                .part(toughHandle, 0.5f)
+                .part(toolBinding, 0.5f)
                 .part(TicEXRegistry.CATALYST_IRONS_SPELLBOOK).build())
             .module(defaultTwoParts)
             .module(new SetStatsModule(StatsNBT.builder()
