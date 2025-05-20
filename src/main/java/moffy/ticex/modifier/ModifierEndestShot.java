@@ -2,7 +2,6 @@ package moffy.ticex.modifier;
 
 import java.util.function.Predicate;
 
-import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +22,7 @@ public class ModifierEndestShot extends NoLevelsModifier implements BowAmmoModif
 
     @Override
     public int getPriority() {
-        return 65;  //クリスタルショットより上かつトリック矢筒より下
+        return 65;
     }
 
     @Override

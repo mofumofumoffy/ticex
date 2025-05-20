@@ -1,9 +1,15 @@
 package moffy.ticex.event;
 
+import moffy.ticex.client.ItemArrowRenderer;
+import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
@@ -35,5 +41,10 @@ public class TicEXAvaritiaEvent {
                 }
             }
         } 
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer((EntityType<ItemArrow>)TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), pContext -> new ItemArrowRenderer(pContext, 1f));
     }
 }

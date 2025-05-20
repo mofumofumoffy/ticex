@@ -23,8 +23,10 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.fluids.block.BurningLiquidBlock;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
@@ -109,5 +111,8 @@ public class TicEXAvaritiaModule extends AddonModule{
 
             TicEXRegistry.SHADER_INSTANCE_MAP.addShader(sakuraInfinityMaterial, moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicShader, moffy.ticex.client.avaritia.TicEXCosmicShader.instance::setupCosmic);
         }
+
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(TicEXAvaritiaEvent::onRegisterRenderers);
     }
 }

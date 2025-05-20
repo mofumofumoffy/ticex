@@ -239,6 +239,7 @@ public class TicEXSBEvent {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer((EntityType<SBToolItemEntity>)TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(), SBToolBladeItemRenderer::new);
     }
