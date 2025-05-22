@@ -31,7 +31,7 @@ public class TicEXTaczEvent {
         ItemStack mainHandStack = attacker.getMainHandItem();
         if(mainHandStack != null && mainHandStack.getItem() instanceof IModifiable){
             ToolStack tool = ToolStack.from(mainHandStack);
-            float damage = event.getBaseAmount() * 0.9f;
+            float damage = event.getBaseAmount();
             float damageTmp = damage;
 
             ToolAttackContext context = new ToolAttackContext(attacker, attacker instanceof Player ? (Player)attacker : null, InteractionHand.MAIN_HAND, target, target instanceof LivingEntity ? (LivingEntity)target : null, event.isHeadShot(), 0, false);
