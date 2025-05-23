@@ -118,6 +118,7 @@ mixin {
     config 'ticex.draconicevolution.mixins.json'
     config 'ticex.slashblade.mixins.json'
     config 'ticex.create.mixins.json'
+    config 'ticex.projecte.mixins.json'
     config 'ticex.curios.mixins.json'
 
     debug.verbose = true

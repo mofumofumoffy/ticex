@@ -45,8 +45,8 @@ public class TicEXPEModule extends AddonModule{
     @OnlyIn(Dist.CLIENT)
     void initClient(){
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(TicEXPEEvent::registerKeyBindings);
+        //bus.addListener(TicEXPEEvent::registerKeyBindings);
 
-        MinecraftForge.EVENT_BUS.addListener(TicEXPEEvent::keyPress);
+        //MinecraftForge.EVENT_BUS.addListener(TicEXPEEvent::keyPress);
     }
 }

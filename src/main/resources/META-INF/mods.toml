@@ -43,7 +43,8 @@ mixins = [
     "ticex.draconicevolution.mixins.json", 
     "ticex.slashblade.mixins.json", 
     "ticex.curios.mixisn.json",
-    "ticex.create.mixins.json"
+    "ticex.create.mixins.json",
+    "ticex.projecte.mixins.json"
 ]
 
 # The description text for the mod (multi line!) (#mandatory)

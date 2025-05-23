@@ -28,6 +28,7 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
+@Deprecated
 public record TicEXPEKeyHandler(PEKeybind key){
     public static void encode(TicEXPEKeyHandler packet, FriendlyByteBuf buf) {
         buf.writeEnum(packet.key());
@@ -70,7 +71,7 @@ public record TicEXPEKeyHandler(PEKeybind key){
 			return;
 		}
 		InternalAbilities internalAbilities = cap.get();
-		for (InteractionHand hand : InteractionHand.values()) {
+		/* for (InteractionHand hand : InteractionHand.values()) {
 			ItemStack stack = player.getItemInHand(hand);
 			switch (key) {
 				case CHARGE -> {
@@ -125,7 +126,7 @@ public record TicEXPEKeyHandler(PEKeybind key){
                     return;
                 }
 			}
-		}
+		} */
 		context.setPacketHandled(true);
     }
     
