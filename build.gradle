@@ -173,7 +173,7 @@ dependencies {
     
     implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6428724")
 
-    implementation fg.deobf("curse.maven:timeless-and-classics-zero-1028108:6069384")
+    implementation fg.deobf("curse.maven:timeless-and-classics-zero-1028108:6518539")
 
     implementation fg.deobf("curse.maven:create-328085:6323270")
     implementation fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
