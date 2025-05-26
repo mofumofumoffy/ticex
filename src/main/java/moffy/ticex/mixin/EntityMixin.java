@@ -3,19 +3,30 @@ package moffy.ticex.mixin;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Map.Entry;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.IEntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements IEntityDataAccessor{
+
+    @Shadow
+    @Final
+    protected SynchedEntityData entityData;
     
+    @Unique
     private Map<String, Field> accessorMap;
 
     private void initializeAccessorMap(Entity entity) {
@@ -42,7 +53,7 @@ public abstract class EntityMixin implements IEntityDataAccessor{
             Field key = entry.getValue();
             try {
                 if(EntityDataAccessor.class.isAssignableFrom(key.getType())){
-                    fields.put(entry.getKey(),((Entity)((Object)this)).getEntityData().get(((EntityDataAccessor<?>)key.get(this))));
+                    fields.put(entry.getKey(),entityData.get(((EntityDataAccessor<?>)key.get(this))));
                 } else {
                     fields.put(entry.getKey(), key.get(this));
                 }
@@ -62,11 +73,38 @@ public abstract class EntityMixin implements IEntityDataAccessor{
     }
 
     @Override
-    public void setValue(Field field, Object value) {
-        try{
-            field.set((Entity)((Object)this), value);
-        }catch(Exception e){
-            TicEX.LOGGER.error("", e);
+    public <T> boolean setValue(Field field, T value) {
+        Optional<DataItemAccessor> accessorOptional = toAccessor(entityData);
+        if(accessorOptional.isPresent()){
+            DataItemAccessor accessor = accessorOptional.get();
+            Int2ObjectMap<SynchedEntityData.DataItem<?>> items = accessor.getItems();
+            try{
+                if(EntityDataAccessor.class.isAssignableFrom(field.getType())){
+                    EntityDataAccessor<T> dataAccessor = (EntityDataAccessor<T>)field.get((Entity)((Object)this));
+                    SynchedEntityData.DataItem<T> dataitem = (SynchedEntityData.DataItem<T>)items.get(dataAccessor.getId());
+                    dataitem.setValue(value);
+                    ((Entity)((Object)this)).onSyncedDataUpdated(dataAccessor);
+                    dataitem.setDirty(true);
+                    accessor.setDirtyByTicEX(true);
+
+                    return true;
+                } else if(value.getClass().isAssignableFrom(field.getType())){
+                    field.set((Entity)((Object)this), value);
+                    return true;
+                } 
+            }catch(Exception e){
+                return false;
+            }
         }
+
+        return false;
+    }
+
+    @Unique
+    private static Optional<DataItemAccessor> toAccessor(SynchedEntityData data){
+        if(data instanceof DataItemAccessor){
+            return Optional.of((DataItemAccessor)data);
+        }
+        return Optional.empty();
     }
 }

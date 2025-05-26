@@ -116,7 +116,10 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
                     victim.setHealth(0);
                     victim.die(new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ModDamageTypes.INFINITY), victim, attackerEntity));
 
-                    victim.level().addFreshEntity(new ExperienceOrb(victim.level(), victim.getX(), victim.getY(), victim.getZ(), victim.getExperienceReward()));
+                    int reward = victim.getExperienceReward();
+                    if(reward > 0){
+                        victim.level().addFreshEntity(new ExperienceOrb(victim.level(), victim.getX(), victim.getY(), victim.getZ(), reward));
+                    }
                     
                     serverLevel.broadcastEntityEvent(victim, (byte)3);
                 } else {

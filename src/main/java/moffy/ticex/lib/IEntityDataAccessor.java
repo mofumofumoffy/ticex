@@ -6,5 +6,5 @@ import java.util.Map;
 public interface IEntityDataAccessor {
     public Map<String, Object> getAllFields();
     public Field getField(String keyName);
-    public void setValue(Field field, Object value);
+    public <T> boolean setValue(Field field, T value);
 } 

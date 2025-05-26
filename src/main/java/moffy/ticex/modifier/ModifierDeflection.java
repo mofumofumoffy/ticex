@@ -70,19 +70,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
                 IEntityDataAccessor accessor = (IEntityDataAccessor)target;
                 Field key = accessor.getField("f_20961_");
                 if(key != null){
-                    try {
-                        if(float.class.isAssignableFrom(key.getType())){
-                            key.setFloat(target, absoluteHealth);
-                        } else if(EntityDataAccessor.class.isAssignableFrom(key.getType())){
-                            target.getEntityData().set((EntityDataAccessor<Float>)key.get(target), absoluteHealth);
-                        }
-                    } catch (Exception e) {
-                        TicEX.LOGGER.error("", e);
-                    }
-                }
-
-                for(MobEffectInstance effect : fakeLivingEntity.getActiveEffects()){
-                    target.addEffect(effect);
+                    accessor.setValue(key, absoluteHealth);
                 }
             }
 
