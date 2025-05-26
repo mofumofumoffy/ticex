@@ -1,5 +1,11 @@
 # TiCEX - Tinkers' Construct EX
 
+## Notice
+
+Development will be temporarily paused from May 27 to June 14, 2025 (JST), as I’d like to take some time to play the mod I created myself.  
+Development is expected to resume on June 15. Thank you for your understanding!
+
+
 🌐 Available languages: [日本語](README.jaJP.md)
 
 **TiCEX** is an addon for Tinkers' Construct that brings in extension content from a variety of other mods. It's all about giving you parts and modifiers based on the **Tier 1 Gear** from those mods. Harness the power of the stars and craft your own ULTIMATE equipment!
