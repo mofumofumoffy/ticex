@@ -2,6 +2,9 @@ package moffy.ticex.event;
 
 import moffy.ticex.client.ItemArrowRenderer;
 import moffy.ticex.entity.ItemArrow;
+import moffy.ticex.lib.utils.TicEXApotheosisUtils;
+import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
@@ -41,6 +45,21 @@ public class TicEXAvaritiaEvent {
                 }
             }
         } 
+    }
+
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        Player player = event.player;
+        if(!(player.isCreative() || player.isSpectator()) && TicEXAvaritiaUtils.hasCelestial(player)){
+            if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
+                TicEXApotheosisUtils.enableCreativeFlight(player);
+            } else if(!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly){
+                TicEXApotheosisUtils.disableCreativeFlight(player);
+            }
+        }else if(player.isCreative() || player.isSpectator()){
+            TicEXApotheosisUtils.enableCreativeFlight(player);
+        }else{
+            TicEXApotheosisUtils.disableCreativeFlight(player);
+        }
     }
 
     @OnlyIn(Dist.CLIENT)

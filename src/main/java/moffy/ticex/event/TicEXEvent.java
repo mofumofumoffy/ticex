@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import moffy.ticex.caps.EmbossmentMaterialCapability;
-import moffy.ticex.lib.utils.TicEXApotheosisUtils;
-import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
-import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -19,12 +16,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
@@ -117,21 +112,6 @@ public class TicEXEvent {
                     event.setCanceled(true);
                 }
             }
-        }
-    }
-
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-        if(!(player.isCreative() || player.isSpectator()) && TicEXAvaritiaUtils.hasCelestial(player)){
-            if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
-                TicEXApotheosisUtils.enableCreativeFlight(player);
-            } else if(!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly){
-                TicEXApotheosisUtils.disableCreativeFlight(player);
-            }
-        }else if(player.isCreative() || player.isSpectator()){
-            TicEXApotheosisUtils.enableCreativeFlight(player);
-        }else{
-            TicEXApotheosisUtils.disableCreativeFlight(player);
         }
     }
 
