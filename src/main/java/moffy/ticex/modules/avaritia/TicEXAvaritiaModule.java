@@ -56,6 +56,7 @@ public class TicEXAvaritiaModule extends AddonModule{
         .setUpdateInterval(20).setShouldReceiveVelocityUpdates(false)
         .build(TicEX.MODID+":endestshot"));
 
+        MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onGetHurt);
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onDeath);
 

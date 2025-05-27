@@ -120,21 +120,6 @@ public class TicEXEvent {
         }
     }
 
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-        if(!(player.isCreative() || player.isSpectator()) && TicEXAvaritiaUtils.hasCelestial(player)){
-            if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
-                TicEXApotheosisUtils.enableCreativeFlight(player);
-            } else if(!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly){
-                TicEXApotheosisUtils.disableCreativeFlight(player);
-            }
-        }else if(player.isCreative() || player.isSpectator()){
-            TicEXApotheosisUtils.enableCreativeFlight(player);
-        }else{
-            TicEXApotheosisUtils.disableCreativeFlight(player);
-        }
-    }
-
     public static void modifyAttribute(ItemAttributeModifierEvent event) {
         ItemStack stack = event.getItemStack();
         EquipmentSlot slot = event.getSlotType();
