@@ -44,6 +44,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 
@@ -62,12 +64,14 @@ public class TicEXSBUtil {
         disallowedEnchantments.add(Enchantments.MOB_LOOTING);
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static Supplier<Matrix4f> defaultTransform = Suppliers.memoize(() -> {
          Matrix4f m = new Matrix4f();
          m.identity();
          return m;
       });
 
+    @OnlyIn(Dist.CLIENT)
     public static void tessellateWithShader(MaterialVariantId material, WavefrontObject wavefrontObject, VertexConsumer tessellator, MultiBufferSource bufferSource, PartType partType, String... groupNames) {
         Iterator<GroupObject> var3 = wavefrontObject.groupObjects.iterator();
 
@@ -98,10 +102,11 @@ public class TicEXSBUtil {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static void renderWithShader(GroupObject groupObject, VertexConsumer tessellator, TextureAtlasSprite sprite){
         if (groupObject.faces.size() > 0) {
             Iterator<Face> var2 = groupObject.faces.iterator();
-   
+
             while(var2.hasNext()) {
                Face face = (Face)var2.next();
                addFaceForRender(face, tessellator, sprite);
@@ -109,10 +114,11 @@ public class TicEXSBUtil {
          }
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static void addFaceForRender(Face face, VertexConsumer tessellator, TextureAtlasSprite sprite) {
         final float textureOffset = 5.0E-4F;
         VertexConsumer wr = tessellator;
-        
+
         if (face.faceNormal == null) {
             face.faceNormal = face.calculateFaceNormal();
         }
@@ -128,7 +134,7 @@ public class TicEXSBUtil {
             averageU /= (float)face.textureCoordinates.length;
             averageV /= (float)face.textureCoordinates.length;
         }
-        
+
         Matrix4f transform;
         if (Face.matrix != null) {
             PoseStack.Pose me = Face.matrix.last();
@@ -142,6 +148,7 @@ public class TicEXSBUtil {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static void putVertex(Face face, VertexConsumer wr, int i, Matrix4f transform, float textureOffset, TextureAtlasSprite sprite, float averageU, float averageV) {
         wr.vertex(transform, face.vertices[i].x, face.vertices[i].y, face.vertices[i].z);
         wr.color(1.0f, 1.0f, 1.0f, (Integer)Face.alphaOverride.apply(new Vector4f(face.vertices[i].x, face.vertices[i].y, face.vertices[i].z, 1.0F), Face.col.getAlpha()));
@@ -180,6 +187,7 @@ public class TicEXSBUtil {
         wr.endVertex();
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static RenderType getRenderType(Supplier<ShaderInstance> instanceSupplier){
         RenderType.CompositeState state = CompositeState.builder().setShaderState(new ShaderStateShard(instanceSupplier)).setOutputState(RenderStateShard.ITEM_ENTITY_TARGET).setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, true)).setTransparencyState(RenderStateShard.NO_TRANSPARENCY).setLightmapState(RenderType.LIGHTMAP).setOverlayState(RenderType.OVERLAY).setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE).createCompositeState(true);
         return RenderType.create("slashblade_tool_shader_blend", DefaultVertexFormat.NEW_ENTITY, Mode.TRIANGLES, 256, true, false, state);
@@ -193,7 +201,7 @@ public class TicEXSBUtil {
                     if (!nbt.contains("Enchantments", Tag.TAG_LIST)) {
                         nbt.put("Enchantments", new ListTag());
                     }
-        
+
                     ListTag listTag = nbt.getList("Enchantments", Tag.TAG_COMPOUND);
                     ListTag newListTag = new ListTag();
                     for(int i = 0; i < listTag.size(); i++){
@@ -205,11 +213,11 @@ public class TicEXSBUtil {
                         }
                     }
                     nbt.put("Enchantments", newListTag);
-                    
+
                 } else {
                     toolStack.enchant(enchantment, Math.min(enchantment.getMaxLevel(), level));
                 }
-                return true;   
+                return true;
             }
         }
         return false;
@@ -220,7 +228,7 @@ public class TicEXSBUtil {
         int levelCap = key.getMaxLevel();
         if(value == currentLv){
             return Math.min(value + 1, levelCap);
-        } 
+        }
         return Math.min(Math.max(value, currentLv), levelCap);
     }
 }
