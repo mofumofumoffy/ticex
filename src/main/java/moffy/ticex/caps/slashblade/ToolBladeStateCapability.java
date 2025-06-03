@@ -39,7 +39,9 @@ public class ToolBladeStateCapability extends SlashBladeState{
             this.tool = tool;
             CompoundTag persistentTag = tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION);
             if(persistentTag != null && !persistentTag.isEmpty()){
-                toolStack.getOrCreateTag().put("bladeState", persistentTag);
+                CompoundTag copy = persistentTag.copy();
+                deserializeNBT(copy);
+                toolStack.getOrCreateTag().put("bladeState", copy);
                 tool.getPersistentData().remove(ModifiableSlashBladeItem.BLADE_STATE_LOCATION);
             }
       }
@@ -51,9 +53,6 @@ public class ToolBladeStateCapability extends SlashBladeState{
 
     @Override
     public int getDamage() {
-        if (!tool.getItem().canBeDepleted()) {
         return 0;
-        }
-        return tool.getDamage();
     }
 }
