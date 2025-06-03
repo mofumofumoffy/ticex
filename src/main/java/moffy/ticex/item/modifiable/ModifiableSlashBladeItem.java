@@ -477,7 +477,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
     if (activeModifier != ModifierEntry.EMPTY) {
       return activeModifier.getHook(ModifierHooks.GENERAL_INTERACT).getUseDuration(tool, activeModifier);
     }
-    return 0;
+    return super.getUseDuration(stack);
   }
 
   @Override

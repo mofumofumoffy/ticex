@@ -64,9 +64,9 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
                 }
             }
         }
-        
+
         toolStack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(s -> {
-            s.deserializeNBT(tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION));
+            s.deserializeNBT(toolStack.getOrCreateTag().getCompound("bladeState"));
             s.setProudSoulCount(s.getProudSoulCount() + input.getCount() * Math.min(5000, enchantmentLevel * 10));
 
             if(input.hasTag()){
@@ -84,12 +84,12 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
                     s.setMaxDamage(s.getMaxDamage() + 1);
             }
 
-            tool.getPersistentData().put(ModifiableSlashBladeItem.BLADE_STATE_LOCATION, s.serializeNBT());
+            toolStack.getOrCreateTag().put("bladeState", s.serializeNBT());
         });
 
         return true;
     }
-    
+
     @Override
     public boolean shouldDisplay(boolean advanced) {
         return advanced;

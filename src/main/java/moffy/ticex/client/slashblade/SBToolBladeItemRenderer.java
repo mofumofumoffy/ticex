@@ -30,7 +30,7 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer{
     public SBToolBladeItemRenderer(Context context) {
         super(context);
     }
-    
+
     @Override
     public void render(ItemEntity itemIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
       this.shadowRadius = 0.0F;
@@ -175,7 +175,7 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer{
 
 
         if(tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0){
-            CompoundTag persistentTag = tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION);
+            CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
             if(persistentTag.contains("ModelName")){
                model = BladeModelManager.getInstance().getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
                textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));

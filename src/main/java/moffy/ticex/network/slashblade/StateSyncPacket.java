@@ -41,7 +41,7 @@ public class StateSyncPacket {
 
                         if(sent.getItem() instanceof IModifiable){
                             sent.getCapability(ItemSlashBlade.BLADESTATE).ifPresent((stateServer)->{
-                                stateClient.deserializeNBT(ToolStack.from(sent).getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION));
+                                stateClient.deserializeNBT(sent.getOrCreateTag().getCompound("bladeState"));
                             });
                         }
                     });

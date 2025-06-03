@@ -14,8 +14,7 @@
         {
           "item": "tconstruct:tough_handle",
           "scale": 0.5
-        },
-        "ticex:catalyst_slashblade"
+        }
       ],
       "primary_part": 0
     },
@@ -33,13 +32,6 @@
         {
           "type": "tconstruct:random",
           "tier": 1
-        },
-        {
-          "type": "tconstruct:random",
-          "tier": {
-            "max": 6,
-            "min": 3
-          }
         }
       ]
     },

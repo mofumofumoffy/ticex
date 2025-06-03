@@ -60,7 +60,7 @@ public class ToolDefinitionProvider  extends AbstractToolDefinitionDataProvider 
         DefaultMaterialsModule defaultFourParts = DefaultMaterialsModule.builder().material(tier1Material, tier1Material, tier1Material, tier1Material, randomCatalystMaterial).build();
         DefaultMaterialsModule ancientTwoParts = DefaultMaterialsModule.builder().material(randomMaterial, randomMaterial, randomCatalystMaterial).build();
         DefaultMaterialsModule ancientThreeParts = DefaultMaterialsModule.builder().material(randomMaterial, randomMaterial, randomMaterial, randomCatalystMaterial).build();
-        
+
         RandomMaterial tier2Material = RandomMaterial.random().tier(1, 2).build();
             DefaultMaterialsModule plateMaterials = DefaultMaterialsModule.builder().material(tier2Material, tier2Material, randomCatalystMaterial).build();
             ToolModule plateSlots =
@@ -72,9 +72,8 @@ public class ToolDefinitionProvider  extends AbstractToolDefinitionDataProvider 
             define(TicEXRegistry.SLASHBLADE_DEFINITION).module(PartStatsModule.parts()
                 .part(TicEXRegistry.SLASHBLADE_BLADE, 0.75f)
                 .part(TicEXRegistry.SLASHBLADE_SAYA, 0.5f)
-                .part(toughHandle, 0.5f)
-                .part(TicEXRegistry.CATALYST_SLASHBLADE).build())
-            .module(defaultThreeParts)
+                .part(toughHandle, 0.5f).build())
+            .module(DefaultMaterialsModule.builder().material(tier1Material, tier1Material, tier1Material).build())
             .module(new SetStatsModule(StatsNBT.builder()
                 .set(ToolStats.ATTACK_DAMAGE, 3f)
                 .set(ToolStats.ATTACK_SPEED, 1.6f).build()))
