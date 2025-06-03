@@ -20,7 +20,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.tools.stats.HeadMaterialStats;
@@ -62,6 +65,16 @@ public class TicEXSlashBladeModule extends AddonModule{
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingFall);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingHurt);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onPlayerFlyableFall);
+
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
+            initClient();
+        });
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void initClient(){
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(TicEXSBEvent::onRegisterRenderers);
     }
 
     @OnlyIn(Dist.CLIENT)
