@@ -64,7 +64,6 @@ public class TicEXSBUtil {
         disallowedEnchantments.add(Enchantments.MOB_LOOTING);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static Supplier<Matrix4f> defaultTransform = Suppliers.memoize(() -> {
          Matrix4f m = new Matrix4f();
          m.identity();
