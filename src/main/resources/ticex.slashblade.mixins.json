@@ -5,13 +5,11 @@
     "plugin": "moffy.ticex.modules.slashblade.TicEXSlashBladeMixinPlugin",
     "mixins": [
         "AttackManagerMixin",
-        "TargetSelectorMixin",
         "SummonedSwordMixin",
         "PlayerAttackHelperMixin"
     ],
     "client": [
-        "ActiveStateSyncMessageMixin",
-        "ClientHandlerMixin"
+        
     ],
     "server": [
         

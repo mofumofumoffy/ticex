@@ -62,6 +62,7 @@ public class TicEXAvaritiaEvent {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @OnlyIn(Dist.CLIENT)
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer((EntityType<ItemArrow>)TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), pContext -> new ItemArrowRenderer(pContext, 1f));

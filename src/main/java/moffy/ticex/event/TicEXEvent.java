@@ -30,10 +30,12 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 public class TicEXEvent {
     public static UUID EXTRA_DAMAGE_UUID = UUID.fromString("39f1e204-7c3b-4d51-9a3c-65e1db213f08");
 
+    @SuppressWarnings("unchecked")
     public static void onEntityAttributeCreation(EntityAttributeCreationEvent event){
         event.put((EntityType<? extends LivingEntity>)TicEXRegistry.FAKE_LIVING_ENTITY.get(), AttributeSupplier.builder().add(Attributes.MAX_HEALTH, Float.MAX_VALUE).build());
     }
 
+    @SuppressWarnings("unchecked")
     public static void onEntityAttributeModification(EntityAttributeModificationEvent event) {
         if(TicEXRegistry.DAMAGE_TAKEN != null && TicEXRegistry.HEALING_RECEIVED != null){
             ForgeRegistries.ENTITY_TYPES.forEach(action->{

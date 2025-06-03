@@ -58,7 +58,6 @@ import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
-import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
@@ -154,7 +153,7 @@ public class TicEXRegistry {
     public static ItemObject<ToolPartItem> CATALYST_KINETIC_GUN = null; 
     public static ItemObject<ToolPartItem> CATALYST_IRONS_SPELLBOOK = null; 
 
-    public static ItemObject<ModifiableItem> REFORGED_SLASHBLADE = null;
+    public static ItemObject<? extends Item> REFORGED_SLASHBLADE = null;
     public static ItemObject<? extends Item> BLITZ_GUN = null; 
     public static ItemObject<? extends Item> REVIVAL_SPELLBOOK_IRONS = null; 
 

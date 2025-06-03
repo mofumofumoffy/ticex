@@ -12,6 +12,7 @@ public class TicEXConfig {
     public static ForgeConfigSpec.ConfigValue<Float> CONDENSING_DROP_PROBABILITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> MEKAPLATE_USE_POWER_SHIELD;
     public static ForgeConfigSpec.ConfigValue<Integer> OVERRIDE_LIMIT;
+    public static ForgeConfigSpec.ConfigValue<Boolean> PROVIDE_PROPERTIES;
 
     public static void registerConfig(){
         final ForgeConfigSpec.Builder COMMON = new ForgeConfigSpec.Builder();
@@ -31,6 +32,10 @@ public class TicEXConfig {
 
         COMMON.push("apotheosis");
         OVERRIDE_LIMIT = COMMON.comment("Maximum level of enchantments granted by override").define("overrideLevelLimit", 255);
+        COMMON.pop();
+
+        COMMON.push("cc:tweaked");
+        PROVIDE_PROPERTIES = COMMON.comment("", "CAUTION: Setting the value to \"true\" may BREAK the game balance and your world!").define("provideProperties", false);
         COMMON.pop();
 
         CLIENT.comment("Client Settings").push("client");

@@ -38,6 +38,7 @@ public class ItemArrowRenderer extends ArrowRenderer<ItemArrow>{
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public ResourceLocation getTextureLocation(ItemArrow pEntity) {
         return TextureAtlas.LOCATION_BLOCKS;

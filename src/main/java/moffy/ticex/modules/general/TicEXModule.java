@@ -20,7 +20,6 @@ import moffy.ticex.lib.recipe.EmbossmentModifierRecipe;
 import moffy.ticex.lib.recipe.ModifierRepairRecipe;
 import moffy.ticex.lib.recipe.SingleEmbossmentModifierRecipe;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
-import moffy.ticex.modifier.ModifierDefine;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.modifier.ModifierSassy;
 import net.minecraft.core.BlockPos;
@@ -117,7 +116,6 @@ public class TicEXModule extends AddonModule{
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
         TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
         TicEXRegistry.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
-        TicEXRegistry.DEFINE_MODIFIER = TicEXRegistry.MODIFIERS.register("define", ModifierDefine::new);
 
         bus.addListener(TicEXEvent::onEntityAttributeCreation);
         bus.addListener(TicEXEvent::onEntityAttributeModification);

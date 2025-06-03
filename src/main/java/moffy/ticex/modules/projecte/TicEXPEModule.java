@@ -1,7 +1,6 @@
 package moffy.ticex.modules.projecte;
 
 import moffy.addonapi.AddonModule;
-import moffy.ticex.TicEX;
 import moffy.ticex.event.TicEXPEEvent;
 import moffy.ticex.item.modifiable.ModifiableGemArmor;
 import moffy.ticex.lib.CatalystMaterialStatsType;
@@ -10,15 +9,9 @@ import moffy.ticex.modifier.ModifierGravitiy;
 import moffy.ticex.modifier.ModifierHurricane;
 import moffy.ticex.modifier.ModifierInfernal;
 import moffy.ticex.modules.general.TicEXRegistry;
-import moffy.ticex.network.projecte.TicEXPEKeyHandler;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXPEModule extends AddonModule{
@@ -34,19 +27,5 @@ public class TicEXPEModule extends AddonModule{
         TicEXRegistry.HURRICANE_MODIFIER = TicEXRegistry.MODIFIERS.register("hurricane", ModifierHurricane::new);   
 
         MinecraftForge.EVENT_BUS.addListener(TicEXPEEvent::onJump);
-
-        TicEX.CHANNEL.registerMessage(TicEX.getPacketHandlerId(), TicEXPEKeyHandler.class, TicEXPEKeyHandler::encode, TicEXPEKeyHandler::decode, TicEXPEKeyHandler::handle);
-    
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
-            initClient();
-        });
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    void initClient(){
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        //bus.addListener(TicEXPEEvent::registerKeyBindings);
-
-        //MinecraftForge.EVENT_BUS.addListener(TicEXPEEvent::keyPress);
     }
 }

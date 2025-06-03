@@ -13,11 +13,9 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 public class SBItemCapabilityProvider implements IToolCapabilityProvider{
 
     private ToolBladeStateCapability bladeState;
-    private ToolInputStateCapability inputState;
 
     public SBItemCapabilityProvider(ItemStack stack, Supplier<? extends IToolStackView> toolSupplier){
         this.bladeState = new ToolBladeStateCapability(stack, toolSupplier.get());
-        this.inputState = new ToolInputStateCapability(toolSupplier.get());
     }
 
     @Override
@@ -25,12 +23,10 @@ public class SBItemCapabilityProvider implements IToolCapabilityProvider{
         if(tool.getItem() instanceof ModifiableSlashBladeItem){
             if(capability == ItemSlashBlade.BLADESTATE){
                 return LazyOptional.of(()->bladeState).cast();
-            } else if (capability == ItemSlashBlade.INPUT_STATE){
-                return LazyOptional.of(()->inputState).cast();
             }
         }
         return LazyOptional.empty();
     }
-    
-    
+
+
 }

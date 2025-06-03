@@ -2,12 +2,9 @@ package moffy.ticex.modifier;
 
 import java.lang.reflect.Field;
 
-import moffy.ticex.TicEX;
 import moffy.ticex.entity.FakeLivingEntity;
 import moffy.ticex.lib.IEntityDataAccessor;
 import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -39,6 +36,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
         hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE, ModifierHooks.PROJECTILE_HIT);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public float getMeleeDamage(IToolStackView tool, ModifierEntry modifierEntry, ToolAttackContext context, float baseDamage,
             float damage) {
@@ -52,25 +50,30 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
             
             if(target != null && attacker != null){
                 fakeLivingEntity.setHealth(target.getHealth());
-    
-                ToolAttackContext newContext = new ToolAttackContext(attacker, attacker, context.getHand(), fakeLivingEntity, fakeLivingEntity, true, context.getCooldown(), false);
                 
                 for(ModifierEntry toolEntry:tool.getModifierList()){
-                    toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, newContext, damage, baseDamage, damage);
+                    toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, context, damage, baseDamage, damage);
                 }
 
                 fakeLivingEntity.hurt(null, damage);
                 fakeLivingEntity.invulnerableTime = 0;
                 
                 for(ModifierEntry toolEntry:tool.getModifierList()){
-                    toolEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, newContext, damage);
+                    toolEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, context, damage);
                 }
 
                 float absoluteHealth = fakeLivingEntity.getFakeHealth();
                 IEntityDataAccessor accessor = (IEntityDataAccessor)target;
-                Field key = accessor.getField("f_20961_");
+
+                String fieldName = "f_20961_";
+
+                Field key = accessor.getField(fieldName);
                 if(key != null){
-                    accessor.setValue(key, absoluteHealth);
+                    if(boolean.class.isAssignableFrom(key.getType())){
+                        accessor.setValue(key, Boolean.class, key);
+                    }else{
+                        accessor.setValue(key, absoluteHealth);
+                    }
                 }
             }
 

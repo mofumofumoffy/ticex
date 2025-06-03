@@ -26,7 +26,7 @@ public class TicEXItemDeferredRegister extends DeferredRegisterWrapper<Item>  {
       });
    }
 
-   @SuppressWarnings("rawtypes")
+   @SuppressWarnings({ "rawtypes", "unchecked" })
     public <T extends Enum<T>, I extends Item> EnumObject<T, I> registerEnum(T[] values, String name, Function<T, ? extends I> mapper) {
         return registerEnum((Enum[])values, (String)name, (BiFunction)((fullName, type) -> {
             return this.register((String)fullName, ()->{
@@ -35,7 +35,7 @@ public class TicEXItemDeferredRegister extends DeferredRegisterWrapper<Item>  {
         }));
     }
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public <T extends Enum<T>, I extends Item> EnumObject<T, I> registerEnum(String name, T[] values, Function<T, ? extends I> mapper) {
         return registerEnum((String)name, (Enum[])values, (BiFunction)((fullName, type) -> {
             return this.register((String)fullName, () -> {

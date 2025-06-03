@@ -6,9 +6,6 @@ import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.fluid.FluidTextureProvider;
 import moffy.ticex.datagen.general.LootProvider;
-import moffy.ticex.datagen.general.recipes.AvaritiaRecipeProvider;
-import moffy.ticex.datagen.general.recipes.CCRecipeProvider;
-import moffy.ticex.datagen.general.recipes.CommonRecipeProvider;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.datagen.general.tag.BlockTagProvider;
 import moffy.ticex.datagen.general.tag.FluidTagProvider;
@@ -26,7 +23,6 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = TicEX.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)

@@ -72,8 +72,9 @@ public abstract class EntityMixin implements IEntityDataAccessor{
         return accessorMap.get(keyName);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public <T> boolean setValue(Field field, T value) {
+    public <T> boolean setValue(Field field, Class<T> cls, Object value) {
         Optional<DataItemAccessor> accessorOptional = toAccessor(entityData);
         if(accessorOptional.isPresent()){
             DataItemAccessor accessor = accessorOptional.get();
@@ -82,7 +83,17 @@ public abstract class EntityMixin implements IEntityDataAccessor{
                 if(EntityDataAccessor.class.isAssignableFrom(field.getType())){
                     EntityDataAccessor<T> dataAccessor = (EntityDataAccessor<T>)field.get((Entity)((Object)this));
                     SynchedEntityData.DataItem<T> dataitem = (SynchedEntityData.DataItem<T>)items.get(dataAccessor.getId());
-                    dataitem.setValue(value);
+                    if(Boolean.class.isAssignableFrom(cls)){
+                        if(Integer.class.isAssignableFrom(value.getClass())){
+                            dataitem.setValue((T)Boolean.valueOf(((Integer)value).intValue() != 0));
+                        } else if(Float.class.isAssignableFrom(value.getClass())){
+                            dataitem.setValue((T)Boolean.valueOf(((Float)value).intValue() != 0f));
+                        } else if(Boolean.class.isAssignableFrom(value.getClass())){
+                            dataitem.setValue((T)value);
+                        }
+                    } else {
+                        dataitem.setValue((T)value);
+                    }
                     ((Entity)((Object)this)).onSyncedDataUpdated(dataAccessor);
                     dataitem.setDirty(true);
                     accessor.setDirtyByTicEX(true);
