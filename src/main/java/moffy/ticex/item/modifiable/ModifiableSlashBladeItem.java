@@ -267,6 +267,8 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
     return 0;
   }
 
+
+
   @Override
   public boolean isBarVisible(ItemStack stack) {
     return stack.getCount() == 1 && DurabilityDisplayModifierHook.showDurabilityBar(stack);

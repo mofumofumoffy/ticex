@@ -6,13 +6,14 @@
     "mixins": [
         "AttackManagerMixin",
         "SummonedSwordMixin",
-        "PlayerAttackHelperMixin"
+        "PlayerAttackHelperMixin",
+        "ItemSlashBladeMixin"
     ],
     "client": [
-        
+
     ],
     "server": [
-        
+
     ],
     "injectors": {
         "defaultRequire": 1
