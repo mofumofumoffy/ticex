@@ -47,9 +47,9 @@ public class SBToolRenderType {
             switch (layerIndex) {
                 case 0:
                     return BLADE;
-                case 1:
-                    return HANDLE;
                 case 2:
+                    return HANDLE;
+                case 1:
                     return SAYA;
                 default:
                     return null;
