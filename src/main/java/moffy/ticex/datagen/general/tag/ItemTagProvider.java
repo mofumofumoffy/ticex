@@ -58,7 +58,7 @@ public class ItemTagProvider extends ItemTagsProvider{
         this.addSmeltery();
         this.addTools();
     }
-    
+
     private void addCommon() {
         addCores(
             new ResourceLocation(TicEX.MODID, "reconstruction_core"),
@@ -85,7 +85,7 @@ public class ItemTagProvider extends ItemTagsProvider{
         addOptional(TicEXTags.Items.CRYSTAL_MATRIX_INGOT, new ResourceLocation("avaritia", "crystal_matrix_ingot"));
 
         addOptional(TicEXTags.Items.ETHERIC_INGOT, new ResourceLocation(TicEX.MODID, "etheric_ingot"));
-        
+
         //blocks
         addOptional(TicEXTags.Items.INFINITY_BLOCK, new ResourceLocation("avaritia", "infinity_block"));
         addOptional(TicEXTags.Items.NEUTRON_BLOCK, new ResourceLocation("avaritia", "neutron_block"));
@@ -114,6 +114,7 @@ public class ItemTagProvider extends ItemTagsProvider{
         this.tag(TinkerTags.Items.SCORCHED_TANKS).add(TicEXRegistry.SCORCHED_RF_FURNACE.get().asItem(), TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get().asItem());
     }
 
+    @SuppressWarnings("unchecked")
     private void addTools() {
         //tools
         addToolTags(new ResourceLocation(TicEX.MODID, "reforged_slashblade"), TicEXTags.Items.SLASHBLADE_TOOL, MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, ItemTags.SWORDS, UNSALVAGABLE);
@@ -126,10 +127,10 @@ public class ItemTagProvider extends ItemTagsProvider{
         addArmorTags(new ResourceLocation(TicEX.MODID,"singular_gem"), TicEXTags.Items.GEM_ARMOR, MULTIPART_TOOL, DURABILITY, BONUS_SLOTS, TRIM);
 
         this.tag(TicEXTags.Items.SERAM).addTags(
-            TicEXTags.Items.SLASHBLADE_TOOL, 
-            TicEXTags.Items.KINETIC_GUN_TOOL, 
-            TicEXTags.Items.IRONS_SPELLBOOK_TOOL, 
-            TicEXTags.Items.MEKASUIT_ARMOR, 
+            TicEXTags.Items.SLASHBLADE_TOOL,
+            TicEXTags.Items.KINETIC_GUN_TOOL,
+            TicEXTags.Items.IRONS_SPELLBOOK_TOOL,
+            TicEXTags.Items.MEKASUIT_ARMOR,
             TicEXTags.Items.GEM_ARMOR
         );
     }

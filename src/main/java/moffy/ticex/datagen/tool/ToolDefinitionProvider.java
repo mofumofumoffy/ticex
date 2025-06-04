@@ -5,7 +5,6 @@ import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraftforge.common.ToolActions;
-import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.data.tinkering.AbstractToolDefinitionDataProvider;
 import slimeknights.tconstruct.library.materials.RandomMaterial;
 import slimeknights.tconstruct.library.tools.SlotType;
@@ -16,33 +15,14 @@ import slimeknights.tconstruct.library.tools.definition.module.build.ToolActions
 import slimeknights.tconstruct.library.tools.definition.module.build.ToolSlotsModule;
 import slimeknights.tconstruct.library.tools.definition.module.build.ToolTraitsModule;
 import slimeknights.tconstruct.library.tools.definition.module.material.DefaultMaterialsModule;
-import slimeknights.tconstruct.library.tools.definition.module.material.MaterialStatsModule;
 import slimeknights.tconstruct.library.tools.definition.module.material.PartStatsModule;
-import slimeknights.tconstruct.library.tools.definition.module.material.PartsModule;
-import slimeknights.tconstruct.library.tools.definition.module.weapon.SweepWeaponAttack;
 import slimeknights.tconstruct.library.tools.nbt.MultiplierNBT;
 import slimeknights.tconstruct.library.tools.nbt.StatsNBT;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
-import slimeknights.tconstruct.tools.ArmorDefinitions;
-import slimeknights.tconstruct.tools.TinkerModifiers;
 import slimeknights.tconstruct.tools.TinkerToolParts;
-import slimeknights.tconstruct.tools.stats.PlatingMaterialStats;
-import slimeknights.tconstruct.tools.stats.StatlessMaterialStats;
 
-import static slimeknights.tconstruct.tools.TinkerToolParts.adzeHead;
-import static slimeknights.tconstruct.tools.TinkerToolParts.bowGrip;
-import static slimeknights.tconstruct.tools.TinkerToolParts.bowLimb;
-import static slimeknights.tconstruct.tools.TinkerToolParts.bowstring;
-import static slimeknights.tconstruct.tools.TinkerToolParts.broadAxeHead;
-import static slimeknights.tconstruct.tools.TinkerToolParts.broadBlade;
-import static slimeknights.tconstruct.tools.TinkerToolParts.hammerHead;
 import static slimeknights.tconstruct.tools.TinkerToolParts.largePlate;
-import static slimeknights.tconstruct.tools.TinkerToolParts.pickHead;
-import static slimeknights.tconstruct.tools.TinkerToolParts.smallAxeHead;
-import static slimeknights.tconstruct.tools.TinkerToolParts.smallBlade;
 import static slimeknights.tconstruct.tools.TinkerToolParts.toolBinding;
-import static slimeknights.tconstruct.tools.TinkerToolParts.toolHandle;
-import static slimeknights.tconstruct.tools.TinkerToolParts.toughBinding;
 import static slimeknights.tconstruct.tools.TinkerToolParts.toughHandle;
 
 public class ToolDefinitionProvider  extends AbstractToolDefinitionDataProvider {
@@ -53,13 +33,8 @@ public class ToolDefinitionProvider  extends AbstractToolDefinitionDataProvider 
     @Override
     protected void addToolDefinitions() {
         RandomMaterial tier1Material = RandomMaterial.random().tier(1).build();
-        RandomMaterial randomMaterial = RandomMaterial.random().allowHidden().build();
         RandomMaterial randomCatalystMaterial = RandomMaterial.random().tier(3, 6).build();
         DefaultMaterialsModule defaultTwoParts = DefaultMaterialsModule.builder().material(tier1Material, tier1Material, randomCatalystMaterial).build();
-        DefaultMaterialsModule defaultThreeParts = DefaultMaterialsModule.builder().material(tier1Material, tier1Material, tier1Material, randomCatalystMaterial).build();
-        DefaultMaterialsModule defaultFourParts = DefaultMaterialsModule.builder().material(tier1Material, tier1Material, tier1Material, tier1Material, randomCatalystMaterial).build();
-        DefaultMaterialsModule ancientTwoParts = DefaultMaterialsModule.builder().material(randomMaterial, randomMaterial, randomCatalystMaterial).build();
-        DefaultMaterialsModule ancientThreeParts = DefaultMaterialsModule.builder().material(randomMaterial, randomMaterial, randomMaterial, randomCatalystMaterial).build();
 
         RandomMaterial tier2Material = RandomMaterial.random().tier(1, 2).build();
             DefaultMaterialsModule plateMaterials = DefaultMaterialsModule.builder().material(tier2Material, tier2Material, randomCatalystMaterial).build();

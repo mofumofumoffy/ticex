@@ -1,11 +1,5 @@
 # TiCEX - Tinkers' Construct EX
 
-## Notice
-
-Development will be temporarily paused from May 27 to June 14, 2025 (JST), as I’d like to take some time to play the mod I created myself.  
-Development is expected to resume on June 15. Thank you for your understanding!
-
-
 🌐 Available languages: [日本語](README.jaJP.md)
 
 **TiCEX** is an addon for Tinkers' Construct that brings in extension content from a variety of other mods. It's all about giving you parts and modifiers based on the **Tier 1 Gear** from those mods. Harness the power of the stars and craft your own ULTIMATE equipment!
@@ -23,7 +17,7 @@ Development is expected to resume on June 15. Thank you for your understanding!
 ## Supported Minecraft Version
 - Forge for Minecraft 1.20.1
 
-## Integrated Mods 
+## Integrated Mods
 - Re-Avaritia
 - Mekanism
 - Draconic Evolution
@@ -40,16 +34,16 @@ Development is expected to resume on June 15. Thank you for your understanding!
 
 ## Other Additions
 
-- Power of the Stars ✨  
-- Some cool new alloys  
-- Electric modules for the smeltery and foundry that heat up based on FE input  
+- Power of the Stars ✨
+- Some cool new alloys
+- Electric modules for the smeltery and foundry that heat up based on FE input
 
 ## Credits
 
-Some resources in this mod were based on materials from the mods listed in [this wiki page](https://github.com/mofumofumoffy/ticex/wiki/Modifiers-&-Traits) section.  
+Some resources in this mod were based on materials from the mods listed in [this wiki page](https://github.com/mofumofumoffy/ticex/wiki/Modifiers-&-Traits) section.
 Additionally, it draws inspiration from the following mods:
 
 - Materialis
-- Tinkers' Evolution  
-- Tinkers' SlashBlade  
+- Tinkers' Evolution
+- Tinkers' SlashBlade
 - PlusTiC

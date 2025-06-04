@@ -3,13 +3,11 @@ package moffy.ticex.network.slashblade;
 import java.util.function.Supplier;
 
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
-import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class StateSyncPacket {
     protected ItemStack bladeStack;

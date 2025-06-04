@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.init.SBItems;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.utils.TicEXSBUtil;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -20,7 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
-import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentModifierHook{
 
@@ -42,8 +40,6 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
 
         int enchantmentLevel = context.getInputStack(inputIndex).getEnchantmentValue();
         int refineLimit = Math.max(10, enchantmentLevel);
-
-        ToolStack tool = ToolStack.from(toolStack);
 
         if(input.isEnchanted()){
             Random random = new Random();

@@ -1,7 +1,6 @@
 package moffy.ticex.datagen.modifier;
 
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -13,7 +12,6 @@ import slimeknights.tconstruct.library.data.tinkering.AbstractModifierProvider;
 import slimeknights.tconstruct.library.modifiers.modules.behavior.AttributeModule;
 import slimeknights.tconstruct.library.modifiers.modules.behavior.ReduceToolDamageModule;
 import slimeknights.tconstruct.library.modifiers.modules.build.EnchantmentModule;
-import slimeknights.tconstruct.library.modifiers.modules.build.ModifierRequirementsModule;
 import slimeknights.tconstruct.library.modifiers.modules.build.ModifierSlotModule;
 import slimeknights.tconstruct.library.modifiers.modules.build.StatBoostModule;
 import slimeknights.tconstruct.library.modifiers.modules.combat.LootingModule;
@@ -21,18 +19,9 @@ import slimeknights.tconstruct.library.modifiers.modules.display.DurabilityBarCo
 import slimeknights.tconstruct.library.modifiers.util.ModifierLevelDisplay;
 import slimeknights.tconstruct.library.tools.SlotType;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
-import slimeknights.tconstruct.tools.TinkerModifiers;
-import slimeknights.tconstruct.tools.data.ModifierIds;
 
-import static slimeknights.tconstruct.common.TinkerTags.Items.ARMOR;
 import static slimeknights.tconstruct.common.TinkerTags.Items.HARVEST;
 import static slimeknights.tconstruct.common.TinkerTags.Items.MELEE;
-import static slimeknights.tconstruct.common.TinkerTags.Items.WORN_ARMOR;
-import static slimeknights.tconstruct.library.json.math.ModifierFormula.LEVEL;
-import static slimeknights.tconstruct.library.json.math.ModifierFormula.MULTIPLIER;
-import static slimeknights.tconstruct.library.json.math.ModifierFormula.VALUE;
-import static slimeknights.tconstruct.library.modifiers.modules.behavior.RepairModule.FACTOR;
-import static slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial.ARMOR_SLOTS;
 
 import moffy.ticex.modules.general.TicEXRegistry;
 
@@ -50,13 +39,12 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
     @Override
     protected void addModifiers() {
         IJsonPredicate<Item> harvest = ItemPredicate.tag(HARVEST);
-        IJsonPredicate<Item> armor = ItemPredicate.tag(WORN_ARMOR);
-        
+
         ModifierSlotModule UPGRADE = new ModifierSlotModule(SlotType.UPGRADE);
 
         //general
         if(TicEXRegistry.REBIRTH_MODIFIER != null)buildModifier(TicEXRegistry.REBIRTH_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
-        
+
         //avaritia
         LootingModule WEAPON_LOOTING = LootingModule.builder().toolItem(ItemPredicate.or(ItemPredicate.set(Items.AIR), ItemPredicate.tag(MELEE))).level(10).weapon();
         EnchantmentModule CONSTANT_FORTUNE = EnchantmentModule.builder(Enchantments.BLOCK_FORTUNE).toolItem(harvest).level(10).constant();
@@ -83,9 +71,9 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
 
         //computercraft
         if(TicEXRegistry.MODEM_MODIFIER != null)buildModifier(TicEXRegistry.MODEM_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(UPGRADE);
-    
+
         //curios
         if(TicEXRegistry.INCOMPARABLE_MODIFIER != null)buildModifier(TicEXRegistry.INCOMPARABLE_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(CONSTANT_FORTUNE);
     }
-    
+
 }
