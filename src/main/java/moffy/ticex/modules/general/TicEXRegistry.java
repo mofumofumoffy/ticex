@@ -85,16 +85,16 @@ public class TicEXRegistry {
 
     public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
     public static final ModifiableArmorMaterial SINGULAR_GEM_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "singular_gem"), SoundEvents.ARMOR_EQUIP_NETHERITE);
-    public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "reforged_slashblade")); 
-    public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "blitz_gun")); 
-    public static final ToolDefinition SPELLBOOK_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "revival_spellbook")); 
+    public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "reforged_slashblade"));
+    public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "blitz_gun"));
+    public static final ToolDefinition SPELLBOOK_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "revival_spellbook"));
 
     public static final Map<Item, Function<BakedModel, BakedModel>> CUSTOM_MODELS = new HashMap<>();
     public static final ToolShaderMap.Tool TOOL_SHADERS = new ToolShaderMap.Tool();
     public static final ToolShaderMap.Armor ARMOR_SHADERS = new ToolShaderMap.Armor();
     public static final ShaderInstanceMap SHADER_INSTANCE_MAP = new ShaderInstanceMap();
     public static final Set<Function<LivingEntity, ItemStack>>TOOL_GETTERS = new HashSet<>();
-    
+
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
     public static final TicEXItemDeferredRegisterExtension ITEMS_EXTENDED = new TicEXItemDeferredRegisterExtension(ITEMS, TicEX.MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TicEX.MODID);
@@ -115,7 +115,7 @@ public class TicEXRegistry {
     public static RegistryObject<RecipeSerializer<?>> MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
     public static RegistryObject<RecipeSerializer<?>> SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
     public static RegistryObject<RecipeSerializer<?>> MODIFIER_REPAIR_RECIPE_SERIALIZER = null;
-    
+
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
 
     public static RegistryObject<Item> ETHERIC_INGOT = null;
@@ -147,15 +147,15 @@ public class TicEXRegistry {
     public static CastItemObject SLASHBLADE_BLADE_CAST;
     public static CastItemObject SLASHBLADE_SAYA_CAST;
 
-    public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKASUIT = null; 
-    public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_GEM = null; 
-    public static ItemObject<ToolPartItem> CATALYST_SLASHBLADE = null; 
-    public static ItemObject<ToolPartItem> CATALYST_KINETIC_GUN = null; 
-    public static ItemObject<ToolPartItem> CATALYST_IRONS_SPELLBOOK = null; 
+    public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKASUIT = null;
+    public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_GEM = null;
+    public static ItemObject<ToolPartItem> CATALYST_SLASHBLADE = null;
+    public static ItemObject<ToolPartItem> CATALYST_KINETIC_GUN = null;
+    public static ItemObject<ToolPartItem> CATALYST_IRONS_SPELLBOOK = null;
 
     public static ItemObject<? extends Item> REFORGED_SLASHBLADE = null;
-    public static ItemObject<? extends Item> BLITZ_GUN = null; 
-    public static ItemObject<? extends Item> REVIVAL_SPELLBOOK_IRONS = null; 
+    public static ItemObject<? extends Item> BLITZ_GUN = null;
+    public static ItemObject<? extends Item> REVIVAL_SPELLBOOK_IRONS = null;
 
     public static EnumObject<ArmorItem.Type, ? extends IModifiable> MEKAPLATE_ARMOR = null;
     public static EnumObject<ArmorItem.Type, ? extends IModifiable> SINGULAR_GEM_ARMOR = null;
@@ -165,12 +165,12 @@ public class TicEXRegistry {
     public static RegistryObject<Block> CREATIVE_SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> SCORCHED_RF_FURNACE = null;
     public static RegistryObject<Block> CREATIVE_SCORCHED_RF_FURNACE = null;
-    
+
     public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> RF_FURNACE_ENTITY = null;
     public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> CREATICE_RF_FURNACE_ENTITY = null;
 
     public static FluidObject<UnplaceableFluid> MOLTEN_RECONSTRUCTION_CORE = null;
-    public static List<FluidObject<UnplaceableFluid>> RF_FURNACE_FUELS = new ArrayList<>(); 
+    public static List<FluidObject<UnplaceableFluid>> RF_FURNACE_FUELS = new ArrayList<>();
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_INFINITY = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_NEUTRON = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_CRYSTAL_MATRIX = null;
@@ -184,6 +184,8 @@ public class TicEXRegistry {
     public static RegistryObject<Attribute> DAMAGE_TAKEN = null;
 
     public static DynamicModifier REBIRTH_MODIFIER = null;
+    public static StaticModifier<Modifier> DEFLECTION_MODIFIER = null;
+    public static StaticModifier<Modifier> EMBOSSMENT_MODIFIER = null;
     public static StaticModifier<Modifier> OMNIPOTEMCE_MODIFIER = null;
     public static DynamicModifier COSMIC_UNBREAKABLE_MODIFIER = null;
     public static DynamicModifier COSMIC_LUCK_MODIFIER = null;
@@ -194,7 +196,6 @@ public class TicEXRegistry {
     public static DynamicModifier DENSE_MODIFIER = null;
     public static StaticModifier<Modifier> AFTERSHOCK_MODIFIER = null;
     public static StaticModifier<Modifier> ENDESTSHOT_MODIFIER = null;
-    public static StaticModifier<Modifier> DEFLECTION_MODIFIER = null;
     public static StaticModifier<Modifier> MEKANIC_MODIFIER = null;
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
     public static StaticModifier<Modifier> SASSY_MODIFIER = null;

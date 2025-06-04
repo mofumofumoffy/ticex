@@ -21,6 +21,7 @@ import moffy.ticex.lib.recipe.ModifierRepairRecipe;
 import moffy.ticex.lib.recipe.SingleEmbossmentModifierRecipe;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.ModifierDeflection;
+import moffy.ticex.modifier.ModifierEmbossment;
 import moffy.ticex.modifier.ModifierSassy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -87,13 +88,13 @@ public class TicEXModule extends AddonModule{
         TicEXRegistry.ITEMS.register("creative_scorched_rf_furnace", ()->new BlockItem(TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get(), new Item.Properties()));
 
         TicEXRegistry.RF_FURNACE_ENTITY = TicEXRegistry.BLOCK_ENTITIES.register(
-            "rf_furnace_entity", 
+            "rf_furnace_entity",
             ()->BlockEntityType.Builder.of(
                 (BlockPos pPos, BlockState pState)->new RFFurnaceBlockEntity(
-                    TicEXRegistry.RF_FURNACE_ENTITY.get(), pPos, pState, false), 
-                    TicEXRegistry.SEARED_RF_FURNACE.get(), 
+                    TicEXRegistry.RF_FURNACE_ENTITY.get(), pPos, pState, false),
+                    TicEXRegistry.SEARED_RF_FURNACE.get(),
                     TicEXRegistry.SCORCHED_RF_FURNACE.get(),
-                    TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get(), 
+                    TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get(),
                     TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get()
                 )
                 .build(null)
@@ -114,6 +115,7 @@ public class TicEXModule extends AddonModule{
                                    .build());
 
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
+        TicEXRegistry.EMBOSSMENT_MODIFIER = TicEXRegistry.MODIFIERS.register("embossment", ModifierEmbossment::new);
         TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
         TicEXRegistry.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
 

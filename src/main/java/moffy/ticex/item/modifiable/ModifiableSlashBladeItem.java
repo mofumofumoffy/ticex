@@ -261,7 +261,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
 
   @Override
   public boolean onLeftClickEntity(ItemStack stack, Player player, Entity target) {
-    return (stack.getCount() > 1 || EntityInteractionModifierHook.leftClickEntity(stack, player, target)) && super.onLeftClickEntity(stack, player, target);
+    return stack.getCount() > 1 || EntityInteractionModifierHook.leftClickEntity(stack, player, target) || super.onLeftClickEntity(stack, player, target);
   }
 
   @Override

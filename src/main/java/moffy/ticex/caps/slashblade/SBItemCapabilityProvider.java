@@ -20,10 +20,8 @@ public class SBItemCapabilityProvider implements IToolCapabilityProvider{
 
     @Override
     public <T> LazyOptional<T> getCapability(IToolStackView tool, Capability<T> capability) {
-        if(tool.getItem() instanceof ModifiableSlashBladeItem){
-            if(capability == ItemSlashBlade.BLADESTATE){
-                return LazyOptional.of(()->bladeState).cast();
-            }
+        if(capability == ItemSlashBlade.BLADESTATE && tool.getItem() instanceof ModifiableSlashBladeItem){
+            return LazyOptional.of(()->bladeState).cast();
         }
         return LazyOptional.empty();
     }

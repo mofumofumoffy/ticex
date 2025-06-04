@@ -9,6 +9,7 @@ import slimeknights.tconstruct.library.data.tinkering.AbstractModifierTagProvide
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.DEFENSE;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.EXTRACT_MODIFIER_BLACKLIST;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.GENERAL_UPGRADES;
+import static slimeknights.tconstruct.common.TinkerTags.Modifiers.ABILITIES;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.BONUS_SLOTLESS;
 
 public class ModifierTagProvider extends AbstractModifierTagProvider {
@@ -36,7 +37,12 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
             new ResourceLocation(TicEX.MODID, "inject")
         );
 
+        this.tag(ABILITIES).addOptional(
+            new ResourceLocation(TicEX.MODID, "embossment")
+        );
+
         this.tag(EXTRACT_MODIFIER_BLACKLIST).addOptional(
+            new ResourceLocation(TicEX.MODID, "embossment"),
             new ResourceLocation(TicEX.MODID, "mekanic"),
             new ResourceLocation(TicEX.MODID, "konpaku"),
             new ResourceLocation(TicEX.MODID, "koshirae"),
@@ -47,5 +53,5 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
             new ResourceLocation(TicEX.MODID, "flowerstorm")
         );
     }
-    
+
 }

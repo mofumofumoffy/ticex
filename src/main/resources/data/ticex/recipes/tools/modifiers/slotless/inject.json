@@ -10,6 +10,6 @@
     "level": 1,
     "result": "ticex:inject",
     "tools": [
-      {"tag": "tconstruct:modifiable/bonus_slots"}
+      {"tag": "tconstruct:modifiable/durability"}
     ]
   }
