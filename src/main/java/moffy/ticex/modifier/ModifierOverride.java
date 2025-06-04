@@ -34,7 +34,7 @@ public class ModifierOverride extends NoLevelsModifier implements EmbossmentModi
 
         if(stack.getItem().equals(Items.ENCHANTED_BOOK)){
             Map<Enchantment, Integer> bookEnchantments = EnchantmentHelper.getEnchantments(stack);
-            
+
             for(Entry<Enchantment, Integer> entry : bookEnchantments.entrySet()){
                 if(toolStack.getEnchantmentLevel(entry.getKey()) >= entry.getKey().getMaxLevel() && entry.getValue() >= entry.getKey().getMaxLevel()){
                     CompoundTag nbt = toolStack.getOrCreateTag();
@@ -60,6 +60,6 @@ public class ModifierOverride extends NoLevelsModifier implements EmbossmentModi
     }
 
     protected int calcEnchLevel(ItemStack stack, Enchantment key, int value){
-        return Math.min(TicEXConfig.OVERRIDE_LIMIT.get(), stack.getEnchantmentLevel(key) + 1);
+        return Math.min(TicEXConfig.OVERRIDE_LIMIT.get(), value + 1);
     }
 }
