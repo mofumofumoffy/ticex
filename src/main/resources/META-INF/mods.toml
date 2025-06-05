@@ -38,10 +38,10 @@ authors="${mod_authors}" #optional
 # IMPORTANT NOTE: this is NOT an instruction as to which environments (CLIENT or DEDICATED SERVER) your mod loads on. Your mod should load (and maybe do nothing!) whereever it finds itself.
 #displayTest="MATCH_VERSION" # MATCH_VERSION is the default if nothing is specified (#optional)
 mixins = [
-    "ticex.mixins.json", 
-    "ticex.mekanism.mixins.json", 
-    "ticex.draconicevolution.mixins.json", 
-    "ticex.slashblade.mixins.json", 
+    "ticex.mixins.json",
+    "ticex.mekanism.mixins.json",
+    "ticex.draconicevolution.mixins.json",
+    "ticex.slashblade.mixins.json",
     "ticex.curios.mixisn.json",
     "ticex.create.mixins.json",
     "ticex.projecte.mixins.json"
@@ -82,7 +82,7 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
     modId="tconstruct"
     mandatory=true
-    versionRange="[3.9.2.37,)"
+    versionRange="[3.10.0.67,)"
     ordering="AFTER"
     side="BOTH"
 
