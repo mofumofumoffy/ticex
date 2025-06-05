@@ -21,7 +21,7 @@ public class TicEXApotheosisUtils {
             if (!attr.hasModifier(modifier)) {
                 attr.addPermanentModifier(modifier);
             }
-        }else{
+        }else if(!player.getAbilities().mayfly){
             player.getAbilities().mayfly = true;
         }
         player.onUpdateAbilities();
@@ -31,7 +31,7 @@ public class TicEXApotheosisUtils {
         AttributeInstance attr = isApothicAttributesLoaded ? getAttributeInstance(player) : null;
         if(isApothicAttributesLoaded){
             attr.removeModifier(modifierUUID);
-        }else{
+        }else if(player.getAbilities().mayfly){
             player.getAbilities().mayfly = false;
         }
         player.onUpdateAbilities();

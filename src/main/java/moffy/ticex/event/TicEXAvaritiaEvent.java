@@ -3,7 +3,6 @@ package moffy.ticex.event;
 import moffy.ticex.client.ItemArrowRenderer;
 import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.lib.utils.TicEXApotheosisUtils;
-import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.EntityType;
@@ -22,7 +21,7 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 public class TicEXAvaritiaEvent {
     public static void onGetHurt(LivingHurtEvent event) {
         LivingEntity target = event.getEntity();
-        
+
         if(target instanceof Player player){
             if(player.getMainHandItem().getItem() instanceof IModifiable){
                 ToolStack tool = ToolStack.from(player.getMainHandItem());
@@ -44,20 +43,14 @@ public class TicEXAvaritiaEvent {
                     }
                 }
             }
-        } 
+        }
     }
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if(!(player.isCreative() || player.isSpectator()) && TicEXAvaritiaUtils.hasCelestial(player)){
-            if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
-                TicEXApotheosisUtils.enableCreativeFlight(player);
-            } else if(!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly){
-                TicEXApotheosisUtils.disableCreativeFlight(player);
-            }
-        }else if(player.isCreative() || player.isSpectator()){
+        if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
             TicEXApotheosisUtils.enableCreativeFlight(player);
-        }else{
+        } else if(!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly){
             TicEXApotheosisUtils.disableCreativeFlight(player);
         }
     }

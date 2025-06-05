@@ -107,6 +107,9 @@ public class ItemTagProvider extends ItemTagsProvider{
                 new ResourceLocation(TicEX.MODID, "catalyst_gem").withSuffix("_"+type.getName())
             );
         }
+
+        addOptional(TinkerTags.Items.TOOL_PARTS, new ResourceLocation(TicEX.MODID, "slashblade_blade"));
+        addOptional(TinkerTags.Items.TOOL_PARTS, new ResourceLocation(TicEX.MODID, "slashblade_saya"));
     }
 
     private void addSmeltery() {

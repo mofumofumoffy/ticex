@@ -31,7 +31,7 @@ import slimeknights.tconstruct.smeltery.block.entity.component.SmelteryComponent
 public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implements ITankBlockEntity{
 
     private boolean isCreative;
-    
+
     private int maxEnergyRate;
     private int lastStrength;
 
@@ -90,7 +90,11 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
 
         float rate = (float)energyRate / pBlockEntity.getMaxEnergyRate();
 
-        int fuelIndex = pBlockEntity.isCreative() ? 20 : Math.round(20 * (1 - (float)Math.exp(-Math.PI*rate)));
+        int fuelIndex = 20;
+
+        if(!pBlockEntity.isCreative() && Math.abs(energyRate - pBlockEntity.getMaxEnergyRate()) > 0.5f){
+            fuelIndex = Math.round(20 * (1 - (float)Math.exp(-Math.PI*rate)));
+        }
 
         if(pBlockEntity.isCreative()){
             pBlockEntity.updateFluidTo(new FluidStack(TicEXRegistry.RF_FURNACE_FUELS.get(19).get(), FluidType.BUCKET_VOLUME));
@@ -156,7 +160,7 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
     public void setLastStrength(int arg0) {
         this.lastStrength = arg0;
     }
-    
+
     @Override
     protected boolean shouldSyncOnUpdate() {
         return true;

@@ -196,7 +196,10 @@
     "modifier.ticex.hurricane.description":"防具は台風の靴の力を行使する",
     "modifier.ticex.modem":"モデム",
     "modifier.ticex.modem.flavor":"Live3D?",
-    "modifier.ticex.modem.description":"装備する人の行動に応じて、ポケットコンピューターにいくつかのイベントを渡す", 
+    "modifier.ticex.modem.description":"装備する人の行動に応じて、ポケットコンピューターにいくつかのイベントを渡す",
+    "modifier.ticex.embossment": "エンボス",
+    "modifier.ticex.embossment.flavor": "かつてのOP、だが何故か利便性向上",
+    "modifier.ticex.embossment.description": "任意のパーツの特性を、ツールに付与できる(1回だけ)",
 
     "stat.tconstruct.harvest_tier.ticex.infinity": "インフィニティ",
 

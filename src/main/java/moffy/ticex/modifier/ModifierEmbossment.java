@@ -30,4 +30,8 @@ public class ModifierEmbossment extends NoLevelsModifier implements EmbossmentMo
         return false;
     }
 
+    @Override
+    public boolean shouldDisplay(boolean advanced) {
+        return advanced;
+    }
 }

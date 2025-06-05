@@ -43,6 +43,14 @@
     {
       "id": "ticex:catalyst_gem_boots",
       "required": false
+    },
+    {
+      "id": "ticex:slashblade_blade",
+      "required": false
+    },
+    {
+      "id": "ticex:slashblade_saya",
+      "required": false
     }
   ]
 }

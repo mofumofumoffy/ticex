@@ -44,22 +44,27 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
             if(fakeLivingEntity == null){
                 fakeLivingEntity = new FakeLivingEntity((EntityType<? extends LivingEntity>)TicEXRegistry.FAKE_LIVING_ENTITY.get(), context.getLevel());
             }
-    
+
             LivingEntity target = context.getLivingTarget();
             Player attacker = context.getPlayerAttacker();
-            
+
             if(target != null && attacker != null){
                 fakeLivingEntity.setHealth(target.getHealth());
-                
+                ToolAttackContext fakeContext = new ToolAttackContext(attacker, attacker, context.getHand(),fakeLivingEntity, fakeLivingEntity, context.isCritical(), damage, context.isExtraAttack());
+
                 for(ModifierEntry toolEntry:tool.getModifierList()){
-                    toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, context, damage, baseDamage, damage);
+                    var hook = toolEntry.getHook(ModifierHooks.MELEE_HIT);
+                    hook.beforeMeleeHit(tool, modifierEntry, context, damage, 0, 0);
+                    hook.beforeMeleeHit(tool, modifierEntry, fakeContext, damage, 0, 0);
                 }
 
                 fakeLivingEntity.hurt(null, damage);
                 fakeLivingEntity.invulnerableTime = 0;
-                
+
                 for(ModifierEntry toolEntry:tool.getModifierList()){
-                    toolEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, context, damage);
+                    var hook = toolEntry.getHook(ModifierHooks.MELEE_HIT);
+                    hook.afterMeleeHit(tool, modifierEntry, context, damage);
+                    hook.afterMeleeHit(tool, modifierEntry, fakeContext, damage);
                 }
 
                 float absoluteHealth = fakeLivingEntity.getFakeHealth();
@@ -89,7 +94,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
             if(!toolEntry.matches(this)){
                 toolEntry.getHook(ModifierHooks.PROJECTILE_HIT).onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit, attacker, target);
             };
-            
+
         }
         return false;
     }

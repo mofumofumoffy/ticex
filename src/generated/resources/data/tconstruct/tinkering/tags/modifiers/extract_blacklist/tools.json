@@ -1,6 +1,10 @@
 {
   "values": [
     {
+      "id": "ticex:embossment",
+      "required": false
+    },
+    {
       "id": "ticex:mekanic",
       "required": false
     },

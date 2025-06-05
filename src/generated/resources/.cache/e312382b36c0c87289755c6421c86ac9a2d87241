@@ -1,4 +1,4 @@
-// 1.20.1	2025-05-19T10:43:38.056525	TiCEX Item Tags
+// 1.20.1	2025-06-05T10:16:49.894351	TiCEX Item Tags
 e6dd16afa69cdb72cce8c31b90e27a4932ad9ee7 data/forge/tags/items/armors/boots.json
 bf7c9cb16ac93a4f4920126765cff10080a6faa4 data/forge/tags/items/armors/chestplates.json
 0651aaaa1e65d69705681720a7418fb91a744770 data/forge/tags/items/armors/helmets.json
@@ -26,7 +26,7 @@ f3e68c1b9999cc570915474a05a30aba2b69ccc0 data/tconstruct/tags/items/modifiable/m
 8d8814f2e3fd187cde25e80bb2e1d11f75d87a17 data/tconstruct/tags/items/modifiable/multipart.json
 f3e68c1b9999cc570915474a05a30aba2b69ccc0 data/tconstruct/tags/items/modifiable/small.json
 f3e68c1b9999cc570915474a05a30aba2b69ccc0 data/tconstruct/tags/items/modifiable/unsalvageable.json
-ffbad857b81512ba83096167d43b6f9ec26c0cb6 data/tconstruct/tags/items/parts.json
+3b59c6e4bc52599c2793ebba6e8054266eb510a6 data/tconstruct/tags/items/parts.json
 66a6e470f9822c5129294e1fe11cf3be03c8c597 data/tconstruct/tags/items/scorched_tanks.json
 c8a68a5279544bac7b38918c7d6ba499e8a7ed37 data/tconstruct/tags/items/seared_tanks.json
 ffbad857b81512ba83096167d43b6f9ec26c0cb6 data/ticex/tags/items/catalysts.json
