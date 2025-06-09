@@ -1,5 +1,6 @@
 package moffy.ticex.item.modifiable;
 
+import com.brandon3055.draconicevolution.api.capability.DECapabilities;
 import moffy.ticex.TicEX;
 import moffy.ticex.client.slashblade.SBToolISTER;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
@@ -509,6 +510,18 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
         return new ToolCapabilityProvider(stack);
+    }
+
+    @Nullable
+    @Override
+    public CompoundTag getShareTag(ItemStack stack) {
+        return DECapabilities.writeToShareTag(stack, stack.getTag());
+    }
+
+    @Override
+    public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
+        stack.setTag(nbt);
+        DECapabilities.readFromShareTag(stack, nbt);
     }
 
     @Override
