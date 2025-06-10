@@ -141,6 +141,16 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
     return 1;
   }
 
+  @Override
+  public CompoundTag getShareTag(ItemStack stack) {
+    return stack.getOrCreateTag();
+  }
+
+  @Override
+  public void readShareTag(ItemStack stack, CompoundTag nbt) {
+      stack.setTag(nbt);
+  }
+
   /* Basic properties */
 
   @Override

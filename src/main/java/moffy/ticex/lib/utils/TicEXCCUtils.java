@@ -3,14 +3,12 @@ package moffy.ticex.lib.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.ImmutableMap;
 
 import dan200.computercraft.api.lua.ILuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
-import moffy.ticex.TicEXConfig;
 import moffy.ticex.lib.IEntityDataAccessor;
-import moffy.ticex.lib.IPropertyProviderModifier;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -29,13 +27,15 @@ public class TicEXCCUtils {
             entityMap.put("pos", new Object[]{entity.position().x, entity.position().y, entity.position().z});
 
             if(entity instanceof Player player){
-                entityMap.put("properties", gatherProperties(player));
+                entityMap.put("getProperties", (ILuaFunction)(args)->{
+                    return MethodResult.of(gatherProperties(player));
+                });
             }
 
             if(entity instanceof IEntityDataAccessor){
                 IEntityDataAccessor accessor = (IEntityDataAccessor)entity;
                 entityMap.put("getData", (ILuaFunction)(args)->{
-                    return MethodResult.of(accessor.getAllFields());
+                    return MethodResult.of(ImmutableMap.copyOf(accessor.getAllFields()));
                 });
             }
         }
@@ -44,31 +44,21 @@ public class TicEXCCUtils {
     }
 
     public static Map<String, Object> gatherProperties(Player player){
-        Multimap<String, Object> properties = ArrayListMultimap.create();
         Map<String, Object> result = new HashMap<>();
 
-        if(TicEXConfig.PROVIDE_PROPERTIES.get()){
-            for(EquipmentSlot slot : EquipmentSlot.values()){
-                ItemStack stack = player.getItemBySlot(slot);
-                if(stack.getItem() instanceof IModifiable){
-                    ToolStack tool = ToolStack.from(stack);
-                    for(ModifierEntry modifierEntry : tool.getModifierList()){
-                        if(modifierEntry.getModifier() instanceof IPropertyProviderModifier){
-                            IPropertyProviderModifier propertyProviderModifier = (IPropertyProviderModifier)modifierEntry.getModifier();
-                            properties.putAll(propertyProviderModifier.getPropertyProvider().apply(stack));
-                        }
-                    }
+        for(EquipmentSlot slot : EquipmentSlot.values()){
+            Map<String, Object> properties = new HashMap<>();
+            ItemStack stack = player.getItemBySlot(slot);
+
+            if(stack.getItem() instanceof IModifiable){
+                for(ModifierEntry entry : ToolStack.from(stack).getModifierList()){
+                    properties.putAll(entry.getHook(TicEXRegistry.PROPERTY_PROVIDER_HOOK).getPropertyProvider().apply(player, stack));
                 }
             }
 
-            properties.asMap().entrySet().forEach(entry->{
-                Map<String, Object> values = new HashMap<>();
-                for(Object object : entry.getValue()){
-                    values.put("", object);
-                }
-                result.put(entry.getKey(), values);
-            });
+            result.put(slot.getName(), properties);
         }
+
         return result;
     }
 }

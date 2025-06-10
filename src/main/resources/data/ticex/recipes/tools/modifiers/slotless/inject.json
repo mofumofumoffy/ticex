@@ -10,6 +10,7 @@
     "level": 1,
     "result": "ticex:inject",
     "tools": [
+      {"tag": "tconstruct:modifiable/melee"},
       {"tag": "tconstruct:modifiable/durability"}
     ]
   }

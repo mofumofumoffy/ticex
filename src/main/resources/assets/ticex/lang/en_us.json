@@ -202,6 +202,17 @@
     "modifier.ticex.embossment": "Embossment",
     "modifier.ticex.embossment.flavor": "Classic OP, but somehow it has improved convenience.",
     "modifier.ticex.embossment.description": "Any part trait can be added to a tool.(only once)",
+    "modifier.ticex.psionizing_radiation": "Psionizing Radiation",
+    "modifier.ticex.psionizing_radiation.flavor": "Please off the record.",
+    "modifier.ticex.psionizing_radiation.description": "Tool gets highly conductive to psions and be suitable for casting spells, +1 spell socket",
+    "modifier.ticex.socket": "Socket",
+    "modifier.ticex.socket.flavor": "Spelling Gadget!",
+    "modifier.ticex.socket.description": "+1 spell socket",
+    "modifier.ticex.sensor": "Sensor",
+    "modifier.ticex.sensor.flavor": "Alea iacta est.",
+    "modifier.ticex.sensor.description": "Enables the tool to cast spells in several situations.",
+
+
 
     "stat.tconstruct.harvest_tier.ticex.infinity": "Infinity",
     "stat.ticex.catalyst_mekasuit_helmet": "Catalyst(MekaSuit Helmet)",

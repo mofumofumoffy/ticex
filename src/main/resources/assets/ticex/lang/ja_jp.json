@@ -200,6 +200,15 @@
     "modifier.ticex.embossment": "エンボス",
     "modifier.ticex.embossment.flavor": "かつてのOP、だが何故か利便性向上",
     "modifier.ticex.embossment.description": "任意のパーツの特性を、ツールに付与できる(1回だけ)",
+    "modifier.ticex.psionizing_radiation": "サイオン特性",
+    "modifier.ticex.psionizing_radiation.flavor": "オフレコで頼む。",
+    "modifier.ticex.psionizing_radiation.description": "ツールは高いサイオン感受性を獲得し、術式を起動できるようになる。 +1 spell socket",
+    "modifier.ticex.socket": "ソケット",
+    "modifier.ticex.socket.flavor": "法機！",
+    "modifier.ticex.socket.description": "+1 spell socket",
+    "modifier.ticex.sensor": "センサー",
+    "modifier.ticex.sensor.flavor": "賽は投げられた。",
+    "modifier.ticex.sensor.description": "ツールが様々な環境下にて術式を起動できるようになる。",
 
     "stat.tconstruct.harvest_tier.ticex.infinity": "インフィニティ",
 

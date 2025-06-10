@@ -15,6 +15,7 @@ import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.client.ShaderInstanceMap;
 import moffy.ticex.client.ToolShaderMap;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.registries.Registries;
@@ -114,9 +115,10 @@ public class TicEXRegistry {
     public static RegistryObject<RecipeSerializer<?>> BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = null;
     public static RegistryObject<RecipeSerializer<?>> MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
     public static RegistryObject<RecipeSerializer<?>> SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
-    public static RegistryObject<RecipeSerializer<?>> MODIFIER_REPAIR_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<?>> VALIDATABLE_INCREMENTAL_RECIPE_SERIALIZER = null;
 
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
+    public static ModuleHook<ProvidePropertyModifierHook> PROPERTY_PROVIDER_HOOK = null;
 
     public static RegistryObject<Item> ETHERIC_INGOT = null;
     public static RegistryObject<Item> DRACONIUM_CRYSTAL = null;
@@ -139,6 +141,10 @@ public class TicEXRegistry {
     public static RegistryObject<Item> OVERRIDE_CORE = null;
     public static RegistryObject<Item> INCOMPARABLE_CORE = null;
     public static RegistryObject<Item> CARDBOARD_CORE = null;
+    public static RegistryObject<Item> ENDESTSHOT_CORE = null;
+    public static RegistryObject<Item> MODEM_CORE = null;
+    public static RegistryObject<Item> PSIONIZING_RADIATION_CORE = null;
+    public static RegistryObject<Item> SOCKET_CORE = null;
     public static RegistryObject<Item> ENDESTSHOT_ARROW = null;
 
     public static ItemObject<ToolPartItem> SLASHBLADE_BLADE = null;
@@ -216,8 +222,10 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> INFERNAL_MODIFIER = null;
     public static StaticModifier<Modifier> GRAVITY_MODIFIER = null;
     public static StaticModifier<Modifier> HURRICANE_MODIFIER = null;
-    public static StaticModifier<Modifier> DEFINE_MODIFIER = null;
     public static DynamicModifier MODEM_MODIFIER = null;
+    public static StaticModifier<Modifier> PSIONIZING_RADIATION_MODIFIER = null;
+    public static StaticModifier<Modifier> SOCKET_MODIFIER = null;
+    public static StaticModifier<Modifier> SENSOR_MODIFIER = null;
 
     public static Tier INFINITY_TIER;
 

@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class TicEXUtils {
@@ -34,11 +35,14 @@ public class TicEXUtils {
         return canFly;
     }
 
-    public static ItemStack getToolStack(LivingEntity entity, Modifier modifier){
-        return getToolStack(entity, (stack)->ToolStack.from(stack).getModifierLevel(modifier) > 0);
+    public static ItemStack getToolStack(IToolStackView tool, LivingEntity entity, Modifier modifier){
+        return getToolStack(tool, entity, (stack)->ToolStack.from(stack).getModifierLevel(modifier) > 0);
     }
 
-    public static ItemStack getToolStack(LivingEntity entity, Predicate<ItemStack> predicate){
+    public static ItemStack getToolStack(IToolStackView tool, LivingEntity entity, Predicate<ItemStack> predicate){
+        if(tool instanceof ToolStack){
+            return ((ToolStack)tool).createStack();
+        }
         ItemStack mainHandStack = entity.getMainHandItem();
         if(mainHandStack.getItem() instanceof IModifiable && predicate.test(mainHandStack)){
             return mainHandStack;
@@ -50,6 +54,4 @@ public class TicEXUtils {
         }
         return ItemStack.EMPTY;
     }
-
-    
 }

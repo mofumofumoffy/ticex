@@ -40,8 +40,6 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
     protected void addModifiers() {
         IJsonPredicate<Item> harvest = ItemPredicate.tag(HARVEST);
 
-        ModifierSlotModule UPGRADE = new ModifierSlotModule(SlotType.UPGRADE);
-
         //general
         if(TicEXRegistry.REBIRTH_MODIFIER != null)buildModifier(TicEXRegistry.REBIRTH_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
 
@@ -61,7 +59,7 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
         if(TicEXRegistry.RADIATION_SHIELDING_MODIFIER != null)buildModifier(TicEXRegistry.RADIATION_SHIELDING_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
 
         //draconicevolution
-        if(TicEXRegistry.INJECT_MODIFIER != null)buildModifier(TicEXRegistry.INJECT_MODIFIER).addModules(new ModifierSlotModule(SlotType.ABILITY, 1), new ModifierSlotModule(SlotType.UPGRADE, 3)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        if(TicEXRegistry.INJECT_MODIFIER != null)buildModifier(TicEXRegistry.INJECT_MODIFIER).addModules(ModifierSlotModule.slot(SlotType.ABILITY).flat(1), ModifierSlotModule.slot(SlotType.UPGRADE).flat(3)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
 
         //irons_spellbook
         if(TicEXRegistry.OVERCASTING_MODIFIER != null)buildModifier(TicEXRegistry.OVERCASTING_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
@@ -70,7 +68,7 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
         if(TicEXRegistry.CARDBOARD_MODIFIER != null)buildModifier(TicEXRegistry.CARDBOARD_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
 
         //computercraft
-        if(TicEXRegistry.MODEM_MODIFIER != null)buildModifier(TicEXRegistry.MODEM_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(UPGRADE);
+        if(TicEXRegistry.MODEM_MODIFIER != null)buildModifier(TicEXRegistry.MODEM_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(ModifierSlotModule.slot(SlotType.UPGRADE).flat(1));
 
         //curios
         if(TicEXRegistry.INCOMPARABLE_MODIFIER != null)buildModifier(TicEXRegistry.INCOMPARABLE_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(CONSTANT_FORTUNE);

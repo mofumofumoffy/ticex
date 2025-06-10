@@ -25,7 +25,7 @@ public abstract class EntityMixin implements IEntityDataAccessor{
     @Shadow
     @Final
     protected SynchedEntityData entityData;
-    
+
     @Unique
     private Map<String, Field> accessorMap;
 
@@ -63,7 +63,7 @@ public abstract class EntityMixin implements IEntityDataAccessor{
         }
         return fields;
     }
-    
+
     @Override
     public Field getField(String keyName) {
         if (accessorMap == null) {
@@ -83,17 +83,6 @@ public abstract class EntityMixin implements IEntityDataAccessor{
                 if(EntityDataAccessor.class.isAssignableFrom(field.getType())){
                     EntityDataAccessor<T> dataAccessor = (EntityDataAccessor<T>)field.get((Entity)((Object)this));
                     SynchedEntityData.DataItem<T> dataitem = (SynchedEntityData.DataItem<T>)items.get(dataAccessor.getId());
-                    if(Boolean.class.isAssignableFrom(cls)){
-                        if(Integer.class.isAssignableFrom(value.getClass())){
-                            dataitem.setValue((T)Boolean.valueOf(((Integer)value).intValue() != 0));
-                        } else if(Float.class.isAssignableFrom(value.getClass())){
-                            dataitem.setValue((T)Boolean.valueOf(((Float)value).intValue() != 0f));
-                        } else if(Boolean.class.isAssignableFrom(value.getClass())){
-                            dataitem.setValue((T)value);
-                        }
-                    } else {
-                        dataitem.setValue((T)value);
-                    }
                     ((Entity)((Object)this)).onSyncedDataUpdated(dataAccessor);
                     dataitem.setDirty(true);
                     accessor.setDirtyByTicEX(true);
@@ -102,7 +91,7 @@ public abstract class EntityMixin implements IEntityDataAccessor{
                 } else if(value.getClass().isAssignableFrom(field.getType())){
                     field.set((Entity)((Object)this), value);
                     return true;
-                } 
+                }
             }catch(Exception e){
                 return false;
             }

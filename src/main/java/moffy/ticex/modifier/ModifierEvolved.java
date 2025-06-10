@@ -93,7 +93,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
     public void addTooltip(IToolStackView tool, ModifierEntry entry, Player player, List<Component> components, TooltipKey tooltipKey,
             TooltipFlag tooltipFlag) {
 
-        ItemStack toolStack = TicEXUtils.getToolStack(player, TicEXRegistry.EVOLVED_MODIFIER.get());
+        ItemStack toolStack = TicEXUtils.getToolStack(tool, player, TicEXRegistry.EVOLVED_MODIFIER.get());
 
         if(!toolStack.isEmpty()){
             components.add(Component.translatable("[Modular Item]").withStyle(ChatFormatting.BLUE));
@@ -135,7 +135,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
 
     private int getDamageBonus(ModuleHost host, IOPStorage opStorage){
         double damage = host.getModuleData(ModuleTypes.DAMAGE, new DamageData(0)).damagePoints();
-        
+
         if (opStorage.getEnergyStored() < EquipCfg.energyAttack * damage) {
             damage = 0;
         }
@@ -226,7 +226,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
     public void afterBlockBreak(IToolStackView tool, ModifierEntry modifierEntry, ToolHarvestContext context) {
         Player player = context.getPlayer();
         if(player != null && !context.isAOE()){
-            ItemStack stack = TicEXUtils.getToolStack(player, TicEXRegistry.EVOLVED_MODIFIER.get());
+            ItemStack stack = TicEXUtils.getToolStack(tool, player, TicEXRegistry.EVOLVED_MODIFIER.get());
             if(!stack.isEmpty()){
                 ModuleHost host = stack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).orElseThrow(IllegalStateException::new);
                 IOPStorage storage = stack.getCapability(DECapabilities.OP_STORAGE).orElseThrow(IllegalStateException::new);
@@ -241,7 +241,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
                         aoeSafe = propertyProvider.getBool("aoe_safe").getValue();
                     }
                 }
-                
+
                 breakAOEBlocks(tool, host, storage, stack, context.getPos(), context.getSideHit(), aoe + tool.getModifierLevel(TinkerModifiers.expanded.get()), 0, player, aoeSafe, context);
             }
         }
@@ -278,14 +278,14 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
         return true;
     }
 
-    
+
 
     @Override
     public Component getDisplayName(int level) {
         return Component.translatable(this.getTranslationKey()+"."+level);
     }
 
-    private  Pair<BlockPos, BlockPos> getMiningArea(BlockPos pos, Direction direction, @SuppressWarnings("unused") Player player, int breakRadius, int breakDepth) {
+    private  Pair<BlockPos, BlockPos> getMiningArea(BlockPos pos, Direction direction, Player player, int breakRadius, int breakDepth) {
 
         int sideHit = direction.get3DDataValue();
 
@@ -355,7 +355,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
         }
     }
 
-    private void breakAOEBlock(IToolStackView tool, ItemStack stack, Level world, BlockPos pos, Player player, @SuppressWarnings("unused") float refStrength, InventoryDynamic inventory, @SuppressWarnings("unused") boolean breakFX, ToolHarvestContext context, IOPStorage storage) {
+    private void breakAOEBlock(IToolStackView tool, ItemStack stack, Level world, BlockPos pos, Player player, float refStrength, InventoryDynamic inventory, boolean breakFX, ToolHarvestContext context, IOPStorage storage) {
         if (world.isEmptyBlock(pos)) {
             return;
         }
@@ -382,7 +382,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
         return stack.isCorrectToolForDrops(state);
     }
 
-    
+
 
     @Override
     public List<ModifierEntry> displayModifiers(ModifierEntry entry) {
@@ -402,7 +402,7 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
         return null;
     }
 
-    
+
 }
 
 

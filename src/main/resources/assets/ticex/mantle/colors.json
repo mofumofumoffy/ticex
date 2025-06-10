@@ -23,7 +23,11 @@
         "override": "#de7631",
         "incomparable": "#FF5555",
         "cardboard": "#e69f6a",
-        "overcasting": "#d3381c"
+        "overcasting": "#d3381c",
+        "modem": "#e6f51d",
+        "psionizing_radiation": "#d18ede",
+        "socket": "#282629",
+        "sensor": "#dbdbdb"
     },
     "material.ticex": {
         "infinity": "#FF5555",
