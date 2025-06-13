@@ -13,7 +13,7 @@ Development is expected to resume on June 15. Thank you for your understanding!
 ## Required Mods
 
 - [Tinkers' Construct](https://modrinth.com/mod/tinkers-construct)
--  AddonAPI v1.2.0 (https://modrinth.com/mod/addonapi)
+- [AddonAPI v1.2.0](https://modrinth.com/mod/addonapi)
 
 ## Supported Minecraft Version
 - Forge for Minecraft 1.20.1
@@ -30,6 +30,7 @@ Development is expected to resume on June 15. Thank you for your understanding!
 - Project E
 - CC: Tweaked(WIP)
 - Curios
+- Psi
 - Tinkers' Things
 - Sakura Tinker
 

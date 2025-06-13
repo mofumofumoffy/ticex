@@ -25,6 +25,7 @@
 - Project E
 - CC: Tweaked(WIP)
 - Curios
+- Psi
 - Tinkers' Things
 - Sakura Tinker
 
