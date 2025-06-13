@@ -2,12 +2,9 @@ package moffy.ticex.modifier;
 
 import java.lang.reflect.Field;
 
-import moffy.ticex.TicEX;
 import moffy.ticex.entity.FakeLivingEntity;
 import moffy.ticex.lib.IEntityDataAccessor;
 import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -39,6 +36,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
         hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE, ModifierHooks.PROJECTILE_HIT);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public float getMeleeDamage(IToolStackView tool, ModifierEntry modifierEntry, ToolAttackContext context, float baseDamage,
             float damage) {
@@ -46,31 +44,41 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
             if(fakeLivingEntity == null){
                 fakeLivingEntity = new FakeLivingEntity((EntityType<? extends LivingEntity>)TicEXRegistry.FAKE_LIVING_ENTITY.get(), context.getLevel());
             }
-    
+
             LivingEntity target = context.getLivingTarget();
             Player attacker = context.getPlayerAttacker();
-            
+
             if(target != null && attacker != null){
                 fakeLivingEntity.setHealth(target.getHealth());
-    
-                ToolAttackContext newContext = new ToolAttackContext(attacker, attacker, context.getHand(), fakeLivingEntity, fakeLivingEntity, true, context.getCooldown(), false);
-                
+                ToolAttackContext fakeContext = new ToolAttackContext(attacker, attacker, context.getHand(),fakeLivingEntity, fakeLivingEntity, context.isCritical(), damage, context.isExtraAttack());
+
                 for(ModifierEntry toolEntry:tool.getModifierList()){
-                    toolEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, newContext, damage, baseDamage, damage);
+                    var hook = toolEntry.getHook(ModifierHooks.MELEE_HIT);
+                    hook.beforeMeleeHit(tool, modifierEntry, context, damage, 0, 0);
+                    hook.beforeMeleeHit(tool, modifierEntry, fakeContext, damage, 0, 0);
                 }
 
                 fakeLivingEntity.hurt(null, damage);
                 fakeLivingEntity.invulnerableTime = 0;
-                
+
                 for(ModifierEntry toolEntry:tool.getModifierList()){
-                    toolEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, newContext, damage);
+                    var hook = toolEntry.getHook(ModifierHooks.MELEE_HIT);
+                    hook.afterMeleeHit(tool, modifierEntry, context, damage);
+                    hook.afterMeleeHit(tool, modifierEntry, fakeContext, damage);
                 }
 
                 float absoluteHealth = fakeLivingEntity.getFakeHealth();
                 IEntityDataAccessor accessor = (IEntityDataAccessor)target;
-                Field key = accessor.getField("f_20961_");
+
+                String fieldName = "f_20961_";
+
+                Field key = accessor.getField(fieldName);
                 if(key != null){
-                    accessor.setValue(key, absoluteHealth);
+                    if(boolean.class.isAssignableFrom(key.getType())){
+                        accessor.setValue(key, Boolean.class, key);
+                    }else{
+                        accessor.setValue(key, absoluteHealth);
+                    }
                 }
             }
 
@@ -86,7 +94,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
             if(!toolEntry.matches(this)){
                 toolEntry.getHook(ModifierHooks.PROJECTILE_HIT).onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit, attacker, target);
             };
-            
+
         }
         return false;
     }

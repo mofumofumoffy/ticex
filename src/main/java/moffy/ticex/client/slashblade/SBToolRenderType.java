@@ -29,8 +29,8 @@ public class SBToolRenderType {
 
     public static enum PartType{
         BLADE(0, "blade"),
-        HANDLE(1, "handle"),
-        SAYA(2, "saya");
+        HANDLE(2, "handle"),
+        SAYA(1, "saya");
 
         private static final ResourceLocation BLADE_TEXTURE_LOC = new ResourceLocation(TicEX.MODID, "textures/item/tool/slashblade_tool/");
         private static final ResourceLocation DEFAULT_BLADE_TEXTURE_LOC = new ResourceLocation(TicEX.MODID, "textures/obj_tool/slashblade_tool/");
@@ -47,9 +47,9 @@ public class SBToolRenderType {
             switch (layerIndex) {
                 case 0:
                     return BLADE;
-                case 1:
-                    return HANDLE;
                 case 2:
+                    return HANDLE;
+                case 1:
                     return SAYA;
                 default:
                     return null;

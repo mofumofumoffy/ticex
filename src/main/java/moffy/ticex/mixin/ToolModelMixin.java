@@ -44,7 +44,6 @@ import slimeknights.mantle.util.ItemLayerPixels;
 import slimeknights.mantle.util.ReversedListBuilder;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.client.materials.MaterialRenderInfo.TintedSprite;
-import slimeknights.tconstruct.library.client.model.UniqueGuiModel;
 import slimeknights.tconstruct.library.client.model.tools.MaterialModel;
 import slimeknights.tconstruct.library.client.model.tools.ToolModel;
 import slimeknights.tconstruct.library.client.modifiers.IBakedModifierModel;
@@ -73,75 +72,124 @@ public class ToolModelMixin {
         cancellable = true,
         remap = false
     )
-    private static void bakeInternalWithShader(IGeometryBakingContext owner, Function<Material, TextureAtlasSprite> spriteGetter, @Nullable Transformation largeTransforms, List<?> parts, Map<ModifierId, IBakedModifierModel> modifierModels, List<?> firstModifiers, List<MaterialVariantId> materials, @Nullable IToolStackView tool, ItemOverrides overrides, CallbackInfoReturnable<BakedModel> cb){
+    private static void bakeInternalWithShader(IGeometryBakingContext owner, Function<Material, TextureAtlasSprite> spriteGetter, @Nullable Transformation largeTransforms,
+                                         List<?> parts, Map<ModifierId,IBakedModifierModel> modifierModels, List<?> firstModifiers,
+                                         List<MaterialVariantId> materials, @Nullable IToolStackView tool, ItemOverrides overrides,
+                                         Collection<BakedQuad> smallExtraQuads, Collection<BakedQuad> largeExtraQuads, Collection<BakedQuad> leftExtraQuads, CallbackInfoReturnable<BakedModel> cb){
         if(tool != null && (TicEXRegistry.TOOL_SHADERS.isToolTarget(tool))){
             Transformation smallTransforms = Transformation.identity();
 
-            
             ReversedListBuilder<Collection<BakedQuad>> smallQuads = new ReversedListBuilder<>();
             ItemLayerPixels smallPixels = new ItemLayerPixels();
-            
             ReversedListBuilder<Collection<BakedQuad>> largeQuads = largeTransforms != null ? new ReversedListBuilder<>() : smallQuads;
             ItemLayerPixels largePixels = largeTransforms != null ? new ItemLayerPixels() : smallPixels;
 
-            
-            if (!modifierModels.isEmpty()) {
+            if (tool != null && !modifierModels.isEmpty()) {
                 addModifierQuads(spriteGetter, modifierModels, firstModifiers, tool, smallQuads::add, smallPixels, smallTransforms, false);
-                
                 if (largeTransforms != null) {
                     addModifierQuads(spriteGetter, modifierModels, firstModifiers, tool, largeQuads::add, largePixels, largeTransforms, true);
                 }
             }
 
-            
             TextureAtlasSprite particle = null;
             for (int i = parts.size() - 1; i >= 0; i--) {
-                Object part = parts.get(i);
+            Object part = parts.get(i);
 
-                
-                if (reflectMethod(part.getClass(), "hasMaterials", part).equals(true)) {
-                    
-                    int index = (int)reflectMethod(part.getClass(), "index", part);
-                    MaterialVariantId material = index < materials.size() ? materials.get(index) : IMaterial.UNKNOWN_ID;
-                    TintedSprite materialSprite = MaterialModel.getMaterialSprite(spriteGetter, owner.getMaterial((String)reflectMethod(part.getClass(), "getName", part, false)), material);
-                    particle = materialSprite.sprite();
+            if (reflectMethod(part.getClass(), "hasMaterials", part).equals(true)) {
+                int index = (int)reflectMethod(part.getClass(), "index", part);
+                MaterialVariantId material = index < materials.size() ? materials.get(index) : IMaterial.UNKNOWN_ID;
+                TintedSprite materialSprite = MaterialModel.getMaterialSprite(spriteGetter, owner.getMaterial((String)reflectMethod(part.getClass(), "getName", part, false)), material);
+                particle = materialSprite.sprite();
 
-                    
-                    addShaderQuads(material, MantleItemLayerModel.getQuadsForSprite(materialSprite.color(), -1, materialSprite.sprite(), smallTransforms, materialSprite.emissivity(), smallPixels), smallQuads::add);
-                    if (largeTransforms != null) {
-                        addShaderQuads(material, MaterialModel.getQuadsForMaterial(spriteGetter, owner.getMaterial((String)reflectMethod(part.getClass(), "getName", part, true)), material, -1, largeTransforms, largePixels), largeQuads::add);
-                    }
-                } else {
-                        
-                        particle = spriteGetter.apply(owner.getMaterial((String)reflectMethod(part.getClass(), "getName", part, false)));
-                        
-                        smallQuads.add(MantleItemLayerModel.getQuadsForSprite(-1, -1, particle, smallTransforms, 0, smallPixels));
-                    if (largeTransforms != null) {
-                        largeQuads.add(MantleItemLayerModel.getQuadsForSprite(-1, -1, spriteGetter.apply(owner.getMaterial((String)reflectMethod(part.getClass(), "getName", part, true))), largeTransforms, 0, largePixels));
-                    }
+
+                addShaderQuads(material, MantleItemLayerModel.getQuadsForSprite(materialSprite.color(), -1, materialSprite.sprite(), smallTransforms, materialSprite.emissivity(), smallPixels), smallQuads::add);
+                if (largeTransforms != null) {
+                    addShaderQuads(material, MaterialModel.getQuadsForMaterial(spriteGetter, owner.getMaterial((String)reflectMethod(part.getClass(), "getName", part, true)), material, -1, largeTransforms, largePixels), largeQuads::add);
+                }
+            } else {
+
+                particle = spriteGetter.apply(owner.getMaterial((String)reflectMethod(part.getClass(), "getName", part, false)));
+
+                smallQuads.add(MantleItemLayerModel.getQuadsForSprite(-1, -1, particle, smallTransforms, 0, smallPixels));
+                if (largeTransforms != null) {
+                    largeQuads.add(MantleItemLayerModel.getQuadsForSprite(-1, -1, spriteGetter.apply(owner.getMaterial((String)reflectMethod(part.getClass(), "getName", part, true))), largeTransforms, 0, largePixels));
                 }
             }
-            
-            if (particle == null) {
-            particle = spriteGetter.apply(new Material(InventoryMenu.BLOCK_ATLAS, MissingTextureAtlasSprite.getLocation()));
-            TConstruct.LOG.error("Created tool model without a particle sprite, this means it somehow has no parts. This should not be possible");
             }
 
-            
-            IModelBuilder<?> smallModelBuilder = makeModelBuilder(owner, overrides, particle);
-            IModelBuilder<?> guiModelBuilder = makeModelBuilder(owner, overrides, particle);
+            if (particle == null) {
+            particle = spriteGetter.apply(new Material(InventoryMenu.BLOCK_ATLAS, MissingTextureAtlasSprite.getLocation()));
+                TConstruct.LOG.error("Created tool model without a particle sprite, this means it somehow has no parts. This should not be possible");
+            }
+
+
+            IModelBuilder<?> smallBuilder = makeModelBuilder(owner, overrides, particle);
+            IModelBuilder<?> guiBuilder = makeModelBuilder(owner, overrides, particle);
+            IModelBuilder<?> leftBuilder = !leftExtraQuads.isEmpty() ? makeModelBuilder(owner, overrides, particle) : null;
+
+
+            if (largeTransforms == null && leftBuilder != null) {
             smallQuads.build(quads -> quads.forEach(quad -> {
-            smallModelBuilder.addUnculledFace(quad);
-            if (quad.getDirection() == Direction.SOUTH) {
-                guiModelBuilder.addUnculledFace(quad);
-            }
+                smallBuilder.addUnculledFace(quad);
+                leftBuilder.addUnculledFace(quad);
+                if (quad.getDirection() == Direction.SOUTH) {
+                guiBuilder.addUnculledFace(quad);
+                }
             }));
-            if (largeTransforms == null) {
-                cb.setReturnValue(wrapModel(tool, new UniqueGuiModel.Baked(smallModelBuilder.build(), guiModelBuilder.build())));
+            } else {
+            smallQuads.build(quads -> quads.forEach(quad -> {
+                smallBuilder.addUnculledFace(quad);
+                if (quad.getDirection() == Direction.SOUTH) {
+                guiBuilder.addUnculledFace(quad);
+                }
+            }));
             }
-            IModelBuilder<?> largeModelBuilder = makeModelBuilder(owner, overrides, particle);
-            largeQuads.build(quads -> quads.forEach(largeModelBuilder::addUnculledFace));
-            cb.setReturnValue(wrapModel(tool, new BakedLargeToolModel(largeModelBuilder.build(), smallModelBuilder.build(), guiModelBuilder.build())));
+
+
+            for (BakedQuad quad : smallExtraQuads) {
+            smallBuilder.addUnculledFace(quad);
+            if (quad.getDirection() == Direction.SOUTH) {
+                guiBuilder.addUnculledFace(quad);
+            }
+            }
+            BakedModel small = smallBuilder.build();
+            BakedModel gui = guiBuilder.build();
+
+
+            BakedModel right;
+            if (largeTransforms != null) {
+            IModelBuilder<?> largeBuilder = makeModelBuilder(owner, overrides, particle);
+
+            if (leftBuilder != null) {
+                largeQuads.build(quads -> quads.forEach(quad -> {
+                largeBuilder.addUnculledFace(quad);
+                leftBuilder.addUnculledFace(quad);
+                }));
+            } else {
+                largeQuads.build(quads -> quads.forEach(largeBuilder::addUnculledFace));
+            }
+
+            for (BakedQuad quad : largeExtraQuads) {
+                largeBuilder.addUnculledFace(quad);
+            }
+            right = largeBuilder.build();
+            } else {
+            right = small;
+            }
+
+
+            BakedModel left;
+            if (leftBuilder != null) {
+            for (BakedQuad quad : leftExtraQuads) {
+                leftBuilder.addUnculledFace(quad);
+            }
+            left = leftBuilder.build();
+            } else {
+            left = right;
+            }
+
+
+            cb.setReturnValue(wrapModel(tool, new BakedToolModel(right, left, small, gui)));
         }
     }
 
@@ -151,12 +199,15 @@ public class ToolModelMixin {
         cancellable = true,
         remap = false
     )
-    private static void bakeInternalWithCustomModel(IGeometryBakingContext owner, Function<Material, TextureAtlasSprite> spriteGetter, @Nullable Transformation largeTransforms, List<?> parts, Map<ModifierId, IBakedModifierModel> modifierModels, List<?> firstModifiers, List<MaterialVariantId> materials, @Nullable IToolStackView tool, ItemOverrides overrides, CallbackInfoReturnable<BakedModel> cb){
+    private static void bakeInternalWithCustomModel(IGeometryBakingContext owner, Function<Material, TextureAtlasSprite> spriteGetter, @Nullable Transformation largeTransforms,
+                                         List<?> parts, Map<ModifierId,IBakedModifierModel> modifierModels, List<?> firstModifiers,
+                                         List<MaterialVariantId> materials, @Nullable IToolStackView tool, ItemOverrides overrides,
+                                         Collection<BakedQuad> smallExtraQuads, Collection<BakedQuad> largeExtraQuads, Collection<BakedQuad> leftExtraQuads, CallbackInfoReturnable<BakedModel> cb){
         cb.setReturnValue(wrapModel(tool, cb.getReturnValue()));
     }
 
     private static void addShaderQuads(MaterialVariantId id, List<BakedQuad> quads, Consumer<Collection<BakedQuad>>addFn){
-        addFn.accept(quads.stream().map(quad-> quad == null ? null : (BakedQuad)new ShaderToolQuad(quad, new PartPredicate(id))).toList());  
+        addFn.accept(quads.stream().map(quad-> quad == null ? null : (BakedQuad)new ShaderToolQuad(quad, new PartPredicate(id))).toList());
     }
 
    private static Object reflectMethod(Class<?> cls, String methodName, Object object, Object... params){
@@ -211,24 +262,29 @@ public class ToolModelMixin {
         return originalModel;
     }
 
-    private static class BakedLargeToolModel extends BakedModelWrapper<BakedModel> {
-    private final BakedModel small;
-    private final BakedModel gui;
-    public BakedLargeToolModel(BakedModel large, BakedModel small, BakedModel gui) {
-      super(large);
-      this.small = small;
-      this.gui = gui;
-    }
+    private static class BakedToolModel extends BakedModelWrapper<BakedModel> {
+        private final BakedModel left;
+        private final BakedModel small;
+        private final BakedModel gui;
+        public BakedToolModel(BakedModel right, BakedModel left, BakedModel small, BakedModel gui) {
+        super(right);
+        this.left = left;
+        this.small = small;
+        this.gui = gui;
+        }
 
-    @Override
-    public BakedModel applyTransform(ItemDisplayContext cameraTransformType, PoseStack mat, boolean applyLeftHandTransform) {
-      BakedModel model = originalModel;
-      if (cameraTransformType == ItemDisplayContext.GUI) {
-        model = gui;
-      } else if (SMALL_TOOL_TYPES.get(cameraTransformType.ordinal())) {
-        model = small;
-      }
-      return model.applyTransform(cameraTransformType, mat, applyLeftHandTransform);
+        @Override
+        public BakedModel applyTransform(ItemDisplayContext cameraTransformType, PoseStack mat, boolean applyLeftHandTransform) {
+        BakedModel model = originalModel;
+        if (cameraTransformType == ItemDisplayContext.GUI) {
+            model = gui;
+        } else if (cameraTransformType == ItemDisplayContext.FIRST_PERSON_LEFT_HAND || cameraTransformType == ItemDisplayContext.THIRD_PERSON_LEFT_HAND) {
+            model = left;
+            model = left;
+        } else if (originalModel != small && SMALL_TOOL_TYPES.get(cameraTransformType.ordinal())) {
+            model = small;
+        }
+        return model.applyTransform(cameraTransformType, mat, applyLeftHandTransform);
+        }
     }
-  }
 }

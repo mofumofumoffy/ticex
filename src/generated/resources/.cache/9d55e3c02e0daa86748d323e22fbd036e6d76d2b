@@ -1,10 +1,10 @@
-// 1.20.1	2025-05-20T20:44:56.8447122	TiCEX Tool Definitions
+// 1.20.1	2025-06-03T17:58:10.1063428	TiCEX Tool Definitions
 9a06b2ec3c834fc36313668ec1f413b9f740d842 data/ticex/tinkering/tool_definitions/blitz_gun.json
 ae6e720f21693164ccde165a1fccc8e6c5d33aca data/ticex/tinkering/tool_definitions/mekaplate_boots.json
 91710e592c3410e57c6202720ad705dd9ac770db data/ticex/tinkering/tool_definitions/mekaplate_chestplate.json
 81a779624ca0426b8c07f8a4b061edf4e5ef5936 data/ticex/tinkering/tool_definitions/mekaplate_helmet.json
 d9d8ceec43a17d6ab77791420319cf04c70067f9 data/ticex/tinkering/tool_definitions/mekaplate_leggings.json
-e8c517c65ee59b6087c048bd3fd0866fe01cd686 data/ticex/tinkering/tool_definitions/reforged_slashblade.json
+bc71ef815e263e54d18ed3dd45f61424c8f10f92 data/ticex/tinkering/tool_definitions/reforged_slashblade.json
 1bad33980887d827d52e58cb1b8563aae5ff61d4 data/ticex/tinkering/tool_definitions/revival_spellbook.json
 239d5321800b08207a2186259febc78dc52184d1 data/ticex/tinkering/tool_definitions/singular_gem_boots.json
 bb0deb89adcef0e35b6a71a791e96a653740704f data/ticex/tinkering/tool_definitions/singular_gem_chestplate.json

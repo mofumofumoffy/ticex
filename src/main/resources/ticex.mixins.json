@@ -7,7 +7,6 @@
         "MeleeAttributeModuleMixin",
         "EntityMixin",
         "DataItemAccessor",
-        "RandomBuilderAccessor",
         "RandomMaterialMixin"
     ],
     "client": [

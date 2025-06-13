@@ -11,6 +11,7 @@ import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.ModifierKonpaku;
 import moffy.ticex.modifier.ModifierKoshirae;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.network.slashblade.StateSyncPacket;
 import moffy.ticex.modifier.ModifierHiddenProud;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -21,17 +22,13 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
-
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.tools.stats.HeadMaterialStats;
 
 public class TicEXSlashBladeModule extends AddonModule{
-
-    @SuppressWarnings("deprecation")
     public TicEXSlashBladeModule(){
 
         TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY = TicEXRegistry.ENTITIES.register("reforged_slashblade", ()->EntityType.Builder.of(SBToolItemEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).setTrackingRange(10)
@@ -59,19 +56,25 @@ public class TicEXSlashBladeModule extends AddonModule{
         TicEXRegistry.KOSHIRAE_MODIFIER = TicEXRegistry.MODIFIERS.register("koshirae", ModifierKoshirae::new);
         TicEXRegistry.PROUD_MODIFIER = TicEXRegistry.MODIFIERS.register("hidden_proud", ModifierHiddenProud::new);
 
-        if(isPreviousVersion()){
-            MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, false, TicEXSBEvent::onInputChange);
-            MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, false, TicEXSBEvent::onLivingDeathEvent);
-            MinecraftForge.EVENT_BUS.addListener(TicEXSBEvent::onXPDropping);
-        }
+        TicEX.CHANNEL.registerMessage(TicEX.getPacketHandlerId(), StateSyncPacket.class, StateSyncPacket::encode, StateSyncPacket::decode, StateSyncPacket::handle);
+
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onBladeMotion);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onInputCommand);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingDeath);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingExperienceDrop);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingFall);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingHurt);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onPlayerFlyableFall);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
-            IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-            bus.addListener(TicEXSBEvent::addLayers);
-            bus.addListener(TicEXSBEvent::onRegisterRenderers);
-
-            MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, false, TicEXSBEvent::onEntityUpdate);
+            initClient();
         });
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void initClient(){
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(TicEXSBEvent::onRegisterRenderers);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -83,7 +86,7 @@ public class TicEXSlashBladeModule extends AddonModule{
         });
     }
 
-    public static boolean isPreviousVersion(){
+    /* public static boolean isPreviousVersion(){
         return ModList.get().getModFileById("slashblade").versionString().compareTo("1.2.0") < 0;
-    }
+    } */
 }

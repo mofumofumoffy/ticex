@@ -3,12 +3,12 @@
   "modules": [
     {
       "type": "tconstruct:modifier_slot",
-      "count": 1,
+      "each_level": 1,
       "name": "abilities"
     },
     {
       "type": "tconstruct:modifier_slot",
-      "count": 3,
+      "each_level": 3,
       "name": "upgrades"
     }
   ],

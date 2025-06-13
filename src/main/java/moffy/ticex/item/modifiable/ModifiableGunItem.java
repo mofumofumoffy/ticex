@@ -45,6 +45,7 @@ import slimeknights.tconstruct.library.modifiers.hook.behavior.EnchantmentModifi
 import slimeknights.tconstruct.library.modifiers.hook.display.DurabilityDisplayModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.SlotStackModifierHook;
+import slimeknights.tconstruct.library.modifiers.modules.build.RarityModule;
 import slimeknights.tconstruct.library.tools.IndestructibleItemEntity;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
@@ -116,7 +117,7 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
         }
         return toolForRendering;
     }
-    
+
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
@@ -135,7 +136,7 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
 
     @Override
     public Rarity getRarity(ItemStack stack) {
-        int rarity = ModifierUtil.getVolatileInt(stack, RARITY);
+        int rarity = ModifierUtil.getVolatileInt(stack, RarityModule.RARITY);
         return Rarity.values()[Mth.clamp(rarity, 0, 3)];
     }
 
@@ -283,7 +284,7 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
               return component;
            }
         }
-  
+
         component = nameFor(itemKey, itemName, material.getId());
         return component != null ? component : itemName;
      }

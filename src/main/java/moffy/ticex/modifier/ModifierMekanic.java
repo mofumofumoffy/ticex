@@ -1,8 +1,14 @@
 package moffy.ticex.modifier;
 
+import java.util.Map;
+import java.util.function.BiFunction;
+
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.modifier.propeties.MekanicProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
@@ -10,11 +16,11 @@ import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModifierHook{
+public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModifierHook, ProvidePropertyModifierHook{
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK);
+        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK, TicEXRegistry.PROPERTY_PROVIDER_HOOK);
     }
 
     @Override
@@ -27,7 +33,7 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
 
             if(armor.getModifierLevel(TicEXRegistry.REBIRTH_MODIFIER.get()) == 0){
                 ArmorItem.Type type = armorItem.getType();
-            
+
                 ItemStack mekaPlateStack = new ItemStack(TicEXRegistry.MEKAPLATE_ARMOR.get(type));
 
                 if(inputStack.hasTag() && inputStack.getTag().contains("embossed")){
@@ -60,10 +66,15 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
         }
         return false;
     }
-    
+
 
     @Override
     public boolean shouldDisplay(boolean advanced) {
         return advanced;
+    }
+
+    @Override
+    public BiFunction<Player, ItemStack, Map<String, Object>> getPropertyProvider() {
+        return MekanicProperty.getProperties();
     }
 }

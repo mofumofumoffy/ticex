@@ -3,6 +3,7 @@ package moffy.ticex.modifier;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
@@ -18,7 +19,7 @@ import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 
 public class ModifierOverload extends NoLevelsModifier implements EmbossmentModifierHook{
-    
+
     @Override
     protected void registerHooks(Builder hookBuilder) {
         hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK);
@@ -33,7 +34,7 @@ public class ModifierOverload extends NoLevelsModifier implements EmbossmentModi
 
         if(stack.getItem().equals(Items.ENCHANTED_BOOK)){
             Map<Enchantment, Integer> bookEnchantments = EnchantmentHelper.getEnchantments(stack);
-            
+
             for(Entry<Enchantment, Integer> entry : bookEnchantments.entrySet()){
                 if(toolStack.getEnchantmentLevel(entry.getKey()) > 0){
                     CompoundTag nbt = toolStack.getOrCreateTag();
@@ -63,10 +64,10 @@ public class ModifierOverload extends NoLevelsModifier implements EmbossmentModi
 
     protected int calcEnchLevel(ItemStack stack, Enchantment key, int value){
         int currentLv = stack.getEnchantmentLevel(key);
-        int levelCap = 127;
+        int levelCap = EnchModule.getDefaultMax(key);
         if(value == currentLv){
             return Math.min(value + 1, levelCap);
-        } 
+        }
         return Math.min(Math.max(value, currentLv), levelCap);
     }
 }

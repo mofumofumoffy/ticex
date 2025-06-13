@@ -31,6 +31,7 @@ import slimeknights.tconstruct.library.client.armor.ArmorModelManager.ArmorModel
 import slimeknights.tconstruct.library.modifiers.hook.behavior.EnchantmentModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.SlotStackModifierHook;
+import slimeknights.tconstruct.library.modifiers.modules.build.RarityModule;
 import slimeknights.tconstruct.library.tools.IndestructibleItemEntity;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
@@ -55,7 +56,7 @@ public class ModifiableGemArmor extends GemArmorBase implements IModifiableDispl
         this.maxStackSize = maxStackSize;
         this.name = armorDefinition.getId();
     }
-    
+
     @Override
     public ToolDefinition getToolDefinition() {
         return this.armorDefinition.getArmorDefinition(type);
@@ -98,7 +99,7 @@ public class ModifiableGemArmor extends GemArmorBase implements IModifiableDispl
         }
         return toolForRendering;
     }
-    
+
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
@@ -117,7 +118,7 @@ public class ModifiableGemArmor extends GemArmorBase implements IModifiableDispl
 
     @Override
     public Rarity getRarity(ItemStack stack) {
-        int rarity = ModifierUtil.getVolatileInt(stack, RARITY);
+        int rarity = ModifierUtil.getVolatileInt(stack, RarityModule.RARITY);
         return Rarity.values()[Mth.clamp(rarity, 0, 3)];
     }
 

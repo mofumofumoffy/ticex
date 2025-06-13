@@ -13,7 +13,7 @@
     ],
     "key": {
       "S": {
-        "tag": "ticex:catalyst"
+        "tag": "ticex:catalysts"
       },
       "C": {
         "item": "ticex:reconstruction_core"
@@ -23,4 +23,3 @@
         "item": "ticex:incomparable_core"
     }
   }
-  

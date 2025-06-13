@@ -11,6 +11,7 @@ import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.ModifierMekanic;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.network.mekanism.ConfigSyncToClientPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -46,13 +47,15 @@ public class TicEXMekanismModule extends AddonModule{
         TicEXRegistry.RADIATION_SHELDING_CORE = TicEXRegistry.ITEMS.register("radiation_shielding_core", ()->new ItemReconstCore(PROPS, "radiation_shielding"));
 
         TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum("mekaplate", ArmorItem.Type.values(), type -> new ModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE_DEFINITION, type, new Item.Properties().stacksTo(1)));
-    
+
         TicEXRegistry.CATALYST_MEKASUIT = TicEXRegistry.ITEMS_EXTENDED.registerEnum("catalyst_mekasuit", ArmorItem.Type.values(), type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId()));
 
         TicEXRegistry.MEKANIC_MODIFIER = TicEXRegistry.MODIFIERS.register("mekanic", ModifierMekanic::new);
         TicEXRegistry.RADIATION_SHIELDING_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("radiation_shielding");
 
         MinecraftForge.EVENT_BUS.register(new TicEXMekanismEvent());
+
+        TicEX.CHANNEL.registerMessage(TicEX.getPacketHandlerId(), ConfigSyncToClientPacket.class, ConfigSyncToClientPacket::encode, ConfigSyncToClientPacket::decode, ConfigSyncToClientPacket::handle);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
             bus.addListener(TicEXMekanismEvent::onLoadAdditionalModel);
@@ -64,7 +67,7 @@ public class TicEXMekanismModule extends AddonModule{
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
         moffy.ticex.client.mekanism.MekaPlateModelCache.INSTANCE.registerMekaSuitModuleModel(new ResourceLocation(TicEX.MODID, "models/entity/modifiable_mekasuit_modules.obj"));
-        
+
         moffy.ticex.client.mekanism.MekaPlateMultilayerModel.registerModule("jetpack", MekanismModules.JETPACK_UNIT, EquipmentSlot.CHEST, (entity)->true);
         moffy.ticex.client.mekanism.MekaPlateMultilayerModel.registerModule("modulator", MekanismModules.GRAVITATIONAL_MODULATING_UNIT, EquipmentSlot.CHEST, (entity)->true);
         moffy.ticex.client.mekanism.MekaPlateMultilayerModel.registerModule("elytra", MekanismModules.ELYTRA_UNIT, EquipmentSlot.CHEST, LivingEntity::isFallFlying);

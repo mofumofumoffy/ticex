@@ -145,7 +145,7 @@ repositories {
 
     maven { url = "https://maven.createmod.net" }
 
-    
+
     flatDir {
         dir './libs'
     }
@@ -160,8 +160,8 @@ dependencies {
 
     implementation fg.deobf("curse.maven:moffs-addonapi-dynload-1242459:6420515")
 
-    implementation fg.deobf("curse.maven:mantle-74924:6258424")
-    implementation fg.deobf("curse.maven:tinkers-construct-74072:6266282")
+    implementation fg.deobf("curse.maven:mantle-74924:6635380")
+    implementation fg.deobf("curse.maven:tinkers-construct-74072:6635554")
 
     implementation fg.deobf("curse.maven:re-avaritia-623969:6264467")
 
@@ -170,8 +170,8 @@ dependencies {
     implementation fg.deobf("curse.maven:brandons-core-231382:5422013")
     implementation fg.deobf("curse.maven:codechicken-lib-1-8-242818:5753868")
     implementation fg.deobf("curse.maven:draconic-evolution-223565:6065044")
-    
-    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6428724")
+
+    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6548163")
 
     implementation fg.deobf("curse.maven:timeless-and-classics-zero-1028108:6518539")
 
@@ -199,11 +199,13 @@ dependencies {
 
     implementation fg.deobf("maven.modrinth:gu7yAYhd:1.115.1")
 
+    implementation fg.deobf("curse.maven:psi-241665:6472034")
+
     implementation fg.deobf("curse.maven:curios-309927:6238756")
 
     implementation fg.deobf("curse.maven:jei-238222:6075247")
     implementation fg.deobf("curse.maven:tconjei-974154:6442609")
-    
+
     /* runtimeOnly fg.deobf("curse.maven:mouse-tweaks-60089:5338457")
     runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
     runtimeOnly fg.deobf("curse.maven:radium-reforged-570017:5706069")
@@ -213,8 +215,6 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:modernfix-790626:6125143")
     runtimeOnly fg.deobf("curse.maven:ferritecore-429235:4810975")
     runtimeOnly fg.deobf("curse.maven:jade-324717:6271651")
-    
-    runtimeOnly fg.deobf("curse.maven:curios-309927:6238756")
 
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:6237015")
     runtimeOnly fg.deobf("curse.maven:selene-499980:6321048")

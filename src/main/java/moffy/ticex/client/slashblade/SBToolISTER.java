@@ -46,10 +46,10 @@ public class SBToolISTER extends BlockEntityWithoutLevelRenderer {
     @Override
     public void renderByItem(ItemStack itemStackIn, ItemDisplayContext type, PoseStack matrixStack,
             MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        
+
         if (!(itemStackIn.getItem() instanceof ModifiableSlashBladeItem))
             return;
-        
+
         renderBlade(itemStackIn, type, matrixStack, bufferIn, combinedLightIn, combinedOverlayIn);
     }
 
@@ -164,32 +164,32 @@ public class SBToolISTER extends BlockEntityWithoutLevelRenderer {
 		if(!(stack.getItem() instanceof ItemSlashBladeDetune)) {
 			String key = stateTag.getString("translationKey");
 			if(!key.isBlank()) {
-				ResourceLocation bladeName = 
+				ResourceLocation bladeName =
 						ResourceLocation.tryParse(key.substring(5).replaceFirst(Pattern.quote("."), Matcher.quoteReplacement(":")));
 				SlashBladeDefinition slashBladeDefinition = BladeModelManager.getClientSlashBladeRegistry().get(bladeName);
-				
+
 				if(slashBladeDefinition != null)
 					name = slashBladeDefinition.getRenderDefinition().getModelName().toString();
 			}
 		}
-		return !name.isBlank() 
+		return !name.isBlank()
 				? ResourceLocation.tryParse(name) : DefaultResources.resourceDefaultModel;
 	}
-	
+
 	private ResourceLocation stackDefaultTexture(ItemStack stack) {
 		CompoundTag stateTag = stack.getOrCreateTagElement("bladeState");
 		String name = stateTag.getString("TextureName");
 		if(!(stack.getItem() instanceof ItemSlashBladeDetune)) {
 			String key = stateTag.getString("translationKey");
 			if(!key.isBlank()) {
-				ResourceLocation bladeName = 
+				ResourceLocation bladeName =
 						ResourceLocation.tryParse(key.substring(5).replaceFirst(Pattern.quote("."), Matcher.quoteReplacement(":")));
 				SlashBladeDefinition slashBladeDefinition = BladeModelManager.getClientSlashBladeRegistry().get(bladeName);
 				if(slashBladeDefinition != null)
 					name = slashBladeDefinition.getRenderDefinition().getTextureName().toString();
 			}
 		}
-		return !name.isBlank() 
+		return !name.isBlank()
 				? ResourceLocation.tryParse(name) : DefaultResources.resourceDefaultTexture;
 	}
 
@@ -354,7 +354,7 @@ public class SBToolISTER extends BlockEntityWithoutLevelRenderer {
 
         ResourceLocation textureLocation;
         if(tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0){
-            CompoundTag persistentTag = tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION);
+            CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
             if(persistentTag.contains("ModelName")){
                 model = BladeModelManager.getInstance().getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
                 textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));

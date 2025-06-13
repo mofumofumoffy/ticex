@@ -1,7 +1,13 @@
 package moffy.ticex.modifier;
 
+import java.util.Map;
+import java.util.function.BiFunction;
+
 import committee.nova.mods.avaritia.init.registry.ModDamageTypes;
 import committee.nova.mods.avaritia.util.ToolUtils;
+import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.modifier.propeties.OmnipotenceProperty;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
@@ -13,6 +19,7 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.entity.PartEntity;
@@ -29,7 +36,7 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
-public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileHitModifierHook, MeleeHitModifierHook, BreakSpeedModifierHook{
+public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileHitModifierHook, MeleeHitModifierHook, BreakSpeedModifierHook, ProvidePropertyModifierHook{
     @Override
     public int getPriority() {
         return 999;
@@ -37,7 +44,7 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
 
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.PROJECTILE_HIT, ModifierHooks.MELEE_HIT, ModifierHooks.BREAK_SPEED);
+        hookBuilder.addHook(this, ModifierHooks.PROJECTILE_HIT, ModifierHooks.MELEE_HIT, ModifierHooks.BREAK_SPEED, TicEXRegistry.PROPERTY_PROVIDER_HOOK);
     }
 
     @Override
@@ -66,7 +73,7 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
             float damageDealt){
         LivingEntity attackerEntity = context.getAttacker();
         Entity victim = context.getTarget();
-        if(victim.isAlive() && context.getLevel() instanceof ServerLevel){
+        if(context.getLevel() instanceof ServerLevel){
             dealInfinityDamage(context.getLevel(), attackerEntity, victim);
         }
     }
@@ -102,12 +109,12 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
                     victim = (LivingEntity)parentEntity;
                 }
             }
-            
-            
+
+
             if(level instanceof ServerLevel){
-                if(victim != null){        
+                if(victim != null){
                     ServerLevel serverLevel = (ServerLevel)level;
-                    
+
                     try{
                         ToolUtils.class.getDeclaredMethod("sweepAttack", Level.class, LivingEntity.class, Entity.class);
                         ToolUtils.sweepAttack(level, attackerEntity, targetEntity);
@@ -120,17 +127,22 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
                     if(reward > 0){
                         victim.level().addFreshEntity(new ExperienceOrb(victim.level(), victim.getX(), victim.getY(), victim.getZ(), reward));
                     }
-                    
+
                     serverLevel.broadcastEntityEvent(victim, (byte)3);
                 } else {
-                
+
                     ServerLevel serverLevel = (ServerLevel)level;
                     targetEntity.killedEntity(serverLevel, attackerEntity);
                     targetEntity.kill();
                     serverLevel.broadcastEntityEvent(targetEntity, (byte)3);
-                } 
+                }
             }
             if(victim != null)victim.setPose(Pose.DYING);
         }
+    }
+
+    @Override
+    public BiFunction<Player, ItemStack, Map<String, Object>> getPropertyProvider() {
+        return OmnipotenceProperty.getProperties();
     }
 }

@@ -14,14 +14,15 @@ import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.InfinityTier;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.recipe.EmbossmentBuildingRecipe;
 import moffy.ticex.lib.recipe.EmbossmentCastingRecipe;
 import moffy.ticex.lib.recipe.EmbossmentModifierRecipe;
-import moffy.ticex.lib.recipe.ModifierRepairRecipe;
 import moffy.ticex.lib.recipe.SingleEmbossmentModifierRecipe;
+import moffy.ticex.lib.recipe.ValidatableIncrementalModifierRecipe;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
-import moffy.ticex.modifier.ModifierDefine;
 import moffy.ticex.modifier.ModifierDeflection;
+import moffy.ticex.modifier.ModifierEmbossment;
 import moffy.ticex.modifier.ModifierSassy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -46,7 +47,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.mantle.recipe.helper.LoadableRecipeSerializer;
-import slimeknights.mantle.recipe.helper.SimpleRecipeSerializer;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.module.ModuleHook;
 import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
@@ -68,9 +68,10 @@ public class TicEXModule extends AddonModule{
         TicEXRegistry.SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("single_embossment_modifier", ()->LoadableRecipeSerializer.of(SingleEmbossmentModifierRecipe.LOADER));
         TicEXRegistry.CASTING_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("embossment_casting", ()->LoadableRecipeSerializer.of(EmbossmentCastingRecipe.LOADER, TinkerRecipeTypes.CASTING_TABLE));
         TicEXRegistry.BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("embossment_building", ()->LoadableRecipeSerializer.of(EmbossmentBuildingRecipe.LOADER));
-        TicEXRegistry.MODIFIER_REPAIR_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("repair_modifier", ()->new SimpleRecipeSerializer<>(ModifierRepairRecipe::new));
+        TicEXRegistry.VALIDATABLE_INCREMENTAL_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register("validatable_incremental_modifier", ()->LoadableRecipeSerializer.of(ValidatableIncrementalModifierRecipe.LOADER));
 
         TicEXRegistry.EMBOSSMENT_HOOK = ModifierHooks.LOADER.register(new ModuleHook<>(new ResourceLocation(TicEX.MODID, "embossment"), EmbossmentModifierHook.class, EmbossmentModifierHook.AllMerger::new, new EmbossmentModifierHook.DefaultClass()));
+        TicEXRegistry.PROPERTY_PROVIDER_HOOK = ModifierHooks.LOADER.register(new ModuleHook<>(new ResourceLocation(TicEX.MODID, "provide_property"), ProvidePropertyModifierHook.class, ProvidePropertyModifierHook.AllMerger::new, new ProvidePropertyModifierHook.DefaultClass()));
 
         TicEXRegistry.RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register("reconstruction_core", ()->new ItemReconstCore(new Item.Properties(), null));
         TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register("flickering_reconstruction_core", ()->new ItemFlickeringCore(new Item.Properties()));
@@ -88,13 +89,13 @@ public class TicEXModule extends AddonModule{
         TicEXRegistry.ITEMS.register("creative_scorched_rf_furnace", ()->new BlockItem(TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get(), new Item.Properties()));
 
         TicEXRegistry.RF_FURNACE_ENTITY = TicEXRegistry.BLOCK_ENTITIES.register(
-            "rf_furnace_entity", 
+            "rf_furnace_entity",
             ()->BlockEntityType.Builder.of(
                 (BlockPos pPos, BlockState pState)->new RFFurnaceBlockEntity(
-                    TicEXRegistry.RF_FURNACE_ENTITY.get(), pPos, pState, false), 
-                    TicEXRegistry.SEARED_RF_FURNACE.get(), 
+                    TicEXRegistry.RF_FURNACE_ENTITY.get(), pPos, pState, false),
+                    TicEXRegistry.SEARED_RF_FURNACE.get(),
                     TicEXRegistry.SCORCHED_RF_FURNACE.get(),
-                    TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get(), 
+                    TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get(),
                     TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get()
                 )
                 .build(null)
@@ -115,9 +116,9 @@ public class TicEXModule extends AddonModule{
                                    .build());
 
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
+        TicEXRegistry.EMBOSSMENT_MODIFIER = TicEXRegistry.MODIFIERS.register("embossment", ModifierEmbossment::new);
         TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
         TicEXRegistry.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
-        TicEXRegistry.DEFINE_MODIFIER = TicEXRegistry.MODIFIERS.register("define", ModifierDefine::new);
 
         bus.addListener(TicEXEvent::onEntityAttributeCreation);
         bus.addListener(TicEXEvent::onEntityAttributeModification);

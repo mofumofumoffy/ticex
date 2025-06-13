@@ -36,7 +36,7 @@ public class TicEXIronsEvent {
                     }
 
                     event.setAmount(damage);
-                    
+
                     for(ModifierEntry entry : book.getModifierList()){
                         entry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(book, entry, context, damage, 0, 0);
                     }
@@ -54,7 +54,7 @@ public class TicEXIronsEvent {
         if(bookStack != null && !bookStack.isEmpty() && bookStack.getItem() instanceof IModifiable){
             ToolStack book = ToolStack.from(bookStack);
             if(book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0){
-                event.setManaCost(Math.round(event.getManaCost() * 1.4f));
+                event.setManaCost(Math.round(event.getManaCost() * 1.1f));
             }
         }
     }

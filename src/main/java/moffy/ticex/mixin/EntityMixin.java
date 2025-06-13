@@ -25,7 +25,7 @@ public abstract class EntityMixin implements IEntityDataAccessor{
     @Shadow
     @Final
     protected SynchedEntityData entityData;
-    
+
     @Unique
     private Map<String, Field> accessorMap;
 
@@ -63,7 +63,7 @@ public abstract class EntityMixin implements IEntityDataAccessor{
         }
         return fields;
     }
-    
+
     @Override
     public Field getField(String keyName) {
         if (accessorMap == null) {
@@ -72,8 +72,9 @@ public abstract class EntityMixin implements IEntityDataAccessor{
         return accessorMap.get(keyName);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public <T> boolean setValue(Field field, T value) {
+    public <T> boolean setValue(Field field, Class<T> cls, Object value) {
         Optional<DataItemAccessor> accessorOptional = toAccessor(entityData);
         if(accessorOptional.isPresent()){
             DataItemAccessor accessor = accessorOptional.get();
@@ -82,7 +83,6 @@ public abstract class EntityMixin implements IEntityDataAccessor{
                 if(EntityDataAccessor.class.isAssignableFrom(field.getType())){
                     EntityDataAccessor<T> dataAccessor = (EntityDataAccessor<T>)field.get((Entity)((Object)this));
                     SynchedEntityData.DataItem<T> dataitem = (SynchedEntityData.DataItem<T>)items.get(dataAccessor.getId());
-                    dataitem.setValue(value);
                     ((Entity)((Object)this)).onSyncedDataUpdated(dataAccessor);
                     dataitem.setDirty(true);
                     accessor.setDirtyByTicEX(true);
@@ -91,7 +91,7 @@ public abstract class EntityMixin implements IEntityDataAccessor{
                 } else if(value.getClass().isAssignableFrom(field.getType())){
                     field.set((Entity)((Object)this), value);
                     return true;
-                } 
+                }
             }catch(Exception e){
                 return false;
             }

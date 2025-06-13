@@ -5,16 +5,15 @@
     "plugin": "moffy.ticex.modules.slashblade.TicEXSlashBladeMixinPlugin",
     "mixins": [
         "AttackManagerMixin",
-        "TargetSelectorMixin",
         "SummonedSwordMixin",
-        "PlayerAttackHelperMixin"
+        "PlayerAttackHelperMixin",
+        "ItemSlashBladeMixin"
     ],
     "client": [
-        "ActiveStateSyncMessageMixin",
-        "ClientHandlerMixin"
+
     ],
     "server": [
-        
+
     ],
     "injectors": {
         "defaultRequire": 1

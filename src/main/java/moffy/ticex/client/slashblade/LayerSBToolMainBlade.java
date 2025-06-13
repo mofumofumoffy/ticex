@@ -26,7 +26,6 @@ import mods.flammpfeil.slashblade.registry.ComboStateRegistry;
 import mods.flammpfeil.slashblade.registry.combo.ComboState;
 import mods.flammpfeil.slashblade.util.TimeValueHelper;
 import mods.flammpfeil.slashblade.util.VectorHelper;
-import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -72,7 +71,7 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
     public LayerSBToolMainBlade(RenderLayerParent<T, M> entityRendererIn) {
         super(entityRendererIn);
     }
-    
+
     @Override
     public void renderStandbyBlade(PoseStack matrixStack, MultiBufferSource bufferIn, int lightIn, ItemStack blade,
             T entity) {
@@ -93,49 +92,49 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
                         if(Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON
                         && entity == Minecraft.getInstance().player) return;
                         break;
-                        
+
                     case KATANA:
                         matrixStack.translate(0.25F,-0.875f, -0.55f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(3.1415927F, 1.570796f, 0.261799F));
                         break;
-                        
+
                     case DEFAULT:
                         matrixStack.translate(0.25F,-0.875f, -0.55f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(0F, 1.570796f, 0.261799F));
                         break;
-                        
+
                     case NINJA:
                         matrixStack.translate(-0.5F,-2f, 0.20f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(-2.094395F, 0f, 3.1415927F));
                         if(Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON
                                 && entity == Minecraft.getInstance().player) return;
                         break;
-                        
+
                     case RNINJA:
                         matrixStack.translate(0.5F,-2f, 0.20f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(-1.047198F, 0, 0));
                         if(Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON
                                 && entity == Minecraft.getInstance().player) return;
                         break;
-                        
+
                     default:
                         // as default
                         matrixStack.translate(0.25F,-0.875f, -0.55f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(0F, 1.570796f, 0.261799F));
                         break;
                 }
-                
+
                 float modelScale = (float) (modelScaleBase * (1.0f / motionScale));
                 matrixStack.scale((float) motionScale, (float) motionScale, (float) motionScale);
                 matrixStack.scale(modelScale, modelScale, modelScale);
-                
-                try (MSAutoCloser msac = MSAutoCloser.pushMatrix(matrixStack)) {    
+
+                try (MSAutoCloser msac = MSAutoCloser.pushMatrix(matrixStack)) {
                     if (s.isBroken()) {
                         part = "blade_damaged";
                     } else {
                         part = "blade";
                     }
-                    
+
                     renderToolSlashBlade(blade, s, part, matrixStack, bufferIn, lightIn);
                     renderToolSlashBlade(blade, s, "sheath", matrixStack, bufferIn, lightIn);
                 }
@@ -147,11 +146,11 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
     public void render(PoseStack matrixStack, MultiBufferSource bufferIn, int lightIn, T entity, float limbSwing,
             float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         this.renderOffhandItem(matrixStack, bufferIn, lightIn, entity);
-    	
+
         float motionYOffset = 1.5f;
         double motionScale = 1.5 / 12.0;
-        double modelScaleBase = 0.0078125F; 
-        
+        double modelScaleBase = 0.0078125F;
+
         ItemStack stack = entity.getItemInHand(InteractionHand.MAIN_HAND);
 
         if (stack.isEmpty())
@@ -165,7 +164,7 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
                 ComboState combo = ComboStateRegistry.REGISTRY.get().getValue(s.getComboSeq()) != null
                         ? ComboStateRegistry.REGISTRY.get().getValue(s.getComboSeq())
                         : ComboStateRegistry.NONE.get();
-                
+
                 double time = TimeValueHelper.getMSecFromTicks(
                         Math.max(0, entity.level().getGameTime() - s.getLastActionTime()) + partialTicks);
 
@@ -215,13 +214,13 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
 
                     setUserPose(matrixStack, entity, partialTicks);
 
-                    
-                    
+
+
                     matrixStack.translate(0, motionYOffset, 0);
 
                     matrixStack.scale((float) motionScale, (float) motionScale, (float) motionScale);
 
-                    
+
                     matrixStack.mulPose(Axis.ZP.rotationDegrees(180));
 
                     try (MSAutoCloser msac = MSAutoCloser.pushMatrix(matrixStack)) {
@@ -295,15 +294,16 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
 
         ResourceLocation textureLocation;
         if(tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0){
-            
-            CompoundTag persistentTag = tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION);
+
+            CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
             if(persistentTag.contains("ModelName")){
                model = BladeModelManager.getInstance().getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
                textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));
             } else {
                 model = BladeModelManager.getInstance().getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
+                textureLocation = state.getTexture().orElse(DefaultResources.resourceDefaultTexture);
             }
-            textureLocation = state.getTexture().orElse(DefaultResources.resourceDefaultTexture);
+
             BladeRenderState.renderOverrided(stack, model, target, textureLocation, matrixStackIn, bufferIn,
                     packedLightIn);
             BladeRenderState.renderOverridedLuminous(stack, model, target + "_luminous", textureLocation,

@@ -9,7 +9,7 @@
             },
             "icon": "ticex:slashblade_blade",
             "translation_key": "item.ticex.slashblade_blade",
-            "x": 12,
+            "x": 21,
             "y": 56
         },
         {
@@ -18,7 +18,7 @@
             },
             "icon": "ticex:slashblade_saya",
             "translation_key": "item.ticex.slashblade_saya",
-            "x": 48,
+            "x": 39,
             "y": 44
         },
         {
@@ -27,17 +27,8 @@
             },
             "icon": "tconstruct:tough_handle",
             "translation_key": "item.tconstruct.tough_handle",
-            "x": 12,
+            "x": 21,
             "y": 34
-        },
-        {
-            "filter": {
-                "item":"ticex:catalyst_slashblade"
-            },
-            "icon": "ticex:catalyst",
-            "translation_key": "item.ticex.catalyst_slashblade",
-            "x": 30,
-            "y": 44
         }
     ],
     "sortIndex": 14,

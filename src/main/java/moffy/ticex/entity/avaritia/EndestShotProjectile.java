@@ -16,11 +16,13 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class EndestShotProjectile extends ItemArrow{
-    
+
+    @SuppressWarnings("unchecked")
     public EndestShotProjectile(EntityType<? extends Entity>type, Level level) {
         super((EntityType<EndestShotProjectile>)type, level);
     }
 
+    @SuppressWarnings("unchecked")
     public EndestShotProjectile( LivingEntity shooter, Level level) {
         super((EntityType<EndestShotProjectile>)TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), shooter, level);
     }
@@ -50,8 +52,8 @@ public class EndestShotProjectile extends ItemArrow{
 
                 ent.moveTo(entity.getX() + offset.x * 0.25, entity.getY() + offset.y * 0.25, entity.getZ() + offset.z * 0.25, entity.getYRot(), 0.0F);
                 this.level().addFreshEntity(ent);
-            } 
-            
+            }
+
             this.remove(RemovalReason.KILLED);
         }
     }
@@ -72,9 +74,9 @@ public class EndestShotProjectile extends ItemArrow{
 
                 ent.moveTo((double)pos.getX() + offset.x * 0.25, (double)pos.getY() + offset.y * 0.25, (double)pos.getZ() + offset.z * 0.25, this.getYRot(), 0.0F);
                 this.level().addFreshEntity(ent);
-            } 
+            }
 
-            
+
             this.remove(RemovalReason.KILLED);
         }
     }
