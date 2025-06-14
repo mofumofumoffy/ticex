@@ -30,7 +30,7 @@
 - 超越:装備部位ごとに被ダメージを25%軽減します。
 
 ## Draconic Evolution
-すべて近接武器・ツールにのみ使用できる素材です。
+すべて近接武器・ツールにのみ使用できる素材です。<br>
 ドラコニウム、ワイバーン、ドラコニック、カオティックすべてで共通の特性を持ちます。
 - 魂狩り:ツールでモブの魂をドロップする可能性があります。
 - 裁断
@@ -97,7 +97,7 @@
 
 ## Integrations with Other TiC Addons
 ### Tinkers' Things
-- Lamellar: Embosses Seram Gear with missing materials to simulate Laminar Armor properties.
+- 多層: Embosses Seram Gear with missing materials to simulate Laminar Armor properties.
 
 ### Sakura Tinker
-- Flowerstorm: Applies custom TiCEX modifiers to conflicting materials. Also, shaders are automatically applied to infinity materials by default.
+- 花吹雪: Applies custom TiCEX modifiers to conflicting materials. Also, shaders are automatically applied to infinity materials by default.
