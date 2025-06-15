@@ -28,11 +28,11 @@ public class OmnipotenceProperty {
     public static ILuaFunction annihilate(Player user, ItemStack stack){
         return (args)->{
             Level level = user.level();
-            if (!level.isClientSide) {
+            if (!level.isClientSide && !user.getCooldowns().isOnCooldown(stack.getItem())) {
                 ToolUtils.aoeAttack(user, ModConfig.swordAttackRange.get(), ModConfig.swordRangeDamage.get(), ModConfig.isSwordAttackAnimal.get(), ModConfig.isSwordAttackLightning.get());
                 user.getCooldowns().addCooldown(stack.getItem(), 20);
+                level.playSound(user, user.getOnPos(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 5.0f);
             }
-            level.playSound(user, user.getOnPos(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 5.0f);
             return MethodResult.of();
         };
     }

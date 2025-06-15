@@ -4,7 +4,7 @@
     {
       "type": "tconstruct:modifier_slot",
       "flat": 1,
-      "name": "upgrades"
+      "name": "abilities"
     }
   ],
   "tooltip_display": "always"

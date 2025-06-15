@@ -65,10 +65,10 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
         if(TicEXRegistry.CARDBOARD_MODIFIER != null)buildModifier(TicEXRegistry.CARDBOARD_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
 
         //computercraft
-        if(TicEXRegistry.MODEM_MODIFIER != null)buildModifier(TicEXRegistry.MODEM_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(ModifierSlotModule.slot(SlotType.UPGRADE).flat(1));
+        if(TicEXRegistry.MODEM_MODIFIER != null)buildModifier(TicEXRegistry.MODEM_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(ModifierSlotModule.slot(SlotType.ABILITY).flat(1));
 
         //curios
-        if(TicEXRegistry.INCOMPARABLE_MODIFIER != null)buildModifier(TicEXRegistry.INCOMPARABLE_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(CONSTANT_FORTUNE);
+        if(TicEXRegistry.INCOMPARABLE_MODIFIER != null)buildModifier(TicEXRegistry.INCOMPARABLE_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
     }
 
 }
