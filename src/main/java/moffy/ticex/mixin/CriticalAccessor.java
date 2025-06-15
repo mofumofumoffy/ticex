@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 
-@Mixin(ToolAttackContext.class)
+@Mixin(value = ToolAttackContext.class, remap = false)
 public interface CriticalAccessor {
 
     @Mutable
