@@ -6,13 +6,8 @@
 
 ## Required Mods
 
-### For All Versions
 - [Tinkers' Construct](https://modrinth.com/mod/tinkers-construct)
-
-### Additional
-| Version | Mods |
-|--------|------|
-| mc1.20.1 | AddonAPI v1.2.0 (https://modrinth.com/mod/addonapi) |
+- [AddonAPI v1.2.0](https://modrinth.com/mod/addonapi)
 
 ## Supported Minecraft Version
 - Forge for Minecraft 1.20.1
@@ -22,10 +17,14 @@
 - Mekanism
 - Draconic Evolution
 - SlashBlade:Resharped
+- Timeless and Classics Zero
 - Apotheosis
 - Create (v6 only, though compatible with v5)
 - Iron's Spells n' SpellBook(Can be used with other TiC addons)
+- Project E
+- CC: Tweaked(WIP)
 - Curios
+- Psi
 - Tinkers' Things
 - Sakura Tinker
 
