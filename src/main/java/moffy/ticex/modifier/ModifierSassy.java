@@ -1,6 +1,6 @@
 package moffy.ticex.modifier;
 
-import moffy.ticex.lib.CriticalAccessor;
+import moffy.ticex.mixin.CriticalAccessor;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeDamageModifierHook;
