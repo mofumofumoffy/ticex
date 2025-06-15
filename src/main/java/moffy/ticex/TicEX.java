@@ -19,13 +19,11 @@ public class TicEX {
 
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-        new ResourceLocation(MODID, "main"), 
-        ()->PROTOCOL_VERSION, 
-        PROTOCOL_VERSION::equals, 
+        new ResourceLocation(MODID, "main"),
+        ()->PROTOCOL_VERSION,
+        PROTOCOL_VERSION::equals,
         PROTOCOL_VERSION::equals
     );
-
-    private static int packetHandlerId = 0;
 
     public TicEX(){
         this(FMLJavaModLoadingContext.get());
@@ -46,9 +44,5 @@ public class TicEX {
         TicEXRegistry.CREATIVE_TABS.register(bus);
         TicEXRegistry.RECIPE_SERIALIZERS.register(bus);
         TicEXRegistry.RECIPE_TYPES.register(bus);
-    }
-
-    public static int getPacketHandlerId(){
-        return packetHandlerId++;
     }
 }

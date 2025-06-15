@@ -47,9 +47,6 @@ public class SBToolRenderState {
         RenderOverrideEvent event = RenderOverrideEvent.onRenderOverride(stack, model, target, null, matrixStackIn,
                 bufferIn);
 
-            if (event.isCanceled())
-                return;
-
         for(int i = 0; i < materials.size(); i++){
             MaterialVariantId material = materials.get(i).getVariant();
             SBToolRenderType.PartType partType = SBToolRenderType.PartType.byIndex(i);
@@ -61,7 +58,7 @@ public class SBToolRenderState {
                     col = new Color(optional.get().vertexColor());
                 }
             });
-            
+
             renderVC(stack, bufferIn, rt, matrixStackIn, event, packedLightIn, enableEffect, target, material, partType);
 
         }
@@ -69,7 +66,7 @@ public class SBToolRenderState {
 
     public static void renderVC(ItemStack stack, MultiBufferSource bufferIn, RenderType rt, PoseStack matrixStackIn, RenderOverrideEvent event, int packedLightIn, boolean enableEffect, String target, MaterialVariantId material, PartType partType){
         VertexConsumer vb = bufferIn.getBuffer(rt);
-        
+
         Face.setCol(col);
         Face.setLightMap(packedLightIn);
         Face.setMatrix(matrixStackIn);
@@ -79,7 +76,7 @@ public class SBToolRenderState {
             vb = bufferIn.getBuffer(target.startsWith("item_") ?BladeRenderState.SLASHBLADE_ITEM_GLINT:BladeRenderState.SLASHBLADE_GLINT);
             event.getModel().tessellateOnly(vb, event.getTarget());
         }
-        
+
         Face.resetMatrix();
         Face.resetLightMap();
         Face.resetCol();

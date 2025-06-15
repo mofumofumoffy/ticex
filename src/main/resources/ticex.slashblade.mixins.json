@@ -10,7 +10,7 @@
         "ItemSlashBladeMixin"
     ],
     "client": [
-
+        "ClientHandlerMixin"
     ],
     "server": [
 

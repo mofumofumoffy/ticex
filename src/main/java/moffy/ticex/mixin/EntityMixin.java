@@ -53,7 +53,7 @@ public abstract class EntityMixin implements IEntityDataAccessor{
             Field key = entry.getValue();
             try {
                 if(EntityDataAccessor.class.isAssignableFrom(key.getType())){
-                    fields.put(entry.getKey(),entityData.get(((EntityDataAccessor<?>)key.get(this))));
+                    entityData.get(((EntityDataAccessor<?>)key.get(this)));
                 } else {
                     fields.put(entry.getKey(), key.get(this));
                 }
@@ -83,6 +83,7 @@ public abstract class EntityMixin implements IEntityDataAccessor{
                 if(EntityDataAccessor.class.isAssignableFrom(field.getType())){
                     EntityDataAccessor<T> dataAccessor = (EntityDataAccessor<T>)field.get((Entity)((Object)this));
                     SynchedEntityData.DataItem<T> dataitem = (SynchedEntityData.DataItem<T>)items.get(dataAccessor.getId());
+                    dataitem.setValue((T)value);
                     ((Entity)((Object)this)).onSyncedDataUpdated(dataAccessor);
                     dataitem.setDirty(true);
                     accessor.setDirtyByTicEX(true);

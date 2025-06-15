@@ -75,8 +75,8 @@ public class ConfigSyncToClientPacket {
     }
 
     public static ConfigSyncToClientPacket decode(FriendlyByteBuf buf){
-        ModuleData<?> moduleData = buf.readRegistryIdSafe(ModuleData.class);
         EquipmentSlot slot = buf.readEnum(EquipmentSlot.class);
+        ModuleData<?> moduleData = buf.readRegistryIdSafe(ModuleData.class);
         int configDataIndex = buf.readInt();
         ModuleDataType dataType = buf.readEnum(ModuleDataType.class);
         Object data = switch (dataType) {
@@ -88,8 +88,8 @@ public class ConfigSyncToClientPacket {
     }
 
     public static void encode(ConfigSyncToClientPacket packet, FriendlyByteBuf buf){
-        buf.writeRegistryId(MekanismAPI.moduleRegistry(), packet.getModuleType());
         buf.writeEnum(packet.getSlot());
+        buf.writeRegistryId(MekanismAPI.moduleRegistry(), packet.getModuleType());
         buf.writeInt(packet.getConfigIndex());
         buf.writeEnum(packet.getDataType());
         switch (packet.getDataType()) {

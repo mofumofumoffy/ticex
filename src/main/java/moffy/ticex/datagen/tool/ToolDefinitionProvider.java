@@ -84,6 +84,7 @@ public class ToolDefinitionProvider  extends AbstractToolDefinitionDataProvider 
                 .set(ToolStats.ATTACK_SPEED, 1.6f).build()))
             .module(new MultiplyStatsModule(MultiplierNBT.builder()
                 .set(ToolStats.DURABILITY, 1.1f).build()))
+            .module(ToolTraitsModule.builder().trait(TicEXRegistry.OVERCASTING_MODIFIER).build())
             .smallToolStartingSlots();
         }
 

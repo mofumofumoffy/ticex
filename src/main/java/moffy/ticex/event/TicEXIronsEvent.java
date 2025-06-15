@@ -1,28 +1,44 @@
 package moffy.ticex.event;
 
-import io.redspace.ironsspellbooks.api.events.SpellDamageEvent;
 import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.util.Utils;
+import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class TicEXIronsEvent {
-    public static void onSpellDamage(SpellDamageEvent event){
-        if(event.getSpellDamageSource().getEntity() instanceof Player caster){
-            LivingEntity target = event.getEntity();
-            ItemStack bookStack = Utils.getPlayerSpellbookStack(caster);
-            if(bookStack != null && !bookStack.isEmpty() && bookStack.getItem() instanceof IModifiable){
-                ToolStack book = ToolStack.from(bookStack);
+
+    public static void onCastSpell(SpellOnCastEvent event){
+        ItemStack bookStack = Utils.getPlayerSpellbookStack(event.getEntity());
+        if(bookStack != null && !bookStack.isEmpty() && bookStack.getItem() instanceof IModifiable){
+            ToolStack book = ToolStack.from(bookStack);
+            if(book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0){
+                event.setManaCost(Math.round(event.getManaCost()));
+            }
+        }
+    }
+
+    public static void onLivingHurt(LivingHurtEvent event){
+        LivingEntity target = event.getEntity();
+        DamageSource source = event.getSource();
+        if(source instanceof SpellDamageSource && source.getEntity() instanceof Player player){
+            ItemStack bookStack = Utils.getPlayerSpellbookStack(player);
+            if(bookStack != null && bookStack.getItem() instanceof IModifiable){
+                IToolStackView book = ToolStack.from(bookStack);
+
                 if(book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0){
-                    ToolAttackContext context = new ToolAttackContext(caster, caster, InteractionHand.MAIN_HAND, target, target, false, 0, false);
+                    ToolAttackContext context = new ToolAttackContext(player, player, InteractionHand.MAIN_HAND, target, target, false, 0, false);
 
                     float damage = event.getAmount();
                     float damageTmp = damage;
@@ -48,15 +64,4 @@ public class TicEXIronsEvent {
             }
         }
     }
-
-    public static void onCastSpell(SpellOnCastEvent event){
-        ItemStack bookStack = Utils.getPlayerSpellbookStack(event.getEntity());
-        if(bookStack != null && !bookStack.isEmpty() && bookStack.getItem() instanceof IModifiable){
-            ToolStack book = ToolStack.from(bookStack);
-            if(book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0){
-                event.setManaCost(Math.round(event.getManaCost() * 1.1f));
-            }
-        }
-    }
-
 }

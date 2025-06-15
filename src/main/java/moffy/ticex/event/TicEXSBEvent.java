@@ -2,6 +2,7 @@ package moffy.ticex.event;
 
 import mods.flammpfeil.slashblade.event.BladeMotionEvent;
 import mods.flammpfeil.slashblade.event.InputCommandEvent;
+import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import moffy.ticex.TicEX;
 import moffy.ticex.client.slashblade.SBToolBladeItemRenderer;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
@@ -68,8 +69,10 @@ public class TicEXSBEvent {
     public static void syncState(ServerPlayer player){
         ItemStack mainHandStack = player.getMainHandItem();
         if(mainHandStack.getItem() instanceof ModifiableSlashBladeItem){
-            StateSyncPacket packet = new StateSyncPacket(mainHandStack);
-            TicEX.CHANNEL.send(PacketDistributor.PLAYER.with(()->player), packet);
+            mainHandStack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(state->{
+                StateSyncPacket packet = new StateSyncPacket(state.serializeNBT());
+                TicEX.CHANNEL.send(PacketDistributor.PLAYER.with(()->player), packet);
+            });
         }
     }
 }

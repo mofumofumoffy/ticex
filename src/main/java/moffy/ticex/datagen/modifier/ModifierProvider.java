@@ -61,9 +61,6 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
         //draconicevolution
         if(TicEXRegistry.INJECT_MODIFIER != null)buildModifier(TicEXRegistry.INJECT_MODIFIER).addModules(ModifierSlotModule.slot(SlotType.ABILITY).flat(1), ModifierSlotModule.slot(SlotType.UPGRADE).flat(3)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
 
-        //irons_spellbook
-        if(TicEXRegistry.OVERCASTING_MODIFIER != null)buildModifier(TicEXRegistry.OVERCASTING_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
-
         //create
         if(TicEXRegistry.CARDBOARD_MODIFIER != null)buildModifier(TicEXRegistry.CARDBOARD_MODIFIER).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
 

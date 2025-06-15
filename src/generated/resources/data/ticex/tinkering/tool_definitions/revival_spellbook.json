@@ -46,6 +46,15 @@
       }
     },
     {
+      "type": "tconstruct:traits",
+      "traits": [
+        {
+          "level": 1,
+          "name": "ticex:overcasting"
+        }
+      ]
+    },
+    {
       "type": "tconstruct:modifier_slots",
       "slots": {
         "abilities": 1,

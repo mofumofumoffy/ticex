@@ -217,7 +217,7 @@ public class TicEXRegistry {
     public static DynamicModifier INCOMPARABLE_MODIFIER = null;
     public static DynamicModifier CARDBOARD_MODIFIER = null;
     public static StaticModifier<Modifier> FLOWERSTORM_MODIFIER = null;
-    public static DynamicModifier OVERCASTING_MODIFIER = null;
+    public static StaticModifier<Modifier> OVERCASTING_MODIFIER = null;
     public static StaticModifier<Modifier> ABYSSAL_MODIFIER = null;
     public static StaticModifier<Modifier> INFERNAL_MODIFIER = null;
     public static StaticModifier<Modifier> GRAVITY_MODIFIER = null;

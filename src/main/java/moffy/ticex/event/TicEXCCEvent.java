@@ -24,29 +24,31 @@ public class TicEXCCEvent {
             Player player = event.getEntity();
             Entity target = event.getTarget();
 
-            PocketServerComputer computerItem = getPocketComputer(player);
-            if(computerItem != null){
-                computerItem.queueEvent("player_attack", new Object[]{TicEXCCUtils.createEntityMap(player), TicEXCCUtils.createEntityMap(target)});
+            if(hasModem(player)){
+                PocketServerComputer computerItem = getPocketComputer(player);
+                if(computerItem != null){
+                    computerItem.queueEvent("player_attack", new Object[]{TicEXCCUtils.createEntityMapWithProps(player), TicEXCCUtils.createEntityMap(target)});
+                }
             }
         }
     }
 
     public static void onPlayerDeath(LivingDeathEvent event){
         LivingEntity livingEntity = event.getEntity();
-        if (!event.getEntity().level().isClientSide && livingEntity instanceof Player player) {
+        if (!event.getEntity().level().isClientSide && livingEntity instanceof Player player && hasModem(player)) {
             PocketServerComputer computerItem = getPocketComputer(player);
             if(computerItem != null){
-                computerItem.queueEvent("player_death", new Object[]{TicEXCCUtils.createEntityMap(player)});
+                computerItem.queueEvent("player_death", new Object[]{TicEXCCUtils.createEntityMapWithProps(player)});
             }
         }
     }
 
     public static void onPlayerTick(LivingTickEvent event){
         LivingEntity livingEntity = event.getEntity();
-        if (!event.getEntity().level().isClientSide && livingEntity instanceof Player player) {
+        if (!event.getEntity().level().isClientSide && livingEntity instanceof Player player && hasModem(player)) {
             PocketServerComputer computerItem = getPocketComputer(player);
             if(computerItem != null){
-                computerItem.queueEvent("player_tick", new Object[]{TicEXCCUtils.createEntityMap(player)});
+                computerItem.queueEvent("player_tick", new Object[]{TicEXCCUtils.createEntityMapWithProps(player)});
             }
         }
     }
@@ -56,10 +58,10 @@ public class TicEXCCEvent {
             Entity source = event.getSource().getEntity();
             LivingEntity target = event.getEntity();
 
-            if(target instanceof Player player){
+            if(target instanceof Player player && hasModem(player)){
                 PocketServerComputer computerItem = getPocketComputer(player);
                 if(computerItem != null){
-                    computerItem.queueEvent("player_hurt", new Object[]{TicEXCCUtils.createEntityMap(source), TicEXCCUtils.createEntityMap(player)});
+                    computerItem.queueEvent("player_hurt", new Object[]{TicEXCCUtils.createEntityMap(source), TicEXCCUtils.createEntityMapWithProps(player)});
                 }
             }
         }
@@ -67,12 +69,21 @@ public class TicEXCCEvent {
 
     public static void onPlayerJump(LivingJumpEvent event){
         LivingEntity livingEntity = event.getEntity();
-        if (!event.getEntity().level().isClientSide && livingEntity instanceof Player player) {
+        if (!event.getEntity().level().isClientSide && livingEntity instanceof Player player && hasModem(player)) {
             PocketServerComputer computerItem = getPocketComputer(player);
             if(computerItem != null){
-                computerItem.queueEvent("player_jump", new Object[]{TicEXCCUtils.createEntityMap(player)});
+                computerItem.queueEvent("player_jump", new Object[]{TicEXCCUtils.createEntityMapWithProps(player)});
             }
         }
+    }
+
+    public static boolean hasModem(Player player){
+        ItemStack chestStack =  player.getItemBySlot(EquipmentSlot.CHEST);
+        if (chestStack.getItem() instanceof IModifiable) {
+            ToolStack chest = ToolStack.from(chestStack);
+            return chest.getModifierLevel(TicEXRegistry.MODEM_MODIFIER.get()) > 0;
+        }
+        return false;
     }
 
     public static PocketServerComputer getPocketComputer(Player player){

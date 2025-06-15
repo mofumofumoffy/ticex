@@ -11,6 +11,7 @@ import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.ModifierMekanic;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.mekanism.ConfigSyncToClientPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -55,7 +56,7 @@ public class TicEXMekanismModule extends AddonModule{
 
         MinecraftForge.EVENT_BUS.register(new TicEXMekanismEvent());
 
-        TicEX.CHANNEL.registerMessage(TicEX.getPacketHandlerId(), ConfigSyncToClientPacket.class, ConfigSyncToClientPacket::encode, ConfigSyncToClientPacket::decode, ConfigSyncToClientPacket::handle);
+        TicEX.CHANNEL.registerMessage(TicEXPacketID.MEK_CONFIG_SYNC, ConfigSyncToClientPacket.class, ConfigSyncToClientPacket::encode, ConfigSyncToClientPacket::decode, ConfigSyncToClientPacket::handle);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
             bus.addListener(TicEXMekanismEvent::onLoadAdditionalModel);

@@ -118,8 +118,8 @@ public class ModifierEvolved extends Modifier implements ToolDamageModifierHook,
         Player player = context.getPlayerAttacker();
         if(player != null){
             Entity target = context.getTarget();
-            ItemStack stack = player.getItemInHand(context.getHand());
-            if(stack != null && !stack.isEmpty() && ToolStack.from(stack).getModifierLevel(this) > 0){
+            ItemStack stack = TicEXUtils.getToolStack(tool, player, TicEXRegistry.EVOLVED_MODIFIER.get());
+            if(stack != null && !stack.isEmpty()){
                 ModuleHost host = stack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).orElseThrow(IllegalStateException::new);
                 IOPStorage opStorage = stack.getCapability(DECapabilities.OP_STORAGE).orElseThrow(IllegalStateException::new);
                 int attackDamage = getDamageBonus(host, opStorage);

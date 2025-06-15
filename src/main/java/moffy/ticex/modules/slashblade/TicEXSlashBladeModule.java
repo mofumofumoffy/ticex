@@ -11,6 +11,7 @@ import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.ModifierKonpaku;
 import moffy.ticex.modifier.ModifierKoshirae;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.slashblade.StateSyncPacket;
 import moffy.ticex.modifier.ModifierHiddenProud;
 import net.minecraft.world.entity.EntityType;
@@ -56,7 +57,7 @@ public class TicEXSlashBladeModule extends AddonModule{
         TicEXRegistry.KOSHIRAE_MODIFIER = TicEXRegistry.MODIFIERS.register("koshirae", ModifierKoshirae::new);
         TicEXRegistry.PROUD_MODIFIER = TicEXRegistry.MODIFIERS.register("hidden_proud", ModifierHiddenProud::new);
 
-        TicEX.CHANNEL.registerMessage(TicEX.getPacketHandlerId(), StateSyncPacket.class, StateSyncPacket::encode, StateSyncPacket::decode, StateSyncPacket::handle);
+        TicEX.CHANNEL.registerMessage(TicEXPacketID.SB_STATE_SYNC, StateSyncPacket.class, StateSyncPacket::encode, StateSyncPacket::decode, StateSyncPacket::handle);
 
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onBladeMotion);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onInputCommand);

@@ -71,14 +71,11 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
                 IEntityDataAccessor accessor = (IEntityDataAccessor)target;
 
                 String fieldName = "f_20961_";
+                fieldName = "DATA_HEALTH_ID";
 
                 Field key = accessor.getField(fieldName);
                 if(key != null){
-                    if(boolean.class.isAssignableFrom(key.getType())){
-                        accessor.setValue(key, Boolean.class, key);
-                    }else{
-                        accessor.setValue(key, absoluteHealth);
-                    }
+                    accessor.setValue(key, absoluteHealth);
                 }
             }
 
