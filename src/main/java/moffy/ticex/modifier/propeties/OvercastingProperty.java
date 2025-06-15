@@ -29,7 +29,7 @@ public class OvercastingProperty {
     public static ILuaFunction castIronsSpell(Player user, ItemStack stack){
         return (args)->{
             ISpellContainer container = ISpellContainer.get(stack);
-            int page = args.getInt(0);
+            int page = args.getInt(0) + 1;
             if(page >= 0 && page < container.getMaxSpellCount() && user instanceof ServerPlayer){
                 ISpellContainer spellContainer = ISpellContainer.get(stack);
                 SpellData spellData = spellContainer.getSpellAtIndex(page);
