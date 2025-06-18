@@ -197,6 +197,15 @@
     "modifier.ticex.embossment": "壓花",
     "modifier.ticex.embossment.flavor": "經典的OP功能，但不知為何便利性增加了。",
     "modifier.ticex.embossment.description": "能在工具上賦予任何組件的特性（隻能賦予一次）",
+    "modifier.ticex.psionizing_radiation": "Psi能量子輻射",
+    "modifier.ticex.psionizing_radiation.flavor": "請保密。",
+    "modifier.ticex.psionizing_radiation.description": "獲得擁有高Psi能量感受度的工具時，將啟動該術式。 / +1法術插槽",
+    "modifier.ticex.socket": "插座",
+
+    "modifier.ticex.socket.description": "+1 法術插槽",
+    "modifier.ticex.sensor": "感受器",
+    "modifier.ticex.sensor.flavor": "木已成舟。",
+    "modifier.ticex.sensor.description": "該工具能在不同環境下啟動術式。",
 
     "stat.tconstruct.harvest_tier.ticex.infinity": "無盡",
     "stat.ticex.catalyst_mekasuit_helmet": "催化劑(MekaSuit頭盔)",
