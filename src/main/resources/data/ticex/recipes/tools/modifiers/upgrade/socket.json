@@ -3,7 +3,7 @@
   "allow_crystal": true,
   "amount_per_item": 1,
   "input": {
-    "item": "ticex:socket_core"
+    "item": "psi:cad_socket_basic"
   },
   "level": {
     "max": 5

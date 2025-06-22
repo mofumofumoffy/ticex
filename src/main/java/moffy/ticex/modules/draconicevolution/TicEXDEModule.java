@@ -22,7 +22,7 @@ public class TicEXDEModule extends AddonModule{
 
     public TicEXDEModule(){
 
-        
+
 
         ToolCapabilityProvider.register(DEItemCapabilityProvider::new);
 
@@ -42,7 +42,7 @@ public class TicEXDEModule extends AddonModule{
         TicEXRegistry.SOUL_RENDING_MODIFIER = TicEXRegistry.MODIFIERS.register("soul_rending", ModifierSoulRending::new);
         TicEXRegistry.INJECT_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("inject");
         TicEXRegistry.EVOLVED_MODIFIER = TicEXRegistry.MODIFIERS.register("evolved", ModifierEvolved::new);
-        
+
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
             initClient();
         });
@@ -61,6 +61,8 @@ public class TicEXDEModule extends AddonModule{
                     if(techLevel != null && moffy.ticex.client.draconicevolution.TicEXDEShader.instance != null){
                         moffy.ticex.client.draconicevolution.TicEXDEShader.glUniformBaseColor(moffy.ticex.client.draconicevolution.TicEXDEShader.instance, techLevel, 1F);
                         wrapper.renderQuadsWithConsumer(moffy.ticex.client.draconicevolution.TicEXDEShader.instance.getRenderType(), wrapper.getQuad(), techLevel == TechLevel.CHAOTIC ? 0.9f : wrapper.getRed(), wrapper.getGreen(), wrapper.getBlue());
+                    } else {
+                        wrapper.renderQuadsWithConsumer();
                     }
                 }
             );

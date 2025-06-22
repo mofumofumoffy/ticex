@@ -17,7 +17,6 @@ public class TicEXPsiModule extends AddonModule{
         ToolCapabilityProvider.register(PsiItemCapabilityProvider::new);
 
         TicEXRegistry.PSIONIZING_RADIATION_CORE = TicEXRegistry.ITEMS.register("psionizing_radiation_core", ()->new ItemReconstCore(new Item.Properties(), "psionizing_radiation"));
-        TicEXRegistry.SOCKET_CORE = TicEXRegistry.ITEMS.register("socket_core", ()->new ItemReconstCore(new Item.Properties(), "socket"));
 
         TicEXRegistry.PSIONIZING_RADIATION_MODIFIER = TicEXRegistry.MODIFIERS.register("psionizing_radiation", ModifierPsionizingRadiation::new);
         TicEXRegistry.SOCKET_MODIFIER = TicEXRegistry.MODIFIERS.register("socket", ModifierSocket::new);

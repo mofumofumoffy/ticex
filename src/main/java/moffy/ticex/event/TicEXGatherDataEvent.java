@@ -14,6 +14,7 @@ import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
 import moffy.ticex.datagen.tool.MaterialDefinitionProvider;
 import moffy.ticex.datagen.tool.MaterialStatsProvider;
+import moffy.ticex.datagen.tool.MaterialTagProvider;
 import moffy.ticex.datagen.tool.MaterialTraitsProvider;
 import moffy.ticex.datagen.tool.ToolDefinitionProvider;
 import net.minecraft.core.HolderLookup.Provider;
@@ -36,7 +37,7 @@ public class TicEXGatherDataEvent {
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<Provider> lookupProvider = event.getLookupProvider();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        
+
         boolean server = event.includeServer();
         boolean client = event.includeClient();
 
@@ -49,17 +50,18 @@ public class TicEXGatherDataEvent {
         //common
         generator.addProvider(client, new FluidTextureProvider(packOutput));
         generator.addProvider(server, new TicEXRecipeProvider(packOutput));
-        generator.addProvider(server, new LootProvider(packOutput));        
+        generator.addProvider(server, new LootProvider(packOutput));
 
         //modifiers
         generator.addProvider(server, new ModifierProvider(packOutput));
         generator.addProvider(server, new ModifierTagProvider(packOutput, existingFileHelper));
-        
+
         //materials
         MaterialDefinitionProvider materialDefinitionProvider = new MaterialDefinitionProvider(packOutput);
         generator.addProvider(server, materialDefinitionProvider);
         generator.addProvider(server, new MaterialStatsProvider(packOutput, materialDefinitionProvider));
         generator.addProvider(server, new MaterialTraitsProvider(packOutput, materialDefinitionProvider));
+        generator.addProvider(server, new MaterialTagProvider(packOutput, existingFileHelper));
 
         //tools
         generator.addProvider(server, new ToolDefinitionProvider(packOutput));
