@@ -4,10 +4,10 @@
     "refmap": "ticex.refmap.json",
     "plugin": "moffy.ticex.modules.curios.TicEXCuriosMixinPlugin",
     "mixins": [
-        "PlayerMixin"
+
     ],
     "client": [
-        
+
     ],
     "server": [],
     "injectors": {

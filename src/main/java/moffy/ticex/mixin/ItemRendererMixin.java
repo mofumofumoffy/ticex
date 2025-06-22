@@ -89,7 +89,7 @@ public abstract class ItemRendererMixin {
                     pPoseStack.popPose();
                     cb.cancel();
                 }
-            } 
+            }
         }
     }
 
@@ -110,14 +110,14 @@ public abstract class ItemRendererMixin {
 
             RenderQuadArgsWrapper defaultWrapper = new RenderQuadArgsWrapper(renderType, pPoseStack, bakedquad, f, f1, f2,  1f, pCombinedLight, pCombinedOverlay, flag, pBuffer, pDisplayContext, tool);
 
+            Consumer<RenderQuadArgsWrapper> renderMethod = (wrapper->{
+                wrapper.renderQuadsWithConsumer();
+            });
+
             if(bakedquad instanceof ShaderToolQuad){
                 PartPredicate predicate = ((ShaderToolQuad)bakedquad).getPredicate();
                 ShaderProvider<RenderQuadArgsWrapper> provider = TicEXRegistry.TOOL_SHADERS.getProvider(predicate);
 
-                Consumer<RenderQuadArgsWrapper> renderMethod = (wrapper->{
-                    wrapper.renderQuadsWithConsumer();
-                });
-                
                 if(provider != null){
                     //underlay
                     if(!seenList.contains(predicate)){
@@ -141,6 +141,8 @@ public abstract class ItemRendererMixin {
                         addTaskFn.accept(new ShaderToolRenderUtils.RenderTask(ShaderToolRenderUtils.RenderPhase.NORMAL_MATERIAL, renderMethod, defaultWrapper));
                     }
                 }
+            } else {
+                addTaskFn.accept(new ShaderToolRenderUtils.RenderTask(ShaderToolRenderUtils.RenderPhase.NORMAL_MODIFIER, renderMethod, defaultWrapper));
             }
         }
     }

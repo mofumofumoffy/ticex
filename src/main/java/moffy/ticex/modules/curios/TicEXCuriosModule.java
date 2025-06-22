@@ -11,7 +11,6 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item.Properties;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
@@ -33,10 +32,9 @@ public class TicEXCuriosModule extends AddonModule{
         CuriosApi.registerCurioPredicate(new ResourceLocation(TicEX.MODID, "incomparable"), (result)->validate(result));
 
         bus.addListener(TicEXCuriosEvent::onRegisterCaps);
-        MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onItemSwap);
     }
 
-    public boolean validate(SlotResult result){
+    public static boolean validate(SlotResult result){
         ItemStack stack = result.stack();
         Item item = stack.getItem();
 
@@ -47,7 +45,7 @@ public class TicEXCuriosModule extends AddonModule{
                     switch (armor.getType()) {
                         case HELMET:
                             return result.slotContext().identifier().equals("incomparable_head");
-                        
+
                         case CHESTPLATE:
                             return result.slotContext().identifier().equals("incomparable_chest");
 
