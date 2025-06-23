@@ -28,6 +28,7 @@ public class TicEXPsiEvent {
                         context.loopcastIndex = timesCast;
                     });
                 }
+                armor.getPersistentData().putInt(ModifierPsionizingRadiation.TIMES_CAST_LOC, timesCast + 1);
             }
         });
     }
