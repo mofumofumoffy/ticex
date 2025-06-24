@@ -21,13 +21,13 @@ import slimeknights.tconstruct.library.tools.stat.ToolStats;
 public class TicEXIronsEvent {
 
     public static void onCastSpell(SpellOnCastEvent event) {
-        ItemStack bookStack = Utils.getPlayerSpellbookStack(event.getEntity());
+        /* ItemStack bookStack = Utils.getPlayerSpellbookStack(event.getEntity());
         if (bookStack != null && !bookStack.isEmpty() && bookStack.getItem() instanceof IModifiable) {
             ToolStack book = ToolStack.from(bookStack);
             if (book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0) {
                 event.setManaCost(Math.round(event.getManaCost()));
             }
-        }
+        } */
     }
 
     public static void onLivingHurt(LivingHurtEvent event) {
