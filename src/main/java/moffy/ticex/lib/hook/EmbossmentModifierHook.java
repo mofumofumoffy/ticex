@@ -1,7 +1,6 @@
 package moffy.ticex.lib.hook;
 
 import java.util.Collection;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.recipe.tinkerstation.ITinkerStationContainer;
@@ -9,19 +8,20 @@ import slimeknights.tconstruct.library.recipe.tinkerstation.ITinkerStationContai
 public interface EmbossmentModifierHook {
     public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary);
 
-    public static class DefaultClass implements EmbossmentModifierHook{
+    public static class DefaultClass implements EmbossmentModifierHook {
+
         @Override
         public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
             return false;
         }
     }
 
-    record AllMerger(Collection<EmbossmentModifierHook> modules) implements EmbossmentModifierHook{
+    record AllMerger(Collection<EmbossmentModifierHook> modules) implements EmbossmentModifierHook {
         @Override
         public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
-            for(EmbossmentModifierHook module : modules){
+            for (EmbossmentModifierHook module : modules) {
                 boolean result = module.applyItem(context, inputIndex, secondary);
-                if(result){
+                if (result) {
                     return true;
                 }
             }
@@ -29,12 +29,13 @@ public interface EmbossmentModifierHook {
         }
     }
 
-    public static class EmbossmentContext{
+    public static class EmbossmentContext {
+
         private ItemStack toolStack;
         private ITinkerStationContainer inv;
         private Component errorMsg;
 
-        public EmbossmentContext(ItemStack toolStack, ITinkerStationContainer inv){
+        public EmbossmentContext(ItemStack toolStack, ITinkerStationContainer inv) {
             this.toolStack = toolStack;
             this.inv = inv;
             this.errorMsg = Component.translatable("recipe.ticex.embossment_not_allowed");
@@ -48,7 +49,7 @@ public interface EmbossmentModifierHook {
             return inv;
         }
 
-        public ItemStack getInputStack(int index){
+        public ItemStack getInputStack(int index) {
             return inv.getInput(index);
         }
 

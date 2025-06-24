@@ -1,10 +1,9 @@
 package moffy.ticex.modifier;
 
-import java.util.Map;
-import java.util.function.BiFunction;
-
 import committee.nova.mods.avaritia.init.registry.ModDamageTypes;
 import committee.nova.mods.avaritia.util.ToolUtils;
+import java.util.Map;
+import java.util.function.BiFunction;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.modifier.propeties.OmnipotenceProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -13,9 +12,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -36,7 +35,10 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
-public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileHitModifierHook, MeleeHitModifierHook, BreakSpeedModifierHook, ProvidePropertyModifierHook{
+public class ModifierOmnipotence
+    extends NoLevelsModifier
+    implements ProjectileHitModifierHook, MeleeHitModifierHook, BreakSpeedModifierHook, ProvidePropertyModifierHook {
+
     @Override
     public int getPriority() {
         return 999;
@@ -44,19 +46,40 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
 
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.PROJECTILE_HIT, ModifierHooks.MELEE_HIT, ModifierHooks.BREAK_SPEED, TicEXRegistry.PROPERTY_PROVIDER_HOOK);
+        hookBuilder.addHook(
+            this,
+            ModifierHooks.PROJECTILE_HIT,
+            ModifierHooks.MELEE_HIT,
+            ModifierHooks.BREAK_SPEED,
+            TicEXRegistry.PROPERTY_PROVIDER_HOOK
+        );
     }
 
     @Override
-    public float beforeMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damage,
-            float baseKnockback, float knockback) {
+    public float beforeMeleeHit(
+        IToolStackView tool,
+        ModifierEntry modifier,
+        ToolAttackContext context,
+        float damage,
+        float baseKnockback,
+        float knockback
+    ) {
         LivingEntity victim = context.getLivingTarget();
-        if(victim != null){
+        if (victim != null) {
             if (victim instanceof EnderDragon) {
                 victim.setInvulnerable(false);
             } else if (victim instanceof Player pvp) {
                 if (ToolUtils.isInfinite(pvp)) {
-                    pvp.level().explode(context.getPlayerAttacker(), pvp.getBlockX(), pvp.getBlockY(), pvp.getBlockZ(), 25.0F, Level.ExplosionInteraction.MOB);
+                    pvp
+                        .level()
+                        .explode(
+                            context.getPlayerAttacker(),
+                            pvp.getBlockX(),
+                            pvp.getBlockY(),
+                            pvp.getBlockZ(),
+                            25.0F,
+                            Level.ExplosionInteraction.MOB
+                        );
                     return 0;
                 } else {
                     victim.setInvulnerable(false);
@@ -69,22 +92,40 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
     }
 
     @Override
-    public void afterMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context,
-            float damageDealt){
+    public void afterMeleeHit(
+        IToolStackView tool,
+        ModifierEntry modifier,
+        ToolAttackContext context,
+        float damageDealt
+    ) {
         LivingEntity attackerEntity = context.getAttacker();
         Entity victim = context.getTarget();
-        if(context.getLevel() instanceof ServerLevel){
+        if (context.getLevel() instanceof ServerLevel) {
             dealInfinityDamage(context.getLevel(), attackerEntity, victim);
         }
     }
 
     @Override
-    public boolean onProjectileHitEntity(ModifierNBT modifiers, ModDataNBT persistentData, ModifierEntry modifier,
-            Projectile projectile, EntityHitResult hit, LivingEntity attacker, LivingEntity target) {
-        boolean result = ProjectileHitModifierHook.super.onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit,
-        attacker, target);
+    public boolean onProjectileHitEntity(
+        ModifierNBT modifiers,
+        ModDataNBT persistentData,
+        ModifierEntry modifier,
+        Projectile projectile,
+        EntityHitResult hit,
+        LivingEntity attacker,
+        LivingEntity target
+    ) {
+        boolean result = ProjectileHitModifierHook.super.onProjectileHitEntity(
+            modifiers,
+            persistentData,
+            modifier,
+            projectile,
+            hit,
+            attacker,
+            target
+        );
 
-        if(attacker.level() instanceof ServerLevel){
+        if (attacker.level() instanceof ServerLevel) {
             dealInfinityDamage(attacker.level(), attacker, target);
         }
 
@@ -92,52 +133,69 @@ public class ModifierOmnipotence extends NoLevelsModifier implements ProjectileH
     }
 
     @Override
-    public void onBreakSpeed(IToolStackView tool, ModifierEntry entry, BreakSpeed event, Direction direction, boolean isEffective,
-            float miningSpeedModifier) {
+    public void onBreakSpeed(
+        IToolStackView tool,
+        ModifierEntry entry,
+        BreakSpeed event,
+        Direction direction,
+        boolean isEffective,
+        float miningSpeedModifier
+    ) {
         event.setNewSpeed(Float.MAX_VALUE);
     }
 
-    private void dealInfinityDamage(Level level, LivingEntity attackerEntity, Entity targetEntity){
-        if(targetEntity != null && targetEntity.isAlive()){
+    private void dealInfinityDamage(Level level, LivingEntity attackerEntity, Entity targetEntity) {
+        if (targetEntity != null && targetEntity.isAlive()) {
             LivingEntity victim = null;
 
-            if(targetEntity instanceof LivingEntity){
-                victim = (LivingEntity)targetEntity;
-            } else if(targetEntity instanceof PartEntity){
-                Entity parentEntity = ((PartEntity<?>)targetEntity).getParent();
-                if(parentEntity instanceof LivingEntity){
-                    victim = (LivingEntity)parentEntity;
+            if (targetEntity instanceof LivingEntity) {
+                victim = (LivingEntity) targetEntity;
+            } else if (targetEntity instanceof PartEntity) {
+                Entity parentEntity = ((PartEntity<?>) targetEntity).getParent();
+                if (parentEntity instanceof LivingEntity) {
+                    victim = (LivingEntity) parentEntity;
                 }
             }
 
+            if (level instanceof ServerLevel) {
+                if (victim != null) {
+                    ServerLevel serverLevel = (ServerLevel) level;
 
-            if(level instanceof ServerLevel){
-                if(victim != null){
-                    ServerLevel serverLevel = (ServerLevel)level;
-
-                    try{
+                    try {
                         ToolUtils.class.getDeclaredMethod("sweepAttack", Level.class, LivingEntity.class, Entity.class);
                         ToolUtils.sweepAttack(level, attackerEntity, targetEntity);
-                    }catch(Exception e){}
+                    } catch (Exception e) {}
 
                     victim.setHealth(0);
-                    victim.die(new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ModDamageTypes.INFINITY), victim, attackerEntity));
+                    victim.die(
+                        new DamageSource(
+                            level
+                                .registryAccess()
+                                .registryOrThrow(Registries.DAMAGE_TYPE)
+                                .getHolderOrThrow(ModDamageTypes.INFINITY),
+                            victim,
+                            attackerEntity
+                        )
+                    );
 
                     int reward = victim.getExperienceReward();
-                    if(reward > 0){
-                        victim.level().addFreshEntity(new ExperienceOrb(victim.level(), victim.getX(), victim.getY(), victim.getZ(), reward));
+                    if (reward > 0) {
+                        victim
+                            .level()
+                            .addFreshEntity(
+                                new ExperienceOrb(victim.level(), victim.getX(), victim.getY(), victim.getZ(), reward)
+                            );
                     }
 
-                    serverLevel.broadcastEntityEvent(victim, (byte)3);
+                    serverLevel.broadcastEntityEvent(victim, (byte) 3);
                 } else {
-
-                    ServerLevel serverLevel = (ServerLevel)level;
+                    ServerLevel serverLevel = (ServerLevel) level;
                     targetEntity.killedEntity(serverLevel, attackerEntity);
                     targetEntity.kill();
-                    serverLevel.broadcastEntityEvent(targetEntity, (byte)3);
+                    serverLevel.broadcastEntityEvent(targetEntity, (byte) 3);
                 }
             }
-            if(victim != null)victim.setPose(Pose.DYING);
+            if (victim != null) victim.setPose(Pose.DYING);
         }
     }
 

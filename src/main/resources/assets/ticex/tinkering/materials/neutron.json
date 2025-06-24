@@ -1,8 +1,6 @@
 {
   "color": "171717",
-  "fallbacks": [
-    "metal"
-  ],
+  "fallbacks": ["metal"],
   "generator": {
     "supported_stats": [
       "tconstruct:armor_plating",

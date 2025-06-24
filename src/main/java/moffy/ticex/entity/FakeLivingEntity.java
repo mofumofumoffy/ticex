@@ -2,7 +2,6 @@ package moffy.ticex.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -11,7 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class FakeLivingEntity extends LivingEntity{
+public class FakeLivingEntity extends LivingEntity {
 
     private final List<ItemStack> emptyList;
     private float fakeHealth;
@@ -32,9 +31,7 @@ public class FakeLivingEntity extends LivingEntity{
     }
 
     @Override
-    public void setItemSlot(EquipmentSlot pSlot, ItemStack pStack) {
-        
-    }
+    public void setItemSlot(EquipmentSlot pSlot, ItemStack pStack) {}
 
     @Override
     public HumanoidArm getMainArm() {
@@ -52,13 +49,10 @@ public class FakeLivingEntity extends LivingEntity{
         this.fakeHealth = pHealth;
     }
 
-
-    public float getFakeHealth(){
+    public float getFakeHealth() {
         return this.fakeHealth;
     }
 
     @Override
-    public void kill() {
-        
-    }
+    public void kill() {}
 }

@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import slimeknights.tconstruct.library.json.IntRange;
 import slimeknights.tconstruct.library.materials.RandomMaterial;
 

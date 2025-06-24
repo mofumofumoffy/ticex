@@ -1,14 +1,14 @@
 {
-    "sources": [
-      {
-        "type": "minecraft:directory",
-        "prefix": "tinker_armor/",
-        "source": "tinker_armor"
-      },
-      {
-        "type": "minecraft:directory",
-        "prefix": "obj_tool/",
-        "source": "obj_tool"
-      }
-    ]
+  "sources": [
+    {
+      "type": "minecraft:directory",
+      "prefix": "tinker_armor/",
+      "source": "tinker_armor"
+    },
+    {
+      "type": "minecraft:directory",
+      "prefix": "obj_tool/",
+      "source": "obj_tool"
+    }
+  ]
 }

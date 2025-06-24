@@ -15,7 +15,8 @@ import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import vazkii.psi.common.item.ItemExosuitSensor;
 
-public class ModifierSensor extends NoLevelsModifier implements EmbossmentModifierHook{
+public class ModifierSensor extends NoLevelsModifier implements EmbossmentModifierHook {
+
     public static final ResourceLocation EVENT_TYPE_LOC = new ResourceLocation(TicEX.MODID, "psieventtype");
     public static final ResourceLocation TIMES_CAST_LOC = new ResourceLocation(TicEX.MODID, "timescast");
 
@@ -28,7 +29,7 @@ public class ModifierSensor extends NoLevelsModifier implements EmbossmentModifi
     public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
         ItemStack toolStack = context.getToolStack();
         ItemStack inputStack = context.getInputStack(inputIndex);
-        if(inputStack.getItem() instanceof ItemExosuitSensor sensor){
+        if (inputStack.getItem() instanceof ItemExosuitSensor sensor) {
             ModDataNBT persistentData = ToolStack.from(toolStack).getPersistentData();
             persistentData.putString(EVENT_TYPE_LOC, sensor.getEventType(inputStack));
             return true;
@@ -38,6 +39,12 @@ public class ModifierSensor extends NoLevelsModifier implements EmbossmentModifi
 
     @Override
     public Component getDisplayName(IToolStackView tool, ModifierEntry entry, RegistryAccess access) {
-        return entry.getDisplayName().copy().append("(").append(Component.translatable(tool.getPersistentData().getString(EVENT_TYPE_LOC))).append(")").withStyle(entry.getDisplayName().getStyle());
+        return entry
+            .getDisplayName()
+            .copy()
+            .append("(")
+            .append(Component.translatable(tool.getPersistentData().getString(EVENT_TYPE_LOC)))
+            .append(")")
+            .withStyle(entry.getDisplayName().getStyle());
     }
 }

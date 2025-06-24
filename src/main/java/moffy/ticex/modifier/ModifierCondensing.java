@@ -12,12 +12,12 @@ import net.minecraft.world.level.Level;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
-import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.modifiers.hook.armor.OnAttackedModifierHook;
+import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.context.EquipmentContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-public class ModifierCondensing extends Modifier implements OnAttackedModifierHook{
+public class ModifierCondensing extends Modifier implements OnAttackedModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
@@ -26,14 +26,27 @@ public class ModifierCondensing extends Modifier implements OnAttackedModifierHo
     }
 
     @Override
-    public void onAttacked(IToolStackView tool, ModifierEntry entry, EquipmentContext context, EquipmentSlot slot,
-            DamageSource source, float amount, boolean isDirectDamage) {
+    public void onAttacked(
+        IToolStackView tool,
+        ModifierEntry entry,
+        EquipmentContext context,
+        EquipmentSlot slot,
+        DamageSource source,
+        float amount,
+        boolean isDirectDamage
+    ) {
         RandomSource random = context.getLevel().getRandom();
-        if(random.nextFloat() < TicEXConfig.CONDENSING_DROP_PROBABILITY.get()){
+        if (random.nextFloat() < TicEXConfig.CONDENSING_DROP_PROBABILITY.get()) {
             Level level = context.getLevel();
             LivingEntity livingEntity = context.getEntity();
             ItemStack pileStack = new ItemStack(ModItems.neutron_pile.get());
-            ItemEntity entity = new ItemEntity(level, livingEntity.getX(), livingEntity.getY() + 1, livingEntity.getZ(), pileStack);
+            ItemEntity entity = new ItemEntity(
+                level,
+                livingEntity.getX(),
+                livingEntity.getY() + 1,
+                livingEntity.getZ(),
+                pileStack
+            );
             level.addFreshEntity(entity);
         }
     }

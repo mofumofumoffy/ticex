@@ -19,45 +19,56 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class TicEXIronsEvent {
 
-    public static void onCastSpell(SpellOnCastEvent event){
+    public static void onCastSpell(SpellOnCastEvent event) {
         ItemStack bookStack = Utils.getPlayerSpellbookStack(event.getEntity());
-        if(bookStack != null && !bookStack.isEmpty() && bookStack.getItem() instanceof IModifiable){
+        if (bookStack != null && !bookStack.isEmpty() && bookStack.getItem() instanceof IModifiable) {
             ToolStack book = ToolStack.from(bookStack);
-            if(book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0){
+            if (book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0) {
                 event.setManaCost(Math.round(event.getManaCost()));
             }
         }
     }
 
-    public static void onLivingHurt(LivingHurtEvent event){
+    public static void onLivingHurt(LivingHurtEvent event) {
         LivingEntity target = event.getEntity();
         DamageSource source = event.getSource();
-        if(source instanceof SpellDamageSource && source.getEntity() instanceof Player player){
+        if (source instanceof SpellDamageSource && source.getEntity() instanceof Player player) {
             ItemStack bookStack = Utils.getPlayerSpellbookStack(player);
-            if(bookStack != null && bookStack.getItem() instanceof IModifiable){
+            if (bookStack != null && bookStack.getItem() instanceof IModifiable) {
                 IToolStackView book = ToolStack.from(bookStack);
 
-                if(book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0){
-                    ToolAttackContext context = new ToolAttackContext(player, player, InteractionHand.MAIN_HAND, target, target, false, 0, false);
+                if (book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0) {
+                    ToolAttackContext context = new ToolAttackContext(
+                        player,
+                        player,
+                        InteractionHand.MAIN_HAND,
+                        target,
+                        target,
+                        false,
+                        0,
+                        false
+                    );
 
                     float damage = event.getAmount();
                     float damageTmp = damage;
-                    for(ModifierEntry entry : book.getModifierList()){
-                        damage = entry.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(book, entry, context, damageTmp, damage);
+                    for (ModifierEntry entry : book.getModifierList()) {
+                        damage = entry
+                            .getHook(ModifierHooks.MELEE_DAMAGE)
+                            .getMeleeDamage(book, entry, context, damageTmp, damage);
                     }
 
-                    if(damage <= 0){
+                    if (damage <= 0) {
                         event.setCanceled(true);
                         return;
                     }
 
                     event.setAmount(damage);
 
-                    for(ModifierEntry entry : book.getModifierList()){
+                    for (ModifierEntry entry : book.getModifierList()) {
                         entry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(book, entry, context, damage, 0, 0);
                     }
 
-                    for(ModifierEntry entry : book.getModifierList()){
+                    for (ModifierEntry entry : book.getModifierList()) {
                         entry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(book, entry, context, damage);
                     }
                 }

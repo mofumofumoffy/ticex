@@ -1,49 +1,47 @@
 {
-    "color": "FF34EAf7",
-    "fallbacks": [
-      "metal"
+  "color": "FF34EAf7",
+  "fallbacks": ["metal"],
+  "generator": {
+    "supported_stats": [
+      "tconstruct:head",
+      "tconstruct:handle",
+      "tconstruct:binding",
+      "tconstruct:repair_kit",
+      "tconstruct:limb",
+      "tconstruct:grip"
     ],
-    "generator": {
-      "supported_stats": [
-        "tconstruct:head",
-        "tconstruct:handle",
-        "tconstruct:binding",
-        "tconstruct:repair_kit",
-        "tconstruct:limb",
-        "tconstruct:grip"
-      ],
-      "transformer": {
-        "type": "tconstruct:grey_to_sprite",
-        "palette": [
-          {
-            "color": "FF000000",
-            "grey": 0
-          },
-          {
-            "grey": 63,
-            "path": "ticex:material/crystal_matrix_outline_dark"
-          },
-          {
-            "grey": 102,
-            "path": "ticex:material/crystal_matrix_outline"
-          },
-          {
-            "color": "FF2D96B9",
-            "grey": 140
-          },
-          {
-            "color": "FF35A6D6",
-            "grey": 178
-          },
-          {
-            "color": "FF47BDEF",
-            "grey": 216
-          },
-          {
-            "color": "FFAADCFF",
-            "grey": 255
-          }
-        ]
-      }
+    "transformer": {
+      "type": "tconstruct:grey_to_sprite",
+      "palette": [
+        {
+          "color": "FF000000",
+          "grey": 0
+        },
+        {
+          "grey": 63,
+          "path": "ticex:material/crystal_matrix_outline_dark"
+        },
+        {
+          "grey": 102,
+          "path": "ticex:material/crystal_matrix_outline"
+        },
+        {
+          "color": "FF2D96B9",
+          "grey": 140
+        },
+        {
+          "color": "FF35A6D6",
+          "grey": 178
+        },
+        {
+          "color": "FF47BDEF",
+          "grey": 216
+        },
+        {
+          "color": "FFAADCFF",
+          "grey": 255
+        }
+      ]
     }
   }
+}

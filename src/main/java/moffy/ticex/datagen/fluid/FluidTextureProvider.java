@@ -31,19 +31,23 @@ public class FluidTextureProvider extends AbstractFluidTextureProvider {
         molten(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE);
 
         int i = 0;
-        for(FluidObject<UnplaceableFluid> fuel : TicEXRegistry.RF_FURNACE_FUELS){
+        for (FluidObject<UnplaceableFluid> fuel : TicEXRegistry.RF_FURNACE_FUELS) {
             fuels(fuel).color(i++ * 0x0C0C0C);
         }
     }
 
     private FluidTexture.Builder fuels(FluidObject<?> fluid) {
-        return this.texture(fluid.getType()).textures(new ResourceLocation(TicEX.MODID, "fluid/rf_furnace_fuels/"), false, false);
+        return this.texture(fluid.getType()).textures(
+                new ResourceLocation(TicEX.MODID, "fluid/rf_furnace_fuels/"),
+                false,
+                false
+            );
     }
 
     private FluidTexture.Builder named(FluidObject<?> fluid, String name) {
-        return texture(fluid).textures(new ResourceLocation(TicEX.MODID, "fluid/"+name+"/"), false, false);
+        return texture(fluid).textures(new ResourceLocation(TicEX.MODID, "fluid/" + name + "/"), false, false);
     }
-    
+
     private FluidTexture.Builder molten(FluidObject<?> fluid) {
         return named(fluid, "molten/" + withoutMolten(fluid));
     }

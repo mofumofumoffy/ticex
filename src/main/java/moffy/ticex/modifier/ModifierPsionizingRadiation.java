@@ -2,7 +2,6 @@ package moffy.ticex.modifier;
 
 import java.util.Map;
 import java.util.function.BiFunction;
-
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.utils.TicEXPsiUtils;
@@ -30,7 +29,9 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.utils.BlockSideHitListener;
 
-public class ModifierPsionizingRadiation extends NoLevelsModifier implements MeleeHitModifierHook, BlockBreakModifierHook, ProvidePropertyModifierHook, ValidateModifierHook{
+public class ModifierPsionizingRadiation
+    extends NoLevelsModifier
+    implements MeleeHitModifierHook, BlockBreakModifierHook, ProvidePropertyModifierHook, ValidateModifierHook {
 
     public static ResourceLocation AUTO_CASTING_LOC = new ResourceLocation(TicEX.MODID, "autocasting");
     public static ResourceLocation SOCKETS_LOC = new ResourceLocation(TicEX.MODID, "cad_sockets");
@@ -38,36 +39,50 @@ public class ModifierPsionizingRadiation extends NoLevelsModifier implements Mel
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.MELEE_HIT, ModifierHooks.BLOCK_BREAK, ModifierHooks.VALIDATE, TicEXRegistry.PROPERTY_PROVIDER_HOOK);
+        hookBuilder.addHook(
+            this,
+            ModifierHooks.MELEE_HIT,
+            ModifierHooks.BLOCK_BREAK,
+            ModifierHooks.VALIDATE,
+            TicEXRegistry.PROPERTY_PROVIDER_HOOK
+        );
     }
 
     @Override
     public Component validate(IToolStackView tool, ModifierEntry entry) {
-        if(entry.getModifier() == this){
+        if (entry.getModifier() == this) {
             initPersistentData(tool);
         }
         return null;
     }
 
     @Override
-    public void afterMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context,
-            float damageDealt) {
+    public void afterMeleeHit(
+        IToolStackView tool,
+        ModifierEntry modifier,
+        ToolAttackContext context,
+        float damageDealt
+    ) {
         initPersistentData(tool);
 
-        if (!tool.isBroken() && context.getPlayerAttacker() != null && !tool.getPersistentData().getBoolean(AUTO_CASTING_LOC)){
+        if (
+            !tool.isBroken() &&
+            context.getPlayerAttacker() != null &&
+            !tool.getPersistentData().getBoolean(AUTO_CASTING_LOC)
+        ) {
             return;
         }
 
         Player player = context.getPlayerAttacker();
         ItemStack toolStack = TicEXUtils.getToolStack(tool, player, this);
-        TicEXPsiUtils.CastSpell(player, toolStack, (spellContext)->{
+        TicEXPsiUtils.CastSpell(player, toolStack, spellContext -> {
             spellContext.attackedEntity = context.getLivingTarget();
         });
     }
 
     @Override
     public void afterBlockBreak(IToolStackView tool, ModifierEntry entry, ToolHarvestContext context) {
-        if (!tool.isBroken() && context.getPlayer() != null && !tool.getPersistentData().getBoolean(AUTO_CASTING_LOC)){
+        if (!tool.isBroken() && context.getPlayer() != null && !tool.getPersistentData().getBoolean(AUTO_CASTING_LOC)) {
             return;
         }
 
@@ -75,9 +90,13 @@ public class ModifierPsionizingRadiation extends NoLevelsModifier implements Mel
         ItemStack toolStack = TicEXUtils.getToolStack(tool, player, this);
 
         Direction sideHit = BlockSideHitListener.getSideHit(context.getPlayer());
-		Vec3 hit = new Vec3((double)context.getPos().getX() + 0.5D - sideHit.getStepX() * 0.5D, context.getPos().getY() + 0.5D - sideHit.getStepY() * 0.5D, context.getPos().getZ() + 0.5D - sideHit.getStepZ() * 0.5D);
+        Vec3 hit = new Vec3(
+            (double) context.getPos().getX() + 0.5D - sideHit.getStepX() * 0.5D,
+            context.getPos().getY() + 0.5D - sideHit.getStepY() * 0.5D,
+            context.getPos().getZ() + 0.5D - sideHit.getStepZ() * 0.5D
+        );
 
-        TicEXPsiUtils.CastSpell(player, toolStack, (spellContext)->{
+        TicEXPsiUtils.CastSpell(player, toolStack, spellContext -> {
             spellContext.positionBroken = new BlockHitResult(hit, sideHit, context.getPos(), false);
         });
     }
@@ -87,17 +106,17 @@ public class ModifierPsionizingRadiation extends NoLevelsModifier implements Mel
         return PsionizingRadiationProperty.getProperties();
     }
 
-    protected void initPersistentData(IToolStackView tool){
+    protected void initPersistentData(IToolStackView tool) {
         ModDataNBT persistentData = tool.getPersistentData();
-        if(!persistentData.contains(AUTO_CASTING_LOC, Tag.TAG_BYTE)){
+        if (!persistentData.contains(AUTO_CASTING_LOC, Tag.TAG_BYTE)) {
             persistentData.putBoolean(AUTO_CASTING_LOC, true);
         }
 
-        if(!persistentData.contains(SOCKETS_LOC, Tag.TAG_INT)){
+        if (!persistentData.contains(SOCKETS_LOC, Tag.TAG_INT)) {
             persistentData.putInt(SOCKETS_LOC, 1);
         }
 
-        if(!persistentData.contains(TIMES_CAST_LOC, Tag.TAG_INT)){
+        if (!persistentData.contains(TIMES_CAST_LOC, Tag.TAG_INT)) {
             persistentData.putInt(TIMES_CAST_LOC, 0);
         }
     }

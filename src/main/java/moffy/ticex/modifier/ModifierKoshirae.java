@@ -1,7 +1,6 @@
 package moffy.ticex.modifier;
 
 import java.util.EnumSet;
-
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
@@ -13,7 +12,8 @@ import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModifierHook{
+public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModifierHook {
+
     @Override
     protected void registerHooks(Builder hookBuilder) {
         hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK);
@@ -26,14 +26,19 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
 
         ToolStack tool = ToolStack.from(toolStack);
         EnumSet<SwordType> swordTypes = SwordType.from(toolStack);
-        if(swordTypes.contains(SwordType.BEWITCHED)){
-            toolStack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(resultState -> {
-                CompoundTag bladeStateTag = input.getOrCreateTag().getCompound("embossed").getCompound("bladeState");
-                resultState.deserializeNBT(bladeStateTag);
-                toolStack.getOrCreateTag().put("bladeState", bladeStateTag);
-            });
+        if (swordTypes.contains(SwordType.BEWITCHED)) {
+            toolStack
+                .getCapability(ItemSlashBlade.BLADESTATE)
+                .ifPresent(resultState -> {
+                    CompoundTag bladeStateTag = input
+                        .getOrCreateTag()
+                        .getCompound("embossed")
+                        .getCompound("bladeState");
+                    resultState.deserializeNBT(bladeStateTag);
+                    toolStack.getOrCreateTag().put("bladeState", bladeStateTag);
+                });
 
-            if(tool.getModifierLevel(TicEXRegistry.REBIRTH_MODIFIER.get()) < 1){
+            if (tool.getModifierLevel(TicEXRegistry.REBIRTH_MODIFIER.get()) < 1) {
                 tool.addModifier(TicEXRegistry.REBIRTH_MODIFIER.getId(), 1);
             }
 
@@ -42,7 +47,6 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
             context.setErrorMsg(Component.translatable("recipe.ticex.not_be_witched"));
         }
         return false;
-
     }
 
     @Override

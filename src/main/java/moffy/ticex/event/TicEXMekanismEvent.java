@@ -2,9 +2,7 @@ package moffy.ticex.event;
 
 import java.util.Map;
 import java.util.Optional;
-
 import javax.annotation.Nullable;
-
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.energy.IEnergyContainer;
@@ -47,7 +45,7 @@ public class TicEXMekanismEvent {
 
     @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
-        if(TicEXConfig.MEKAPLATE_USE_POWER_SHIELD.get()){
+        if (TicEXConfig.MEKAPLATE_USE_POWER_SHIELD.get()) {
             LivingEntity entity = event.getEntity();
             if (event.getAmount() <= 0 || !entity.isAlive()) {
                 return;
@@ -59,7 +57,11 @@ public class TicEXMekanismEvent {
                 }
             }
             if (entity instanceof Player player) {
-                float ratioAbsorbed = ModifiableMekaSuitArmor.getDamageAbsorbed(player, event.getSource(), event.getAmount());
+                float ratioAbsorbed = ModifiableMekaSuitArmor.getDamageAbsorbed(
+                    player,
+                    event.getSource(),
+                    event.getAmount()
+                );
                 if (ratioAbsorbed > 0) {
                     float damageRemaining = event.getAmount() * Math.max(0, 1 - ratioAbsorbed);
                     if (damageRemaining <= 0) {
@@ -75,18 +77,26 @@ public class TicEXMekanismEvent {
         }
     }
 
-    private boolean handleDamage(LivingHurtEvent event, @Nullable IEnergyContainer energyContainer, FloatSupplier absorptionRatio, FloatingLongSupplier energyCost) {
+    private boolean handleDamage(
+        LivingHurtEvent event,
+        @Nullable IEnergyContainer energyContainer,
+        FloatSupplier absorptionRatio,
+        FloatingLongSupplier energyCost
+    ) {
         if (energyContainer != null) {
             float absorption = absorptionRatio.getAsFloat();
             float amount = event.getAmount() * absorption;
             FloatingLong energyRequirement = energyCost.get().multiply(amount);
             float ratioAbsorbed;
             if (energyRequirement.isZero()) {
-                
-                
                 ratioAbsorbed = absorption;
             } else {
-                ratioAbsorbed = absorption * energyContainer.extract(energyRequirement, Action.EXECUTE, AutomationType.MANUAL).divide(amount).floatValue();
+                ratioAbsorbed =
+                    absorption *
+                    energyContainer
+                        .extract(energyRequirement, Action.EXECUTE, AutomationType.MANUAL)
+                        .divide(amount)
+                        .floatValue();
             }
             if (ratioAbsorbed > 0) {
                 float damageRemaining = event.getAmount() * Math.max(0, 1 - ratioAbsorbed);
@@ -104,15 +114,24 @@ public class TicEXMekanismEvent {
     @SubscribeEvent
     public void onLivingJump(LivingJumpEvent event) {
         if (event.getEntity() instanceof Player player) {
-            IModule<ModuleHydraulicPropulsionUnit> module = IModuleHelper.INSTANCE.load(player.getItemBySlot(EquipmentSlot.FEET), MekanismModules.HYDRAULIC_PROPULSION_UNIT);
+            IModule<ModuleHydraulicPropulsionUnit> module = IModuleHelper.INSTANCE.load(
+                player.getItemBySlot(EquipmentSlot.FEET),
+                MekanismModules.HYDRAULIC_PROPULSION_UNIT
+            );
             if (module != null && module.isEnabled() && Mekanism.keyMap.has(player.getUUID(), KeySync.BOOST)) {
                 float boost = module.getCustomInstance().getBoost();
                 FloatingLong usage = MekanismConfig.gear.mekaSuitBaseJumpEnergyUsage.get().multiply(boost / 0.1F);
                 IEnergyContainer energyContainer = module.getEnergyContainer();
                 if (module.canUseEnergy(player, energyContainer, usage, false)) {
-                    
-                    IModule<ModuleLocomotiveBoostingUnit> boostModule = IModuleHelper.INSTANCE.load(player.getItemBySlot(EquipmentSlot.LEGS), MekanismModules.LOCOMOTIVE_BOOSTING_UNIT);
-                    if (boostModule != null && boostModule.isEnabled() && boostModule.getCustomInstance().canFunction(boostModule, player)) {
+                    IModule<ModuleLocomotiveBoostingUnit> boostModule = IModuleHelper.INSTANCE.load(
+                        player.getItemBySlot(EquipmentSlot.LEGS),
+                        MekanismModules.LOCOMOTIVE_BOOSTING_UNIT
+                    );
+                    if (
+                        boostModule != null &&
+                        boostModule.isEnabled() &&
+                        boostModule.getCustomInstance().canFunction(boostModule, player)
+                    ) {
                         boost = (float) Math.sqrt(boost);
                     }
                     player.setDeltaMovement(player.getDeltaMovement().add(0, boost, 0));
@@ -128,19 +147,28 @@ public class TicEXMekanismEvent {
         if (!feetStack.isEmpty()) {
             if (feetStack.getItem() instanceof ItemFreeRunners boots) {
                 if (boots.getMode(feetStack).preventsFallDamage()) {
-                    return new FallEnergyInfo(StorageUtils.getEnergyContainer(feetStack, 0), MekanismConfig.gear.freeRunnerFallDamageRatio,
-                          MekanismConfig.gear.freeRunnerFallEnergyCost);
+                    return new FallEnergyInfo(
+                        StorageUtils.getEnergyContainer(feetStack, 0),
+                        MekanismConfig.gear.freeRunnerFallDamageRatio,
+                        MekanismConfig.gear.freeRunnerFallEnergyCost
+                    );
                 }
             } else if (feetStack.getItem() instanceof ModifiableMekaSuitArmor) {
-                return new FallEnergyInfo(StorageUtils.getEnergyContainer(feetStack, 0), MekanismConfig.gear.mekaSuitFallDamageRatio,
-                      MekanismConfig.gear.mekaSuitEnergyUsageFall);
+                return new FallEnergyInfo(
+                    StorageUtils.getEnergyContainer(feetStack, 0),
+                    MekanismConfig.gear.mekaSuitFallDamageRatio,
+                    MekanismConfig.gear.mekaSuitEnergyUsageFall
+                );
             }
         }
         return null;
     }
 
-    private record FallEnergyInfo(@Nullable IEnergyContainer container, FloatSupplier damageRatio, FloatingLongSupplier energyCost) {
-    }
+    private record FallEnergyInfo(
+        @Nullable IEnergyContainer container,
+        FloatSupplier damageRatio,
+        FloatingLongSupplier energyCost
+    ) {}
 
     @SubscribeEvent
     public void getBreakSpeed(BreakSpeed event) {
@@ -150,23 +178,28 @@ public class TicEXMekanismEvent {
         Optional<BlockPos> position = event.getPosition();
         if (position.isPresent()) {
             BlockPos pos = position.get();
-            
+
             ItemStack mainHand = player.getMainHandItem();
             if (!mainHand.isEmpty() && mainHand.getItem() instanceof IBlastingItem tool) {
-                Map<BlockPos, BlockState> blocks = tool.getBlastedBlocks(player.level(), player, mainHand, pos, event.getState());
+                Map<BlockPos, BlockState> blocks = tool.getBlastedBlocks(
+                    player.level(),
+                    player,
+                    mainHand,
+                    pos,
+                    event.getState()
+                );
                 if (!blocks.isEmpty()) {
-                    
-                    
                     float targetHardness = event.getState().getDestroySpeed(player.level(), pos);
-                    float maxHardness = blocks.entrySet().stream()
-                          .map(entry -> entry.getValue().getDestroySpeed(player.level(), entry.getKey()))
-                          .reduce(targetHardness, Float::max);
+                    float maxHardness = blocks
+                        .entrySet()
+                        .stream()
+                        .map(entry -> entry.getValue().getDestroySpeed(player.level(), entry.getKey()))
+                        .reduce(targetHardness, Float::max);
                     speed *= (targetHardness / maxHardness);
                 }
             }
         }
 
-        
         ItemStack legs = player.getItemBySlot(EquipmentSlot.LEGS);
         if (!legs.isEmpty() && IModuleHelper.INSTANCE.isEnabled(legs, MekanismModules.GYROSCOPIC_STABILIZATION_UNIT)) {
             if (player.isEyeInFluidType(ForgeMod.WATER_TYPE.get()) && !EnchantmentHelper.hasAquaAffinity(player)) {
@@ -182,12 +215,12 @@ public class TicEXMekanismEvent {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void onLoadAdditionalModel(ModelEvent.RegisterAdditional event){
-            MekaPlateModelCache.INSTANCE.setup(event);
+    public static void onLoadAdditionalModel(ModelEvent.RegisterAdditional event) {
+        MekaPlateModelCache.INSTANCE.setup(event);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void onModelBake(BakingCompleted event){
-            MekaPlateModelCache.INSTANCE.onBake(event);
+    public static void onModelBake(BakingCompleted event) {
+        MekaPlateModelCache.INSTANCE.onBake(event);
     }
 }

@@ -2,20 +2,20 @@ package moffy.ticex.block.entity;
 
 import net.minecraftforge.energy.EnergyStorage;
 
-public class RFFurnaceEnergyStorage extends EnergyStorage{
+public class RFFurnaceEnergyStorage extends EnergyStorage {
 
     private int energyRate;
     private int maxEnergyRate;
 
     public RFFurnaceEnergyStorage(int maxEnergyRate) {
-            super(maxEnergyRate);
-            this.maxEnergyRate = maxEnergyRate;
-        }
-    
-        @Override
+        super(maxEnergyRate);
+        this.maxEnergyRate = maxEnergyRate;
+    }
+
+    @Override
     public int receiveEnergy(int maxReceive, boolean simulate) {
         int received = Math.min(maxEnergyRate, maxReceive);
-        if(!simulate){
+        if (!simulate) {
             this.energyRate = received;
             this.energy = received;
         }
@@ -25,10 +25,10 @@ public class RFFurnaceEnergyStorage extends EnergyStorage{
     @Override
     public int extractEnergy(int maxExtract, boolean simulate) {
         int extracted = Math.min(this.energy, maxExtract);
-        if(!simulate){
+        if (!simulate) {
             this.energy -= extracted;
         }
-        return extracted; 
+        return extracted;
     }
 
     @Override

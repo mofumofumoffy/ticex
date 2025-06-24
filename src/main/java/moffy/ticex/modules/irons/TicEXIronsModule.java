@@ -10,12 +10,19 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
-public class TicEXIronsModule extends AddonModule{
-    public TicEXIronsModule(){
+public class TicEXIronsModule extends AddonModule {
 
-        TicEXRegistry.CATALYST_IRONS_SPELLBOOK = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_irons_spellbook", ()->new ToolPartItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_irons_spellbook").getId()));
+    public TicEXIronsModule() {
+        TicEXRegistry.CATALYST_IRONS_SPELLBOOK = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_irons_spellbook", () ->
+            new ToolPartItem(
+                new Item.Properties(),
+                CatalystMaterialStatsType.getOrMakeType("catalyst_irons_spellbook").getId()
+            )
+        );
 
-        TicEXRegistry.REVIVAL_SPELLBOOK_IRONS = TicEXRegistry.ITEMS_EXTENDED.register("revival_spellbook_irons", ()->new ModifiableIronsSpellbookItem(TicEXRegistry.SPELLBOOK_DEFINITION, 1));
+        TicEXRegistry.REVIVAL_SPELLBOOK_IRONS = TicEXRegistry.ITEMS_EXTENDED.register("revival_spellbook_irons", () ->
+            new ModifiableIronsSpellbookItem(TicEXRegistry.SPELLBOOK_DEFINITION, 1)
+        );
 
         TicEXRegistry.OVERCASTING_MODIFIER = TicEXRegistry.MODIFIERS.register("overcasting", ModifierOvercasting::new);
 

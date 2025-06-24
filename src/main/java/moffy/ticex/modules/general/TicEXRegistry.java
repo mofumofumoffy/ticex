@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
-
 import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.client.ShaderInstanceMap;
@@ -28,6 +27,9 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
@@ -36,9 +38,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -59,54 +58,100 @@ import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
-
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
 
 public class TicEXRegistry {
 
     public static final BlockBehaviour.Properties SEARED;
+
     static {
         IntFunction<BlockBehaviour.Properties> solidProps = factor ->
-        builder(MapColor.COLOR_GRAY, SoundType.METAL)
-            .instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F * factor, 9.0F * factor)
-            .isValidSpawn((s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE));
+            builder(MapColor.COLOR_GRAY, SoundType.METAL)
+                .instrument(NoteBlockInstrument.BASEDRUM)
+                .requiresCorrectToolForDrops()
+                .strength(3.0F * factor, 9.0F * factor)
+                .isValidSpawn(
+                    (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
+                );
         SEARED = solidProps.apply(1);
     }
 
     public static final BlockBehaviour.Properties SCORCHED;
+
     static {
-        IntFunction<BlockBehaviour.Properties> solidProps = factor -> builder(MapColor.TERRACOTTA_BROWN, SoundType.BASALT)
-        .instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(2.5F * factor, 8.0F * factor)
-        .isValidSpawn((s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE));
+        IntFunction<BlockBehaviour.Properties> solidProps = factor ->
+            builder(MapColor.TERRACOTTA_BROWN, SoundType.BASALT)
+                .instrument(NoteBlockInstrument.BASEDRUM)
+                .requiresCorrectToolForDrops()
+                .strength(2.5F * factor, 8.0F * factor)
+                .isValidSpawn(
+                    (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
+                );
         SCORCHED = solidProps.apply(1);
     }
 
-    public static final TagKey<Item> KEY_MODIFIER_UNSTABLE = TagKey.create(Registries.ITEM, new ResourceLocation(TicEX.MODID, "tool/unstable_modifier"));
+    public static final TagKey<Item> KEY_MODIFIER_UNSTABLE = TagKey.create(
+        Registries.ITEM,
+        new ResourceLocation(TicEX.MODID, "tool/unstable_modifier")
+    );
 
-    public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "mekaplate"), SoundEvents.ARMOR_EQUIP_NETHERITE);
-    public static final ModifiableArmorMaterial SINGULAR_GEM_DEFINITION = ModifiableArmorMaterial.create(new ResourceLocation(TicEX.MODID, "singular_gem"), SoundEvents.ARMOR_EQUIP_NETHERITE);
-    public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "reforged_slashblade"));
-    public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "blitz_gun"));
-    public static final ToolDefinition SPELLBOOK_DEFINITION = ToolDefinition.create(new ResourceLocation(TicEX.MODID, "revival_spellbook"));
+    public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(
+        new ResourceLocation(TicEX.MODID, "mekaplate"),
+        SoundEvents.ARMOR_EQUIP_NETHERITE
+    );
+    public static final ModifiableArmorMaterial SINGULAR_GEM_DEFINITION = ModifiableArmorMaterial.create(
+        new ResourceLocation(TicEX.MODID, "singular_gem"),
+        SoundEvents.ARMOR_EQUIP_NETHERITE
+    );
+    public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(
+        new ResourceLocation(TicEX.MODID, "reforged_slashblade")
+    );
+    public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(
+        new ResourceLocation(TicEX.MODID, "blitz_gun")
+    );
+    public static final ToolDefinition SPELLBOOK_DEFINITION = ToolDefinition.create(
+        new ResourceLocation(TicEX.MODID, "revival_spellbook")
+    );
 
     public static final Map<Item, Function<BakedModel, BakedModel>> CUSTOM_MODELS = new HashMap<>();
     public static final ToolShaderMap.Tool TOOL_SHADERS = new ToolShaderMap.Tool();
     public static final ToolShaderMap.Armor ARMOR_SHADERS = new ToolShaderMap.Armor();
     public static final ShaderInstanceMap SHADER_INSTANCE_MAP = new ShaderInstanceMap();
-    public static final Set<Function<LivingEntity, ItemStack>>TOOL_GETTERS = new HashSet<>();
+    public static final Set<Function<LivingEntity, ItemStack>> TOOL_GETTERS = new HashSet<>();
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
-    public static final TicEXItemDeferredRegisterExtension ITEMS_EXTENDED = new TicEXItemDeferredRegisterExtension(ITEMS, TicEX.MODID);
+    public static final TicEXItemDeferredRegisterExtension ITEMS_EXTENDED = new TicEXItemDeferredRegisterExtension(
+        ITEMS,
+        TicEX.MODID
+    );
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TicEX.MODID);
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TicEX.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(
+        ForgeRegistries.BLOCK_ENTITY_TYPES,
+        TicEX.MODID
+    );
     public static final FluidDeferredRegister FLUIDS = new FluidDeferredRegister(TicEX.MODID);
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, TicEX.MODID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(
+        ForgeRegistries.ENTITY_TYPES,
+        TicEX.MODID
+    );
     public static final ModifierDeferredRegister MODIFIERS = ModifierDeferredRegister.create(TicEX.MODID);
-    public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, TicEX.MODID);
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TicEX.MODID);
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, TicEX.MODID);
-    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, TicEX.MODID);
+    public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(
+        ForgeRegistries.ATTRIBUTES,
+        TicEX.MODID
+    );
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(
+        Registries.CREATIVE_MODE_TAB,
+        TicEX.MODID
+    );
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(
+        Registries.RECIPE_SERIALIZER,
+        TicEX.MODID
+    );
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(
+        Registries.RECIPE_TYPE,
+        TicEX.MODID
+    );
 
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
@@ -182,9 +227,9 @@ public class TicEXRegistry {
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_CRYSTAL_MATRIX = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
 
-    public static RegistryObject<EntityType<?>>FAKE_LIVING_ENTITY = null;
-    public static RegistryObject<EntityType<?>>SLASHBLADE_TOOL_ITEM_ENTITY = null;
-    public static RegistryObject<EntityType<?>>ENDESTSHOT_PROJECTILE = null;
+    public static RegistryObject<EntityType<?>> FAKE_LIVING_ENTITY = null;
+    public static RegistryObject<EntityType<?>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
+    public static RegistryObject<EntityType<?>> ENDESTSHOT_PROJECTILE = null;
 
     public static RegistryObject<Attribute> HEALING_RECEIVED = null;
     public static RegistryObject<Attribute> DAMAGE_TAKEN = null;
@@ -230,14 +275,14 @@ public class TicEXRegistry {
     public static Tier INFINITY_TIER;
 
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
-        for(RegistryObject<Item> itemObject : ITEMS.getEntries()){
+        for (RegistryObject<Item> itemObject : ITEMS.getEntries()) {
             Item item = itemObject.get();
-            if(!(item instanceof ToolPartItem || item instanceof IModifiable)){
+            if (!(item instanceof ToolPartItem || item instanceof IModifiable)) {
                 output.accept(itemObject.get());
             }
         }
 
-        for(RegistryObject<Block> blockObject : BLOCKS.getEntries()){
+        for (RegistryObject<Block> blockObject : BLOCKS.getEntries()) {
             output.accept(blockObject.get().asItem());
         }
 
@@ -261,41 +306,43 @@ public class TicEXRegistry {
         acceptCast(output, SLASHBLADE_SAYA_CAST);
     }
 
-    private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends Item> toolObject){
-        if(toolObject != null){
+    private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends Item> toolObject) {
+        if (toolObject != null) {
             Item item = toolObject.get();
-            if(item instanceof IModifiable){
-                ToolBuildHandler.addVariants(output::accept, (IModifiable)item, "");
+            if (item instanceof IModifiable) {
+                ToolBuildHandler.addVariants(output::accept, (IModifiable) item, "");
             }
         }
     }
 
-    private static void acceptArmor(CreativeModeTab.Output output, EnumObject<?,? extends IModifiable> armorObject){
-        if(armorObject != null){
+    private static void acceptArmor(CreativeModeTab.Output output, EnumObject<?, ? extends IModifiable> armorObject) {
+        if (armorObject != null) {
             armorObject.forEach(obj -> ToolBuildHandler.addVariants(output::accept, obj, ""));
         }
     }
 
-    private static void acceptCatalystArmor(CreativeModeTab.Output output, EnumObject<ArmorItem.Type, ToolPartItem> catalystObject){
-        if(catalystObject != null){
+    private static void acceptCatalystArmor(
+        CreativeModeTab.Output output,
+        EnumObject<ArmorItem.Type, ToolPartItem> catalystObject
+    ) {
+        if (catalystObject != null) {
             catalystObject.forEach(c -> c.addVariants(output::accept, ""));
         }
     }
 
-    private static void acceptPart(CreativeModeTab.Output output, ItemObject<ToolPartItem> partObject){
-        if(partObject != null){
+    private static void acceptPart(CreativeModeTab.Output output, ItemObject<ToolPartItem> partObject) {
+        if (partObject != null) {
             partObject.get().addVariants(output::accept, "");
         }
     }
 
-    private static void acceptCast(CreativeModeTab.Output output, CastItemObject castObject){
-        if(castObject != null){
+    private static void acceptCast(CreativeModeTab.Output output, CastItemObject castObject) {
+        if (castObject != null) {
             output.accept(castObject.get());
             output.accept(castObject.getRedSand());
             output.accept(castObject.getSand());
         }
     }
-
 
     private static BlockBehaviour.Properties builder(MapColor color, SoundType soundType) {
         return BlockBehaviour.Properties.of().sound(soundType).mapColor(color);

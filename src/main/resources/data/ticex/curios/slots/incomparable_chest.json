@@ -1,5 +1,5 @@
 {
-    "size": 1,
-    "icon":"ticex:slot/chest",
-    "validators": ["ticex:incomparable"]
+  "size": 1,
+  "icon": "ticex:slot/chest",
+  "validators": ["ticex:incomparable"]
 }

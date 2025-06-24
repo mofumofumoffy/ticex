@@ -1,8 +1,6 @@
 {
-    "type": "ticex:single_embossment_modifier",
-    "emboss_input": [
-      { "item":"ticex:catalyst_slashblade" }
-    ],
-    "tools": { "tag": "ticex:seram/slashblade" },
-    "result": "ticex:koshirae"
-  }
+  "type": "ticex:single_embossment_modifier",
+  "emboss_input": [{ "item": "ticex:catalyst_slashblade" }],
+  "tools": { "tag": "ticex:seram/slashblade" },
+  "result": "ticex:koshirae"
+}

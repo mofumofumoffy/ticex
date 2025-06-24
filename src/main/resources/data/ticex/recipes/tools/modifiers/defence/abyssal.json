@@ -1,19 +1,19 @@
 {
-    "type": "tconstruct:modifier",
-    "inputs": [
-      {
-        "item": "ticex:catalyst_gem_helmet"
-      }
-    ],
-    "tools": [
-      {
-        "type": "forge:difference",
-        "base": { "tag": "tconstruct:modifiable/armor/helmets" },
-        "subtracted": { "tag": "ticex:seram/gem" }
-      }
-    ],
-    "slots": {
-      "defense": 1
-    },
-    "result": "ticex:abyssal"
-  }
+  "type": "tconstruct:modifier",
+  "inputs": [
+    {
+      "item": "ticex:catalyst_gem_helmet"
+    }
+  ],
+  "tools": [
+    {
+      "type": "forge:difference",
+      "base": { "tag": "tconstruct:modifiable/armor/helmets" },
+      "subtracted": { "tag": "ticex:seram/gem" }
+    }
+  ],
+  "slots": {
+    "defense": 1
+  },
+  "result": "ticex:abyssal"
+}

@@ -1,15 +1,15 @@
 {
-    "type": "ticex:embossment_casting",
-    "conditions": [
-      {
-        "type": "addonapi:mods_available",
-        "required_raw_module": "ticex:mekanism_compat"
-      }
-    ],
-    "cast": {
-      "item": "mekanism:mekasuit_helmet"
-    },
-    "cast_consumed": true,
-    "item_cost": 1,
-    "result": "ticex:catalyst_mekasuit_helmet"
-  }
+  "type": "ticex:embossment_casting",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:mekanism_compat"
+    }
+  ],
+  "cast": {
+    "item": "mekanism:mekasuit_helmet"
+  },
+  "cast_consumed": true,
+  "item_cost": 1,
+  "result": "ticex:catalyst_mekasuit_helmet"
+}

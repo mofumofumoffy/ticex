@@ -1,7 +1,6 @@
 package moffy.ticex.modifier;
 
 import java.util.function.Predicate;
-
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -26,14 +25,26 @@ public class ModifierEndestShot extends NoLevelsModifier implements BowAmmoModif
     }
 
     @Override
-    public ItemStack findAmmo(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, ItemStack standardAmmo, Predicate<ItemStack> ammoPredicate) {
+    public ItemStack findAmmo(
+        IToolStackView tool,
+        ModifierEntry modifier,
+        LivingEntity shooter,
+        ItemStack standardAmmo,
+        Predicate<ItemStack> ammoPredicate
+    ) {
         ItemStack itemstack = new ItemStack(TicEXRegistry.ENDESTSHOT_ARROW.get());
         itemstack.setCount(64);
         return itemstack;
     }
 
     @Override
-    public void shrinkAmmo(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, ItemStack ammo, int needed) {
+    public void shrinkAmmo(
+        IToolStackView tool,
+        ModifierEntry modifier,
+        LivingEntity shooter,
+        ItemStack ammo,
+        int needed
+    ) {
         ToolDamageUtil.damageAnimated(tool, 16 * needed, shooter, shooter.getUsedItemHand());
     }
 }

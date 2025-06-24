@@ -1,9 +1,6 @@
 package moffy.ticex.datagen.general.tag;
 
 import java.util.concurrent.CompletableFuture;
-
-import org.jetbrains.annotations.Nullable;
-
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import net.minecraft.core.HolderLookup.Provider;
@@ -13,15 +10,19 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.common.TinkerTags;
 
-public class FluidTagProvider extends FluidTagsProvider{
+public class FluidTagProvider extends FluidTagsProvider {
 
-    public FluidTagProvider(PackOutput pOutput, CompletableFuture<Provider> pProvider,
-            @Nullable ExistingFileHelper existingFileHelper) {
+    public FluidTagProvider(
+        PackOutput pOutput,
+        CompletableFuture<Provider> pProvider,
+        @Nullable ExistingFileHelper existingFileHelper
+    ) {
         super(pOutput, pProvider, TicEX.MODID, existingFileHelper);
     }
-    
+
     @Override
     protected void addTags(Provider pProvider) {
         fluidTag(TicEXTags.Fluids.INFINITY, new ResourceLocation(TicEX.MODID, "molten_infinity"));
@@ -32,7 +33,8 @@ public class FluidTagProvider extends FluidTagsProvider{
 
         fluidTag(TicEXTags.Fluids.RECONSTRUCTION_CORE, new ResourceLocation(TicEX.MODID, "molten_reconstruction_core"));
 
-        fluidTag(TinkerTags.Fluids.METAL_TOOLTIPS, 
+        fluidTag(
+            TinkerTags.Fluids.METAL_TOOLTIPS,
             new ResourceLocation(TicEX.MODID, "molten_infinity"),
             new ResourceLocation(TicEX.MODID, "molten_neutron"),
             new ResourceLocation(TicEX.MODID, "molten_crystal_matrix"),
@@ -40,8 +42,8 @@ public class FluidTagProvider extends FluidTagsProvider{
         );
     }
 
-    private void fluidTag(TagKey<Fluid> tagKey, ResourceLocation... rls){
-        for(ResourceLocation rl : rls){
+    private void fluidTag(TagKey<Fluid> tagKey, ResourceLocation... rls) {
+        for (ResourceLocation rl : rls) {
             this.tag(tagKey).addOptional(rl);
         }
     }

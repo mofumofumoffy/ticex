@@ -1,9 +1,9 @@
 {
-    "type": "tconstruct:material",
-    "ingredient": {
-      "item":"ticex:chaotic_crystal"
-    },
-    "material": "ticex:chaotic",
-    "needed": 1,
-    "value": 1
-  }
+  "type": "tconstruct:material",
+  "ingredient": {
+    "item": "ticex:chaotic_crystal"
+  },
+  "material": "ticex:chaotic",
+  "needed": 1,
+  "value": 1
+}

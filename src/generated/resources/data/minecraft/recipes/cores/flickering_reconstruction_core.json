@@ -9,11 +9,7 @@
       "item": "minecraft:nether_star"
     }
   },
-  "pattern": [
-    "ccc",
-    "csc",
-    "ccc"
-  ],
+  "pattern": ["ccc", "csc", "ccc"],
   "result": {
     "item": "ticex:flickering_reconstruction_core"
   },

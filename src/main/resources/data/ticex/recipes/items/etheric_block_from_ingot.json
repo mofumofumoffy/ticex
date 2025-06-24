@@ -1,21 +1,17 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "category": "misc",
-    "key": {
-      "#": {
-        "tag": "forge:ingots/etheric"
-      },
-      "*": {
-        "item": "ticex:etheric_ingot"
-      }
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "forge:ingots/etheric"
     },
-    "pattern": [
-      "###",
-      "#*#",
-      "###"
-    ],
-    "result": {
-      "item": "ticex:etheric_block"
-    },
-    "show_notification": true
-  }
+    "*": {
+      "item": "ticex:etheric_ingot"
+    }
+  },
+  "pattern": ["###", "#*#", "###"],
+  "result": {
+    "item": "ticex:etheric_block"
+  },
+  "show_notification": true
+}

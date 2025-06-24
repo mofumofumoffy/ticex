@@ -1,22 +1,20 @@
 package moffy.ticex.item.modifiable;
+
+import com.google.common.collect.Sets;
+import com.tacz.guns.item.ModernKineticGunItem;
 /*
  * This file is part of the TicEXTaczModule.
  *
  * Licensed under the GNU General Public License v3.0.
  * See the LICENSES/GPL-3.0.md file for details.
  * 2025 Moffy
-*/
+ */
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
-
 import javax.annotation.Nullable;
-
-import com.google.common.collect.Sets;
-import com.tacz.guns.item.ModernKineticGunItem;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -62,14 +60,14 @@ import slimeknights.tconstruct.library.tools.nbt.MaterialNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.utils.Util;
 
-public class ModifiableGunItem extends ModernKineticGunItem implements IModifiableDisplay{
+public class ModifiableGunItem extends ModernKineticGunItem implements IModifiableDisplay {
 
     private final ToolDefinition toolDefinition;
     private final int maxStackSize;
 
     protected ItemStack toolForRendering;
 
-    public ModifiableGunItem(ToolDefinition toolDefinition, int maxStackSize){
+    public ModifiableGunItem(ToolDefinition toolDefinition, int maxStackSize) {
         super();
         this.toolDefinition = toolDefinition;
         this.maxStackSize = maxStackSize;
@@ -86,27 +84,27 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
     }
 
     @Override
-  public boolean isEnchantable(ItemStack stack) {
-    return false;
-  }
-
-  @Override
-  public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-    return false;
-  }
-
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-    return enchantment.isCurse() && super.canApplyAtEnchantingTable(stack, enchantment);
-  }
-
-  @Override
-  public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
-    return EnchantmentModifierHook.getEnchantmentLevel(stack, enchantment);
-  }
+    public boolean isEnchantable(ItemStack stack) {
+        return false;
+    }
 
     @Override
-    public Map<Enchantment,Integer> getAllEnchantments(ItemStack stack) {
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return false;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return enchantment.isCurse() && super.canApplyAtEnchantingTable(stack, enchantment);
+    }
+
+    @Override
+    public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
+        return EnchantmentModifierHook.getEnchantmentLevel(stack, enchantment);
+    }
+
+    @Override
+    public Map<Enchantment, Integer> getAllEnchantments(ItemStack stack) {
         return EnchantmentModifierHook.getAllEnchantments(stack);
     }
 
@@ -187,7 +185,13 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
     }
 
     @Override
-    public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+    public boolean mineBlock(
+        ItemStack stack,
+        Level worldIn,
+        BlockState state,
+        BlockPos pos,
+        LivingEntity entityLiving
+    ) {
         return ToolHarvestLogic.mineBlock(stack, worldIn, state, pos, entityLiving);
     }
 
@@ -212,7 +216,14 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
     }
 
     @Override
-    public boolean overrideOtherStackedOnMe(ItemStack slotStack, ItemStack held, Slot slot, ClickAction action, Player player, SlotAccess access) {
+    public boolean overrideOtherStackedOnMe(
+        ItemStack slotStack,
+        ItemStack held,
+        Slot slot,
+        ClickAction action,
+        Player player,
+        SlotAccess access
+    ) {
         return SlotStackModifierHook.overrideOtherStackedOnMe(slotStack, held, slot, action, player, access);
     }
 
@@ -223,40 +234,40 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
         if (!name.isEmpty()) {
             return Component.literal(name);
         } else {
-         List<MaterialStatsId> components = ToolMaterialHook.stats(toolDefinition);
-         Component baseName = super.getName(stack);
-         if (components.isEmpty()) {
-            return baseName;
-         } else {
-            if (tool == null) {
-               tool = ToolStack.from(stack);
-            }
-
-            MaterialNBT materials = ((IToolStackView)tool).getMaterials();
-            if (materials.size() != components.size()) {
-               return baseName;
+            List<MaterialStatsId> components = ToolMaterialHook.stats(toolDefinition);
+            Component baseName = super.getName(stack);
+            if (components.isEmpty()) {
+                return baseName;
             } else {
-               Set<Component> nameMaterials = Sets.newLinkedHashSet();
-               MaterialVariantId firstMaterial = null;
-               IMaterialRegistry registry = MaterialRegistry.getInstance();
+                if (tool == null) {
+                    tool = ToolStack.from(stack);
+                }
 
-               for(int i = 0; i < components.size(); ++i) {
-                  if (i < materials.size() && registry.canRepair((MaterialStatsId)components.get(i))) {
-                     MaterialVariantId material = materials.get(i).getVariant();
-                     if (!IMaterial.UNKNOWN_ID.equals(material)) {
-                        if (firstMaterial == null) {
-                           firstMaterial = material;
+                MaterialNBT materials = ((IToolStackView) tool).getMaterials();
+                if (materials.size() != components.size()) {
+                    return baseName;
+                } else {
+                    Set<Component> nameMaterials = Sets.newLinkedHashSet();
+                    MaterialVariantId firstMaterial = null;
+                    IMaterialRegistry registry = MaterialRegistry.getInstance();
+
+                    for (int i = 0; i < components.size(); ++i) {
+                        if (i < materials.size() && registry.canRepair((MaterialStatsId) components.get(i))) {
+                            MaterialVariantId material = materials.get(i).getVariant();
+                            if (!IMaterial.UNKNOWN_ID.equals(material)) {
+                                if (firstMaterial == null) {
+                                    firstMaterial = material;
+                                }
+
+                                nameMaterials.add(MaterialTooltipCache.getDisplayName(material));
+                            }
                         }
+                    }
 
-                        nameMaterials.add(MaterialTooltipCache.getDisplayName(material));
-                     }
-                  }
-               }
-
-                return getMaterialItemName(stack, baseName, firstMaterial);
+                    return getMaterialItemName(stack, baseName, firstMaterial);
+                }
             }
-         }
-      }
+        }
     }
 
     @Nullable
@@ -268,9 +279,14 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
         } else {
             String formatKey = materialKey + ".format";
             if (Util.canTranslate(formatKey)) {
-                return Component.translatable(formatKey, new Object[]{itemName});
+                return Component.translatable(formatKey, new Object[] { itemName });
             } else {
-                return Util.canTranslate(materialKey) ? Component.translatable(TooltipUtil.KEY_FORMAT, new Object[]{Component.translatable(materialKey), itemName}) : null;
+                return Util.canTranslate(materialKey)
+                    ? Component.translatable(
+                        TooltipUtil.KEY_FORMAT,
+                        new Object[] { Component.translatable(materialKey), itemName }
+                    )
+                    : null;
             }
         }
     }
@@ -279,22 +295,22 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
         String itemKey = stack.getDescriptionId();
         Component component;
         if (material.hasVariant()) {
-           component = nameFor(itemKey, itemName, material);
-           if (component != null) {
-              return component;
-           }
+            component = nameFor(itemKey, itemName, material);
+            if (component != null) {
+                return component;
+            }
         }
 
         component = nameFor(itemKey, itemName, material.getId());
         return component != null ? component : itemName;
-     }
+    }
 
-     @Override
-     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-         /* ToolStack tool = ToolStack.from(stack);
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        /* ToolStack tool = ToolStack.from(stack);
          tooltip.add(Component.translatable("tooltip.ticex.modifier_stability", tool.isBroken() ? Component.translatable("tooltip.ticex.modifier_stability.lost").getString() : String.format(" %d %%", 100 - (int)Math.ceil(tool.getDamage()/tool.getStats().get(ToolStats.DURABILITY)*100))).withStyle(ChatFormatting.GREEN)); */
-         TooltipUtil.addInformation(this, stack, level, tooltip, SafeClientAccess.getTooltipKey(), flag);
-     }
+        TooltipUtil.addInformation(this, stack, level, tooltip, SafeClientAccess.getTooltipKey(), flag);
+    }
 
     @Override
     public int getDefaultTooltipHideFlags(ItemStack stack) {

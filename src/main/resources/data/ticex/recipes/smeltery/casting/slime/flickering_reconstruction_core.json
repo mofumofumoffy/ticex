@@ -1,11 +1,11 @@
 {
-    "type": "tconstruct:casting_table",
-    "fluid": {
-      "tag": "forge:molten_reconstruction_core",
-      "amount": 2000
-    },
-    "result": {
-      "item": "ticex:flickering_reconstruction_core"
-    },
-    "cooling_time": 60
-  }
+  "type": "tconstruct:casting_table",
+  "fluid": {
+    "tag": "forge:molten_reconstruction_core",
+    "amount": 2000
+  },
+  "result": {
+    "item": "ticex:flickering_reconstruction_core"
+  },
+  "cooling_time": 60
+}

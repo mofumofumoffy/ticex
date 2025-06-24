@@ -1,11 +1,11 @@
 {
   "type": "psi:trick_crafting",
   "conditions": [
-      {
-        "type": "addonapi:mods_available",
-        "required_raw_module": "ticex:psi_compat"
-      }
-    ],
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:psi_compat"
+    }
+  ],
   "cad": {
     "item": "psi:cad_assembly_psimetal"
   },

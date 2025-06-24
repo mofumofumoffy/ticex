@@ -1,19 +1,19 @@
 {
-    "type": "tconstruct:modifier",
-    "inputs": [
-      {
-        "item": "ticex:catalyst_gem_chestplate"
-      }
-    ],
-    "tools": [
-      {
-        "type": "forge:difference",
-        "base": { "tag": "tconstruct:modifiable/armor/chestplate" },
-        "subtracted": { "tag": "ticex:seram/gem" }
-      }
-    ],
-    "slots": {
-      "defense": 1
-    },
-    "result": "ticex:infernal"
-  }
+  "type": "tconstruct:modifier",
+  "inputs": [
+    {
+      "item": "ticex:catalyst_gem_chestplate"
+    }
+  ],
+  "tools": [
+    {
+      "type": "forge:difference",
+      "base": { "tag": "tconstruct:modifiable/armor/chestplate" },
+      "subtracted": { "tag": "ticex:seram/gem" }
+    }
+  ],
+  "slots": {
+    "defense": 1
+  },
+  "result": "ticex:infernal"
+}

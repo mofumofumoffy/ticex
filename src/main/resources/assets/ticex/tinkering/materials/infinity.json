@@ -1,8 +1,6 @@
 {
   "color": "FFFFFF",
-  "fallbacks": [
-    "metal"
-  ],
+  "fallbacks": ["metal"],
   "generator": {
     "supported_stats": [
       "tconstruct:head",

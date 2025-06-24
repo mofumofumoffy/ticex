@@ -1,17 +1,13 @@
 {
-    "type": "ticex:embossment_modifier",
-    "conditions": [
-      {
-        "type": "addonapi:mods_available",
-        "required_raw_module": "ticex:sakura_compat"
-      }
-    ],
-    "inputs": [
-      { "item":"sakuratinker:soul_sakura" }
-    ],
-    "emboss_inputs": [
-      { "item":"ticex:reconstruction_core" }
-    ],
-    "tools": { "tag": "tconstruct:modifiable" },
-    "result": "ticex:flowerstorm"
-  }
+  "type": "ticex:embossment_modifier",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:sakura_compat"
+    }
+  ],
+  "inputs": [{ "item": "sakuratinker:soul_sakura" }],
+  "emboss_inputs": [{ "item": "ticex:reconstruction_core" }],
+  "tools": { "tag": "tconstruct:modifiable" },
+  "result": "ticex:flowerstorm"
+}

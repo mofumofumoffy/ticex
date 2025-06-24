@@ -1,6 +1,6 @@
 {
-    "parent": "item/generated",
-    "textures": {
-      "layer0": "ticex:item/cores/chaotic_evolved_core"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "ticex:item/cores/chaotic_evolved_core"
   }
+}

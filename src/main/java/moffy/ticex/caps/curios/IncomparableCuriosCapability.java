@@ -1,9 +1,7 @@
 package moffy.ticex.caps.curios;
 
-import java.util.UUID;
-
 import com.google.common.collect.Multimap;
-
+import java.util.UUID;
 import moffy.ticex.lib.utils.TicEXCuriosUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,7 +16,8 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
-public class IncomparableCuriosCapability implements ICurio{
+public class IncomparableCuriosCapability implements ICurio {
+
     public static final String INCOMPARABLE_REMOVE_FLAG = "incomparable_remove";
 
     protected final ItemStack stack;
@@ -26,7 +25,7 @@ public class IncomparableCuriosCapability implements ICurio{
 
     private ItemStack preStack = ItemStack.EMPTY;
 
-    public IncomparableCuriosCapability(ItemStack stack, IToolStackView tool){
+    public IncomparableCuriosCapability(ItemStack stack, IToolStackView tool) {
         this.stack = stack;
         this.tool = tool;
     }
@@ -39,16 +38,17 @@ public class IncomparableCuriosCapability implements ICurio{
     @Override
     public void curioTick(SlotContext slotContext) {
         LivingEntity entity = slotContext.entity();
-        CuriosApi.getCuriosInventory(entity).ifPresent(inv->{
-            for(EquipmentSlot equipmentSlot : EquipmentSlot.values()){
-                inv.findCurio(TicEXCuriosUtils.resolveEquipmentSlot(equipmentSlot), 0).ifPresent(result -> {
-
-                    if(entity.getItemBySlot(equipmentSlot).isEmpty()){
-                        ItemStack hollowStack = result.stack().copy();
-                        entity.setItemSlot(equipmentSlot, hollowStack);
-                        preStack = hollowStack;
-                    }
-                });
+        CuriosApi.getCuriosInventory(entity).ifPresent(inv -> {
+            for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+                inv
+                    .findCurio(TicEXCuriosUtils.resolveEquipmentSlot(equipmentSlot), 0)
+                    .ifPresent(result -> {
+                        if (entity.getItemBySlot(equipmentSlot).isEmpty()) {
+                            ItemStack hollowStack = result.stack().copy();
+                            entity.setItemSlot(equipmentSlot, hollowStack);
+                            preStack = hollowStack;
+                        }
+                    });
             }
         });
     }
@@ -65,7 +65,7 @@ public class IncomparableCuriosCapability implements ICurio{
 
     @Override
     public boolean isEnderMask(SlotContext context, EnderMan enderMan) {
-        if(context.entity() instanceof Player player){
+        if (context.entity() instanceof Player player) {
             return stack.isEnderMask(player, enderMan);
         }
         return ICurio.super.isEnderMask(context, enderMan);
@@ -91,6 +91,4 @@ public class IncomparableCuriosCapability implements ICurio{
     public void onUnequip(SlotContext slotContext, ItemStack newStack) {
         preStack.shrink(preStack.getCount());
     }
-
-
 }

@@ -1,28 +1,28 @@
 {
-    "type": "draconicevolution:fusion_crafting",
-    "conditions": [
-      {
-        "type": "addonapi:mods_available",
-        "required_raw_module": "ticex:draconicevolution_compat"
-      }
-    ],
-    "result": {
-        "item": "ticex:wyvern_evolved_core"
-    },
-    "catalyst": {
-        "item": "ticex:reconstruction_core"
-    },
-    "total_energy": 64000000,
-    "tier": "WYVERN",
-    "ingredients": [
-        { "item": "draconicevolution:wyvern_core" },
-        { "item": "draconicevolution:draconium_core"},
-        { "item": "draconicevolution:draconium_core"},
-        { "item": "minecraft:nether_star"},
-        { "item": "minecraft:nether_star"},
-        { "item": "draconicevolution:wyvern_sword"},
-        { "item": "draconicevolution:wyvern_shovel"},
-        { "item": "draconicevolution:wyvern_pickaxe"},
-        { "item": "draconicevolution:module_core" }
-    ]
-  }
+  "type": "draconicevolution:fusion_crafting",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:draconicevolution_compat"
+    }
+  ],
+  "result": {
+    "item": "ticex:wyvern_evolved_core"
+  },
+  "catalyst": {
+    "item": "ticex:reconstruction_core"
+  },
+  "total_energy": 64000000,
+  "tier": "WYVERN",
+  "ingredients": [
+    { "item": "draconicevolution:wyvern_core" },
+    { "item": "draconicevolution:draconium_core" },
+    { "item": "draconicevolution:draconium_core" },
+    { "item": "minecraft:nether_star" },
+    { "item": "minecraft:nether_star" },
+    { "item": "draconicevolution:wyvern_sword" },
+    { "item": "draconicevolution:wyvern_shovel" },
+    { "item": "draconicevolution:wyvern_pickaxe" },
+    { "item": "draconicevolution:module_core" }
+  ]
+}

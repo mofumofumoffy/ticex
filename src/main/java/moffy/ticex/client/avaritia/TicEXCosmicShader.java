@@ -1,13 +1,11 @@
 package moffy.ticex.client.avaritia;
 
-import java.util.Objects;
-
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
-
 import committee.nova.mods.avaritia.Static;
 import committee.nova.mods.avaritia.api.client.shader.CCShaderInstance;
 import committee.nova.mods.avaritia.api.client.shader.CCUniform;
+import java.util.Objects;
 import moffy.ticex.TicEX;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -26,7 +24,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-public final class TicEXCosmicShader{
+public final class TicEXCosmicShader {
 
     public static TicEXCosmicShader instance = null;
 
@@ -48,26 +46,36 @@ public final class TicEXCosmicShader{
     public CCUniform cosmicOpacity;
     public CCUniform cosmicUVs;
 
-    public TicEXCosmicShader(){
+    public TicEXCosmicShader() {
         this.shader = new RenderStateShard.ShaderStateShard(() -> cosmicShader);
-        cosmicRenderTypeTool = RenderType.create("ticex:cosmic",
-                                    DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 2097152, true, false,
-                                    RenderType.CompositeState.builder().setShaderState(shader)
-                                            .setLightmapState(RenderStateShard.LIGHTMAP)
-                                            .setTransparencyState(RenderStateShard.NO_TRANSPARENCY)
-                                            .setTextureState(RenderStateShard.BLOCK_SHEET_MIPPED)
-                                            .createCompositeState(true)
-                                );
+        cosmicRenderTypeTool = RenderType.create(
+            "ticex:cosmic",
+            DefaultVertexFormat.BLOCK,
+            VertexFormat.Mode.QUADS,
+            2097152,
+            true,
+            false,
+            RenderType.CompositeState.builder()
+                .setShaderState(shader)
+                .setLightmapState(RenderStateShard.LIGHTMAP)
+                .setTransparencyState(RenderStateShard.NO_TRANSPARENCY)
+                .setTextureState(RenderStateShard.BLOCK_SHEET_MIPPED)
+                .createCompositeState(true)
+        );
 
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
-            IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-            bus.addListener(this::onRegisterShaders);
+        DistExecutor.unsafeRunWhenOn(
+            Dist.CLIENT,
+            () ->
+                () -> {
+                    IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+                    bus.addListener(this::onRegisterShaders);
 
-            MinecraftForge.EVENT_BUS.addListener(this::clientTick);
-            MinecraftForge.EVENT_BUS.addListener(this::renderTick);
-            MinecraftForge.EVENT_BUS.addListener(this::drawScreenPre);
-            MinecraftForge.EVENT_BUS.addListener(this::drawScreenPost);
-        });
+                    MinecraftForge.EVENT_BUS.addListener(this::clientTick);
+                    MinecraftForge.EVENT_BUS.addListener(this::renderTick);
+                    MinecraftForge.EVENT_BUS.addListener(this::drawScreenPre);
+                    MinecraftForge.EVENT_BUS.addListener(this::drawScreenPost);
+                }
+        );
     }
 
     public CCShaderInstance getCosmicShader() {
@@ -79,13 +87,15 @@ public final class TicEXCosmicShader{
     }
 
     public RenderType getCosmicRenderTypeArmor(ResourceLocation texture) {
-        return RenderType.create("", 
-            DefaultVertexFormat.NEW_ENTITY, 
-            VertexFormat.Mode.QUADS, 
-            256, 
-            true, 
-            false, 
-            RenderType.CompositeState.builder().setShaderState(shader)
+        return RenderType.create(
+            "",
+            DefaultVertexFormat.NEW_ENTITY,
+            VertexFormat.Mode.QUADS,
+            256,
+            true,
+            false,
+            RenderType.CompositeState.builder()
+                .setShaderState(shader)
                 .setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
                 .setTransparencyState(RenderType.NO_TRANSPARENCY)
                 .setCullState(RenderType.NO_CULL)
@@ -93,45 +103,55 @@ public final class TicEXCosmicShader{
                 .setOverlayState(RenderType.OVERLAY)
                 .setLayeringState(RenderType.VIEW_OFFSET_Z_LAYERING)
                 .createCompositeState(true)
-            );
+        );
     }
 
-    public static void setup(){
+    public static void setup() {
         instance = new TicEXCosmicShader();
     }
 
     public void onRegisterShaders(RegisterShadersEvent event) {
-        event.registerShader(CCShaderInstance.create(event.getResourceProvider(), new ResourceLocation(TicEX.MODID, "avaritia/materials/infinity"), DefaultVertexFormat.BLOCK), e -> {
-            cosmicShader = (CCShaderInstance) e;
-            cosmicTime = Objects.requireNonNull(cosmicShader.getUniform("time"));
-            cosmicYaw = Objects.requireNonNull(cosmicShader.getUniform("yaw"));
-            cosmicPitch = Objects.requireNonNull(cosmicShader.getUniform("pitch"));
-            cosmicExternalScale = Objects.requireNonNull(cosmicShader.getUniform("externalScale"));
-            cosmicOpacity = Objects.requireNonNull(cosmicShader.getUniform("opacity"));
-            cosmicUVs = Objects.requireNonNull(cosmicShader.getUniform("cosmicuvs"));
-            cosmicTime.set((float) renderTime + renderFrame);
-            cosmicShader.onApply(() -> {
+        event.registerShader(
+            CCShaderInstance.create(
+                event.getResourceProvider(),
+                new ResourceLocation(TicEX.MODID, "avaritia/materials/infinity"),
+                DefaultVertexFormat.BLOCK
+            ),
+            e -> {
+                cosmicShader = (CCShaderInstance) e;
+                cosmicTime = Objects.requireNonNull(cosmicShader.getUniform("time"));
+                cosmicYaw = Objects.requireNonNull(cosmicShader.getUniform("yaw"));
+                cosmicPitch = Objects.requireNonNull(cosmicShader.getUniform("pitch"));
+                cosmicExternalScale = Objects.requireNonNull(cosmicShader.getUniform("externalScale"));
+                cosmicOpacity = Objects.requireNonNull(cosmicShader.getUniform("opacity"));
+                cosmicUVs = Objects.requireNonNull(cosmicShader.getUniform("cosmicuvs"));
                 cosmicTime.set((float) renderTime + renderFrame);
-            });
-        });
+                cosmicShader.onApply(() -> {
+                    cosmicTime.set((float) renderTime + renderFrame);
+                });
+            }
+        );
     }
 
-    public void setupCosmic(){
+    public void setupCosmic() {
         final Minecraft mc = Minecraft.getInstance();
         float yaw = 0.0f;
         float pitch = 0.0f;
         float scale = 1f;
-        yaw = (float) (mc.player.getYRot() * 2.0f * Math.PI / 360.0);
-        pitch = -(float) (mc.player.getXRot() * 2.0f * Math.PI / 360.0);
-        
-        TicEXCosmicShader.instance.cosmicTime
-                .set((System.currentTimeMillis() - TicEXCosmicShader.instance.renderTime) / 2000.0F);
+        yaw = (float) ((mc.player.getYRot() * 2.0f * Math.PI) / 360.0);
+        pitch = -(float) ((mc.player.getXRot() * 2.0f * Math.PI) / 360.0);
+
+        TicEXCosmicShader.instance.cosmicTime.set(
+            (System.currentTimeMillis() - TicEXCosmicShader.instance.renderTime) / 2000.0F
+        );
         TicEXCosmicShader.instance.cosmicYaw.set(yaw);
         TicEXCosmicShader.instance.cosmicPitch.set(pitch);
         TicEXCosmicShader.instance.cosmicExternalScale.set(scale);
 
         for (int i = 0; i < 10; ++i) {
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(Static.rl("misc/cosmic_" + i));
+            TextureAtlasSprite sprite = Minecraft.getInstance()
+                .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
+                .apply(Static.rl("misc/cosmic_" + i));
             TicEXCosmicShader.instance.COSMIC_UVS[i * 4] = sprite.getU0();
             TicEXCosmicShader.instance.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
             TicEXCosmicShader.instance.COSMIC_UVS[i * 4 + 2] = sprite.getU1();
@@ -140,9 +160,9 @@ public final class TicEXCosmicShader{
         if (TicEXCosmicShader.instance.cosmicUVs != null) {
             TicEXCosmicShader.instance.cosmicUVs.set(TicEXCosmicShader.instance.COSMIC_UVS);
         }
-}
+    }
 
-    public void setupCosmic(ItemDisplayContext displayContext){
+    public void setupCosmic(ItemDisplayContext displayContext) {
         final Minecraft mc = Minecraft.getInstance();
         float yaw = 0.0f;
         float pitch = 0.0f;
@@ -150,18 +170,21 @@ public final class TicEXCosmicShader{
         if (TicEXCosmicShader.instance.inventoryRender || displayContext == ItemDisplayContext.GUI) {
             scale = 100.0F;
         } else {
-            yaw = (float) (mc.player.getYRot() * 2.0f * Math.PI / 360.0);
-            pitch = -(float) (mc.player.getXRot() * 2.0f * Math.PI / 360.0);
+            yaw = (float) ((mc.player.getYRot() * 2.0f * Math.PI) / 360.0);
+            pitch = -(float) ((mc.player.getXRot() * 2.0f * Math.PI) / 360.0);
         }
 
-        TicEXCosmicShader.instance.cosmicTime
-                .set((System.currentTimeMillis() - TicEXCosmicShader.instance.renderTime) / 2000.0F);
+        TicEXCosmicShader.instance.cosmicTime.set(
+            (System.currentTimeMillis() - TicEXCosmicShader.instance.renderTime) / 2000.0F
+        );
         TicEXCosmicShader.instance.cosmicYaw.set(yaw);
         TicEXCosmicShader.instance.cosmicPitch.set(pitch);
         TicEXCosmicShader.instance.cosmicExternalScale.set(scale);
 
         for (int i = 0; i < 10; ++i) {
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(Static.rl("misc/cosmic_" + i));
+            TextureAtlasSprite sprite = Minecraft.getInstance()
+                .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
+                .apply(Static.rl("misc/cosmic_" + i));
             TicEXCosmicShader.instance.COSMIC_UVS[i * 4] = sprite.getU0();
             TicEXCosmicShader.instance.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
             TicEXCosmicShader.instance.COSMIC_UVS[i * 4 + 2] = sprite.getU1();
@@ -193,5 +216,4 @@ public final class TicEXCosmicShader{
     public void drawScreenPost(final ScreenEvent.Render.Post e) {
         inventoryRender = false;
     }
-    
 }

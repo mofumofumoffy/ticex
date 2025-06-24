@@ -1,7 +1,6 @@
 package moffy.ticex.datagen.general.recipes;
 
 import java.util.function.Consumer;
-
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -13,9 +12,9 @@ import slimeknights.tconstruct.library.data.recipe.IMaterialRecipeHelper;
 import slimeknights.tconstruct.shared.TinkerCommons;
 import slimeknights.tconstruct.shared.block.SlimeType;
 
-public class CommonRecipeProvider implements ITicEXRecipeHelper, IMaterialRecipeHelper{
-    public void buildRecipes(Consumer<FinishedRecipe> pWriter){
+public class CommonRecipeProvider implements ITicEXRecipeHelper, IMaterialRecipeHelper {
 
+    public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         metalMaterialRecipe(pWriter, TicEXMaterials.ETHERIC, materialFolder, "etheric", false);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.RECONSTRUCTION_CORE.get())
@@ -27,7 +26,7 @@ public class CommonRecipeProvider implements ITicEXRecipeHelper, IMaterialRecipe
             .pattern("pcp")
             .pattern("asa")
             .unlockedBy("has_item", TicEXRecipeProvider.has(TinkerCommons.slimeball.get(SlimeType.SKY)))
-            .save(pWriter,"cores/reconstruction_core");
+            .save(pWriter, "cores/reconstruction_core");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE.get())
             .define('c', TicEXRegistry.RECONSTRUCTION_CORE.get())
@@ -36,7 +35,7 @@ public class CommonRecipeProvider implements ITicEXRecipeHelper, IMaterialRecipe
             .pattern("csc")
             .pattern("ccc")
             .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.RECONSTRUCTION_CORE.get()))
-            .save(pWriter,"cores/flickering_reconstruction_core");
+            .save(pWriter, "cores/flickering_reconstruction_core");
     }
 
     @Override

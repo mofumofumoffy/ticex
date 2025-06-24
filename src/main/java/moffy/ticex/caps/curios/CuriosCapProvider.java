@@ -1,7 +1,6 @@
 package moffy.ticex.caps.curios;
 
 import java.util.function.Supplier;
-
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -10,18 +9,20 @@ import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider.I
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import top.theillusivec4.curios.api.CuriosCapability;
 
-public class CuriosCapProvider implements IToolCapabilityProvider{
+public class CuriosCapProvider implements IToolCapabilityProvider {
 
     public IncomparableCuriosCapability incomparable;
 
-    public CuriosCapProvider(ItemStack stack, Supplier<? extends IToolStackView> toolSupplier){
+    public CuriosCapProvider(ItemStack stack, Supplier<? extends IToolStackView> toolSupplier) {
         this.incomparable = new IncomparableCuriosCapability(stack, toolSupplier.get());
     }
 
     @Override
     public <T> LazyOptional<T> getCapability(IToolStackView tool, Capability<T> capability) {
-        if(capability == CuriosCapability.ITEM && tool.getModifierLevel(TicEXRegistry.INCOMPARABLE_MODIFIER.get()) > 0){
-            return LazyOptional.of(()->this.incomparable).cast();
+        if (
+            capability == CuriosCapability.ITEM && tool.getModifierLevel(TicEXRegistry.INCOMPARABLE_MODIFIER.get()) > 0
+        ) {
+            return LazyOptional.of(() -> this.incomparable).cast();
         }
         return LazyOptional.empty();
     }

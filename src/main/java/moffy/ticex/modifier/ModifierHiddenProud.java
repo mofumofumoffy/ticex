@@ -1,8 +1,7 @@
 package moffy.ticex.modifier;
 
-import java.util.Random;
 import java.util.Map.Entry;
-
+import java.util.Random;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.init.SBItems;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -20,11 +19,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 
-public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentModifierHook{
+public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentModifierHook {
 
     protected TagKey<Item> proudSoulKey;
 
-    public ModifierHiddenProud(){
+    public ModifierHiddenProud() {
         proudSoulKey = TagKey.create(Registries.ITEM, new ResourceLocation(SlashBlade.MODID, "proudsouls"));
     }
 
@@ -41,47 +40,45 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
         int enchantmentLevel = context.getInputStack(inputIndex).getEnchantmentValue();
         int refineLimit = Math.max(10, enchantmentLevel);
 
-        if(input.isEnchanted()){
+        if (input.isEnchanted()) {
             Random random = new Random();
-            for(Entry<Enchantment, Integer> enchantmentEntry : input.getAllEnchantments().entrySet()){
-                if(TicEXSBUtil.disallowedEnchantments.contains(enchantmentEntry.getKey())){
+            for (Entry<Enchantment, Integer> enchantmentEntry : input.getAllEnchantments().entrySet()) {
+                if (TicEXSBUtil.disallowedEnchantments.contains(enchantmentEntry.getKey())) {
                     context.setErrorMsg(Component.translatable("recipe.ticex.not_allowed_enchantment_slashblade"));
                     return false;
                 }
                 var probability = 1.0F;
-                if (input.is(SBItems.proudsoul_tiny))
-                    probability = 0.25F;
-                if (input.is(SBItems.proudsoul))
-                    probability = 0.5F;
-                if (input.is(SBItems.proudsoul_ingot))
-                    probability = 0.75F;
+                if (input.is(SBItems.proudsoul_tiny)) probability = 0.25F;
+                if (input.is(SBItems.proudsoul)) probability = 0.5F;
+                if (input.is(SBItems.proudsoul_ingot)) probability = 0.75F;
                 if (random.nextFloat() <= probability) {
                     TicEXSBUtil.applyEnchantment(toolStack, enchantmentEntry.getKey(), enchantmentLevel);
                 }
             }
         }
 
-        toolStack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(s -> {
-            s.deserializeNBT(toolStack.getOrCreateTag().getCompound("bladeState"));
-            s.setProudSoulCount(s.getProudSoulCount() + input.getCount() * Math.min(5000, enchantmentLevel * 10));
+        toolStack
+            .getCapability(ItemSlashBlade.BLADESTATE)
+            .ifPresent(s -> {
+                s.deserializeNBT(toolStack.getOrCreateTag().getCompound("bladeState"));
+                s.setProudSoulCount(s.getProudSoulCount() + input.getCount() * Math.min(5000, enchantmentLevel * 10));
 
-            if(input.hasTag()){
-                CompoundTag nbt = input.getTag();
-                if(nbt.contains("SpecialAttackType")){
-                    s.setSlashArtsKey(new ResourceLocation(nbt.getString("SpecialAttackType")));
-                } else if(nbt.contains("SpecialEffectType")){
-                    s.addSpecialEffect(new ResourceLocation(nbt.getString("SpecialEffectType")));
+                if (input.hasTag()) {
+                    CompoundTag nbt = input.getTag();
+                    if (nbt.contains("SpecialAttackType")) {
+                        s.setSlashArtsKey(new ResourceLocation(nbt.getString("SpecialAttackType")));
+                    } else if (nbt.contains("SpecialEffectType")) {
+                        s.addSpecialEffect(new ResourceLocation(nbt.getString("SpecialEffectType")));
+                    }
                 }
-            }
 
-            if (s.getRefine() < refineLimit) {
-                s.setRefine(s.getRefine() + input.getCount());
-                if(s.getRefine() < 200)
-                    s.setMaxDamage(s.getMaxDamage() + 1);
-            }
+                if (s.getRefine() < refineLimit) {
+                    s.setRefine(s.getRefine() + input.getCount());
+                    if (s.getRefine() < 200) s.setMaxDamage(s.getMaxDamage() + 1);
+                }
 
-            toolStack.getOrCreateTag().put("bladeState", s.serializeNBT());
-        });
+                toolStack.getOrCreateTag().put("bladeState", s.serializeNBT());
+            });
 
         return true;
     }

@@ -1,7 +1,6 @@
 package moffy.ticex.event;
 
 import java.util.concurrent.CompletableFuture;
-
 import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.fluid.FluidTextureProvider;
@@ -30,7 +29,7 @@ import net.minecraftforge.fml.common.Mod;
 public class TicEXGatherDataEvent {
 
     @SubscribeEvent
-    public static void gatherData(GatherDataEvent event){
+    public static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         CraftingHelper.register(new ModsAvailableCondition.Serializer());
 
@@ -44,7 +43,10 @@ public class TicEXGatherDataEvent {
         //tags
         BlockTagProvider blockTags = new BlockTagProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(server, blockTags);
-        generator.addProvider(server, new ItemTagProvider(packOutput, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
+        generator.addProvider(
+            server,
+            new ItemTagProvider(packOutput, lookupProvider, blockTags.contentsGetter(), existingFileHelper)
+        );
         generator.addProvider(server, new FluidTagProvider(packOutput, lookupProvider, existingFileHelper));
 
         //common

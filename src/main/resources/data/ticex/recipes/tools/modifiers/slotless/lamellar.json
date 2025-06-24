@@ -1,11 +1,7 @@
 {
-    "type": "ticex:embossment_modifier",
-    "inputs": [
-      { "item":"ticex:lamellar_core" }
-    ],
-    "emboss_inputs": [
-      { "tag":"tconstruct:parts" }
-    ],
-    "tools": { "tag": "ticex:seram" },
-    "result": "ticex:lamellar"
+  "type": "ticex:embossment_modifier",
+  "inputs": [{ "item": "ticex:lamellar_core" }],
+  "emboss_inputs": [{ "tag": "tconstruct:parts" }],
+  "tools": { "tag": "ticex:seram" },
+  "result": "ticex:lamellar"
 }

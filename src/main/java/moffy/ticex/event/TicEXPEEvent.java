@@ -12,17 +12,17 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 public class TicEXPEEvent {
 
     public static void onJump(LivingEvent.LivingJumpEvent evt) {
-		if (evt.getEntity() instanceof Player player && player.level().isClientSide) {
-			ItemStack leggingsStack = player.getItemBySlot(EquipmentSlot.LEGS);
-            if(leggingsStack.getItem() instanceof IModifiable){
+        if (evt.getEntity() instanceof Player player && player.level().isClientSide) {
+            ItemStack leggingsStack = player.getItemBySlot(EquipmentSlot.LEGS);
+            if (leggingsStack.getItem() instanceof IModifiable) {
                 ToolStack leggings = ToolStack.from(leggingsStack);
-                for(ModifierEntry entry : leggings.getModifierList()){
-                    if(entry.getLazyModifier().get() instanceof ModifierGravitiy gravitiyModifier){
+                for (ModifierEntry entry : leggings.getModifierList()) {
+                    if (entry.getLazyModifier().get() instanceof ModifierGravitiy gravitiyModifier) {
                         gravitiyModifier.getLastJumpTracker().put(player.getId(), player.level().getGameTime());
                         break;
                     }
                 }
             }
-		}
-	}
+        }
+    }
 }

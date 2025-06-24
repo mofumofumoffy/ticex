@@ -1,16 +1,16 @@
 {
-    "loader": "tconstruct:tool",
-    "parent": "forge:item/default",
-    "textures": {
-      "plating": "tconstruct:item/tool/armor/plate/helmet/plating",
-      "maille":  "tconstruct:item/tool/armor/plate/helmet/maille",
-      "mekaplate": "mekanism:item/mekasuit_helmet"
-    },
-    "modifier_roots": [ "tconstruct:item/tool/armor/plate/helmet/modifiers/" ],
-    "first_modifiers": [ "tconstruct:trim" ],
-    "parts": [
-      { "name": "plating", "index": 0 },
-      { "name": "maille",  "index": 1 },
-      { "name": "mekaplate", "index": 2}
-    ]
-  }
+  "loader": "tconstruct:tool",
+  "parent": "forge:item/default",
+  "textures": {
+    "plating": "tconstruct:item/tool/armor/plate/helmet/plating",
+    "maille": "tconstruct:item/tool/armor/plate/helmet/maille",
+    "mekaplate": "mekanism:item/mekasuit_helmet"
+  },
+  "modifier_roots": ["tconstruct:item/tool/armor/plate/helmet/modifiers/"],
+  "first_modifiers": ["tconstruct:trim"],
+  "parts": [
+    { "name": "plating", "index": 0 },
+    { "name": "maille", "index": 1 },
+    { "name": "mekaplate", "index": 2 }
+  ]
+}

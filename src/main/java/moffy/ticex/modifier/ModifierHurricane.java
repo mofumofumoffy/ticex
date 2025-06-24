@@ -3,7 +3,6 @@ package moffy.ticex.modifier;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.BiConsumer;
-
 import moffy.ticex.TicEX;
 import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.ChatFormatting;
@@ -17,8 +16,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -38,12 +37,19 @@ import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
-public class ModifierHurricane extends NoLevelsModifier implements InventoryTickModifierHook, TooltipModifierHook, AttributesModifierHook{
+public class ModifierHurricane
+    extends NoLevelsModifier
+    implements InventoryTickModifierHook, TooltipModifierHook, AttributesModifierHook {
 
     private static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("A4334312-DFF8-4582-9F4F-62AD0C070475");
-    
+
     private static final UUID STEP_ASSIST_MODIFIER_UUID = UUID.fromString("4726C09D-FD86-46D0-92DD-49ED952A12D2");
-	private static final AttributeModifier STEP_ASSIST = new AttributeModifier(STEP_ASSIST_MODIFIER_UUID, "Step Assist", 0.4, Operation.ADDITION);
+    private static final AttributeModifier STEP_ASSIST = new AttributeModifier(
+        STEP_ASSIST_MODIFIER_UUID,
+        "Step Assist",
+        0.4,
+        Operation.ADDITION
+    );
 
     public static final ResourceLocation HURRICANE_DATA = new ResourceLocation(TicEX.MODID, "hurricane");
 
@@ -53,31 +59,48 @@ public class ModifierHurricane extends NoLevelsModifier implements InventoryTick
     }
 
     public static void toggleStepAssist(IToolStackView boots, Player player) {
-		boolean value;
-		ModDataNBT bootsTag = boots.getPersistentData();
-		if (bootsTag.contains(HURRICANE_DATA, Tag.TAG_BYTE)) {
-			value = !bootsTag.getBoolean(HURRICANE_DATA);
-			bootsTag.putBoolean(HURRICANE_DATA, value);
-		} else {
-			bootsTag.putBoolean(HURRICANE_DATA, true);
-			value = true;
-		}
-		if (value) {
-			player.sendSystemMessage(PELang.STEP_ASSIST.translate(ChatFormatting.GREEN, PELang.GEM_ENABLED));
-		} else {
-			player.sendSystemMessage(PELang.STEP_ASSIST.translate(ChatFormatting.RED, PELang.GEM_DISABLED));
-		}
-	}
-    
+        boolean value;
+        ModDataNBT bootsTag = boots.getPersistentData();
+        if (bootsTag.contains(HURRICANE_DATA, Tag.TAG_BYTE)) {
+            value = !bootsTag.getBoolean(HURRICANE_DATA);
+            bootsTag.putBoolean(HURRICANE_DATA, value);
+        } else {
+            bootsTag.putBoolean(HURRICANE_DATA, true);
+            value = true;
+        }
+        if (value) {
+            player.sendSystemMessage(PELang.STEP_ASSIST.translate(ChatFormatting.GREEN, PELang.GEM_ENABLED));
+        } else {
+            player.sendSystemMessage(PELang.STEP_ASSIST.translate(ChatFormatting.RED, PELang.GEM_DISABLED));
+        }
+    }
+
     private static boolean isJumpPressed() {
-		return DistExecutor.unsafeRunForDist(() -> () -> Minecraft.getInstance().options.keyJump.isDown(), () -> () -> false);
-	}
+        return DistExecutor.unsafeRunForDist(
+            () -> () -> Minecraft.getInstance().options.keyJump.isDown(),
+            () -> () -> false
+        );
+    }
 
     @Override
-    public void onInventoryTick(IToolStackView tool, ModifierEntry entry, Level level, LivingEntity entity, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack) {
+    public void onInventoryTick(
+        IToolStackView tool,
+        ModifierEntry entry,
+        Level level,
+        LivingEntity entity,
+        int itemSlot,
+        boolean isSelected,
+        boolean isCorrectSlot,
+        ItemStack stack
+    ) {
         Item item = tool.getItem();
 
-        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.BOOTS && entity instanceof Player player  && itemSlot == 0){
+        if (
+            item instanceof ArmorItem armorItem &&
+            armorItem.getType() == ArmorItem.Type.BOOTS &&
+            entity instanceof Player player &&
+            itemSlot == 0
+        ) {
             if (!level.isClientSide) {
                 ServerPlayer playerMP = (ServerPlayer) player;
                 playerMP.fallDistance = 0;
@@ -101,14 +124,14 @@ public class ModifierHurricane extends NoLevelsModifier implements InventoryTick
 
             ModDataNBT persistentData = tool.getPersistentData();
             boolean stepAssistEnabled = false;
-            if(persistentData.contains(HURRICANE_DATA, Tag.TAG_BYTE)){
+            if (persistentData.contains(HURRICANE_DATA, Tag.TAG_BYTE)) {
                 stepAssistEnabled = persistentData.getBoolean(HURRICANE_DATA);
             }
 
             AttributeInstance attributeInstance = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
             if (attributeInstance != null) {
                 AttributeModifier existing = attributeInstance.getModifier(STEP_ASSIST_MODIFIER_UUID);
-                if(stepAssistEnabled){
+                if (stepAssistEnabled) {
                     if (existing == null) {
                         attributeInstance.addTransientModifier(STEP_ASSIST);
                     }
@@ -117,21 +140,33 @@ public class ModifierHurricane extends NoLevelsModifier implements InventoryTick
                 }
             }
         }
-
     }
 
     @Override
-    public void addTooltip(IToolStackView tool, ModifierEntry entry, Player player, List<Component> tooltips, TooltipKey tooltipKey,
-            TooltipFlag tooltipFlag) {
+    public void addTooltip(
+        IToolStackView tool,
+        ModifierEntry entry,
+        Player player,
+        List<Component> tooltips,
+        TooltipKey tooltipKey,
+        TooltipFlag tooltipFlag
+    ) {
         tooltips.add(PELang.GEM_LORE_FEET.translate());
     }
 
     @Override
-    public void addAttributes(IToolStackView tool, ModifierEntry entry, EquipmentSlot slot,
-            BiConsumer<Attribute, AttributeModifier> modifierGetter) {  
-        if(tool.getPersistentData().getBoolean(HURRICANE_DATA) && slot == EquipmentSlot.FEET){
-            modifierGetter.accept(Attributes.MOVEMENT_SPEED, new AttributeModifier(MOVEMENT_SPEED_MODIFIER_UUID, "Armor modifier", 1.0, Operation.MULTIPLY_TOTAL));
-        }  
+    public void addAttributes(
+        IToolStackView tool,
+        ModifierEntry entry,
+        EquipmentSlot slot,
+        BiConsumer<Attribute, AttributeModifier> modifierGetter
+    ) {
+        if (tool.getPersistentData().getBoolean(HURRICANE_DATA) && slot == EquipmentSlot.FEET) {
+            modifierGetter.accept(
+                Attributes.MOVEMENT_SPEED,
+                new AttributeModifier(MOVEMENT_SPEED_MODIFIER_UUID, "Armor modifier", 1.0, Operation.MULTIPLY_TOTAL)
+            );
+        }
     }
 
     @Override

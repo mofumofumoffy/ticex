@@ -2,7 +2,6 @@ package moffy.ticex.client.slashblade;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-
 import mods.flammpfeil.slashblade.client.renderer.layers.LayerMainBlade;
 import mods.flammpfeil.slashblade.client.renderer.util.MSAutoCloser;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
@@ -16,19 +15,21 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-public class SBToolFirstPersonRender{
+public class SBToolFirstPersonRender {
+
     private LayerMainBlade<LocalPlayer, ?> layer = null;
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public SBToolFirstPersonRender(){
+    public SBToolFirstPersonRender() {
         Minecraft mc = Minecraft.getInstance();
         EntityRenderer<?> renderer = mc.getEntityRenderDispatcher().getRenderer(mc.player);
         if (renderer instanceof RenderLayerParent) {
-            this.layer = new LayerSBToolMainBlade((RenderLayerParent)renderer);
+            this.layer = new LayerSBToolMainBlade((RenderLayerParent) renderer);
         }
     }
 
     private static final class SingletonHolder {
+
         private static final SBToolFirstPersonRender instance = new SBToolFirstPersonRender();
     }
 
@@ -37,22 +38,23 @@ public class SBToolFirstPersonRender{
     }
 
     public void render(PoseStack matrixStack, MultiBufferSource bufferIn, int combinedLightIn) {
-        if (layer == null)
-            return;
+        if (layer == null) return;
 
         Minecraft mc = Minecraft.getInstance();
-        boolean flag = mc.getCameraEntity() instanceof LivingEntity
-                && ((LivingEntity) mc.getCameraEntity()).isSleeping();
-        if (!(mc.options.getCameraType() == CameraType.FIRST_PERSON && !flag && !mc.options.hideGui
-                && !mc.gameMode.isAlwaysFlying())) {
+        boolean flag =
+            mc.getCameraEntity() instanceof LivingEntity && ((LivingEntity) mc.getCameraEntity()).isSleeping();
+        if (
+            !(mc.options.getCameraType() == CameraType.FIRST_PERSON &&
+                !flag &&
+                !mc.options.hideGui &&
+                !mc.gameMode.isAlwaysFlying())
+        ) {
             return;
         }
         LocalPlayer player = mc.player;
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-        if (stack.isEmpty())
-            return;
-        if (!(stack.getItem() instanceof ModifiableSlashBladeItem))
-            return;
+        if (stack.isEmpty()) return;
+        if (!(stack.getItem() instanceof ModifiableSlashBladeItem)) return;
 
         try (MSAutoCloser msac = MSAutoCloser.pushMatrix(matrixStack)) {
             PoseStack.Pose me = matrixStack.last();

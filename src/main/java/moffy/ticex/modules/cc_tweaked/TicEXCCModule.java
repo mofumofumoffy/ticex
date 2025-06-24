@@ -5,8 +5,9 @@ import moffy.ticex.event.TicEXCCEvent;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraftforge.common.MinecraftForge;
 
-public class TicEXCCModule extends AddonModule{
-    public TicEXCCModule(){
+public class TicEXCCModule extends AddonModule {
+
+    public TicEXCCModule() {
         TicEXRegistry.MODEM_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("modem");
 
         MinecraftForge.EVENT_BUS.addListener(TicEXCCEvent::onPlayerAttack);

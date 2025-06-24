@@ -1,7 +1,7 @@
 {
-    "parent": "forge:item/default",
-    "loader": "tconstruct:material",
-    "textures": {
-      "texture": "ticex:item/tool/parts/slashblade_blade"
-    }
+  "parent": "forge:item/default",
+  "loader": "tconstruct:material",
+  "textures": {
+    "texture": "ticex:item/tool/parts/slashblade_blade"
   }
+}

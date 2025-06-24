@@ -1,6 +1,4 @@
 {
-    "replace": false,
-    "values": [
-      {"id": "ticex:slashblade_blade_cast", "required":false}
-    ]
-  }
+  "replace": false,
+  "values": [{ "id": "ticex:slashblade_blade_cast", "required": false }]
+}

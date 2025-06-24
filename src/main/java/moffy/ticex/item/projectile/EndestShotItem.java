@@ -9,12 +9,13 @@ import net.minecraft.world.level.Level;
 import slimeknights.tconstruct.tools.item.CrystalshotItem;
 
 public class EndestShotItem extends CrystalshotItem {
-    public EndestShotItem(Item.Properties props){
+
+    public EndestShotItem(Item.Properties props) {
         super(props);
     }
 
     @Override
-    public AbstractArrow createArrow(Level pLevel, ItemStack pStack, LivingEntity pShooter){
+    public AbstractArrow createArrow(Level pLevel, ItemStack pStack, LivingEntity pShooter) {
         EndestShotProjectile arrow = new EndestShotProjectile(pShooter, pLevel);
         return arrow;
     }

@@ -8,7 +8,7 @@ import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
-public class ModifierEmbossment extends NoLevelsModifier implements EmbossmentModifierHook{
+public class ModifierEmbossment extends NoLevelsModifier implements EmbossmentModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
@@ -20,10 +20,12 @@ public class ModifierEmbossment extends NoLevelsModifier implements EmbossmentMo
         ItemStack toolStack = context.getToolStack();
         ItemStack inputStack = context.getInputStack(inputIndex);
 
-        if(inputStack.getItem() instanceof ToolPartItem part){
-            toolStack.getCapability(EmbossmentMaterialCapability.EMBOSSMENT_MATERIAL_CAPABILITY).ifPresent(embossment->{
-                embossment.accept(toolStack, inputStack, part);
-            });
+        if (inputStack.getItem() instanceof ToolPartItem part) {
+            toolStack
+                .getCapability(EmbossmentMaterialCapability.EMBOSSMENT_MATERIAL_CAPABILITY)
+                .ifPresent(embossment -> {
+                    embossment.accept(toolStack, inputStack, part);
+                });
             return true;
         }
 

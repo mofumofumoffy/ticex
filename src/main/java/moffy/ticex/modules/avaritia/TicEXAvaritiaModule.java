@@ -31,86 +31,132 @@ import slimeknights.tconstruct.fluids.block.BurningLiquidBlock;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 
-public class TicEXAvaritiaModule extends AddonModule{
+public class TicEXAvaritiaModule extends AddonModule {
 
-    public TicEXAvaritiaModule(){
-        TicEXRegistry.CELESTIAL_CORE = TicEXRegistry.ITEMS.register("celestial_core", ()->new ItemReconstCore(new Item.Properties(), "celestial"));
-        TicEXRegistry.ENDESTSHOT_ARROW = TicEXRegistry.ITEMS.register("endestshot", ()->new EndestShotItem(new Item.Properties()));
+    public TicEXAvaritiaModule() {
+        TicEXRegistry.CELESTIAL_CORE = TicEXRegistry.ITEMS.register("celestial_core", () ->
+            new ItemReconstCore(new Item.Properties(), "celestial")
+        );
+        TicEXRegistry.ENDESTSHOT_ARROW = TicEXRegistry.ITEMS.register("endestshot", () ->
+            new EndestShotItem(new Item.Properties())
+        );
 
         TicEXRegistry.OMNIPOTEMCE_MODIFIER = TicEXRegistry.MODIFIERS.register("omnipotence", ModifierOmnipotence::new);
         TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_unbreakable");
         TicEXRegistry.COSMIC_LUCK_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_luck");
-        TicEXRegistry.BEDROCK_BREAKER_MODIFIER = TicEXRegistry.MODIFIERS.register("bedrock_breaker", ModifierBedrockBreaker::new);
+        TicEXRegistry.BEDROCK_BREAKER_MODIFIER = TicEXRegistry.MODIFIERS.register(
+            "bedrock_breaker",
+            ModifierBedrockBreaker::new
+        );
         TicEXRegistry.CELESTIAL_MODIFIER = TicEXRegistry.MODIFIERS.register("celestial", ModifierCelestial::new);
         TicEXRegistry.CONDENSING_MODIFIER = TicEXRegistry.MODIFIERS.register("condensing", ModifierCondensing::new);
         TicEXRegistry.AFTERSHOCK_MODIFIER = TicEXRegistry.MODIFIERS.register("aftershock", ModifierAftershock::new);
         TicEXRegistry.TRANSCENDENTAL_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("transcendental");
         TicEXRegistry.DENSE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("dense");
-        TicEXRegistry.ENDESTSHOT_MODIFIER = TicEXRegistry.MODIFIERS.register("endestshot",ModifierEndestShot::new);
+        TicEXRegistry.ENDESTSHOT_MODIFIER = TicEXRegistry.MODIFIERS.register("endestshot", ModifierEndestShot::new);
 
-        TicEXRegistry.MOLTEN_INFINITY = TicEXRegistry.FLUIDS.register("molten_infinity").type(TicEXFluidUtils.hot("molten_infinity").temperature(6360).lightLevel(15)).block(BurningLiquidBlock.createBurning(MapColor.EMERALD, 15, 20, 20f)).bucket().commonTag().flowing();
-        TicEXRegistry.MOLTEN_NEUTRON = TicEXRegistry.FLUIDS.register("molten_neutron").type(TicEXFluidUtils.cool().temperature(1000)).block(MapColor.COLOR_BLACK, 0).bucket().commonTag().flowing();        
-        TicEXRegistry.MOLTEN_CRYSTAL_MATRIX = TicEXRegistry.FLUIDS.register("molten_crystal_matrix").type(TicEXFluidUtils.cool().temperature(1000)).block(MapColor.COLOR_LIGHT_BLUE, 0).bucket().commonTag().flowing();    
-    
-        TicEXRegistry.ENDESTSHOT_PROJECTILE = TicEXRegistry.ENTITIES.register("endestshot",()->EntityType.Builder.<EndestShotProjectile>of(EndestShotProjectile::new, MobCategory.MISC).sized(0.5f, 0.5f).setTrackingRange(10)
-        .setUpdateInterval(20).setShouldReceiveVelocityUpdates(false)
-        .build(TicEX.MODID+":endestshot"));
+        TicEXRegistry.MOLTEN_INFINITY = TicEXRegistry.FLUIDS.register("molten_infinity")
+            .type(TicEXFluidUtils.hot("molten_infinity").temperature(6360).lightLevel(15))
+            .block(BurningLiquidBlock.createBurning(MapColor.EMERALD, 15, 20, 20f))
+            .bucket()
+            .commonTag()
+            .flowing();
+        TicEXRegistry.MOLTEN_NEUTRON = TicEXRegistry.FLUIDS.register("molten_neutron")
+            .type(TicEXFluidUtils.cool().temperature(1000))
+            .block(MapColor.COLOR_BLACK, 0)
+            .bucket()
+            .commonTag()
+            .flowing();
+        TicEXRegistry.MOLTEN_CRYSTAL_MATRIX = TicEXRegistry.FLUIDS.register("molten_crystal_matrix")
+            .type(TicEXFluidUtils.cool().temperature(1000))
+            .block(MapColor.COLOR_LIGHT_BLUE, 0)
+            .bucket()
+            .commonTag()
+            .flowing();
+
+        TicEXRegistry.ENDESTSHOT_PROJECTILE = TicEXRegistry.ENTITIES.register("endestshot", () ->
+            EntityType.Builder.<EndestShotProjectile>of(EndestShotProjectile::new, MobCategory.MISC)
+                .sized(0.5f, 0.5f)
+                .setTrackingRange(10)
+                .setUpdateInterval(20)
+                .setShouldReceiveVelocityUpdates(false)
+                .build(TicEX.MODID + ":endestshot")
+        );
 
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onGetHurt);
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onDeath);
 
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
-            initClient(); 
-        });
+        DistExecutor.unsafeRunWhenOn(
+            Dist.CLIENT,
+            () ->
+                () -> {
+                    initClient();
+                }
+        );
     }
 
     @OnlyIn(Dist.CLIENT)
-    void initClient(){
-        
+    void initClient() {
         moffy.ticex.client.avaritia.TicEXCosmicShader.setup();
-    
+
         MaterialVariantId infinityMaterial = new MaterialId(new ResourceLocation(TicEX.MODID, "infinity"));
 
-        TicEXRegistry.TOOL_SHADERS.addShader(infinityMaterial, 
-            (wrapper)->{
-                moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic(wrapper.getDisplayContext());
-                net.minecraft.client.renderer.RenderType cosmicRenderType = moffy.ticex.client.avaritia.TicEXCosmicShader.instance.getCosmicRenderTypeTool();
-                wrapper.renderQuadsWithConsumer(cosmicRenderType);
-            }
+        TicEXRegistry.TOOL_SHADERS.addShader(infinityMaterial, wrapper -> {
+            moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic(wrapper.getDisplayContext());
+            net.minecraft.client.renderer.RenderType cosmicRenderType =
+                moffy.ticex.client.avaritia.TicEXCosmicShader.instance.getCosmicRenderTypeTool();
+            wrapper.renderQuadsWithConsumer(cosmicRenderType);
+        });
+
+        TicEXRegistry.ARMOR_SHADERS.addShader(infinityMaterial, wrapper -> {
+            moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic();
+            net.minecraft.client.resources.model.Material material = new net.minecraft.client.resources.model.Material(
+                InventoryMenu.BLOCK_ATLAS,
+                wrapper.getTexture()
+            );
+            wrapper.renderArmorWithConsumer(
+                material.buffer(
+                    wrapper.getBufferSource(),
+                    moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicRenderTypeArmor
+                )
+            );
+        });
+
+        TicEXRegistry.SHADER_INSTANCE_MAP.addShader(
+            infinityMaterial,
+            moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicShader,
+            moffy.ticex.client.avaritia.TicEXCosmicShader.instance::setupCosmic
         );
 
-        TicEXRegistry.ARMOR_SHADERS.addShader(infinityMaterial,
-            (wrapper)->{
-                moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic();
-                net.minecraft.client.resources.model.Material material = new net.minecraft.client.resources.model.Material(InventoryMenu.BLOCK_ATLAS, wrapper.getTexture());
-                wrapper.renderArmorWithConsumer(material.buffer(wrapper.getBufferSource(), moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicRenderTypeArmor));
-            }
-        );
-
-        TicEXRegistry.SHADER_INSTANCE_MAP.addShader(infinityMaterial, moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicShader, moffy.ticex.client.avaritia.TicEXCosmicShader.instance::setupCosmic);
-        
         //Sakura Tinker Compats
-        if(ModList.get().isLoaded("sakuratinker")){
+        if (ModList.get().isLoaded("sakuratinker")) {
             MaterialVariantId sakuraInfinityMaterial = new MaterialId(new ResourceLocation("sakuratinker", "infinity"));
 
-            TicEXRegistry.TOOL_SHADERS.addShader(sakuraInfinityMaterial, 
-                (wrapper)->{
-                    moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic(wrapper.getDisplayContext());
-                    net.minecraft.client.renderer.RenderType cosmicRenderType = moffy.ticex.client.avaritia.TicEXCosmicShader.instance.getCosmicRenderTypeTool();
-                    wrapper.renderQuadsWithConsumer(cosmicRenderType);
-                }
-            );
+            TicEXRegistry.TOOL_SHADERS.addShader(sakuraInfinityMaterial, wrapper -> {
+                moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic(wrapper.getDisplayContext());
+                net.minecraft.client.renderer.RenderType cosmicRenderType =
+                    moffy.ticex.client.avaritia.TicEXCosmicShader.instance.getCosmicRenderTypeTool();
+                wrapper.renderQuadsWithConsumer(cosmicRenderType);
+            });
 
-            TicEXRegistry.ARMOR_SHADERS.addShader(sakuraInfinityMaterial,
-                (wrapper)->{
-                    moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic();
-                    net.minecraft.client.resources.model.Material material = new net.minecraft.client.resources.model.Material(InventoryMenu.BLOCK_ATLAS, wrapper.getTexture());
-                    wrapper.renderArmorWithConsumer(material.buffer(wrapper.getBufferSource(), moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicRenderTypeArmor));
-                }
-            );
+            TicEXRegistry.ARMOR_SHADERS.addShader(sakuraInfinityMaterial, wrapper -> {
+                moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic();
+                net.minecraft.client.resources.model.Material material =
+                    new net.minecraft.client.resources.model.Material(InventoryMenu.BLOCK_ATLAS, wrapper.getTexture());
+                wrapper.renderArmorWithConsumer(
+                    material.buffer(
+                        wrapper.getBufferSource(),
+                        moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicRenderTypeArmor
+                    )
+                );
+            });
 
-            TicEXRegistry.SHADER_INSTANCE_MAP.addShader(sakuraInfinityMaterial, moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicShader, moffy.ticex.client.avaritia.TicEXCosmicShader.instance::setupCosmic);
+            TicEXRegistry.SHADER_INSTANCE_MAP.addShader(
+                sakuraInfinityMaterial,
+                moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicShader,
+                moffy.ticex.client.avaritia.TicEXCosmicShader.instance::setupCosmic
+            );
         }
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

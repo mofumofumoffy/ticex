@@ -1,14 +1,10 @@
 {
-    "type": "ticex:embossment_modifier",
-    "inputs": [
-      { "item":"ticex:overload_core" }
-    ],
-    "emboss_inputs": [
-      { "item":"minecraft:enchanted_book" }
-    ],
-    "tools": { "tag": "tconstruct:modifiable" },
-    "slots": {
-      "upgrades": 1
-    },
-    "result": "ticex:overload"
-  }
+  "type": "ticex:embossment_modifier",
+  "inputs": [{ "item": "ticex:overload_core" }],
+  "emboss_inputs": [{ "item": "minecraft:enchanted_book" }],
+  "tools": { "tag": "tconstruct:modifiable" },
+  "slots": {
+    "upgrades": 1
+  },
+  "result": "ticex:overload"
+}

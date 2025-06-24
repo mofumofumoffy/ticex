@@ -1,7 +1,7 @@
 {
-    "variants":{
-        "":{
-            "model":"ticex:block/etheric_block"
-        }
+  "variants": {
+    "": {
+      "model": "ticex:block/etheric_block"
     }
+  }
 }

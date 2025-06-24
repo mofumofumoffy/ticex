@@ -9,18 +9,19 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class TicEXCuriosEvent {
+
     public static void onItemSwap(LivingSwapItemsEvent.Hands event) {
-        if(hasIncomparable(event.getItemSwappedToMainHand()) || hasIncomparable(event.getItemSwappedToOffHand())){
+        if (hasIncomparable(event.getItemSwappedToMainHand()) || hasIncomparable(event.getItemSwappedToOffHand())) {
             event.setCanceled(true);
         }
     }
 
-    public static void onRegisterCaps(RegisterCapabilitiesEvent event){
+    public static void onRegisterCaps(RegisterCapabilitiesEvent event) {
         event.register(IncomparableCuriosCapability.class);
     }
 
-    private static boolean hasIncomparable(ItemStack stack){
-        if(stack.getItem() instanceof IModifiable){
+    private static boolean hasIncomparable(ItemStack stack) {
+        if (stack.getItem() instanceof IModifiable) {
             ToolStack tool = ToolStack.from(stack);
             return tool.getModifierLevel(TicEXRegistry.INCOMPARABLE_MODIFIER.get()) > 0;
         }

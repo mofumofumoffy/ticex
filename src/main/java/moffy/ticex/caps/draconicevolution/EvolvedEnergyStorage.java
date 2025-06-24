@@ -1,13 +1,13 @@
 package moffy.ticex.caps.draconicevolution;
 
 import com.brandon3055.brandonscore.api.power.OPStorage;
-
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class EvolvedEnergyStorage implements IEnergyStorage{
+public class EvolvedEnergyStorage implements IEnergyStorage {
+
     protected OPStorage opStorage;
 
-    public EvolvedEnergyStorage(OPStorage opStorage){
+    public EvolvedEnergyStorage(OPStorage opStorage) {
         this.opStorage = opStorage;
     }
 

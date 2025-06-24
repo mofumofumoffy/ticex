@@ -3,9 +3,7 @@ package moffy.ticex.lib.recipe;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.annotation.Nullable;
-
 import moffy.ticex.lib.hook.EmbossmentModifierHook.EmbossmentContext;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
@@ -28,21 +26,35 @@ import slimeknights.tconstruct.library.tools.SlotType.SlotCount;
 import slimeknights.tconstruct.library.tools.nbt.LazyToolStack;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class EmbossmentModifierRecipe extends AbstractModifierRecipe{
+public class EmbossmentModifierRecipe extends AbstractModifierRecipe {
 
-    public static final RecordLoadable<EmbossmentModifierRecipe>LOADER = RecordLoadable.create(
-        ContextKey.ID.requiredField(), 
+    public static final RecordLoadable<EmbossmentModifierRecipe> LOADER = RecordLoadable.create(
+        ContextKey.ID.requiredField(),
         SizedIngredient.LOADABLE.list(1).requiredField("inputs", r -> r.inputs),
         SizedIngredient.LOADABLE.list(1).requiredField("emboss_inputs", r -> r.embossItem),
-        TOOLS_FIELD, MAX_TOOL_SIZE_FIELD, RESULT_FIELD, LEVEL_FIELD, SLOTS_FIELD,
-    EmbossmentModifierRecipe::new);
+        TOOLS_FIELD,
+        MAX_TOOL_SIZE_FIELD,
+        RESULT_FIELD,
+        LEVEL_FIELD,
+        SLOTS_FIELD,
+        EmbossmentModifierRecipe::new
+    );
 
     private final List<SizedIngredient> embossItem;
     private final List<SizedIngredient> inputs;
 
     private List<SizedIngredient> ingredientsCache;
 
-    public EmbossmentModifierRecipe(ResourceLocation id, List<SizedIngredient> inputs, List<SizedIngredient> embossItem, Ingredient toolRequirement, int maxToolSize, ModifierId result, IntRange level, @Nullable SlotCount slots){
+    public EmbossmentModifierRecipe(
+        ResourceLocation id,
+        List<SizedIngredient> inputs,
+        List<SizedIngredient> embossItem,
+        Ingredient toolRequirement,
+        int maxToolSize,
+        ModifierId result,
+        IntRange level,
+        @Nullable SlotCount slots
+    ) {
         super(id, toolRequirement, maxToolSize, result, level, slots, false, false);
         this.inputs = inputs;
         this.embossItem = embossItem;
@@ -52,17 +64,17 @@ public class EmbossmentModifierRecipe extends AbstractModifierRecipe{
     public boolean matches(ITinkerStationContainer container, Level level) {
         if (!result.isBound() || !this.toolRequirement.test(container.getTinkerableStack())) {
             return false;
-          }
-          
-          if(ingredientsCache == null){
-            ingredientsCache = new ArrayList<>();
-          } else {
-            ingredientsCache.clear();
-          }
+        }
 
-          ingredientsCache.addAll(inputs);
-          ingredientsCache.addAll(embossItem);
-          return ModifierRecipe.checkMatch(container, ingredientsCache);
+        if (ingredientsCache == null) {
+            ingredientsCache = new ArrayList<>();
+        } else {
+            ingredientsCache.clear();
+        }
+
+        ingredientsCache.addAll(inputs);
+        ingredientsCache.addAll(embossItem);
+        return ModifierRecipe.checkMatch(container, ingredientsCache);
     }
 
     @Override
@@ -79,13 +91,13 @@ public class EmbossmentModifierRecipe extends AbstractModifierRecipe{
     @Override
     public List<ItemStack> getDisplayItems(int slot) {
         if (slot >= 0 && slot < inputs.size() + embossItem.size()) {
-            if(slot < inputs.size()){
+            if (slot < inputs.size()) {
                 return inputs.get(slot).getMatchingStacks();
             } else {
                 return embossItem.get(slot - inputs.size()).getMatchingStacks();
             }
-          }
-          return Collections.emptyList();
+        }
+        return Collections.emptyList();
     }
 
     @Override
@@ -101,7 +113,7 @@ public class EmbossmentModifierRecipe extends AbstractModifierRecipe{
 
         tool = tool.copy();
 
-        if(tool.getModifierLevel(modifier) == 0){
+        if (tool.getModifierLevel(modifier) == 0) {
             SlotCount slots = getSlots();
             if (slots != null) {
                 tool.getPersistentData().addSlots(slots.type(), -slots.count());
@@ -117,15 +129,18 @@ public class EmbossmentModifierRecipe extends AbstractModifierRecipe{
         EmbossmentContext context = new EmbossmentContext(resultStack, inv);
 
         boolean secondary = false;
-        for(int i = 0; i < inv.getInputCount(); i++){
+        for (int i = 0; i < inv.getInputCount(); i++) {
             ItemStack input = inv.getInput(i);
-            if(embossItem.get(0).test(input)){
-                result = tool.getModifier(modifier).getHook(TicEXRegistry.EMBOSSMENT_HOOK).applyItem(context, i, secondary);
+            if (embossItem.get(0).test(input)) {
+                result = tool
+                    .getModifier(modifier)
+                    .getHook(TicEXRegistry.EMBOSSMENT_HOOK)
+                    .applyItem(context, i, secondary);
             }
             secondary = true;
         }
-        
-        if(result){
+
+        if (result) {
             return LazyToolStack.success(context.getToolStack());
         }
         return RecipeResult.failure(context.getErrorMsg());

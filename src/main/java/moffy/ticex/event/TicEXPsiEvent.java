@@ -15,33 +15,35 @@ import vazkii.psi.api.exosuit.PsiArmorEvent;
 
 public class TicEXPsiEvent {
 
-    public static void onPsiArmorEvent(PsiArmorEvent event){
+    public static void onPsiArmorEvent(PsiArmorEvent event) {
         Player player = event.getEntity();
-        player.getArmorSlots().forEach(armorStack->{
-            if(armorStack.getItem() instanceof IModifiable){
-                ToolStack armor = ToolStack.from(armorStack);
-                String eventType = getEvent(armorStack);
-                int timesCast = armor.getPersistentData().getInt(ModifierPsionizingRadiation.TIMES_CAST_LOC);
+        player
+            .getArmorSlots()
+            .forEach(armorStack -> {
+                if (armorStack.getItem() instanceof IModifiable) {
+                    ToolStack armor = ToolStack.from(armorStack);
+                    String eventType = getEvent(armorStack);
+                    int timesCast = armor.getPersistentData().getInt(ModifierPsionizingRadiation.TIMES_CAST_LOC);
 
-                if(eventType != null && event.type.equals(eventType)){
-                    TicEXPsiUtils.CastSpell(player, armorStack, (context)->{
-                        context.loopcastIndex = timesCast;
-                    });
+                    if (eventType != null && event.type.equals(eventType)) {
+                        TicEXPsiUtils.CastSpell(player, armorStack, context -> {
+                            context.loopcastIndex = timesCast;
+                        });
 
-                    armor.getPersistentData().putInt(ModifierPsionizingRadiation.TIMES_CAST_LOC, timesCast + 1);
+                        armor.getPersistentData().putInt(ModifierPsionizingRadiation.TIMES_CAST_LOC, timesCast + 1);
+                    }
                 }
-            }
-        });
+            });
     }
 
-    public static String getEvent(ItemStack armorStack){
-        if(armorStack.getItem() instanceof IModifiable && armorStack.getItem() instanceof ArmorItem armorItem){
+    public static String getEvent(ItemStack armorStack) {
+        if (armorStack.getItem() instanceof IModifiable && armorStack.getItem() instanceof ArmorItem armorItem) {
             ToolStack armor = ToolStack.from(armorStack);
-            if(armor.getModifierLevel(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER.get()) > 0){
+            if (armor.getModifierLevel(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER.get()) > 0) {
                 switch (armorItem.getType()) {
                     case HELMET:
                         ModDataNBT persistentData = armor.getPersistentData();
-                        if(persistentData.contains(ModifierSensor.EVENT_TYPE_LOC, Tag.TAG_STRING)){
+                        if (persistentData.contains(ModifierSensor.EVENT_TYPE_LOC, Tag.TAG_STRING)) {
                             return persistentData.getString(ModifierSensor.EVENT_TYPE_LOC);
                         }
                         return null;

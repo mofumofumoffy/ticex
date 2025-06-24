@@ -1,20 +1,18 @@
 {
-    "package": "moffy.ticex.mixin.mekanism",
-    "compatibilityLevel": "JAVA_17",
-    "refmap": "ticex.refmap.json",
-    "plugin": "moffy.ticex.modules.mekanism.TicEXMekanismMixinPlugin",
-    "mixins": [
-        "ModuleNutritionalInjectionUnitMixin",
-        "ModuleJetpackUnitMixin",
-        "ModuleHelperMixin",
-        "MekanismIMCMixin"
-    ],
-    "client": [
-        "HUDHandlerMixin"
-    ],
-    "server": [],
-    "injectors": {
-        "defaultRequire": 1
-    },
-    "minVersion": 0.7
+  "package": "moffy.ticex.mixin.mekanism",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ticex.refmap.json",
+  "plugin": "moffy.ticex.modules.mekanism.TicEXMekanismMixinPlugin",
+  "mixins": [
+    "ModuleNutritionalInjectionUnitMixin",
+    "ModuleJetpackUnitMixin",
+    "ModuleHelperMixin",
+    "MekanismIMCMixin"
+  ],
+  "client": ["HUDHandlerMixin"],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": 0.7
 }

@@ -3,15 +3,19 @@ package moffy.ticex.caps.draconicevolution;
 import com.brandon3055.brandonscore.api.power.OPStorage;
 import com.brandon3055.draconicevolution.api.modules.lib.ModularOPStorage;
 import com.brandon3055.draconicevolution.init.EquipCfg;
-
 import moffy.ticex.modifier.ModifierEvolved;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-public class EvolvedOPStorage extends ModularOPStorage{
+public class EvolvedOPStorage extends ModularOPStorage {
+
     private IToolStackView tool;
 
     public EvolvedOPStorage(EvolvedModuleHost host, IToolStackView tool) {
-        super(host, EquipCfg.getBaseStaffEnergy(host.getHostTechLevel()), EquipCfg.getBaseStaffTransfer(host.getHostTechLevel()));
+        super(
+            host,
+            EquipCfg.getBaseStaffEnergy(host.getHostTechLevel()),
+            EquipCfg.getBaseStaffTransfer(host.getHostTechLevel())
+        );
         this.tool = tool;
         this.setIOMode(true);
         readFromPersistentData();
@@ -23,7 +27,7 @@ public class EvolvedOPStorage extends ModularOPStorage{
         writeToPersistentData();
         return extracted;
     }
-    
+
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate) {
         int received = super.receiveEnergy(maxReceive, simulate);
@@ -62,11 +66,11 @@ public class EvolvedOPStorage extends ModularOPStorage{
         return true;
     }
 
-    private void writeToPersistentData(){
+    private void writeToPersistentData() {
         tool.getPersistentData().put(ModifierEvolved.OP_STORAGE_LOCATION, serializeNBT());
     }
 
-    private void readFromPersistentData(){
+    private void readFromPersistentData() {
         deserializeNBT(tool.getPersistentData().getCompound(ModifierEvolved.OP_STORAGE_LOCATION));
     }
 }

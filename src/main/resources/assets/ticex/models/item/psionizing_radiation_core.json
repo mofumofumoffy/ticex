@@ -1,6 +1,6 @@
 {
-    "parent": "minecraft:item/generated",
-    "textures": {
-      "layer0": "ticex:item/cores/psionizing_radiation_core"
-    }
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ticex:item/cores/psionizing_radiation_core"
   }
+}

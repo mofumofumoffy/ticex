@@ -3,7 +3,6 @@ package moffy.ticex.lib;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
 import moffy.ticex.TicEX;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -17,26 +16,29 @@ import slimeknights.tconstruct.library.materials.stats.MaterialStatType;
 import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.tools.stat.ModifierStatsBuilder;
 
-
-public record CatalystMaterialStatsType(MaterialStatType<?> getType) implements IMaterialStats{
-    
+public record CatalystMaterialStatsType(MaterialStatType<?> getType) implements IMaterialStats {
     private static final RecordLoadable<CatalystMaterialStatsType> LOADABLE;
     private static final List<Component> DESCRIPTION;
 
-    private static final HashMap<String, MaterialStatType<CatalystMaterialStatsType>>TYPES;
+    private static final HashMap<String, MaterialStatType<CatalystMaterialStatsType>> TYPES;
 
-    public CatalystMaterialStatsType(MaterialStatType<?> getType){
+    public CatalystMaterialStatsType(MaterialStatType<?> getType) {
         this.getType = getType;
-    };
-
-    public static MaterialStatType<CatalystMaterialStatsType> getOrMakeType(String id){
-        if(TYPES.containsKey(id)){
+    }
+    public static MaterialStatType<CatalystMaterialStatsType> getOrMakeType(String id) {
+        if (TYPES.containsKey(id)) {
             return TYPES.get(id);
         } else {
             MaterialStatsId statsId = new MaterialStatsId(TicEX.MODID, id);
-            MaterialStatType<CatalystMaterialStatsType> catalystStatType = new MaterialStatType<CatalystMaterialStatsType>(statsId, (type) -> {
-                return new CatalystMaterialStatsType(type);
-            }, LOADABLE);
+            MaterialStatType<CatalystMaterialStatsType> catalystStatType = new MaterialStatType<
+                CatalystMaterialStatsType
+            >(
+                statsId,
+                type -> {
+                    return new CatalystMaterialStatsType(type);
+                },
+                LOADABLE
+            );
 
             TYPES.put(id, catalystStatType);
 
@@ -45,14 +47,20 @@ public record CatalystMaterialStatsType(MaterialStatType<?> getType) implements 
     }
 
     public static MaterialStatType<CatalystMaterialStatsType> getOrMakeType(String prefix, ArmorItem.Type armorType) {
-        String id = prefix+"_"+armorType.getName();
-        if(TYPES.containsKey(id)){
+        String id = prefix + "_" + armorType.getName();
+        if (TYPES.containsKey(id)) {
             return TYPES.get(id);
         } else {
             MaterialStatsId statsId = new MaterialStatsId(TicEX.MODID, id);
-            MaterialStatType<CatalystMaterialStatsType> catalystStatType = new MaterialStatType<CatalystMaterialStatsType>(statsId, (type) -> {
-                return new CatalystMaterialStatsType(type);
-            }, LOADABLE);
+            MaterialStatType<CatalystMaterialStatsType> catalystStatType = new MaterialStatType<
+                CatalystMaterialStatsType
+            >(
+                statsId,
+                type -> {
+                    return new CatalystMaterialStatsType(type);
+                },
+                LOADABLE
+            );
 
             TYPES.put(id, catalystStatType);
 
@@ -60,20 +68,18 @@ public record CatalystMaterialStatsType(MaterialStatType<?> getType) implements 
         }
     }
 
-    public static void RegisterStats(){
-        for(MaterialStatType<CatalystMaterialStatsType> catalystStatType : TYPES.values()){
+    public static void RegisterStats() {
+        for (MaterialStatType<CatalystMaterialStatsType> catalystStatType : TYPES.values()) {
             MaterialRegistry.getInstance().registerStatType(catalystStatType);
         }
     }
 
-    public static Collection<MaterialStatType<CatalystMaterialStatsType>> getAllCatalystStats(){
+    public static Collection<MaterialStatType<CatalystMaterialStatsType>> getAllCatalystStats() {
         return TYPES.values();
     }
 
     @Override
-    public void apply(ModifierStatsBuilder builder, float scale) {
-        
-    }
+    public void apply(ModifierStatsBuilder builder, float scale) {}
 
     @Override
     public List<Component> getLocalizedDescriptions() {
@@ -89,11 +95,12 @@ public record CatalystMaterialStatsType(MaterialStatType<?> getType) implements 
     public MutableComponent getLocalizedName() {
         return IMaterialStats.super.getLocalizedName().withStyle(ChatFormatting.AQUA);
     }
-    
 
-    static{
-        LOADABLE = RecordLoadable.create(MaterialStatType.CONTEXT_KEY.requiredField(),CatalystMaterialStatsType::new);
+    static {
+        LOADABLE = RecordLoadable.create(MaterialStatType.CONTEXT_KEY.requiredField(), CatalystMaterialStatsType::new);
         DESCRIPTION = List.of(Component.empty());
         TYPES = new HashMap<>();
     }
-} 
+
+
+}

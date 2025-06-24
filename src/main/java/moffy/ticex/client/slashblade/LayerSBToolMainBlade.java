@@ -1,14 +1,9 @@
 package moffy.ticex.client.slashblade;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import jp.nyatla.nymmd.MmdException;
 import jp.nyatla.nymmd.MmdMotionPlayerGL2;
 import jp.nyatla.nymmd.MmdPmdModelMc;
@@ -38,88 +33,94 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<T>> extends LayerMainBlade<T, M>{
+public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<T>> extends LayerMainBlade<T, M> {
 
     final LazyOptional<MmdPmdModelMc> bladeholder = LazyOptional.of(() -> {
-      try {
-         return new MmdPmdModelMc(new ResourceLocation("slashblade", "model/bladeholder.pmd"));
-      } catch (FileNotFoundException var1) {
-         var1.printStackTrace();
-      } catch (MmdException var2) {
-         var2.printStackTrace();
-      } catch (IOException var3) {
-         var3.printStackTrace();
-      }
-
-      return null;
-   });
-   final LazyOptional<MmdMotionPlayerGL2> motionPlayer = LazyOptional.of(() -> {
-      MmdMotionPlayerGL2 mmp = new MmdMotionPlayerGL2();
-      this.bladeholder.ifPresent((pmd) -> {
-         try {
-            mmp.setPmd(pmd);
-         } catch (MmdException var3) {
+        try {
+            return new MmdPmdModelMc(new ResourceLocation("slashblade", "model/bladeholder.pmd"));
+        } catch (FileNotFoundException var1) {
+            var1.printStackTrace();
+        } catch (MmdException var2) {
+            var2.printStackTrace();
+        } catch (IOException var3) {
             var3.printStackTrace();
-         }
+        }
 
-      });
-      return mmp;
-   });
+        return null;
+    });
+    final LazyOptional<MmdMotionPlayerGL2> motionPlayer = LazyOptional.of(() -> {
+        MmdMotionPlayerGL2 mmp = new MmdMotionPlayerGL2();
+        this.bladeholder.ifPresent(pmd -> {
+                try {
+                    mmp.setPmd(pmd);
+                } catch (MmdException var3) {
+                    var3.printStackTrace();
+                }
+            });
+        return mmp;
+    });
 
     public LayerSBToolMainBlade(RenderLayerParent<T, M> entityRendererIn) {
         super(entityRendererIn);
     }
 
     @Override
-    public void renderStandbyBlade(PoseStack matrixStack, MultiBufferSource bufferIn, int lightIn, ItemStack blade,
-            T entity) {
-
+    public void renderStandbyBlade(
+        PoseStack matrixStack,
+        MultiBufferSource bufferIn,
+        int lightIn,
+        ItemStack blade,
+        T entity
+    ) {
         LazyOptional<ISlashBladeState> state = blade.getCapability(CapabilitySlashBlade.BLADESTATE);
         state.ifPresent(s -> {
-	        double modelScaleBase = 0.0078125F;
-	        double motionScale = 1.5 / 12.0;
+            double modelScaleBase = 0.0078125F;
+            double motionScale = 1.5 / 12.0;
 
-	        String part;
-	        try (MSAutoCloser msacA = MSAutoCloser.pushMatrix(matrixStack)) {
+            String part;
+            try (MSAutoCloser msacA = MSAutoCloser.pushMatrix(matrixStack)) {
                 matrixStack.translate(0, 1.5f, 0);
                 var carrytype = s.getCarryType();
-                switch(carrytype) {
+                switch (carrytype) {
                     case PSO2:
-                        matrixStack.translate(1F,-1.125f, 0.20f);
+                        matrixStack.translate(1F, -1.125f, 0.20f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(-0.122173F, 0, 0));
-                        if(Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON
-                        && entity == Minecraft.getInstance().player) return;
+                        if (
+                            Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON &&
+                            entity == Minecraft.getInstance().player
+                        ) return;
                         break;
-
                     case KATANA:
-                        matrixStack.translate(0.25F,-0.875f, -0.55f);
+                        matrixStack.translate(0.25F, -0.875f, -0.55f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(3.1415927F, 1.570796f, 0.261799F));
                         break;
-
                     case DEFAULT:
-                        matrixStack.translate(0.25F,-0.875f, -0.55f);
+                        matrixStack.translate(0.25F, -0.875f, -0.55f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(0F, 1.570796f, 0.261799F));
                         break;
-
                     case NINJA:
-                        matrixStack.translate(-0.5F,-2f, 0.20f);
+                        matrixStack.translate(-0.5F, -2f, 0.20f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(-2.094395F, 0f, 3.1415927F));
-                        if(Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON
-                                && entity == Minecraft.getInstance().player) return;
+                        if (
+                            Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON &&
+                            entity == Minecraft.getInstance().player
+                        ) return;
                         break;
-
                     case RNINJA:
-                        matrixStack.translate(0.5F,-2f, 0.20f);
+                        matrixStack.translate(0.5F, -2f, 0.20f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(-1.047198F, 0, 0));
-                        if(Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON
-                                && entity == Minecraft.getInstance().player) return;
+                        if (
+                            Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON &&
+                            entity == Minecraft.getInstance().player
+                        ) return;
                         break;
-
                     default:
                         // as default
-                        matrixStack.translate(0.25F,-0.875f, -0.55f);
+                        matrixStack.translate(0.25F, -0.875f, -0.55f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(0F, 1.570796f, 0.261799F));
                         break;
                 }
@@ -143,8 +144,18 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
     }
 
     @Override
-    public void render(PoseStack matrixStack, MultiBufferSource bufferIn, int lightIn, T entity, float limbSwing,
-            float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(
+        PoseStack matrixStack,
+        MultiBufferSource bufferIn,
+        int lightIn,
+        T entity,
+        float limbSwing,
+        float limbSwingAmount,
+        float partialTicks,
+        float ageInTicks,
+        float netHeadYaw,
+        float headPitch
+    ) {
         this.renderOffhandItem(matrixStack, bufferIn, lightIn, entity);
 
         float motionYOffset = 1.5f;
@@ -153,32 +164,33 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
 
         ItemStack stack = entity.getItemInHand(InteractionHand.MAIN_HAND);
 
-        if (stack.isEmpty())
-            return;
+        if (stack.isEmpty()) return;
 
         LazyOptional<ISlashBladeState> state = stack.getCapability(CapabilitySlashBlade.BLADESTATE);
         state.ifPresent(s -> {
-            WavefrontObject model = BladeModelManager.getInstance().getModel(s.getModel().orElse(DefaultResources.resourceDefaultModel));
+            WavefrontObject model = BladeModelManager.getInstance()
+                .getModel(s.getModel().orElse(DefaultResources.resourceDefaultModel));
 
             motionPlayer.ifPresent(mmp -> {
                 ComboState combo = ComboStateRegistry.REGISTRY.get().getValue(s.getComboSeq()) != null
-                        ? ComboStateRegistry.REGISTRY.get().getValue(s.getComboSeq())
-                        : ComboStateRegistry.NONE.get();
+                    ? ComboStateRegistry.REGISTRY.get().getValue(s.getComboSeq())
+                    : ComboStateRegistry.NONE.get();
 
                 double time = TimeValueHelper.getMSecFromTicks(
-                        Math.max(0, entity.level().getGameTime() - s.getLastActionTime()) + partialTicks);
+                    Math.max(0, entity.level().getGameTime() - s.getLastActionTime()) + partialTicks
+                );
 
                 while (combo != ComboStateRegistry.NONE.get() && combo.getTimeoutMS() < time) {
                     time -= combo.getTimeoutMS();
 
                     combo = ComboStateRegistry.REGISTRY.get().getValue(combo.getNextOfTimeout(entity)) != null
-                            ? ComboStateRegistry.REGISTRY.get().getValue(combo.getNextOfTimeout(entity))
-                            : ComboStateRegistry.NONE.get();
+                        ? ComboStateRegistry.REGISTRY.get().getValue(combo.getNextOfTimeout(entity))
+                        : ComboStateRegistry.NONE.get();
                 }
                 if (combo == ComboStateRegistry.NONE.get()) {
                     combo = ComboStateRegistry.REGISTRY.get().getValue(s.getComboRoot()) != null
-                            ? ComboStateRegistry.REGISTRY.get().getValue(s.getComboRoot())
-                            : ComboStateRegistry.STANDBY.get();
+                        ? ComboStateRegistry.REGISTRY.get().getValue(s.getComboRoot())
+                        : ComboStateRegistry.STANDBY.get();
                 }
 
                 MmdVmdMotionMc motion = BladeMotionManager.getInstance().getMotion(combo.getMotionLoc());
@@ -211,15 +223,11 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
                 }
 
                 try (MSAutoCloser msacA = MSAutoCloser.pushMatrix(matrixStack)) {
-
                     setUserPose(matrixStack, entity, partialTicks);
-
-
 
                     matrixStack.translate(0, motionYOffset, 0);
 
                     matrixStack.scale((float) motionScale, (float) motionScale, (float) motionScale);
-
 
                     matrixStack.mulPose(Axis.ZP.rotationDegrees(180));
 
@@ -273,52 +281,93 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
 
                         if (s.isCharged(entity)) {
                             float f = (float) entity.tickCount + partialTicks;
-                            BladeRenderState.renderChargeEffect(stack, f, model, "effect",
-                                    new ResourceLocation("textures/entity/creeper/creeper_armor.png"), matrixStack,
-                                    bufferIn, lightIn);
+                            BladeRenderState.renderChargeEffect(
+                                stack,
+                                f,
+                                model,
+                                "effect",
+                                new ResourceLocation("textures/entity/creeper/creeper_armor.png"),
+                                matrixStack,
+                                bufferIn,
+                                lightIn
+                            );
                         }
-
                     }
-
                 }
-
             });
-
         });
     }
 
-    public void renderToolSlashBlade(ItemStack stack, ISlashBladeState state, String target, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn){
+    public void renderToolSlashBlade(
+        ItemStack stack,
+        ISlashBladeState state,
+        String target,
+        PoseStack matrixStackIn,
+        MultiBufferSource bufferIn,
+        int packedLightIn
+    ) {
         ToolStack tool = ToolStack.from(stack);
 
         WavefrontObject model;
 
         ResourceLocation textureLocation;
-        if(tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0){
-
+        if (tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0) {
             CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
-            if(persistentTag.contains("ModelName")){
-               model = BladeModelManager.getInstance().getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
-               textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));
+            if (persistentTag.contains("ModelName")) {
+                model = BladeModelManager.getInstance()
+                    .getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
+                textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));
             } else {
-                model = BladeModelManager.getInstance().getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
+                model = BladeModelManager.getInstance()
+                    .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
                 textureLocation = state.getTexture().orElse(DefaultResources.resourceDefaultTexture);
             }
 
-            BladeRenderState.renderOverrided(stack, model, target, textureLocation, matrixStackIn, bufferIn,
-                    packedLightIn);
-            BladeRenderState.renderOverridedLuminous(stack, model, target + "_luminous", textureLocation,
-                    matrixStackIn, bufferIn, packedLightIn);
-        } else if(tool.getMaterials().size() > 0){
-            model = BladeModelManager.getInstance().getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
+            BladeRenderState.renderOverrided(
+                stack,
+                model,
+                target,
+                textureLocation,
+                matrixStackIn,
+                bufferIn,
+                packedLightIn
+            );
+            BladeRenderState.renderOverridedLuminous(
+                stack,
+                model,
+                target + "_luminous",
+                textureLocation,
+                matrixStackIn,
+                bufferIn,
+                packedLightIn
+            );
+        } else if (tool.getMaterials().size() > 0) {
+            model = BladeModelManager.getInstance()
+                .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
             SBToolRenderState.renderOverrided(stack, model, target, matrixStackIn, bufferIn, packedLightIn);
             SBToolRenderState.renderOverridedLuminous(stack, model, target, matrixStackIn, bufferIn, packedLightIn);
         } else {
-            model = BladeModelManager.getInstance().getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
+            model = BladeModelManager.getInstance()
+                .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
             textureLocation = state.getTexture().orElse(DefaultResources.resourceDefaultTexture);
-            BladeRenderState.renderOverrided(stack, model, target, textureLocation, matrixStackIn, bufferIn,
-                    packedLightIn);
-            BladeRenderState.renderOverridedLuminous(stack, model, target + "_luminous", textureLocation,
-                    matrixStackIn, bufferIn, packedLightIn);
+            BladeRenderState.renderOverrided(
+                stack,
+                model,
+                target,
+                textureLocation,
+                matrixStackIn,
+                bufferIn,
+                packedLightIn
+            );
+            BladeRenderState.renderOverridedLuminous(
+                stack,
+                model,
+                target + "_luminous",
+                textureLocation,
+                matrixStackIn,
+                bufferIn,
+                packedLightIn
+            );
         }
     }
 }

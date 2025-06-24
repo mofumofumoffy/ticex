@@ -1,28 +1,5 @@
 package moffy.ticex.datagen.general.tag;
 
-import java.util.concurrent.CompletableFuture;
-
-import org.jetbrains.annotations.Nullable;
-
-import moffy.ticex.TicEX;
-import moffy.ticex.lib.TicEXTags;
-import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import slimeknights.mantle.registration.object.FluidObject;
-import slimeknights.tconstruct.TConstruct;
-import slimeknights.tconstruct.common.TinkerTags;
-import slimeknights.tconstruct.library.data.recipe.CostTagAppender;
-
 import static slimeknights.tconstruct.common.TinkerTags.Items.BONUS_SLOTS;
 import static slimeknights.tconstruct.common.TinkerTags.Items.BOOTS;
 import static slimeknights.tconstruct.common.TinkerTags.Items.CHESTPLATES;
@@ -38,16 +15,39 @@ import static slimeknights.tconstruct.common.TinkerTags.Items.SMALL_TOOLS;
 import static slimeknights.tconstruct.common.TinkerTags.Items.TRIM;
 import static slimeknights.tconstruct.common.TinkerTags.Items.UNSALVAGABLE;
 
+import java.util.concurrent.CompletableFuture;
+import moffy.ticex.TicEX;
+import moffy.ticex.lib.TicEXTags;
+import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.Nullable;
+import slimeknights.mantle.registration.object.FluidObject;
+import slimeknights.tconstruct.TConstruct;
+import slimeknights.tconstruct.common.TinkerTags;
+import slimeknights.tconstruct.library.data.recipe.CostTagAppender;
 
-public class ItemTagProvider extends ItemTagsProvider{
+public class ItemTagProvider extends ItemTagsProvider {
 
     /*
      * sample link: https://github.com/SlimeKnights/TinkersConstruct/blob/1.20.1/src/main/java/slimeknights/tconstruct/common/data/tags/ItemTagProvider.java
      */
 
-    public ItemTagProvider(PackOutput pOutput, CompletableFuture<Provider> pLookupProvider,
-            CompletableFuture<TagLookup<Block>> pBlockTags,
-            @Nullable ExistingFileHelper existingFileHelper) {
+    public ItemTagProvider(
+        PackOutput pOutput,
+        CompletableFuture<Provider> pLookupProvider,
+        CompletableFuture<TagLookup<Block>> pBlockTags,
+        @Nullable ExistingFileHelper existingFileHelper
+    ) {
         super(pOutput, pLookupProvider, pBlockTags, TicEX.MODID, existingFileHelper);
     }
 
@@ -101,10 +101,10 @@ public class ItemTagProvider extends ItemTagsProvider{
         );
 
         //catalyst_armors
-        for(ArmorItem.Type type : ArmorItem.Type.values()){
+        for (ArmorItem.Type type : ArmorItem.Type.values()) {
             addCatalysts(
-                new ResourceLocation(TicEX.MODID, "catalyst_mekasuit").withSuffix("_"+type.getName()),
-                new ResourceLocation(TicEX.MODID, "catalyst_gem").withSuffix("_"+type.getName())
+                new ResourceLocation(TicEX.MODID, "catalyst_mekasuit").withSuffix("_" + type.getName()),
+                new ResourceLocation(TicEX.MODID, "catalyst_gem").withSuffix("_" + type.getName())
             );
         }
 
@@ -113,48 +113,105 @@ public class ItemTagProvider extends ItemTagsProvider{
     }
 
     private void addSmeltery() {
-        this.tag(TinkerTags.Items.SEARED_TANKS).add(TicEXRegistry.SEARED_RF_FURNACE.get().asItem(), TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get().asItem());
-        this.tag(TinkerTags.Items.SCORCHED_TANKS).add(TicEXRegistry.SCORCHED_RF_FURNACE.get().asItem(), TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get().asItem());
+        this.tag(TinkerTags.Items.SEARED_TANKS).add(
+                TicEXRegistry.SEARED_RF_FURNACE.get().asItem(),
+                TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get().asItem()
+            );
+        this.tag(TinkerTags.Items.SCORCHED_TANKS).add(
+                TicEXRegistry.SCORCHED_RF_FURNACE.get().asItem(),
+                TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get().asItem()
+            );
     }
 
     @SuppressWarnings("unchecked")
     private void addTools() {
         //tools
-        addToolTags(new ResourceLocation(TicEX.MODID, "reforged_slashblade"), TicEXTags.Items.SLASHBLADE_TOOL, MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, ItemTags.SWORDS, UNSALVAGABLE);
-        addToolTags(new ResourceLocation(TicEX.MODID, "blitz_gun"), TicEXTags.Items.KINETIC_GUN_TOOL, MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, UNSALVAGABLE);
-        addToolTags(new ResourceLocation(TicEX.MODID, "revival_spellbook_irons"), TicEXTags.Items.IRONS_SPELLBOOK_TOOL, MULTIPART_TOOL, DURABILITY, HARVEST, MELEE_PRIMARY, INTERACTABLE_RIGHT, PARRY, SMALL_TOOLS, BONUS_SLOTS, UNSALVAGABLE);
+        addToolTags(
+            new ResourceLocation(TicEX.MODID, "reforged_slashblade"),
+            TicEXTags.Items.SLASHBLADE_TOOL,
+            MULTIPART_TOOL,
+            DURABILITY,
+            HARVEST,
+            MELEE_PRIMARY,
+            INTERACTABLE_RIGHT,
+            PARRY,
+            SMALL_TOOLS,
+            BONUS_SLOTS,
+            ItemTags.SWORDS,
+            UNSALVAGABLE
+        );
+        addToolTags(
+            new ResourceLocation(TicEX.MODID, "blitz_gun"),
+            TicEXTags.Items.KINETIC_GUN_TOOL,
+            MULTIPART_TOOL,
+            DURABILITY,
+            HARVEST,
+            MELEE_PRIMARY,
+            INTERACTABLE_RIGHT,
+            PARRY,
+            SMALL_TOOLS,
+            BONUS_SLOTS,
+            UNSALVAGABLE
+        );
+        addToolTags(
+            new ResourceLocation(TicEX.MODID, "revival_spellbook_irons"),
+            TicEXTags.Items.IRONS_SPELLBOOK_TOOL,
+            MULTIPART_TOOL,
+            DURABILITY,
+            HARVEST,
+            MELEE_PRIMARY,
+            INTERACTABLE_RIGHT,
+            PARRY,
+            SMALL_TOOLS,
+            BONUS_SLOTS,
+            UNSALVAGABLE
+        );
 
         //armors
         addArmorTags(new ResourceLocation(TConstruct.MOD_ID, "plate"), TicEXTags.Items.PLATE);
-        addArmorTags(new ResourceLocation(TicEX.MODID,"mekaplate"), TicEXTags.Items.MEKASUIT_ARMOR, MULTIPART_TOOL, DURABILITY, BONUS_SLOTS, TRIM);
-        addArmorTags(new ResourceLocation(TicEX.MODID,"singular_gem"), TicEXTags.Items.GEM_ARMOR, MULTIPART_TOOL, DURABILITY, BONUS_SLOTS, TRIM);
+        addArmorTags(
+            new ResourceLocation(TicEX.MODID, "mekaplate"),
+            TicEXTags.Items.MEKASUIT_ARMOR,
+            MULTIPART_TOOL,
+            DURABILITY,
+            BONUS_SLOTS,
+            TRIM
+        );
+        addArmorTags(
+            new ResourceLocation(TicEX.MODID, "singular_gem"),
+            TicEXTags.Items.GEM_ARMOR,
+            MULTIPART_TOOL,
+            DURABILITY,
+            BONUS_SLOTS,
+            TRIM
+        );
 
         this.tag(TicEXTags.Items.SERAM).addTags(
-            TicEXTags.Items.SLASHBLADE_TOOL,
-            TicEXTags.Items.KINETIC_GUN_TOOL,
-            TicEXTags.Items.IRONS_SPELLBOOK_TOOL,
-            TicEXTags.Items.MEKASUIT_ARMOR,
-            TicEXTags.Items.GEM_ARMOR
-        );
+                TicEXTags.Items.SLASHBLADE_TOOL,
+                TicEXTags.Items.KINETIC_GUN_TOOL,
+                TicEXTags.Items.IRONS_SPELLBOOK_TOOL,
+                TicEXTags.Items.MEKASUIT_ARMOR,
+                TicEXTags.Items.GEM_ARMOR
+            );
     }
 
-    private void addTag(TagKey<Item> tagKey, ResourceLocation coreItem){
+    private void addTag(TagKey<Item> tagKey, ResourceLocation coreItem) {
         this.tag(tagKey).addOptional(coreItem);
     }
 
     @SafeVarargs
-    private void addCores(ResourceLocation... coreItems){
-        for(ResourceLocation coreItem : coreItems){
-            if(coreItem != null){
+    private void addCores(ResourceLocation... coreItems) {
+        for (ResourceLocation coreItem : coreItems) {
+            if (coreItem != null) {
                 addTag(TicEXTags.Items.CORES, coreItem);
             }
         }
     }
 
     @SafeVarargs
-    private void addCatalysts(ResourceLocation... catalystItems){
-        for(ResourceLocation catalystItem : catalystItems){
-            if(catalystItem != null){
+    private void addCatalysts(ResourceLocation... catalystItems) {
+        for (ResourceLocation catalystItem : catalystItems) {
+            if (catalystItem != null) {
                 this.tag(TicEXTags.Items.CATALYSTS).addOptional(catalystItem);
                 this.tag(TinkerTags.Items.TOOL_PARTS).addOptional(catalystItem);
             }
@@ -163,7 +220,7 @@ public class ItemTagProvider extends ItemTagsProvider{
 
     @SafeVarargs
     private void addToolTags(ResourceLocation tool, TagKey<Item>... tags) {
-        if(tool != null){
+        if (tool != null) {
             for (TagKey<Item> tag : tags) {
                 this.tag(tag).addOptional(tool);
             }
@@ -181,22 +238,22 @@ public class ItemTagProvider extends ItemTagsProvider{
 
     private TagKey<Item> getForgeArmorTag(ArmorItem.Type slotType) {
         return switch (slotType) {
-        case BOOTS -> Tags.Items.ARMORS_BOOTS;
-        case LEGGINGS -> Tags.Items.ARMORS_LEGGINGS;
-        case CHESTPLATE -> Tags.Items.ARMORS_CHESTPLATES;
-        case HELMET -> Tags.Items.ARMORS_HELMETS;
+            case BOOTS -> Tags.Items.ARMORS_BOOTS;
+            case LEGGINGS -> Tags.Items.ARMORS_LEGGINGS;
+            case CHESTPLATE -> Tags.Items.ARMORS_CHESTPLATES;
+            case HELMET -> Tags.Items.ARMORS_HELMETS;
         };
     }
 
     @SafeVarargs
     private void addArmorTags(ResourceLocation armor, TagKey<Item>... tags) {
-        if(armor != null){
-            for(ArmorItem.Type type : ArmorItem.Type.values()){
+        if (armor != null) {
+            for (ArmorItem.Type type : ArmorItem.Type.values()) {
                 for (TagKey<Item> tag : tags) {
-                    this.tag(tag).addOptional(armor.withSuffix("_"+type.getName()));
+                    this.tag(tag).addOptional(armor.withSuffix("_" + type.getName()));
                 }
-                this.tag(getArmorTag(type)).addOptional(armor.withSuffix("_"+type.getName()));
-                this.tag(getForgeArmorTag(type)).addOptional(armor.withSuffix("_"+type.getName()));
+                this.tag(getArmorTag(type)).addOptional(armor.withSuffix("_" + type.getName()));
+                this.tag(getForgeArmorTag(type)).addOptional(armor.withSuffix("_" + type.getName()));
             }
         }
     }
@@ -205,7 +262,7 @@ public class ItemTagProvider extends ItemTagsProvider{
         return CostTagAppender.moltenToolMelting(fluid, tag -> tag(ItemTags.create(tag)));
     }
 
-    private void addOptional(TagKey<Item> tagkey, ResourceLocation id){
+    private void addOptional(TagKey<Item> tagkey, ResourceLocation id) {
         this.tag(tagkey).addOptional(id);
     }
 

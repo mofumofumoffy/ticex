@@ -3,9 +3,7 @@ package moffy.ticex.item.modifiable;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import javax.annotation.Nullable;
-
 import moze_intel.projecte.gameObjs.items.armor.GemArmorBase;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -43,14 +41,20 @@ import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class ModifiableGemArmor extends GemArmorBase implements IModifiableDisplay{
+public class ModifiableGemArmor extends GemArmorBase implements IModifiableDisplay {
+
     private final ModifiableArmorMaterial armorDefinition;
     private final int maxStackSize;
     private final ResourceLocation name;
 
     protected ItemStack toolForRendering;
 
-    public ModifiableGemArmor(ArmorItem.Type slot, ModifiableArmorMaterial armorDefinition, int maxStackSize, Item.Properties properties) {
+    public ModifiableGemArmor(
+        ArmorItem.Type slot,
+        ModifiableArmorMaterial armorDefinition,
+        int maxStackSize,
+        Item.Properties properties
+    ) {
         super(slot, properties.stacksTo(maxStackSize));
         this.armorDefinition = armorDefinition;
         this.maxStackSize = maxStackSize;
@@ -88,7 +92,7 @@ public class ModifiableGemArmor extends GemArmorBase implements IModifiableDispl
     }
 
     @Override
-    public Map<Enchantment,Integer> getAllEnchantments(ItemStack stack) {
+    public Map<Enchantment, Integer> getAllEnchantments(ItemStack stack) {
         return EnchantmentModifierHook.getAllEnchantments(stack);
     }
 
@@ -159,7 +163,14 @@ public class ModifiableGemArmor extends GemArmorBase implements IModifiableDispl
     }
 
     @Override
-    public boolean overrideOtherStackedOnMe(ItemStack slotStack, ItemStack held, Slot slot, ClickAction action, Player player, SlotAccess access) {
+    public boolean overrideOtherStackedOnMe(
+        ItemStack slotStack,
+        ItemStack held,
+        Slot slot,
+        ClickAction action,
+        Player player,
+        SlotAccess access
+    ) {
         return SlotStackModifierHook.overrideOtherStackedOnMe(slotStack, held, slot, action, player, access);
     }
 
@@ -187,11 +198,13 @@ public class ModifiableGemArmor extends GemArmorBase implements IModifiableDispl
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new ArmorModelDispatcher() {
-            @Override
-            protected ResourceLocation getName() {
-                return name;
+        consumer.accept(
+            new ArmorModelDispatcher() {
+                @Override
+                protected ResourceLocation getName() {
+                    return name;
+                }
             }
-        });
+        );
     }
 }

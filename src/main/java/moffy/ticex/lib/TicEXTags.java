@@ -1,5 +1,8 @@
 package moffy.ticex.lib;
 
+import static slimeknights.mantle.Mantle.commonResource;
+
+import moffy.ticex.TicEX;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -7,12 +10,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 
-import static slimeknights.mantle.Mantle.commonResource;
-
-import moffy.ticex.TicEX;
-
 public class TicEXTags {
-    public static class Blocks{
+
+    public static class Blocks {
+
         public static final TagKey<Block> INFINITY = common("storage_blocks/infinity");
         public static final TagKey<Block> NEUTRON = common("storage_blocks/neutron");
         public static final TagKey<Block> CRYSTAL_MATRIX = common("storage_blocks/crystal_matrix");
@@ -24,6 +25,7 @@ public class TicEXTags {
     }
 
     public static class Items {
+
         public static final TagKey<Item> CORES = local("cores");
         public static final TagKey<Item> CATALYSTS = local("catalysts");
 
@@ -37,7 +39,7 @@ public class TicEXTags {
         public static final TagKey<Item> CRYSTAL_MATRIX_BLOCK = common("storage_blocks/crystal_matrix");
         public static final TagKey<Item> ETHERIC_BLOCK = common("storage_blocks/etheric");
 
-        public static final TagKey<Item> SERAM =  local("seram");
+        public static final TagKey<Item> SERAM = local("seram");
         public static final TagKey<Item> PLATE = local("plate");
         public static final TagKey<Item> MEKASUIT_ARMOR = local("seram/mekasuit");
         public static final TagKey<Item> GEM_ARMOR = local("seram/gem");
@@ -55,6 +57,7 @@ public class TicEXTags {
     }
 
     public static class Fluids {
+
         public static final TagKey<Fluid> INFINITY = common("molten_infinity");
         public static final TagKey<Fluid> NEUTRON = common("molten_neutron");
         public static final TagKey<Fluid> CRYSTAL_MATRIX = common("molten_crystal_matrix");
@@ -67,7 +70,7 @@ public class TicEXTags {
         }
     }
 
-    public static ResourceLocation getResource(String name){
+    public static ResourceLocation getResource(String name) {
         return new ResourceLocation(TicEX.MODID, name);
     }
 }

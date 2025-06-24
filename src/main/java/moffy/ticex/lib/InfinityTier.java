@@ -3,7 +3,7 @@ package moffy.ticex.lib;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 
-public class InfinityTier implements Tier{
+public class InfinityTier implements Tier {
 
     public static Tier instance = new InfinityTier();
 
@@ -36,5 +36,4 @@ public class InfinityTier implements Tier{
     public Ingredient getRepairIngredient() {
         return null;
     }
-    
 }

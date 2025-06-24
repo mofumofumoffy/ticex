@@ -8,15 +8,18 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.client.armor.ArmorModelManager.ArmorModelDispatcher;
 
-public abstract class MekaPlateDispatcher extends ArmorModelDispatcher{
-
+public abstract class MekaPlateDispatcher extends ArmorModelDispatcher {
 
     @Override
     protected abstract ResourceLocation getName();
-    
+
     @Override
-    public Model getGenericArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot,
-            HumanoidModel<?> original) {
+    public Model getGenericArmorModel(
+        LivingEntity living,
+        ItemStack stack,
+        EquipmentSlot slot,
+        HumanoidModel<?> original
+    ) {
         switch (slot) {
             case HEAD:
                 return MekaPlateMultilayerModel.HEAD.setup(living, stack, slot, original, this.getModel(stack));

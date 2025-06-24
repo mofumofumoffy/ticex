@@ -1,25 +1,25 @@
 {
-    "type": "tconstruct:melting",
-    "conditions": [
-      {
-        "type": "addonapi:mods_available",
-        "required_raw_module": "ticex:avaritia_compat"
-      },
-      {
-        "type": "forge:not",
-        "value": {
-          "type": "forge:mod_loaded",
-          "modid": "sakuratinker"
-        }
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "sakuratinker"
       }
-    ],
-    "ingredient": {
-      "tag": "forge:ingots/crystal_matrix"
-    },
-    "result": {
-      "fluid": "ticex:molten_crystal_matrix",
-      "amount": 90
-    },
-    "temperature": 1050,
-    "time": 60
-  }
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/crystal_matrix"
+  },
+  "result": {
+    "fluid": "ticex:molten_crystal_matrix",
+    "amount": 90
+  },
+  "temperature": 1050,
+  "time": 60
+}

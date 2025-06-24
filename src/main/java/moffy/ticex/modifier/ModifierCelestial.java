@@ -6,7 +6,8 @@ import slimeknights.tconstruct.library.modifiers.modules.technical.ArmorLevelMod
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.capability.TinkerDataCapability.TinkerDataKey;
 
-public class ModifierCelestial extends NoLevelsModifier{
+public class ModifierCelestial extends NoLevelsModifier {
+
     public static final TinkerDataKey<Integer> CELESTIAL_KEY = TConstruct.createKey("celestial");
 
     @Override

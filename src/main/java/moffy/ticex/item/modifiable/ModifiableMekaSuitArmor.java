@@ -1,18 +1,13 @@
 package moffy.ticex.item.modifiable;
 
+import com.google.common.collect.ImmutableMultimap.Builder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
-
 import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NotNull;
-
-import com.google.common.collect.ImmutableMultimap.Builder;
-
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.NBTConstants;
@@ -87,10 +82,13 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.item.armor.MultilayerArmorItem;
 
-public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IModifiableMekItem, IModuleContainerItem, IModeItem, IJetpackItem, IAttributeRefresher{
+public class ModifiableMekaSuitArmor
+    extends MultilayerArmorItem
+    implements IModifiableMekItem, IModuleContainerItem, IModeItem, IJetpackItem, IAttributeRefresher {
 
     private final List<ChemicalTankSpec<Gas>> gasTankSpecs = new ArrayList<>();
     private final List<ChemicalTankSpec<Gas>> gasTankSpecsView = Collections.unmodifiableList(gasTankSpecs);
@@ -106,15 +104,27 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
         super(material, slot, properties);
         switch (slot) {
             case HELMET -> {
-                fluidTankSpecs.add(FluidTankSpec.createFillOnly(MekanismConfig.gear.mekaSuitNutritionalTransferRate, MekanismConfig.gear.mekaSuitNutritionalMaxStorage,
-                      fluid -> fluid.getFluid() == MekanismFluids.NUTRITIONAL_PASTE.getFluid(), stack -> hasModule(stack, MekanismModules.NUTRITIONAL_INJECTION_UNIT)));
+                fluidTankSpecs.add(
+                    FluidTankSpec.createFillOnly(
+                        MekanismConfig.gear.mekaSuitNutritionalTransferRate,
+                        MekanismConfig.gear.mekaSuitNutritionalMaxStorage,
+                        fluid -> fluid.getFluid() == MekanismFluids.NUTRITIONAL_PASTE.getFluid(),
+                        stack -> hasModule(stack, MekanismModules.NUTRITIONAL_INJECTION_UNIT)
+                    )
+                );
                 absorption = 0.15F;
                 laserDissipation = 0.15;
                 laserRefraction = 0.2;
             }
             case CHESTPLATE -> {
-                gasTankSpecs.add(ChemicalTankSpec.createFillOnly(MekanismConfig.gear.mekaSuitJetpackTransferRate, MekanismConfig.gear.mekaSuitJetpackMaxStorage,
-                      gas -> gas == MekanismGases.HYDROGEN.get(), stack -> hasModule(stack, MekanismModules.JETPACK_UNIT)));
+                gasTankSpecs.add(
+                    ChemicalTankSpec.createFillOnly(
+                        MekanismConfig.gear.mekaSuitJetpackTransferRate,
+                        MekanismConfig.gear.mekaSuitJetpackMaxStorage,
+                        gas -> gas == MekanismGases.HYDROGEN.get(),
+                        stack -> hasModule(stack, MekanismModules.JETPACK_UNIT)
+                    )
+                );
                 absorption = 0.4F;
                 laserDissipation = 0.3;
                 laserRefraction = 0.4;
@@ -136,17 +146,18 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
 
     @Override
     public void initializeClient(@NotNull Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new MekaPlateDispatcher(){
-            @Override
-            protected ResourceLocation getName() {
-                return name;
+        consumer.accept(
+            new MekaPlateDispatcher() {
+                @Override
+                protected ResourceLocation getName() {
+                    return name;
+                }
             }
-        });
+        );
     }
 
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-        
         return 0;
     }
 
@@ -156,7 +167,12 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, Level world, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
+    public void appendHoverText(
+        @NotNull ItemStack stack,
+        Level world,
+        @NotNull List<Component> tooltip,
+        @NotNull TooltipFlag flag
+    ) {
         super.appendHoverText(stack, world, tooltip, flag);
         if (MekKeyHandler.isKeyPressed(MekanismKeyHandler.detailsKey)) {
             addModuleDetails(stack, tooltip);
@@ -168,7 +184,13 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
             if (!fluidTankSpecs.isEmpty()) {
                 StorageUtils.addStoredFluid(stack, tooltip, true);
             }
-            tooltip.add(MekanismLang.HOLD_FOR_MODULES.translateColored(EnumColor.GRAY, EnumColor.INDIGO, MekanismKeyHandler.detailsKey.getTranslatedKeyMessage()));
+            tooltip.add(
+                MekanismLang.HOLD_FOR_MODULES.translateColored(
+                    EnumColor.GRAY,
+                    EnumColor.INDIGO,
+                    MekanismKeyHandler.detailsKey.getTranslatedKeyMessage()
+                )
+            );
         }
     }
 
@@ -204,8 +226,10 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
 
     @Override
     public boolean isNotReplaceableByPickAction(ItemStack stack, Player player, int inventorySlot) {
-        
-        return super.isNotReplaceableByPickAction(stack, player, inventorySlot) || ItemDataUtils.hasData(stack, NBTConstants.MODULES, Tag.TAG_COMPOUND);
+        return (
+            super.isNotReplaceableByPickAction(stack, player, inventorySlot) ||
+            ItemDataUtils.hasData(stack, NBTConstants.MODULES, Tag.TAG_COMPOUND)
+        );
     }
 
     @Override
@@ -218,15 +242,22 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
         if (stack.isEmpty()) {
             return 0;
         }
-        
+
         ListTag enchantments = ItemDataUtils.getList(stack, NBTConstants.ENCHANTMENTS);
-        return Math.max(MekanismUtils.getEnchantmentLevel(enchantments, enchantment), super.getEnchantmentLevel(stack, enchantment));
+        return Math.max(
+            MekanismUtils.getEnchantmentLevel(enchantments, enchantment),
+            super.getEnchantmentLevel(stack, enchantment)
+        );
     }
 
     @Override
     public Map<Enchantment, Integer> getAllEnchantments(ItemStack stack) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(ItemDataUtils.getList(stack, NBTConstants.ENCHANTMENTS));
-        super.getAllEnchantments(stack).forEach((enchantment, level) -> enchantments.merge(enchantment, level, Math::max));
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(
+            ItemDataUtils.getList(stack, NBTConstants.ENCHANTMENTS)
+        );
+        super.getAllEnchantments(stack).forEach((enchantment, level) ->
+            enchantments.merge(enchantment, level, Math::max)
+        );
         return enchantments;
     }
 
@@ -247,14 +278,28 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
     @Override
     public void gatherCapabilities(List<ItemCapability> capabilities, ItemStack stack) {
         GenderCapabilityHelper.addGenderCapability(this, capabilities::add);
-        
-        
-        capabilities.add(RateLimitEnergyHandler.create(() -> getChargeRate(stack), () -> getMaxEnergy(stack), BasicEnergyContainer.manualOnly,
-              BasicEnergyContainer.alwaysTrue));
-        capabilities.add(RadiationShieldingHandler.create(item -> isModuleEnabled(item, MekanismModules.RADIATION_SHIELDING_UNIT) ?
-                                                                  ItemHazmatSuitArmor.getShieldingByArmor(getType()) : 0));
-        capabilities.add(LaserDissipationHandler.create(item -> isModuleEnabled(item, MekanismModules.LASER_DISSIPATION_UNIT) ? laserDissipation : 0,
-              item -> isModuleEnabled(item, MekanismModules.LASER_DISSIPATION_UNIT) ? laserRefraction : 0));
+
+        capabilities.add(
+            RateLimitEnergyHandler.create(
+                () -> getChargeRate(stack),
+                () -> getMaxEnergy(stack),
+                BasicEnergyContainer.manualOnly,
+                BasicEnergyContainer.alwaysTrue
+            )
+        );
+        capabilities.add(
+            RadiationShieldingHandler.create(item ->
+                isModuleEnabled(item, MekanismModules.RADIATION_SHIELDING_UNIT)
+                    ? ItemHazmatSuitArmor.getShieldingByArmor(getType())
+                    : 0
+            )
+        );
+        capabilities.add(
+            LaserDissipationHandler.create(
+                item -> isModuleEnabled(item, MekanismModules.LASER_DISSIPATION_UNIT) ? laserDissipation : 0,
+                item -> isModuleEnabled(item, MekanismModules.LASER_DISSIPATION_UNIT) ? laserRefraction : 0
+            )
+        );
         if (!gasTankSpecs.isEmpty()) {
             capabilities.add(RateLimitMultiTankGasHandler.create(gasTankSpecs));
         }
@@ -321,21 +366,28 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
 
     @Override
     public boolean supportsSlotType(ItemStack stack, @NotNull EquipmentSlot slotType) {
-        
-        return slotType == getEquipmentSlot() && getModules(stack).stream().anyMatch(mekanism.common.content.gear.Module::handlesModeChange);
+        return (
+            slotType == getEquipmentSlot() &&
+            getModules(stack).stream().anyMatch(mekanism.common.content.gear.Module::handlesModeChange)
+        );
     }
 
     @Override
     public boolean canElytraFly(ItemStack stack, LivingEntity entity) {
         if (getType() == ArmorItem.Type.CHESTPLATE && !entity.isShiftKeyDown()) {
-            
             IModule<ModuleElytraUnit> module = getModule(stack, MekanismModules.ELYTRA_UNIT);
-            if (module != null && module.isEnabled() && module.canUseEnergy(entity, MekanismConfig.gear.mekaSuitElytraEnergyUsage.get())) {
-                
-                
+            if (
+                module != null &&
+                module.isEnabled() &&
+                module.canUseEnergy(entity, MekanismConfig.gear.mekaSuitElytraEnergyUsage.get())
+            ) {
                 IModule<ModuleJetpackUnit> jetpack = getModule(stack, MekanismModules.JETPACK_UNIT);
-                return jetpack == null || !jetpack.isEnabled() || jetpack.getCustomInstance().getMode() != JetpackMode.HOVER ||
-                       getContainedGas(stack, MekanismGases.HYDROGEN.get()).isEmpty();
+                return (
+                    jetpack == null ||
+                    !jetpack.isEnabled() ||
+                    jetpack.getCustomInstance().getMode() != JetpackMode.HOVER ||
+                    getContainedGas(stack, MekanismGases.HYDROGEN.get()).isEmpty()
+                );
             }
         }
         return false;
@@ -343,8 +395,6 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
 
     @Override
     public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
-        
-        
         if (!entity.level().isClientSide) {
             int nextFlightTicks = flightTicks + 1;
             if (nextFlightTicks % 10 == 0) {
@@ -362,8 +412,18 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
 
     @Override
     public boolean canUseJetpack(ItemStack stack) {
-        return type == ArmorItem.Type.CHESTPLATE && (isModuleEnabled(stack, MekanismModules.JETPACK_UNIT) ? ChemicalUtil.hasChemical(stack, MekanismGases.HYDROGEN.get()) :
-                                                     getModules(stack).stream().anyMatch(module -> module.isEnabled() && module.getData().isExclusive(ExclusiveFlag.OVERRIDE_JUMP.getMask())));
+        return (
+            type == ArmorItem.Type.CHESTPLATE &&
+            (isModuleEnabled(stack, MekanismModules.JETPACK_UNIT)
+                    ? ChemicalUtil.hasChemical(stack, MekanismGases.HYDROGEN.get())
+                    : getModules(stack)
+                        .stream()
+                        .anyMatch(
+                            module ->
+                                module.isEnabled() &&
+                                module.getData().isExclusive(ExclusiveFlag.OVERRIDE_JUMP.getMask())
+                        ))
+        );
     }
 
     @Override
@@ -382,12 +442,16 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
 
     private FloatingLong getMaxEnergy(ItemStack stack) {
         IModule<ModuleEnergyUnit> module = getModule(stack, MekanismModules.ENERGY_UNIT);
-        return module == null ? MekanismConfig.gear.mekaSuitBaseEnergyCapacity.get() : module.getCustomInstance().getEnergyCapacity(module);
+        return module == null
+            ? MekanismConfig.gear.mekaSuitBaseEnergyCapacity.get()
+            : module.getCustomInstance().getEnergyCapacity(module);
     }
 
     private FloatingLong getChargeRate(ItemStack stack) {
         IModule<ModuleEnergyUnit> module = getModule(stack, MekanismModules.ENERGY_UNIT);
-        return module == null ? MekanismConfig.gear.mekaSuitBaseChargeRate.get() : module.getCustomInstance().getChargeRate(module);
+        return module == null
+            ? MekanismConfig.gear.mekaSuitBaseChargeRate.get()
+            : module.getCustomInstance().getChargeRate(module);
     }
 
     @Override
@@ -402,20 +466,16 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        
         return slotChanged || oldStack.getItem() != newStack.getItem();
     }
 
     @Override
     public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
-        
         return oldStack.getItem() != newStack.getItem();
     }
 
     @Override
-    public void addToBuilder(Builder<Attribute, AttributeModifier> builder) {
-
-    }
+    public void addToBuilder(Builder<Attribute, AttributeModifier> builder) {}
 
     public static float getDamageAbsorbed(Player player, DamageSource source, float amount) {
         return getDamageAbsorbed(player, source, amount, null);
@@ -424,7 +484,6 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
     public static boolean tryAbsorbAll(Player player, DamageSource source, float amount) {
         List<Runnable> energyUsageCallbacks = new ArrayList<>(4);
         if (getDamageAbsorbed(player, source, amount, energyUsageCallbacks) >= 1) {
-            
             for (Runnable energyUsageCallback : energyUsageCallbacks) {
                 energyUsageCallback.run();
             }
@@ -433,13 +492,18 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
         return false;
     }
 
-    private static float getDamageAbsorbed(Player player, DamageSource source, float amount, @Nullable List<Runnable> energyUseCallbacks) {
+    private static float getDamageAbsorbed(
+        Player player,
+        DamageSource source,
+        float amount,
+        @Nullable List<Runnable> energyUseCallbacks
+    ) {
         if (amount <= 0) {
             return 0;
         }
         float ratioAbsorbed = 0;
         List<FoundArmorDetails> armorDetails = new ArrayList<>();
-        
+
         for (ItemStack stack : player.getArmorSlots()) {
             if (!stack.isEmpty() && stack.getItem() instanceof ModifiableMekaSuitArmor armor) {
                 IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
@@ -451,40 +515,48 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
                             ModuleDamageAbsorbInfo damageAbsorbInfo = getModuleDamageAbsorbInfo(module, source);
                             if (damageAbsorbInfo != null) {
                                 float absorption = damageAbsorbInfo.absorptionRatio().getAsFloat();
-                                ratioAbsorbed += absorbDamage(details.usageInfo, amount, absorption, ratioAbsorbed, damageAbsorbInfo.energyCost());
+                                ratioAbsorbed += absorbDamage(
+                                    details.usageInfo,
+                                    amount,
+                                    absorption,
+                                    ratioAbsorbed,
+                                    damageAbsorbInfo.energyCost()
+                                );
                                 if (ratioAbsorbed >= 1) {
-                                    
                                     break;
                                 }
                             }
                         }
                     }
                     if (ratioAbsorbed >= 1) {
-                        
                         break;
                     }
                 }
             }
         }
         if (ratioAbsorbed < 1) {
-            
             Float absorbRatio = null;
             for (FoundArmorDetails details : armorDetails) {
                 if (absorbRatio == null) {
-                    
-                    
-                    if (!source.is(MekanismTags.DamageTypes.MEKASUIT_ALWAYS_SUPPORTED) && source.is(DamageTypeTags.BYPASSES_ARMOR)) {
+                    if (
+                        !source.is(MekanismTags.DamageTypes.MEKASUIT_ALWAYS_SUPPORTED) &&
+                        source.is(DamageTypeTags.BYPASSES_ARMOR)
+                    ) {
                         break;
                     }
-                    
-                    ResourceLocation damageTypeName = source.typeHolder().unwrapKey()
-                          .map(ResourceKey::location)
-                          
-                          
-                          .orElseGet(() -> player.level().registryAccess().registry(Registries.DAMAGE_TYPE)
+
+                    ResourceLocation damageTypeName = source
+                        .typeHolder()
+                        .unwrapKey()
+                        .map(ResourceKey::location)
+                        .orElseGet(() ->
+                            player
+                                .level()
+                                .registryAccess()
+                                .registry(Registries.DAMAGE_TYPE)
                                 .map(registry -> registry.getKey(source.type()))
                                 .orElse(null)
-                          );
+                        );
                     if (damageTypeName != null) {
                         absorbRatio = MekanismConfig.gear.mekaSuitDamageRatios.get().get(damageTypeName);
                     }
@@ -492,26 +564,38 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
                         absorbRatio = MekanismConfig.gear.mekaSuitUnspecifiedDamageRatio.getAsFloat();
                     }
                     if (absorbRatio == 0) {
-                        
-                        
                         break;
                     }
                 }
                 float absorption = details.armor.absorption * absorbRatio;
-                ratioAbsorbed += absorbDamage(details.usageInfo, amount, absorption, ratioAbsorbed, MekanismConfig.gear.mekaSuitEnergyUsageDamage);
+                ratioAbsorbed += absorbDamage(
+                    details.usageInfo,
+                    amount,
+                    absorption,
+                    ratioAbsorbed,
+                    MekanismConfig.gear.mekaSuitEnergyUsageDamage
+                );
                 if (ratioAbsorbed >= 1) {
-                    
                     break;
                 }
             }
         }
         for (FoundArmorDetails details : armorDetails) {
-            
             if (!details.usageInfo.energyUsed.isZero()) {
                 if (energyUseCallbacks == null) {
-                    details.energyContainer.extract(details.usageInfo.energyUsed, Action.EXECUTE, AutomationType.MANUAL);
+                    details.energyContainer.extract(
+                        details.usageInfo.energyUsed,
+                        Action.EXECUTE,
+                        AutomationType.MANUAL
+                    );
                 } else {
-                    energyUseCallbacks.add(() -> details.energyContainer.extract(details.usageInfo.energyUsed, Action.EXECUTE, AutomationType.MANUAL));
+                    energyUseCallbacks.add(() ->
+                        details.energyContainer.extract(
+                            details.usageInfo.energyUsed,
+                            Action.EXECUTE,
+                            AutomationType.MANUAL
+                        )
+                    );
                 }
             }
         }
@@ -519,29 +603,31 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
     }
 
     @Nullable
-    private static <MODULE extends ICustomModule<MODULE>> ModuleDamageAbsorbInfo getModuleDamageAbsorbInfo(IModule<MODULE> module, DamageSource damageSource) {
+    private static <MODULE extends ICustomModule<MODULE>> ModuleDamageAbsorbInfo getModuleDamageAbsorbInfo(
+        IModule<MODULE> module,
+        DamageSource damageSource
+    ) {
         return module.getCustomInstance().getDamageAbsorbInfo(module, damageSource);
     }
 
-    private static float absorbDamage(EnergyUsageInfo usageInfo, float amount, float absorption, float currentAbsorbed, FloatingLongSupplier energyCost) {
-        
+    private static float absorbDamage(
+        EnergyUsageInfo usageInfo,
+        float amount,
+        float absorption,
+        float currentAbsorbed,
+        FloatingLongSupplier energyCost
+    ) {
         absorption = Math.min(1 - currentAbsorbed, absorption);
         float toAbsorb = amount * absorption;
         if (toAbsorb > 0) {
             FloatingLong usage = energyCost.get().multiply(toAbsorb);
             if (usage.isZero()) {
-                
-                
                 return absorption;
             } else if (usageInfo.energyAvailable.greaterOrEqual(usage)) {
-                
-                
                 usageInfo.energyUsed = usageInfo.energyUsed.plusEqual(usage);
                 usageInfo.energyAvailable = usageInfo.energyAvailable.minusEqual(usage);
                 return absorption;
             } else if (!usageInfo.energyAvailable.isZero()) {
-                
-                
                 float absorbedPercent = usageInfo.energyAvailable.divide(usage).floatValue();
                 usageInfo.energyUsed = usageInfo.energyUsed.plusEqual(usageInfo.energyAvailable);
                 usageInfo.energyAvailable = FloatingLong.ZERO;
@@ -570,7 +656,6 @@ public class ModifiableMekaSuitArmor extends MultilayerArmorItem implements IMod
         private FloatingLong energyUsed = FloatingLong.ZERO;
 
         public EnergyUsageInfo(FloatingLong energyAvailable) {
-            
             this.energyAvailable = energyAvailable.copy();
         }
     }

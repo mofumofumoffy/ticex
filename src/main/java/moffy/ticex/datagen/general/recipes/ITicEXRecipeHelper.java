@@ -8,7 +8,7 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import slimeknights.mantle.recipe.data.IRecipeHelper;
 
-public interface ITicEXRecipeHelper extends IRecipeHelper,IConditionBuilder{
+public interface ITicEXRecipeHelper extends IRecipeHelper, IConditionBuilder {
     public String upgradeFolder = "tools/modifiers/upgrade/";
     public String abilityFolder = "tools/modifiers/ability/";
     public String slotlessFolder = "tools/modifiers/slotless/";
@@ -21,7 +21,7 @@ public interface ITicEXRecipeHelper extends IRecipeHelper,IConditionBuilder{
     public String worktableFolder = "tools/modifiers/worktable/";
     public String materialFolder = "tools/materials/";
 
-    default public ICondition modsAvailable(ResourceLocation rl){
+    public default ICondition modsAvailable(ResourceLocation rl) {
         return new ModsAvailableCondition(new ResourceLocation(AddonAPI.MODID, "mods_available"), rl);
     }
 

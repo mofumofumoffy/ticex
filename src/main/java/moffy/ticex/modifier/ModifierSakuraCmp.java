@@ -12,7 +12,7 @@ import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 
-public class ModifierSakuraCmp extends NoLevelsModifier implements EmbossmentModifierHook{
+public class ModifierSakuraCmp extends NoLevelsModifier implements EmbossmentModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
@@ -21,23 +21,27 @@ public class ModifierSakuraCmp extends NoLevelsModifier implements EmbossmentMod
 
     @Override
     public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
-        
         boolean succeed = false;
 
         ItemStack toolStack = context.getToolStack();
 
         //ticex to sakuratinker
-        if(!(toolStack.getItem() instanceof ArmorItem)){
+        if (!(toolStack.getItem() instanceof ArmorItem)) {
             ToolStack tool = ToolStack.from(toolStack);
-            for(MaterialVariant materialVariant : tool.getMaterials()){
-                if(materialVariant.matches(new MaterialId("sakuratinker","infinity")) && TicEXRegistry.COSMIC_LUCK_MODIFIER != null){ 
+            for (MaterialVariant materialVariant : tool.getMaterials()) {
+                if (
+                    materialVariant.matches(new MaterialId("sakuratinker", "infinity")) &&
+                    TicEXRegistry.COSMIC_LUCK_MODIFIER != null
+                ) {
                     //infinity
-                    tool.addModifier(TicEXRegistry.COSMIC_LUCK_MODIFIER.getId(), 1); 
+                    tool.addModifier(TicEXRegistry.COSMIC_LUCK_MODIFIER.getId(), 1);
                     succeed = true;
-                } 
-                else if(materialVariant.matches(new MaterialId("sakuratinker","crystal_matrix"))){ 
+                } else if (materialVariant.matches(new MaterialId("sakuratinker", "crystal_matrix"))) {
                     //crystal matrix
-                    tool.addModifier(TinkerModifiers.insatiable.getId(), tool.getModifierLevel(new ModifierId("sakuratinker", "crystalline")));
+                    tool.addModifier(
+                        TinkerModifiers.insatiable.getId(),
+                        tool.getModifierLevel(new ModifierId("sakuratinker", "crystalline"))
+                    );
                     succeed = true;
                 }
             }
@@ -45,7 +49,7 @@ public class ModifierSakuraCmp extends NoLevelsModifier implements EmbossmentMod
 
         return succeed;
     }
-    
+
     @Override
     public boolean shouldDisplay(boolean advanced) {
         return false;

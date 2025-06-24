@@ -1,10 +1,9 @@
 package moffy.ticex.client.slashblade;
 
-import java.util.Optional;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
+import java.awt.Color;
+import java.util.Optional;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.Face;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
 import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
@@ -20,51 +19,112 @@ import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import slimeknights.tconstruct.library.tools.nbt.MaterialNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-import java.awt.Color;
-
 public class SBToolRenderState {
 
     private static final Color defaultColor = Color.white;
     private static Color col = defaultColor;
 
-    static public void renderOverrided(ItemStack stack, WavefrontObject model, String target,
-            PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-
-        renderOverrided(stack, model, target, matrixStackIn, bufferIn,
-                packedLightIn, SBToolRenderType.instance::getSlashBladeBlend, true);
+    public static void renderOverrided(
+        ItemStack stack,
+        WavefrontObject model,
+        String target,
+        PoseStack matrixStackIn,
+        MultiBufferSource bufferIn,
+        int packedLightIn
+    ) {
+        renderOverrided(
+            stack,
+            model,
+            target,
+            matrixStackIn,
+            bufferIn,
+            packedLightIn,
+            SBToolRenderType.instance::getSlashBladeBlend,
+            true
+        );
     }
 
-    public static void renderOverridedLuminous(ItemStack stack, WavefrontObject model, String target,
-            PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        renderOverrided(stack, model, target, matrixStackIn, bufferIn, packedLightIn,
-        		SBToolRenderType.instance::getSlashBladeLuminousBlend, false);
+    public static void renderOverridedLuminous(
+        ItemStack stack,
+        WavefrontObject model,
+        String target,
+        PoseStack matrixStackIn,
+        MultiBufferSource bufferIn,
+        int packedLightIn
+    ) {
+        renderOverrided(
+            stack,
+            model,
+            target,
+            matrixStackIn,
+            bufferIn,
+            packedLightIn,
+            SBToolRenderType.instance::getSlashBladeLuminousBlend,
+            false
+        );
     }
 
-    public static void renderOverrided(ItemStack stack, WavefrontObject model, String target, PoseStack  matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, RenderGetter<MaterialVariantId, Runnable, RenderType> getRenderType, boolean enableEffect){
+    public static void renderOverrided(
+        ItemStack stack,
+        WavefrontObject model,
+        String target,
+        PoseStack matrixStackIn,
+        MultiBufferSource bufferIn,
+        int packedLightIn,
+        RenderGetter<MaterialVariantId, Runnable, RenderType> getRenderType,
+        boolean enableEffect
+    ) {
         ToolStack tool = ToolStack.from(stack);
         MaterialNBT materials = tool.getMaterials();
 
-        RenderOverrideEvent event = RenderOverrideEvent.onRenderOverride(stack, model, target, null, matrixStackIn,
-                bufferIn);
+        RenderOverrideEvent event = RenderOverrideEvent.onRenderOverride(
+            stack,
+            model,
+            target,
+            null,
+            matrixStackIn,
+            bufferIn
+        );
 
-        for(int i = 0; i < materials.size(); i++){
+        for (int i = 0; i < materials.size(); i++) {
             MaterialVariantId material = materials.get(i).getVariant();
             SBToolRenderType.PartType partType = SBToolRenderType.PartType.byIndex(i);
-            if(partType == null)continue;
+            if (partType == null) continue;
 
-            RenderType rt = getRenderType.getRenderType(material, partType, ()->{
+            RenderType rt = getRenderType.getRenderType(material, partType, () -> {
                 Optional<MaterialRenderInfo> optional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(material);
-                if(optional.isPresent()){
+                if (optional.isPresent()) {
                     col = new Color(optional.get().vertexColor());
                 }
             });
 
-            renderVC(stack, bufferIn, rt, matrixStackIn, event, packedLightIn, enableEffect, target, material, partType);
-
+            renderVC(
+                stack,
+                bufferIn,
+                rt,
+                matrixStackIn,
+                event,
+                packedLightIn,
+                enableEffect,
+                target,
+                material,
+                partType
+            );
         }
     }
 
-    public static void renderVC(ItemStack stack, MultiBufferSource bufferIn, RenderType rt, PoseStack matrixStackIn, RenderOverrideEvent event, int packedLightIn, boolean enableEffect, String target, MaterialVariantId material, PartType partType){
+    public static void renderVC(
+        ItemStack stack,
+        MultiBufferSource bufferIn,
+        RenderType rt,
+        PoseStack matrixStackIn,
+        RenderOverrideEvent event,
+        int packedLightIn,
+        boolean enableEffect,
+        String target,
+        MaterialVariantId material,
+        PartType partType
+    ) {
         VertexConsumer vb = bufferIn.getBuffer(rt);
 
         Face.setCol(col);
@@ -73,7 +133,9 @@ public class SBToolRenderState {
         TicEXSBUtil.tessellateWithShader(material, event.getModel(), vb, bufferIn, partType, event.getTarget());
 
         if (stack.hasFoil() && enableEffect) {
-            vb = bufferIn.getBuffer(target.startsWith("item_") ?BladeRenderState.SLASHBLADE_ITEM_GLINT:BladeRenderState.SLASHBLADE_GLINT);
+            vb = bufferIn.getBuffer(
+                target.startsWith("item_") ? BladeRenderState.SLASHBLADE_ITEM_GLINT : BladeRenderState.SLASHBLADE_GLINT
+            );
             event.getModel().tessellateOnly(vb, event.getTarget());
         }
 

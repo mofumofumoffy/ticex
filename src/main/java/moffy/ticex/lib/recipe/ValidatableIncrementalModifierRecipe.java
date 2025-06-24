@@ -1,13 +1,11 @@
 package moffy.ticex.lib.recipe;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.math.IntMath;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.math.IntMath;
-
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -35,26 +33,43 @@ import slimeknights.tconstruct.library.tools.SlotType.SlotCount;
 import slimeknights.tconstruct.library.tools.nbt.LazyToolStack;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class ValidatableIncrementalModifierRecipe extends AbstractModifierRecipe{
+public class ValidatableIncrementalModifierRecipe extends AbstractModifierRecipe {
+
     public static final RecordLoadable<ValidatableIncrementalModifierRecipe> LOADER = RecordLoadable.create(
-    ContextKey.ID.requiredField(),
-    IngredientLoadable.DISALLOW_EMPTY.requiredField("input", r -> r.input),
-    IntLoadable.FROM_ONE.defaultField("amount_per_item", 1, true, r -> r.amountPerInput),
-    IntLoadable.FROM_ONE.requiredField("needed_per_level", r -> r.neededPerLevel),
-    TOOLS_FIELD, MAX_TOOL_SIZE_FIELD, RESULT_FIELD, LEVEL_FIELD, SLOTS_FIELD,
-    ItemOutput.Loadable.OPTIONAL_STACK.emptyField("leftover", r -> r.leftover),
-    ALLOW_CRYSTAL_FIELD, CHECK_TRAIT_LEVEL_FIELD,
-    ValidatableIncrementalModifierRecipe::new);
+        ContextKey.ID.requiredField(),
+        IngredientLoadable.DISALLOW_EMPTY.requiredField("input", r -> r.input),
+        IntLoadable.FROM_ONE.defaultField("amount_per_item", 1, true, r -> r.amountPerInput),
+        IntLoadable.FROM_ONE.requiredField("needed_per_level", r -> r.neededPerLevel),
+        TOOLS_FIELD,
+        MAX_TOOL_SIZE_FIELD,
+        RESULT_FIELD,
+        LEVEL_FIELD,
+        SLOTS_FIELD,
+        ItemOutput.Loadable.OPTIONAL_STACK.emptyField("leftover", r -> r.leftover),
+        ALLOW_CRYSTAL_FIELD,
+        CHECK_TRAIT_LEVEL_FIELD,
+        ValidatableIncrementalModifierRecipe::new
+    );
 
     private final Ingredient input;
     private final int amountPerInput;
     private final int neededPerLevel;
     private final ItemOutput leftover;
 
-
-    public ValidatableIncrementalModifierRecipe(ResourceLocation id, Ingredient input, int amountPerInput,
-            int neededPerLevel, Ingredient toolRequirement, int maxToolSize, ModifierId result, IntRange level,
-            SlotCount slots, ItemOutput leftover, boolean allowCrystal, boolean checkTraitLevel) {
+    public ValidatableIncrementalModifierRecipe(
+        ResourceLocation id,
+        Ingredient input,
+        int amountPerInput,
+        int neededPerLevel,
+        Ingredient toolRequirement,
+        int maxToolSize,
+        ModifierId result,
+        IntRange level,
+        SlotCount slots,
+        ItemOutput leftover,
+        boolean allowCrystal,
+        boolean checkTraitLevel
+    ) {
         super(id, toolRequirement, maxToolSize, result, level, slots, allowCrystal, checkTraitLevel);
         this.input = input;
         this.amountPerInput = amountPerInput;
@@ -64,9 +79,8 @@ public class ValidatableIncrementalModifierRecipe extends AbstractModifierRecipe
 
     @Override
     public boolean matches(ITinkerStationContainer inv, Level level) {
-
         if (!result.isBound() || !this.toolRequirement.test(inv.getTinkerableStack())) {
-        return false;
+            return false;
         }
         return matchesCrystal(inv) || IncrementalModifierRecipe.containsOnlyIngredient(inv, input);
     }
@@ -75,74 +89,80 @@ public class ValidatableIncrementalModifierRecipe extends AbstractModifierRecipe
     public RecipeResult<LazyToolStack> getValidatedResult(ITinkerStationContainer inv, RegistryAccess access) {
         ToolStack tool = inv.getTinkerable();
 
-
         ModifierId modifier = result.getId();
         boolean newLevel = tool.getUpgrades().getEntry(modifier).getAmount(0) <= 0;
 
-
         boolean crystal = matchesCrystal(inv);
         if (crystal || newLevel) {
-        Component commonError = validatePrerequisites(tool);
-        if (commonError != null) {
-            return RecipeResult.failure(commonError);
+            Component commonError = validatePrerequisites(tool);
+            if (commonError != null) {
+                return RecipeResult.failure(commonError);
+            }
         }
-        }
-
 
         tool = tool.copy();
 
-
         if (crystal || newLevel) {
-        SlotCount slots = getSlots();
-        if (slots != null) {
-            tool.getPersistentData().addSlots(slots.type(), -slots.count());
+            SlotCount slots = getSlots();
+            if (slots != null) {
+                tool.getPersistentData().addSlots(slots.type(), -slots.count());
+            }
         }
-        }
-
 
         if (crystal) {
-        tool.addModifier(modifier, 1);
+            tool.addModifier(modifier, 1);
         } else {
-
-            tool.addModifierAmount(modifier, IncrementalModifierRecipe.getAvailableAmount(inv, input, amountPerInput), neededPerLevel);
+            tool.addModifierAmount(
+                modifier,
+                IncrementalModifierRecipe.getAvailableAmount(inv, input, amountPerInput),
+                neededPerLevel
+            );
         }
 
         Component error = tool.tryValidate();
-        if(error != null){
+        if (error != null) {
             return RecipeResult.failure(error);
         }
 
         return success(tool, inv);
     }
 
-     @Override
+    @Override
     public void updateInputs(LazyToolStack result, IMutableTinkerStationContainer inv, boolean isServer) {
-
         if (matchesCrystal(inv)) {
-        super.updateInputs(result, inv, isServer);
-        return;
+            super.updateInputs(result, inv, isServer);
+            return;
         }
-
 
         ToolStack inputTool = inv.getTinkerable();
         ModifierId modifier = this.result.getId();
         ModifierEntry inputEntry = inputTool.getUpgrades().getEntry(modifier);
         ModifierEntry resultEntry = result.getTool().getUpgrades().getEntry(modifier);
 
-
         int inputNeed = inputEntry.getNeeded();
 
         if (inputNeed == 0 || inputNeed == neededPerLevel) {
-
-        IncrementalModifierRecipe.updateInputs(inv, input, resultEntry.getAmount(neededPerLevel) - inputEntry.getAmount(0), amountPerInput, leftover.get());
+            IncrementalModifierRecipe.updateInputs(
+                inv,
+                input,
+                resultEntry.getAmount(neededPerLevel) - inputEntry.getAmount(0),
+                amountPerInput,
+                leftover.get()
+            );
         } else {
+            int gcd = IntMath.gcd(inputNeed, neededPerLevel);
+            int recipeScale = inputNeed / gcd;
+            int used =
+                (resultEntry.getAmount(neededPerLevel) * recipeScale) -
+                ((inputEntry.getAmount(0) * neededPerLevel) / gcd);
 
-        int gcd = IntMath.gcd(inputNeed, neededPerLevel);
-        int recipeScale = inputNeed / gcd;
-        int used = (resultEntry.getAmount(neededPerLevel) * recipeScale) - (inputEntry.getAmount(0) * neededPerLevel / gcd);
-
-
-        IncrementalModifierRecipe.updateInputs(inv, input, (used + recipeScale - 1) / recipeScale, amountPerInput, leftover.get());
+            IncrementalModifierRecipe.updateInputs(
+                inv,
+                input,
+                (used + recipeScale - 1) / recipeScale,
+                amountPerInput,
+                leftover.get()
+            );
         }
     }
 
@@ -162,16 +182,19 @@ public class ValidatableIncrementalModifierRecipe extends AbstractModifierRecipe
         if (slotCache == null) {
             ImmutableList.Builder<List<ItemStack>> builder = ImmutableList.builder();
 
-
             List<ItemStack> items = Arrays.asList(input.getItems());
             int maxStackSize = items.stream().mapToInt(ItemStack::getMaxStackSize).min().orElse(64);
-
 
             int needed = neededPerLevel / amountPerInput;
             if (neededPerLevel % amountPerInput > 0) {
                 needed++;
             }
-            Lazy<List<ItemStack>> fullSize = Lazy.of(() -> items.stream().map(stack -> ItemHandlerHelper.copyStackWithSize(stack, maxStackSize)).collect(Collectors.toList()));
+            Lazy<List<ItemStack>> fullSize = Lazy.of(() ->
+                items
+                    .stream()
+                    .map(stack -> ItemHandlerHelper.copyStackWithSize(stack, maxStackSize))
+                    .collect(Collectors.toList())
+            );
             while (needed > maxStackSize) {
                 builder.add(fullSize.get());
                 needed -= maxStackSize;
@@ -179,7 +202,12 @@ public class ValidatableIncrementalModifierRecipe extends AbstractModifierRecipe
 
             if (needed > 0) {
                 int remaining = needed;
-                builder.add(items.stream().map(stack -> ItemHandlerHelper.copyStackWithSize(stack, remaining)).collect(Collectors.toList()));
+                builder.add(
+                    items
+                        .stream()
+                        .map(stack -> ItemHandlerHelper.copyStackWithSize(stack, remaining))
+                        .collect(Collectors.toList())
+                );
             }
             slotCache = builder.build();
         }

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "ticex:reconstruction_core"
-            ]
+            "items": ["ticex:reconstruction_core"]
           }
         ]
       },
@@ -20,16 +18,9 @@
       "trigger": "minecraft:recipe_unlocked"
     }
   },
-  "requirements": [
-    [
-      "has_item",
-      "has_the_recipe"
-    ]
-  ],
+  "requirements": [["has_item", "has_the_recipe"]],
   "rewards": {
-    "recipes": [
-      "minecraft:cores/flickering_reconstruction_core"
-    ]
+    "recipes": ["minecraft:cores/flickering_reconstruction_core"]
   },
   "sends_telemetry_event": false
 }

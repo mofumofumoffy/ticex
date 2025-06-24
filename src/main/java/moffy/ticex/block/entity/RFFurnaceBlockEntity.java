@@ -1,10 +1,6 @@
 package moffy.ticex.block.entity;
 
 import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.BlockPos;
@@ -21,6 +17,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.client.SafeClient;
 import slimeknights.tconstruct.library.client.model.ModelProperties;
 import slimeknights.tconstruct.library.fluid.FluidTankAnimated;
@@ -28,7 +26,7 @@ import slimeknights.tconstruct.library.utils.NBTTags;
 import slimeknights.tconstruct.smeltery.block.entity.ITankBlockEntity;
 import slimeknights.tconstruct.smeltery.block.entity.component.SmelteryComponentBlockEntity;
 
-public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implements ITankBlockEntity{
+public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implements ITankBlockEntity {
 
     private boolean isCreative;
 
@@ -51,8 +49,8 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
 
         this.tankCapacity = FluidType.BUCKET_VOLUME;
         this.tank = new RFFurnaceFluidTank(tankCapacity, this);
-        this.fluidHolder = LazyOptional.of(()->this.tank);
-        this.energyHolder = LazyOptional.of(()->this.energyStorage);
+        this.fluidHolder = LazyOptional.of(() -> this.tank);
+        this.energyHolder = LazyOptional.of(() -> this.energyStorage);
     }
 
     public RFFurnaceEnergyStorage getEnergyStorage() {
@@ -69,9 +67,9 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
 
     @Override
     public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == ForgeCapabilities.FLUID_HANDLER){
+        if (cap == ForgeCapabilities.FLUID_HANDLER) {
             return fluidHolder.cast();
-        } else if(cap == ForgeCapabilities.ENERGY){
+        } else if (cap == ForgeCapabilities.ENERGY) {
             return energyHolder.cast();
         }
         return super.getCapability(cap, side);
@@ -84,25 +82,29 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
         energyHolder.invalidate();
     }
 
-    public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, RFFurnaceBlockEntity pBlockEntity){
+    public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, RFFurnaceBlockEntity pBlockEntity) {
         int energyRate = pBlockEntity.getEnergyStorage().getEnergyRate();
         int extracted = pBlockEntity.getEnergyStorage().extractEnergy(1000, false);
 
-        float rate = (float)energyRate / pBlockEntity.getMaxEnergyRate();
+        float rate = (float) energyRate / pBlockEntity.getMaxEnergyRate();
 
         int fuelIndex = 20;
 
-        if(!pBlockEntity.isCreative() && Math.abs(energyRate - pBlockEntity.getMaxEnergyRate()) > 0.5f){
-            fuelIndex = Math.round(20 * (1 - (float)Math.exp(-Math.PI*rate)));
+        if (!pBlockEntity.isCreative() && Math.abs(energyRate - pBlockEntity.getMaxEnergyRate()) > 0.5f) {
+            fuelIndex = Math.round(20 * (1 - (float) Math.exp(-Math.PI * rate)));
         }
 
-        if(pBlockEntity.isCreative()){
-            pBlockEntity.updateFluidTo(new FluidStack(TicEXRegistry.RF_FURNACE_FUELS.get(19).get(), FluidType.BUCKET_VOLUME));
-        }else if(extracted >= 1){
-            if(fuelIndex == 0){
+        if (pBlockEntity.isCreative()) {
+            pBlockEntity.updateFluidTo(
+                new FluidStack(TicEXRegistry.RF_FURNACE_FUELS.get(19).get(), FluidType.BUCKET_VOLUME)
+            );
+        } else if (extracted >= 1) {
+            if (fuelIndex == 0) {
                 pBlockEntity.updateFluidTo(FluidStack.EMPTY);
             } else {
-                pBlockEntity.updateFluidTo(new FluidStack(TicEXRegistry.RF_FURNACE_FUELS.get(fuelIndex - 1).get(), FluidType.BUCKET_VOLUME));
+                pBlockEntity.updateFluidTo(
+                    new FluidStack(TicEXRegistry.RF_FURNACE_FUELS.get(fuelIndex - 1).get(), FluidType.BUCKET_VOLUME)
+                );
             }
         } else {
             pBlockEntity.getEnergyStorage().setEnergyRate(0);
@@ -114,8 +116,8 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
     public void onTankContentsChanged() {
         ITankBlockEntity.super.onTankContentsChanged();
         if (this.level != null) {
-        level.getLightEngine().checkBlock(this.worldPosition);
-        this.requestModelDataUpdate();
+            level.getLightEngine().checkBlock(this.worldPosition);
+            this.requestModelDataUpdate();
         }
     }
 
@@ -133,8 +135,9 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
     @Override
     public ModelData getModelData() {
         return ModelData.builder()
-                        .with(ModelProperties.FLUID_STACK, tank.getFluid())
-                        .with(ModelProperties.TANK_CAPACITY, tank.getCapacity()).build();
+            .with(ModelProperties.FLUID_STACK, tank.getFluid())
+            .with(ModelProperties.TANK_CAPACITY, tank.getCapacity())
+            .build();
     }
 
     public void updateTank(CompoundTag nbt) {
@@ -146,15 +149,15 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
                 this.level.getLightEngine().checkBlock(worldPosition);
             }
         }
-      }
+    }
 
     @Override
     public void updateFluidTo(FluidStack fluid) {
         this.tank.setFluid(fluid);
-            if (this.isFluidInModel()) {
-                SafeClient.updateFluidModel(this.getTE(), tank, this.tankCapacity, this.tankCapacity);
-            }
+        if (this.isFluidInModel()) {
+            SafeClient.updateFluidModel(this.getTE(), tank, this.tankCapacity, this.tankCapacity);
         }
+    }
 
     @Override
     public void setLastStrength(int arg0) {

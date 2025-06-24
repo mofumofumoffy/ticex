@@ -1,12 +1,10 @@
 package moffy.ticex.item.modifiable;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
 import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.item.SpellBook;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -36,13 +34,14 @@ import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiableDisplay{
+public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiableDisplay {
+
     private final ToolDefinition toolDefinition;
     private final int maxStackSize;
 
     protected ItemStack toolForRendering;
 
-    public ModifiableIronsSpellbookItem(ToolDefinition toolDefinition, int maxStackSize){
+    public ModifiableIronsSpellbookItem(ToolDefinition toolDefinition, int maxStackSize) {
         super(12, SpellRarity.LEGENDARY, new Item.Properties().stacksTo(maxStackSize));
         this.toolDefinition = toolDefinition;
         this.maxStackSize = maxStackSize;
@@ -59,27 +58,27 @@ public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiab
     }
 
     @Override
-  public boolean isEnchantable(ItemStack stack) {
-    return false;
-  }
-
-  @Override
-  public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-    return false;
-  }
-
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-    return enchantment.isCurse() && super.canApplyAtEnchantingTable(stack, enchantment);
-  }
-
-  @Override
-  public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
-    return EnchantmentModifierHook.getEnchantmentLevel(stack, enchantment);
-  }
+    public boolean isEnchantable(ItemStack stack) {
+        return false;
+    }
 
     @Override
-    public Map<Enchantment,Integer> getAllEnchantments(ItemStack stack) {
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return false;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return enchantment.isCurse() && super.canApplyAtEnchantingTable(stack, enchantment);
+    }
+
+    @Override
+    public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
+        return EnchantmentModifierHook.getEnchantmentLevel(stack, enchantment);
+    }
+
+    @Override
+    public Map<Enchantment, Integer> getAllEnchantments(ItemStack stack) {
         return EnchantmentModifierHook.getAllEnchantments(stack);
     }
 
@@ -150,7 +149,14 @@ public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiab
     }
 
     @Override
-    public boolean overrideOtherStackedOnMe(ItemStack slotStack, ItemStack held, Slot slot, ClickAction action, Player player, SlotAccess access) {
+    public boolean overrideOtherStackedOnMe(
+        ItemStack slotStack,
+        ItemStack held,
+        Slot slot,
+        ClickAction action,
+        Player player,
+        SlotAccess access
+    ) {
         return SlotStackModifierHook.overrideOtherStackedOnMe(slotStack, held, slot, action, player, access);
     }
 

@@ -2,7 +2,6 @@ package moffy.ticex.modifier;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import moffy.ticex.TicEX;
 import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.handlers.InternalTimers;
@@ -37,28 +36,27 @@ import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
-public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickModifierHook{
+public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickModifierHook {
 
     public static final ResourceLocation ABYSSAL_DATA = new ResourceLocation(TicEX.MODID, "abyssal");
 
     public static void toggleNightVision(IToolStackView tool, Player player) {
-		boolean value;
-		
-        ModDataNBT helmetTag = tool.getPersistentData();
-		if (helmetTag.contains(ABYSSAL_DATA, Tag.TAG_BYTE)) {
-			value = !helmetTag.getBoolean(ABYSSAL_DATA);
-			helmetTag.putBoolean(ABYSSAL_DATA, value);
-		} else {
-			helmetTag.putBoolean(ABYSSAL_DATA, true);
-			value = true;
-		}
-		if (value) {
-			player.sendSystemMessage(PELang.NIGHT_VISION.translate(ChatFormatting.GREEN, PELang.GEM_ENABLED));
-		} else {
-			player.sendSystemMessage(PELang.NIGHT_VISION.translate(ChatFormatting.RED, PELang.GEM_DISABLED));
-		}
-	}
+        boolean value;
 
+        ModDataNBT helmetTag = tool.getPersistentData();
+        if (helmetTag.contains(ABYSSAL_DATA, Tag.TAG_BYTE)) {
+            value = !helmetTag.getBoolean(ABYSSAL_DATA);
+            helmetTag.putBoolean(ABYSSAL_DATA, value);
+        } else {
+            helmetTag.putBoolean(ABYSSAL_DATA, true);
+            value = true;
+        }
+        if (value) {
+            player.sendSystemMessage(PELang.NIGHT_VISION.translate(ChatFormatting.GREEN, PELang.GEM_ENABLED));
+        } else {
+            player.sendSystemMessage(PELang.NIGHT_VISION.translate(ChatFormatting.RED, PELang.GEM_DISABLED));
+        }
+    }
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
@@ -69,26 +67,42 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
     public List<Component> getDescriptionList(IToolStackView tool, ModifierEntry entry) {
         List<Component> tooltips = new ArrayList<>();
         tooltips.add(PELang.GEM_LORE_HELM.translate());
-		tooltips.add(PELang.NIGHT_VISION_PROMPT.translate(ClientKeyHelper.getKeyName(PEKeybind.HELMET_TOGGLE)));
-		if (tool.getPersistentData().getBoolean(ABYSSAL_DATA)) {
-			tooltips.add(PELang.NIGHT_VISION.translate(ChatFormatting.GREEN, PELang.GEM_ENABLED));
-		} else {
-			tooltips.add(PELang.NIGHT_VISION.translate(ChatFormatting.RED, PELang.GEM_DISABLED));
-		}
+        tooltips.add(PELang.NIGHT_VISION_PROMPT.translate(ClientKeyHelper.getKeyName(PEKeybind.HELMET_TOGGLE)));
+        if (tool.getPersistentData().getBoolean(ABYSSAL_DATA)) {
+            tooltips.add(PELang.NIGHT_VISION.translate(ChatFormatting.GREEN, PELang.GEM_ENABLED));
+        } else {
+            tooltips.add(PELang.NIGHT_VISION.translate(ChatFormatting.RED, PELang.GEM_DISABLED));
+        }
         return tooltips;
     }
 
     @Override
-    public void onInventoryTick(IToolStackView tool, ModifierEntry entry, Level level, LivingEntity entity, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack) {
+    public void onInventoryTick(
+        IToolStackView tool,
+        ModifierEntry entry,
+        Level level,
+        LivingEntity entity,
+        int itemSlot,
+        boolean isSelected,
+        boolean isCorrectSlot,
+        ItemStack stack
+    ) {
         Item item = tool.getItem();
-        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.HELMET && entity instanceof Player && itemSlot == 3){
+        if (
+            item instanceof ArmorItem armorItem &&
+            armorItem.getType() == ArmorItem.Type.HELMET &&
+            entity instanceof Player &&
+            itemSlot == 3
+        ) {
             if (!level.isClientSide) {
-                entity.getCapability(InternalTimers.CAPABILITY).ifPresent(handler -> {
-                    handler.activateHeal();
-                    if (entity.getHealth() < entity.getMaxHealth() && handler.canHeal()) {
-                        entity.heal(2.0F);
-                    }
-                });
+                entity
+                    .getCapability(InternalTimers.CAPABILITY)
+                    .ifPresent(handler -> {
+                        handler.activateHeal();
+                        if (entity.getHealth() < entity.getMaxHealth() && handler.canHeal()) {
+                            entity.heal(2.0F);
+                        }
+                    });
 
                 if (tool.getPersistentData().getBoolean(ABYSSAL_DATA)) {
                     entity.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 220, 0, true, false));
@@ -98,24 +112,24 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
             }
         }
     }
-    
-    public static void doZap(Player player) {
-		if (ProjectEConfig.server.difficulty.offensiveAbilities.get()) {
-			BlockHitResult strikeResult = PlayerHelper.getBlockLookingAt(player, 120.0F);
-			if (strikeResult.getType() != HitResult.Type.MISS) {
-				BlockPos strikePos = strikeResult.getBlockPos();
-				Level level = player.level();
-				LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
-				if (lightning != null) {
-					lightning.moveTo(Vec3.atCenterOf(strikePos));
-					lightning.setCause((ServerPlayer) player);
-					level.addFreshEntity(lightning);
-				}
-			}
-		}
-	}
 
-	@Override
+    public static void doZap(Player player) {
+        if (ProjectEConfig.server.difficulty.offensiveAbilities.get()) {
+            BlockHitResult strikeResult = PlayerHelper.getBlockLookingAt(player, 120.0F);
+            if (strikeResult.getType() != HitResult.Type.MISS) {
+                BlockPos strikePos = strikeResult.getBlockPos();
+                Level level = player.level();
+                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
+                if (lightning != null) {
+                    lightning.moveTo(Vec3.atCenterOf(strikePos));
+                    lightning.setCause((ServerPlayer) player);
+                    level.addFreshEntity(lightning);
+                }
+            }
+        }
+    }
+
+    @Override
     public boolean shouldDisplay(boolean advanced) {
         return advanced;
     }

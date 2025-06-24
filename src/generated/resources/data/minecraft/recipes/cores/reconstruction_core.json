@@ -15,11 +15,7 @@
       "item": "minecraft:shulker_shell"
     }
   },
-  "pattern": [
-    "asa",
-    "pcp",
-    "asa"
-  ],
+  "pattern": ["asa", "pcp", "asa"],
   "result": {
     "item": "ticex:reconstruction_core"
   },

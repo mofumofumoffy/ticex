@@ -1,6 +1,6 @@
 {
-    "parent": "minecraft:item/generated",
-    "textures": {
-      "layer0": "ticex:item/casts/slashblade_blade_cast"
-    }
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ticex:item/casts/slashblade_blade_cast"
   }
+}

@@ -1,25 +1,21 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "conditions": [
-      {
-        "type": "addonapi:mods_available",
-        "required_raw_module": "ticex:things_compat"
-      }
-    ],
-    "pattern": [
-      "HHH",
-      "HCH",
-      "HHH"
-    ],
-    "key": {
-      "C": {
-        "item": "ticex:reconstruction_core"
-      },
-      "H": {
-        "item": "tinkers_things:hematite"
-      }
-    },
-    "result": {
-        "item": "ticex:lamellar_core"
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:things_compat"
     }
+  ],
+  "pattern": ["HHH", "HCH", "HHH"],
+  "key": {
+    "C": {
+      "item": "ticex:reconstruction_core"
+    },
+    "H": {
+      "item": "tinkers_things:hematite"
+    }
+  },
+  "result": {
+    "item": "ticex:lamellar_core"
+  }
 }

@@ -7,29 +7,36 @@ import net.minecraftforge.fluids.FluidType;
 import slimeknights.tconstruct.TConstruct;
 
 public class TicEXFluidUtils {
+
     public static FluidType.Properties hot(String name) {
-        return FluidType.Properties.create().density(2000).viscosity(10000).temperature(1000)
-                                .descriptionId(TConstruct.makeDescriptionId("fluid", name))
-                                .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
-                                .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
-                                // from forge lava type
-                                .motionScale(0.0023333333333333335D)
-                                .canSwim(false).canDrown(false)
-                                .pathType(BlockPathTypes.LAVA).adjacentPathType(null);
+        return FluidType.Properties.create()
+            .density(2000)
+            .viscosity(10000)
+            .temperature(1000)
+            .descriptionId(TConstruct.makeDescriptionId("fluid", name))
+            .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
+            .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
+            // from forge lava type
+            .motionScale(0.0023333333333333335D)
+            .canSwim(false)
+            .canDrown(false)
+            .pathType(BlockPathTypes.LAVA)
+            .adjacentPathType(null);
     }
 
     public static FluidType.Properties cool() {
         return FluidType.Properties.create()
-                                   .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
-                                   .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
-                                   .motionScale(0.0023333333333333335D)
-                                   .canExtinguish(true);
+            .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
+            .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
+            .motionScale(0.0023333333333333335D)
+            .canExtinguish(true);
     }
 
     public static FluidType.Properties cool(String name) {
-        return cool().descriptionId(TConstruct.makeDescriptionId("fluid", name))
-                     .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
-                     .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY);
+        return cool()
+            .descriptionId(TConstruct.makeDescriptionId("fluid", name))
+            .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
+            .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY);
     }
 
     public static FluidType.Properties slime(String name) {

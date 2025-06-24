@@ -4,6 +4,7 @@ import moffy.ticex.TicEX;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 
 public class TicEXMaterials {
+
     public static final MaterialId INFINITY = MaterialId.tryBuild(TicEX.MODID, "infinity");
     public static final MaterialId NEUTRON = MaterialId.tryBuild(TicEX.MODID, "neutron");
     public static final MaterialId CRYSTAL_MATRIX = MaterialId.tryBuild(TicEX.MODID, "crystal_matrix");

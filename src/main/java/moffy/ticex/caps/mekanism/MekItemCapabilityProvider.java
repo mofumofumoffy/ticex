@@ -3,7 +3,6 @@ package moffy.ticex.caps.mekanism;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
-
 import mekanism.common.capabilities.ItemCapabilityWrapper;
 import mekanism.common.capabilities.ItemCapabilityWrapper.ItemCapability;
 import moffy.ticex.item.modifiable.IModifiableMekItem;
@@ -13,7 +12,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider.IToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-public class MekItemCapabilityProvider implements IToolCapabilityProvider{
+public class MekItemCapabilityProvider implements IToolCapabilityProvider {
 
     private IToolStackView tool;
     private ItemCapabilityWrapper mekCapabilityWrapper;
@@ -23,9 +22,9 @@ public class MekItemCapabilityProvider implements IToolCapabilityProvider{
 
         List<ItemCapability> capabilities = new ArrayList<>();
 
-        if(this.tool.getItem() instanceof IModifiableMekItem){
-            IModifiableMekItem modifiableMekItem = (IModifiableMekItem)this.tool.getItem();
-            if(modifiableMekItem.areCapabilityConfigsLoaded()){
+        if (this.tool.getItem() instanceof IModifiableMekItem) {
+            IModifiableMekItem modifiableMekItem = (IModifiableMekItem) this.tool.getItem();
+            if (modifiableMekItem.areCapabilityConfigsLoaded()) {
                 modifiableMekItem.gatherCapabilities(capabilities, stack);
             }
         }
@@ -35,10 +34,9 @@ public class MekItemCapabilityProvider implements IToolCapabilityProvider{
 
     @Override
     public <T> LazyOptional<T> getCapability(IToolStackView tool, Capability<T> capability) {
-        if(tool.getItem() instanceof IModifiableMekItem){
+        if (tool.getItem() instanceof IModifiableMekItem) {
             return mekCapabilityWrapper.getCapability(capability, null);
         }
         return LazyOptional.empty();
     }
-    
 }

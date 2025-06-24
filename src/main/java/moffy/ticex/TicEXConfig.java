@@ -7,6 +7,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig.Type;
 
 public class TicEXConfig {
+
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
     public static ForgeConfigSpec.ConfigValue<Float> CONDENSING_DROP_PROBABILITY;
@@ -14,7 +15,7 @@ public class TicEXConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> OVERRIDE_LIMIT;
     public static ForgeConfigSpec.ConfigValue<Boolean> PROVIDE_PROPERTIES;
 
-    public static void registerConfig(){
+    public static void registerConfig() {
         final ForgeConfigSpec.Builder COMMON = new ForgeConfigSpec.Builder();
         final ForgeConfigSpec.Builder CLIENT = new ForgeConfigSpec.Builder();
 
@@ -23,19 +24,30 @@ public class TicEXConfig {
         COMMON.pop();
 
         COMMON.push("avaritia");
-        CONDENSING_DROP_PROBABILITY = COMMON.comment("Probability of a neutron pile is dropped by condensing modifier").define("condensingDropProbability", 0.003f);
+        CONDENSING_DROP_PROBABILITY = COMMON.comment(
+            "Probability of a neutron pile is dropped by condensing modifier"
+        ).define("condensingDropProbability", 0.003f);
         COMMON.pop();
 
         COMMON.push("mekanism");
-        MEKAPLATE_USE_POWER_SHIELD = COMMON.comment("Allow Mekaplate can use shield of electricity").define("mekaplateUseShield", true);
+        MEKAPLATE_USE_POWER_SHIELD = COMMON.comment("Allow Mekaplate can use shield of electricity").define(
+            "mekaplateUseShield",
+            true
+        );
         COMMON.pop();
 
         COMMON.push("apotheosis");
-        OVERRIDE_LIMIT = COMMON.comment("Maximum level of enchantments granted by override").define("overrideLevelLimit", 255);
+        OVERRIDE_LIMIT = COMMON.comment("Maximum level of enchantments granted by override").define(
+            "overrideLevelLimit",
+            255
+        );
         COMMON.pop();
 
         COMMON.push("cc:tweaked");
-        PROVIDE_PROPERTIES = COMMON.comment("", "CAUTION: Setting the value to \"true\" may BREAK the game balance and your world!").define("provideProperties", false);
+        PROVIDE_PROPERTIES = COMMON.comment(
+            "",
+            "CAUTION: Setting the value to \"true\" may BREAK the game balance and your world!"
+        ).define("provideProperties", false);
         COMMON.pop();
 
         CLIENT.comment("Client Settings").push("client");

@@ -1,9 +1,8 @@
 package moffy.ticex.modifier;
 
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
@@ -18,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 
-public class ModifierOverload extends NoLevelsModifier implements EmbossmentModifierHook{
+public class ModifierOverload extends NoLevelsModifier implements EmbossmentModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
@@ -32,11 +31,11 @@ public class ModifierOverload extends NoLevelsModifier implements EmbossmentModi
         ItemStack toolStack = context.getToolStack();
         ItemStack stack = context.getInputStack(inputIndex);
 
-        if(stack.getItem().equals(Items.ENCHANTED_BOOK)){
+        if (stack.getItem().equals(Items.ENCHANTED_BOOK)) {
             Map<Enchantment, Integer> bookEnchantments = EnchantmentHelper.getEnchantments(stack);
 
-            for(Entry<Enchantment, Integer> entry : bookEnchantments.entrySet()){
-                if(toolStack.getEnchantmentLevel(entry.getKey()) > 0){
+            for (Entry<Enchantment, Integer> entry : bookEnchantments.entrySet()) {
+                if (toolStack.getEnchantmentLevel(entry.getKey()) > 0) {
                     CompoundTag nbt = toolStack.getOrCreateTag();
                     if (!nbt.contains("Enchantments", Tag.TAG_LIST)) {
                         nbt.put("Enchantments", new ListTag());
@@ -44,10 +43,19 @@ public class ModifierOverload extends NoLevelsModifier implements EmbossmentModi
 
                     ListTag listTag = nbt.getList("Enchantments", Tag.TAG_COMPOUND);
                     ListTag newListTag = new ListTag();
-                    for(int i = 0; i < listTag.size(); i++){
+                    for (int i = 0; i < listTag.size(); i++) {
                         CompoundTag enchantmentTag = listTag.getCompound(i);
-                        if(enchantmentTag.getString("id").equals(ForgeRegistries.ENCHANTMENTS.getKey(entry.getKey()).toString())){
-                            newListTag.add(EnchantmentHelper.storeEnchantment(ResourceLocation.tryParse(enchantmentTag.getString("id")), calcEnchLevel(toolStack, entry.getKey(), entry.getValue())));
+                        if (
+                            enchantmentTag
+                                .getString("id")
+                                .equals(ForgeRegistries.ENCHANTMENTS.getKey(entry.getKey()).toString())
+                        ) {
+                            newListTag.add(
+                                EnchantmentHelper.storeEnchantment(
+                                    ResourceLocation.tryParse(enchantmentTag.getString("id")),
+                                    calcEnchLevel(toolStack, entry.getKey(), entry.getValue())
+                                )
+                            );
                         } else {
                             newListTag.add(enchantmentTag);
                         }
@@ -62,10 +70,10 @@ public class ModifierOverload extends NoLevelsModifier implements EmbossmentModi
         return result;
     }
 
-    protected int calcEnchLevel(ItemStack stack, Enchantment key, int value){
+    protected int calcEnchLevel(ItemStack stack, Enchantment key, int value) {
         int currentLv = stack.getEnchantmentLevel(key);
         int levelCap = EnchModule.getDefaultMax(key);
-        if(value == currentLv){
+        if (value == currentLv) {
             return Math.min(value + 1, levelCap);
         }
         return Math.min(Math.max(value, currentLv), levelCap);

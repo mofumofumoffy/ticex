@@ -16,18 +16,35 @@ import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
 
-public class ModifierAftershock extends Modifier implements MeleeHitModifierHook{
+public class ModifierAftershock extends Modifier implements MeleeHitModifierHook {
 
     @Override
-    public void afterMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context,
-            float damageDealt) {
-        if(context.isFullyCharged()){
+    public void afterMeleeHit(
+        IToolStackView tool,
+        ModifierEntry modifier,
+        ToolAttackContext context,
+        float damageDealt
+    ) {
+        if (context.isFullyCharged()) {
             Entity entity = context.getTarget();
-            ToolAttackUtil.attackEntitySecondary(new DamageSource(context.getLevel().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MAGIC)), tool.getStats().get(ToolStats.ATTACK_DAMAGE) * modifier.getLevel() * 0.1f, entity, (entity instanceof LivingEntity ? (LivingEntity)entity : null), true);
-            context.getLevel().addParticle(ParticleTypes.ENCHANTED_HIT, entity.getX(), entity.getY(), entity.getZ(), 0, 5, 0);
+            ToolAttackUtil.attackEntitySecondary(
+                new DamageSource(
+                    context
+                        .getLevel()
+                        .registryAccess()
+                        .registryOrThrow(Registries.DAMAGE_TYPE)
+                        .getHolderOrThrow(DamageTypes.MAGIC)
+                ),
+                tool.getStats().get(ToolStats.ATTACK_DAMAGE) * modifier.getLevel() * 0.1f,
+                entity,
+                (entity instanceof LivingEntity ? (LivingEntity) entity : null),
+                true
+            );
+            context
+                .getLevel()
+                .addParticle(ParticleTypes.ENCHANTED_HIT, entity.getX(), entity.getY(), entity.getZ(), 0, 5, 0);
         }
     }
-    
 
     @Override
     protected void registerHooks(Builder hookBuilder) {

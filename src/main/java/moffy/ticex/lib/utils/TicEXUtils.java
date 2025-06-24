@@ -1,7 +1,6 @@
 package moffy.ticex.lib.utils;
 
 import java.util.function.Predicate;
-
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -16,62 +15,69 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class TicEXUtils {
-    public static boolean isPureDamage(DamageSource source, float damage){
+
+    public static boolean isPureDamage(DamageSource source, float damage) {
         boolean isInfinityDamage = false;
 
-        if(ModList.get().isLoaded("avaritia")){
+        if (ModList.get().isLoaded("avaritia")) {
             isInfinityDamage = TicEXAvaritiaUtils.isInfinityDamage(source);
         }
 
-        return source.is(DamageTypes.FELL_OUT_OF_WORLD) || isInfinityDamage || (damage == Float.MAX_VALUE && source.is(DamageTypeTags.BYPASSES_ARMOR) && source.is(DamageTypeTags.BYPASSES_INVULNERABILITY));
+        return (
+            source.is(DamageTypes.FELL_OUT_OF_WORLD) ||
+            isInfinityDamage ||
+            (damage == Float.MAX_VALUE &&
+                source.is(DamageTypeTags.BYPASSES_ARMOR) &&
+                source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
+        );
     }
 
-    public static boolean canPlayerFly(Player player){
+    public static boolean canPlayerFly(Player player) {
         boolean canFly = player.getAbilities().mayfly;
 
-        if(ModList.get().isLoaded("avaritia")){
+        if (ModList.get().isLoaded("avaritia")) {
             canFly = canFly || TicEXAvaritiaUtils.hasCelestial(player);
         }
 
         return canFly;
     }
 
-    public static ItemStack getToolStack(IToolStackView tool, LivingEntity entity, Modifier modifier){
-        return getToolStack(tool, entity, (stack)->ToolStack.from(stack).getModifierLevel(modifier) > 0);
+    public static ItemStack getToolStack(IToolStackView tool, LivingEntity entity, Modifier modifier) {
+        return getToolStack(tool, entity, stack -> ToolStack.from(stack).getModifierLevel(modifier) > 0);
     }
 
-    public static ItemStack getToolStack(IToolStackView tool, LivingEntity entity, Predicate<ItemStack> predicate){
-        if(tool instanceof ToolStack){
-            return ((ToolStack)tool).createStack();
+    public static ItemStack getToolStack(IToolStackView tool, LivingEntity entity, Predicate<ItemStack> predicate) {
+        if (tool instanceof ToolStack) {
+            return ((ToolStack) tool).createStack();
         }
         ItemStack mainHandStack = entity.getMainHandItem();
-        if(mainHandStack.getItem() instanceof IModifiable && predicate.test(mainHandStack)){
+        if (mainHandStack.getItem() instanceof IModifiable && predicate.test(mainHandStack)) {
             return mainHandStack;
         }
         ItemStack offHandStack = entity.getOffhandItem();
-        if(offHandStack.getItem() instanceof IModifiable && predicate.test(offHandStack)){
+        if (offHandStack.getItem() instanceof IModifiable && predicate.test(offHandStack)) {
             return offHandStack;
         }
 
-        if(ModList.get().isLoaded("curios")){
+        if (ModList.get().isLoaded("curios")) {
             ItemStack curioStack = TicEXCuriosUtils.getToolStackInCurios(entity, predicate);
-            if(curioStack != null){
+            if (curioStack != null) {
                 return curioStack;
             }
         }
         return ItemStack.EMPTY;
     }
 
-    public static String getEquipmentSlotName(LivingEntity entity, ItemStack stack){
-        for(EquipmentSlot slot : EquipmentSlot.values()){
-            if(ItemStack.isSameItem(entity.getItemBySlot(slot), stack)){
+    public static String getEquipmentSlotName(LivingEntity entity, ItemStack stack) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (ItemStack.isSameItem(entity.getItemBySlot(slot), stack)) {
                 return slot.getName();
             }
         }
 
-        if(ModList.get().isLoaded("curios")){
+        if (ModList.get().isLoaded("curios")) {
             String curioName = TicEXCuriosUtils.getEquipmentSlotNameInCurios(entity, stack);
-            if(curioName != null){
+            if (curioName != null) {
                 return curioName;
             }
         }

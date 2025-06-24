@@ -6,7 +6,6 @@ public class TicEXCuriosMixinPlugin extends AddonMixinPlugin {
 
     @Override
     public String[] getRequiredModIds() {
-        return new String[]{"curios"};
+        return new String[] { "curios" };
     }
-    
 }

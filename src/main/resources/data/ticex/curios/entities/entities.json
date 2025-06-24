@@ -1,14 +1,11 @@
 {
-    "entities": [
-      "minecraft:player",
-      "minecraft:armor_stand"
-    ],
-    "slots": [
-      "incomparable_head",
-      "incomparable_chest",
-      "incomparable_legs",
-      "incomparable_feet",
-      "incomparable_mainhand",
-      "incomparable_offhand"
-    ]
-  }
+  "entities": ["minecraft:player", "minecraft:armor_stand"],
+  "slots": [
+    "incomparable_head",
+    "incomparable_chest",
+    "incomparable_legs",
+    "incomparable_feet",
+    "incomparable_mainhand",
+    "incomparable_offhand"
+  ]
+}

@@ -19,13 +19,19 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class TicEXAvaritiaEvent {
+
     public static void onGetHurt(LivingHurtEvent event) {
         LivingEntity target = event.getEntity();
 
-        if(target instanceof Player player){
-            if(player.getMainHandItem().getItem() instanceof IModifiable){
+        if (target instanceof Player player) {
+            if (player.getMainHandItem().getItem() instanceof IModifiable) {
                 ToolStack tool = ToolStack.from(player.getMainHandItem());
-                if (!player.getMainHandItem().isEmpty() && TicEXRegistry.OMNIPOTEMCE_MODIFIER != null && tool.getModifierLevel(TicEXRegistry.OMNIPOTEMCE_MODIFIER.get()) > 0 && player.getMainHandItem().useOnRelease()) {
+                if (
+                    !player.getMainHandItem().isEmpty() &&
+                    TicEXRegistry.OMNIPOTEMCE_MODIFIER != null &&
+                    tool.getModifierLevel(TicEXRegistry.OMNIPOTEMCE_MODIFIER.get()) > 0 &&
+                    player.getMainHandItem().useOnRelease()
+                ) {
                     event.setCanceled(true);
                 }
             }
@@ -34,10 +40,13 @@ public class TicEXAvaritiaEvent {
 
     public static void onDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof Player player) {
-            for(ItemStack armorStack : player.getArmorSlots()){
-                if(armorStack.getItem() instanceof IModifiable){
+            for (ItemStack armorStack : player.getArmorSlots()) {
+                if (armorStack.getItem() instanceof IModifiable) {
                     ToolStack armor = ToolStack.from(armorStack);
-                    if(TicEXRegistry.TRANSCENDENTAL_MODIFIER != null && armor.getModifierLevel(TicEXRegistry.TRANSCENDENTAL_MODIFIER.get()) > 0){
+                    if (
+                        TicEXRegistry.TRANSCENDENTAL_MODIFIER != null &&
+                        armor.getModifierLevel(TicEXRegistry.TRANSCENDENTAL_MODIFIER.get()) > 0
+                    ) {
                         event.setCanceled(true);
                         player.setHealth(player.getMaxHealth());
                     }
@@ -50,7 +59,7 @@ public class TicEXAvaritiaEvent {
         Player player = event.player;
         if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
             TicEXApotheosisUtils.enableCreativeFlight(player);
-        } else if(!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly){
+        } else if (!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly) {
             TicEXApotheosisUtils.disableCreativeFlight(player);
         }
     }
@@ -58,6 +67,8 @@ public class TicEXAvaritiaEvent {
     @SuppressWarnings("unchecked")
     @OnlyIn(Dist.CLIENT)
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer((EntityType<ItemArrow>)TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), pContext -> new ItemArrowRenderer(pContext, 1f));
+        event.registerEntityRenderer((EntityType<ItemArrow>) TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), pContext ->
+            new ItemArrowRenderer(pContext, 1f)
+        );
     }
 }

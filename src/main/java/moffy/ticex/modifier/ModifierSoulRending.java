@@ -2,7 +2,6 @@ package moffy.ticex.modifier;
 
 import com.brandon3055.draconicevolution.DEConfig;
 import com.brandon3055.draconicevolution.init.DEContent;
-
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,7 +18,7 @@ import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.context.LootingContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-public class ModifierSoulRending extends Modifier implements LootingModifierHook{
+public class ModifierSoulRending extends Modifier implements LootingModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
@@ -48,11 +47,16 @@ public class ModifierSoulRending extends Modifier implements LootingModifierHook
 
         if ((rand == 0 && !isAnimal) || (rand2 == 0 && isAnimal)) {
             ItemStack soul = DEContent.MOB_SOUL.get().getSoulFromEntity(entity, false);
-            context.getHolder().level().addFreshEntity(new ItemEntity(context.getHolder().level(), entity.getX(), entity.getY(), entity.getZ(), soul));
+            context
+                .getHolder()
+                .level()
+                .addFreshEntity(
+                    new ItemEntity(context.getHolder().level(), entity.getX(), entity.getY(), entity.getZ(), soul)
+                );
         }
         return looting;
     }
-    
+
     private static boolean canEntityDropSoul(LivingEntity entity) {
         if (!entity.canChangeDimensions() && !DEConfig.allowBossSouls) {
             return false;

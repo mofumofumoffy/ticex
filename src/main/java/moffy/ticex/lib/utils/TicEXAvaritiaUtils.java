@@ -9,15 +9,16 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class TicEXAvaritiaUtils {
-    public static boolean isInfinityDamage(DamageSource source){
+
+    public static boolean isInfinityDamage(DamageSource source) {
         return source.is(ModDamageTypes.INFINITY);
     }
 
-    public static boolean hasCelestial(Player player){
-        for(ItemStack armorStack : player.getArmorSlots()){
-            if(armorStack.getItem() instanceof IModifiable){
+    public static boolean hasCelestial(Player player) {
+        for (ItemStack armorStack : player.getArmorSlots()) {
+            if (armorStack.getItem() instanceof IModifiable) {
                 ToolStack armor = ToolStack.from(armorStack);
-                if(armor.getModifierLevel(TicEXRegistry.CELESTIAL_MODIFIER.get()) > 0){
+                if (armor.getModifierLevel(TicEXRegistry.CELESTIAL_MODIFIER.get()) > 0) {
                     return true;
                 }
             }

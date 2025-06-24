@@ -1,22 +1,18 @@
 {
-    "package": "moffy.ticex.mixin.slashblade",
-    "compatibilityLevel": "JAVA_17",
-    "refmap": "ticex.refmap.json",
-    "plugin": "moffy.ticex.modules.slashblade.TicEXSlashBladeMixinPlugin",
-    "mixins": [
-        "AttackManagerMixin",
-        "SummonedSwordMixin",
-        "PlayerAttackHelperMixin",
-        "ItemSlashBladeMixin"
-    ],
-    "client": [
-        "ClientHandlerMixin"
-    ],
-    "server": [
-
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    },
-    "minVersion": 0.7
+  "package": "moffy.ticex.mixin.slashblade",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ticex.refmap.json",
+  "plugin": "moffy.ticex.modules.slashblade.TicEXSlashBladeMixinPlugin",
+  "mixins": [
+    "AttackManagerMixin",
+    "SummonedSwordMixin",
+    "PlayerAttackHelperMixin",
+    "ItemSlashBladeMixin"
+  ],
+  "client": ["ClientHandlerMixin"],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": 0.7
 }

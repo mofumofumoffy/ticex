@@ -3,7 +3,6 @@ package moffy.ticex.modifier;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import moze_intel.projecte.utils.WorldHelper;
 import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.network.chat.Component;
@@ -25,7 +24,7 @@ import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-public class ModifierGravitiy extends NoLevelsModifier implements InventoryTickModifierHook, TooltipModifierHook{
+public class ModifierGravitiy extends NoLevelsModifier implements InventoryTickModifierHook, TooltipModifierHook {
 
     private final Map<Integer, Long> lastJumpTracker = new HashMap<>();
 
@@ -35,35 +34,77 @@ public class ModifierGravitiy extends NoLevelsModifier implements InventoryTickM
     }
 
     @Override
-    public void addTooltip(IToolStackView tool, ModifierEntry entry, Player player, List<Component> tooltips, TooltipKey tooltipKey,
-            TooltipFlag tooltipFlag) {
+    public void addTooltip(
+        IToolStackView tool,
+        ModifierEntry entry,
+        Player player,
+        List<Component> tooltips,
+        TooltipKey tooltipKey,
+        TooltipFlag tooltipFlag
+    ) {
         tooltips.add(PELang.GEM_LORE_LEGS.translate());
     }
 
     private boolean jumpedRecently(Player player) {
-		return lastJumpTracker.containsKey(player.getId()) && player.level().getGameTime() - lastJumpTracker.get(player.getId()) < 5;
-	}
+        return (
+            lastJumpTracker.containsKey(player.getId()) &&
+            player.level().getGameTime() - lastJumpTracker.get(player.getId()) < 5
+        );
+    }
 
     @Override
-    public void onInventoryTick(IToolStackView tool, ModifierEntry entry, Level level, LivingEntity entity, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack) {
+    public void onInventoryTick(
+        IToolStackView tool,
+        ModifierEntry entry,
+        Level level,
+        LivingEntity entity,
+        int itemSlot,
+        boolean isSelected,
+        boolean isCorrectSlot,
+        ItemStack stack
+    ) {
         Item item = tool.getItem();
 
-        if(item instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.LEGGINGS && entity instanceof Player player  && itemSlot == 1){
+        if (
+            item instanceof ArmorItem armorItem &&
+            armorItem.getType() == ArmorItem.Type.LEGGINGS &&
+            entity instanceof Player player &&
+            itemSlot == 1
+        ) {
             if (level.isClientSide) {
-                if (player.isSecondaryUseActive() && !player.onGround() && player.getDeltaMovement().y() > -8 && !jumpedRecently(player)) {
+                if (
+                    player.isSecondaryUseActive() &&
+                    !player.onGround() &&
+                    player.getDeltaMovement().y() > -8 &&
+                    !jumpedRecently(player)
+                ) {
                     player.setDeltaMovement(player.getDeltaMovement().add(0, -0.32F, 0));
                 }
             }
             if (player.isSecondaryUseActive()) {
-                AABB box = new AABB(player.getX() - 3.5, player.getY() - 3.5, player.getZ() - 3.5,
-                        player.getX() + 3.5, player.getY() + 3.5, player.getZ() + 3.5);
+                AABB box = new AABB(
+                    player.getX() - 3.5,
+                    player.getY() - 3.5,
+                    player.getZ() - 3.5,
+                    player.getX() + 3.5,
+                    player.getY() + 3.5,
+                    player.getZ() + 3.5
+                );
                 WorldHelper.repelEntitiesSWRG(level, box, player);
                 if (!level.isClientSide && player.getDeltaMovement().y() < -0.08) {
-                    List<Entity> entities = player.level().getEntities(player, player.getBoundingBox().move(player.getDeltaMovement()).inflate(2.0D),
-                            cadidateEntity -> cadidateEntity instanceof LivingEntity);
+                    List<Entity> entities = player
+                        .level()
+                        .getEntities(
+                            player,
+                            player.getBoundingBox().move(player.getDeltaMovement()).inflate(2.0D),
+                            cadidateEntity -> cadidateEntity instanceof LivingEntity
+                        );
                     for (Entity e : entities) {
                         if (e.isPickable()) {
-                            e.hurt(level.damageSources().playerAttack(player), (float) -player.getDeltaMovement().y() * 6F);
+                            e.hurt(
+                                level.damageSources().playerAttack(player),
+                                (float) -player.getDeltaMovement().y() * 6F
+                            );
                         }
                     }
                 }

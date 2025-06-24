@@ -12,7 +12,7 @@ import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.tools.TinkerToolParts;
 
-public class ModifierLamellar extends NoLevelsModifier implements EmbossmentModifierHook{
+public class ModifierLamellar extends NoLevelsModifier implements EmbossmentModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
@@ -23,13 +23,18 @@ public class ModifierLamellar extends NoLevelsModifier implements EmbossmentModi
     public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
         ItemStack toolStack = context.getToolStack();
         ItemStack input = context.getInputStack(inputIndex);
-        if(input.getItem() instanceof ToolPartItem part){
+        if (input.getItem() instanceof ToolPartItem part) {
             MaterialStatsId partStat = part.getStatType();
-            if(toolStack.getItem() instanceof ArmorItem armor){
-                if(partStat.equals(getPartStat(armor.getType())) || partStat.equals(TinkerToolParts.shieldCore.get().getStatType())){
-                    toolStack.getCapability(EmbossmentMaterialCapability.EMBOSSMENT_MATERIAL_CAPABILITY).ifPresent(materialCap -> {
-                        materialCap.accept(toolStack, input, part);
-                    });
+            if (toolStack.getItem() instanceof ArmorItem armor) {
+                if (
+                    partStat.equals(getPartStat(armor.getType())) ||
+                    partStat.equals(TinkerToolParts.shieldCore.get().getStatType())
+                ) {
+                    toolStack
+                        .getCapability(EmbossmentMaterialCapability.EMBOSSMENT_MATERIAL_CAPABILITY)
+                        .ifPresent(materialCap -> {
+                            materialCap.accept(toolStack, input, part);
+                        });
                     return true;
                 }
             }
@@ -37,9 +42,8 @@ public class ModifierLamellar extends NoLevelsModifier implements EmbossmentModi
         return false;
     }
 
-    public MaterialStatsId getPartStat(ArmorItem.Type type){
+    public MaterialStatsId getPartStat(ArmorItem.Type type) {
         EnumObject<ArmorItem.Type, ToolPartItem> platingObj = TinkerToolParts.plating;
         return platingObj.get(type).getStatType();
     }
-    
 }

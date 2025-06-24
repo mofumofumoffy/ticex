@@ -16,19 +16,34 @@ import slimeknights.tconstruct.library.recipe.casting.ICastingContainer;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingRecipe;
 import slimeknights.tconstruct.library.tools.part.IMaterialItem;
 
-public class EmbossmentCastingRecipe extends MaterialCastingRecipe{
+public class EmbossmentCastingRecipe extends MaterialCastingRecipe {
 
-    protected static final LoadableField<IMaterialItem,EmbossmentCastingRecipe> RESULT_FIELD = TinkerLoadables.MATERIAL_ITEM.requiredField("result", r -> r.result);
+    protected static final LoadableField<IMaterialItem, EmbossmentCastingRecipe> RESULT_FIELD =
+        TinkerLoadables.MATERIAL_ITEM.requiredField("result", r -> r.result);
     public static final RecordLoadable<EmbossmentCastingRecipe> LOADER = RecordLoadable.create(
         LoadableRecipeSerializer.TYPED_SERIALIZER.requiredField(),
-        ContextKey.ID.requiredField(), LoadableRecipeSerializer.RECIPE_GROUP, CAST_FIELD,
-        ITEM_COST_FIELD, RESULT_FIELD, CAST_CONSUMED_FIELD, SWITCH_SLOTS_FIELD,
-        EmbossmentCastingRecipe::new);
+        ContextKey.ID.requiredField(),
+        LoadableRecipeSerializer.RECIPE_GROUP,
+        CAST_FIELD,
+        ITEM_COST_FIELD,
+        RESULT_FIELD,
+        CAST_CONSUMED_FIELD,
+        SWITCH_SLOTS_FIELD,
+        EmbossmentCastingRecipe::new
+    );
 
     protected Ingredient castIngredient;
 
-    public EmbossmentCastingRecipe(TypeAwareRecipeSerializer<?> serializer, ResourceLocation id, String group,
-            Ingredient cast, int itemCost, IMaterialItem result, boolean consumed, boolean switchSlots) {
+    public EmbossmentCastingRecipe(
+        TypeAwareRecipeSerializer<?> serializer,
+        ResourceLocation id,
+        String group,
+        Ingredient cast,
+        int itemCost,
+        IMaterialItem result,
+        boolean consumed,
+        boolean switchSlots
+    ) {
         super(serializer, id, group, cast, itemCost, result, consumed, switchSlots);
         this.castIngredient = cast;
     }
@@ -42,7 +57,7 @@ public class EmbossmentCastingRecipe extends MaterialCastingRecipe{
     public ItemStack assemble(ICastingContainer inv, RegistryAccess access) {
         ItemStack assembled = super.assemble(inv, access);
         ItemStack cast = inv.getStack();
-        if(cast.hasTag()){
+        if (cast.hasTag()) {
             assembled.getOrCreateTag().put("embossed", cast.getTag());
         }
         return assembled;

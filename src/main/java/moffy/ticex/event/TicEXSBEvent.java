@@ -21,38 +21,39 @@ import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import net.minecraftforge.network.PacketDistributor;
 
 public class TicEXSBEvent {
+
     public static void onBladeMotion(BladeMotionEvent event) {
-        if(event.getEntity() instanceof ServerPlayer player){
+        if (event.getEntity() instanceof ServerPlayer player) {
             syncState(player);
         }
     }
 
     public static void onLivingFall(LivingFallEvent event) {
-        if(event.getEntity() instanceof ServerPlayer player){
+        if (event.getEntity() instanceof ServerPlayer player) {
             syncState(player);
         }
     }
 
     public static void onPlayerFlyableFall(PlayerFlyableFallEvent event) {
-        if(event.getEntity() instanceof ServerPlayer player){
+        if (event.getEntity() instanceof ServerPlayer player) {
             syncState(player);
         }
     }
 
     public static void onLivingDeath(LivingDeathEvent event) {
-        if(event.getSource().getEntity() instanceof ServerPlayer player){
+        if (event.getSource().getEntity() instanceof ServerPlayer player) {
             syncState(player);
         }
     }
 
     public static void onLivingExperienceDrop(LivingExperienceDropEvent event) {
-        if(event.getAttackingPlayer() instanceof ServerPlayer player){
+        if (event.getAttackingPlayer() instanceof ServerPlayer player) {
             syncState(player);
         }
     }
 
     public static void onLivingHurt(LivingHurtEvent event) {
-        if(event.getSource().getEntity() instanceof ServerPlayer player){
+        if (event.getSource().getEntity() instanceof ServerPlayer player) {
             syncState(player);
         }
     }
@@ -63,16 +64,21 @@ public class TicEXSBEvent {
 
     @SuppressWarnings("unchecked")
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer((EntityType<SBToolItemEntity>)TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(), SBToolBladeItemRenderer::new);
+        event.registerEntityRenderer(
+            (EntityType<SBToolItemEntity>) TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
+            SBToolBladeItemRenderer::new
+        );
     }
 
-    public static void syncState(ServerPlayer player){
+    public static void syncState(ServerPlayer player) {
         ItemStack mainHandStack = player.getMainHandItem();
-        if(mainHandStack.getItem() instanceof ModifiableSlashBladeItem){
-            mainHandStack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(state->{
-                StateSyncPacket packet = new StateSyncPacket(state.serializeNBT());
-                TicEX.CHANNEL.send(PacketDistributor.PLAYER.with(()->player), packet);
-            });
+        if (mainHandStack.getItem() instanceof ModifiableSlashBladeItem) {
+            mainHandStack
+                .getCapability(ItemSlashBlade.BLADESTATE)
+                .ifPresent(state -> {
+                    StateSyncPacket packet = new StateSyncPacket(state.serializeNBT());
+                    TicEX.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
+                });
         }
     }
 }

@@ -1,17 +1,13 @@
 {
-    "package": "moffy.ticex.mixin.draconicevolution",
-    "compatibilityLevel": "JAVA_17",
-    "refmap": "ticex.refmap.json",
-    "plugin": "moffy.ticex.modules.draconicevolution.TicEXDEMixinPlugin",
-    "mixins": [
-        "ModuleEntityMixin"
-    ],
-    "client": [
-        
-    ],
-    "server": [],
-    "injectors": {
-        "defaultRequire": 1
-    },
-    "minVersion": 0.7
+  "package": "moffy.ticex.mixin.draconicevolution",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ticex.refmap.json",
+  "plugin": "moffy.ticex.modules.draconicevolution.TicEXDEMixinPlugin",
+  "mixins": ["ModuleEntityMixin"],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": 0.7
 }

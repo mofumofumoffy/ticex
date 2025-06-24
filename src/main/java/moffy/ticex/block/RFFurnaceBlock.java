@@ -1,7 +1,6 @@
 package moffy.ticex.block;
 
 import javax.annotation.Nullable;
-
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.BlockPos;
@@ -20,7 +19,7 @@ import net.minecraftforge.fluids.FluidType;
 import slimeknights.tconstruct.smeltery.block.component.OrientableSmelteryBlock;
 import slimeknights.tconstruct.smeltery.block.component.SearedTankBlock;
 
-public class RFFurnaceBlock extends SearedTankBlock{
+public class RFFurnaceBlock extends SearedTankBlock {
 
     private boolean isCreative;
 
@@ -33,18 +32,22 @@ public class RFFurnaceBlock extends SearedTankBlock{
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new RFFurnaceBlockEntity(TicEXRegistry.RF_FURNACE_ENTITY.get(), pPos, pState, isCreative);
     }
-    
+
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState,
-            BlockEntityType<T> pBlockEntityType) {
-        if(pBlockEntityType == TicEXRegistry.RF_FURNACE_ENTITY.get() && !pLevel.isClientSide()){
-            return (Level level, BlockPos pos, BlockState state, T pBlockEntity)->RFFurnaceBlockEntity.serverTick(level, pos, state, (RFFurnaceBlockEntity)pBlockEntity);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+        Level pLevel,
+        BlockState pState,
+        BlockEntityType<T> pBlockEntityType
+    ) {
+        if (pBlockEntityType == TicEXRegistry.RF_FURNACE_ENTITY.get() && !pLevel.isClientSide()) {
+            return (Level level, BlockPos pos, BlockState state, T pBlockEntity) ->
+                RFFurnaceBlockEntity.serverTick(level, pos, state, (RFFurnaceBlockEntity) pBlockEntity);
         }
         return null;
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(OrientableSmelteryBlock.FACING);
     }
@@ -52,18 +55,25 @@ public class RFFurnaceBlock extends SearedTankBlock{
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(OrientableSmelteryBlock.FACING, context.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState()
+            .setValue(OrientableSmelteryBlock.FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Deprecated
     @Override
     public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(OrientableSmelteryBlock.FACING, rotation.rotate(state.getValue(OrientableSmelteryBlock.FACING)));
+        return state.setValue(
+            OrientableSmelteryBlock.FACING,
+            rotation.rotate(state.getValue(OrientableSmelteryBlock.FACING))
+        );
     }
 
     @Deprecated
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.setValue(OrientableSmelteryBlock.FACING, mirror.mirror(state.getValue(OrientableSmelteryBlock.FACING)));
+        return state.setValue(
+            OrientableSmelteryBlock.FACING,
+            mirror.mirror(state.getValue(OrientableSmelteryBlock.FACING))
+        );
     }
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-
 import mekanism.api.MekanismAPI;
 import mekanism.api.gear.ModuleData;
 import mekanism.api.gear.config.ModuleBooleanData;
@@ -27,13 +26,20 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
 public class ConfigSyncToClientPacket {
+
     private final ModuleData<?> moduleType;
     private final EquipmentSlot slot;
     private final int configIndex;
     private final ModuleDataType dataType;
     private final Object value;
 
-    public static ConfigSyncToClientPacket create(ModuleData<?> moduleType, EquipmentSlot slot, int configIndex, ModuleConfigData<?> configData, Object newValue) {
+    public static ConfigSyncToClientPacket create(
+        ModuleData<?> moduleType,
+        EquipmentSlot slot,
+        int configIndex,
+        ModuleConfigData<?> configData,
+        Object newValue
+    ) {
         if (configData instanceof ModuleEnumData<?>) {
             return new ConfigSyncToClientPacket(moduleType, slot, configIndex, ModuleDataType.ENUM, newValue);
         }
@@ -45,8 +51,13 @@ public class ConfigSyncToClientPacket {
         throw new IllegalArgumentException("Unknown config data type.");
     }
 
-    protected ConfigSyncToClientPacket(ModuleData<?> moduleType, EquipmentSlot slot, int configIndex, ModuleDataType dataType,
-            Object value) {
+    protected ConfigSyncToClientPacket(
+        ModuleData<?> moduleType,
+        EquipmentSlot slot,
+        int configIndex,
+        ModuleDataType dataType,
+        Object value
+    ) {
         this.moduleType = moduleType;
         this.slot = slot;
         this.configIndex = configIndex;
@@ -74,20 +85,21 @@ public class ConfigSyncToClientPacket {
         return value;
     }
 
-    public static ConfigSyncToClientPacket decode(FriendlyByteBuf buf){
+    public static ConfigSyncToClientPacket decode(FriendlyByteBuf buf) {
         EquipmentSlot slot = buf.readEnum(EquipmentSlot.class);
         ModuleData<?> moduleData = buf.readRegistryIdSafe(ModuleData.class);
         int configDataIndex = buf.readInt();
         ModuleDataType dataType = buf.readEnum(ModuleDataType.class);
-        Object data = switch (dataType) {
-            case BOOLEAN -> buf.readBoolean();
-            case COLOR -> buf.readInt();
-            case INTEGER, ENUM -> buf.readVarInt();
-        };
+        Object data =
+            switch (dataType) {
+                case BOOLEAN -> buf.readBoolean();
+                case COLOR -> buf.readInt();
+                case INTEGER, ENUM -> buf.readVarInt();
+            };
         return new ConfigSyncToClientPacket(moduleData, slot, configDataIndex, dataType, data);
     }
 
-    public static void encode(ConfigSyncToClientPacket packet, FriendlyByteBuf buf){
+    public static void encode(ConfigSyncToClientPacket packet, FriendlyByteBuf buf) {
         buf.writeEnum(packet.getSlot());
         buf.writeRegistryId(MekanismAPI.moduleRegistry(), packet.getModuleType());
         buf.writeInt(packet.getConfigIndex());
@@ -99,7 +111,7 @@ public class ConfigSyncToClientPacket {
         }
     }
 
-    public static void handle(ConfigSyncToClientPacket packet, Supplier<NetworkEvent.Context> contextSupplier){
+    public static void handle(ConfigSyncToClientPacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             Player player = Minecraft.getInstance().player;
@@ -111,12 +123,32 @@ public class ConfigSyncToClientPacket {
                     if (packet.getConfigIndex() < configItems.size()) {
                         ModuleConfigItem<?> configItem = configItems.get(packet.getConfigIndex());
                         setValue(configItem, packet.getDataType(), packet.getValue());
-                        if(stack.getItem() instanceof ArmorItem){
-                            Mekanism.packetHandler().sendToServer(PacketUpdateModuleSettings.create(36+(3-packet.getSlot().getIndex()), module.getData(), packet.getConfigIndex(), configItem.getData()));
+                        if (stack.getItem() instanceof ArmorItem) {
+                            Mekanism.packetHandler()
+                                .sendToServer(
+                                    PacketUpdateModuleSettings.create(
+                                        36 + (3 - packet.getSlot().getIndex()),
+                                        module.getData(),
+                                        packet.getConfigIndex(),
+                                        configItem.getData()
+                                    )
+                                );
                         } else {
-                            Optional<ItemStack> optionalStack = player.getInventory().items.stream().filter(item -> ItemStack.isSameItem(stack, item)).findFirst();
-                            if(optionalStack.isPresent()){
-                                Mekanism.packetHandler().sendToServer(PacketUpdateModuleSettings.create(player.getInventory().findSlotMatchingItem(optionalStack.get()), module.getData(), packet.getConfigIndex(), configItem.getData()));
+                            Optional<ItemStack> optionalStack = player
+                                .getInventory()
+                                .items.stream()
+                                .filter(item -> ItemStack.isSameItem(stack, item))
+                                .findFirst();
+                            if (optionalStack.isPresent()) {
+                                Mekanism.packetHandler()
+                                    .sendToServer(
+                                        PacketUpdateModuleSettings.create(
+                                            player.getInventory().findSlotMatchingItem(optionalStack.get()),
+                                            module.getData(),
+                                            packet.getConfigIndex(),
+                                            configItem.getData()
+                                        )
+                                    );
                             }
                         }
                     }

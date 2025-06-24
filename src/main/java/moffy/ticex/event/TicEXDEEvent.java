@@ -1,5 +1,3 @@
 package moffy.ticex.event;
 
-public class TicEXDEEvent {
-    
-}
+public class TicEXDEEvent {}
