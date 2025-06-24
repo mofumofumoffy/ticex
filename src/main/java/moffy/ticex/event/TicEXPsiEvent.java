@@ -27,6 +27,8 @@ public class TicEXPsiEvent {
                     TicEXPsiUtils.CastSpell(player, armorStack, (context)->{
                         context.loopcastIndex = timesCast;
                     });
+
+                    armor.getPersistentData().putInt(ModifierPsionizingRadiation.TIMES_CAST_LOC, timesCast + 1);
                 }
             }
         });
