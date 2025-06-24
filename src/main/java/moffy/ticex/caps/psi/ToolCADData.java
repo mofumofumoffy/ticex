@@ -134,6 +134,7 @@ public class ToolCADData implements ICADData, ISpellAcceptor, ISocketable, IPsiB
 		}
 
 		cadStack.getOrCreateTag().put(name, cmp);
+        cad.getPersistentData().putInt(ModifierPsionizingRadiation.TIMES_CAST_LOC, 0);
 	}
 
 	@Override
@@ -144,6 +145,7 @@ public class ToolCADData implements ICADData, ISpellAcceptor, ISocketable, IPsiB
 	@Override
 	public void setSelectedSlot(int slot) {
 		cadStack.getOrCreateTag().putInt(IPsimetalTool.TAG_SELECTED_SLOT, slot);
+        cad.getPersistentData().putInt(ModifierPsionizingRadiation.TIMES_CAST_LOC, 0);
 	}
 
 	@Override

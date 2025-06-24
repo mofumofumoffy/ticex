@@ -6,6 +6,7 @@ import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider.IToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import vazkii.psi.api.PsiAPI;
@@ -19,7 +20,7 @@ public class PsiItemCapabilityProvider implements IToolCapabilityProvider{
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(IToolStackView tool, Capability<T> capability) {
+    public <T> @NotNull LazyOptional<T> getCapability(IToolStackView tool, Capability<T> capability) {
         if((capability == PsiAPI.SOCKETABLE_CAPABILITY
 				|| capability == PsiAPI.CAD_DATA_CAPABILITY
 				|| capability == PsiAPI.PSI_BAR_DISPLAY_CAPABILITY
