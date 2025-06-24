@@ -16,6 +16,7 @@ import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.library.tools.stat.ToolStats;
 
 public class TicEXIronsEvent {
 
@@ -49,12 +50,14 @@ public class TicEXIronsEvent {
                         false
                     );
 
-                    float damage = event.getAmount();
-                    float damageTmp = damage;
-                    for (ModifierEntry entry : book.getModifierList()) {
-                        damage = entry
-                            .getHook(ModifierHooks.MELEE_DAMAGE)
-                            .getMeleeDamage(book, entry, context, damageTmp, damage);
+                    float originalDamage = event.getAmount();
+                    float attackDamageStat = book.getStats().get(ToolStats.ATTACK_DAMAGE);
+
+                    float initialDamage = (float) Math.sqrt(originalDamage*originalDamage + attackDamageStat*attackDamageStat);
+
+                    float damage = initialDamage;
+                    for(ModifierEntry entry : book.getModifierList()){
+                        damage = entry.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(book, entry, context, initialDamage, damage);
                     }
 
                     if (damage <= 0) {

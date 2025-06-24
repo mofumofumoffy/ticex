@@ -23,6 +23,7 @@ import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.library.tools.stat.ToolStats;
 
 public class TicEXTaczEvent {
 
@@ -32,19 +33,13 @@ public class TicEXTaczEvent {
         ItemStack mainHandStack = attacker.getMainHandItem();
         if (mainHandStack != null && mainHandStack.getItem() instanceof IModifiable) {
             ToolStack tool = ToolStack.from(mainHandStack);
-            float damage = event.getBaseAmount();
-            float damageTmp = damage;
+            float originalDamage = event.getAmount();
+            float attackDamageStat = tool.getStats().get(ToolStats.ATTACK_DAMAGE);
 
-            ToolAttackContext context = new ToolAttackContext(
-                attacker,
-                attacker instanceof Player ? (Player) attacker : null,
-                InteractionHand.MAIN_HAND,
-                target,
-                target instanceof LivingEntity ? (LivingEntity) target : null,
-                event.isHeadShot(),
-                0,
-                false
-            );
+            float initialDamage = (float) Math.sqrt(originalDamage*originalDamage + attackDamageStat*attackDamageStat);
+
+            float damage = initialDamage;
+            ToolAttackContext context = new ToolAttackContext(attacker, attacker instanceof Player ? (Player)attacker : null, InteractionHand.MAIN_HAND, target, target instanceof LivingEntity ? (LivingEntity)target : null, event.isHeadShot(), 0, false);
 
             /* int lostStability = 10;
             for(ModifierEntry modifier : tool.getModifierList()){
@@ -53,19 +48,15 @@ public class TicEXTaczEvent {
 
             tool.setDamage(tool.getDamage() + lostStability); */
 
-            if (!mainHandStack.is(TicEXRegistry.KEY_MODIFIER_UNSTABLE) || !tool.isBroken()) {
-                for (ModifierEntry modifier : tool.getModifierList()) {
-                    damage = modifier
-                        .getHook(ModifierHooks.MELEE_DAMAGE)
-                        .getMeleeDamage(tool, modifier, context, damageTmp, damage);
+            if(!mainHandStack.is(TicEXRegistry.KEY_MODIFIER_UNSTABLE) || !tool.isBroken()){
+                for(ModifierEntry modifier : tool.getModifierList()){
+                    damage = modifier.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, modifier, context, initialDamage, damage);
                 }
 
                 event.setBaseAmount(damage);
 
-                for (ModifierEntry modifier : tool.getModifierList()) {
-                    modifier
-                        .getHook(ModifierHooks.MELEE_HIT)
-                        .beforeMeleeHit(tool, modifier, context, event.getBaseAmount(), 0, 0);
+                for(ModifierEntry modifier : tool.getModifierList()){
+                    modifier.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifier, context, event.getBaseAmount(), 0, 0);
                 }
             }
         }
