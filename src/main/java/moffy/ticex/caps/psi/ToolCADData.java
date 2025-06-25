@@ -1,7 +1,6 @@
 package moffy.ticex.caps.psi;
 
 import com.google.common.collect.Lists;
-import java.util.List;
 import moffy.ticex.modifier.ModifierPsionizingRadiation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
@@ -19,6 +18,8 @@ import vazkii.psi.api.spell.ISpellAcceptor;
 import vazkii.psi.api.spell.Spell;
 import vazkii.psi.common.item.component.ItemCADSocket;
 import vazkii.psi.common.item.tool.IPsimetalTool;
+
+import java.util.List;
 
 public class ToolCADData implements ICADData, ISpellAcceptor, ISocketable, IPsiBarDisplay {
 
@@ -99,7 +100,7 @@ public class ToolCADData implements ICADData, ISpellAcceptor, ISocketable, IPsiB
 
     @Override
     public boolean requiresSneakForSpellSet() {
-        return true;
+        return false;
     }
 
     @Override
