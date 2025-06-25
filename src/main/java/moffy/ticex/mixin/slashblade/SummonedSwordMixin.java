@@ -17,7 +17,7 @@ import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-@Mixin(value = EntityAbstractSummonedSword.class)
+@Mixin(value = EntityAbstractSummonedSword.class, remap=false)
 public abstract class SummonedSwordMixin {
 
     @Shadow
