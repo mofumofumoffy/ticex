@@ -112,36 +112,38 @@ public class ModifierEvolved
         TooltipKey tooltipKey,
         TooltipFlag tooltipFlag
     ) {
-        ItemStack toolStack = TicEXUtils.getToolStack(tool, player, TicEXRegistry.EVOLVED_MODIFIER.get());
+        if(player != null){
+            ItemStack toolStack = TicEXUtils.getToolStack(tool, player, TicEXRegistry.EVOLVED_MODIFIER.get());
 
-        if (!toolStack.isEmpty()) {
-            components.add(Component.translatable("[Modular Item]").withStyle(ChatFormatting.BLUE));
-            toolStack
-                .getCapability(DECapabilities.MODULE_HOST_CAPABILITY)
-                .ifPresent(host -> {
-                    host
-                        .getModuleEntities()
-                        .forEach(e -> e.addHostHoverText(toolStack, player.level(), components, tooltipFlag));
-                    host
-                        .getInstalledTypes()
-                        .map(host::getModuleData)
-                        .filter(Objects::nonNull)
-                        .forEach(data -> data.addHostHoverText(toolStack, player.level(), components, tooltipFlag));
-                });
-            EnergyUtils.addEnergyInfo(toolStack, components);
-            if (EnergyUtils.isEnergyItem(toolStack) && EnergyUtils.getMaxEnergyStored(toolStack) == 0) {
-                components.add(
-                    Component.translatable("modular_item.draconicevolution.requires_energy").withStyle(
-                        ChatFormatting.RED
-                    )
-                );
-                if (KeyBindings.toolModules != null && KeyBindings.toolModules.getTranslatedKeyMessage() != null) {
+            if (!toolStack.isEmpty()) {
+                components.add(Component.translatable("[Modular Item]").withStyle(ChatFormatting.BLUE));
+                toolStack
+                    .getCapability(DECapabilities.MODULE_HOST_CAPABILITY)
+                    .ifPresent(host -> {
+                        host
+                            .getModuleEntities()
+                            .forEach(e -> e.addHostHoverText(toolStack, player.level(), components, tooltipFlag));
+                        host
+                            .getInstalledTypes()
+                            .map(host::getModuleData)
+                            .filter(Objects::nonNull)
+                            .forEach(data -> data.addHostHoverText(toolStack, player.level(), components, tooltipFlag));
+                    });
+                EnergyUtils.addEnergyInfo(toolStack, components);
+                if (EnergyUtils.isEnergyItem(toolStack) && EnergyUtils.getMaxEnergyStored(toolStack) == 0) {
                     components.add(
-                        Component.translatable(
-                            "modular_item.draconicevolution.requires_energy_press",
-                            KeyBindings.toolModules.getTranslatedKeyMessage().getString()
-                        ).withStyle(ChatFormatting.BLUE)
+                        Component.translatable("modular_item.draconicevolution.requires_energy").withStyle(
+                            ChatFormatting.RED
+                        )
                     );
+                    if (KeyBindings.toolModules != null && KeyBindings.toolModules.getTranslatedKeyMessage() != null) {
+                        components.add(
+                            Component.translatable(
+                                "modular_item.draconicevolution.requires_energy_press",
+                                KeyBindings.toolModules.getTranslatedKeyMessage().getString()
+                            ).withStyle(ChatFormatting.BLUE)
+                        );
+                    }
                 }
             }
         }
