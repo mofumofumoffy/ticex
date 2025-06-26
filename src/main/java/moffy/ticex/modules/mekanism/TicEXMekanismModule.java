@@ -8,6 +8,7 @@ import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
 import moffy.ticex.event.TicEXMekanismEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
+import moffy.ticex.item.modifiable.ModifiableMekaTool;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.ModifierMekanic;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -60,6 +61,10 @@ public class TicEXMekanismModule extends AddonModule {
             "catalyst_mekasuit",
             ArmorItem.Type.values(),
             type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId())
+        );
+
+        TicEXRegistry.MEKA_TOOL = TicEXRegistry.ITEMS_EXTENDED.register("meka_tool",
+                () -> new ModifiableMekaTool(new Item.Properties().stacksTo(1))
         );
 
         TicEXRegistry.MEKANIC_MODIFIER = TicEXRegistry.MODIFIERS.register("mekanic", ModifierMekanic::new);

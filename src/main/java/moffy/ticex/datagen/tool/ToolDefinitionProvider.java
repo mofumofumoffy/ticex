@@ -1,9 +1,5 @@
 package moffy.ticex.datagen.tool;
 
-import static slimeknights.tconstruct.tools.TinkerToolParts.largePlate;
-import static slimeknights.tconstruct.tools.TinkerToolParts.toolBinding;
-import static slimeknights.tconstruct.tools.TinkerToolParts.toughHandle;
-
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
@@ -24,6 +20,8 @@ import slimeknights.tconstruct.library.tools.nbt.MultiplierNBT;
 import slimeknights.tconstruct.library.tools.nbt.StatsNBT;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.tools.TinkerToolParts;
+
+import static slimeknights.tconstruct.tools.TinkerToolParts.*;
 
 public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
 
@@ -155,6 +153,20 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                     ArmorItem.Type.BOOTS,
                     ToolTraitsModule.builder().trait(TicEXRegistry.HURRICANE_MODIFIER).build()
                 );
+        }
+
+        if (TicEXRegistry.MEKA_TOOL_DEFINITION != null) {
+            define(TicEXRegistry.MEKA_TOOL_DEFINITION)
+                    .module(
+                            PartStatsModule.parts()
+                                    .part(TinkerToolParts.pickHead, 0.75f)
+                                    .part(toolBinding, 0.5f)
+                                    .part(maille, 0.5f)
+                                    .build()
+                    )
+                    .module(DefaultMaterialsModule.builder().material(tier1Material, tier1Material, tier1Material).build())
+                    .smallToolStartingSlots()
+                    .module(ToolActionsModule.of(ToolActions.SWORD_DIG));
         }
     }
 
