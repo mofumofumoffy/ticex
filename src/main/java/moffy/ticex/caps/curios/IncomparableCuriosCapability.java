@@ -37,7 +37,7 @@ public class IncomparableCuriosCapability implements ICurio {
 
     @Override
     public void curioTick(SlotContext slotContext) {
-        LivingEntity entity = slotContext.entity();
+        /* LivingEntity entity = slotContext.entity();
         CuriosApi.getCuriosInventory(entity).ifPresent(inv -> {
             for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
                 inv
@@ -50,7 +50,7 @@ public class IncomparableCuriosCapability implements ICurio {
                         }
                     });
             }
-        });
+        }); */
     }
 
     @Override
