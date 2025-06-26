@@ -82,6 +82,7 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
@@ -90,7 +91,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDeferredRegister.ICustomCreativeTabContents, IModuleContainerItem, IBlastingItem, IGenericRadialModeItem {
+public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDeferredRegister.ICustomCreativeTabContents, IModuleContainerItem, IBlastingItem, IGenericRadialModeItem, IModifiableMekItem {
     private static final FloatingLongSupplier chargeRateSupplier = MekanismConfig.gear.mekaToolBaseChargeRate;
     private static final FloatingLongSupplier maxEnergySupplier = MekanismConfig.gear.mekaToolBaseEnergyCapacity;
     private static final ResourceLocation RADIAL_ID = Mekanism.rl("meka_tool");
@@ -100,22 +101,23 @@ public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDef
         super(properties, TicEXRegistry.MEKA_TOOL_DEFINITION);
     }
 
-    protected boolean areCapabilityConfigsLoaded() {
+    public boolean areCapabilityConfigsLoaded() {
         return MekanismConfig.gear.isLoaded();
     }
 
-    protected void gatherCapabilities(List<ItemCapabilityWrapper.ItemCapability> capabilities, ItemStack stack, CompoundTag nbt) {
+    @Override
+    public void gatherCapabilities(List<ItemCapabilityWrapper.ItemCapability> capabilities, ItemStack stack) {
         capabilities.add(RateLimitEnergyHandler.create(() -> this.getChargeRate(stack), () -> this.getMaxEnergy(stack), BasicEnergyContainer.manualOnly, BasicEnergyContainer.alwaysTrue));
     }
 
     @Override
     public @Nullable ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-        if (areCapabilityConfigsLoaded()) {
+        if (!areCapabilityConfigsLoaded()) {
             return super.initCapabilities(stack, nbt);
         } else {
             List<ItemCapabilityWrapper.ItemCapability> capabilities = new ArrayList<>();
-            this.gatherCapabilities(capabilities, stack, nbt);
-            return capabilities.isEmpty() ? super.initCapabilities(stack, nbt) : new ItemCapabilityWrapper(stack, capabilities.toArray(ItemCapabilityWrapper.ItemCapability[]::new));
+            this.gatherCapabilities(capabilities, stack);
+            return new ToolCapabilityProvider(stack);
         }
     }
 

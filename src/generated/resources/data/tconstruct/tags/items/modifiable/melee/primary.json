@@ -11,6 +11,10 @@
     {
       "id": "ticex:revival_spellbook_irons",
       "required": false
+    },
+    {
+      "id": "ticex:meka_tool",
+      "required": false
     }
   ]
 }

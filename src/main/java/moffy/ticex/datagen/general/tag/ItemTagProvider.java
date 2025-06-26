@@ -1,20 +1,5 @@
 package moffy.ticex.datagen.general.tag;
 
-import static slimeknights.tconstruct.common.TinkerTags.Items.BONUS_SLOTS;
-import static slimeknights.tconstruct.common.TinkerTags.Items.BOOTS;
-import static slimeknights.tconstruct.common.TinkerTags.Items.CHESTPLATES;
-import static slimeknights.tconstruct.common.TinkerTags.Items.DURABILITY;
-import static slimeknights.tconstruct.common.TinkerTags.Items.HARVEST;
-import static slimeknights.tconstruct.common.TinkerTags.Items.HELMETS;
-import static slimeknights.tconstruct.common.TinkerTags.Items.INTERACTABLE_RIGHT;
-import static slimeknights.tconstruct.common.TinkerTags.Items.LEGGINGS;
-import static slimeknights.tconstruct.common.TinkerTags.Items.MELEE_PRIMARY;
-import static slimeknights.tconstruct.common.TinkerTags.Items.MULTIPART_TOOL;
-import static slimeknights.tconstruct.common.TinkerTags.Items.PARRY;
-import static slimeknights.tconstruct.common.TinkerTags.Items.SMALL_TOOLS;
-import static slimeknights.tconstruct.common.TinkerTags.Items.TRIM;
-import static slimeknights.tconstruct.common.TinkerTags.Items.UNSALVAGABLE;
-
 import java.util.concurrent.CompletableFuture;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
@@ -35,6 +20,8 @@ import slimeknights.mantle.registration.object.FluidObject;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.data.recipe.CostTagAppender;
+
+import static slimeknights.tconstruct.common.TinkerTags.Items.*;
 
 public class ItemTagProvider extends ItemTagsProvider {
 
@@ -165,6 +152,13 @@ public class ItemTagProvider extends ItemTagsProvider {
             SMALL_TOOLS,
             BONUS_SLOTS,
             UNSALVAGABLE
+        );
+        addToolTags(
+                new ResourceLocation(TicEX.MODID, "meka_tool"),
+                TicEXTags.Items.MEKA_TOOL,
+                MULTIPART_TOOL,
+                MELEE_PRIMARY,
+                PARRY
         );
 
         //armors

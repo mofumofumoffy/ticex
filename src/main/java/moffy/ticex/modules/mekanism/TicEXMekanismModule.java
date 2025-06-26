@@ -36,6 +36,7 @@ public class TicEXMekanismModule extends AddonModule {
     public static final String ADD_MEKAPLATE_CHESTPLATE_MODULES = "add_mekaplate_chestplate_modules";
     public static final String ADD_MEKAPLATE_LEGGINGS_MODULES = "add_mekaplate_leggings_modules";
     public static final String ADD_MEKAPLATE_BOOTS_MODULES = "add_mekaplate_boots_modules";
+    public static final String ADD_MEKA_TOOL_MODULES = "add_modifiable_meka_tool_modules";
 
     public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
 

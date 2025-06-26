@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-05T10:16:49.894351	TiCEX Item Tags
+// 1.20.1	2025-06-27T06:49:54.0793049	TiCEX Item Tags
 e6dd16afa69cdb72cce8c31b90e27a4932ad9ee7 data/forge/tags/items/armors/boots.json
 bf7c9cb16ac93a4f4920126765cff10080a6faa4 data/forge/tags/items/armors/chestplates.json
 0651aaaa1e65d69705681720a7418fb91a744770 data/forge/tags/items/armors/helmets.json
@@ -21,9 +21,10 @@ a620d19603b5dc5ca2308289cd79e7c3e8047bdf data/tconstruct/tags/items/modifiable/a
 8d8814f2e3fd187cde25e80bb2e1d11f75d87a17 data/tconstruct/tags/items/modifiable/durability.json
 f3e68c1b9999cc570915474a05a30aba2b69ccc0 data/tconstruct/tags/items/modifiable/harvest.json
 f3e68c1b9999cc570915474a05a30aba2b69ccc0 data/tconstruct/tags/items/modifiable/interactable/right.json
-f3e68c1b9999cc570915474a05a30aba2b69ccc0 data/tconstruct/tags/items/modifiable/melee/parry.json
-f3e68c1b9999cc570915474a05a30aba2b69ccc0 data/tconstruct/tags/items/modifiable/melee/primary.json
-8d8814f2e3fd187cde25e80bb2e1d11f75d87a17 data/tconstruct/tags/items/modifiable/multipart.json
+f61cd59d4d1946feb0588ba977a75645a098952e data/tconstruct/tags/items/modifiable/melee.json
+6960e7bef1d75d5dbecfe7c6e0115129c853d41f data/tconstruct/tags/items/modifiable/melee/parry.json
+6960e7bef1d75d5dbecfe7c6e0115129c853d41f data/tconstruct/tags/items/modifiable/melee/primary.json
+cd289893a49d1e6c99884796c3ca039fa7b72ec4 data/tconstruct/tags/items/modifiable/multipart.json
 f3e68c1b9999cc570915474a05a30aba2b69ccc0 data/tconstruct/tags/items/modifiable/small.json
 f3e68c1b9999cc570915474a05a30aba2b69ccc0 data/tconstruct/tags/items/modifiable/unsalvageable.json
 3b59c6e4bc52599c2793ebba6e8054266eb510a6 data/tconstruct/tags/items/parts.json
@@ -37,4 +38,5 @@ f81160f655f465df3a2d9896def0270dba4dbf1a data/ticex/tags/items/plate.json
 61a9ef4ee2385210e90760c836896427b953e663 data/ticex/tags/items/seram/irons_spellbook.json
 212ac2139e17e058870a7de086b017b2157fc869 data/ticex/tags/items/seram/kinetic_gun.json
 f8afe7fc13e98c4739d4a4ce2dd095b27056965d data/ticex/tags/items/seram/mekasuit.json
+f61cd59d4d1946feb0588ba977a75645a098952e data/ticex/tags/items/seram/meka_tool.json
 eda8bac7faa80b90e9f7abbb1bdd37bd0fb77320 data/ticex/tags/items/seram/slashblade.json

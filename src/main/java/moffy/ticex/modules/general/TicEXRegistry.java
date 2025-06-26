@@ -58,6 +58,7 @@ import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
 
@@ -210,7 +211,7 @@ public class TicEXRegistry {
     public static ItemObject<? extends Item> REFORGED_SLASHBLADE = null;
     public static ItemObject<? extends Item> BLITZ_GUN = null;
     public static ItemObject<? extends Item> REVIVAL_SPELLBOOK_IRONS = null;
-    public static ItemObject<? extends Item> MEKA_TOOL = null;
+    public static ItemObject<? extends ModifiableItem> MEKA_TOOL = null;
 
     public static EnumObject<ArmorItem.Type, ? extends IModifiable> MEKAPLATE_ARMOR = null;
     public static EnumObject<ArmorItem.Type, ? extends IModifiable> SINGULAR_GEM_ARMOR = null;
