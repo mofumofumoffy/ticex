@@ -195,6 +195,9 @@ dependencies {
     implementation fg.deobf("curse.maven:patchouli-306770:6164575")
     implementation fg.deobf("curse.maven:apothic-attributes-898963:5634071")
 
+    implementation fg.deobf("curse.maven:json-things-541617:6100175")
+    implementation fg.deobf("maven.modrinth:fNJfw6Ix:1.3.2")
+
     implementation fg.deobf("curse.maven:projecte-226410:4901949")
 
     implementation fg.deobf("maven.modrinth:gu7yAYhd:1.115.1")
@@ -218,6 +221,7 @@ dependencies {
 
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:6237015")
     runtimeOnly fg.deobf("curse.maven:selene-499980:6321048")
+
 
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'

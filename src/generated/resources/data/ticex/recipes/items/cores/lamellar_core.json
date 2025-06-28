@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:things_compat"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "ticex:reconstruction_core"
+    },
+    "H": {
+      "item": "tinkers_things:hematite"
+    }
+  },
+  "pattern": [
+    "HHH",
+    "HCH",
+    "HHH"
+  ],
+  "result": {
+    "item": "ticex:lamellar_core"
+  },
+  "show_notification": true
+}

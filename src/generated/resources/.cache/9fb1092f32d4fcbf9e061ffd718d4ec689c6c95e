@@ -1,7 +1,8 @@
-// 1.20.1	2025-06-28T22:22:30.5335618	Recipes
+// 1.20.1	2025-06-28T22:48:46.9932894	Recipes
 0910092462b9774aff6610ef37e9fd110e70d797 data/ticex/advancements/recipes/misc/items/cores/celestial_core.json
 4764758122eca313b8896bc76772e99350833553 data/ticex/advancements/recipes/misc/items/cores/flickering_reconstruction_core.json
 9e1bce03265191d28647bcc84ab8bda2f2490c8a data/ticex/advancements/recipes/misc/items/cores/konpaku_core.json
+819fe91c33c351ffa430580d512a9db07ade93c3 data/ticex/advancements/recipes/misc/items/cores/lamellar_core.json
 57011591f3c83565dba772e9e280b279df5194b3 data/ticex/advancements/recipes/misc/items/cores/reconstruction_core.json
 2e7a3608dd4e3218792930a3d0872a09b433f8f2 data/ticex/advancements/recipes/misc/items/etheric_block_from_ingot.json
 ea982b192d5cb7c42ec683cc798912fc2181030b data/ticex/advancements/recipes/misc/items/etheric_ingot_from_block.json
@@ -13,6 +14,7 @@ b546183df9ba301f9cbd64f1cd5fce349120b6a7 data/ticex/recipes/items/cores/chaotic_
 e3f6223df0f56f7d247256f47e9d712fd791edad data/ticex/recipes/items/cores/flickering_reconstruction_core.json
 68f154caa02f9b1afa0ece8e1ac16ff88f4804c5 data/ticex/recipes/items/cores/inject_core.json
 b85e48f57e81c8ab423a82a0ac1847c6fbabd45b data/ticex/recipes/items/cores/konpaku_core.json
+6282d2aaaac28cd8f905bfffaaa3f09fad6601fe data/ticex/recipes/items/cores/lamellar_core.json
 516dca47974a3b36f42d155672f23a6559186f84 data/ticex/recipes/items/cores/overload_core.json
 c88af326679cd37de1292ef699ef827adf56d40b data/ticex/recipes/items/cores/override_core.json
 15f9496cbbe7a7158fff48a555dce3eeaf9a6d4a data/ticex/recipes/items/cores/psionizing_radiation_core.json
