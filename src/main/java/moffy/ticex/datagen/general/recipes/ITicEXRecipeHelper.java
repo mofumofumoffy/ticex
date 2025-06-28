@@ -4,25 +4,33 @@ import moffy.addonapi.AddonAPI;
 import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.mantle.recipe.data.IRecipeHelper;
 
 public interface ITicEXRecipeHelper extends IRecipeHelper, IConditionBuilder {
-    public String upgradeFolder = "tools/modifiers/upgrade/";
-    public String abilityFolder = "tools/modifiers/ability/";
-    public String slotlessFolder = "tools/modifiers/slotless/";
-    public String upgradeSalvage = "tools/modifiers/salvage/upgrade/";
-    public String abilitySalvage = "tools/modifiers/salvage/ability/";
-    public String defenseFolder = "tools/modifiers/defense/";
-    public String defenseSalvage = "tools/modifiers/salvage/defense/";
-    public String compatFolder = "tools/modifiers/compat/";
-    public String compatSalvage = "tools/modifiers/salvage/compat/";
-    public String worktableFolder = "tools/modifiers/worktable/";
-    public String materialFolder = "tools/materials/";
+    String upgradeFolder = "tools/modifiers/upgrade/";
+    String abilityFolder = "tools/modifiers/ability/";
+    String slotlessFolder = "tools/modifiers/slotless/";
+    String upgradeSalvage = "tools/modifiers/salvage/upgrade/";
+    String abilitySalvage = "tools/modifiers/salvage/ability/";
+    String defenseFolder = "tools/modifiers/defense/";
+    String defenseSalvage = "tools/modifiers/salvage/defense/";
+    String compatFolder = "tools/modifiers/compat/";
+    String compatSalvage = "tools/modifiers/salvage/compat/";
+    String worktableFolder = "tools/modifiers/worktable/";
+    String materialFolder = "tools/materials/";
+    String coresFolder = "items/cores/";
+    String itemsFolder = "items/";
 
-    public default ICondition modsAvailable(ResourceLocation rl) {
+    default ICondition modsAvailable(ResourceLocation rl) {
         return new ModsAvailableCondition(new ResourceLocation(AddonAPI.MODID, "mods_available"), rl);
+    }
+
+    default Item item(ResourceLocation resourceLocation) {
+        return ForgeRegistries.ITEMS.getValue(resourceLocation);
     }
 
     @Override

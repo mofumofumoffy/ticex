@@ -1,16 +1,20 @@
 package moffy.ticex.datagen.general.recipes;
 
-import java.util.function.Consumer;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.data.recipe.IMaterialRecipeHelper;
 import slimeknights.tconstruct.shared.TinkerCommons;
 import slimeknights.tconstruct.shared.block.SlimeType;
+
+import java.util.function.Consumer;
 
 public class CommonRecipeProvider implements ITicEXRecipeHelper, IMaterialRecipeHelper {
 
@@ -26,7 +30,7 @@ public class CommonRecipeProvider implements ITicEXRecipeHelper, IMaterialRecipe
             .pattern("pcp")
             .pattern("asa")
             .unlockedBy("has_item", TicEXRecipeProvider.has(TinkerCommons.slimeball.get(SlimeType.SKY)))
-            .save(pWriter, "cores/reconstruction_core");
+            .save(pWriter, prefix(TicEXRegistry.RECONSTRUCTION_CORE, coresFolder));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE.get())
             .define('c', TicEXRegistry.RECONSTRUCTION_CORE.get())
@@ -35,11 +39,26 @@ public class CommonRecipeProvider implements ITicEXRecipeHelper, IMaterialRecipe
             .pattern("csc")
             .pattern("ccc")
             .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.RECONSTRUCTION_CORE.get()))
-            .save(pWriter, "cores/flickering_reconstruction_core");
+            .save(pWriter, prefix(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE, coresFolder));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.ETHERIC_BLOCK.get())
+            .showNotification(true)
+            .define('#', TicEXTags.Items.ETHERIC_INGOT)
+            .define('*', TicEXRegistry.ETHERIC_INGOT.get())
+            .pattern("###")
+            .pattern("#*#")
+            .pattern("###")
+            .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.ETHERIC_INGOT.get()))
+            .save(pWriter, prefix(itemsFolder + "etheric_block_from_ingot"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TicEXRegistry.ETHERIC_INGOT.get(), 9)
+            .requires(TicEXRegistry.ETHERIC_BLOCK.get())
+            .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.ETHERIC_BLOCK.get()))
+            .save(pWriter, prefix(itemsFolder + "etheric_ingot_from_block"));
     }
 
     @Override
-    public String getModId() {
+    public @NotNull String getModId() {
         return TicEX.MODID;
     }
 }

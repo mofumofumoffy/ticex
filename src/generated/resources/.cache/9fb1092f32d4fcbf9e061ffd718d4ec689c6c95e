@@ -1,8 +1,26 @@
-// 1.20.1	2025-05-19T10:16:28.7109135	Recipes
-9ebf6b48b3d12cde381ae855550f70bc11496d46 data/minecraft/advancements/recipes/misc/cores/flickering_reconstruction_core.json
-9ba70ba74a2241403228a1e4587115182a7afe64 data/minecraft/advancements/recipes/misc/cores/reconstruction_core.json
-e3f6223df0f56f7d247256f47e9d712fd791edad data/minecraft/recipes/cores/flickering_reconstruction_core.json
-b79fc71ca9b90cdbc2b2b7e6fd1261a029cd8fda data/minecraft/recipes/cores/reconstruction_core.json
+// 1.20.1	2025-06-28T22:22:30.5335618	Recipes
+0910092462b9774aff6610ef37e9fd110e70d797 data/ticex/advancements/recipes/misc/items/cores/celestial_core.json
+4764758122eca313b8896bc76772e99350833553 data/ticex/advancements/recipes/misc/items/cores/flickering_reconstruction_core.json
+9e1bce03265191d28647bcc84ab8bda2f2490c8a data/ticex/advancements/recipes/misc/items/cores/konpaku_core.json
+57011591f3c83565dba772e9e280b279df5194b3 data/ticex/advancements/recipes/misc/items/cores/reconstruction_core.json
+2e7a3608dd4e3218792930a3d0872a09b433f8f2 data/ticex/advancements/recipes/misc/items/etheric_block_from_ingot.json
+ea982b192d5cb7c42ec683cc798912fc2181030b data/ticex/advancements/recipes/misc/items/etheric_ingot_from_block.json
+27a59fb0d04240add14e1875a0df1791298dfb8a data/ticex/recipes/items/cores/cardboard_core.json
+e6589ea590973517e36072d51e355e5ebc1ab7bd data/ticex/recipes/items/cores/celestial_core.json
+b546183df9ba301f9cbd64f1cd5fce349120b6a7 data/ticex/recipes/items/cores/chaotic_evolved_core.json
+6cbda8b3020943898e08a216087b077c6bb7fedc data/ticex/recipes/items/cores/draconic_evolved_core.json
+031d2838198415533dc6a120eb0e4c580ed5f71f data/ticex/recipes/items/cores/draconium_evolved_core.json
+e3f6223df0f56f7d247256f47e9d712fd791edad data/ticex/recipes/items/cores/flickering_reconstruction_core.json
+68f154caa02f9b1afa0ece8e1ac16ff88f4804c5 data/ticex/recipes/items/cores/inject_core.json
+b85e48f57e81c8ab423a82a0ac1847c6fbabd45b data/ticex/recipes/items/cores/konpaku_core.json
+516dca47974a3b36f42d155672f23a6559186f84 data/ticex/recipes/items/cores/overload_core.json
+c88af326679cd37de1292ef699ef827adf56d40b data/ticex/recipes/items/cores/override_core.json
+15f9496cbbe7a7158fff48a555dce3eeaf9a6d4a data/ticex/recipes/items/cores/psionizing_radiation_core.json
+b797d053b80ec2094b7189889ee390eb995a755c data/ticex/recipes/items/cores/radiation_shielding_core.json
+b79fc71ca9b90cdbc2b2b7e6fd1261a029cd8fda data/ticex/recipes/items/cores/reconstruction_core.json
+cccc6c8ca0ced2bcc4b1905c1dbddc8cc71f3c3f data/ticex/recipes/items/cores/wyvern_evolved_core.json
+0e0aa78a07892c71d1ef81cc2c2d70a4d48cfabc data/ticex/recipes/items/etheric_block_from_ingot.json
+d07a8a4d8520bc187ac6d6e4955aa75f18dff541 data/ticex/recipes/items/etheric_ingot_from_block.json
 6d4e05d97529af4cebba6ca7ffbf5ce5d8dccd64 data/ticex/recipes/tools/materials/crystal_matrix/block.json
 ae3de6d65b009416597bfcc19c25bbf9e5c807f6 data/ticex/recipes/tools/materials/crystal_matrix/ingot.json
 7e50d68dbfe08aab88d744641a40cdcb5de64410 data/ticex/recipes/tools/materials/crystal_matrix/nugget.json

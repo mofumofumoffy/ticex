@@ -1,7 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    { "id": "ticex:slashblade_blade_cast", "required": false },
-    { "id": "ticex:slashblade_saya_cast", "required": false }
-  ]
-}

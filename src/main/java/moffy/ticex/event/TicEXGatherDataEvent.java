@@ -1,22 +1,20 @@
 package moffy.ticex.event;
 
-import java.util.concurrent.CompletableFuture;
 import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
+import moffy.ticex.datagen.blockstate.TicEXBlockstateProvider;
 import moffy.ticex.datagen.fluid.FluidTextureProvider;
 import moffy.ticex.datagen.general.LootProvider;
+import moffy.ticex.datagen.general.TicEXDamageTypeProvider;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.datagen.general.tag.BlockTagProvider;
 import moffy.ticex.datagen.general.tag.FluidTagProvider;
 import moffy.ticex.datagen.general.tag.ItemTagProvider;
 import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
-import moffy.ticex.datagen.tool.MaterialDefinitionProvider;
-import moffy.ticex.datagen.tool.MaterialStatsProvider;
-import moffy.ticex.datagen.tool.MaterialTagProvider;
-import moffy.ticex.datagen.tool.MaterialTraitsProvider;
-import moffy.ticex.datagen.tool.ToolDefinitionProvider;
+import moffy.ticex.datagen.tool.*;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -24,6 +22,9 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import slimeknights.tconstruct.fluids.data.FluidBlockstateModelProvider;
+
+import java.util.concurrent.CompletableFuture;
 
 @Mod.EventBusSubscriber(modid = TicEX.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TicEXGatherDataEvent {
@@ -36,9 +37,13 @@ public class TicEXGatherDataEvent {
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<Provider> lookupProvider = event.getLookupProvider();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        RegistrySetBuilder registrySetBuilder = new RegistrySetBuilder();
 
         boolean server = event.includeServer();
         boolean client = event.includeClient();
+
+        // its sometimes cleaner to splitup different registry sets to their own classes, combine them here into a single provider
+        TicEXDamageTypeProvider.register(registrySetBuilder);
 
         //tags
         BlockTagProvider blockTags = new BlockTagProvider(packOutput, lookupProvider, existingFileHelper);
@@ -53,6 +58,8 @@ public class TicEXGatherDataEvent {
         generator.addProvider(client, new FluidTextureProvider(packOutput));
         generator.addProvider(server, new TicEXRecipeProvider(packOutput));
         generator.addProvider(server, new LootProvider(packOutput));
+        generator.addProvider(server, new FluidBlockstateModelProvider(packOutput, TicEX.MODID));
+        generator.addProvider(server, new TicEXBlockstateProvider(packOutput, existingFileHelper));
 
         //modifiers
         generator.addProvider(server, new ModifierProvider(packOutput));

@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-05T10:16:49.894351	TiCEX Item Tags
+// 1.20.1	2025-06-28T22:22:30.5382876	TiCEX Item Tags
 e6dd16afa69cdb72cce8c31b90e27a4932ad9ee7 data/forge/tags/items/armors/boots.json
 bf7c9cb16ac93a4f4920126765cff10080a6faa4 data/forge/tags/items/armors/chestplates.json
 0651aaaa1e65d69705681720a7418fb91a744770 data/forge/tags/items/armors/helmets.json
@@ -12,6 +12,12 @@ d01772499c62cb11fe973145cda379b9da7c46df data/forge/tags/items/storage_blocks/cr
 7b1526d9db5712652951fd6dd6b1af2a49149444 data/forge/tags/items/storage_blocks/infinity.json
 54d0b2246edaf8ca724e663d1305213b2ad7fe68 data/forge/tags/items/storage_blocks/neutron.json
 eda8bac7faa80b90e9f7abbb1bdd37bd0fb77320 data/minecraft/tags/items/swords.json
+5d15efcabb1721107ad0fd4f0588c67d912f726c data/tconstruct/tags/items/casts.json
+6bc438852a5e7ea6f0ce6e3a5244f5647c080f8e data/tconstruct/tags/items/casts/gold.json
+6c441c761dd485112b3c410c94ade67c3161f68e data/tconstruct/tags/items/casts/multi_use.json
+3a825a1420826ffd216369d2385542dc6056d875 data/tconstruct/tags/items/casts/red_sand.json
+f68603baee8e26597d95e5a6ae4ac21413e44b0b data/tconstruct/tags/items/casts/sand.json
+32f3b4dc5cdb1347880fac379e98f8199037a82f data/tconstruct/tags/items/casts/single_use.json
 e6dd16afa69cdb72cce8c31b90e27a4932ad9ee7 data/tconstruct/tags/items/modifiable/armor/boots.json
 bf7c9cb16ac93a4f4920126765cff10080a6faa4 data/tconstruct/tags/items/modifiable/armor/chestplate.json
 0651aaaa1e65d69705681720a7418fb91a744770 data/tconstruct/tags/items/modifiable/armor/helmets.json
@@ -29,6 +35,10 @@ f3e68c1b9999cc570915474a05a30aba2b69ccc0 data/tconstruct/tags/items/modifiable/u
 3b59c6e4bc52599c2793ebba6e8054266eb510a6 data/tconstruct/tags/items/parts.json
 66a6e470f9822c5129294e1fe11cf3be03c8c597 data/tconstruct/tags/items/scorched_tanks.json
 c8a68a5279544bac7b38918c7d6ba499e8a7ed37 data/tconstruct/tags/items/seared_tanks.json
+4f017cad9a1f1092eac9d6112f073b0a13fa6c62 data/ticex/tags/items/casts/multi_use/slashblade_blade.json
+5e1de7a8797409cb0b2efdf5a2aa2ad62d168289 data/ticex/tags/items/casts/multi_use/slashblade_saya.json
+6f1bf41e50d4e171c9dc33a5bff0c5151c045f12 data/ticex/tags/items/casts/single_use/slashblade_blade.json
+3bdfdd65ffdc8a83722c4821b0c7a4dbb7aa0806 data/ticex/tags/items/casts/single_use/slashblade_saya.json
 ffbad857b81512ba83096167d43b6f9ec26c0cb6 data/ticex/tags/items/catalysts.json
 a048601e73112726dce5b446e163679e671ee1e6 data/ticex/tags/items/cores.json
 f81160f655f465df3a2d9896def0270dba4dbf1a data/ticex/tags/items/plate.json
