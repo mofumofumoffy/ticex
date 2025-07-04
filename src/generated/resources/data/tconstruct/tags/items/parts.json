@@ -13,6 +13,10 @@
       "required": false
     },
     {
+      "id": "ticex:catalyst_meka_tool",
+      "required": false
+    },
+    {
       "id": "ticex:catalyst_mekasuit_helmet",
       "required": false
     },

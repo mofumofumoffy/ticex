@@ -1,6 +1,7 @@
 package moffy.ticex.item.modifiable;
 
 import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -48,10 +49,12 @@ import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -82,10 +85,18 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import slimeknights.mantle.client.SafeClientAccess;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+import slimeknights.tconstruct.library.tools.definition.module.ToolHooks;
+import slimeknights.tconstruct.library.tools.definition.module.mining.IsEffectiveToolHook;
+import slimeknights.tconstruct.library.tools.definition.module.mining.MiningSpeedToolHook;
+import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
+import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.library.tools.stat.ToolStats;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -112,13 +123,7 @@ public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDef
 
     @Override
     public @Nullable ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-        if (!areCapabilityConfigsLoaded()) {
-            return super.initCapabilities(stack, nbt);
-        } else {
-            List<ItemCapabilityWrapper.ItemCapability> capabilities = new ArrayList<>();
-            this.gatherCapabilities(capabilities, stack);
-            return new ToolCapabilityProvider(stack);
-        }
+        return new ToolCapabilityProvider(stack);
     }
 
     public boolean isBarVisible(@NotNull ItemStack stack) {
@@ -134,6 +139,7 @@ public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDef
     }
 
     public void appendHoverText(@NotNull ItemStack stack, Level world, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
+        TooltipUtil.addInformation(this, stack, world, tooltip, SafeClientAccess.getTooltipKey(), flag);
         if (MekKeyHandler.isKeyPressed(MekanismKeyHandler.detailsKey)) {
             this.addModuleDetails(stack, tooltip);
         } else {
@@ -174,8 +180,13 @@ public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDef
         return true;
     }
 
+    @Override
+    public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
+        return true;
+    }
+
     public boolean canPerformAction(ItemStack stack, ToolAction action) {
-        return ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(action) ? this.hasEnergyForDigAction(stack) : this.getModules(stack).stream().anyMatch((module) -> module.isEnabled() && this.canPerformAction((IModule<?>)module, action));
+        return super.canPerformAction(stack, action) || ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(action) ? this.hasEnergyForDigAction(stack) : this.getModules(stack).stream().anyMatch((module) -> module.isEnabled() && this.canPerformAction((IModule<?>)module, action));
     }
 
     private <MODULE extends ICustomModule<MODULE>> boolean canPerformAction(IModule<MODULE> module, ToolAction action) {
@@ -246,7 +257,7 @@ public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDef
         return module.getCustomInstance().onInteract(module, player, entity, hand);
     }
 
-    public float getDestroySpeed(@NotNull ItemStack stack, @NotNull BlockState state) {
+    public float getMekDestroySpeed(@NotNull ItemStack stack, @NotNull BlockState state) {
         IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
         if (energyContainer == null) {
             return 0.0F;
@@ -260,6 +271,23 @@ public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDef
                 return module != null && module.isEnabled() ? module.getCustomInstance().getEfficiency() : MekanismConfig.gear.mekaToolBaseEfficiency.get();
             }
         }
+    }
+
+    public float getTiCDestroySpeed(@NotNull ItemStack stack, @NotNull BlockState state) {
+         if (!stack.hasTag()) {
+             return 1.0F;
+         }
+         ToolStack tool = ToolStack.from(stack);
+         if (tool.isBroken()) {
+            return 0.3F;
+        } else {
+            return Math.max(1.0F, tool.getHook(ToolHooks.MINING_SPEED).modifyDestroySpeed(tool, state, tool.getStats().get(ToolStats.MINING_SPEED)));
+        }
+    }
+
+    @Override
+    public float getDestroySpeed(@NotNull ItemStack stack, @NotNull BlockState state) {
+        return getTiCDestroySpeed(stack, state) + getMekDestroySpeed(stack, state);
     }
 
     public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level world, @NotNull BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity entityliving) {
@@ -357,7 +385,7 @@ public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDef
         return destroyEnergy.multiply(efficiency);
     }
 
-    public @NotNull Multimap<Attribute, AttributeModifier> getAttributeModifiers(@NotNull EquipmentSlot slot, @NotNull ItemStack stack) {
+    public @NotNull Multimap<Attribute, AttributeModifier> getMekanismAttributeModifiers(@NotNull EquipmentSlot slot, @NotNull ItemStack stack) {
         if (slot == EquipmentSlot.MAINHAND) {
             int unitDamage = 0;
             IModule<ModuleAttackAmplificationUnit> attackAmplificationUnit = this.getModule(stack, MekanismModules.ATTACK_AMPLIFICATION_UNIT);
@@ -388,6 +416,57 @@ public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDef
         } else {
             return super.getAttributeModifiers(slot, stack);
         }
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> mekanismMap = getMekanismAttributeModifiers(slot, stack);
+        Multimap<Attribute, AttributeModifier> tconMap = super.getAttributeModifiers(slot, stack);
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+
+        double totalAttackDamage = 0;
+        for (AttributeModifier mod : mekanismMap.get(Attributes.ATTACK_DAMAGE)) {
+            if (mod.getOperation() == AttributeModifier.Operation.ADDITION && mod.getId().equals(BASE_ATTACK_DAMAGE_UUID)) {
+                totalAttackDamage += mod.getAmount();
+            }
+        }
+        for (AttributeModifier mod : tconMap.get(Attributes.ATTACK_DAMAGE)) {
+            if (mod.getOperation() == AttributeModifier.Operation.ADDITION && mod.getId().equals(BASE_ATTACK_DAMAGE_UUID)) {
+                totalAttackDamage += mod.getAmount();
+            }
+        }
+        if (totalAttackDamage != 0) {
+            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(
+                    BASE_ATTACK_DAMAGE_UUID,
+                    "Merged attack damage",
+                    totalAttackDamage,
+                    AttributeModifier.Operation.ADDITION));
+        }
+
+        double tconSpeed = 0;
+        double mekSpeed = 0;
+        for (AttributeModifier mod : tconMap.get(Attributes.ATTACK_SPEED)) {
+            if (mod.getOperation() == AttributeModifier.Operation.ADDITION && mod.getId().equals(BASE_ATTACK_SPEED_UUID)) {
+                tconSpeed = mod.getAmount();
+                break;
+            }
+        }
+        for (AttributeModifier mod : mekanismMap.get(Attributes.ATTACK_SPEED)) {
+            if (mod.getOperation() == AttributeModifier.Operation.ADDITION && mod.getId().equals(BASE_ATTACK_SPEED_UUID)) {
+                mekSpeed = mod.getAmount();
+                break;
+            }
+        }
+        double maxSpeed = Math.max(tconSpeed, mekSpeed);
+        if (maxSpeed != 0) {
+            builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(
+                    BASE_ATTACK_SPEED_UUID,
+                    "Merged attack speed",
+                    maxSpeed,
+                    AttributeModifier.Operation.ADDITION));
+        }
+
+        return builder.build();
     }
 
     public @NotNull InteractionResultHolder<ItemStack> use(Level world, Player player, @NotNull InteractionHand hand) {
@@ -512,5 +591,10 @@ public class ModifiableMekaTool extends ModifiableItem implements CreativeTabDef
             }
         }
 
+    }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        return MutableComponent.create(super.getName(stack).getContents()).withStyle(ChatFormatting.LIGHT_PURPLE);
     }
 }

@@ -68,6 +68,10 @@ public class TicEXMekanismModule extends AddonModule {
                 () -> new ModifiableMekaTool(new Item.Properties().stacksTo(1))
         );
 
+        TicEXRegistry.CATALYST_MEKA_TOOL = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_tool",
+                () -> new ToolPartItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_tool").getId())
+        );
+
         TicEXRegistry.MEKANIC_MODIFIER = TicEXRegistry.MODIFIERS.register("mekanic", ModifierMekanic::new);
         TicEXRegistry.RADIATION_SHIELDING_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("radiation_shielding");
 

@@ -3,18 +3,9 @@
     {
       "type": "tconstruct:part_stats",
       "parts": [
-        {
-          "item": "tconstruct:pick_head",
-          "scale": 0.75
-        },
-        {
-          "item": "tconstruct:tool_binding",
-          "scale": 0.5
-        },
-        {
-          "item": "tconstruct:maille",
-          "scale": 0.5
-        }
+        "tconstruct:broad_blade",
+        "tconstruct:tough_handle",
+        "ticex:catalyst_meka_tool"
       ],
       "primary_part": 0
     },
@@ -43,9 +34,12 @@
       }
     },
     {
-      "type": "tconstruct:tool_actions",
-      "tool_actions": [
-        "sword_dig"
+      "type": "tconstruct:traits",
+      "traits": [
+        {
+          "level": 1,
+          "name": "ticex:mekanic"
+        }
       ]
     }
   ]

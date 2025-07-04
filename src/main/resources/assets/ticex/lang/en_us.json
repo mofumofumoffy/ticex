@@ -27,6 +27,7 @@
   "item.ticex.reforged_slashblade": "Reforged SlashBlade",
   "item.ticex.blitz_gun": "Blitz Gun",
   "item.ticex.revival_spellbook_irons": "Iron's Revival Spellbook",
+  "item.ticex.meka_tool": "MekaEdge",
 
   "tagtype.ticex.catalyst": "Seram Catalyst",
 
@@ -238,6 +239,7 @@
   "gui.ticex.blitz_gun.description": "Blitz Gun is the tool of precision and swiftness, which has been reconstructed with the power of the star clusters.",
   "gui.ticex.revival_spellbook_irons": "Iron's Revival Spellbook",
   "gui.ticex.revival_spellbook_irons.description": "Revival Spellbook is the mystic tool, which has been reconstructed with the power of the star clusters.",
+  "gui.ticex.meka_tool": "MekaEdge",
 
   "curios.identifier.incomparable_head": "Incomparable Helmet",
   "curios.identifier.incomparable_chest": "Incomparable Chestplate",

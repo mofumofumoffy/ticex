@@ -207,6 +207,7 @@ public class TicEXRegistry {
     public static ItemObject<ToolPartItem> CATALYST_SLASHBLADE = null;
     public static ItemObject<ToolPartItem> CATALYST_KINETIC_GUN = null;
     public static ItemObject<ToolPartItem> CATALYST_IRONS_SPELLBOOK = null;
+    public static ItemObject<ToolPartItem> CATALYST_MEKA_TOOL = null;
 
     public static ItemObject<? extends Item> REFORGED_SLASHBLADE = null;
     public static ItemObject<? extends Item> BLITZ_GUN = null;
