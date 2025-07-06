@@ -26,14 +26,15 @@ public interface ITicEXRecipeHelper extends IRecipeHelper, IConditionBuilder {
     // tools/parts/
     String partsFolder = "tools/parts/";
     String partsBuilderFolder      = "tools/parts/builder/";
+    String partsCastingFolder = "tools/parts/casting/";
 
     // tools/armor/
     String armorFolder   = "tools/armor/";
 
     // tools/materials/
     String materialFolder   = "tools/materials/";
-    String toolCastingFolder = "tools/materials/casting/";
-    String toolMeltingFolder = "tools/materials/melting/";
+    String materialCastingFolder = "tools/materials/casting/";
+    String materialMeltingFolder = "tools/materials/melting/";
 
     // tools/building/
     String buildingFolder   = "tools/building/";

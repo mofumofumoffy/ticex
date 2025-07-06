@@ -23,46 +23,46 @@ public class EmbossmentModifierRecipeBuilder extends AbstractModifierRecipeBuild
         this.inputs = inputs;
     }
 
-    private static EmbossmentModifierRecipeBuilder builder(ModifierId result) {
+    public static EmbossmentModifierRecipeBuilder modifier(ModifierId result) {
         return new EmbossmentModifierRecipeBuilder(result, new ArrayList<>(), new ArrayList<>());
     }
 
-    private EmbossmentModifierRecipeBuilder addInput(SizedIngredient input) {
+    public EmbossmentModifierRecipeBuilder addInput(SizedIngredient input) {
         this.inputs.add(input);
         return this;
     }
 
-    private EmbossmentModifierRecipeBuilder addInputs(SizedIngredient... inputs) {
+    public EmbossmentModifierRecipeBuilder addInputs(SizedIngredient... inputs) {
         this.inputs.addAll(List.of(inputs));
         return this;
     }
 
-    private EmbossmentModifierRecipeBuilder setInputs(SizedIngredient... inputs) {
+    public EmbossmentModifierRecipeBuilder setInputs(SizedIngredient... inputs) {
         this.inputs = List.of(inputs);
         return this;
     }
 
-    private EmbossmentModifierRecipeBuilder setInputs(List<SizedIngredient> inputs) {
+    public EmbossmentModifierRecipeBuilder setInputs(List<SizedIngredient> inputs) {
         this.inputs = inputs;
         return this;
     }
 
-    private EmbossmentModifierRecipeBuilder addEmbossItem(SizedIngredient input) {
+    public EmbossmentModifierRecipeBuilder addEmbossItem(SizedIngredient input) {
         this.embossItem.add(input);
         return this;
     }
 
-    private EmbossmentModifierRecipeBuilder addEmbossItems(SizedIngredient... inputs) {
+    public EmbossmentModifierRecipeBuilder addEmbossItems(SizedIngredient... inputs) {
         this.embossItem.addAll(List.of(inputs));
         return this;
     }
 
-    private EmbossmentModifierRecipeBuilder setEmbossItems(SizedIngredient... inputs) {
+    public EmbossmentModifierRecipeBuilder setEmbossItems(SizedIngredient... inputs) {
         this.embossItem = List.of(inputs);
         return this;
     }
 
-    private EmbossmentModifierRecipeBuilder setEmbossItems(List<SizedIngredient> inputs) {
+    public EmbossmentModifierRecipeBuilder setEmbossItems(List<SizedIngredient> inputs) {
         this.embossItem = inputs;
         return this;
     }

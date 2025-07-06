@@ -9,7 +9,7 @@
       "tag": "forge:ingots/molten_etheric"
     }
   ],
-  "cooling_time": 28,
+  "cooling_time": 151,
   "fluid": {
     "amount": 90,
     "tag": "forge:molten_etheric"

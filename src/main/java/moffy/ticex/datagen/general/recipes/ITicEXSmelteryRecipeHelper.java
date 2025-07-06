@@ -24,6 +24,7 @@ public interface ITicEXSmelteryRecipeHelper extends ITicEXRecipeHelper {
         metal
                 .optional()
                 .oreRate(IMeltingContainer.OreRateType.METAL)
+                .temperature(temperature)
                 .baseUnit(90)
                 .damageUnit(10)
                 .melting(9.0F, "block", "storage_blocks", 3.0F, false, false)
@@ -33,6 +34,6 @@ public interface ITicEXSmelteryRecipeHelper extends ITicEXRecipeHelper {
         ItemCastingRecipeBuilder.basinRecipe(ItemOutput.fromTag(storageTag))
                 .setFluid(fluidTag, 810)
                 .setCoolingTime(temperature, 810)
-                .save(wrapped, this.prefix(name, smelteryCastingFolder));
+                .save(wrapped, this.location(smelteryCastingFolder + "metal/" + name.getPath() + "/block"));
     }
 }

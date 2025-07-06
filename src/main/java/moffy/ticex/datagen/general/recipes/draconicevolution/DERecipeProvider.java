@@ -32,6 +32,19 @@ public class DERecipeProvider implements ITicEXRecipeHelper, ITicEXSmelteryRecip
                 modsAvailable(new ResourceLocation(TicEX.MODID, "draconicevolution_compat"))
         );
 
+        if(TicEXRegistry.INJECT_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXRegistry.PROUD_MODIFIER.getId())
+                    .allowCrystal()
+                    .checkTraitLevel()
+                    .addInput(TicEXRegistry.INJECT_CORE.get())
+                    .setMaxLevel(1)
+                    .setTools(Ingredient.fromValues(Stream.of(
+                            new Ingredient.TagValue(TinkerTags.Items.MELEE),
+                            new Ingredient.TagValue(TinkerTags.Items.MODIFIABLE)
+                    )))
+                    .save(topConsumer, prefix(TicEXRegistry.INJECT_MODIFIER, slotlessFolder));
+        }
+
         if(TicEXRegistry.EVOLVED_MODIFIER != null) {
             evolvedModifier(topConsumer, "draconium_", TicEXRegistry.DRACONIUM_EVOLVED_CORE.get(), 1);
             evolvedModifier(topConsumer, "wyvern_", TicEXRegistry.WYVERN_EVOLVED_CORE.get(), 2);
@@ -188,13 +201,13 @@ public class DERecipeProvider implements ITicEXRecipeHelper, ITicEXSmelteryRecip
         ResourceLocation rl = TicEXRegistry.EVOLVED_MODIFIER.getId().withPrefix(prefix);
         ModifierRecipeBuilder.modifier(TicEXRegistry.EVOLVED_MODIFIER)
                 .setTools(Ingredient.fromValues(Stream.of(
-                        new Ingredient.TagValue(TinkerTags.Items.MELEE),
+                        new Ingredient.TagValue(TinkerTags.Items.MELEE_WEAPON),
                         new Ingredient.TagValue(TinkerTags.Items.HARVEST),
                         new Ingredient.TagValue(TinkerTags.Items.RANGED)
                 )))
                 .addInput(core)
                 .setSlots(SlotType.ABILITY, 1)
-                .setLevelRange(level, level)
+                .exactLevel(level)
                 .checkTraitLevel()
                 .allowCrystal()
                 .save(consumer, prefix(rl, abilityFolder));

@@ -30,7 +30,7 @@ public class TaczRecipeProvider implements ITicEXRecipeHelper, IEmbossmentToolRe
             EmbossmentCastingRecipeBuilder.castingRecipe(TicEXRegistry.CATALYST_KINETIC_GUN.get())
                     .setItemCost(1)
                     .setCast(ModItems.MODERN_KINETIC_GUN.get(), true)
-                    .save(topConsumer, prefix(TicEXRegistry.CATALYST_KINETIC_GUN, toolCastingFolder));
+                    .save(topConsumer, prefix(TicEXRegistry.CATALYST_KINETIC_GUN, partsCastingFolder));
         }
     }
 }

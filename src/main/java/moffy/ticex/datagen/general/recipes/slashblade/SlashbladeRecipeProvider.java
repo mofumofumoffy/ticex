@@ -1,19 +1,25 @@
 package moffy.ticex.datagen.general.recipes.slashblade;
 
+import mods.flammpfeil.slashblade.data.tag.SlashBladeItemTags;
 import mods.flammpfeil.slashblade.init.SBItems;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.datagen.general.recipes.ticex.IEmbossmentToolRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentBuildingRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentModifierRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.embossment.SingleEmbossmentModifierRecipeBuilder;
+import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
+import slimeknights.mantle.recipe.ingredient.SizedIngredient;
 import slimeknights.mantle.registration.object.ItemObject;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.common.registration.CastItemObject;
@@ -22,6 +28,7 @@ import slimeknights.tconstruct.library.data.recipe.IToolRecipeHelper;
 import slimeknights.tconstruct.library.recipe.casting.material.CompositeCastingRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.partbuilder.PartRecipeBuilder;
+import slimeknights.tconstruct.library.tools.SlotType;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.part.IMaterialItem;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
@@ -36,6 +43,33 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
                 modsAvailable(new ResourceLocation(TicEX.MODID, "slashblade_compat"))
         );
 
+        // slotless
+
+        if(TicEXRegistry.PROUD_MODIFIER != null) {
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.PROUD_MODIFIER.getId(), Ingredient.of(SlashBladeItemTags.PROUD_SOULS))
+                    .setTools(TicEXTags.Items.SLASHBLADE_TOOL)
+                    .save(topConsumer, prefix(TicEXRegistry.PROUD_MODIFIER, slotlessFolder));
+        }
+
+        if(TicEXRegistry.KOSHIRAE_MODIFIER != null) {
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KOSHIRAE_MODIFIER.getId(), Ingredient.of(TicEXRegistry.CATALYST_SLASHBLADE))
+                    .setTools(TicEXTags.Items.SLASHBLADE_TOOL)
+                    .save(topConsumer, prefix(TicEXRegistry.KOSHIRAE_MODIFIER, slotlessFolder));
+        }
+
+        // upgrades
+
+        if(TicEXRegistry.KONPAKU_MODIFIER != null) {
+            EmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KONPAKU_MODIFIER.getId())
+                    .addInput(SizedIngredient.fromItems(TicEXRegistry.KONPAKU_CORE.get()))
+                    .addEmbossItem(SizedIngredient.fromItems(Items.ENCHANTED_BOOK))
+                    .setTools(TicEXTags.Items.SLASHBLADE_TOOL)
+                    .setSlots(SlotType.UPGRADE, 1)
+                    .save(topConsumer, prefix(TicEXRegistry.KONPAKU_MODIFIER, upgradeFolder));
+        }
+
+        // shaped
+
        if(TicEXRegistry.KONPAKU_CORE != null) {
            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.KONPAKU_CORE.get())
                    .define('A', SBItems.proudsoul_tiny)
@@ -46,6 +80,8 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
                    .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.RECONSTRUCTION_CORE.get()))
                    .save(topConsumer, prefix(TicEXRegistry.KONPAKU_CORE, coresFolder));
        }
+
+       // other
 
         if(TicEXRegistry.REFORGED_SLASHBLADE != null) {
             EmbossmentBuildingRecipeBuilder.buildingRecipe((IModifiable) TicEXRegistry.REFORGED_SLASHBLADE.asItem())
@@ -63,7 +99,7 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
 
         if(TicEXRegistry.CATALYST_SLASHBLADE != null) {
             embossmentCasting(topConsumer, TicEXRegistry.CATALYST_SLASHBLADE.get(), 1, SBItems.slashblade.asItem(), true,
-                    prefix(TicEXRegistry.CATALYST_SLASHBLADE, toolCastingFolder));
+                    prefix(TicEXRegistry.CATALYST_SLASHBLADE, partsCastingFolder));
         }
     }
 

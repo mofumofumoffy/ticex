@@ -4,6 +4,10 @@
     {
       "type": "mantle:tag_filled",
       "tag": "forge:storage_blocks/neutron"
+    },
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
     }
   ],
   "cooling_time": 517,

@@ -1,0 +1,36 @@
+{
+  "icon": {
+    "item": "ticex:blitz_gun"
+  },
+  "input_slots": [
+    {
+      "filter": {
+        "item": "tconstruct:tough_handle"
+      },
+      "icon": "tconstruct:tough_handle",
+      "translation_key": "item.tconstruct.tough_handle",
+      "x": 13,
+      "y": 29
+    },
+    {
+      "filter": {
+        "item": "tconstruct:tool_binding"
+      },
+      "icon": "tconstruct:tool_binding",
+      "translation_key": "item.tconstruct.tool_binding",
+      "x": 13,
+      "y": 53
+    },
+    {
+      "filter": {
+        "item": "ticex:catalyst_irons_spellbook"
+      },
+      "icon": "ticex:catalyst_irons_spellbook",
+      "translation_key": "item.ticex.catalyst_irons_spellbook",
+      "x": 33,
+      "y": 44
+    }
+  ],
+  "sortIndex": 15,
+  "translation_key": "gui.ticex.revival_spellbook_irons"
+}

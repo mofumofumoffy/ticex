@@ -14,11 +14,10 @@ import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierId;
 import slimeknights.tconstruct.library.modifiers.util.LazyModifier;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.AbstractModifierRecipeBuilder;
-import slimeknights.tconstruct.library.recipe.modifiers.adding.IncrementalModifierRecipeBuilder;
 
 import java.util.function.Consumer;
 
-public class ValidatableIncrementalModifierRecipeBuilder extends AbstractModifierRecipeBuilder<IncrementalModifierRecipeBuilder> {
+public class ValidatableIncrementalModifierRecipeBuilder extends AbstractModifierRecipeBuilder<ValidatableIncrementalModifierRecipeBuilder> {
     private Ingredient input;
     private int amountPerItem;
     private int neededPerLevel;
@@ -38,11 +37,9 @@ public class ValidatableIncrementalModifierRecipeBuilder extends AbstractModifie
         return modifier(modifier.getId());
     }
 
-    public ValidatableIncrementalModifierRecipeBuilder setInput(Ingredient input, int amountPerItem, int neededPerLevel) {
+    public ValidatableIncrementalModifierRecipeBuilder input(Ingredient input, int amountPerItem, int neededPerLevel) {
         if (amountPerItem < 1) {
             throw new IllegalArgumentException("Amount per item must be at least 1");
-        } else if (neededPerLevel <= amountPerItem) {
-            throw new IllegalArgumentException("Needed per level must be greater than amount per item");
         } else {
             this.input = input;
             this.amountPerItem = amountPerItem;
@@ -51,25 +48,25 @@ public class ValidatableIncrementalModifierRecipeBuilder extends AbstractModifie
         }
     }
 
-    public ValidatableIncrementalModifierRecipeBuilder setInput(ItemLike item, int amountPerItem, int neededPerLevel) {
-        return this.setInput(Ingredient.of(new ItemLike[]{item}), amountPerItem, neededPerLevel);
+    public ValidatableIncrementalModifierRecipeBuilder input(ItemLike item, int amountPerItem, int neededPerLevel) {
+        return this.input(Ingredient.of(new ItemLike[]{item}), amountPerItem, neededPerLevel);
     }
 
-    public ValidatableIncrementalModifierRecipeBuilder setInput(TagKey<Item> tag, int amountPerItem, int neededPerLevel) {
-        return this.setInput(Ingredient.of(tag), amountPerItem, neededPerLevel);
+    public ValidatableIncrementalModifierRecipeBuilder input(TagKey<Item> tag, int amountPerItem, int neededPerLevel) {
+        return this.input(Ingredient.of(tag), amountPerItem, neededPerLevel);
     }
 
-    public ValidatableIncrementalModifierRecipeBuilder setLeftover(ItemOutput leftover) {
+    public ValidatableIncrementalModifierRecipeBuilder leftover(ItemOutput leftover) {
         this.leftover = leftover;
         return this;
     }
 
-    public ValidatableIncrementalModifierRecipeBuilder setLeftover(ItemStack stack) {
-        return this.setLeftover(ItemOutput.fromStack(stack));
+    public ValidatableIncrementalModifierRecipeBuilder leftover(ItemStack stack) {
+        return this.leftover(ItemOutput.fromStack(stack));
     }
 
-    public ValidatableIncrementalModifierRecipeBuilder setLeftover(ItemLike item) {
-        return this.setLeftover(ItemOutput.fromItem(item));
+    public ValidatableIncrementalModifierRecipeBuilder leftover(ItemLike item) {
+        return this.leftover(ItemOutput.fromItem(item));
     }
 
     public void save(@NotNull Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation id) {

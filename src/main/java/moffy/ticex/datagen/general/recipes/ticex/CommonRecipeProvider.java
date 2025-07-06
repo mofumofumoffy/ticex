@@ -4,6 +4,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
+import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.fluid.UnplaceableFluid;
 import slimeknights.mantle.recipe.helper.FluidOutput;
 import slimeknights.mantle.recipe.helper.ItemOutput;
+import slimeknights.mantle.recipe.ingredient.SizedIngredient;
 import slimeknights.mantle.registration.object.FluidObject;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.fluids.TinkerFluids;
@@ -30,6 +32,7 @@ import slimeknights.tconstruct.library.recipe.melting.MaterialMeltingRecipeBuild
 import slimeknights.tconstruct.library.recipe.melting.MeltingRecipeBuilder;
 import slimeknights.tconstruct.shared.TinkerCommons;
 import slimeknights.tconstruct.shared.block.SlimeType;
+import slimeknights.tconstruct.world.TinkerWorld;
 
 import java.util.function.Consumer;
 
@@ -95,10 +98,10 @@ public class CommonRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelteryR
         MaterialFluidRecipeBuilder.material(TicEXMaterials.ETHERIC)
                 .setTemperature(2500)
                 .setFluid(TicEXTags.Fluids.ETHERIC, 90)
-                .save(pWriter, prefix(TicEXMaterials.ETHERIC, toolCastingFolder));
+                .save(pWriter, prefix(TicEXMaterials.ETHERIC, materialCastingFolder));
 
         MaterialMeltingRecipeBuilder.material(TicEXMaterials.ETHERIC, 2500, new FluidStack(TicEXRegistry.MOLTEN_ETHERIC.get().getSource(), 90))
-                .save(pWriter, prefix(TicEXMaterials.ETHERIC, toolMeltingFolder));
+                .save(pWriter, prefix(TicEXMaterials.ETHERIC, materialMeltingFolder));
     }
 
     public void buildSmelteryRecipes(Consumer<FinishedRecipe> pWriter) {
@@ -117,6 +120,15 @@ public class CommonRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelteryR
                 .setCoolingTime(60)
                 .save(pWriter, prefix(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE, smelteryCastingFolder + "slime/"));
 
+        EmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.EMBOSSMENT_MODIFIER.getId())
+                .addInput(SizedIngredient.fromItems(TinkerWorld.earthGeode.get()))
+                .addInput(SizedIngredient.fromItems(TinkerWorld.skyGeode.get()))
+                .addInput(SizedIngredient.fromItems(TinkerWorld.ichorGeode.get()))
+                .addInput(SizedIngredient.fromItems(TinkerWorld.enderGeode.get()))
+                .addEmbossItem(SizedIngredient.fromTag(TinkerTags.Items.TOOL_PARTS))
+                .setTools(TinkerTags.Items.DURABILITY)
+                .save(pWriter, prefix(TicEXRegistry.EMBOSSMENT_MODIFIER, slotlessFolder));
+
         MeltingRecipeBuilder.melting(Ingredient.of(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE.get()),
                         FluidOutput.fromFluid(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE.get(), 2000), 1000, (int) 32)
                 .save(pWriter, prefix(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE, smelteryMeltingFolder));
@@ -124,7 +136,7 @@ public class CommonRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelteryR
         for (int i = 0; i < TicEXRegistry.RF_FURNACE_FUELS.size(); i++) {
             FluidObject<UnplaceableFluid> fuel = TicEXRegistry.RF_FURNACE_FUELS.get(i);
             MeltingFuelBuilder.fuel(fuel.ingredient(50), 150, calculateRfFuelTemperature(i))
-                    .rate(5*i+5)
+                    .rate(5 * i + 5)
                     .save(pWriter, prefix(fuel, smelteryMeltingFolder + "fuel/"));
         }
     }

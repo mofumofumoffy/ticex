@@ -2,6 +2,8 @@ package moffy.ticex.datagen.general.recipes.psi;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
+import moffy.ticex.datagen.general.recipes.ticex.embossment.SingleEmbossmentModifierRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.embossment.ValidatableIncrementalModifierRecipeBuilder;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -24,10 +26,37 @@ public class PsiRecipeProvider implements ITicEXRecipeHelper {
             modsAvailable(new ResourceLocation(TicEX.MODID, "psi_compat"))
         );
 
+        if(TicEXRegistry.SENSOR_MODIFIER != null) {
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.SENSOR_MODIFIER.getId(), Ingredient.of(
+                    ModItems.exosuitSensorLight,
+                    ModItems.exosuitSensorHeat,
+                    ModItems.exosuitSensorStress,
+                    ModItems.exosuitSensorWater,
+                    ModItems.exosuitSensorTrigger
+            ))
+                    .setTools(TinkerTags.Items.HELMETS)
+                    .save(topConsumer, prefix(TicEXRegistry.SENSOR_MODIFIER, slotlessFolder));
+        }
+
+
+        if(TicEXRegistry.SOCKET_MODIFIER != null) {
+            ValidatableIncrementalModifierRecipeBuilder.modifier(TicEXRegistry.SOCKET_MODIFIER)
+                    .allowCrystal()
+                    .input(ModItems.cadSocketBasic, 1, 1)
+                    .exactLevel(5)
+                    .setSlots(SlotType.UPGRADE, 1)
+                    .setTools(Ingredient.fromValues(Stream.of(
+                            new Ingredient.TagValue(TinkerTags.Items.MELEE_WEAPON),
+                            new Ingredient.TagValue(TinkerTags.Items.HARVEST),
+                            new Ingredient.TagValue(TinkerTags.Items.ARMOR)
+                    )))
+                    .save(topConsumer, prefix(TicEXRegistry.SOCKET_MODIFIER, upgradeFolder));
+        }
+
         if(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER != null) {
             ModifierRecipeBuilder.modifier(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER)
                     .setTools(Ingredient.fromValues(Stream.of(
-                            new Ingredient.TagValue(TinkerTags.Items.MELEE),
+                            new Ingredient.TagValue(TinkerTags.Items.MELEE_WEAPON),
                             new Ingredient.TagValue(TinkerTags.Items.HARVEST),
                             new Ingredient.TagValue(TinkerTags.Items.ARMOR)
                     )))

@@ -12,25 +12,30 @@ import slimeknights.tconstruct.library.recipe.modifiers.adding.AbstractModifierR
 import java.util.function.Consumer;
 
 public class SingleEmbossmentModifierRecipeBuilder extends AbstractModifierRecipeBuilder<SingleEmbossmentModifierRecipeBuilder> {
-    private Ingredient input;
+    private Ingredient embossInput;
 
-    protected SingleEmbossmentModifierRecipeBuilder(ModifierId result, Ingredient input) {
+    protected SingleEmbossmentModifierRecipeBuilder(ModifierId result, Ingredient embossInput) {
         super(result);
-        this.input = input;
+        this.embossInput = embossInput;
     }
 
-    private static SingleEmbossmentModifierRecipeBuilder builder(ModifierId result, Ingredient input) {
+    public SingleEmbossmentModifierRecipeBuilder setEmbossInput(Ingredient embossInput) {
+        this.embossInput = embossInput;
+        return this;
+    }
+
+    public static SingleEmbossmentModifierRecipeBuilder modifier(ModifierId result, Ingredient input) {
         return new SingleEmbossmentModifierRecipeBuilder(result, input);
     }
 
     @Override
     public void save(@NotNull Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation id) {
-        if (this.input.isEmpty()) {
+        if (this.embossInput.isEmpty()) {
             throw new IllegalStateException("Must have at least 1 input");
         } else {
             ResourceLocation advancementId = this.buildOptionalAdvancement(id, "modifiers");
             consumer.accept(new LoadableFinishedRecipe<>(
-                    new SingleEmbossmentModifierRecipe(id, input, tools, maxToolSize, result, ModifierEntry.VALID_LEVEL.range(minLevel, maxLevel), slots),
+                    new SingleEmbossmentModifierRecipe(id, embossInput, tools, maxToolSize, result, ModifierEntry.VALID_LEVEL.range(minLevel, maxLevel), slots),
                     SingleEmbossmentModifierRecipe.LOADER,
                     advancementId));
         }

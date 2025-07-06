@@ -4,6 +4,17 @@
     {
       "type": "mantle:tag_filled",
       "tag": "forge:storage_blocks/infinity"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:sakura_compat"
+      }
+    },
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
     }
   ],
   "cooling_time": 285,

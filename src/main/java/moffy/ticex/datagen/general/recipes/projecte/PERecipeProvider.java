@@ -8,6 +8,7 @@ import moze_intel.projecte.gameObjs.registries.PEItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.DifferenceIngredient;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -15,6 +16,7 @@ import slimeknights.tconstruct.library.data.recipe.IToolRecipeHelper;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
 import slimeknights.tconstruct.library.tools.SlotType;
+import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 import java.util.function.Consumer;
 
@@ -66,25 +68,22 @@ public class PERecipeProvider implements ITicEXRecipeHelper, IToolRecipeHelper {
         }
 
         if(TicEXRegistry.CATALYST_GEM != null) {
-            MaterialCastingRecipeBuilder.tableRecipe(TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.HELMET))
-                    .setCast(PEItems.GEM_HELMET.asItem(), true)
-                    .setItemCost(1)
-                    .save(topConsumer, prefix(this.id(TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.HELMET)), armorFolder));
-
-            MaterialCastingRecipeBuilder.tableRecipe(TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.CHESTPLATE))
-                    .setCast(PEItems.GEM_CHESTPLATE.asItem(), true)
-                    .setItemCost(1)
-                    .save(topConsumer, prefix(this.id(TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.CHESTPLATE)), armorFolder));
-
-            MaterialCastingRecipeBuilder.tableRecipe(TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.LEGGINGS))
-                    .setCast(PEItems.GEM_LEGGINGS.asItem(), true)
-                    .setItemCost(1)
-                    .save(topConsumer, prefix(this.id(TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.LEGGINGS)), armorFolder));
-
-            MaterialCastingRecipeBuilder.tableRecipe(TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.BOOTS))
-                    .setCast(PEItems.GEM_BOOTS.asItem(), true)
-                    .setItemCost(1)
-                    .save(topConsumer, prefix(this.id(TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.BOOTS)), armorFolder));
+            armorTableCasting(topConsumer, TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.HELMET), PEItems.GEM_HELMET.asItem());
+            armorTableCasting(topConsumer, TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.CHESTPLATE), PEItems.GEM_CHESTPLATE.asItem());
+            armorTableCasting(topConsumer, TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.LEGGINGS), PEItems.GEM_LEGGINGS.asItem());
+            armorTableCasting(topConsumer, TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.BOOTS), PEItems.GEM_BOOTS.asItem());
         }
+    }
+
+    public void armorTableCasting(Consumer<FinishedRecipe> topConsumer, ToolPartItem gemItem, Item castItem) {
+        MaterialCastingRecipeBuilder.tableRecipe(gemItem)
+                .setCast(castItem, true)
+                .setItemCost(1)
+                .save(topConsumer, prefix(this.id(gemItem), armorFolder));
+
+        MaterialCastingRecipeBuilder.tableRecipe(gemItem)
+                .setCast(castItem, true)
+                .setItemCost(1)
+                .save(topConsumer, prefix(this.id(gemItem), materialCastingFolder));
     }
 }

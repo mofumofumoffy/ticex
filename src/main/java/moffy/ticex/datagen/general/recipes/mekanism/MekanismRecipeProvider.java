@@ -7,6 +7,7 @@ import mekanism.common.registries.MekanismItems;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.IEmbossmentToolRecipeHelper;
+import moffy.ticex.datagen.general.recipes.ticex.embossment.SingleEmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -30,6 +31,17 @@ public class MekanismRecipeProvider implements ITicEXRecipeHelper, IEmbossmentTo
         );
 
         buildArmorRecipes(topConsumer);
+
+        if(TicEXRegistry.MEKANIC_MODIFIER != null) {
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.MEKANIC_MODIFIER.getId(), Ingredient.of(
+                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.HELMET),
+                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.CHESTPLATE),
+                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.LEGGINGS),
+                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.BOOTS)
+            ))
+                    .setTools(TicEXTags.Items.PLATE)
+                    .save(topConsumer, prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder));
+        }
 
         if (TicEXRegistry.RADIATION_SHELDING_CORE != null) {
             PressurizedReactionRecipeBuilder.reaction(
@@ -60,13 +72,13 @@ public class MekanismRecipeProvider implements ITicEXRecipeHelper, IEmbossmentTo
             embossmentBuilding(topConsumer, TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.BOOTS), armorFolder, seramGear);
 
             embossmentCasting(topConsumer, TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.HELMET), 1, MekanismItems.MEKASUIT_HELMET.get(), true,
-                    prefix(TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.HELMET).getStatType(), toolCastingFolder));
+                    prefix(TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.HELMET).getStatType(), partsCastingFolder));
             embossmentCasting(topConsumer, TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.CHESTPLATE), 1, MekanismItems.MEKASUIT_BODYARMOR.get(), true,
-                    prefix(TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.CHESTPLATE).getStatType(), toolCastingFolder));
+                    prefix(TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.CHESTPLATE).getStatType(), partsCastingFolder));
             embossmentCasting(topConsumer, TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.LEGGINGS), 1, MekanismItems.MEKASUIT_PANTS.get(), true,
-                    prefix(TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.LEGGINGS).getStatType(), toolCastingFolder));
+                    prefix(TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.LEGGINGS).getStatType(), partsCastingFolder));
             embossmentCasting(topConsumer, TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.BOOTS), 1, MekanismItems.MEKASUIT_BOOTS.get(), true,
-                    prefix(TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.BOOTS).getStatType(), toolCastingFolder));
+                    prefix(TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.BOOTS).getStatType(), partsCastingFolder));
         }
     }
 }

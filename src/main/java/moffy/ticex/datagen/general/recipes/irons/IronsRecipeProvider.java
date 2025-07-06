@@ -13,7 +13,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.DifferenceIngredient;
+import slimeknights.mantle.recipe.ingredient.SizedIngredient;
 import slimeknights.tconstruct.common.TinkerTags;
+import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
+import slimeknights.tconstruct.library.tools.SlotType;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 
 import java.util.function.Consumer;
@@ -24,6 +27,18 @@ public class IronsRecipeProvider implements ITicEXRecipeHelper {
                 pWriter,
                 modsAvailable(new ResourceLocation(TicEX.MODID, "irons_spellbooks_compat"))
         );
+
+        if(TicEXRegistry.OVERCASTING_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXRegistry.OVERCASTING_MODIFIER.getId())
+                    .allowCrystal()
+                    .addInput(SizedIngredient.fromItems(TicEXRegistry.CATALYST_IRONS_SPELLBOOK.get()))
+                    .setTools(DifferenceIngredient.of(
+                            Ingredient.of(TinkerTags.Items.DURABILITY),
+                            Ingredient.of(TicEXRegistry.CATALYST_IRONS_SPELLBOOK)
+                    ))
+                    .setSlots(SlotType.UPGRADE, 1)
+                    .save(topConsumer, prefix(TicEXRegistry.OVERCASTING_MODIFIER, upgradeFolder));
+        }
 
         if(TicEXRegistry.REVIVAL_SPELLBOOK_IRONS != null) {
             EmbossmentBuildingRecipeBuilder.buildingRecipe((IModifiable) TicEXRegistry.REVIVAL_SPELLBOOK_IRONS.asItem())
@@ -36,7 +51,7 @@ public class IronsRecipeProvider implements ITicEXRecipeHelper {
             EmbossmentCastingRecipeBuilder.castingRecipe(TicEXRegistry.CATALYST_IRONS_SPELLBOOK.get())
                     .setItemCost(1)
                     .setCast(DifferenceIngredient.of(Ingredient.of(spellbookTags), Ingredient.of(TinkerTags.Items.MODIFIABLE)), true)
-                    .save(topConsumer, prefix(TicEXRegistry.CATALYST_IRONS_SPELLBOOK, toolCastingFolder));
+                    .save(topConsumer, prefix(TicEXRegistry.CATALYST_IRONS_SPELLBOOK, partsCastingFolder));
         }
     }
 }

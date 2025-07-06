@@ -13,6 +13,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.crafting.conditions.NotCondition;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.recipe.helper.FluidOutput;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -82,50 +83,57 @@ public class AvaritiaRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelter
         MaterialFluidRecipeBuilder.material(TicEXMaterials.CRYSTAL_MATRIX)
                 .setTemperature(1050)
                 .setFluid(TicEXTags.Fluids.CRYSTAL_MATRIX, 90)
-                .save(topConsumer, prefix(TicEXMaterials.CRYSTAL_MATRIX, toolCastingFolder));
+                .save(topConsumer, prefix(TicEXMaterials.CRYSTAL_MATRIX, materialCastingFolder));
 
         MaterialFluidRecipeBuilder.material(TicEXMaterials.INFINITY)
                 .setTemperature(3180)
                 .setFluid(TicEXTags.Fluids.INFINITY, 90)
-                .save(topConsumer, prefix(TicEXMaterials.INFINITY, toolCastingFolder));
+                .save(topConsumer, prefix(TicEXMaterials.INFINITY, materialCastingFolder));
 
         MaterialFluidRecipeBuilder.material(TicEXMaterials.NEUTRON)
                 .setTemperature(1400)
                 .setFluid(TicEXTags.Fluids.NEUTRON, 90)
-                .save(topConsumer, prefix(TicEXMaterials.NEUTRON, toolCastingFolder));
+                .save(topConsumer, prefix(TicEXMaterials.NEUTRON, materialCastingFolder));
 
         MaterialFluidRecipeBuilder.material(TicEXMaterials.RECONSTRUCTION)
                 .setTemperature(1000)
                 .setFluid(TicEXTags.Fluids.RECONSTRUCTION_CORE, 2000)
-                .save(topConsumer, prefix(TicEXMaterials.RECONSTRUCTION, toolCastingFolder));
+                .save(topConsumer, prefix(TicEXMaterials.RECONSTRUCTION, materialCastingFolder));
 
         // smeltery
 
+        Consumer<FinishedRecipe> noSakura = withCondition(
+                topConsumer,
+                new NotCondition(
+                    modsAvailable(new ResourceLocation(TicEX.MODID, "sakura_compat"))
+                )
+        );
+
         if(TicEXRegistry.MOLTEN_CRYSTAL_MATRIX != null) {
-            MaterialMeltingRecipeBuilder.material(TicEXMaterials.CRYSTAL_MATRIX,
+                MaterialMeltingRecipeBuilder.material(TicEXMaterials.CRYSTAL_MATRIX,
                         3180,
                         FluidOutput.fromFluid(TicEXRegistry.MOLTEN_CRYSTAL_MATRIX.get().getSource(), 90))
-                    .save(topConsumer, prefix(TicEXMaterials.CRYSTAL_MATRIX, toolMeltingFolder));
+                    .save(topConsumer, prefix(TicEXMaterials.CRYSTAL_MATRIX, materialMeltingFolder));
 
-            metalIngotOptional(pWriter, TicEXTags.Fluids.CRYSTAL_MATRIX, TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, 2100, TicEXRegistry.MOLTEN_CRYSTAL_MATRIX.getId());
+            metalIngotOptional(noSakura, TicEXTags.Fluids.CRYSTAL_MATRIX, TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, 2100, TicEXRegistry.MOLTEN_CRYSTAL_MATRIX.getId());
         }
 
         if(TicEXRegistry.MOLTEN_INFINITY != null) {
-            MaterialMeltingRecipeBuilder.material(TicEXMaterials.INFINITY,
+                MaterialMeltingRecipeBuilder.material(TicEXMaterials.INFINITY,
                             3180,
                             FluidOutput.fromFluid(TicEXRegistry.MOLTEN_INFINITY.get().getSource(), 90))
-                    .save(topConsumer, prefix(TicEXMaterials.INFINITY, toolMeltingFolder));
+                    .save(topConsumer, prefix(TicEXMaterials.INFINITY, materialMeltingFolder));
 
-            metalIngotOptional(pWriter, TicEXTags.Fluids.INFINITY, TicEXTags.Items.INFINITY_BLOCK, 2100, TicEXRegistry.MOLTEN_INFINITY.getId());
+            metalIngotOptional(noSakura, TicEXTags.Fluids.INFINITY, TicEXTags.Items.INFINITY_BLOCK, 2100, TicEXRegistry.MOLTEN_INFINITY.getId());
         }
 
         if(TicEXRegistry.MOLTEN_NEUTRON != null) {
-            MaterialMeltingRecipeBuilder.material(TicEXMaterials.NEUTRON,
+                MaterialMeltingRecipeBuilder.material(TicEXMaterials.NEUTRON,
                         1400,
                         FluidOutput.fromFluid(TicEXRegistry.MOLTEN_NEUTRON.get().getSource(), 90))
-                    .save(topConsumer, prefix(TicEXMaterials.NEUTRON, toolMeltingFolder));
+                    .save(topConsumer, prefix(TicEXMaterials.NEUTRON, materialMeltingFolder));
 
-            metalIngotOptional(pWriter, TicEXTags.Fluids.NEUTRON, TicEXTags.Items.NEUTRON_BLOCK, 6360, TicEXRegistry.MOLTEN_NEUTRON.getId());
+            metalIngotOptional(topConsumer, TicEXTags.Fluids.NEUTRON, TicEXTags.Items.NEUTRON_BLOCK, 6360, TicEXRegistry.MOLTEN_NEUTRON.getId());
         }
 
 

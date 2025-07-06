@@ -13,6 +13,6 @@
     "amount": 90,
     "tag": "forge:molten_etheric"
   },
-  "temperature": 0,
-  "time": 28
+  "temperature": 5000,
+  "time": 151
 }
