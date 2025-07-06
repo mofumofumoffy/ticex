@@ -18,6 +18,7 @@ import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
 import slimeknights.tconstruct.library.tools.SlotType;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
+import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.function.Consumer;
 
@@ -47,7 +48,7 @@ public class IronsRecipeProvider implements ITicEXRecipeHelper {
         }
 
         if(TicEXRegistry.CATALYST_IRONS_SPELLBOOK != null) {
-            TagKey<Item> spellbookTags = TagKey.create(Registries.ITEM, new ResourceLocation("tacz", Curios.SPELLBOOK_SLOT));
+            TagKey<Item> spellbookTags = TagKey.create(Registries.ITEM, new ResourceLocation(CuriosApi.MODID, Curios.SPELLBOOK_SLOT));
             EmbossmentCastingRecipeBuilder.castingRecipe(TicEXRegistry.CATALYST_IRONS_SPELLBOOK.get())
                     .setItemCost(1)
                     .setCast(DifferenceIngredient.of(Ingredient.of(spellbookTags), Ingredient.of(TinkerTags.Items.MODIFIABLE)), true)

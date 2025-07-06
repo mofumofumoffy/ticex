@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-06T20:31:51.2575519	Recipes
+// 1.20.1	2025-07-07T06:11:07.4674919	Recipes
 0910092462b9774aff6610ef37e9fd110e70d797 data/ticex/advancements/recipes/misc/items/cores/celestial_core.json
 4764758122eca313b8896bc76772e99350833553 data/ticex/advancements/recipes/misc/items/cores/flickering_reconstruction_core.json
 9e1bce03265191d28647bcc84ab8bda2f2490c8a data/ticex/advancements/recipes/misc/items/cores/konpaku_core.json
@@ -158,7 +158,7 @@ f79b6fa9b5a8e5fdc6b46233c7c60283fea6e42c data/ticex/recipes/tools/modifiers/upgr
 d4490a6c8d54735667b9d10c3d860d3581ca1ac4 data/ticex/recipes/tools/modifiers/upgrade/socket.json
 46876f0c3b476089ab75e53e68bd632ebd93b59e data/ticex/recipes/tools/parts/builder/slashblade_blade.json
 3676c24f4f3f729b4b34490b5fe77df0227a45a4 data/ticex/recipes/tools/parts/builder/slashblade_saya.json
-ab04c52796cec92e43e26179188b9b2eb2a1cafb data/ticex/recipes/tools/parts/casting/catalyst_irons_spellbook.json
+fd82e361e66c43106adc9423bb6e4b1fdc026f02 data/ticex/recipes/tools/parts/casting/catalyst_irons_spellbook.json
 0f63881db80b06bd68bd4b22abe5c7b5836a7bbb data/ticex/recipes/tools/parts/casting/catalyst_kinetic_gun.json
 fccf97128318172c2488267cefc2c3c80602740c data/ticex/recipes/tools/parts/casting/catalyst_mekasuit_boots.json
 424767b74387920098a062c74736d6b2f7657d9f data/ticex/recipes/tools/parts/casting/catalyst_mekasuit_chestplate.json

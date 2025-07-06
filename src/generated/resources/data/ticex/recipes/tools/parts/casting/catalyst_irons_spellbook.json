@@ -3,7 +3,7 @@
   "cast": {
     "type": "forge:difference",
     "base": {
-      "tag": "tacz:spellbook"
+      "tag": "curios:spellbook"
     },
     "subtracted": {
       "tag": "tconstruct:modifiable"

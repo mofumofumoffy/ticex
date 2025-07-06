@@ -20,7 +20,7 @@
       ],
       "icon": "tconstruct:plating",
       "translation_key": "pattern.tconstruct.plating",
-      "x": 23,
+      "x": 33,
       "y": 29
     },
     {
@@ -36,12 +36,12 @@
       "filter": {
         "tag": "ticex:catalysts"
       },
-      "icon": "ticex:catalysts",
+      "icon": "ticex:catalyst",
       "translation_key": "tagtype.ticex.catalyst",
       "x": 13,
       "y": 44
     }
   ],
   "sortIndex": 15,
-  "translation_key": "gui.ticex.gui.ticex.seram_gear"
+  "translation_key": "gui.ticex.seram_gear"
 }

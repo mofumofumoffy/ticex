@@ -1,5 +1,6 @@
 package moffy.ticex.datagen.layout;
 
+import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +23,7 @@ public class CommonStationSlotLayoutProvider extends AbstractStationSlotLayoutPr
         ResourceLocation seramGear = new ResourceLocation("ticex", "seram_gear");
         define(seramGear)
                 .icon(new Pattern(seramGear))
-                .addInputSlot(Patterns.PLATING, "pattern.tconstruct.plating", 23, 29,
+                .addInputSlot(Patterns.PLATING, "pattern.tconstruct.plating", 33, 29,
                         Ingredient.of(
                                 TinkerToolParts.plating.get(ArmorItem.Type.HELMET),
                                 TinkerToolParts.plating.get(ArmorItem.Type.CHESTPLATE),
@@ -31,10 +32,10 @@ public class CommonStationSlotLayoutProvider extends AbstractStationSlotLayoutPr
                         ))
                 .addInputSlot(new Pattern(TinkerToolParts.maille.getId()), "item.tconstruct.maille", 33, 53,
                         Ingredient.of(TinkerToolParts.maille))
-                .addInputSlot(new Pattern(TicEXTags.Items.CATALYSTS.location()), "tagtype.ticex.catalyst", 13, 44,
+                .addInputSlot(new Pattern(new ResourceLocation(TicEX.MODID, "catalyst")), "tagtype.ticex.catalyst", 13, 44,
                         Ingredient.of(TicEXTags.Items.CATALYSTS))
                 .sortIndex(15)
-                .translationKey("gui.ticex.gui.ticex.seram_gear")
+                .translationKey("gui.ticex.seram_gear")
                 .build();
     }
 

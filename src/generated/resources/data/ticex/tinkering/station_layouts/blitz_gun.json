@@ -1,6 +1,6 @@
 {
   "icon": {
-    "item": "ticex:blitz_gun"
+    "pattern": "ticex:blitz_gun"
   },
   "input_slots": [
     {
@@ -25,7 +25,7 @@
       "filter": {
         "item": "ticex:catalyst_kinetic_gun"
       },
-      "icon": "ticex:catalyst_kinetic_gun",
+      "icon": "ticex:catalyst",
       "translation_key": "item.ticex.catalyst_kinetic_gun",
       "x": 24,
       "y": 34

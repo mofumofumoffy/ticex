@@ -1,7 +1,6 @@
 {
   "icon": {
-    "item": "ticex:reforged_slashblade",
-    "nbt": "{Damage:0,tic_broken:0b}"
+    "pattern": "ticex:reforged_slashblade"
   },
   "input_slots": [
     {

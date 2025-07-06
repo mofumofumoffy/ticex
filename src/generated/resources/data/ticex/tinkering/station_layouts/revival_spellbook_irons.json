@@ -1,14 +1,14 @@
 {
   "icon": {
-    "item": "ticex:blitz_gun"
+    "pattern": "ticex:revival_spellbook"
   },
   "input_slots": [
     {
       "filter": {
-        "item": "tconstruct:tough_handle"
+        "item": "tconstruct:large_plate"
       },
-      "icon": "tconstruct:tough_handle",
-      "translation_key": "item.tconstruct.tough_handle",
+      "icon": "tconstruct:large_plate",
+      "translation_key": "item.tconstruct.large_plate",
       "x": 13,
       "y": 29
     },
@@ -25,7 +25,7 @@
       "filter": {
         "item": "ticex:catalyst_irons_spellbook"
       },
-      "icon": "ticex:catalyst_irons_spellbook",
+      "icon": "ticex:catalyst",
       "translation_key": "item.ticex.catalyst_irons_spellbook",
       "x": 33,
       "y": 44

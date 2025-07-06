@@ -2,7 +2,6 @@ package moffy.ticex.datagen.layout;
 
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.data.tinkering.AbstractStationSlotLayoutProvider;
@@ -19,7 +18,7 @@ public class SlashBladeStationSlotLayoutProvider extends AbstractStationSlotLayo
     protected void addLayouts() {
         if (TicEXRegistry.REFORGED_SLASHBLADE != null) {
             defineModifiable((IModifiableDisplay) TicEXRegistry.REFORGED_SLASHBLADE.get())
-                    .icon(new ItemStack(TicEXRegistry.REFORGED_SLASHBLADE.get()))
+                    .icon(new Pattern(TicEXRegistry.REFORGED_SLASHBLADE.getId()))
                     .addInputSlot(new Pattern(TicEXRegistry.SLASHBLADE_BLADE.getId()), "item.ticex.slashblade_blade", 21, 56,
                             Ingredient.of(TicEXRegistry.SLASHBLADE_BLADE))
                     .addInputSlot(new Pattern(TicEXRegistry.SLASHBLADE_SAYA.getId()), "item.ticex.slashblade_saya", 39, 44,
