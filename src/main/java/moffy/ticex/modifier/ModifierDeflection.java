@@ -1,11 +1,12 @@
 package moffy.ticex.modifier;
 
-import java.lang.reflect.Field;
+import cpw.mods.modlauncher.api.INameMappingService;
 import moffy.ticex.lib.IEntityDataAccessor;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
@@ -16,6 +17,8 @@ import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
+
+import java.lang.reflect.Field;
 
 public class ModifierDeflection extends Modifier implements MeleeDamageModifierHook, ProjectileHitModifierHook {
 
@@ -56,7 +59,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
                 float absoluteHealth = Math.max(target.getHealth() - damage, 0f);
                 IEntityDataAccessor accessor = (IEntityDataAccessor) target;
 
-                String fieldName = "f_20961_";
+                String fieldName = ObfuscationReflectionHelper.remapName(INameMappingService.Domain.FIELD, "f_20961_");
                 //fieldName = "DATA_HEALTH_ID";
 
                 Field key = accessor.getField(fieldName);
