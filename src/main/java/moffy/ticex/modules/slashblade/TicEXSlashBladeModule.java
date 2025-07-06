@@ -108,11 +108,16 @@ public class TicEXSlashBladeModule extends AddonModule {
     @OnlyIn(Dist.CLIENT)
     private void initClient() {
         moffy.ticex.client.slashblade.SBToolRenderType.init();
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(TicEXSBEvent::onRegisterRenderers);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void clientSetup(FMLClientSetupEvent event) {
         TicEXRegistry.CUSTOM_MODELS.put(TicEXRegistry.REFORGED_SLASHBLADE.get(), originalModel -> {
             return new moffy.ticex.client.CustomModel(originalModel);
         });
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(TicEXSBEvent::onRegisterRenderers);
     }
     /* public static boolean isPreviousVersion(){
         return ModList.get().getModFileById("slashblade").versionString().compareTo("1.2.0") < 0;
