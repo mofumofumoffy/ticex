@@ -1,6 +1,5 @@
 package moffy.ticex.datagen.general.recipes.apotheosis;
 
-import dev.shadowsoffire.apotheosis.util.ModuleCondition;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -12,7 +11,7 @@ import java.util.function.Consumer;
 
 public class ApotheosisRecipeProvider implements ITicEXRecipeHelper {
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
-        CraftingHelper.register(new ModuleCondition.Serializer());
+        CraftingHelper.register(new FixedModuleCondition.Serializer());
 
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
@@ -21,7 +20,7 @@ public class ApotheosisRecipeProvider implements ITicEXRecipeHelper {
 
         Consumer<FinishedRecipe> enchantmentConsumer = withCondition(
                 topConsumer,
-                new ModuleCondition("enchantment")
+                new FixedModuleCondition("enchantment")
         );
 
         if(TicEXRegistry.OVERLOAD_CORE != null) {

@@ -1,11 +1,14 @@
 package moffy.ticex.modules.apotheosis;
 
 import moffy.addonapi.AddonModule;
+import moffy.ticex.datagen.general.recipes.apotheosis.FixedModuleCondition;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierOverload;
 import moffy.ticex.modifier.ModifierOverride;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class TicEXApotheosisModule extends AddonModule {
 
@@ -21,5 +24,10 @@ public class TicEXApotheosisModule extends AddonModule {
 
         TicEXRegistry.OVERLOAD_MODIFIER = TicEXRegistry.MODIFIERS.register("overload", ModifierOverload::new);
         TicEXRegistry.OVERRIDE_MODIFIER = TicEXRegistry.MODIFIERS.register("override", ModifierOverride::new);
+    }
+
+    @Override
+    public void setup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> CraftingHelper.register(new FixedModuleCondition.Serializer()));
     }
 }

@@ -2,8 +2,8 @@
   "type": "apotheosis:enchanting",
   "conditions": [
     {
-      "type": "apotheosis:module",
-      "field": "enchantment"
+      "type": "ticex:module_fixed",
+      "module": "enchantment"
     },
     {
       "type": "addonapi:mods_available",
