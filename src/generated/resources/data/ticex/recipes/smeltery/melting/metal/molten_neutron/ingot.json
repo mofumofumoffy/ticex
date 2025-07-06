@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:ingots/molten_neutron"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/molten_neutron"
+  },
+  "result": {
+    "amount": 90,
+    "tag": "forge:molten_neutron"
+  },
+  "temperature": 0,
+  "time": 28
+}

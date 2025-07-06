@@ -1,9 +1,0 @@
-{
-  "type": "tconstruct:material",
-  "ingredient": {
-    "item": "ticex:draconic_crystal"
-  },
-  "material": "ticex:draconic",
-  "needed": 1,
-  "value": 1
-}

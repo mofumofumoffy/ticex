@@ -1,7 +1,5 @@
 package moffy.ticex.lib;
 
-import static slimeknights.mantle.Mantle.commonResource;
-
 import moffy.ticex.TicEX;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -9,6 +7,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
+
+import static slimeknights.mantle.Mantle.commonResource;
 
 public class TicEXTags {
 
@@ -62,6 +62,8 @@ public class TicEXTags {
         public static final TagKey<Fluid> NEUTRON = common("molten_neutron");
         public static final TagKey<Fluid> CRYSTAL_MATRIX = common("molten_crystal_matrix");
         public static final TagKey<Fluid> ETHERIC = common("molten_etheric");
+        public static final TagKey<Fluid> HEPATIZON = common("molten_hepatizon");
+        public static final TagKey<Fluid> GOLD = common("molten_gold");
 
         public static final TagKey<Fluid> RECONSTRUCTION_CORE = common("molten_reconstruction_core");
 

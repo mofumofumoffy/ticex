@@ -1,21 +1,5 @@
 package moffy.ticex.datagen.general.tag;
 
-import static slimeknights.tconstruct.common.TinkerTags.Items.BONUS_SLOTS;
-import static slimeknights.tconstruct.common.TinkerTags.Items.BOOTS;
-import static slimeknights.tconstruct.common.TinkerTags.Items.CHESTPLATES;
-import static slimeknights.tconstruct.common.TinkerTags.Items.DURABILITY;
-import static slimeknights.tconstruct.common.TinkerTags.Items.HARVEST;
-import static slimeknights.tconstruct.common.TinkerTags.Items.HELMETS;
-import static slimeknights.tconstruct.common.TinkerTags.Items.INTERACTABLE_RIGHT;
-import static slimeknights.tconstruct.common.TinkerTags.Items.LEGGINGS;
-import static slimeknights.tconstruct.common.TinkerTags.Items.MELEE_PRIMARY;
-import static slimeknights.tconstruct.common.TinkerTags.Items.MULTIPART_TOOL;
-import static slimeknights.tconstruct.common.TinkerTags.Items.PARRY;
-import static slimeknights.tconstruct.common.TinkerTags.Items.SMALL_TOOLS;
-import static slimeknights.tconstruct.common.TinkerTags.Items.TRIM;
-import static slimeknights.tconstruct.common.TinkerTags.Items.UNSALVAGABLE;
-
-import java.util.concurrent.CompletableFuture;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -30,11 +14,17 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.registration.object.FluidObject;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
+import slimeknights.tconstruct.common.registration.CastItemObject;
 import slimeknights.tconstruct.library.data.recipe.CostTagAppender;
+
+import java.util.concurrent.CompletableFuture;
+
+import static slimeknights.tconstruct.common.TinkerTags.Items.*;
 
 public class ItemTagProvider extends ItemTagsProvider {
 
@@ -52,7 +42,7 @@ public class ItemTagProvider extends ItemTagsProvider {
     }
 
     @Override
-    protected void addTags(Provider pProvider) {
+    protected void addTags(@NotNull Provider pProvider) {
         this.addCommon();
         //this.addWorld();
         this.addSmeltery();
@@ -112,6 +102,7 @@ public class ItemTagProvider extends ItemTagsProvider {
         addOptional(TinkerTags.Items.TOOL_PARTS, new ResourceLocation(TicEX.MODID, "slashblade_saya"));
     }
 
+    @SuppressWarnings("unchecked")
     private void addSmeltery() {
         this.tag(TinkerTags.Items.SEARED_TANKS).add(
                 TicEXRegistry.SEARED_RF_FURNACE.get().asItem(),
@@ -121,6 +112,24 @@ public class ItemTagProvider extends ItemTagsProvider {
                 TicEXRegistry.SCORCHED_RF_FURNACE.get().asItem(),
                 TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get().asItem()
             );
+
+        addCast(TicEXRegistry.SLASHBLADE_SAYA_CAST);
+        addCast(TicEXRegistry.SLASHBLADE_BLADE_CAST);
+
+        this.tag(TinkerTags.Items.CASTS)
+                .addOptionalTags(TinkerTags.Items.GOLD_CASTS, TinkerTags.Items.SAND_CASTS, TinkerTags.Items.RED_SAND_CASTS, TinkerTags.Items.TABLE_EMPTY_CASTS, TinkerTags.Items.BASIN_EMPTY_CASTS);
+
+    }
+
+    public void addCast(CastItemObject cast) {
+        this.tag(TinkerTags.Items.GOLD_CASTS).add(cast.get());
+        this.tag(TinkerTags.Items.SAND_CASTS).add(cast.getSand());
+        this.tag(TinkerTags.Items.RED_SAND_CASTS).add(cast.getRedSand());
+        this.tag(SINGLE_USE_CASTS).addTag(cast.getSingleUseTag());
+        this.tag(cast.getSingleUseTag()).add(cast.getSand(), cast.getRedSand());
+        this.tag(MULTI_USE_CASTS).addTag(cast.getMultiUseTag());
+        this.tag(cast.getMultiUseTag()).add(cast.get());
+
     }
 
     @SuppressWarnings("unchecked")
@@ -199,7 +208,6 @@ public class ItemTagProvider extends ItemTagsProvider {
         this.tag(tagKey).addOptional(coreItem);
     }
 
-    @SafeVarargs
     private void addCores(ResourceLocation... coreItems) {
         for (ResourceLocation coreItem : coreItems) {
             if (coreItem != null) {
@@ -208,7 +216,6 @@ public class ItemTagProvider extends ItemTagsProvider {
         }
     }
 
-    @SafeVarargs
     private void addCatalysts(ResourceLocation... catalystItems) {
         for (ResourceLocation catalystItem : catalystItems) {
             if (catalystItem != null) {
@@ -267,7 +274,7 @@ public class ItemTagProvider extends ItemTagsProvider {
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "TiCEX Item Tags";
     }
 }

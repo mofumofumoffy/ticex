@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:storage_blocks/molten_neutron"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/molten_neutron"
+  },
+  "result": {
+    "amount": 810,
+    "tag": "forge:molten_neutron"
+  },
+  "temperature": 0,
+  "time": 84
+}

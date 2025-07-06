@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:storage_blocks/molten_crystal_matrix"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/molten_crystal_matrix"
+  },
+  "result": {
+    "amount": 810,
+    "tag": "forge:molten_crystal_matrix"
+  },
+  "temperature": 0,
+  "time": 84
+}
