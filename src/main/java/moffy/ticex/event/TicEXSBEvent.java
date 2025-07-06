@@ -1,7 +1,7 @@
 package moffy.ticex.event;
 
 import mods.flammpfeil.slashblade.event.BladeMotionEvent;
-import mods.flammpfeil.slashblade.event.InputCommandEvent;
+import mods.flammpfeil.slashblade.event.handler.InputCommandEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import moffy.ticex.TicEX;
 import moffy.ticex.client.slashblade.SBToolBladeItemRenderer;
