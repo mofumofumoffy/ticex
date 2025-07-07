@@ -32,6 +32,7 @@ import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -305,6 +306,7 @@ public class ToolModelMixin {
         );
     }
 
+    @Unique
     private static Object reflectMethod(Class<?> cls, String methodName, Object object, Object... params) {
         try {
             Method method = Arrays.stream(cls.getDeclaredMethods())
@@ -329,6 +331,7 @@ public class ToolModelMixin {
         return null;
     }
 
+    @Unique
     private static boolean isAssignable(Class<?> target, Class<?> actual) {
         if (target.isPrimitive()) {
             return switch (target.getName()) {
@@ -346,6 +349,7 @@ public class ToolModelMixin {
         return target.isAssignableFrom(actual);
     }
 
+    @Unique
     private static BakedModel wrapModel(IToolStackView tool, BakedModel originalModel) {
         if (tool != null) {
             for (Item predicate : TicEXRegistry.CUSTOM_MODELS.keySet()) {
@@ -357,6 +361,7 @@ public class ToolModelMixin {
         return originalModel;
     }
 
+    @Unique
     private static class BakedToolModel extends BakedModelWrapper<BakedModel> {
 
         private final BakedModel left;
