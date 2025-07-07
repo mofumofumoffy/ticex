@@ -102,20 +102,13 @@ public class AvaritiaRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelter
 
         // smeltery
 
-        Consumer<FinishedRecipe> noSakura = withCondition(
-                topConsumer,
-                new NotCondition(
-                    modsAvailable(new ResourceLocation(TicEX.MODID, "sakura_compat"))
-                )
-        );
-
         if(TicEXRegistry.MOLTEN_CRYSTAL_MATRIX != null) {
                 MaterialMeltingRecipeBuilder.material(TicEXMaterials.CRYSTAL_MATRIX,
                         3180,
                         FluidOutput.fromFluid(TicEXRegistry.MOLTEN_CRYSTAL_MATRIX.get().getSource(), 90))
                     .save(topConsumer, prefix(TicEXMaterials.CRYSTAL_MATRIX, materialMeltingFolder));
 
-            metalIngotOptional(noSakura, TicEXTags.Fluids.CRYSTAL_MATRIX, TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, 2100, TicEXRegistry.MOLTEN_CRYSTAL_MATRIX.getId());
+            metalIngotOptional(topConsumer, TicEXTags.Fluids.CRYSTAL_MATRIX, TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, 2100, TicEXRegistry.MOLTEN_CRYSTAL_MATRIX.getId());
         }
 
         if(TicEXRegistry.MOLTEN_INFINITY != null) {
@@ -124,7 +117,7 @@ public class AvaritiaRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelter
                             FluidOutput.fromFluid(TicEXRegistry.MOLTEN_INFINITY.get().getSource(), 90))
                     .save(topConsumer, prefix(TicEXMaterials.INFINITY, materialMeltingFolder));
 
-            metalIngotOptional(noSakura, TicEXTags.Fluids.INFINITY, TicEXTags.Items.INFINITY_BLOCK, 2100, TicEXRegistry.MOLTEN_INFINITY.getId());
+            metalIngotOptional(topConsumer, TicEXTags.Fluids.INFINITY, TicEXTags.Items.INFINITY_BLOCK, 2100, TicEXRegistry.MOLTEN_INFINITY.getId());
         }
 
         if(TicEXRegistry.MOLTEN_NEUTRON != null) {
