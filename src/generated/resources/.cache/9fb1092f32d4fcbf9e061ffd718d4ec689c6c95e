@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-07T06:11:07.4674919	Recipes
+// 1.20.1	2025-07-08T08:46:06.145617	Recipes
 0910092462b9774aff6610ef37e9fd110e70d797 data/ticex/advancements/recipes/misc/items/cores/celestial_core.json
 4764758122eca313b8896bc76772e99350833553 data/ticex/advancements/recipes/misc/items/cores/flickering_reconstruction_core.json
 9e1bce03265191d28647bcc84ab8bda2f2490c8a data/ticex/advancements/recipes/misc/items/cores/konpaku_core.json
@@ -6,7 +6,7 @@
 2e7a3608dd4e3218792930a3d0872a09b433f8f2 data/ticex/advancements/recipes/misc/items/etheric_block_from_ingot.json
 ea982b192d5cb7c42ec683cc798912fc2181030b data/ticex/advancements/recipes/misc/items/etheric_ingot_from_block.json
 27a59fb0d04240add14e1875a0df1791298dfb8a data/ticex/recipes/items/cores/cardboard_core.json
-e6589ea590973517e36072d51e355e5ebc1ab7bd data/ticex/recipes/items/cores/celestial_core.json
+114cfd5467946be0bbf9f415137cf93083fdd189 data/ticex/recipes/items/cores/celestial_core.json
 b546183df9ba301f9cbd64f1cd5fce349120b6a7 data/ticex/recipes/items/cores/chaotic_evolved_core.json
 6cbda8b3020943898e08a216087b077c6bb7fedc data/ticex/recipes/items/cores/draconic_evolved_core.json
 031d2838198415533dc6a120eb0e4c580ed5f71f data/ticex/recipes/items/cores/draconium_evolved_core.json
@@ -25,15 +25,15 @@ d07a8a4d8520bc187ac6d6e4955aa75f18dff541 data/ticex/recipes/items/etheric_ingot_
 63c9dae1d4c05b95ef70018e89fb5c2e6d22e90f data/ticex/recipes/smeltery/casting/chaotic_crystal.json
 e839424f1dea5cf4c89f161aaf30917982396177 data/ticex/recipes/smeltery/casting/draconic_crystal.json
 bda0939d6be8afab9bddb0affe77ca09e422f722 data/ticex/recipes/smeltery/casting/draconium_crystal.json
-fad0bc082d6aae583daac3dbf84cb4403fde56a2 data/ticex/recipes/smeltery/casting/metal/molten_crystal_matrix/block.json
-602e086e5eff674f0f118368fbfad918a46399cd data/ticex/recipes/smeltery/casting/metal/molten_crystal_matrix/ingot_gold_cast.json
-09416998b268fb2daf1bb347ea9e76416a7bad5c data/ticex/recipes/smeltery/casting/metal/molten_crystal_matrix/ingot_sand_cast.json
+2a81e3eb3688e94d432bb8f4ac2c65f82fa9aee6 data/ticex/recipes/smeltery/casting/metal/molten_crystal_matrix/block.json
+bfa935e7ab68082dcf161694ca4345f9ca85d0a7 data/ticex/recipes/smeltery/casting/metal/molten_crystal_matrix/ingot_gold_cast.json
+13e1b555f7d3564c73e37f1de831d2b743dafa98 data/ticex/recipes/smeltery/casting/metal/molten_crystal_matrix/ingot_sand_cast.json
 aab46a6cd97aee12771f44f4fe99bfb450505d69 data/ticex/recipes/smeltery/casting/metal/molten_etheric/block.json
 8dd8b37a082a392ddb96c5ee1ebaea327f0cd0ae data/ticex/recipes/smeltery/casting/metal/molten_etheric/ingot_gold_cast.json
 f823d30f94eb77d9c4e36803ebe00ce2721ac085 data/ticex/recipes/smeltery/casting/metal/molten_etheric/ingot_sand_cast.json
-9b9f8098e2fedbdd4e5115d2f5b67630add1420c data/ticex/recipes/smeltery/casting/metal/molten_infinity/block.json
-41b77b0df00fb2e95a290cf6a5b969069f90eb3a data/ticex/recipes/smeltery/casting/metal/molten_infinity/ingot_gold_cast.json
-724d5e440e6ce02a16a5877788ab6bbac78b8262 data/ticex/recipes/smeltery/casting/metal/molten_infinity/ingot_sand_cast.json
+b8c3552f4a85cf372adf42ef51b074716b1d8c27 data/ticex/recipes/smeltery/casting/metal/molten_infinity/block.json
+0b9bea9677f9aa2c67199c81c21b5251557240f4 data/ticex/recipes/smeltery/casting/metal/molten_infinity/ingot_gold_cast.json
+f9b3b1a9bb87e30c8c828fd2c6ee83a8517acba7 data/ticex/recipes/smeltery/casting/metal/molten_infinity/ingot_sand_cast.json
 b582a7cf4f916509075c5e61c6b829102752a26c data/ticex/recipes/smeltery/casting/metal/molten_neutron/block.json
 49d22be3d467b220a299a2258db94faa62da84a9 data/ticex/recipes/smeltery/casting/metal/molten_neutron/ingot_gold_cast.json
 aab4658c0bf1b9ba5fb7cf55a8f6ff2031ec9b41 data/ticex/recipes/smeltery/casting/metal/molten_neutron/ingot_sand_cast.json
@@ -76,12 +76,12 @@ a6802f4c8245b63c2aa73c1de6091901d4631a6f data/ticex/recipes/smeltery/melting/fue
 7f5b3e87b4d5e23b526b9674d11ff954a89dfa3a data/ticex/recipes/smeltery/melting/fuel/rf_furnace_fuel_7.json
 74281b4dee93c0424fedd21a1313f9f45d3b6493 data/ticex/recipes/smeltery/melting/fuel/rf_furnace_fuel_8.json
 472d05843f6dabd73a6f36af9f3a5a687285d1da data/ticex/recipes/smeltery/melting/fuel/rf_furnace_fuel_9.json
-638cda2c224fab8bc47aadee43d8c60968f4a2c5 data/ticex/recipes/smeltery/melting/metal/molten_crystal_matrix/block.json
-101421f7f3272744a66eb5ff10a31c3cc1825385 data/ticex/recipes/smeltery/melting/metal/molten_crystal_matrix/ingot.json
+fbd59ae95f5a9167f940e811a4c35704ac387a05 data/ticex/recipes/smeltery/melting/metal/molten_crystal_matrix/block.json
+9af4810c9fbab001c236710f70354f214f3bec2b data/ticex/recipes/smeltery/melting/metal/molten_crystal_matrix/ingot.json
 85821570bd6ae151097d4c665f3ee022ec02576e data/ticex/recipes/smeltery/melting/metal/molten_etheric/block.json
 5ec5bf4d8ec430eefc11f090a323cbbb221c23c6 data/ticex/recipes/smeltery/melting/metal/molten_etheric/ingot.json
-3062d292f3c72fbc4c057d53d24bb75d58ddc0cc data/ticex/recipes/smeltery/melting/metal/molten_infinity/block.json
-88103643e856c261a347e791868561cf6d725bd6 data/ticex/recipes/smeltery/melting/metal/molten_infinity/ingot.json
+36a5cd2c7a50bfa7537bcbae6c1b8d36d00c53a8 data/ticex/recipes/smeltery/melting/metal/molten_infinity/block.json
+74c24e12384d3be833a6543d1a5bc06421d2c8a5 data/ticex/recipes/smeltery/melting/metal/molten_infinity/ingot.json
 d5411b8d73bb31360e91d7b1dd593046c481fc04 data/ticex/recipes/smeltery/melting/metal/molten_neutron/block.json
 9b92897ce5652f019c18043fb9a67f713fc48b9d data/ticex/recipes/smeltery/melting/metal/molten_neutron/ingot.json
 6c5734d3fec24c8b6efa04c6dfbc24f6b4af6d11 data/ticex/recipes/tools/armor/catalyst_gem_boots.json

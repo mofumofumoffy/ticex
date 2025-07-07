@@ -10,13 +10,6 @@
       "tag": "forge:ingots/molten_crystal_matrix"
     },
     {
-      "type": "forge:not",
-      "value": {
-        "type": "addonapi:mods_available",
-        "required_raw_module": "ticex:sakura_compat"
-      }
-    },
-    {
       "type": "addonapi:mods_available",
       "required_raw_module": "ticex:avaritia_compat"
     }
