@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import cpw.mods.modlauncher.api.INameMappingService;
 import moffy.ticex.lib.IEntityDataAccessor;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -56,7 +57,11 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
                     hook.afterMeleeHit(tool, modifierEntry, context, damage);
                 }
 
-                float absoluteHealth = Math.max(target.getHealth() - damage, 0f);
+                if(target.getHealth() <= 0f){
+                    return 0;
+                }
+
+                float absoluteHealth = target.getHealth() - damage;
                 IEntityDataAccessor accessor = (IEntityDataAccessor) target;
 
                 String fieldName = ObfuscationReflectionHelper.remapName(INameMappingService.Domain.FIELD, "f_20961_");
@@ -65,6 +70,13 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
                 Field key = accessor.getField(fieldName);
                 if (key != null) {
                     accessor.setValue(key, absoluteHealth);
+
+                    if(absoluteHealth <= 0f){
+                        target.die(attacker.damageSources().genericKill());
+                        if(target.level() instanceof ServerLevel serverLevel){
+                            serverLevel.broadcastEntityEvent(target, (byte) 3);
+                        }
+                    }
                 }
             }
 
