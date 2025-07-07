@@ -1,5 +1,5 @@
 {
-  "type": "avaritia:shaped_extreme_craft",
+  "type": "avaritia:shaped_table",
   "category": "misc",
   "conditions": [
     {
@@ -32,5 +32,6 @@
   "result": {
     "item": "ticex:celestial_core"
   },
-  "show_notification": true
+  "show_notification": true,
+  "tier": 4
 }

@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-08T08:46:06.145617	Recipes
+// 1.20.1	2025-07-08T08:56:31.3143034	Recipes
 0910092462b9774aff6610ef37e9fd110e70d797 data/ticex/advancements/recipes/misc/items/cores/celestial_core.json
 4764758122eca313b8896bc76772e99350833553 data/ticex/advancements/recipes/misc/items/cores/flickering_reconstruction_core.json
 9e1bce03265191d28647bcc84ab8bda2f2490c8a data/ticex/advancements/recipes/misc/items/cores/konpaku_core.json
@@ -6,7 +6,7 @@
 2e7a3608dd4e3218792930a3d0872a09b433f8f2 data/ticex/advancements/recipes/misc/items/etheric_block_from_ingot.json
 ea982b192d5cb7c42ec683cc798912fc2181030b data/ticex/advancements/recipes/misc/items/etheric_ingot_from_block.json
 27a59fb0d04240add14e1875a0df1791298dfb8a data/ticex/recipes/items/cores/cardboard_core.json
-114cfd5467946be0bbf9f415137cf93083fdd189 data/ticex/recipes/items/cores/celestial_core.json
+e0def38edcd9c8557e79ad3ed20c1aef10706343 data/ticex/recipes/items/cores/celestial_core.json
 b546183df9ba301f9cbd64f1cd5fce349120b6a7 data/ticex/recipes/items/cores/chaotic_evolved_core.json
 6cbda8b3020943898e08a216087b077c6bb7fedc data/ticex/recipes/items/cores/draconic_evolved_core.json
 031d2838198415533dc6a120eb0e4c580ed5f71f data/ticex/recipes/items/cores/draconium_evolved_core.json
