@@ -158,6 +158,8 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
 
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+
     implementation fg.deobf("curse.maven:moffs-addonapi-dynload-1242459:6420515")
 
     implementation fg.deobf("curse.maven:mantle-74924:6635380")

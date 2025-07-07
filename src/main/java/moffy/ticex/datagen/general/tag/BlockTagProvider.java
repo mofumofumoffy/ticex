@@ -37,6 +37,22 @@ public class BlockTagProvider extends BlockTagsProvider {
         addMetalTags(TicEXTags.Blocks.CRYSTAL_MATRIX, new ResourceLocation("avaritia", "crystal_matrix_block"), true);
 
         addMetalTags(TicEXTags.Blocks.ETHERIC, new ResourceLocation(TicEX.MODID, "etheric_block"), true);
+
+        addPickaxeBlock(BlockTags.NEEDS_IRON_TOOL, new ResourceLocation(TicEX.MODID, "etheric_block"));
+
+        addPickaxeBlock(BlockTags.NEEDS_STONE_TOOL,
+            new ResourceLocation(TicEX.MODID, "seared_rf_furnace"),
+            new ResourceLocation(TicEX.MODID, "scorched_rf_furnace"),
+            new ResourceLocation(TicEX.MODID, "creative_seared_rf_furnace"),
+            new ResourceLocation(TicEX.MODID, "creative_scorched_rf_furnace")
+        );
+    }
+
+    private void addPickaxeBlock(TagKey<Block> tool, ResourceLocation ...blocks){
+        for(ResourceLocation block : blocks){
+            this.tag(BlockTags.MINEABLE_WITH_PICKAXE).addOptional(block);
+            this.tag(tool).addOptional(block);
+        }
     }
 
     private void addSmeltery() {
