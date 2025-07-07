@@ -1,9 +1,0 @@
-{
-  "type": "tconstruct:material",
-  "ingredient": {
-    "item": "ticex:wyvern_crystal"
-  },
-  "material": "ticex:wyvern",
-  "needed": 1,
-  "value": 1
-}

@@ -1,0 +1,14 @@
+{
+  "entities": [
+    "minecraft:armor_stand",
+    "minecraft:player"
+  ],
+  "slots": [
+    "incomparable_legs",
+    "incomparable_offhand",
+    "incomparable_chest",
+    "incomparable_head",
+    "incomparable_mainhand",
+    "incomparable_feet"
+  ]
+}

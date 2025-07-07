@@ -1,0 +1,29 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:ingots/molten_infinity"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "addonapi:mods_available",
+        "required_raw_module": "ticex:sakura_compat"
+      }
+    },
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/molten_infinity"
+  },
+  "result": {
+    "amount": 90,
+    "tag": "forge:molten_infinity"
+  },
+  "temperature": 2100,
+  "time": 95
+}
