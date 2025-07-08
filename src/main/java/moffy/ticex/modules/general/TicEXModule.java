@@ -1,6 +1,5 @@
 package moffy.ticex.modules.general;
 
-import java.util.List;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.RFFurnaceBlock;
@@ -14,11 +13,7 @@ import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.InfinityTier;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
-import moffy.ticex.lib.recipe.EmbossmentBuildingRecipe;
-import moffy.ticex.lib.recipe.EmbossmentCastingRecipe;
-import moffy.ticex.lib.recipe.EmbossmentModifierRecipe;
-import moffy.ticex.lib.recipe.SingleEmbossmentModifierRecipe;
-import moffy.ticex.lib.recipe.ValidatableIncrementalModifierRecipe;
+import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.modifier.ModifierEmbossment;
@@ -29,11 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -50,6 +41,8 @@ import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.module.ModuleHook;
 import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+
+import java.util.List;
 
 public class TicEXModule extends AddonModule {
 
@@ -69,7 +62,7 @@ public class TicEXModule extends AddonModule {
 
         TicEXRegistry.MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
             "embossment_modifier",
-            () -> LoadableRecipeSerializer.of(EmbossmentModifierRecipe.LOADER)
+                () -> LoadableRecipeSerializer.of(EmbossmentModifierRecipe.LOADER)
         );
         TicEXRegistry.SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
             "single_embossment_modifier",

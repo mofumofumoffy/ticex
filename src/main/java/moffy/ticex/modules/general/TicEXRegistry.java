@@ -1,20 +1,12 @@
 package moffy.ticex.modules.general;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.function.IntFunction;
-import java.util.function.Supplier;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.client.ShaderInstanceMap;
 import moffy.ticex.client.ToolShaderMap;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.registries.Registries;
@@ -24,12 +16,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
@@ -43,6 +31,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import slimeknights.mantle.fluid.UnplaceableFluid;
+import slimeknights.mantle.recipe.helper.TypeAwareRecipeSerializer;
 import slimeknights.mantle.registration.deferred.FluidDeferredRegister;
 import slimeknights.mantle.registration.object.EnumObject;
 import slimeknights.mantle.registration.object.FlowingFluidObject;
@@ -61,6 +50,11 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.Supplier;
 
 public class TicEXRegistry {
 
@@ -160,11 +154,13 @@ public class TicEXRegistry {
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
 
-    public static RegistryObject<RecipeSerializer<?>> CASTING_EMBOSSMENT_RECIPE_SERIALIZER = null;
-    public static RegistryObject<RecipeSerializer<?>> BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = null;
-    public static RegistryObject<RecipeSerializer<?>> MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
-    public static RegistryObject<RecipeSerializer<?>> SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
-    public static RegistryObject<RecipeSerializer<?>> VALIDATABLE_INCREMENTAL_RECIPE_SERIALIZER = null;
+    public static RegistryObject<TypeAwareRecipeSerializer<EmbossmentCastingRecipe>> CASTING_EMBOSSMENT_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<EmbossmentBuildingRecipe>> BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<EmbossmentModifierRecipe>> MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<SingleEmbossmentModifierRecipe>> SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
+    public static RegistryObject<RecipeSerializer<ValidatableIncrementalModifierRecipe>> VALIDATABLE_INCREMENTAL_RECIPE_SERIALIZER = null;
+
+
 
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
     public static ModuleHook<ProvidePropertyModifierHook> PROPERTY_PROVIDER_HOOK = null;
@@ -224,7 +220,7 @@ public class TicEXRegistry {
     public static RegistryObject<Block> CREATIVE_SCORCHED_RF_FURNACE = null;
 
     public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> RF_FURNACE_ENTITY = null;
-    public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> CREATICE_RF_FURNACE_ENTITY = null;
+    public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> CREATIVE_RF_FURNACE_ENTITY = null;
 
     public static FluidObject<UnplaceableFluid> MOLTEN_RECONSTRUCTION_CORE = null;
     public static List<FluidObject<UnplaceableFluid>> RF_FURNACE_FUELS = new ArrayList<>();
