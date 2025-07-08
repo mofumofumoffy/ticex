@@ -27,3 +27,5 @@ forge*changelog.txt
 
 #libs
 libs
+
+src/generated/resources/.cache

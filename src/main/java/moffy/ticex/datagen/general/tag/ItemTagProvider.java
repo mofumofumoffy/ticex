@@ -147,6 +147,7 @@ public class ItemTagProvider extends ItemTagsProvider {
             PARRY,
             SMALL_TOOLS,
             BONUS_SLOTS,
+            LONGBOWS,
             ItemTags.SWORDS,
             UNSALVAGABLE
         );
