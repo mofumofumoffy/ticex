@@ -1,7 +1,0 @@
-// 1.20.1	2025-05-15T11:07:42.166403	Tags for minecraft:fluid mod id ticex
-50272066a1303761f5e10ec13495bdb7093d9bda data/forge/tags/fluids/molten_crystal_matrix.json
-9195f48434262332fd23e8bf7245c86a36dfbd1a data/forge/tags/fluids/molten_etheric.json
-6108a7ae71f47d464850c603e7c6e436b5b1ca8f data/forge/tags/fluids/molten_infinity.json
-cefcf67bcb2ba85a589eade25ea4b03204c287f4 data/forge/tags/fluids/molten_neutron.json
-4b1ee269aa70629f4d412455835a5e6ca6a7e9f3 data/forge/tags/fluids/molten_reconstruction_core.json
-ce7e1de2cf948d5360a1bb9b5122047d5bbdcbc8 data/tconstruct/tags/fluids/tooltips/metal.json
