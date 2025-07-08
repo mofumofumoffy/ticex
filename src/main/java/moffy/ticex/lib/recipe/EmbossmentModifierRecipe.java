@@ -108,41 +108,45 @@ public class EmbossmentModifierRecipe extends AbstractModifierRecipe {
     @Override
     public RecipeResult<LazyToolStack> getValidatedResult(ITinkerStationContainer inv, RegistryAccess access) {
         ToolStack tool = inv.getTinkerable();
-
-        ModifierId modifier = result.getId();
-
-        tool = tool.copy();
-
-        if (tool.getModifierLevel(modifier) == 0) {
-            SlotCount slots = getSlots();
-            if (slots != null) {
-                tool.getPersistentData().addSlots(slots.type(), -slots.count());
-            }
+        var commonError = this.validatePrerequisites(tool);
+        if (commonError != null) {
+            return RecipeResult.failure(commonError);
         } else {
-            tool.removeModifier(modifier, 1);
-        }
+            ModifierId modifier = result.getId();
 
-        tool.addModifier(modifier, 1);
-        boolean result = false;
-        ItemStack resultStack = tool.createStack();
+            tool = tool.copy();
 
-        EmbossmentContext context = new EmbossmentContext(resultStack, inv);
-
-        boolean secondary = false;
-        for (int i = 0; i < inv.getInputCount(); i++) {
-            ItemStack input = inv.getInput(i);
-            if (embossItem.get(0).test(input)) {
-                result = tool
-                    .getModifier(modifier)
-                    .getHook(TicEXRegistry.EMBOSSMENT_HOOK)
-                    .applyItem(context, i, secondary);
+            if (tool.getModifierLevel(modifier) == 0) {
+                SlotCount slots = getSlots();
+                if (slots != null) {
+                    tool.getPersistentData().addSlots(slots.type(), -slots.count());
+                }
+            } else {
+                tool.removeModifier(modifier, 1);
             }
-            secondary = true;
-        }
 
-        if (result) {
-            return LazyToolStack.success(context.getToolStack());
+            tool.addModifier(modifier, 1);
+            boolean result = false;
+            ItemStack resultStack = tool.createStack();
+
+            EmbossmentContext context = new EmbossmentContext(resultStack, inv);
+
+            boolean secondary = false;
+            for (int i = 0; i < inv.getInputCount(); i++) {
+                ItemStack input = inv.getInput(i);
+                if (embossItem.get(0).test(input)) {
+                    result = tool
+                            .getModifier(modifier)
+                            .getHook(TicEXRegistry.EMBOSSMENT_HOOK)
+                            .applyItem(context, i, secondary);
+                }
+                secondary = true;
+            }
+
+            if (result) {
+                return LazyToolStack.success(context.getToolStack());
+            }
+            return RecipeResult.failure(context.getErrorMsg());
         }
-        return RecipeResult.failure(context.getErrorMsg());
     }
 }

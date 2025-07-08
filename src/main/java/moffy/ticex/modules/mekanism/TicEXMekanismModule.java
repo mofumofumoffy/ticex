@@ -8,6 +8,7 @@ import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
 import moffy.ticex.event.TicEXMekanismEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
+import moffy.ticex.item.modifiable.ModifiableMekaTool;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.ModifierMekanic;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -35,6 +36,7 @@ public class TicEXMekanismModule extends AddonModule {
     public static final String ADD_MEKAPLATE_CHESTPLATE_MODULES = "add_mekaplate_chestplate_modules";
     public static final String ADD_MEKAPLATE_LEGGINGS_MODULES = "add_mekaplate_leggings_modules";
     public static final String ADD_MEKAPLATE_BOOTS_MODULES = "add_mekaplate_boots_modules";
+    public static final String ADD_MEKA_TOOL_MODULES = "add_modifiable_meka_tool_modules";
 
     public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
 
@@ -60,6 +62,14 @@ public class TicEXMekanismModule extends AddonModule {
             "catalyst_mekasuit",
             ArmorItem.Type.values(),
             type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId())
+        );
+
+        TicEXRegistry.MEKA_TOOL = TicEXRegistry.ITEMS_EXTENDED.register("meka_tool",
+                () -> new ModifiableMekaTool(new Item.Properties().stacksTo(1))
+        );
+
+        TicEXRegistry.CATALYST_MEKA_TOOL = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_tool",
+                () -> new ToolPartItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_tool").getId())
         );
 
         TicEXRegistry.MEKANIC_MODIFIER = TicEXRegistry.MODIFIERS.register("mekanic", ModifierMekanic::new);

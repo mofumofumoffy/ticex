@@ -46,4 +46,11 @@ public class MekanismIMCMixin {
     ) {
         sendModuleIMC(TicEXMekanismModule.ADD_MEKAPLATE_BOOTS_MODULES, moduleDataProviders);
     }
+
+    @Inject(at = @At("tail"), method = "addMekaToolModules")
+    private static void addMekaToolModuleExtension(
+            IModuleDataProvider<?>[] moduleDataProviders,
+            CallbackInfo ci) {
+        sendModuleIMC(TicEXMekanismModule.ADD_MEKA_TOOL_MODULES, moduleDataProviders);
+    }
 }

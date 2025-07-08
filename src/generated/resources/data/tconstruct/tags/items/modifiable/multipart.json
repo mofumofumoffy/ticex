@@ -13,6 +13,10 @@
       "required": false
     },
     {
+      "id": "ticex:meka_tool",
+      "required": false
+    },
+    {
       "id": "ticex:mekaplate_helmet",
       "required": false
     },

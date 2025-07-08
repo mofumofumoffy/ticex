@@ -68,6 +68,12 @@ public abstract class ModuleHelperMixin {
             TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.BOOTS),
             supportedContainersBuilderMap
         );
+        mixinMapSupportedModules(
+                event,
+                TicEXMekanismModule.ADD_MEKA_TOOL_MODULES,
+                TicEXRegistry.MEKA_TOOL.get(),
+                supportedContainersBuilderMap
+        );
     }
 
     private void mixinMapSupportedModules(

@@ -46,6 +46,7 @@ public class TicEXTags {
         public static final TagKey<Item> SLASHBLADE_TOOL = local("seram/slashblade");
         public static final TagKey<Item> KINETIC_GUN_TOOL = local("seram/kinetic_gun");
         public static final TagKey<Item> IRONS_SPELLBOOK_TOOL = local("seram/irons_spellbook");
+        public static final TagKey<Item> MEKA_TOOL = local("seram/meka_tool");
 
         private static TagKey<Item> local(String name) {
             return TagKey.create(Registries.ITEM, getResource(name));

@@ -1,5 +1,6 @@
 package moffy.ticex.datagen.general.tag;
 
+import java.util.concurrent.CompletableFuture;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -21,7 +22,6 @@ import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.common.registration.CastItemObject;
 import slimeknights.tconstruct.library.data.recipe.CostTagAppender;
-
 import java.util.concurrent.CompletableFuture;
 
 import static slimeknights.tconstruct.common.TinkerTags.Items.*;
@@ -87,7 +87,8 @@ public class ItemTagProvider extends ItemTagsProvider {
         addCatalysts(
             new ResourceLocation(TicEX.MODID, "catalyst_slashblade"),
             new ResourceLocation(TicEX.MODID, "catalyst_kinetic_gun"),
-            new ResourceLocation(TicEX.MODID, "catalyst_irons_spellbook")
+            new ResourceLocation(TicEX.MODID, "catalyst_irons_spellbook"),
+            new ResourceLocation(TicEX.MODID, "catalyst_meka_tool")
         );
 
         //catalyst_armors
@@ -176,6 +177,15 @@ public class ItemTagProvider extends ItemTagsProvider {
             BONUS_SLOTS,
             UNSALVAGABLE
         );
+        addToolTags(
+                new ResourceLocation(TicEX.MODID, "meka_tool"),
+                TicEXTags.Items.MEKA_TOOL,
+                MULTIPART_TOOL,
+                MELEE_WEAPON,
+                HARVEST,
+                BONUS_SLOTS,
+                DURABILITY
+        );
 
         //armors
         addArmorTags(new ResourceLocation(TConstruct.MOD_ID, "plate"), TicEXTags.Items.PLATE);
@@ -201,7 +211,8 @@ public class ItemTagProvider extends ItemTagsProvider {
                 TicEXTags.Items.KINETIC_GUN_TOOL,
                 TicEXTags.Items.IRONS_SPELLBOOK_TOOL,
                 TicEXTags.Items.MEKASUIT_ARMOR,
-                TicEXTags.Items.GEM_ARMOR
+                TicEXTags.Items.GEM_ARMOR,
+                TicEXTags.Items.MEKA_TOOL
             );
     }
 
