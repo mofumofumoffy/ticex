@@ -64,7 +64,7 @@ public class AvaritiaRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelter
         // core
 
         if (TicEXRegistry.CELESTIAL_CORE != null) {
-            ModShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.CELESTIAL_CORE.get())
+            ModShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.CELESTIAL_CORE.get(),1)
                     .showNotification(true)
                     .define('c', TicEXRegistry.RECONSTRUCTION_CORE.get())
                     .define('d', Items.DRAGON_HEAD)
