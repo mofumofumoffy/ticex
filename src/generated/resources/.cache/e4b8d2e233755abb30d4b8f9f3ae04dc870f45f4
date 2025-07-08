@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-27T20:40:43.225059	TiCEX Material Stats
+// 1.20.1	2025-06-05T10:16:49.8923507	TiCEX Material Stats
 3f5502533243853789c922a3e9ed2bf88dc3a09a data/ticex/tinkering/materials/stats/chaotic.json
 352fab11ed6caa3d8fe55452c31cd8224565311f data/ticex/tinkering/materials/stats/crystal_matrix.json
 5db6caaa156b0be40e15af1c7eda5618557b2e13 data/ticex/tinkering/materials/stats/draconic.json
@@ -6,5 +6,5 @@
 b2080bb87024043732a492041cf9167c478207df data/ticex/tinkering/materials/stats/etheric.json
 5255eef7b5793c64aa0fcdf6fcba61796d4f8210 data/ticex/tinkering/materials/stats/infinity.json
 ca5b8a0bda301d16698dd990d24e874cff394756 data/ticex/tinkering/materials/stats/neutron.json
-ce13baf19d04fbd58d94982bae670208f1bd235b data/ticex/tinkering/materials/stats/reconstruction.json
+ce109ad4a8855a957cb1cb503d4c88db1136775b data/ticex/tinkering/materials/stats/reconstruction.json
 6af4c9db87e20d9e2dc5b0821e92032a350d2975 data/ticex/tinkering/materials/stats/wyvern.json
