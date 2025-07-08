@@ -163,7 +163,7 @@ public class ModifierOmnipotence
 
                     try {
                         ToolUtils.class.getDeclaredMethod("sweepAttack", Level.class, LivingEntity.class, Entity.class);
-                        ToolUtils.sweepAttack(level, attackerEntity, targetEntity);
+                        ToolUtils.sweepAttack(level, attackerEntity, victim);
                     } catch (Exception e) {}
 
                     victim.setHealth(0);

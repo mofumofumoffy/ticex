@@ -7,5 +7,11 @@
   },
   "java.compile.nullAnalysis.mode": "disabled",
   "formatAll.includeFileExtensions": [".java", ".json"],
-  "formatAll.excludeFolders": ["bin", "build", "run-data", "run"]
+  "formatAll.excludeFolders": [
+    "bin",
+    "build",
+    "run-data",
+    "run"
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

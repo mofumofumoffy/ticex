@@ -1,0 +1,26 @@
+{
+  "type": "tconstruct:alloy",
+  "inputs": [
+    {
+      "amount": 90,
+      "fluid": "tconstruct:molten_slimesteel"
+    },
+    {
+      "amount": 90,
+      "tag": "forge:molten_hepatizon"
+    },
+    {
+      "amount": 90,
+      "tag": "forge:molten_gold"
+    },
+    {
+      "amount": 250,
+      "fluid": "ticex:molten_reconstruction_core"
+    }
+  ],
+  "result": {
+    "amount": 270,
+    "tag": "forge:molten_etheric"
+  },
+  "temperature": 2500
+}

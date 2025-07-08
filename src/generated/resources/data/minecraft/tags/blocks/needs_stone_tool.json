@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "ticex:seared_rf_furnace",
+      "required": false
+    },
+    {
+      "id": "ticex:scorched_rf_furnace",
+      "required": false
+    },
+    {
+      "id": "ticex:creative_seared_rf_furnace",
+      "required": false
+    },
+    {
+      "id": "ticex:creative_scorched_rf_furnace",
+      "required": false
+    }
+  ]
+}
