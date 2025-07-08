@@ -16,6 +16,14 @@
     "config.MeltingFuelAccessor",
     "config.MeltingFuelMixin",
     "config.ToolDefinitionLoaderMixin"
+    "CriticalAccessor",
+    "DataItemAccessor",
+    "EntityMixin",
+    "MeleeAttributeModuleMixin",
+    "RandomMaterialMixin",
+    "config.MeltingFuelAccessor",
+    "config.MeltingFuelMixin",
+    "config.ToolDefinitionLoaderMixin"
   ],
   "client": [
     "ItemRendererMixin",
