@@ -11,13 +11,17 @@ import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentModifierRe
 import moffy.ticex.datagen.general.recipes.ticex.embossment.SingleEmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
+
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.recipe.ingredient.SizedIngredient;
 import slimeknights.mantle.registration.object.ItemObject;
@@ -98,8 +102,12 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
         }
 
         if(TicEXRegistry.CATALYST_SLASHBLADE != null) {
+            Consumer<FinishedRecipe> hfConsumer = withCondition(topConsumer, new ModLoadedCondition("energyblade"));
+
             embossmentCasting(topConsumer, TicEXRegistry.CATALYST_SLASHBLADE.get(), 1, SBItems.slashblade.asItem(), true,
                     prefix(TicEXRegistry.CATALYST_SLASHBLADE, partsCastingFolder));
+            embossmentCasting(hfConsumer, TicEXRegistry.CATALYST_SLASHBLADE.get(), 1, TagKey.create(Registries.ITEM, new ResourceLocation("energyblade", "forge_energy_blade")), true,
+                    prefix(TicEXRegistry.CATALYST_SLASHBLADE, partsCastingFolder).withSuffix("_hf"));
         }
     }
 

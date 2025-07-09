@@ -95,11 +95,6 @@ public class AvaritiaRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelter
                 .setFluid(TicEXTags.Fluids.NEUTRON, 90)
                 .save(topConsumer, prefix(TicEXMaterials.NEUTRON, materialCastingFolder));
 
-        MaterialFluidRecipeBuilder.material(TicEXMaterials.RECONSTRUCTION)
-                .setTemperature(1000)
-                .setFluid(TicEXTags.Fluids.RECONSTRUCTION_CORE, 2000)
-                .save(topConsumer, prefix(TicEXMaterials.RECONSTRUCTION, materialCastingFolder));
-
         // smeltery
 
         if(TicEXRegistry.MOLTEN_CRYSTAL_MATRIX != null) {
