@@ -106,8 +106,6 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
 
             embossmentCasting(topConsumer, TicEXRegistry.CATALYST_SLASHBLADE.get(), 1, SBItems.slashblade.asItem(), true,
                     prefix(TicEXRegistry.CATALYST_SLASHBLADE, partsCastingFolder));
-            embossmentCasting(hfConsumer, TicEXRegistry.CATALYST_SLASHBLADE.get(), 1, TagKey.create(Registries.ITEM, new ResourceLocation("energyblade", "forge_energy_blade")), true,
-                    prefix(TicEXRegistry.CATALYST_SLASHBLADE, partsCastingFolder).withSuffix("_hf"));
         }
     }
 
