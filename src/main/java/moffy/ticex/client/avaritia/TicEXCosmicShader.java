@@ -15,10 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterShadersEvent;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -69,11 +66,6 @@ public final class TicEXCosmicShader {
                 () -> {
                     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
                     bus.addListener(this::onRegisterShaders);
-
-                    MinecraftForge.EVENT_BUS.addListener(this::clientTick);
-                    MinecraftForge.EVENT_BUS.addListener(this::renderTick);
-                    MinecraftForge.EVENT_BUS.addListener(this::drawScreenPre);
-                    MinecraftForge.EVENT_BUS.addListener(this::drawScreenPost);
                 }
         );
     }
@@ -207,13 +199,4 @@ public final class TicEXCosmicShader {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public void drawScreenPre(final ScreenEvent.Render.Pre e) {
-        inventoryRender = true;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void drawScreenPost(final ScreenEvent.Render.Post e) {
-        inventoryRender = false;
-    }
 }

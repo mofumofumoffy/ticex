@@ -12,11 +12,6 @@ import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderType.CompositeState;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.Objects;
@@ -71,11 +66,6 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
         );
 
         this.register(bus);
-
-        MinecraftForge.EVENT_BUS.addListener(this::drawScreenPre);
-        MinecraftForge.EVENT_BUS.addListener(this::drawScreenPost);
-        MinecraftForge.EVENT_BUS.addListener(this::guiOverlayPre);
-        MinecraftForge.EVENT_BUS.addListener(this::guiOverlayPost);
     }
 
     public static void init(IEventBus bus) {
@@ -173,25 +163,5 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
                 toolShader.getBaseColorUniform().glUniform4f(r, g, b, a);
             }
         }
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void drawScreenPre(final ScreenEvent.Render.Pre e) {
-        guiRender = true;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void guiOverlayPre(final RenderGuiOverlayEvent.Pre e) {
-        guiRender = true;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void drawScreenPost(final ScreenEvent.Render.Post e) {
-        guiRender = false;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void guiOverlayPost(final RenderGuiOverlayEvent.Post e) {
-        guiRender = false;
     }
 }

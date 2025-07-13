@@ -216,6 +216,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:bookshelf-228525:5423987")
     runtimeOnly fg.deobf("curse.maven:modernfix-790626:6125143")
     runtimeOnly fg.deobf("curse.maven:ferritecore-429235:4810975")
+    runtimeOnly fg.deobf("curse.maven:badoptimizations-949555:6742958")
     runtimeOnly fg.deobf("curse.maven:jade-324717:6271651")
 
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:6237015")

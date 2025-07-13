@@ -31,15 +31,17 @@ public class TicEXDEUtils {
     );
 
     public static TechLevel getTechLevel(IToolStackView tool) {
-        switch (tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get())) {
-            case 1:
-                return TechLevel.DRACONIUM;
-            case 2:
-                return TechLevel.WYVERN;
-            case 3:
-                return TechLevel.DRACONIC;
-            case 4:
-                return TechLevel.CHAOTIC;
+        if(tool != null){
+            switch (tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get())) {
+                case 1:
+                    return TechLevel.DRACONIUM;
+                case 2:
+                    return TechLevel.WYVERN;
+                case 3:
+                    return TechLevel.DRACONIC;
+                case 4:
+                    return TechLevel.CHAOTIC;
+            }
         }
         return null;
     }

@@ -12,6 +12,7 @@ import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.PartPredicate;
 import moffy.ticex.client.ShaderProvider;
 import moffy.ticex.client.ShaderProvider.RenderQuadArgsWrapper;
+import moffy.ticex.lib.AddQuadToQueueConsumer;
 import moffy.ticex.client.ShaderToolQuad;
 import moffy.ticex.client.ShaderToolRenderUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -35,6 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.library.tools.part.IToolPart;
 
 @Mixin(value = ItemRenderer.class, priority = 1700)
 public abstract class ItemRendererMixin {
@@ -52,7 +54,6 @@ public abstract class ItemRendererMixin {
         VertexConsumer pBuffer
     );
 
-    @SuppressWarnings("deprecation")
     @Inject(at = @At("head"), method = "render", cancellable = true)
     public void render(
         ItemStack pItemStack,
@@ -73,72 +74,95 @@ public abstract class ItemRendererMixin {
             if (pItemStack.getItem() instanceof IModifiable) {
                 ToolStack tool = ToolStack.from(pItemStack);
                 if (TicEXRegistry.TOOL_SHADERS.isToolTarget(tool)) {
-                    List<ShaderToolRenderUtils.RenderTask> renderQueue = new ArrayList<>();
-                    Set<PartPredicate> seen = new HashSet<>();
-
-                    pPoseStack.pushPose();
-
-                    pModel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(
-                        pPoseStack,
-                        pModel,
-                        pDisplayContext,
-                        pLeftHand
-                    );
-                    pPoseStack.translate(-0.5F, -0.5F, -0.5F);
-                    for (var model : pModel.getRenderPasses(pItemStack, true)) {
-                        for (var rendertype : model.getRenderTypes(pItemStack, true)) {
-                            RandomSource randomsource = RandomSource.create();
-
-                            for (Direction direction : Direction.values()) {
-                                randomsource.setSeed(42L);
-                                this.addShaderQuadToQueue(
-                                        rendertype,
-                                        pPoseStack,
-                                        pBuffer,
-                                        model.getQuads((BlockState) null, direction, randomsource),
-                                        pItemStack,
-                                        pCombinedLight,
-                                        pCombinedOverlay,
-                                        pDisplayContext,
-                                        tool,
-                                        renderQueue::add,
-                                        seen
-                                    );
-                            }
-
-                            randomsource.setSeed(42L);
-                            this.addShaderQuadToQueue(
-                                    rendertype,
-                                    pPoseStack,
-                                    pBuffer,
-                                    model.getQuads((BlockState) null, (Direction) null, randomsource),
-                                    pItemStack,
-                                    pCombinedLight,
-                                    pCombinedOverlay,
-                                    pDisplayContext,
-                                    tool,
-                                    renderQueue::add,
-                                    seen
-                                );
-                        }
-                    }
-
-                    renderQueue.sort(
-                        Comparator.comparingInt(task -> ((ShaderToolRenderUtils.RenderTask) task).getPhase().getIndex())
-                    );
-                    for (ShaderToolRenderUtils.RenderTask task : renderQueue) {
-                        task.renderQuad();
-                    }
-
-                    pPoseStack.popPose();
+                    renderModelListsWithShader(pItemStack, pPoseStack, pModel, pDisplayContext, pLeftHand, (rendertype, quads, queue, seen)->{
+                        this.addToolShaderQuadToQueue(
+                            rendertype,
+                            pPoseStack,
+                            pBuffer,
+                            quads,
+                            pItemStack,
+                            pCombinedLight,
+                            pCombinedOverlay,
+                            pDisplayContext,
+                            queue::add,
+                            seen,
+                            tool
+                        );
+                    });
+                    cb.cancel();
+                }
+            } else if(pItemStack.getItem() instanceof IToolPart toolPart){
+                ShaderProvider<RenderQuadArgsWrapper> provider = TicEXRegistry.TOOL_SHADERS.getProvider(toolPart.getMaterial(pItemStack));
+                if(provider != null){
+                    renderModelListsWithShader(pItemStack, pPoseStack, pModel, pDisplayContext, pLeftHand, (rendertype, quads, queue, seen)->{
+                        this.addToolShaderQuadToQueue(
+                            rendertype,
+                            pPoseStack,
+                            pBuffer,
+                            quads,
+                            pItemStack,
+                            pCombinedLight,
+                            pCombinedOverlay,
+                            pDisplayContext,
+                            queue::add,
+                            seen,
+                            null
+                        );
+                    });
                     cb.cancel();
                 }
             }
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Unique
-    private void addShaderQuadToQueue(
+    private void renderModelListsWithShader(
+        ItemStack pItemStack,
+        PoseStack pPoseStack,
+        BakedModel pModel,
+        ItemDisplayContext pDisplayContext,
+        boolean pLeftHand,
+        AddQuadToQueueConsumer addQueueConsumer
+    ){
+        List<ShaderToolRenderUtils.RenderTask> renderQueue = new ArrayList<>();
+        Set<PartPredicate> seen = new HashSet<>();
+
+        pPoseStack.pushPose();
+
+        pModel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(
+            pPoseStack,
+            pModel,
+            pDisplayContext,
+            pLeftHand
+        );
+        pPoseStack.translate(-0.5F, -0.5F, -0.5F);
+        for (var model : pModel.getRenderPasses(pItemStack, true)) {
+            for (var rendertype : model.getRenderTypes(pItemStack, true)) {
+                RandomSource randomsource = RandomSource.create();
+
+                for (Direction direction : Direction.values()) {
+                    randomsource.setSeed(42L);
+                    addQueueConsumer.accept(rendertype, model.getQuads((BlockState) null, direction, randomsource), renderQueue, seen);
+                }
+
+                randomsource.setSeed(42L);
+                addQueueConsumer.accept(rendertype, model.getQuads((BlockState) null, (Direction) null, randomsource), renderQueue, seen);
+            }
+        }
+
+        renderQueue.sort(
+            Comparator.comparingInt(task -> ((ShaderToolRenderUtils.RenderTask) task).getPhase().getIndex())
+        );
+        for (ShaderToolRenderUtils.RenderTask task : renderQueue) {
+            task.renderQuad();
+        }
+
+        pPoseStack.popPose();
+    }
+
+    @Unique
+    private void addToolShaderQuadToQueue(
         RenderType renderType,
         PoseStack pPoseStack,
         MultiBufferSource pBuffer,
@@ -147,9 +171,9 @@ public abstract class ItemRendererMixin {
         int pCombinedLight,
         int pCombinedOverlay,
         ItemDisplayContext pDisplayContext,
-        IToolStackView tool,
         Consumer<ShaderToolRenderUtils.RenderTask> addTaskFn,
-        Set<PartPredicate> seenList
+        Set<PartPredicate> seenList,
+        IToolStackView tool
     ) {
         boolean flag = !pItemStack.isEmpty();
 
