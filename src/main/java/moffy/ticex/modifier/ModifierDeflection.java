@@ -1,11 +1,17 @@
 package moffy.ticex.modifier;
 
 import cpw.mods.modlauncher.api.INameMappingService;
+import moffy.ticex.TicEX;
 import moffy.ticex.lib.IEntityDataAccessor;
+import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.modifier.propeties.DeflectionProperty;
+import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import slimeknights.tconstruct.library.modifiers.Modifier;
@@ -20,8 +26,12 @@ import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
 import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.function.BiFunction;
 
-public class ModifierDeflection extends Modifier implements MeleeDamageModifierHook, ProjectileHitModifierHook {
+public class ModifierDeflection extends Modifier implements MeleeDamageModifierHook, ProjectileHitModifierHook, ProvidePropertyModifierHook {
+
+    public static final ResourceLocation DEFLECTION_DISABLED = new ResourceLocation(TicEX.MODID, "deflection_disabled");
 
     @Override
     public int getPriority() {
@@ -31,7 +41,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
     @Override
     protected void registerHooks(Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE, ModifierHooks.PROJECTILE_HIT);
+        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE, ModifierHooks.PROJECTILE_HIT, TicEXRegistry.PROPERTY_PROVIDER_HOOK);
     }
 
     @Override
@@ -42,7 +52,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
         float baseDamage,
         float damage
     ) {
-        if (!context.isExtraAttack()) {
+        if (!context.isExtraAttack() && !tool.getPersistentData().getBoolean(DEFLECTION_DISABLED)) {
             LivingEntity target = context.getLivingTarget();
             Player attacker = context.getPlayerAttacker();
 
@@ -96,12 +106,17 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
         LivingEntity target
     ) {
         for (ModifierEntry toolEntry : modifiers.getModifiers()) {
-            if (!toolEntry.matches(this)) {
+            if (!toolEntry.matches(this) && !persistentData.getBoolean(DEFLECTION_DISABLED)) {
                 toolEntry
                     .getHook(ModifierHooks.PROJECTILE_HIT)
                     .onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit, attacker, target);
             }
         }
         return false;
+    }
+
+    @Override
+    public BiFunction<Player, ItemStack, Map<String, Object>> getPropertyProvider() {
+        return DeflectionProperty.getProperties();
     }
 }
