@@ -10,6 +10,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
@@ -26,7 +27,7 @@ public class ModifierSoulRending extends Modifier implements LootingModifierHook
     }
 
     @Override
-    public int updateLooting(IToolStackView tool, ModifierEntry modifierEntry, LootingContext context, int looting) {
+    public int updateLooting(@NotNull IToolStackView tool, @NotNull ModifierEntry modifierEntry, LootingContext context, int looting) {
         if (!canEntityDropSoul(context.getLivingTarget())) {
             return looting;
         }
@@ -47,6 +48,7 @@ public class ModifierSoulRending extends Modifier implements LootingModifierHook
 
         if ((rand == 0 && !isAnimal) || (rand2 == 0 && isAnimal)) {
             ItemStack soul = DEContent.MOB_SOUL.get().getSoulFromEntity(entity, false);
+            //noinspection resource
             context
                 .getHolder()
                 .level()
@@ -58,6 +60,8 @@ public class ModifierSoulRending extends Modifier implements LootingModifierHook
     }
 
     private static boolean canEntityDropSoul(LivingEntity entity) {
+        if(entity == null) return false;
+
         if (!entity.canChangeDimensions() && !DEConfig.allowBossSouls) {
             return false;
         }
