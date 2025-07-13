@@ -3,7 +3,9 @@ package moffy.ticex.modules.draconicevolution;
 import com.brandon3055.brandonscore.api.TechLevel;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.caps.draconicevolution.DEItemCapabilityProvider;
+import moffy.ticex.client.draconicevolution.TicEXDEShader;
 import moffy.ticex.item.cores.ItemReconstCore;
+import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import moffy.ticex.modifier.ModifierEvolved;
 import moffy.ticex.modifier.ModifierSoulRending;
@@ -14,6 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 
@@ -55,10 +58,7 @@ public class TicEXDEModule extends AddonModule {
 
         DistExecutor.unsafeRunWhenOn(
             Dist.CLIENT,
-            () ->
-                () -> {
-                    initClient();
-                }
+            () -> this::initClient
         );
     }
 
@@ -66,18 +66,19 @@ public class TicEXDEModule extends AddonModule {
     void initClient() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        moffy.ticex.client.draconicevolution.TicEXDEShader.init(bus);
+        TicEXDEShader.init(bus);
 
         TicEXRegistry.TOOL_SHADERS.addShader(ModifierIds.reinforced, wrapper -> {
+            TicEXDEShader shader = TicEXDEShader.instance;
             TechLevel techLevel = TicEXDEUtils.getTechLevel(wrapper.getTool());
-            if (techLevel != null && moffy.ticex.client.draconicevolution.TicEXDEShader.instance != null) {
-                moffy.ticex.client.draconicevolution.TicEXDEShader.glUniformBaseColor(
-                    moffy.ticex.client.draconicevolution.TicEXDEShader.instance,
+            if (techLevel != null && shader != null) {
+                TicEXDEShader.glUniformBaseColor(
+                        shader,
                     techLevel,
                     1F
                 );
                 wrapper.renderQuadsWithConsumer(
-                    moffy.ticex.client.draconicevolution.TicEXDEShader.instance.getRenderType(),
+                    shader.getModifierRenderType(),
                     wrapper.getQuad(),
                     techLevel == TechLevel.CHAOTIC ? 0.9f : wrapper.getRed(),
                     wrapper.getGreen(),
@@ -87,9 +88,42 @@ public class TicEXDEModule extends AddonModule {
                 wrapper.renderQuadsWithConsumer();
             }
         });
+
         TicEXRegistry.SHADER_INSTANCE_MAP.addShader(
             ModifierIds.reinforced,
-            moffy.ticex.client.draconicevolution.TicEXDEShader.instance::getShaderInstance
+            TicEXDEShader.instance::getShaderInstance
         );
+
+        MaterialId[] materials = new MaterialId[] {
+                TicEXMaterials.DRACONIUM,
+                TicEXMaterials.WYVERN,
+                TicEXMaterials.DRACONIC,
+                TicEXMaterials.CHAOTIC
+        };
+
+        for (int i = 0; i < materials.length; i++) {
+            MaterialId materialId = materials[i];
+            TechLevel techLevel = TechLevel.VALUES[i];
+
+
+            TicEXRegistry.TOOL_SHADERS.addShader(materialId, wrapper -> {
+                TicEXDEShader shader = TicEXDEShader.instance;
+                TicEXDEShader.glUniformBaseColor(shader, techLevel, 1.0F);
+
+                wrapper.renderQuadsWithConsumer(
+                        shader.getMaterialsRenderType(),
+                        wrapper.getQuad(),
+                        techLevel == TechLevel.CHAOTIC ? 0.9f : wrapper.getRed(),
+                        wrapper.getGreen(),
+                        wrapper.getBlue()
+                );
+            });
+
+            TicEXRegistry.SHADER_INSTANCE_MAP.addShader(
+                    materialId,
+                    TicEXDEShader.instance::getShaderInstance,
+                    () -> TicEXDEShader.instance.setup(techLevel)
+            );
+        }
     }
 }

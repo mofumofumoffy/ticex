@@ -5,6 +5,7 @@
 
 uniform sampler2D Sampler0;
 
+uniform float Scale;
 uniform vec4 ColorModulator;
 uniform float FogStart;
 uniform float FogEnd;
@@ -27,13 +28,15 @@ in vec3 vNorm;
 out vec4 fragColor;
 
 void main() {
-
     vec4 texColor = texture(Sampler0, texCoord0.xy);
+    if(texColor.a < 0.1) discard;
 
     vec3 coord = vec3(texCoord0, 0.0);
 
     coord.x += ((fPos.x + vNorm.x) / 10);
     coord.y += ((fPos.y + vNorm.y) / 10);
+
+    coord *= Scale;
 
     float brightness = BaseColor.w;
     float density = 8;
@@ -56,6 +59,5 @@ void main() {
     color.rgb = mix(overlayColor.rgb, color.rgb, overlayColor.a);
     color *= lightMapColor;
 
-    if(texColor.a < 0.1) discard;
     fragColor = linear_fog(color, vertexDistance, FogStart, FogEnd, FogColor);
 }

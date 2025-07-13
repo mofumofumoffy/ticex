@@ -4,46 +4,78 @@ import codechicken.lib.render.shader.CCUniform;
 import codechicken.lib.util.ClientUtils;
 import com.brandon3055.brandonscore.api.TechLevel;
 import com.brandon3055.brandonscore.client.shader.BCShader;
+import com.google.common.base.Supplier;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import java.util.Objects;
 import moffy.ticex.TicEX;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderType.CompositeState;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public final class TicEXDEShader extends BCShader<TicEXDEShader> {
+import java.util.Objects;
 
+public final class TicEXDEShader extends BCShader<TicEXDEShader> {
+    private final RenderStateShard.ShaderStateShard shaderState;
+
+    private CCUniform scaleUniform;
     private CCUniform uv1OverrideUniform;
     private CCUniform uv2OverrideUniform;
 
     private CCUniform baseColorUniform;
 
-    private RenderType renderType;
+    private final RenderType modifierRenderType;
+    private final RenderType materialsRenderType;
+    public boolean guiRender = false;
 
     public static TicEXDEShader instance = null;
 
     public TicEXDEShader(IEventBus bus) {
-        super(new ResourceLocation(TicEX.MODID, "draconicevolution/modifiers/trace"), DefaultVertexFormat.NEW_ENTITY);
-        renderType = RenderType.create(
-            TicEX.MODID + ":tool_evolved",
+        super(new ResourceLocation(TicEX.MODID, "draconicevolution/trace"), DefaultVertexFormat.NEW_ENTITY);
+        this.shaderState = new RenderStateShard.ShaderStateShard(this::getShaderInstance);
+        Supplier<CompositeState.CompositeStateBuilder> shaderStateBaseFactory = () ->
+                CompositeState.builder()
+                        .setShaderState(shaderState)
+                        .setTextureState(RenderStateShard.BLOCK_SHEET_MIPPED)
+                        .setLightmapState(RenderType.LIGHTMAP)
+                        .setOverlayState(RenderStateShard.OVERLAY)
+                        .setOutputState(RenderType.TRANSLUCENT_TARGET);
+
+        modifierRenderType = RenderType.create(
+            TicEX.MODID + ":tool_evolved_modifiers",
             DefaultVertexFormat.NEW_ENTITY,
             VertexFormat.Mode.QUADS,
             2097152,
             true,
             false,
-            RenderType.CompositeState.builder()
-                .setShaderState(new RenderStateShard.ShaderStateShard(this::getShaderInstance))
-                .setTextureState(RenderStateShard.BLOCK_SHEET_MIPPED)
-                .setLightmapState(RenderType.LIGHTMAP)
-                .setOverlayState(RenderStateShard.OVERLAY)
+            shaderStateBaseFactory.get()
                 .setTransparencyState(RenderType.LIGHTNING_TRANSPARENCY)
-                .setOutputState(RenderType.TRANSLUCENT_TARGET)
+                .createCompositeState(true)
+        );
+        materialsRenderType = RenderType.create(
+            TicEX.MODID + ":tool_evolved_materials",
+            DefaultVertexFormat.NEW_ENTITY,
+            VertexFormat.Mode.QUADS,
+            2097152,
+            true,
+            false,
+            shaderStateBaseFactory.get()
+                .setTransparencyState(RenderType.NO_TRANSPARENCY)
                 .createCompositeState(true)
         );
 
         this.register(bus);
+
+        MinecraftForge.EVENT_BUS.addListener(this::drawScreenPre);
+        MinecraftForge.EVENT_BUS.addListener(this::drawScreenPost);
+        MinecraftForge.EVENT_BUS.addListener(this::guiOverlayPre);
+        MinecraftForge.EVENT_BUS.addListener(this::guiOverlayPost);
     }
 
     public static void init(IEventBus bus) {
@@ -52,44 +84,65 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
         );
     }
 
-    public final CCUniform getUv1OverrideUniform() {
+    public void setup(TechLevel techLevel) {
+        glUniformBaseColor(this, techLevel, 1.0F);
+
+        if(hasScaleUniform()) {
+            getScaleUniform().glUniform1f(guiRender ? 0.1f : 1.0f);
+        }
+    }
+
+    public CCUniform getUv1OverrideUniform() {
         return Objects.requireNonNull(uv1OverrideUniform, missingUniformMessage("UV1Override"));
     }
 
-    public final boolean hasUv1OverrideUniform() {
+    public boolean hasScaleUniform() {
+        return scaleUniform != null;
+    }
+
+    public CCUniform getScaleUniform() {
+        return Objects.requireNonNull(scaleUniform, missingUniformMessage("Scale"));
+    }
+
+    public boolean hasUv1OverrideUniform() {
         return uv1OverrideUniform != null;
     }
 
-    public final CCUniform getUv2OverrideUniform() {
+    public CCUniform getUv2OverrideUniform() {
         return Objects.requireNonNull(uv2OverrideUniform, missingUniformMessage("UV2Override"));
     }
 
-    public final boolean hasUv2OverrideUniform() {
+    public boolean hasUv2OverrideUniform() {
         return uv2OverrideUniform != null;
     }
 
-    public final CCUniform getBaseColorUniform() {
+    public CCUniform getBaseColorUniform() {
         return Objects.requireNonNull(baseColorUniform, missingUniformMessage("BaseColor"));
     }
 
-    public final boolean hasBaseColorUniform() {
+    public boolean hasBaseColorUniform() {
         return baseColorUniform != null;
     }
 
     @Override
     protected void onShaderLoaded() {
         super.onShaderLoaded();
+        scaleUniform = shaderInstance.getUniform("Scale");
         uv1OverrideUniform = shaderInstance.getUniform("UV1Override");
         uv2OverrideUniform = shaderInstance.getUniform("UV2Override");
 
         baseColorUniform = shaderInstance.getUniform("BaseColor");
     }
 
-    public RenderType getRenderType() {
-        return renderType;
+    public RenderType getModifierRenderType() {
+        return modifierRenderType;
     }
 
-    protected static float[][] baseColours = {
+    public RenderType getMaterialsRenderType() {
+        return materialsRenderType;
+    }
+
+    private static final float[][] baseColours = {
         { 0.0F, 0.5F, 0.8F, 1F },
         { 0.55F, 0.0F, 0.65F, 1F },
         { 0.8F, 0.5F, 0.1F, 1F },
@@ -116,9 +169,29 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
                         b += pulse * 0.2F;
                 }
 
+
                 toolShader.getBaseColorUniform().glUniform4f(r, g, b, a);
-                return;
             }
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void drawScreenPre(final ScreenEvent.Render.Pre e) {
+        guiRender = true;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void guiOverlayPre(final RenderGuiOverlayEvent.Pre e) {
+        guiRender = true;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void drawScreenPost(final ScreenEvent.Render.Post e) {
+        guiRender = false;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void guiOverlayPost(final RenderGuiOverlayEvent.Post e) {
+        guiRender = false;
     }
 }

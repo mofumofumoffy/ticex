@@ -5,7 +5,7 @@
     "dstrgb": "1-srcalpha"
   },
   "vertex": "draconicevolution:tools/tool_base",
-  "fragment": "ticex:draconicevolution/modifiers/trace",
+  "fragment": "ticex:draconicevolution/trace",
   "attributes": ["Position", "Color", "UV0", "UV1", "UV2", "Normal"],
   "samplers": [
     { "name": "Sampler0" },
@@ -13,6 +13,12 @@
     { "name": "Sampler2" }
   ],
   "uniforms": [
+    {
+      "name": "Scale",
+      "type": "float",
+      "count": 1,
+      "values": [1.0]
+    },
     {
       "name": "ModelViewMat",
       "type": "matrix4x4",

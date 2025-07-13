@@ -50,6 +50,7 @@ mat4 rotationMatrix(vec3 axis, float angle)
 void main (void)
 {
     vec4 mask = texture(Sampler0, texCoord0.xy);
+    if(mask.a < 0.1) discard;
 
     float oneOverExternalScale = 1.0/externalScale;
 
@@ -185,6 +186,5 @@ void main (void)
 
     col = clamp(col,0.0,1.0);
 
-    if(mask.a < 0.1) discard;
     fragColor = linear_fog(col * ColorModulator, vertexDistance, FogStart, FogEnd, FogColor);
 }
