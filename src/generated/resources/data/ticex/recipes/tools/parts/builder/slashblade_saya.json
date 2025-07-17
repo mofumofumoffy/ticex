@@ -8,14 +8,6 @@
   ],
   "cost": 6,
   "pattern": "ticex:slashblade_saya",
-  "pattern_item": [
-    {
-      "tag": "tconstruct:patterns/default"
-    },
-    {
-      "item": "ticex:slashblade_saya_cast"
-    }
-  ],
   "result": {
     "item": "ticex:slashblade_saya"
   }

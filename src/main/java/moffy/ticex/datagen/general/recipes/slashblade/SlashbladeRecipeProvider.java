@@ -110,8 +110,7 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
                 .setCost(cost)
                 .setPattern(new ResourceLocation(TicEX.MODID, pattern))
                 .setPatternItem(Ingredient.fromValues(Stream.of(
-                        new Ingredient.TagValue(TinkerTags.Items.DEFAULT_PATTERNS),
-                        new Ingredient.ItemValue(new ItemStack(castItem))
+                        new Ingredient.TagValue(TinkerTags.Items.DEFAULT_PATTERNS)
                 )))
                 .save(topConsumer, prefix(itemObj, partsBuilderFolder));
 
