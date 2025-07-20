@@ -4,6 +4,7 @@ import static slimeknights.tconstruct.common.TinkerTags.Modifiers.ABILITIES;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.BONUS_SLOTLESS;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.DEFENSE;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.EXTRACT_MODIFIER_BLACKLIST;
+import static slimeknights.tconstruct.common.TinkerTags.Modifiers.EXTRACT_SLOTLESS_BLACKLIST;
 import static slimeknights.tconstruct.common.TinkerTags.Modifiers.GENERAL_UPGRADES;
 
 import moffy.ticex.TicEX;
@@ -32,6 +33,18 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
         this.tag(BONUS_SLOTLESS).addOptional(new ResourceLocation(TicEX.MODID, "inject"));
 
         this.tag(ABILITIES).addOptional(new ResourceLocation(TicEX.MODID, "embossment"));
+
+        this.tag(EXTRACT_SLOTLESS_BLACKLIST).addOptional(
+                new ResourceLocation(TicEX.MODID, "embossment"),
+                new ResourceLocation(TicEX.MODID, "mekanic"),
+                new ResourceLocation(TicEX.MODID, "konpaku"),
+                new ResourceLocation(TicEX.MODID, "koshirae"),
+                new ResourceLocation(TicEX.MODID, "hidden_proud"),
+                new ResourceLocation(TicEX.MODID, "overload"),
+                new ResourceLocation(TicEX.MODID, "override"),
+                new ResourceLocation(TicEX.MODID, "lamellar"),
+                new ResourceLocation(TicEX.MODID, "flowerstorm")
+            );
 
         this.tag(EXTRACT_MODIFIER_BLACKLIST).addOptional(
                 new ResourceLocation(TicEX.MODID, "embossment"),

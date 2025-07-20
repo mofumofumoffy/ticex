@@ -45,5 +45,6 @@ public class TicEXPEModule extends AddonModule {
         TicEXRegistry.HURRICANE_MODIFIER = TicEXRegistry.MODIFIERS.register("hurricane", ModifierHurricane::new);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXPEEvent::onJump);
+        MinecraftForge.EVENT_BUS.addListener(TicEXPEEvent::onPlayerTick);
     }
 }

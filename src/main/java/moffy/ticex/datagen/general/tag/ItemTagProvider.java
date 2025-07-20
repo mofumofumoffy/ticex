@@ -22,7 +22,6 @@ import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.common.registration.CastItemObject;
 import slimeknights.tconstruct.library.data.recipe.CostTagAppender;
-import java.util.concurrent.CompletableFuture;
 
 import static slimeknights.tconstruct.common.TinkerTags.Items.*;
 

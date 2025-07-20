@@ -12,7 +12,7 @@ public class TicEXApotheosisUtils {
     private static boolean isApothicAttributesLoaded = ModList.get().isLoaded("attributeslib");
     private static UUID modifierUUID = UUID.fromString("841a954a-1deb-4c01-925f-973d9e265bf5");
     private static AttributeModifier modifier = isApothicAttributesLoaded
-        ? new AttributeModifier(modifierUUID, "celestial", 1, AttributeModifier.Operation.ADDITION)
+        ? new AttributeModifier(modifierUUID, "flying", 1, AttributeModifier.Operation.ADDITION)
         : null;
 
     private static AttributeInstance getAttributeInstance(Player player) {
@@ -25,7 +25,9 @@ public class TicEXApotheosisUtils {
             if (!attr.hasModifier(modifier)) {
                 attr.addPermanentModifier(modifier);
             }
-        } else if (!player.getAbilities().mayfly) {
+        }
+
+        if (!player.getAbilities().mayfly) {
             player.getAbilities().mayfly = true;
         }
         player.onUpdateAbilities();
@@ -35,9 +37,12 @@ public class TicEXApotheosisUtils {
         AttributeInstance attr = isApothicAttributesLoaded ? getAttributeInstance(player) : null;
         if (isApothicAttributesLoaded) {
             attr.removeModifier(modifierUUID);
-        } else if (player.getAbilities().mayfly) {
+        }
+
+        if (player.getAbilities().mayfly) {
             player.getAbilities().mayfly = false;
         }
+        player.getAbilities().flying = false;
         player.onUpdateAbilities();
     }
 }

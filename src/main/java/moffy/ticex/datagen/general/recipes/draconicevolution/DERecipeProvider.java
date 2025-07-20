@@ -4,7 +4,6 @@ import com.brandon3055.brandonscore.api.TechLevel;
 import com.brandon3055.draconicevolution.datagen.FusionRecipeBuilder;
 import com.brandon3055.draconicevolution.init.DEContent;
 import moffy.ticex.TicEX;
-import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
@@ -25,7 +24,7 @@ import slimeknights.tconstruct.library.tools.SlotType;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class DERecipeProvider implements ITicEXRecipeHelper, ITicEXSmelteryRecipeHelper, ISmelteryRecipeHelper {
+public class DERecipeProvider implements ITicEXSmelteryRecipeHelper, ISmelteryRecipeHelper {
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
@@ -33,7 +32,7 @@ public class DERecipeProvider implements ITicEXRecipeHelper, ITicEXSmelteryRecip
         );
 
         if(TicEXRegistry.INJECT_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.PROUD_MODIFIER.getId())
+            ModifierRecipeBuilder.modifier(TicEXRegistry.INJECT_MODIFIER.getId())
                     .allowCrystal()
                     .checkTraitLevel()
                     .addInput(TicEXRegistry.INJECT_CORE.get())

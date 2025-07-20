@@ -53,7 +53,7 @@ public class PERecipeProvider implements ITicEXRecipeHelper, IToolRecipeHelper {
 
         if(TicEXRegistry.INFERNAL_MODIFIER != null) {
             ModifierRecipeBuilder.modifier(TicEXRegistry.INFERNAL_MODIFIER)
-                    .setTools(DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.CHEST_PARTS), Ingredient.of(TicEXTags.Items.GEM_ARMOR)))
+                    .setTools(DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.CHESTPLATES), Ingredient.of(TicEXTags.Items.GEM_ARMOR)))
                     .addInput(item(new ResourceLocation(TicEX.MODID, "catalyst_gem_chestplate")))
                     .setSlots(SlotType.DEFENSE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.INFERNAL_MODIFIER.getId(), defenseFolder));

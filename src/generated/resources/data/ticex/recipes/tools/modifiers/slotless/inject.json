@@ -14,7 +14,7 @@
     }
   ],
   "level": 1,
-  "result": "ticex:hidden_proud",
+  "result": "ticex:inject",
   "tools": [
     {
       "tag": "tconstruct:modifiable/melee"

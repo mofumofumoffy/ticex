@@ -19,7 +19,7 @@
   "tools": {
     "type": "forge:difference",
     "base": {
-      "tag": "tconstruct:chest_parts"
+      "tag": "tconstruct:modifiable/armor/chestplate"
     },
     "subtracted": {
       "tag": "ticex:seram/gem"
