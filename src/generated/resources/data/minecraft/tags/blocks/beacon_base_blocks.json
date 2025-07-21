@@ -1,15 +1,15 @@
 {
   "values": [
     {
-      "id": "avaritia:infinity_block",
+      "id": "avaritia:infinity",
       "required": false
     },
     {
-      "id": "avaritia:neutron_block",
+      "id": "avaritia:neutron",
       "required": false
     },
     {
-      "id": "avaritia:crystal_matrix_block",
+      "id": "avaritia:crystal_matrix",
       "required": false
     },
     {

@@ -23,7 +23,7 @@ public class MaterialDefinitionProvider extends AbstractMaterialDataProvider {
     protected void addMaterials() {
         addMaterial(
             TicEXMaterials.INFINITY,
-            999,
+            6,
             ORDER_COMPAT + ORDER_WEAPON,
             false,
             false,
@@ -77,7 +77,7 @@ public class MaterialDefinitionProvider extends AbstractMaterialDataProvider {
             false,
             availableCondition("draconicevolution_compat")
         );
-        addMaterial(TicEXMaterials.ETHERIC, 999, ORDER_COMPAT + ORDER_WEAPON, false);
+        addMaterial(TicEXMaterials.ETHERIC, 6, ORDER_COMPAT + ORDER_WEAPON, false);
         addMaterial(TicEXMaterials.RECONSTRUCTION, 3, ORDER_COMPAT, false);
     }
 

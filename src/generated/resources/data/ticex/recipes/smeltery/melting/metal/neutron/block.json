@@ -1,5 +1,5 @@
 {
-  "type": "tconstruct:casting_basin",
+  "type": "tconstruct:melting",
   "conditions": [
     {
       "type": "mantle:tag_filled",
@@ -10,12 +10,13 @@
       "required_raw_module": "ticex:avaritia_compat"
     }
   ],
-  "cooling_time": 453,
-  "fluid": {
+  "ingredient": {
+    "tag": "forge:storage_blocks/neutron"
+  },
+  "result": {
     "amount": 810,
     "tag": "forge:molten_neutron"
   },
-  "result": {
-    "tag": "forge:storage_blocks/neutron"
-  }
+  "temperature": 5000,
+  "time": 453
 }

@@ -3,7 +3,7 @@
   "conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:storage_blocks/molten_neutron"
+      "tag": "forge:ingots/crystal_matrix"
     },
     {
       "type": "addonapi:mods_available",
@@ -11,12 +11,12 @@
     }
   ],
   "ingredient": {
-    "tag": "forge:storage_blocks/molten_neutron"
+    "tag": "forge:ingots/crystal_matrix"
   },
   "result": {
-    "amount": 810,
-    "tag": "forge:molten_neutron"
+    "amount": 90,
+    "tag": "forge:molten_crystal_matrix"
   },
-  "temperature": 6360,
-  "time": 517
+  "temperature": 2100,
+  "time": 95
 }

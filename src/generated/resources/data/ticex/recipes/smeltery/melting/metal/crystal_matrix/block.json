@@ -3,7 +3,7 @@
   "conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:storage_blocks/molten_crystal_matrix"
+      "tag": "forge:storage_blocks/crystal_matrix"
     },
     {
       "type": "addonapi:mods_available",
@@ -11,7 +11,7 @@
     }
   ],
   "ingredient": {
-    "tag": "forge:storage_blocks/molten_crystal_matrix"
+    "tag": "forge:storage_blocks/crystal_matrix"
   },
   "result": {
     "amount": 810,

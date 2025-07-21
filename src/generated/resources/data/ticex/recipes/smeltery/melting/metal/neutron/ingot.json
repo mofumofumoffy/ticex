@@ -3,7 +3,7 @@
   "conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:storage_blocks/molten_infinity"
+      "tag": "forge:ingots/neutron"
     },
     {
       "type": "addonapi:mods_available",
@@ -11,12 +11,12 @@
     }
   ],
   "ingredient": {
-    "tag": "forge:storage_blocks/molten_infinity"
+    "tag": "forge:ingots/neutron"
   },
   "result": {
-    "amount": 810,
-    "tag": "forge:molten_infinity"
+    "amount": 90,
+    "tag": "forge:molten_neutron"
   },
-  "temperature": 2100,
-  "time": 285
+  "temperature": 5000,
+  "time": 151
 }

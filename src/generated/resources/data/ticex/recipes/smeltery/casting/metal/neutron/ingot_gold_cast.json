@@ -6,19 +6,19 @@
   "conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:ingots/molten_crystal_matrix"
+      "tag": "forge:ingots/neutron"
     },
     {
       "type": "addonapi:mods_available",
       "required_raw_module": "ticex:avaritia_compat"
     }
   ],
-  "cooling_time": 95,
+  "cooling_time": 151,
   "fluid": {
     "amount": 90,
-    "tag": "forge:molten_crystal_matrix"
+    "tag": "forge:molten_neutron"
   },
   "result": {
-    "tag": "forge:ingots/molten_crystal_matrix"
+    "tag": "forge:ingots/neutron"
   }
 }

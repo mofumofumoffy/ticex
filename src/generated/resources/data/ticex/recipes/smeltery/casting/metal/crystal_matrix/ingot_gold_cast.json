@@ -6,7 +6,7 @@
   "conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:ingots/molten_infinity"
+      "tag": "forge:ingots/crystal_matrix"
     },
     {
       "type": "addonapi:mods_available",
@@ -16,9 +16,9 @@
   "cooling_time": 95,
   "fluid": {
     "amount": 90,
-    "tag": "forge:molten_infinity"
+    "tag": "forge:molten_crystal_matrix"
   },
   "result": {
-    "tag": "forge:ingots/molten_infinity"
+    "tag": "forge:ingots/crystal_matrix"
   }
 }

@@ -76,9 +76,9 @@ public class ItemTagProvider extends ItemTagsProvider {
         addOptional(TicEXTags.Items.ETHERIC_INGOT, new ResourceLocation(TicEX.MODID, "etheric_ingot"));
 
         //blocks
-        addOptional(TicEXTags.Items.INFINITY_BLOCK, new ResourceLocation("avaritia", "infinity_block"));
-        addOptional(TicEXTags.Items.NEUTRON_BLOCK, new ResourceLocation("avaritia", "neutron_block"));
-        addOptional(TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, new ResourceLocation("avaritia", "crystal_matrix_block"));
+        addOptional(TicEXTags.Items.INFINITY_BLOCK, new ResourceLocation("avaritia", "infinity"));
+        addOptional(TicEXTags.Items.NEUTRON_BLOCK, new ResourceLocation("avaritia", "neutron"));
+        addOptional(TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, new ResourceLocation("avaritia", "crystal_matrix"));
 
         addOptional(TicEXTags.Items.ETHERIC_BLOCK, new ResourceLocation(TicEX.MODID, "etheric_block"));
 
