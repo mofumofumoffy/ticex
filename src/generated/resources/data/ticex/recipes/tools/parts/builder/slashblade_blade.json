@@ -8,9 +8,6 @@
   ],
   "cost": 4,
   "pattern": "ticex:slashblade_blade",
-  "pattern_item": {
-    "tag": "tconstruct:patterns/default"
-  },
   "result": {
     "item": "ticex:slashblade_blade"
   }

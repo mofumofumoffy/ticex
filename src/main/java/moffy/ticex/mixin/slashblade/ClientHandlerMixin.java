@@ -1,7 +1,7 @@
 package moffy.ticex.mixin.slashblade;
 
 import mods.flammpfeil.slashblade.client.ClientHandler;
-import moffy.ticex.client.slashblade.LayerSBToolMainBlade;
+import moffy.ticex.client.modules.slashblade.LayerSBToolMainBlade;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.EntityType;

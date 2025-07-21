@@ -1,9 +1,7 @@
-package moffy.ticex.client.slashblade;
+package moffy.ticex.client.modules.slashblade;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import jp.nyatla.nymmd.MmdException;
 import jp.nyatla.nymmd.MmdMotionPlayerGL2;
 import jp.nyatla.nymmd.MmdPmdModelMc;
@@ -21,46 +19,50 @@ import mods.flammpfeil.slashblade.registry.ComboStateRegistry;
 import mods.flammpfeil.slashblade.registry.combo.ComboState;
 import mods.flammpfeil.slashblade.util.TimeValueHelper;
 import mods.flammpfeil.slashblade.util.VectorHelper;
+import moffy.ticex.client.rendering.ItemRenderContext;
+import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+
+import java.io.IOException;
 
 public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<T>> extends LayerMainBlade<T, M> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LayerSBToolMainBlade.class);
     final LazyOptional<MmdPmdModelMc> bladeholder = LazyOptional.of(() -> {
         try {
             return new MmdPmdModelMc(new ResourceLocation("slashblade", "model/bladeholder.pmd"));
-        } catch (FileNotFoundException var1) {
-            var1.printStackTrace();
-        } catch (MmdException var2) {
-            var2.printStackTrace();
-        } catch (IOException var3) {
-            var3.printStackTrace();
+        } catch (MmdException | IOException e) {
+            LOGGER.error("Error occurred", e);
+            throw new RuntimeException(e);
         }
-
-        return null;
     });
     final LazyOptional<MmdMotionPlayerGL2> motionPlayer = LazyOptional.of(() -> {
         MmdMotionPlayerGL2 mmp = new MmdMotionPlayerGL2();
         this.bladeholder.ifPresent(pmd -> {
-                try {
-                    mmp.setPmd(pmd);
-                } catch (MmdException var3) {
-                    var3.printStackTrace();
-                }
-            });
+            try {
+                mmp.setPmd(pmd);
+            } catch (MmdException e) {
+                LOGGER.error("Error occured", e);
+            }
+        });
         return mmp;
     });
 
@@ -70,19 +72,28 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
 
     @Override
     public void renderStandbyBlade(
-        PoseStack matrixStack,
-        MultiBufferSource bufferIn,
-        int lightIn,
-        ItemStack blade,
-        T entity
+            PoseStack matrixStack,
+            MultiBufferSource bufferIn,
+            int lightIn,
+            ItemStack blade,
+            T entity
     ) {
+        ItemRenderContext itemRenderContext = new ItemRenderContext(
+                blade,
+                ItemDisplayContext.FIXED,
+                false,
+                matrixStack,
+                bufferIn,
+                lightIn,
+                OverlayTexture.NO_OVERLAY);
+
         LazyOptional<ISlashBladeState> state = blade.getCapability(CapabilitySlashBlade.BLADESTATE);
         state.ifPresent(s -> {
             double modelScaleBase = 0.0078125F;
             double motionScale = 1.5 / 12.0;
 
             String part;
-            try (MSAutoCloser msacA = MSAutoCloser.pushMatrix(matrixStack)) {
+            try (MSAutoCloser ignored = MSAutoCloser.pushMatrix(matrixStack)) {
                 matrixStack.translate(0, 1.5f, 0);
                 var carrytype = s.getCarryType();
                 switch (carrytype) {
@@ -90,8 +101,8 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
                         matrixStack.translate(1F, -1.125f, 0.20f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(-0.122173F, 0, 0));
                         if (
-                            Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON &&
-                            entity == Minecraft.getInstance().player
+                                Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON &&
+                                        entity == Minecraft.getInstance().player
                         ) return;
                         break;
                     case KATANA:
@@ -106,16 +117,16 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
                         matrixStack.translate(-0.5F, -2f, 0.20f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(-2.094395F, 0f, 3.1415927F));
                         if (
-                            Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON &&
-                            entity == Minecraft.getInstance().player
+                                Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON &&
+                                        entity == Minecraft.getInstance().player
                         ) return;
                         break;
                     case RNINJA:
                         matrixStack.translate(0.5F, -2f, 0.20f);
                         matrixStack.mulPose(new Quaternionf().rotateZYX(-1.047198F, 0, 0));
                         if (
-                            Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON &&
-                            entity == Minecraft.getInstance().player
+                                Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON &&
+                                        entity == Minecraft.getInstance().player
                         ) return;
                         break;
                     default:
@@ -129,70 +140,75 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
                 matrixStack.scale((float) motionScale, (float) motionScale, (float) motionScale);
                 matrixStack.scale(modelScale, modelScale, modelScale);
 
-                try (MSAutoCloser msac = MSAutoCloser.pushMatrix(matrixStack)) {
+                try (MSAutoCloser ignored$1 = MSAutoCloser.pushMatrix(matrixStack)) {
                     if (s.isBroken()) {
                         part = "blade_damaged";
                     } else {
                         part = "blade";
                     }
 
-                    renderToolSlashBlade(blade, s, part, matrixStack, bufferIn, lightIn);
-                    renderToolSlashBlade(blade, s, "sheath", matrixStack, bufferIn, lightIn);
+                    renderToolSlashBlade(blade, itemRenderContext, s, part, matrixStack, bufferIn, lightIn);
+                    renderToolSlashBlade(blade, itemRenderContext, s, "sheath", matrixStack, bufferIn, lightIn);
                 }
             }
         });
     }
 
-    @Override
-    public void render(
-        PoseStack matrixStack,
-        MultiBufferSource bufferIn,
-        int lightIn,
-        T entity,
-        float limbSwing,
-        float limbSwingAmount,
-        float partialTicks,
-        float ageInTicks,
-        float netHeadYaw,
-        float headPitch
+    public void renderItemEntity(
+            PoseStack matrixStack,
+            MultiBufferSource bufferIn,
+            ItemRenderContext itemRenderContext,
+            int lightIn,
+            T entity,
+            float limbSwing,
+            float limbSwingAmount,
+            float partialTicks,
+            float ageInTicks,
+            float netHeadYaw,
+            float headPitch
     ) {
+        ItemStack stack = entity.getItemInHand(InteractionHand.MAIN_HAND);
+        if (stack.isEmpty()) return;
+        if (!(stack.getItem() instanceof ModifiableSlashBladeItem)) return;
+
+
         this.renderOffhandItem(matrixStack, bufferIn, lightIn, entity);
 
         float motionYOffset = 1.5f;
         double motionScale = 1.5 / 12.0;
         double modelScaleBase = 0.0078125F;
 
-        ItemStack stack = entity.getItemInHand(InteractionHand.MAIN_HAND);
-
         if (stack.isEmpty()) return;
 
         LazyOptional<ISlashBladeState> state = stack.getCapability(CapabilitySlashBlade.BLADESTATE);
-        state.ifPresent(s -> {
+        state.ifPresent(bladeState -> {
             WavefrontObject model = BladeModelManager.getInstance()
-                .getModel(s.getModel().orElse(DefaultResources.resourceDefaultModel));
+                    .getModel(bladeState.getModel().orElse(DefaultResources.resourceDefaultModel));
 
             motionPlayer.ifPresent(mmp -> {
-                ComboState combo = ComboStateRegistry.REGISTRY.get().getValue(s.getComboSeq()) != null
-                    ? ComboStateRegistry.REGISTRY.get().getValue(s.getComboSeq())
-                    : ComboStateRegistry.NONE.get();
+                ComboState combo = ComboStateRegistry.REGISTRY.get().getValue(bladeState.getComboSeq()) != null
+                        ? ComboStateRegistry.REGISTRY.get().getValue(bladeState.getComboSeq())
+                        : ComboStateRegistry.NONE.get();
 
+                //noinspection resource
                 double time = TimeValueHelper.getMSecFromTicks(
-                    Math.max(0, entity.level().getGameTime() - s.getLastActionTime()) + partialTicks
+                        Math.max(0, entity.level().getGameTime() - bladeState.getLastActionTime()) + partialTicks
                 );
 
-                while (combo != ComboStateRegistry.NONE.get() && combo.getTimeoutMS() < time) {
+                while (combo != ComboStateRegistry.NONE.get() && combo != null && combo.getTimeoutMS() < time) {
                     time -= combo.getTimeoutMS();
 
                     combo = ComboStateRegistry.REGISTRY.get().getValue(combo.getNextOfTimeout(entity)) != null
-                        ? ComboStateRegistry.REGISTRY.get().getValue(combo.getNextOfTimeout(entity))
-                        : ComboStateRegistry.NONE.get();
+                            ? ComboStateRegistry.REGISTRY.get().getValue(combo.getNextOfTimeout(entity))
+                            : ComboStateRegistry.NONE.get();
                 }
                 if (combo == ComboStateRegistry.NONE.get()) {
-                    combo = ComboStateRegistry.REGISTRY.get().getValue(s.getComboRoot()) != null
-                        ? ComboStateRegistry.REGISTRY.get().getValue(s.getComboRoot())
-                        : ComboStateRegistry.STANDBY.get();
+                    combo = ComboStateRegistry.REGISTRY.get().getValue(bladeState.getComboRoot()) != null
+                            ? ComboStateRegistry.REGISTRY.get().getValue(bladeState.getComboRoot())
+                            : ComboStateRegistry.STANDBY.get();
                 }
 
+                //noinspection DataFlowIssue
                 MmdVmdMotionMc motion = BladeMotionManager.getInstance().getMotion(combo.getMotionLoc());
 
                 double maxSeconds = 0;
@@ -250,13 +266,13 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
                         matrixStack.scale(modelScale, modelScale, modelScale);
 
                         String part;
-                        if (s.isBroken()) {
+                        if (bladeState.isBroken()) {
                             part = "blade_damaged";
                         } else {
                             part = "blade";
                         }
 
-                        renderToolSlashBlade(stack, s, part, matrixStack, bufferIn, lightIn);
+                        renderToolSlashBlade(stack, itemRenderContext, bladeState, part, matrixStack, bufferIn, lightIn);
                     }
 
                     try (MSAutoCloser msac = MSAutoCloser.pushMatrix(matrixStack)) {
@@ -277,19 +293,19 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
                         float modelScale = (float) (modelScaleBase * (1.0f / motionScale));
                         matrixStack.scale(modelScale, modelScale, modelScale);
 
-                        renderToolSlashBlade(stack, s, "sheath", matrixStack, bufferIn, lightIn);
+                        renderToolSlashBlade(stack, itemRenderContext, bladeState, "sheath", matrixStack, bufferIn, lightIn);
 
-                        if (s.isCharged(entity)) {
+                        if (bladeState.isCharged(entity)) {
                             float f = (float) entity.tickCount + partialTicks;
                             BladeRenderState.renderChargeEffect(
-                                stack,
-                                f,
-                                model,
-                                "effect",
-                                new ResourceLocation("textures/entity/creeper/creeper_armor.png"),
-                                matrixStack,
-                                bufferIn,
-                                lightIn
+                                    stack,
+                                    f,
+                                    model,
+                                    "effect",
+                                    new ResourceLocation("textures/entity/creeper/creeper_armor.png"),
+                                    matrixStack,
+                                    bufferIn,
+                                    lightIn
                             );
                         }
                     }
@@ -299,12 +315,13 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
     }
 
     public void renderToolSlashBlade(
-        ItemStack stack,
-        ISlashBladeState state,
-        String target,
-        PoseStack matrixStackIn,
-        MultiBufferSource bufferIn,
-        int packedLightIn
+            ItemStack stack,
+            ItemRenderContext itemRenderContext,
+            ISlashBladeState state,
+            String target,
+            PoseStack matrixStackIn,
+            MultiBufferSource bufferIn,
+            int packedLightIn
     ) {
         ToolStack tool = ToolStack.from(stack);
 
@@ -315,58 +332,58 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
             CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
             if (persistentTag.contains("ModelName")) {
                 model = BladeModelManager.getInstance()
-                    .getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
+                        .getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
                 textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));
             } else {
                 model = BladeModelManager.getInstance()
-                    .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
+                        .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
                 textureLocation = state.getTexture().orElse(DefaultResources.resourceDefaultTexture);
             }
 
             BladeRenderState.renderOverrided(
-                stack,
-                model,
-                target,
-                textureLocation,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn
+                    stack,
+                    model,
+                    target,
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
             );
             BladeRenderState.renderOverridedLuminous(
-                stack,
-                model,
-                target + "_luminous",
-                textureLocation,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn
+                    stack,
+                    model,
+                    target + "_luminous",
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
             );
         } else if (tool.getMaterials().size() > 0) {
             model = BladeModelManager.getInstance()
-                .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
-            SBToolRenderState.renderOverrided(stack, model, target, matrixStackIn, bufferIn, packedLightIn);
-            SBToolRenderState.renderOverridedLuminous(stack, model, target, matrixStackIn, bufferIn, packedLightIn);
+                    .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
+            SBToolRenderState.renderOverrided(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
+            SBToolRenderState.renderOverridedLuminous(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
         } else {
             model = BladeModelManager.getInstance()
-                .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
+                    .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
             textureLocation = state.getTexture().orElse(DefaultResources.resourceDefaultTexture);
             BladeRenderState.renderOverrided(
-                stack,
-                model,
-                target,
-                textureLocation,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn
+                    stack,
+                    model,
+                    target,
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
             );
             BladeRenderState.renderOverridedLuminous(
-                stack,
-                model,
-                target + "_luminous",
-                textureLocation,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn
+                    stack,
+                    model,
+                    target + "_luminous",
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
             );
         }
     }

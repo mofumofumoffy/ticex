@@ -1,9 +1,9 @@
-package moffy.ticex.client.slashblade;
+package moffy.ticex.client.modules.slashblade;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import mods.flammpfeil.slashblade.client.renderer.layers.LayerMainBlade;
 import mods.flammpfeil.slashblade.client.renderer.util.MSAutoCloser;
+import moffy.ticex.client.rendering.ItemRenderContext;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -17,9 +17,9 @@ import net.minecraft.world.item.ItemStack;
 
 public class SBToolFirstPersonRender {
 
-    private LayerMainBlade<LocalPlayer, ?> layer = null;
+    private LayerSBToolMainBlade<LocalPlayer, ?> layer = null;
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public SBToolFirstPersonRender() {
         Minecraft mc = Minecraft.getInstance();
         EntityRenderer<?> renderer = mc.getEntityRenderDispatcher().getRenderer(mc.player);
@@ -28,26 +28,21 @@ public class SBToolFirstPersonRender {
         }
     }
 
-    private static final class SingletonHolder {
-
-        private static final SBToolFirstPersonRender instance = new SBToolFirstPersonRender();
-    }
-
     public static SBToolFirstPersonRender getInstance() {
         return SingletonHolder.instance;
     }
 
-    public void render(PoseStack matrixStack, MultiBufferSource bufferIn, int combinedLightIn) {
+    public void render(PoseStack matrixStack, ItemRenderContext itemRenderContext, MultiBufferSource bufferIn, int combinedLightIn) {
         if (layer == null) return;
 
         Minecraft mc = Minecraft.getInstance();
         boolean flag =
-            mc.getCameraEntity() instanceof LivingEntity && ((LivingEntity) mc.getCameraEntity()).isSleeping();
+                mc.getCameraEntity() instanceof LivingEntity && ((LivingEntity) mc.getCameraEntity()).isSleeping();
         if (
-            !(mc.options.getCameraType() == CameraType.FIRST_PERSON &&
-                !flag &&
-                !mc.options.hideGui &&
-                !mc.gameMode.isAlwaysFlying())
+                !(mc.options.getCameraType() == CameraType.FIRST_PERSON &&
+                        !flag &&
+                        !mc.options.hideGui &&
+                        !mc.gameMode.isAlwaysFlying())
         ) {
             return;
         }
@@ -68,7 +63,12 @@ public class SBToolFirstPersonRender {
             matrixStack.mulPose(Axis.XP.rotationDegrees(-mc.player.getXRot()));
 
             float partialTicks = mc.getFrameTime();
-            layer.render(matrixStack, bufferIn, combinedLightIn, mc.player, 0, 0, partialTicks, 0, 0, 0);
+            layer.renderItemEntity(matrixStack, bufferIn, itemRenderContext, combinedLightIn, mc.player, 0, 0, partialTicks, 0, 0, 0);
         }
+    }
+
+    private static final class SingletonHolder {
+
+        private static final SBToolFirstPersonRender instance = new SBToolFirstPersonRender();
     }
 }

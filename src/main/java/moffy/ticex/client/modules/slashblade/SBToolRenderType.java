@@ -1,6 +1,5 @@
-package moffy.ticex.client.slashblade;
+package moffy.ticex.client.modules.slashblade;
 
-import java.util.Optional;
 import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
 import moffy.ticex.TicEX;
 import net.minecraft.client.Minecraft;
@@ -10,44 +9,46 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 
+import java.util.Optional;
+
 public class SBToolRenderType {
 
     public static SBToolRenderType instance = null;
+
+    public static void init() {
+        instance = new SBToolRenderType();
+    }
 
     public RenderType getSlashBladeBlend(MaterialVariantId material, PartType partType, Runnable whenIsDefault) {
         return BladeRenderState.getSlashBladeBlend(partType.tryTexture(material, whenIsDefault));
     }
 
     public RenderType getSlashBladeLuminousBlend(
-        MaterialVariantId material,
-        PartType partType,
-        Runnable whenIsDefault
+            MaterialVariantId material,
+            PartType partType,
+            Runnable whenIsDefault
     ) {
         return BladeRenderState.getSlashBladeBlendLuminous(partType.tryTexture(material, whenIsDefault));
     }
 
-    public static void init() {
-        instance = new SBToolRenderType();
-    }
-
-    public static enum PartType {
+    public enum PartType {
         BLADE(0, "blade"),
         HANDLE(2, "handle"),
         SAYA(1, "saya");
 
         private static final ResourceLocation BLADE_TEXTURE_LOC = new ResourceLocation(
-            TicEX.MODID,
-            "textures/item/tool/slashblade_tool/"
+                TicEX.MODID,
+                "textures/item/shader/slashblade_tool/"
         );
         private static final ResourceLocation DEFAULT_BLADE_TEXTURE_LOC = new ResourceLocation(
-            TicEX.MODID,
-            "textures/obj_tool/slashblade_tool/"
+                TicEX.MODID,
+                "textures/obj_tool/slashblade_tool/"
         );
 
         private final int index;
         private final String name;
 
-        private PartType(int index, String name) {
+        PartType(int index, String name) {
             this.index = index;
             this.name = name;
         }

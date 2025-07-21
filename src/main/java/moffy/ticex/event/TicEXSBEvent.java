@@ -4,7 +4,7 @@ import mods.flammpfeil.slashblade.event.BladeMotionEvent;
 import mods.flammpfeil.slashblade.event.handler.InputCommandEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.slashblade.SBToolBladeItemRenderer;
+import moffy.ticex.client.modules.slashblade.SBToolBladeItemRenderer;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.general.TicEXRegistry;
