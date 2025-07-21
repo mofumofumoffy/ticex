@@ -32,9 +32,9 @@ public class BlockTagProvider extends BlockTagsProvider {
     }
 
     private void addCommon() {
-        addMetalTags(TicEXTags.Blocks.INFINITY, new ResourceLocation("avaritia", "infinity_block"), true);
-        addMetalTags(TicEXTags.Blocks.NEUTRON, new ResourceLocation("avaritia", "neutron_block"), true);
-        addMetalTags(TicEXTags.Blocks.CRYSTAL_MATRIX, new ResourceLocation("avaritia", "crystal_matrix_block"), true);
+        addMetalTags(TicEXTags.Blocks.INFINITY, new ResourceLocation("avaritia", "infinity"), true);
+        addMetalTags(TicEXTags.Blocks.NEUTRON, new ResourceLocation("avaritia", "neutron"), true);
+        addMetalTags(TicEXTags.Blocks.CRYSTAL_MATRIX, new ResourceLocation("avaritia", "crystal_matrix"), true);
 
         addMetalTags(TicEXTags.Blocks.ETHERIC, new ResourceLocation(TicEX.MODID, "etheric_block"), true);
 

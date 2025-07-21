@@ -112,7 +112,7 @@ public class AvaritiaRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelter
                             FluidOutput.fromFluid(TicEXRegistry.MOLTEN_INFINITY.get().getSource(), 90))
                     .save(topConsumer, prefix(TicEXMaterials.INFINITY, materialMeltingFolder));
 
-            metalIngotOptional(topConsumer, TicEXTags.Fluids.INFINITY, TicEXTags.Items.INFINITY_BLOCK, 2100, TicEXRegistry.MOLTEN_INFINITY.getId());
+            metalIngotOptional(topConsumer, TicEXTags.Fluids.INFINITY, TicEXTags.Items.INFINITY_BLOCK, 6360, TicEXRegistry.MOLTEN_INFINITY.getId());
         }
 
         if(TicEXRegistry.MOLTEN_NEUTRON != null) {
@@ -121,7 +121,7 @@ public class AvaritiaRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelter
                         FluidOutput.fromFluid(TicEXRegistry.MOLTEN_NEUTRON.get().getSource(), 90))
                     .save(topConsumer, prefix(TicEXMaterials.NEUTRON, materialMeltingFolder));
 
-            metalIngotOptional(topConsumer, TicEXTags.Fluids.NEUTRON, TicEXTags.Items.NEUTRON_BLOCK, 6360, TicEXRegistry.MOLTEN_NEUTRON.getId());
+            metalIngotOptional(topConsumer, TicEXTags.Fluids.NEUTRON, TicEXTags.Items.NEUTRON_BLOCK, 5000, TicEXRegistry.MOLTEN_NEUTRON.getId());
         }
 
 

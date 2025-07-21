@@ -3,11 +3,11 @@
   "conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:ingots/molten_etheric"
+      "tag": "forge:ingots/etheric"
     }
   ],
   "ingredient": {
-    "tag": "forge:ingots/molten_etheric"
+    "tag": "forge:ingots/etheric"
   },
   "result": {
     "amount": 90,

@@ -1,22 +1,24 @@
 {
-  "type": "tconstruct:melting",
+  "type": "tconstruct:casting_table",
+  "cast": {
+    "tag": "tconstruct:casts/multi_use/ingot"
+  },
   "conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:ingots/molten_infinity"
+      "tag": "forge:ingots/infinity"
     },
     {
       "type": "addonapi:mods_available",
       "required_raw_module": "ticex:avaritia_compat"
     }
   ],
-  "ingredient": {
-    "tag": "forge:ingots/molten_infinity"
-  },
-  "result": {
+  "cooling_time": 172,
+  "fluid": {
     "amount": 90,
     "tag": "forge:molten_infinity"
   },
-  "temperature": 2100,
-  "time": 95
+  "result": {
+    "tag": "forge:ingots/infinity"
+  }
 }

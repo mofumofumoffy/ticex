@@ -20,7 +20,7 @@ public interface ITicEXSmelteryRecipeHelper extends ITicEXRecipeHelper {
     }
 
     default void metalIngotOptional(Consumer<FinishedRecipe> consumer, TagKey<Fluid> fluidTag, TagKey<Item> storageTag, int temperature, ResourceLocation name) {
-        SmelteryRecipeBuilder metal = metal(consumer, fluidTag, name);
+        SmelteryRecipeBuilder metal = metal(consumer, fluidTag, new ResourceLocation(name.getNamespace(), name.getPath().replace("molten_", "")));
         metal
                 .optional()
                 .oreRate(IMeltingContainer.OreRateType.METAL)

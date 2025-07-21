@@ -1,7 +1,7 @@
 {
   "values": [
     {
-      "id": "avaritia:neutron_block",
+      "id": "avaritia:neutron",
       "required": false
     }
   ]
