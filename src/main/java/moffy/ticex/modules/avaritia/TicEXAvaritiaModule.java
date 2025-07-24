@@ -2,25 +2,22 @@ package moffy.ticex.modules.avaritia;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.ItemArrowRenderer;
+import moffy.ticex.client.modules.avaritia.TicEXCosmicShaderProvider;
+import moffy.ticex.client.rendering.PartPredicate;
+import moffy.ticex.client.rendering.ticex.ItemArrowRenderer;
+import moffy.ticex.client.rendering.ticex.TicEXRenders;
 import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.event.TicEXAvaritiaEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.projectile.EndestShotItem;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
-import moffy.ticex.modifier.ModifierAftershock;
-import moffy.ticex.modifier.ModifierBedrockBreaker;
-import moffy.ticex.modifier.ModifierCelestial;
-import moffy.ticex.modifier.ModifierCondensing;
-import moffy.ticex.modifier.ModifierEndestShot;
-import moffy.ticex.modifier.ModifierOmnipotence;
+import moffy.ticex.modifier.*;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,6 +31,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.fluids.block.BurningLiquidBlock;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TicEXAvaritiaModule extends AddonModule {
 
@@ -93,77 +93,25 @@ public class TicEXAvaritiaModule extends AddonModule {
 
         DistExecutor.unsafeRunWhenOn(
             Dist.CLIENT,
-            () ->
-                () -> {
-                    initClient();
-                }
+                () -> this::initClient
         );
     }
 
     @OnlyIn(Dist.CLIENT)
     void initClient() {
-        moffy.ticex.client.avaritia.TicEXCosmicShader.setup();
+        List<MaterialVariantId> infinityMaterials = new ArrayList<>();
+        infinityMaterials.add(new MaterialId(new ResourceLocation(TicEX.MODID, "infinity")));
 
-        MaterialVariantId infinityMaterial = new MaterialId(new ResourceLocation(TicEX.MODID, "infinity"));
-
-        TicEXRegistry.TOOL_SHADERS.addShader(infinityMaterial, wrapper -> {
-            moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic(wrapper.getDisplayContext());
-            net.minecraft.client.renderer.RenderType cosmicRenderType =
-                moffy.ticex.client.avaritia.TicEXCosmicShader.instance.getCosmicRenderTypeTool();
-            wrapper.renderQuadsWithConsumer(cosmicRenderType);
-        });
-
-        TicEXRegistry.ARMOR_SHADERS.addShader(infinityMaterial, wrapper -> {
-            moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic();
-            net.minecraft.client.resources.model.Material material = new net.minecraft.client.resources.model.Material(
-                InventoryMenu.BLOCK_ATLAS,
-                wrapper.getTexture()
-            );
-            wrapper.renderArmorWithConsumer(
-                material.buffer(
-                    wrapper.getBufferSource(),
-                    moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicRenderTypeArmor
-                )
-            );
-        });
-
-        TicEXRegistry.SHADER_INSTANCE_MAP.addShader(
-            infinityMaterial,
-            moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicShader,
-            moffy.ticex.client.avaritia.TicEXCosmicShader.instance::setupCosmic
-        );
-
-        //Sakura Tinker Compats
         if (ModList.get().isLoaded("sakuratinker")) {
-            MaterialVariantId sakuraInfinityMaterial = new MaterialId(new ResourceLocation("sakuratinker", "infinity"));
-
-            TicEXRegistry.TOOL_SHADERS.addShader(sakuraInfinityMaterial, wrapper -> {
-                moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic(wrapper.getDisplayContext());
-                net.minecraft.client.renderer.RenderType cosmicRenderType =
-                    moffy.ticex.client.avaritia.TicEXCosmicShader.instance.getCosmicRenderTypeTool();
-                wrapper.renderQuadsWithConsumer(cosmicRenderType);
-            });
-
-            TicEXRegistry.ARMOR_SHADERS.addShader(sakuraInfinityMaterial, wrapper -> {
-                moffy.ticex.client.avaritia.TicEXCosmicShader.instance.setupCosmic();
-                net.minecraft.client.resources.model.Material material =
-                    new net.minecraft.client.resources.model.Material(InventoryMenu.BLOCK_ATLAS, wrapper.getTexture());
-                wrapper.renderArmorWithConsumer(
-                    material.buffer(
-                        wrapper.getBufferSource(),
-                        moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicRenderTypeArmor
-                    )
-                );
-            });
-
-            TicEXRegistry.SHADER_INSTANCE_MAP.addShader(
-                sakuraInfinityMaterial,
-                moffy.ticex.client.avaritia.TicEXCosmicShader.instance::getCosmicShader,
-                moffy.ticex.client.avaritia.TicEXCosmicShader.instance::setupCosmic
-            );
+            infinityMaterials.add(new MaterialId(new ResourceLocation("sakuratinker", "infinity")));
         }
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        TicEXCosmicShaderProvider.init(bus);
+        TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Tool());
+        TicEXRenders.ARMOR_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Armor());
+
         bus.addListener(TicEXAvaritiaEvent::onRegisterRenderers);
     }
 

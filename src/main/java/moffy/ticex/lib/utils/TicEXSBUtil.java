@@ -5,25 +5,21 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.function.Supplier;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.Face;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.GroupObject;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.Vertex;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
 import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.client.ShaderInstanceMap.InstanceProvider;
-import moffy.ticex.client.slashblade.SBToolRenderType.PartType;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.client.modules.slashblade.SBToolRenderType.PartType;
+import moffy.ticex.client.rendering.ItemRenderContext;
+import moffy.ticex.client.rendering.shader.ShaderProvider;
+import moffy.ticex.client.rendering.ticex.TicEXToolRenders;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderStateShard.ShaderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderType.CompositeState;
-import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
@@ -46,6 +42,9 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 
+import java.util.*;
+import java.util.function.Supplier;
+
 public class TicEXSBUtil {
 
     public static Set<Enchantment> disallowedEnchantments = new HashSet<>();
@@ -67,48 +66,60 @@ public class TicEXSBUtil {
         return m;
     });
 
+    private static final Map<ShaderProvider.Tool, RenderType> renderTypeCache = new HashMap<>();
+
     @OnlyIn(Dist.CLIENT)
     public static void tessellateWithShader(
-        MaterialVariantId material,
-        WavefrontObject wavefrontObject,
-        VertexConsumer tessellator,
-        MultiBufferSource bufferSource,
-        PartType partType,
-        String... groupNames
+            ItemStack stack,
+            ItemRenderContext itemRenderContext,
+            ShaderProvider.Tool shaderProvider,
+            MaterialVariantId material,
+            WavefrontObject wavefrontObject,
+            VertexConsumer tessellator,
+            MultiBufferSource bufferSource,
+            PartType partType,
+            String... groupNames
     ) {
-        Iterator<GroupObject> var3 = wavefrontObject.groupObjects.iterator();
-
-        InstanceProvider instanceProvider = TicEXRegistry.SHADER_INSTANCE_MAP.getInstanceProvider(material);
-        boolean needShader = instanceProvider != null && TicEXConfig.USE_SHADER.get();
+        boolean needShader = shaderProvider != null && TicEXConfig.USE_SHADER.get();
 
         Material atlasMaterial = new Material(
             InventoryMenu.BLOCK_ATLAS,
             new ResourceLocation(TicEX.MODID, "obj_tool/slashblade_tool/" + partType.getName())
         );
         TextureAtlasSprite sprite = atlasMaterial.sprite();
+        VertexConsumer vertexConsumer = null;
+
 
         if (needShader) {
-            instanceProvider.getSetupMethod().run();
-        }
-        while (var3.hasNext()) {
-            GroupObject groupObject = (GroupObject) var3.next();
-            String[] var5 = groupNames;
-            int var6 = groupNames.length;
+            shaderProvider.beginRender(stack, itemRenderContext);
+            shaderProvider.beginRenderMaterial(stack, material.getId());
+            shaderProvider.preRenderMaterial(stack, material.getId());
 
-            for (int var7 = 0; var7 < var6; ++var7) {
-                String groupName = var5[var7];
-                if (groupName.equalsIgnoreCase(groupObject.name)) {
-                    if (needShader) {
-                        renderWithShader(
+            // fake batch
+            shaderProvider.startRenderBatch(itemRenderContext, TicEXToolRenders.RenderPhase.OVERLAY_MATERIAL);
+
+            vertexConsumer = bufferSource.getBuffer(getBladeRenderType(shaderProvider));
+        }
+
+        for (GroupObject groupObject : wavefrontObject.groupObjects) {
+            for (String groupName : groupNames) {
+                if (!groupName.equalsIgnoreCase(groupObject.name)) {
+                    continue;
+                }
+                if (needShader) {
+                    renderWithShader(
                             groupObject,
-                            bufferSource.getBuffer(getRenderType(instanceProvider.getInstanceSupplier())),
+                            vertexConsumer,
                             sprite
-                        );
-                    } else {
-                        groupObject.render(tessellator);
-                    }
+                    );
+                } else {
+                    groupObject.render(tessellator);
                 }
             }
+        }
+
+        if (needShader) {
+            shaderProvider.endRenderBatch(itemRenderContext, TicEXToolRenders.RenderPhase.OVERLAY_MATERIAL);
         }
     }
 
@@ -118,20 +129,18 @@ public class TicEXSBUtil {
         VertexConsumer tessellator,
         TextureAtlasSprite sprite
     ) {
-        if (groupObject.faces.size() > 0) {
-            Iterator<Face> var2 = groupObject.faces.iterator();
+        if (groupObject.faces.isEmpty()) {
+            return;
+        }
 
-            while (var2.hasNext()) {
-                Face face = (Face) var2.next();
-                addFaceForRender(face, tessellator, sprite);
-            }
+        for (Face face : groupObject.faces) {
+            addFaceForRender(face, tessellator, sprite);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void addFaceForRender(Face face, VertexConsumer tessellator, TextureAtlasSprite sprite) {
         final float textureOffset = 5.0E-4F;
-        VertexConsumer wr = tessellator;
 
         if (face.faceNormal == null) {
             face.faceNormal = face.calculateFaceNormal();
@@ -154,11 +163,11 @@ public class TicEXSBUtil {
             PoseStack.Pose me = Face.matrix.last();
             transform = me.pose();
         } else {
-            transform = (Matrix4f) defaultTransform.get();
+            transform = defaultTransform.get();
         }
 
         for (int i = 0; i < face.vertices.length; ++i) {
-            putVertex(face, wr, i, transform, textureOffset, sprite, averageU, averageV);
+            putVertex(face, tessellator, i, transform, textureOffset, sprite, averageU, averageV);
         }
     }
 
@@ -178,10 +187,10 @@ public class TicEXSBUtil {
             1.0f,
             1.0f,
             1.0f,
-            (Integer) Face.alphaOverride.apply(
-                new Vector4f(face.vertices[i].x, face.vertices[i].y, face.vertices[i].z, 1.0F),
-                Face.col.getAlpha()
-            )
+                Face.alphaOverride.apply(
+                        new Vector4f(face.vertices[i].x, face.vertices[i].y, face.vertices[i].z, 1.0F),
+                        Face.col.getAlpha()
+                )
         );
         if (face.textureCoordinates != null && face.textureCoordinates.length > 0) {
             float offsetU = textureOffset;
@@ -209,7 +218,7 @@ public class TicEXSBUtil {
         Vector3f vector3f;
         if (Face.isSmoothShade && face.vertexNormals != null) {
             Vertex normal = face.vertexNormals[i];
-            Vec3 nol = new Vec3((double) normal.x, (double) normal.y, (double) normal.z);
+            Vec3 nol = new Vec3(normal.x, normal.y, normal.z);
             vector3f = new Vector3f((float) nol.x, (float) nol.y, (float) nol.z);
         } else {
             vector3f = new Vector3f(face.faceNormal.x, face.faceNormal.y, face.faceNormal.z);
@@ -222,9 +231,13 @@ public class TicEXSBUtil {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static RenderType getRenderType(Supplier<ShaderInstance> instanceSupplier) {
+    public static RenderType getBladeRenderType(ShaderProvider.Tool shaderProvider) {
+        if (renderTypeCache.containsKey(shaderProvider)) {
+            return renderTypeCache.get(shaderProvider);
+        }
+
         RenderType.CompositeState state = CompositeState.builder()
-            .setShaderState(new ShaderStateShard(instanceSupplier))
+                .setShaderState(new ShaderStateShard(shaderProvider::getShaderInstance))
             .setOutputState(RenderStateShard.ITEM_ENTITY_TARGET)
             .setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, true))
             .setTransparencyState(RenderStateShard.NO_TRANSPARENCY)
@@ -232,15 +245,18 @@ public class TicEXSBUtil {
             .setOverlayState(RenderType.OVERLAY)
             .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
             .createCompositeState(true);
-        return RenderType.create(
-            "slashblade_tool_shader_blend",
-            DefaultVertexFormat.NEW_ENTITY,
-            Mode.TRIANGLES,
-            256,
-            true,
-            false,
-            state
+        var renderType = RenderType.create(
+                "slashblade_tool_shader_blend",
+                DefaultVertexFormat.NEW_ENTITY,
+                Mode.TRIANGLES,
+                256,
+                true,
+                false,
+                state
         );
+
+        renderTypeCache.put(shaderProvider, renderType);
+        return renderType;
     }
 
     public static boolean applyEnchantment(ItemStack toolStack, Enchantment enchantment, int level) {
@@ -259,7 +275,7 @@ public class TicEXSBUtil {
                         if (
                             enchantmentTag
                                 .getString("id")
-                                .equals(ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString())
+                                    .equals(Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)).toString())
                         ) {
                             newListTag.add(
                                 EnchantmentHelper.storeEnchantment(

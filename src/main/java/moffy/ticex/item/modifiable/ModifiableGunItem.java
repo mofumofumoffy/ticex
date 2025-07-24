@@ -2,19 +2,6 @@ package moffy.ticex.item.modifiable;
 
 import com.google.common.collect.Sets;
 import com.tacz.guns.item.ModernKineticGunItem;
-/*
- * This file is part of the TicEXTaczModule.
- *
- * Licensed under the GNU General Public License v3.0.
- * See the LICENSES/GPL-3.0.md file for details.
- * 2025 Moffy
- */
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
-import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -49,16 +36,17 @@ import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.definition.module.material.ToolMaterialHook;
 import slimeknights.tconstruct.library.tools.definition.module.mining.MiningSpeedToolHook;
-import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
-import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
-import slimeknights.tconstruct.library.tools.helper.ToolDamageUtil;
-import slimeknights.tconstruct.library.tools.helper.ToolHarvestLogic;
-import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
+import slimeknights.tconstruct.library.tools.helper.*;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
-import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.MaterialNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.utils.Util;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
 
 public class ModifiableGunItem extends ModernKineticGunItem implements IModifiableDisplay {
 
@@ -227,6 +215,26 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
         return SlotStackModifierHook.overrideOtherStackedOnMe(slotStack, held, slot, action, player, access);
     }
 
+    @Nullable
+    private static Component nameFor(String itemKey, Component itemName, MaterialVariantId variantId) {
+        String materialKey = MaterialTooltipCache.getKey(variantId);
+        String key = itemKey + "." + materialKey;
+        if (Util.canTranslate(key)) {
+            return Component.translatable(key);
+        } else {
+            String formatKey = materialKey + ".format";
+            if (Util.canTranslate(formatKey)) {
+                return Component.translatable(formatKey, itemName);
+            } else {
+                return Util.canTranslate(materialKey)
+                        ? Component.translatable(
+                        TooltipUtil.KEY_FORMAT,
+                        Component.translatable(materialKey), itemName)
+                        : null;
+            }
+        }
+    }
+
     @Override
     public Component getName(ItemStack stack) {
         ToolStack tool = ToolStack.from(stack);
@@ -243,7 +251,7 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
                     tool = ToolStack.from(stack);
                 }
 
-                MaterialNBT materials = ((IToolStackView) tool).getMaterials();
+                MaterialNBT materials = tool.getMaterials();
                 if (materials.size() != components.size()) {
                     return baseName;
                 } else {
@@ -252,7 +260,7 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
                     IMaterialRegistry registry = MaterialRegistry.getInstance();
 
                     for (int i = 0; i < components.size(); ++i) {
-                        if (i < materials.size() && registry.canRepair((MaterialStatsId) components.get(i))) {
+                        if (i < materials.size() && registry.canRepair(components.get(i))) {
                             MaterialVariantId material = materials.get(i).getVariant();
                             if (!IMaterial.UNKNOWN_ID.equals(material)) {
                                 if (firstMaterial == null) {
@@ -266,27 +274,6 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
 
                     return getMaterialItemName(stack, baseName, firstMaterial);
                 }
-            }
-        }
-    }
-
-    @Nullable
-    private static Component nameFor(String itemKey, Component itemName, MaterialVariantId variantId) {
-        String materialKey = MaterialTooltipCache.getKey(variantId);
-        String key = itemKey + "." + materialKey;
-        if (Util.canTranslate(key)) {
-            return Component.translatable(key);
-        } else {
-            String formatKey = materialKey + ".format";
-            if (Util.canTranslate(formatKey)) {
-                return Component.translatable(formatKey, new Object[] { itemName });
-            } else {
-                return Util.canTranslate(materialKey)
-                    ? Component.translatable(
-                        TooltipUtil.KEY_FORMAT,
-                        new Object[] { Component.translatable(materialKey), itemName }
-                    )
-                    : null;
             }
         }
     }
@@ -307,8 +294,8 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        /* ToolStack tool = ToolStack.from(stack);
-         tooltip.add(Component.translatable("tooltip.ticex.modifier_stability", tool.isBroken() ? Component.translatable("tooltip.ticex.modifier_stability.lost").getString() : String.format(" %d %%", 100 - (int)Math.ceil(tool.getDamage()/tool.getStats().get(ToolStats.DURABILITY)*100))).withStyle(ChatFormatting.GREEN)); */
+        /* ToolStack shader = ToolStack.from(stack);
+         tooltip.add(Component.translatable("tooltip.ticex.modifier_stability", shader.isBroken() ? Component.translatable("tooltip.ticex.modifier_stability.lost").getString() : String.format(" %d %%", 100 - (int)Math.ceil(shader.getDamage()/shader.getStats().get(ToolStats.DURABILITY)*100))).withStyle(ChatFormatting.GREEN)); */
         TooltipUtil.addInformation(this, stack, level, tooltip, SafeClientAccess.getTooltipKey(), flag);
     }
 

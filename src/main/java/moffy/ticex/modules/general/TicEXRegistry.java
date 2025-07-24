@@ -2,22 +2,21 @@ package moffy.ticex.modules.general;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
-import moffy.ticex.client.ShaderInstanceMap;
-import moffy.ticex.client.ToolShaderMap;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
@@ -51,8 +50,8 @@ import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
@@ -88,7 +87,7 @@ public class TicEXRegistry {
 
     public static final TagKey<Item> KEY_MODIFIER_UNSTABLE = TagKey.create(
         Registries.ITEM,
-        new ResourceLocation(TicEX.MODID, "tool/unstable_modifier")
+            new ResourceLocation(TicEX.MODID, "shader/unstable_modifier")
     );
 
     public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(
@@ -114,12 +113,6 @@ public class TicEXRegistry {
     public static final ToolDefinition GAUNTLET_DEFINITION = ToolDefinition.create(
             new ResourceLocation(TicEX.MODID, "resonance_gauntlet")
     );
-
-    public static final Map<Item, Function<BakedModel, BakedModel>> CUSTOM_MODELS = new HashMap<>();
-    public static final ToolShaderMap.Tool TOOL_SHADERS = new ToolShaderMap.Tool();
-    public static final ToolShaderMap.Armor ARMOR_SHADERS = new ToolShaderMap.Armor();
-    public static final ShaderInstanceMap SHADER_INSTANCE_MAP = new ShaderInstanceMap();
-    public static final Set<Function<LivingEntity, ItemStack>> TOOL_GETTERS = new HashSet<>();
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
     public static final TicEXItemDeferredRegisterExtension ITEMS_EXTENDED = new TicEXItemDeferredRegisterExtension(

@@ -3,6 +3,9 @@ package moffy.ticex.modules.slashblade;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.slashblade.SBItemCapabilityProvider;
+import moffy.ticex.client.modules.slashblade.SBToolRenderType;
+import moffy.ticex.client.rendering.CustomModel;
+import moffy.ticex.client.rendering.ticex.TicEXRenders;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.event.TicEXSBEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -107,7 +110,7 @@ public class TicEXSlashBladeModule extends AddonModule {
 
     @OnlyIn(Dist.CLIENT)
     private void initClient() {
-        moffy.ticex.client.slashblade.SBToolRenderType.init();
+        SBToolRenderType.init();
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(TicEXSBEvent::onRegisterRenderers);
     }
@@ -115,9 +118,7 @@ public class TicEXSlashBladeModule extends AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        TicEXRegistry.CUSTOM_MODELS.put(TicEXRegistry.REFORGED_SLASHBLADE.get(), originalModel -> {
-            return new moffy.ticex.client.CustomModel(originalModel);
-        });
+        TicEXRenders.CUSTOM_MODELS.put(TicEXRegistry.REFORGED_SLASHBLADE.get(), CustomModel::new);
     }
     /* public static boolean isPreviousVersion(){
         return ModList.get().getModFileById("slashblade").versionString().compareTo("1.2.0") < 0;

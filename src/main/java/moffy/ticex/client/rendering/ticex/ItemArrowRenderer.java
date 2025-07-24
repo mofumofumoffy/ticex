@@ -1,4 +1,4 @@
-package moffy.ticex.client;
+package moffy.ticex.client.rendering.ticex;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -25,15 +25,15 @@ public class ItemArrowRenderer extends ArrowRenderer<ItemArrow> {
 
     @Override
     public void render(
-        ItemArrow pEntity,
-        float pEntityYaw,
-        float pPartialTicks,
-        PoseStack pPoseStack,
-        MultiBufferSource pBuffer,
-        int pPackedLight
+            ItemArrow pEntity,
+            float pEntityYaw,
+            float pPartialTicks,
+            PoseStack pPoseStack,
+            MultiBufferSource pBuffer,
+            int pPackedLight
     ) {
         if (
-            pEntity.tickCount >= 2 || !(this.entityRenderDispatcher.camera.getEntity().distanceToSqr(pEntity) < 12.25D)
+                pEntity.tickCount >= 2 || !(this.entityRenderDispatcher.camera.getEntity().distanceToSqr(pEntity) < 12.25D)
         ) {
             pPoseStack.pushPose();
             pPoseStack.scale(this.scale, this.scale, this.scale);
@@ -48,7 +48,7 @@ public class ItemArrowRenderer extends ArrowRenderer<ItemArrow> {
                     pBuffer,
                     pEntity.level(),
                     pEntity.getId()
-                );
+            );
             pPoseStack.popPose();
         }
     }

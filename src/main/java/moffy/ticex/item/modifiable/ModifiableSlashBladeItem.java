@@ -3,17 +3,11 @@ package moffy.ticex.item.modifiable;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.function.Consumer;
-import javax.annotation.Nullable;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ReachModifier;
 import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.slashblade.SBToolISTER;
+import moffy.ticex.client.modules.slashblade.SBToolISTER;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.Minecraft;
@@ -25,11 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.SlotAccess;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -55,22 +45,14 @@ import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.AttributesModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.EnchantmentModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.DurabilityDisplayModifierHook;
-import slimeknights.tconstruct.library.modifiers.hook.interaction.EntityInteractionModifierHook;
-import slimeknights.tconstruct.library.modifiers.hook.interaction.GeneralInteractionModifierHook;
-import slimeknights.tconstruct.library.modifiers.hook.interaction.InteractionSource;
-import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
-import slimeknights.tconstruct.library.modifiers.hook.interaction.SlotStackModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.*;
 import slimeknights.tconstruct.library.tools.IndestructibleItemEntity;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.capability.inventory.ToolInventoryCapability;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.definition.module.mining.IsEffectiveToolHook;
 import slimeknights.tconstruct.library.tools.definition.module.mining.MiningSpeedToolHook;
-import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
-import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
-import slimeknights.tconstruct.library.tools.helper.ToolDamageUtil;
-import slimeknights.tconstruct.library.tools.helper.ToolHarvestLogic;
-import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
+import slimeknights.tconstruct.library.tools.helper.*;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.nbt.IModDataView;
@@ -80,6 +62,13 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.library.utils.Util;
 import slimeknights.tconstruct.tools.TinkerToolActions;
+
+import javax.annotation.Nullable;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifiableDisplay {
 
@@ -361,7 +350,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
         if (hand == InteractionHand.OFF_HAND) {
             return true;
         }
-        // main hand may wish to defer to the offhand if it has a tool
+        // main hand may wish to defer to the offhand if it has a shader
         return player == null || !volatileData.getBoolean(DEFER_OFFHAND) || player.getOffhandItem().isEmpty();
     }
 
@@ -458,7 +447,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
         ToolStack tool = ToolStack.from(stack);
         ModifierEntry activeModifier = GeneralInteractionModifierHook.getActiveModifier(tool);
         if (activeModifier != ModifierEntry.EMPTY) {
-            ((GeneralInteractionModifierHook) activeModifier.getHook(ModifierHooks.GENERAL_INTERACT)).onUsingTick(
+            activeModifier.getHook(ModifierHooks.GENERAL_INTERACT).onUsingTick(
                     tool,
                     activeModifier,
                     entityLiving,
@@ -483,7 +472,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
         ToolStack tool = ToolStack.from(stack);
         ModifierEntry activeModifier = GeneralInteractionModifierHook.getActiveModifier(tool);
         if (activeModifier != ModifierEntry.EMPTY) {
-            ((GeneralInteractionModifierHook) activeModifier.getHook(ModifierHooks.GENERAL_INTERACT)).onFinishUsing(
+            activeModifier.getHook(ModifierHooks.GENERAL_INTERACT).onFinishUsing(
                     tool,
                     activeModifier,
                     entityLiving
@@ -498,7 +487,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
         ToolStack tool = ToolStack.from(stack);
         ModifierEntry activeModifier = GeneralInteractionModifierHook.getActiveModifier(tool);
         if (activeModifier != ModifierEntry.EMPTY) {
-            ((GeneralInteractionModifierHook) activeModifier.getHook(ModifierHooks.GENERAL_INTERACT)).onStoppedUsing(
+            activeModifier.getHook(ModifierHooks.GENERAL_INTERACT).onStoppedUsing(
                     tool,
                     activeModifier,
                     entityLiving,
@@ -606,7 +595,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(
             new IClientItemExtensions() {
-                BlockEntityWithoutLevelRenderer renderer = new SBToolISTER(
+                final BlockEntityWithoutLevelRenderer renderer = new SBToolISTER(
                     Minecraft.getInstance().getBlockEntityRenderDispatcher(),
                     Minecraft.getInstance().getEntityModels()
                 );

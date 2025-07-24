@@ -1,6 +1,6 @@
 package moffy.ticex.event;
 
-import moffy.ticex.client.ItemArrowRenderer;
+import moffy.ticex.client.rendering.ticex.ItemArrowRenderer;
 import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.lib.utils.TicEXApotheosisUtils;
 import moffy.ticex.lib.utils.TicEXUtils;

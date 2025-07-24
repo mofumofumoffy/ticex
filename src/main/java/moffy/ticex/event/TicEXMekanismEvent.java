@@ -1,8 +1,5 @@
 package moffy.ticex.event;
 
-import java.util.Map;
-import java.util.Optional;
-import javax.annotation.Nullable;
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.energy.IEnergyContainer;
@@ -21,7 +18,7 @@ import mekanism.common.item.gear.ItemFreeRunners;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.StorageUtils;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.client.mekanism.MekaPlateModelCache;
+import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
 import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.DamageTypeTags;
@@ -40,6 +37,10 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.Optional;
 
 public class TicEXMekanismEvent {
 
