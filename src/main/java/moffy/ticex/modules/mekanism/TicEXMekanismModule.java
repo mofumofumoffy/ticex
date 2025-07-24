@@ -5,6 +5,8 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.mekanism.MekItemCapabilityProvider;
 import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
+import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
+import moffy.ticex.client.modules.mekanism.MekaPlateMultilayerModel;
 import moffy.ticex.event.TicEXMekanismEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
@@ -98,23 +100,23 @@ public class TicEXMekanismModule extends AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        moffy.ticex.client.mekanism.MekaPlateModelCache.INSTANCE.registerMekaSuitModuleModel(
+        MekaPlateModelCache.INSTANCE.registerMekaSuitModuleModel(
             new ResourceLocation(TicEX.MODID, "models/entity/modifiable_mekasuit_modules.obj")
         );
 
-        moffy.ticex.client.mekanism.MekaPlateMultilayerModel.registerModule(
+        MekaPlateMultilayerModel.registerModule(
             "jetpack",
             MekanismModules.JETPACK_UNIT,
             EquipmentSlot.CHEST,
             entity -> true
         );
-        moffy.ticex.client.mekanism.MekaPlateMultilayerModel.registerModule(
+        MekaPlateMultilayerModel.registerModule(
             "modulator",
             MekanismModules.GRAVITATIONAL_MODULATING_UNIT,
             EquipmentSlot.CHEST,
             entity -> true
         );
-        moffy.ticex.client.mekanism.MekaPlateMultilayerModel.registerModule(
+        MekaPlateMultilayerModel.registerModule(
             "elytra",
             MekanismModules.ELYTRA_UNIT,
             EquipmentSlot.CHEST,

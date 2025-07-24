@@ -1,13 +1,6 @@
 package moffy.ticex.item.modifiable;
 
 import com.google.common.collect.ImmutableMultimap.Builder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-import javax.annotation.Nullable;
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.NBTConstants;
@@ -53,7 +46,7 @@ import mekanism.common.util.ChemicalUtil;
 import mekanism.common.util.ItemDataUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
-import moffy.ticex.client.mekanism.MekaPlateDispatcher;
+import moffy.ticex.client.modules.mekanism.MekaPlateDispatcher;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.ListTag;
@@ -85,6 +78,10 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.item.armor.MultilayerArmorItem;
+
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class ModifiableMekaSuitArmor
     extends MultilayerArmorItem
@@ -144,12 +141,123 @@ public class ModifiableMekaSuitArmor
         this.name = material.getId();
     }
 
+    @SuppressWarnings("resource")
+    private static float getDamageAbsorbed(
+            Player player,
+            DamageSource source,
+            float amount,
+            @Nullable List<Runnable> energyUseCallbacks
+    ) {
+        if (amount <= 0) {
+            return 0;
+        }
+        float ratioAbsorbed = 0;
+        List<FoundArmorDetails> armorDetails = new ArrayList<>();
+
+        for (ItemStack stack : player.getArmorSlots()) {
+            if (!stack.isEmpty() && stack.getItem() instanceof ModifiableMekaSuitArmor armor) {
+                IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
+                if (energyContainer != null) {
+                    FoundArmorDetails details = new FoundArmorDetails(energyContainer, armor);
+                    armorDetails.add(details);
+                    for (mekanism.common.content.gear.Module<?> module : details.armor.getModules(stack)) {
+                        if (module.isEnabled()) {
+                            ModuleDamageAbsorbInfo damageAbsorbInfo = getModuleDamageAbsorbInfo(module, source);
+                            if (damageAbsorbInfo != null) {
+                                float absorption = damageAbsorbInfo.absorptionRatio().getAsFloat();
+                                ratioAbsorbed += absorbDamage(
+                                        details.usageInfo,
+                                        amount,
+                                        absorption,
+                                        ratioAbsorbed,
+                                        damageAbsorbInfo.energyCost()
+                                );
+                                if (ratioAbsorbed >= 1) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (ratioAbsorbed >= 1) {
+                        break;
+                    }
+                }
+            }
+        }
+        if (ratioAbsorbed < 1) {
+            Float absorbRatio = null;
+            for (FoundArmorDetails details : armorDetails) {
+                if (absorbRatio == null) {
+                    if (
+                            !source.is(MekanismTags.DamageTypes.MEKASUIT_ALWAYS_SUPPORTED) &&
+                                    source.is(DamageTypeTags.BYPASSES_ARMOR)
+                    ) {
+                        break;
+                    }
+
+                    ResourceLocation damageTypeName = source
+                            .typeHolder()
+                            .unwrapKey()
+                            .map(ResourceKey::location)
+                            .orElseGet(() ->
+                                    player
+                                            .level()
+                                            .registryAccess()
+                                            .registry(Registries.DAMAGE_TYPE)
+                                            .map(registry -> registry.getKey(source.type()))
+                                            .orElse(null)
+                            );
+                    if (damageTypeName != null) {
+                        absorbRatio = MekanismConfig.gear.mekaSuitDamageRatios.get().get(damageTypeName);
+                    }
+                    if (absorbRatio == null) {
+                        absorbRatio = MekanismConfig.gear.mekaSuitUnspecifiedDamageRatio.getAsFloat();
+                    }
+                    if (absorbRatio == 0) {
+                        break;
+                    }
+                }
+                float absorption = details.armor.absorption * absorbRatio;
+                ratioAbsorbed += absorbDamage(
+                        details.usageInfo,
+                        amount,
+                        absorption,
+                        ratioAbsorbed,
+                        MekanismConfig.gear.mekaSuitEnergyUsageDamage
+                );
+                if (ratioAbsorbed >= 1) {
+                    break;
+                }
+            }
+        }
+        for (FoundArmorDetails details : armorDetails) {
+            if (!details.usageInfo.energyUsed.isZero()) {
+                if (energyUseCallbacks == null) {
+                    details.energyContainer.extract(
+                            details.usageInfo.energyUsed,
+                            Action.EXECUTE,
+                            AutomationType.MANUAL
+                    );
+                } else {
+                    energyUseCallbacks.add(() ->
+                            details.energyContainer.extract(
+                                    details.usageInfo.energyUsed,
+                                    Action.EXECUTE,
+                                    AutomationType.MANUAL
+                            )
+                    );
+                }
+            }
+        }
+        return Math.min(ratioAbsorbed, 1);
+    }
+
     @Override
     public void initializeClient(@NotNull Consumer<IClientItemExtensions> consumer) {
         consumer.accept(
             new MekaPlateDispatcher() {
                 @Override
-                protected ResourceLocation getName() {
+                protected @NotNull ResourceLocation getName() {
                     return name;
                 }
             }
@@ -157,13 +265,8 @@ public class ModifiableMekaSuitArmor
     }
 
     @Override
-    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
+    public <T extends LivingEntity> int damageItem(@NotNull ItemStack stack, int amount, @NotNull T entity, @NotNull Consumer<T> onBroken) {
         return 0;
-    }
-
-    @Override
-    public Component getName(ItemStack stack) {
-        return MutableComponent.create(super.getName(stack).getContents()).withStyle(ChatFormatting.LIGHT_PURPLE);
     }
 
     @Override
@@ -225,7 +328,12 @@ public class ModifiableMekaSuitArmor
     }
 
     @Override
-    public boolean isNotReplaceableByPickAction(ItemStack stack, Player player, int inventorySlot) {
+    public @NotNull Component getName(@NotNull ItemStack stack) {
+        return MutableComponent.create(super.getName(stack).getContents()).withStyle(ChatFormatting.LIGHT_PURPLE);
+    }
+
+    @Override
+    public boolean isNotReplaceableByPickAction(@NotNull ItemStack stack, @NotNull Player player, int inventorySlot) {
         return (
             super.isNotReplaceableByPickAction(stack, player, inventorySlot) ||
             ItemDataUtils.hasData(stack, NBTConstants.MODULES, Tag.TAG_COMPOUND)
@@ -233,12 +341,12 @@ public class ModifiableMekaSuitArmor
     }
 
     @Override
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+    public boolean isBookEnchantable(@NotNull ItemStack stack, @NotNull ItemStack book) {
         return false;
     }
 
     @Override
-    public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
+    public int getEnchantmentLevel(ItemStack stack, @NotNull Enchantment enchantment) {
         if (stack.isEmpty()) {
             return 0;
         }
@@ -248,17 +356,6 @@ public class ModifiableMekaSuitArmor
             MekanismUtils.getEnchantmentLevel(enchantments, enchantment),
             super.getEnchantmentLevel(stack, enchantment)
         );
-    }
-
-    @Override
-    public Map<Enchantment, Integer> getAllEnchantments(ItemStack stack) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(
-            ItemDataUtils.getList(stack, NBTConstants.ENCHANTMENTS)
-        );
-        super.getAllEnchantments(stack).forEach((enchantment, level) ->
-            enchantments.merge(enchantment, level, Math::max)
-        );
-        return enchantments;
     }
 
     @SuppressWarnings("removal")
@@ -373,7 +470,18 @@ public class ModifiableMekaSuitArmor
     }
 
     @Override
-    public boolean canElytraFly(ItemStack stack, LivingEntity entity) {
+    public @NotNull Map<Enchantment, Integer> getAllEnchantments(@NotNull ItemStack stack) {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(
+                ItemDataUtils.getList(stack, NBTConstants.ENCHANTMENTS)
+        );
+        super.getAllEnchantments(stack).forEach((enchantment, level) ->
+                enchantments.merge(enchantment, level, Math::max)
+        );
+        return enchantments;
+    }
+
+    @Override
+    public boolean canElytraFly(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
         if (getType() == ArmorItem.Type.CHESTPLATE && !entity.isShiftKeyDown()) {
             IModule<ModuleElytraUnit> module = getModule(stack, MekanismModules.ELYTRA_UNIT);
             if (
@@ -391,23 +499,6 @@ public class ModifiableMekaSuitArmor
             }
         }
         return false;
-    }
-
-    @Override
-    public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
-        if (!entity.level().isClientSide) {
-            int nextFlightTicks = flightTicks + 1;
-            if (nextFlightTicks % 10 == 0) {
-                if (nextFlightTicks % 20 == 0) {
-                    IModule<ModuleElytraUnit> module = getModule(stack, MekanismModules.ELYTRA_UNIT);
-                    if (module != null && module.isEnabled()) {
-                        module.useEnergy(entity, MekanismConfig.gear.mekaSuitElytraEnergyUsage.get());
-                    }
-                }
-                entity.gameEvent(GameEvent.ELYTRA_GLIDE);
-            }
-        }
-        return true;
     }
 
     @Override
@@ -492,114 +583,22 @@ public class ModifiableMekaSuitArmor
         return false;
     }
 
-    private static float getDamageAbsorbed(
-        Player player,
-        DamageSource source,
-        float amount,
-        @Nullable List<Runnable> energyUseCallbacks
-    ) {
-        if (amount <= 0) {
-            return 0;
-        }
-        float ratioAbsorbed = 0;
-        List<FoundArmorDetails> armorDetails = new ArrayList<>();
-
-        for (ItemStack stack : player.getArmorSlots()) {
-            if (!stack.isEmpty() && stack.getItem() instanceof ModifiableMekaSuitArmor armor) {
-                IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
-                if (energyContainer != null) {
-                    FoundArmorDetails details = new FoundArmorDetails(energyContainer, armor);
-                    armorDetails.add(details);
-                    for (mekanism.common.content.gear.Module<?> module : details.armor.getModules(stack)) {
-                        if (module.isEnabled()) {
-                            ModuleDamageAbsorbInfo damageAbsorbInfo = getModuleDamageAbsorbInfo(module, source);
-                            if (damageAbsorbInfo != null) {
-                                float absorption = damageAbsorbInfo.absorptionRatio().getAsFloat();
-                                ratioAbsorbed += absorbDamage(
-                                    details.usageInfo,
-                                    amount,
-                                    absorption,
-                                    ratioAbsorbed,
-                                    damageAbsorbInfo.energyCost()
-                                );
-                                if (ratioAbsorbed >= 1) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (ratioAbsorbed >= 1) {
-                        break;
+    @SuppressWarnings("resource")
+    @Override
+    public boolean elytraFlightTick(@NotNull ItemStack stack, LivingEntity entity, int flightTicks) {
+        if (!entity.level().isClientSide) {
+            int nextFlightTicks = flightTicks + 1;
+            if (nextFlightTicks % 10 == 0) {
+                if (nextFlightTicks % 20 == 0) {
+                    IModule<ModuleElytraUnit> module = getModule(stack, MekanismModules.ELYTRA_UNIT);
+                    if (module != null && module.isEnabled()) {
+                        module.useEnergy(entity, MekanismConfig.gear.mekaSuitElytraEnergyUsage.get());
                     }
                 }
+                entity.gameEvent(GameEvent.ELYTRA_GLIDE);
             }
         }
-        if (ratioAbsorbed < 1) {
-            Float absorbRatio = null;
-            for (FoundArmorDetails details : armorDetails) {
-                if (absorbRatio == null) {
-                    if (
-                        !source.is(MekanismTags.DamageTypes.MEKASUIT_ALWAYS_SUPPORTED) &&
-                        source.is(DamageTypeTags.BYPASSES_ARMOR)
-                    ) {
-                        break;
-                    }
-
-                    ResourceLocation damageTypeName = source
-                        .typeHolder()
-                        .unwrapKey()
-                        .map(ResourceKey::location)
-                        .orElseGet(() ->
-                            player
-                                .level()
-                                .registryAccess()
-                                .registry(Registries.DAMAGE_TYPE)
-                                .map(registry -> registry.getKey(source.type()))
-                                .orElse(null)
-                        );
-                    if (damageTypeName != null) {
-                        absorbRatio = MekanismConfig.gear.mekaSuitDamageRatios.get().get(damageTypeName);
-                    }
-                    if (absorbRatio == null) {
-                        absorbRatio = MekanismConfig.gear.mekaSuitUnspecifiedDamageRatio.getAsFloat();
-                    }
-                    if (absorbRatio == 0) {
-                        break;
-                    }
-                }
-                float absorption = details.armor.absorption * absorbRatio;
-                ratioAbsorbed += absorbDamage(
-                    details.usageInfo,
-                    amount,
-                    absorption,
-                    ratioAbsorbed,
-                    MekanismConfig.gear.mekaSuitEnergyUsageDamage
-                );
-                if (ratioAbsorbed >= 1) {
-                    break;
-                }
-            }
-        }
-        for (FoundArmorDetails details : armorDetails) {
-            if (!details.usageInfo.energyUsed.isZero()) {
-                if (energyUseCallbacks == null) {
-                    details.energyContainer.extract(
-                        details.usageInfo.energyUsed,
-                        Action.EXECUTE,
-                        AutomationType.MANUAL
-                    );
-                } else {
-                    energyUseCallbacks.add(() ->
-                        details.energyContainer.extract(
-                            details.usageInfo.energyUsed,
-                            Action.EXECUTE,
-                            AutomationType.MANUAL
-                        )
-                    );
-                }
-            }
-        }
-        return Math.min(ratioAbsorbed, 1);
+        return true;
     }
 
     @Nullable

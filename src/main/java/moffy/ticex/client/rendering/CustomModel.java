@@ -1,6 +1,5 @@
-package moffy.ticex.client;
+package moffy.ticex.client.rendering;
 
-import java.util.List;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -13,6 +12,8 @@ import net.minecraftforge.client.model.data.ModelData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class CustomModel implements BakedModel {
 
     protected BakedModel original;
@@ -21,7 +22,7 @@ public class CustomModel implements BakedModel {
         this.original = original;
     }
 
-    public ItemOverrides getOverrides() {
+    public @NotNull ItemOverrides getOverrides() {
         return this.original.getOverrides();
     }
 
@@ -43,23 +44,23 @@ public class CustomModel implements BakedModel {
     }
 
     @SuppressWarnings("deprecation")
-    public TextureAtlasSprite getParticleIcon() {
+    public @NotNull TextureAtlasSprite getParticleIcon() {
         return this.original.getParticleIcon();
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public List<BakedQuad> getQuads(BlockState pState, Direction pDirection, RandomSource pRandom) {
+    public @NotNull List<BakedQuad> getQuads(BlockState pState, Direction pDirection, @NotNull RandomSource pRandom) {
         return this.original.getQuads(pState, pDirection, pRandom);
     }
 
     @Override
     public @NotNull List<BakedQuad> getQuads(
-        @Nullable BlockState state,
-        @Nullable Direction side,
-        @NotNull RandomSource rand,
-        @NotNull ModelData data,
-        @Nullable RenderType renderType
+            @Nullable BlockState state,
+            @Nullable Direction side,
+            @NotNull RandomSource rand,
+            @NotNull ModelData data,
+            @Nullable RenderType renderType
     ) {
         return this.original.getQuads(state, side, rand, data, renderType);
     }

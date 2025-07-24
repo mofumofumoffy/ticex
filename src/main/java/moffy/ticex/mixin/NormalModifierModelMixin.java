@@ -1,77 +1,39 @@
 package moffy.ticex.mixin;
 
-import com.mojang.math.Transformation;
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import javax.annotation.Nullable;
-import moffy.ticex.client.PartPredicate;
-import moffy.ticex.client.ShaderToolQuad;
-import moffy.ticex.modules.general.TicEXRegistry;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
+import moffy.ticex.client.rendering.shader.ShaderProvider;
+import moffy.ticex.client.rendering.shader.ShaderToolQuad;
+import moffy.ticex.client.rendering.ticex.TicEXRenders;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import slimeknights.mantle.client.model.util.MantleItemLayerModel;
-import slimeknights.mantle.util.ItemLayerPixels;
 import slimeknights.tconstruct.library.client.modifiers.NormalModifierModel;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
+import slimeknights.tconstruct.library.modifiers.ModifierId;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-@Mixin(NormalModifierModel.class)
+import java.util.List;
+
+@Mixin(value = NormalModifierModel.class, remap = false)
 public class NormalModifierModelMixin {
+    @ModifyExpressionValue(method = "addQuads", at = @At(value = "INVOKE", target = "Lslimeknights/mantle/client/model/util/MantleItemLayerModel;getQuadsForSprite(IILnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lcom/mojang/math/Transformation;ILslimeknights/mantle/util/ItemLayerPixels;)Ljava/util/List;"))
+    public List<BakedQuad> addQuadsExtension(List<BakedQuad> original,
+                                             @Local(argsOnly = true) IToolStackView tool,
+                                             @Local Material spriteName,
+                                             @Local(argsOnly = true) ModifierEntry entry) {
+        if (TicEXRenders.TOOL_SHADERS.isToolTarget(tool)) {
+            ModifierId modifierId = entry.getId();
+            ShaderProvider.Tool shaderProvider = TicEXRenders.TOOL_SHADERS.getShaderProvider(modifierId);
 
-    @Shadow(remap = false)
-    private Material small;
-
-    @Shadow(remap = false)
-    private Material large;
-
-    @Shadow(remap = false)
-    private int color;
-
-    @Shadow(remap = false)
-    private int luminosity;
-
-    @Inject(at = @At("invoke"), method = "addQuads", cancellable = true, remap = false)
-    public void addQuadsExtension(
-        IToolStackView tool,
-        ModifierEntry entry,
-        Function<Material, TextureAtlasSprite> spriteGetter,
-        Transformation transforms,
-        boolean isLarge,
-        int startTintIndex,
-        Consumer<Collection<BakedQuad>> quadConsumer,
-        @Nullable ItemLayerPixels pixels,
-        CallbackInfo cb
-    ) {
-        if (TicEXRegistry.TOOL_SHADERS.isToolTarget(tool)) {
-            Material spriteName = isLarge ? large : small;
-            if (spriteName != null) {
-                TextureAtlasSprite sprite = spriteGetter.apply(spriteName);
-                List<BakedQuad> quads = MantleItemLayerModel.getQuadsForSprite(
-                    color,
-                    -1,
-                    sprite,
-                    transforms,
-                    luminosity,
-                    pixels
-                );
-                quadConsumer.accept(
-                    quads
-                        .stream()
-                        .map(quad ->
-                            quad == null ? null : (BakedQuad) new ShaderToolQuad(quad, new PartPredicate(entry.getId()))
-                        )
-                        .toList()
-                );
-            }
-            cb.cancel();
+            return original
+                    .stream()
+                    .map(quad ->
+                            quad == null ? null : (BakedQuad) new ShaderToolQuad.Modifier(quad, shaderProvider, modifierId)
+                    )
+                    .toList();
         }
+        return original;
     }
 }

@@ -42,11 +42,11 @@ public class TicEXTaczEvent {
             ToolAttackContext context = new ToolAttackContext(attacker, attacker instanceof Player ? (Player)attacker : null, InteractionHand.MAIN_HAND, target, target instanceof LivingEntity ? (LivingEntity)target : null, event.isHeadShot(), 0, false);
 
             /* int lostStability = 10;
-            for(ModifierEntry modifier : tool.getModifierList()){
-                lostStability = modifier.getHook(ModifierHooks.TOOL_DAMAGE).onDamageTool(tool, modifier, lostStability, attacker);
+            for(ModifierEntry modifier : shader.getModifierList()){
+                lostStability = modifier.getHook(ModifierHooks.TOOL_DAMAGE).onDamageTool(shader, modifier, lostStability, attacker);
             }
 
-            tool.setDamage(tool.getDamage() + lostStability); */
+            shader.setDamage(shader.getDamage() + lostStability); */
 
             if(!mainHandStack.is(TicEXRegistry.KEY_MODIFIER_UNSTABLE) || !tool.isBroken()){
                 for(ModifierEntry modifier : tool.getModifierList()){

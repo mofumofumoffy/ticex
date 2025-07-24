@@ -11,6 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
+import javax.annotation.Nullable;
+
 public class TicEXDEUtils {
 
     public static ResourceKey<DamageType> TOOL_DRACONIUM = ResourceKey.create(
@@ -30,18 +32,16 @@ public class TicEXDEUtils {
         new ResourceLocation(TicEX.MODID, "tool_chaotic")
     );
 
+    @Nullable
     public static TechLevel getTechLevel(IToolStackView tool) {
-        if(tool != null){
-            switch (tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get())) {
-                case 1:
-                    return TechLevel.DRACONIUM;
-                case 2:
-                    return TechLevel.WYVERN;
-                case 3:
-                    return TechLevel.DRACONIC;
-                case 4:
-                    return TechLevel.CHAOTIC;
-            }
+        if (tool != null) {
+            return switch (tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get())) {
+                case 1 -> TechLevel.DRACONIUM;
+                case 2 -> TechLevel.WYVERN;
+                case 3 -> TechLevel.DRACONIC;
+                case 4 -> TechLevel.CHAOTIC;
+                default -> null;
+            };
         }
         return null;
     }
@@ -54,15 +54,11 @@ public class TicEXDEUtils {
 
     public static ResourceKey<DamageType> getDamageTag(IToolStackView tool) {
         int level = tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get());
-        switch (level) {
-            case 2:
-                return TOOL_WYVERN;
-            case 3:
-                return TOOL_DRACONIC;
-            case 4:
-                return TOOL_CHAOTIC;
-            default:
-                return TOOL_DRACONIUM;
-        }
+        return switch (level) {
+            case 2 -> TOOL_WYVERN;
+            case 3 -> TOOL_DRACONIC;
+            case 4 -> TOOL_CHAOTIC;
+            default -> TOOL_DRACONIUM;
+        };
     }
 }

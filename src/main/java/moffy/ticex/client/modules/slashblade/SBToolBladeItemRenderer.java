@@ -1,10 +1,7 @@
-package moffy.ticex.client.slashblade;
+package moffy.ticex.client.modules.slashblade;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import java.util.EnumSet;
-import java.util.Objects;
-import java.util.Optional;
 import mods.flammpfeil.slashblade.client.renderer.entity.BladeItemEntityRenderer;
 import mods.flammpfeil.slashblade.client.renderer.model.BladeModelManager;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
@@ -12,15 +9,22 @@ import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
 import mods.flammpfeil.slashblade.client.renderer.util.MSAutoCloser;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
+import moffy.ticex.client.rendering.ItemRenderContext;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+
+import java.util.EnumSet;
+import java.util.Objects;
+import java.util.Optional;
 
 public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
 
@@ -30,16 +34,26 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
 
     @Override
     public void render(
-        ItemEntity itemIn,
-        float entityYaw,
-        float partialTicks,
-        PoseStack matrixStackIn,
-        MultiBufferSource bufferIn,
-        int packedLightIn
+            ItemEntity itemIn,
+            float entityYaw,
+            float partialTicks,
+            PoseStack matrixStackIn,
+            MultiBufferSource bufferIn,
+            int packedLightIn
     ) {
+        ItemRenderContext itemRenderContext = new ItemRenderContext(
+                itemIn.getItem(),
+                ItemDisplayContext.GROUND,
+                false,
+                matrixStackIn,
+                bufferIn,
+                packedLightIn,
+                OverlayTexture.NO_OVERLAY
+        );
+
         this.shadowRadius = 0.0F;
         if (!itemIn.getItem().isEmpty()) {
-            this.renderBlade(itemIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+            this.renderBlade(itemIn, itemRenderContext, entityYaw, partialTicks);
         } else {
             partialTicks = (float) ((double) itemIn.bobOffs * 20.0 - (double) itemIn.getAge());
             super.render(itemIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
@@ -47,13 +61,17 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
     }
 
     private void renderBlade(
-        ItemEntity itemIn,
-        float entityYaw,
-        float partialTicks,
-        PoseStack matrixStackIn,
-        MultiBufferSource bufferIn,
-        int packedLightIn
+            ItemEntity itemIn,
+            ItemRenderContext itemRenderContext,
+            float entityYaw,
+            float partialTicks
     ) {
+
+        PoseStack matrixStackIn = itemRenderContext.poseStack();
+        MultiBufferSource bufferIn = itemRenderContext.bufferSource();
+        int packedLightIn = itemRenderContext.combinedLight();
+
+
         if (itemIn instanceof SBToolItemEntity bladeItem) {
             MSAutoCloser msac = MSAutoCloser.pushMatrix(matrixStackIn);
 
@@ -63,23 +81,23 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
                 EnumSet<SwordType> types = SwordType.from(current);
                 itemIn.getPersistentData();
                 Optional<ResourceLocation> modelLoc = current
-                    .getCapability(ItemSlashBlade.BLADESTATE)
-                    .map(state -> {
-                        Optional<ResourceLocation> rl = state.getModel();
-                        Objects.requireNonNull(bladeItem);
-                        return (ResourceLocation) rl.orElseGet(bladeItem::getModel);
-                    });
+                        .getCapability(ItemSlashBlade.BLADESTATE)
+                        .map(state -> {
+                            Optional<ResourceLocation> rl = state.getModel();
+                            Objects.requireNonNull(bladeItem);
+                            return rl.orElseGet(bladeItem::getModel);
+                        });
                 Objects.requireNonNull(bladeItem);
-                ResourceLocation modelLocation = (ResourceLocation) modelLoc.orElseGet(bladeItem::getModel);
+                ResourceLocation modelLocation = modelLoc.orElseGet(bladeItem::getModel);
                 Optional<ResourceLocation> textureLoc = current
-                    .getCapability(ItemSlashBlade.BLADESTATE)
-                    .map(state -> {
-                        Optional<ResourceLocation> rl = state.getTexture();
-                        Objects.requireNonNull(bladeItem);
-                        return (ResourceLocation) rl.orElseGet(bladeItem::getTexture);
-                    });
+                        .getCapability(ItemSlashBlade.BLADESTATE)
+                        .map(state -> {
+                            Optional<ResourceLocation> rl = state.getTexture();
+                            Objects.requireNonNull(bladeItem);
+                            return rl.orElseGet(bladeItem::getTexture);
+                        });
                 Objects.requireNonNull(bladeItem);
-                ResourceLocation textureLocation = (ResourceLocation) textureLoc.orElseGet(bladeItem::getTexture);
+                ResourceLocation textureLocation = textureLoc.orElseGet(bladeItem::getTexture);
                 WavefrontObject model = BladeModelManager.getInstance().getModel(modelLocation);
                 float scale = 0.00625F;
                 MSAutoCloser msac2 = MSAutoCloser.pushMatrix(matrixStackIn);
@@ -111,25 +129,26 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
                         matrixStackIn.scale(scale, scale, scale);
                         float speed = -81.0F;
                         matrixStackIn.mulPose(
-                            Axis.ZP.rotationDegrees(speed * ((float) itemIn.tickCount + partialTicks))
+                                Axis.ZP.rotationDegrees(speed * ((float) itemIn.tickCount + partialTicks))
                         );
                         matrixStackIn.translate(xOffset, 0.0F, 0.0F);
                     } else {
                         matrixStackIn.scale(scale, scale, scale);
                         matrixStackIn.mulPose(
-                            Axis.ZP.rotationDegrees(60.0F + (float) Math.toDegrees((double) itemIn.bobOffs / 6.0))
+                                Axis.ZP.rotationDegrees(60.0F + (float) Math.toDegrees((double) itemIn.bobOffs / 6.0))
                         );
                         matrixStackIn.translate(heightOffset, 0.0F, 0.0F);
                     }
 
                     renderToolSlashBlade(
-                        current,
-                        model,
-                        textureLocation,
-                        renderTarget,
-                        matrixStackIn,
-                        bufferIn,
-                        packedLightIn
+                            current,
+                            itemRenderContext,
+                            model,
+                            textureLocation,
+                            renderTarget,
+                            matrixStackIn,
+                            bufferIn,
+                            packedLightIn
                     );
                 } catch (Throwable var23) {
                     if (msac2 != null) {
@@ -161,13 +180,14 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
                         matrixStackIn.mulPose(Axis.XP.rotationDegrees(90.0F));
                         String renderTarget = "sheath";
                         renderToolSlashBlade(
-                            current,
-                            model,
-                            textureLocation,
-                            renderTarget,
-                            matrixStackIn,
-                            bufferIn,
-                            packedLightIn
+                                current,
+                                itemRenderContext,
+                                model,
+                                textureLocation,
+                                renderTarget,
+                                matrixStackIn,
+                                bufferIn,
+                                packedLightIn
                         );
                     } catch (Throwable var24) {
                         if (msac2 != null) {
@@ -204,13 +224,14 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
     }
 
     public void renderToolSlashBlade(
-        ItemStack stack,
-        WavefrontObject model,
-        ResourceLocation textureLocation,
-        String target,
-        PoseStack matrixStackIn,
-        MultiBufferSource bufferIn,
-        int packedLightIn
+            ItemStack stack,
+            ItemRenderContext itemRenderContext,
+            WavefrontObject model,
+            ResourceLocation textureLocation,
+            String target,
+            PoseStack matrixStackIn,
+            MultiBufferSource bufferIn,
+            int packedLightIn
     ) {
         ToolStack tool = ToolStack.from(stack);
 
@@ -218,48 +239,48 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
             CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
             if (persistentTag.contains("ModelName")) {
                 model = BladeModelManager.getInstance()
-                    .getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
+                        .getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
                 textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));
             }
             BladeRenderState.renderOverrided(
-                stack,
-                model,
-                target,
-                textureLocation,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn
+                    stack,
+                    model,
+                    target,
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
             );
             BladeRenderState.renderOverridedLuminous(
-                stack,
-                model,
-                target + "_luminous",
-                textureLocation,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn
+                    stack,
+                    model,
+                    target + "_luminous",
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
             );
         } else if (tool.getMaterials().size() > 0) {
-            SBToolRenderState.renderOverrided(stack, model, target, matrixStackIn, bufferIn, packedLightIn);
-            SBToolRenderState.renderOverridedLuminous(stack, model, target, matrixStackIn, bufferIn, packedLightIn);
+            SBToolRenderState.renderOverrided(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
+            SBToolRenderState.renderOverridedLuminous(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
         } else {
             BladeRenderState.renderOverrided(
-                stack,
-                model,
-                target,
-                textureLocation,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn
+                    stack,
+                    model,
+                    target,
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
             );
             BladeRenderState.renderOverridedLuminous(
-                stack,
-                model,
-                target + "_luminous",
-                textureLocation,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn
+                    stack,
+                    model,
+                    target + "_luminous",
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
             );
         }
     }
