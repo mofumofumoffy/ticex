@@ -3,7 +3,6 @@ package moffy.ticex.event;
 import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.blockstate.TicEXBlockstateProvider;
-import moffy.ticex.datagen.curios.TicEXCuriosDataProvider;
 import moffy.ticex.datagen.fluid.FluidTextureProvider;
 import moffy.ticex.datagen.general.LootProvider;
 import moffy.ticex.datagen.general.TicEXDamageTypeProvider;
@@ -45,7 +44,6 @@ public class TicEXGatherDataEvent {
 
         boolean server = event.includeServer();
         boolean client = event.includeClient();
-        boolean both = client || server;
 
         TicEXDamageTypeProvider.register(registrySetBuilder);
 
@@ -67,9 +65,6 @@ public class TicEXGatherDataEvent {
         generator.addProvider(server, new LootProvider(packOutput));
         generator.addProvider(client, new FluidBlockstateModelProvider(packOutput, TicEX.MODID));
         generator.addProvider(client, new TicEXBlockstateProvider(packOutput, existingFileHelper));
-
-        //curio
-        generator.addProvider(both, new TicEXCuriosDataProvider(packOutput, existingFileHelper, lookupProvider));
 
         //tinkers slot
         generator.addProvider(server, new TicEXStationSlotLayoutProvider(packOutput));

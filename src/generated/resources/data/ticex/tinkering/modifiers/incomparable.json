@@ -1,4 +1,20 @@
 {
-  "level_display": "tconstruct:no_levels",
+  "level_display": "tconstruct:default",
+  "modules": [
+    {
+      "type": "tconstruct:inventory",
+      "filter": {
+        "type": "mantle:tag",
+        "tag": "tconstruct:modifiable/multipart"
+      },
+      "slots": {
+        "each_level": 6
+      }
+    },
+    {
+      "type": "tconstruct:inventory_menu",
+      "on_key": "any"
+    }
+  ],
   "tooltip_display": "always"
 }

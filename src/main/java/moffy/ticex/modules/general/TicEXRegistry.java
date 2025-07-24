@@ -109,7 +109,10 @@ public class TicEXRegistry {
         new ResourceLocation(TicEX.MODID, "revival_spellbook")
     );
     public static final ToolDefinition MEKA_TOOL_DEFINITION = ToolDefinition.create(
-            new ResourceLocation(TicEX.MODID, "meka_tool")
+            new ResourceLocation(TicEX.MODID, "meka_edge")
+    );
+    public static final ToolDefinition GAUNTLET_DEFINITION = ToolDefinition.create(
+            new ResourceLocation(TicEX.MODID, "resonance_gauntlet")
     );
 
     public static final Map<Item, Function<BakedModel, BakedModel>> CUSTOM_MODELS = new HashMap<>();
@@ -165,6 +168,7 @@ public class TicEXRegistry {
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
     public static ModuleHook<ProvidePropertyModifierHook> PROPERTY_PROVIDER_HOOK = null;
 
+    public static RegistryObject<Item> EXHAUSTED_MITTEN = null;
     public static RegistryObject<Item> ETHERIC_INGOT = null;
     public static RegistryObject<Item> DRACONIUM_CRYSTAL = null;
     public static RegistryObject<Item> WYVERN_CRYSTAL = null;
@@ -208,7 +212,8 @@ public class TicEXRegistry {
     public static ItemObject<? extends Item> REFORGED_SLASHBLADE = null;
     public static ItemObject<? extends Item> BLITZ_GUN = null;
     public static ItemObject<? extends Item> REVIVAL_SPELLBOOK_IRONS = null;
-    public static ItemObject<? extends ModifiableItem> MEKA_TOOL = null;
+    public static ItemObject<? extends ModifiableItem> MEKA_EDGE = null;
+    public static ItemObject<? extends Item> RESONANCE_GAUNTLET = null;
 
     public static EnumObject<ArmorItem.Type, ? extends IModifiable> MEKAPLATE_ARMOR = null;
     public static EnumObject<ArmorItem.Type, ? extends IModifiable> SINGULAR_GEM_ARMOR = null;
@@ -279,7 +284,7 @@ public class TicEXRegistry {
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for (RegistryObject<Item> itemObject : ITEMS.getEntries()) {
             Item item = itemObject.get();
-            if (!(item instanceof ToolPartItem || item instanceof IModifiable)) {
+            if (!(item instanceof ToolPartItem || item instanceof IModifiable || item instanceof ArrowItem)) {
                 output.accept(itemObject.get());
             }
         }
@@ -297,6 +302,8 @@ public class TicEXRegistry {
         acceptPart(output, SLASHBLADE_BLADE);
         acceptPart(output, SLASHBLADE_SAYA);
 
+        acceptTool(output, MEKA_EDGE);
+        acceptTool(output, RESONANCE_GAUNTLET);
         acceptTool(output, REFORGED_SLASHBLADE);
         //acceptTool(output, BLITZ_GUN);
         //acceptTool(output, REVIVAL_SPELLBOOK_IRONS);
@@ -306,8 +313,6 @@ public class TicEXRegistry {
 
         acceptCast(output, SLASHBLADE_BLADE_CAST);
         acceptCast(output, SLASHBLADE_SAYA_CAST);
-
-        acceptTool(output, MEKA_TOOL);
     }
 
     private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends Item> toolObject) {

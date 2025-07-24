@@ -50,7 +50,6 @@ public class ItemArrowRenderer extends ArrowRenderer<ItemArrow> {
                     pEntity.getId()
                 );
             pPoseStack.popPose();
-            super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
         }
     }
 

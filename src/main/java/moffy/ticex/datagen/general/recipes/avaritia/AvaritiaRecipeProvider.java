@@ -3,7 +3,6 @@ package moffy.ticex.datagen.general.recipes.avaritia;
 import committee.nova.mods.avaritia.init.data.provider.recipe.ModShapedRecipeBuilder;
 import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.ticex.TicEX;
-import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.lib.TicEXMaterials;
@@ -13,7 +12,6 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.crafting.conditions.NotCondition;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.recipe.helper.FluidOutput;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -25,7 +23,7 @@ import slimeknights.tconstruct.library.tools.SlotType;
 
 import java.util.function.Consumer;
 
-public class AvaritiaRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelteryRecipeHelper, IMaterialRecipeHelper {
+public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMaterialRecipeHelper {
 
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
