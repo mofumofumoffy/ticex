@@ -1,5 +1,8 @@
 {
   "values": [
-    "ticex:slashblade_blade_cast"
+    {
+      "id": "ticex:slashblade_blade_cast",
+      "required": false
+    }
   ]
 }

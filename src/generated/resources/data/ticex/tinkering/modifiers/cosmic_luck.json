@@ -9,7 +9,9 @@
         "predicates": [
           {
             "type": "mantle:set",
-            "items": ["minecraft:air"]
+            "items": [
+              "minecraft:air"
+            ]
           },
           {
             "type": "mantle:tag",

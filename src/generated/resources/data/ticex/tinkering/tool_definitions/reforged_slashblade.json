@@ -58,7 +58,9 @@
     },
     {
       "type": "tconstruct:tool_actions",
-      "tool_actions": ["sword_dig"]
+      "tool_actions": [
+        "sword_dig"
+      ]
     }
   ]
 }

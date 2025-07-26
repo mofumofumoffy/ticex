@@ -6,6 +6,6 @@
       "required_raw_module": "ticex:slashblade_compat"
     }
   ],
-  "item_cost": 4,
+  "item_cost": 6,
   "result": "ticex:slashblade_saya"
 }
