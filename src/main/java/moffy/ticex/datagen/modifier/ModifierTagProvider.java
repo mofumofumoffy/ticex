@@ -55,8 +55,14 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
             );
 
         this.tag(TicEXTags.Modifiers.REMOVAL_BLACKLIST).addOptional(
+                new ResourceLocation(TicEX.MODID, "embossment"),
+                new ResourceLocation(TicEX.MODID, "konpaku"),
+                new ResourceLocation(TicEX.MODID, "koshirae"),
+                new ResourceLocation(TicEX.MODID, "hidden_proud"),
                 new ResourceLocation(TicEX.MODID, "overload"),
-                new ResourceLocation(TicEX.MODID, "override")
+                new ResourceLocation(TicEX.MODID, "override"),
+                new ResourceLocation(TicEX.MODID, "lamellar"),
+                new ResourceLocation(TicEX.MODID, "flowerstorm")
         );
     }
 }
