@@ -14,8 +14,6 @@ import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.world.item.ItemStack;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
@@ -26,8 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TicEXToolRenders {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TicEXToolRenders.class);
-
     public static List<RenderTask> prepareRenderTasks(
             RenderType renderType,
             List<BakedQuad> pQuads,

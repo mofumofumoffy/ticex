@@ -1,7 +1,6 @@
 package moffy.ticex.datagen.general.recipes.ticex;
 
 import moffy.ticex.TicEX;
-import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentModifierRecipeBuilder;
@@ -36,7 +35,7 @@ import slimeknights.tconstruct.world.TinkerWorld;
 
 import java.util.function.Consumer;
 
-public class CommonRecipeProvider implements ITicEXRecipeHelper, ITicEXSmelteryRecipeHelper, IMaterialRecipeHelper {
+public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMaterialRecipeHelper {
 
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         metalMaterialRecipe(pWriter, TicEXMaterials.ETHERIC, materialFolder, "etheric", false);

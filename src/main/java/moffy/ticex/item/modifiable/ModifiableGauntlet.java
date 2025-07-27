@@ -1,6 +1,5 @@
 package moffy.ticex.item.modifiable;
 
-import moffy.ticex.TicEX;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;

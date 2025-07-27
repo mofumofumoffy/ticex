@@ -6,7 +6,6 @@ import dan200.computercraft.api.lua.MethodResult;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import moffy.ticex.TicEX;
 import moffy.ticex.lib.IEntityDataAccessor;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;

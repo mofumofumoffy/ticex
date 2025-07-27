@@ -2,7 +2,6 @@ package moffy.ticex.caps.curios;
 
 import java.util.function.Supplier;
 
-import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.tools.capability.inventory.ToolInventoryCapability;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
