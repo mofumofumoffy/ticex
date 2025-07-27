@@ -1,7 +1,10 @@
 {
   "replace": false,
   "values": [
-    "psi:programmer",
+    {
+      "id": "psi:programmer",
+      "required": false
+    },
     "tconstruct:seared_table",
     "tconstruct:scorched_table"
   ]
