@@ -7,6 +7,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
+import slimeknights.tconstruct.library.modifiers.Modifier;
+import slimeknights.tconstruct.library.modifiers.ModifierManager;
 
 import static slimeknights.mantle.Mantle.commonResource;
 
@@ -70,6 +72,14 @@ public class TicEXTags {
 
         private static TagKey<Fluid> common(String name) {
             return TagKey.create(Registries.FLUID, commonResource(name));
+        }
+    }
+
+    public static class Modifiers {
+        public static final TagKey<Modifier> REMOVAL_BLACKLIST = local("removal_blacklist");
+
+        private static TagKey<Modifier> local(String name) {
+            return ModifierManager.getTag(getResource(name));
         }
     }
 
