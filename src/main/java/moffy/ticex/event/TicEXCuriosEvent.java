@@ -15,7 +15,7 @@ public class TicEXCuriosEvent {
         if(!level.isClientSide()){
             RandomSource randomSource = level.getRandom();
             if(randomSource.nextIntBetweenInclusive(0, 1000) <= 0){
-                level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXRegistry.EXHAUSTED_MITTEN.get())));
+                level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXRegistry.EXHAUSTED_GLOVE.get())));
             }
         }
     }

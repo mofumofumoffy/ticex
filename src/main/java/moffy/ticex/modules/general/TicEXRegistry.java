@@ -162,7 +162,7 @@ public class TicEXRegistry {
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
     public static ModuleHook<ProvidePropertyModifierHook> PROPERTY_PROVIDER_HOOK = null;
 
-    public static RegistryObject<Item> EXHAUSTED_MITTEN = null;
+    public static RegistryObject<Item> EXHAUSTED_GLOVE = null;
     public static RegistryObject<Item> ETHERIC_INGOT = null;
     public static RegistryObject<Item> DRACONIUM_CRYSTAL = null;
     public static RegistryObject<Item> WYVERN_CRYSTAL = null;

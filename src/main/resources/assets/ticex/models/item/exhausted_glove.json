@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "ticex:item/exhausted_mitten"
+    "layer0": "ticex:item/exhausted_glove"
   }
 }

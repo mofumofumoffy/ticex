@@ -20,7 +20,7 @@ public class CuriosRecipeProvider implements ITicEXRecipeHelper{
 
         if(TicEXRegistry.RESONANCE_GAUNTLET != null){
             MaterialCastingRecipeBuilder.tableRecipe((ModifiableItem)TicEXRegistry.RESONANCE_GAUNTLET.get())
-                                .setCast(Ingredient.of(TicEXRegistry.EXHAUSTED_MITTEN.get()), true)
+                                .setCast(Ingredient.of(TicEXRegistry.EXHAUSTED_GLOVE.get()), true)
                                 .setItemCost(8)
                                 .save(topConsumer, location(buildingFolder+"resonance_gauntlet"));
         }

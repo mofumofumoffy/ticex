@@ -11,9 +11,9 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class MittenItem extends Item{
+public class GloveItem extends Item{
 
-    public MittenItem(Properties pProperties) {
+    public GloveItem(Properties pProperties) {
         super(pProperties);
     }
 
@@ -25,6 +25,6 @@ public class MittenItem extends Item{
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents,
             TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(Component.translatable("item.ticex.exhausted_mitten.desc").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+        pTooltipComponents.add(Component.translatable("item.ticex.exhausted_glove.desc").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 }
