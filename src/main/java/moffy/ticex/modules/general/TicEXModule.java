@@ -184,6 +184,7 @@ public class TicEXModule extends AddonModule {
 
         bus.addListener(TicEXEvent::onEntityAttributeModification);
         bus.addListener(TicEXEvent::onRegisterCaps);
+        bus.addListener(TicEXEvent::registerModelLoaders);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::modifyAttribute);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHeal);

@@ -1,0 +1,85 @@
+{
+  "parent": "minecraft:item/generated",
+  "loader": "ticex:overrides_obj",
+  "model": "ticex:models/entity/modifiable_mekatool_right.obj",
+  "flip_v": true,
+  "part_override": [
+    {
+      "prefix": "blade_",
+      "index": 1
+    },
+    {
+      "prefix": "handle_",
+      "index": 0
+    }
+  ],
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [
+        90,
+        0,
+        -10
+      ],
+      "translation": [
+        0,
+        -3,
+        0
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "translation": [
+        1,
+        -10,
+        -4
+      ]
+    },
+    "gui": {
+      "rotation": [
+        90,
+        40,
+        90
+      ],
+      "translation": [
+        6.5,
+        -3.5,
+        0
+      ]
+    },
+    "ground": {
+      "translation": [
+        1,
+        2,
+        7
+      ]
+    },
+    "head": {
+      "rotation": [
+        270,
+        220,
+        90
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        270,
+        220,
+        90
+      ],
+      "translation": [
+        -6,
+        -4,
+        -1
+      ]
+    }
+  }
+}
