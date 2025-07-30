@@ -25,6 +25,6 @@ public class MittenItem extends Item{
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents,
             TooltipFlag pIsAdvanced) {
-        Component.translatable("item.ticex.exhausted_mitten.desc").withStyle(ChatFormatting.AQUA);
+        pTooltipComponents.add(Component.translatable("item.ticex.exhausted_mitten.desc").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 }
