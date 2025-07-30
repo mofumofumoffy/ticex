@@ -170,11 +170,6 @@ public class TicEXToolRenders {
                 }
         ));
 
-        renderTasks.add(new NakedRenderTask(
-                RenderPhase.MATERIAL_WITH_OVERLAY,
-                context
-        ));
-
         return renderTasks;
     }
 
@@ -215,23 +210,16 @@ public class TicEXToolRenders {
                     provider.renderQuadOverlay(context);
                 }
         ));
-        renderTasks.add(new NakedRenderTask(
-                RenderPhase.MODIFIER_WITH_OVERLAY,
-                context
-        ));
 
         return renderTasks;
     }
 
-    // DONT CHANGE
     public enum RenderPhase {
         UNDERLAY(0),
-        MATERIAL_WITH_OVERLAY(1),
-        OVERLAY_MATERIAL(2),
-        NORMAL_MATERIAL(3),
-        NORMAL_MODIFIER(4),
-        MODIFIER_WITH_OVERLAY(5),
-        OVERLAY_MODIFIER(6);
+        OVERLAY_MATERIAL(1),
+        NORMAL_MATERIAL(2),
+        NORMAL_MODIFIER(3),
+        OVERLAY_MODIFIER(4);
 
         private final int index;
 
