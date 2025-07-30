@@ -10,7 +10,7 @@ import moffy.ticex.client.modules.slashblade.SBToolRenderType.PartType;
 import moffy.ticex.client.rendering.ItemRenderContext;
 import moffy.ticex.client.rendering.shader.ShaderProvider;
 import moffy.ticex.client.rendering.ticex.TicEXRenders;
-import moffy.ticex.lib.utils.TicEXSBUtil;
+import moffy.ticex.lib.utils.TicEXSBUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.ItemStack;
@@ -146,7 +146,7 @@ public class SBToolRenderState {
         Face.setCol(col);
         Face.setLightMap(packedLightIn);
         Face.setMatrix(matrixStackIn);
-        TicEXSBUtil.tessellateWithShader(stack, itemRenderContext, shaderProvider, material, event.getModel(), vb, bufferIn, partType, event.getTarget());
+        TicEXSBUtils.tessellateWithShader(stack, itemRenderContext, shaderProvider, material, event.getModel(), vb, bufferIn, partType, event.getTarget());
 
         if (stack.hasFoil() && enableEffect) {
             vb = bufferIn.getBuffer(

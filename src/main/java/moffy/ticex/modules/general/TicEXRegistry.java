@@ -228,7 +228,6 @@ public class TicEXRegistry {
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_CRYSTAL_MATRIX = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
 
-    public static RegistryObject<EntityType<?>> FAKE_LIVING_ENTITY = null;
     public static RegistryObject<EntityType<?>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
     public static RegistryObject<EntityType<?>> ENDESTSHOT_PROJECTILE = null;
 

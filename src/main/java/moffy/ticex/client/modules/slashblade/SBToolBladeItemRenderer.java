@@ -223,7 +223,7 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
         }
     }
 
-    public void renderToolSlashBlade(
+    public static void renderToolSlashBlade(
             ItemStack stack,
             ItemRenderContext itemRenderContext,
             WavefrontObject model,

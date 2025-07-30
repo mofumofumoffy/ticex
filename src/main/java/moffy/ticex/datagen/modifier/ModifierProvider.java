@@ -103,6 +103,7 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
         if (TicEXRegistry.INCOMPARABLE_MODIFIER != null) buildModifier(
             TicEXRegistry.INCOMPARABLE_MODIFIER
         )
+        .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
         .addModule(InventoryModule.builder().filter(ItemPredicate.tag(TinkerTags.Items.MULTIPART_TOOL)).slotsPerLevel(6))
         .addModule(InventoryMenuModule.ANY);
     }
