@@ -43,7 +43,7 @@ public class PsiRecipeProvider implements ITicEXRecipeHelper {
             ValidatableIncrementalModifierRecipeBuilder.modifier(TicEXRegistry.SOCKET_MODIFIER)
                     .allowCrystal()
                     .input(ModItems.cadSocketBasic, 1, 1)
-                    .exactLevel(5)
+                    .setMaxLevel(5)
                     .setSlots(SlotType.UPGRADE, 1)
                     .setTools(Ingredient.fromValues(Stream.of(
                             new Ingredient.TagValue(TinkerTags.Items.MELEE_WEAPON),

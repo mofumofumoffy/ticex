@@ -14,10 +14,12 @@ import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 public class GauntletItemHandler extends ToolInventoryCapability implements ICurio{
 
+    protected IToolStackView tool;
     protected ItemStack stack;
 
     public GauntletItemHandler(ItemStack stack, Supplier<? extends IToolStackView> tool) {
         super(tool);
+        this.tool = tool.get();
         this.stack = stack;
     }
 

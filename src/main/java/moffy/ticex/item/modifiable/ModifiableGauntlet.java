@@ -5,6 +5,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import slimeknights.tconstruct.library.tools.capability.inventory.ToolInventoryCapability;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
@@ -27,5 +28,10 @@ public class ModifiableGauntlet extends ModifiableItem{
             }
         }
         return super.use(levelIn, playerIn, handIn);
+    }
+
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        return Rarity.EPIC;
     }
 }

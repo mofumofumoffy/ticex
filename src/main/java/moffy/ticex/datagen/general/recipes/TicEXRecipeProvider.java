@@ -4,12 +4,12 @@ import moffy.ticex.datagen.general.recipes.apotheosis.ApotheosisRecipeProvider;
 import moffy.ticex.datagen.general.recipes.avaritia.AvaritiaRecipeProvider;
 import moffy.ticex.datagen.general.recipes.cc.CCRecipeProvider;
 import moffy.ticex.datagen.general.recipes.create.CreateRecipeProvider;
+import moffy.ticex.datagen.general.recipes.curios.CuriosRecipeProvider;
 import moffy.ticex.datagen.general.recipes.draconicevolution.DERecipeProvider;
 import moffy.ticex.datagen.general.recipes.irons.IronsRecipeProvider;
 import moffy.ticex.datagen.general.recipes.mekanism.MekanismRecipeProvider;
 import moffy.ticex.datagen.general.recipes.projecte.PERecipeProvider;
 import moffy.ticex.datagen.general.recipes.psi.PsiRecipeProvider;
-import moffy.ticex.datagen.general.recipes.sakura.SakuraRecipeProvider;
 import moffy.ticex.datagen.general.recipes.slashblade.SlashbladeRecipeProvider;
 import moffy.ticex.datagen.general.recipes.tacz.TaczRecipeProvider;
 import moffy.ticex.datagen.general.recipes.ticex.CommonRecipeProvider;
@@ -45,7 +45,7 @@ public class TicEXRecipeProvider extends RecipeProvider {
         if (ModList.get().isLoaded("tacz")) new TaczRecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("irons_spellbooks")) new IronsRecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("projecte")) new PERecipeProvider().buildRecipes(pWriter);
-        if (ModList.get().isLoaded("sakura")) new SakuraRecipeProvider().buildRecipes(pWriter);
+        if (ModList.get().isLoaded("curios")) new CuriosRecipeProvider().buildRecipes(pWriter);
     }
 
     public static InventoryChangeTrigger.TriggerInstance has(@NotNull ItemLike itemLike) {
