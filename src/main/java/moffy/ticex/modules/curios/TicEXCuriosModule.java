@@ -2,12 +2,14 @@ package moffy.ticex.modules.curios;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.caps.curios.CuriosCapProvider;
+import moffy.ticex.event.TicEXCuriosEvent;
 import moffy.ticex.item.MittenItem;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableGauntlet;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
+import net.minecraftforge.common.MinecraftForge;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 
 public class TicEXCuriosModule extends AddonModule {
@@ -23,5 +25,7 @@ public class TicEXCuriosModule extends AddonModule {
         );
 
         TicEXRegistry.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("incomparable");
+
+        MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onLivingDeath);
     }
 }

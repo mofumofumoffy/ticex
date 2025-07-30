@@ -141,17 +141,6 @@ public class TicEXEvent {
         }
     }
 
-    public static void onLivingDeath(LivingDeathEvent event){
-        LivingEntity livingEntity = event.getEntity();
-        Level level = livingEntity.level();
-        if(!level.isClientSide()){
-            RandomSource randomSource = level.getRandom();
-                if(randomSource.nextIntBetweenInclusive(0, 1000) <= 0){
-                    level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXRegistry.EXHAUSTED_MITTEN.get())));
-                }
-            }
-        }
-
     public static void onRegisterCaps(RegisterCapabilitiesEvent event) {
         event.register(EmbossmentMaterialCapability.class);
     }
