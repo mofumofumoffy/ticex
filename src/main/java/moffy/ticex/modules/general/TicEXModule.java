@@ -25,7 +25,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.GlassBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -110,7 +110,7 @@ public class TicEXModule extends AddonModule {
         );
 
         TicEXRegistry.ETHERIC_BLOCK = TicEXRegistry.BLOCKS.register("etheric_block", () ->
-            new GlassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).noOcclusion())
+                new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).noOcclusion())
         );
         TicEXRegistry.SEARED_RF_FURNACE = TicEXRegistry.BLOCKS.register("seared_rf_furnace", () ->
             new RFFurnaceBlock(TicEXRegistry.SEARED, false)

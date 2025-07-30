@@ -1,8 +1,23 @@
 {
-  "parent": "tconstruct:block/template/slimy_cube",
+  "loader": "forge:composite",
+  "parent": "block/block",
   "textures": {
-    "particle": "ticex:block/etheric_block_face",
-    "slime": "ticex:block/etheric_block_face",
-    "metal": "ticex:block/block_core"
+    "particle": "ticex:block/etheric_block_face"
+  },
+  "children": {
+    "metal": {
+      "render_type": "minecraft:solid",
+      "parent": "tconstruct:block/template/cube_all_14",
+      "textures": {
+        "all": "ticex:block/block_core"
+      }
+    },
+    "slime": {
+      "render_type": "minecraft:translucent",
+      "parent": "block/cube_all",
+      "textures": {
+        "all": "ticex:block/etheric_block_face"
+      }
+    }
   }
 }
