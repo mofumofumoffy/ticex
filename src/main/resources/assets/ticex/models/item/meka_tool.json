@@ -1,16 +1,16 @@
 {
   "parent": "minecraft:item/generated",
-  "loader": "ticex:overrides_obj",
+  "loader": "ticex:mat_override_obj",
   "model": "ticex:models/entity/modifiable_mekatool_right.obj",
   "flip_v": true,
-  "part_override": [
-    {
-      "prefix": "blade_",
-      "index": 1
-    },
+  "material_overrides": [
     {
       "prefix": "handle_",
       "index": 0
+    },
+    {
+      "prefix": "blade_",
+      "index": 1
     }
   ],
   "display": {

@@ -1,7 +1,7 @@
 package moffy.ticex.event;
 
 import moffy.ticex.caps.EmbossmentMaterialCapability;
-import moffy.ticex.client.modules.ticex.PartOverrideModel;
+import moffy.ticex.client.modules.ticex.MaterialOverrideModel;
 import moffy.ticex.client.rendering.ticex.LayerResonanceTools;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -161,6 +161,6 @@ public class TicEXEvent {
     }
 
     public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
-        event.register("overrides_obj", PartOverrideModel.LOADER);
+        event.register("mat_override_obj", MaterialOverrideModel.LOADER);
     }
 }

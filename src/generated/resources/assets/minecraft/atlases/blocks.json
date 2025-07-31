@@ -2,6 +2,11 @@
   "sources": [
     {
       "type": "minecraft:directory",
+      "prefix": "entity/",
+      "source": "entity"
+    },
+    {
+      "type": "minecraft:directory",
       "prefix": "tinker_armor/",
       "source": "tinker_armor"
     },
