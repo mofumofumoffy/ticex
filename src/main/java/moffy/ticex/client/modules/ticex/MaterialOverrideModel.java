@@ -110,7 +110,7 @@ public class MaterialOverrideModel extends AbstractObjOverrideModel<MaterialOver
     public BakedQuad modifyQuad(ToolStack tool, BakedQuad bakedQuad, ObjModel.ModelGroup group, ObjModel.ModelObject partObject) {
         int size = tool.getMaterials().size();
         for (MaterialOverrideEntry prefixEntry : prefixEntries) {
-            if (partObject.name.startsWith(prefixEntry.prefix)) {
+            if (partObject.name.startsWith(prefixEntry.prefix) || partObject.name.equals(prefixEntry.name)) {
                 int index = prefixEntry.index;
                 if (index < 0 || index >= size) continue;
                 MaterialVariant material = tool.getMaterial(index);
@@ -145,13 +145,14 @@ public class MaterialOverrideModel extends AbstractObjOverrideModel<MaterialOver
         return bakedQuad;
     }
 
-    public record MaterialOverrideEntry(String prefix, int index) {
+    public record MaterialOverrideEntry(String prefix, String name, int index) {
         public static MaterialOverrideEntry read(JsonElement json, String key) {
             JsonObject jsonObject = json.getAsJsonObject();
 
-            String prefix = GsonHelper.getAsString(jsonObject, "prefix");
+            String prefix = jsonObject.has("prefix") ? GsonHelper.getAsString(jsonObject, "prefix") : "";
+            String name = jsonObject.has("name") ? GsonHelper.getAsString(jsonObject, "name") : "";
             int index = GsonHelper.getAsInt(jsonObject, "index");
-            return new MaterialOverrideEntry(prefix, index);
+            return new MaterialOverrideEntry(prefix, name, index);
         }
     }
 
