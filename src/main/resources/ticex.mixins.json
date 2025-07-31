@@ -21,6 +21,9 @@
     "EntityMixin",
     "MeleeAttributeModuleMixin",
     "RandomMaterialMixin",
+    "RomanNumeralHelperMixin",
+    "config.AbstractModifierRecipeAccessor",
+    "config.AbstractModifierRecipeMixin",
     "config.MeltingFuelAccessor",
     "config.MeltingFuelMixin",
     "config.ToolDefinitionLoaderMixin"

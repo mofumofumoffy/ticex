@@ -1,13 +1,18 @@
 package moffy.ticex;
 
 import moffy.addonapi.AddonModuleRegistry;
+import moffy.ticex.lib.config.ModifierLevelPreset;
+import moffy.ticex.lib.config.ToolSlotPreset;
 import moffy.ticex.modules.general.TicEXModuleProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig.Type;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TicEXConfig {
 
@@ -19,30 +24,8 @@ public class TicEXConfig {
     public static ForgeConfigSpec.ConfigValue<Boolean> PROVIDE_PROPERTIES;
     public static List<ForgeConfigSpec.ConfigValue<Integer>> RF_FURNACE_FUEL_TEMP = new ArrayList<>();
     public static List<ForgeConfigSpec.ConfigValue<Integer>> RF_FURNACE_FUEL_RATE = new ArrayList<>();
-    public static ForgeConfigSpec.ConfigValue<Integer> BLITZ_GUN_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> BLITZ_GUN_ABILITY_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEKA_EDGE_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEKA_EDGE_ABILITY_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEKAPLATE_BOOTS_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEKAPLATE_BOOTS_DEFENSE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEKAPLATE_CHESTPLATE_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEKAPLATE_CHESTPLATE_DEFENSE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEKAPLATE_HELMET_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEKAPLATE_HELMET_DEFENSE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEKAPLATE_LEGGINGS_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEKAPLATE_LEGGINGS_DEFENSE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> REFORGED_SLASHBLADE_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> REFORGED_SLASHBLADE_ABILITY_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> REVIVAL_SPELLBOOK_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> REVIVAL_SPELLBOOK_ABILITY_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> SINGULAR_GEM_BOOTS_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> SINGULAR_GEM_BOOTS_DEFENSE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> SINGULAR_GEM_CHESTPLATE_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> SINGULAR_GEM_CHESTPLATE_DEFENSE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> SINGULAR_GEM_HELMET_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> SINGULAR_GEM_HELMET_DEFENSE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> SINGULAR_GEM_LEGGINGS_UPGRADE_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<Integer> SINGULAR_GEM_LEGGINGS_DEFENSE_SLOTS;
+    public static Map<ResourceLocation, ToolSlotPreset.SlotConfigSpec> SLOTS_CONFIG = new HashMap<>();
+    public static Map<ResourceLocation, ForgeConfigSpec.ConfigValue<Integer>> MODIFIER_CONFIG = new HashMap<>();
 
     public static void registerConfig() {
         final ForgeConfigSpec.Builder COMMON = new ForgeConfigSpec.Builder();
@@ -102,30 +85,55 @@ public class TicEXConfig {
         MORE_CONFIG.pop();
         MORE_CONFIG.push("Tool/Armor Slots Settings");
         MORE_CONFIG.comment("These values are 32-bit signed integer. (Maximum value is about 2.147G)");
-        BLITZ_GUN_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Blitz Gun.").define("blitzGunUpgradeSlots", 3);
-        BLITZ_GUN_ABILITY_SLOTS = MORE_CONFIG.comment("Ability Slots of Blitz Gun.").define("blitzGunAbilitySlots", 1);
-        MEKA_EDGE_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of MekaEdge.").define("mekaEdgeUpgradeSlots", 3);
-        MEKA_EDGE_ABILITY_SLOTS = MORE_CONFIG.comment("Ability Slots of MekaEdge.").define("mekaEdgeAbilitySlots", 1);
-        MEKAPLATE_BOOTS_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Mekaplate Boots.").define("mekaplateBootsUpgradeSlots", 2);
-        MEKAPLATE_BOOTS_DEFENSE_SLOTS = MORE_CONFIG.comment("Defense Slots of Mekaplate Boots.").define("mekaplateBootsDefenseSlots", 3);
-        MEKAPLATE_CHESTPLATE_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Mekaplate Chestplate.").define("mekaplateChestplateUpgradeSlots", 2);
-        MEKAPLATE_CHESTPLATE_DEFENSE_SLOTS = MORE_CONFIG.comment("Defense Slots of Mekaplate Chestplate.").define("mekaplateChestplateDefenseSlots", 3);
-        MEKAPLATE_HELMET_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Mekaplate Helmet.").define("mekaplateHelmetUpgradeSlots", 2);
-        MEKAPLATE_HELMET_DEFENSE_SLOTS = MORE_CONFIG.comment("Defense Slots of Mekaplate Helmet.").define("mekaplateHelmetDefenseSlots", 3);
-        MEKAPLATE_LEGGINGS_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Mekaplate Leggings.").define("mekaplateLeggingsUpgradeSlots", 2);
-        MEKAPLATE_LEGGINGS_DEFENSE_SLOTS = MORE_CONFIG.comment("Defense Slots of Mekaplate Leggings.").define("mekaplateLeggingsDefenseSlots", 3);
-        REFORGED_SLASHBLADE_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Reforged Slashblade.").define("reforgedSlashbladeUpgradeSlots", 3);
-        REFORGED_SLASHBLADE_ABILITY_SLOTS = MORE_CONFIG.comment("Ability Slots of Reforged Slashblade.").define("reforgedSlashbladeAbilitySlots", 1);
-        REVIVAL_SPELLBOOK_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Revival Spellbook.").define("revivalSpellbookUpgradeSlots", 3);
-        REVIVAL_SPELLBOOK_ABILITY_SLOTS = MORE_CONFIG.comment("Ability Slots of Revival Spellbook").define("revivalSpellbookAbilitySlots", 1);
-        SINGULAR_GEM_BOOTS_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Singular Gem Boots.").define("singularGemBootsUpgradeSlots", 2);
-        SINGULAR_GEM_BOOTS_DEFENSE_SLOTS = MORE_CONFIG.comment("Defense Slots of Singular Gem Boots.").define("singularGemBootsDefenseSlots", 3);
-        SINGULAR_GEM_CHESTPLATE_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Singular Gem Chestplate.").define("singularGemChestplateUpgradeSlots", 2);
-        SINGULAR_GEM_CHESTPLATE_DEFENSE_SLOTS = MORE_CONFIG.comment("Defense Slots of Singular Gem Chestplate.").define("singularGemChestplateDefenseSlots", 3);
-        SINGULAR_GEM_HELMET_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Singular Gem Helmet.").define("singularGemHelmetUpgradeSlots", 2);
-        SINGULAR_GEM_HELMET_DEFENSE_SLOTS = MORE_CONFIG.comment("Defense Slots of Singular Gem Helmet.").define("singularGemHelmetDefenseSlots", 3);
-        SINGULAR_GEM_LEGGINGS_UPGRADE_SLOTS = MORE_CONFIG.comment("Upgrade Slots of Singular Gem Leggings.").define("singularGemLeggingsUpgradeSlots", 2);
-        SINGULAR_GEM_LEGGINGS_DEFENSE_SLOTS = MORE_CONFIG.comment("Defense Slots of Singular Gem Leggings.").define("singularGemLeggingsDefenseSlots", 3);
+        ToolSlotPreset.PRESET.forEach(preset -> {
+            ToolSlotPreset.SlotConfigSpec spec = null;
+            if (preset.upgradeSlot() > 0) {
+                if (preset.abilitySlot() > 0) {
+                    if (preset.defenseSlot() > 0) {
+                        spec = new ToolSlotPreset.BothSlotConfigSpec(
+                                MORE_CONFIG.comment("Upgrade Slots of " + preset.name()).define(preset.configName() + "UpgradeSlots", preset.upgradeSlot()),
+                                MORE_CONFIG.comment("Ability Slots of " + preset.name()).define(preset.configName() + "AbilitySlots", preset.abilitySlot()),
+                                MORE_CONFIG.comment("Defense Slots of " + preset.name()).define(preset.configName() + "DefenseSlots", preset.defenseSlot())
+                        );
+                    } else {
+                        spec = new ToolSlotPreset.AbilitySlotConfigSpec(
+                                MORE_CONFIG.comment("Upgrade Slots of " + preset.name()).define(preset.configName() + "UpgradeSlots", preset.upgradeSlot()),
+                                MORE_CONFIG.comment("Ability Slots of " + preset.name()).define(preset.configName() + "AbilitySlots", preset.abilitySlot())
+                        );
+                    }
+                } else {
+                    if (preset.defenseSlot() > 0) {
+                        spec = new ToolSlotPreset.DefenseSlotConfigSpec(
+                                MORE_CONFIG.comment("Upgrade Slots of " + preset.name()).define(preset.configName() + "UpgradeSlots", preset.upgradeSlot()),
+                                MORE_CONFIG.comment("Defense Slots of " + preset.name()).define(preset.configName() + "AbilitySlots", preset.defenseSlot())
+                        );
+                    }
+                }
+            } else {
+                if (preset.defenseSlot() > 0) {
+                    if (preset.abilitySlot() > 0) {
+                        spec = new ToolSlotPreset.NoUpgradeSlotConfigSpec(
+                                MORE_CONFIG.comment("Ability Slots of " + preset.name()).define(preset.configName() + "AbilitySlots", preset.abilitySlot()),
+                                MORE_CONFIG.comment("Defense Slots of " + preset.name()).define(preset.configName() + "DefenseSlots", preset.defenseSlot())
+                        );
+                    } else {
+                        spec = new ToolSlotPreset.DefenseOnlySlotConfigSpec(
+                                MORE_CONFIG.comment("Defense Slots of " + preset.name()).define(preset.configName() + "DefenseSlots", preset.defenseSlot())
+                        );
+                    }
+                }
+            }
+            if (spec != null) {
+                SLOTS_CONFIG.put(preset.rl(), spec);
+            }
+        });
+        MORE_CONFIG.pop();
+        MORE_CONFIG.push("Modifier Level Settings");
+        MORE_CONFIG.comment("These values are 32-bit signed integer. (Maximum value is about 2.147G)");
+        ModifierLevelPreset.PRESET.forEach(preset ->
+                MODIFIER_CONFIG.put(preset.rl(), MORE_CONFIG.comment("Max Level of " + preset.name())
+                        .define(preset.configName() + "MaxLevel", preset.max()))
+        );
         MORE_CONFIG.pop();
 
         CLIENT.comment("Client Settings").push("client");

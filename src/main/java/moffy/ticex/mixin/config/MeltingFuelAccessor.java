@@ -13,5 +13,5 @@ public interface MeltingFuelAccessor {
 
     @Accessor("rate")
     @Mutable
-    void seTRate(int rate);
+    void setRate(int rate);
 }

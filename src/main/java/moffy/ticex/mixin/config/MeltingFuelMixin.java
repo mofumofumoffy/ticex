@@ -1,6 +1,5 @@
 package moffy.ticex.mixin.config;
 
-import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +16,7 @@ public class MeltingFuelMixin {
         for (int i = 0; i < 20; i++) {
             if (id.getNamespace().equals("ticex") && id.getPath().equals("smeltery/melting/fuel/rf_furnace_fuel_" + i)) {
                 ((MeltingFuelAccessor) this).setTemperature(TicEXConfig.RF_FURNACE_FUEL_TEMP.get(i).get());
-                ((MeltingFuelAccessor) this).seTRate(TicEXConfig.RF_FURNACE_FUEL_RATE.get(i).get());
+                ((MeltingFuelAccessor) this).setRate(TicEXConfig.RF_FURNACE_FUEL_RATE.get(i).get());
             }
         }
     }

@@ -5,6 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
+import moffy.ticex.lib.config.SlotValues;
+import moffy.ticex.lib.config.ToolSlotPreset;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -18,51 +20,38 @@ import slimeknights.tconstruct.library.tools.definition.ToolDefinitionLoader;
 import slimeknights.tconstruct.library.tools.definition.module.ToolHooks;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Mixin(value = ToolDefinitionLoader.class, remap = false)
 public class ToolDefinitionLoaderMixin {
-    @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V",
-            at = @At("HEAD"))
+    @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V", at = @At("HEAD"))
     private void modify(@NotNull Map<ResourceLocation, JsonElement> splashList, ResourceManager resourceManagerIn, ProfilerFiller profilerIn, CallbackInfo ci) {
-        splashList.forEach(((resourceLocation, jsonElement) -> {
-            TicEX.LOGGER.debug("At Resource Location {}, found ToolDefinitionData {}", resourceLocation, jsonElement);
-            modifySlotsWithAU("ticex", "meka_tool", TicEXConfig.MEKA_EDGE_ABILITY_SLOTS.get(), TicEXConfig.MEKA_EDGE_UPGRADE_SLOTS.get(), resourceLocation, jsonElement);
-        }));
+        splashList.forEach((resourceLocation, jsonElement) -> {
+            TicEXConfig.SLOTS_CONFIG.forEach((rl, spec) -> {
+                if (rl.equals(resourceLocation)) {
+                    SlotValues slots = SlotValues.fromSpec(spec);
+                    if (slots != null) {
+                        modifySlots(resourceLocation, jsonElement, slots);
+                    }
+                }
+            });
+        });
     }
 
-    private void modifySlotsWithAU(String ns, String pth, int aSlot, int uSlot, ResourceLocation rl, JsonElement json) {
-        if (rl.getNamespace().equals(ns) && rl.getPath().equals(pth)) {
-            JsonArray modules = json.getAsJsonObject().getAsJsonArray("modules");
-            if (modules != null) {
-                modules.forEach(elem -> {
-                    JsonObject module = elem.getAsJsonObject();
-                    if (module.has("type") && module.get("type").getAsString().equals("tconstruct:modifier_slots")) {
-                        JsonObject slots = module.getAsJsonObject("slots");
-                        if (slots != null) {
-                            slots.addProperty("abilities", aSlot);
-                            slots.addProperty("upgrades", uSlot);
-                        }
+    private void modifySlots(ResourceLocation rl, JsonElement json, SlotValues slots) {
+        JsonArray modules = json.getAsJsonObject().getAsJsonArray("modules");
+        if (modules != null) {
+            modules.forEach(elem -> {
+                JsonObject module = elem.getAsJsonObject();
+                if (module.has("type") && "tconstruct:modifier_slots".equals(module.get("type").getAsString())) {
+                    JsonObject slotObj = module.getAsJsonObject("slots");
+                    if (slotObj != null) {
+                        if (slots.abilities != null) slotObj.addProperty("abilities", slots.abilities);
+                        if (slots.defense != null) slotObj.addProperty("defense", slots.defense);
+                        if (slots.upgrades != null) slotObj.addProperty("upgrades", slots.upgrades);
                     }
-                });
-            }
-        }
-    }
-
-    private void modifySlotsWithDU(String ns, String pth, int dSlot, int uSlot, ResourceLocation rl, JsonElement json) {
-        if (rl.getNamespace().equals(ns) && rl.getPath().equals(pth)) {
-            JsonArray modules = json.getAsJsonObject().getAsJsonArray("modules");
-            if (modules != null) {
-                modules.forEach(elem -> {
-                    JsonObject module = elem.getAsJsonObject();
-                    if (module.has("type") && module.get("type").getAsString().equals("tconstruct:modifier_slots")) {
-                        JsonObject slots = module.getAsJsonObject("slots");
-                        if (slots != null) {
-                            slots.addProperty("defense", dSlot);
-                            slots.addProperty("upgrades", uSlot);
-                        }
-                    }
-                });
-            }
+                }
+            });
         }
     }
 }
