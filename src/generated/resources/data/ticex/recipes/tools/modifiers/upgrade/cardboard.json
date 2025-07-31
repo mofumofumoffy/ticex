@@ -10,9 +10,6 @@
   "inputs": [
     {
       "item": "ticex:cardboard_core"
-    },
-    {
-      "tag": "tconstruct:modifiable/armor/worn"
     }
   ],
   "result": "ticex:cardboard",
@@ -20,6 +17,6 @@
     "upgrades": 1
   },
   "tools": {
-    "tag": "tconstruct:modifiable"
+    "tag": "tconstruct:modifiable/armor/worn"
   }
 }
