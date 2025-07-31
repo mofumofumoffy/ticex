@@ -22,7 +22,7 @@ public class MekanismSlotLayoutProvider extends AbstractStationSlotLayoutProvide
                     .icon(new Pattern(TicEXRegistry.MEKA_EDGE.getId()))
                     .addInputSlot(new Pattern(TinkerToolParts.broadBlade.getId()), "item.tconstruct.broad_blade", 42, 34,
                             Ingredient.of(TinkerToolParts.broadBlade))
-                    .addInputSlot(new Pattern(TinkerToolParts.toughHandle.getId()), "item.tconstruct.tough_handle", 42, 56,
+                    .addInputSlot(new Pattern(TinkerToolParts.toughHandle.getId()), "item.tconstruct.tough_handle", 24, 56,
                             Ingredient.of(TinkerToolParts.toughHandle))
                     .addInputSlot(new Pattern(new ResourceLocation(TicEX.MODID, "catalyst")), "item.ticex.catalyst_meka_tool", 24, 34,
                             Ingredient.of(TicEXRegistry.CATALYST_MEKA_TOOL))
