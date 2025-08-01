@@ -1,5 +1,5 @@
 {
-  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx80G -Xms10G -Xlog:disable",
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx16G -Xms2G -Xlog:disable",
   "java.import.gradle.annotationProcessing.enabled": true,
   "java.import.gradle.enabled": true,
   "[java]": {
