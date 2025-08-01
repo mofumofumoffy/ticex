@@ -57,9 +57,9 @@ public class TicEXAvaritiaEvent {
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if (TicEXUtils.canPlayerFly(player) && !player.getAbilities().mayfly) {
+        if (TicEXUtils.canPlayerFly(player)) {
             TicEXApotheosisUtils.enableCreativeFlight(player);
-        } else if (!TicEXUtils.canPlayerFly(player) && player.getAbilities().mayfly) {
+        } else if (!TicEXUtils.canPlayerFly(player)) {
             TicEXApotheosisUtils.disableCreativeFlight(player);
         }
     }

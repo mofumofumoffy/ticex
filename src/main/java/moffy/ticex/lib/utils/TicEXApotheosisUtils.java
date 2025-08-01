@@ -27,9 +27,7 @@ public class TicEXApotheosisUtils {
             }
         }
 
-        if (!player.getAbilities().mayfly) {
-            player.getAbilities().mayfly = true;
-        }
+        player.getAbilities().mayfly = true;
         player.onUpdateAbilities();
     }
 
