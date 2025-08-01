@@ -39,8 +39,8 @@ public class TicEXApotheosisUtils {
 
         if (player.getAbilities().mayfly) {
             player.getAbilities().mayfly = false;
+            player.getAbilities().flying = false;
         }
-        player.getAbilities().flying = false;
         player.onUpdateAbilities();
     }
 }
