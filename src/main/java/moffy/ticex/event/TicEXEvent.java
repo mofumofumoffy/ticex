@@ -1,15 +1,11 @@
 package moffy.ticex.event;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
 import moffy.ticex.caps.EmbossmentMaterialCapability;
+import moffy.ticex.client.modules.ticex.MaterialOverrideModel;
 import moffy.ticex.client.rendering.ticex.LayerResonanceTools;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -17,24 +13,27 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 
 public class TicEXEvent {
 
@@ -152,12 +151,16 @@ public class TicEXEvent {
         addPlayerLayer(event, "slim");
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @OnlyIn(Dist.CLIENT)
     public static void addPlayerLayer(EntityRenderersEvent.AddLayers event, String skin) {
         EntityRenderer<? extends Player> renderer = event.getSkin(skin);
         if (renderer instanceof LivingEntityRenderer livingRenderer) {
             livingRenderer.addLayer(new LayerResonanceTools<>(livingRenderer));
         }
+    }
+
+    public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
+        event.register("mat_override_obj", MaterialOverrideModel.LOADER);
     }
 }

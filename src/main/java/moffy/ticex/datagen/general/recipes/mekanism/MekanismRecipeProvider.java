@@ -7,6 +7,7 @@ import mekanism.common.registries.MekanismItems;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.IEmbossmentToolRecipeHelper;
+import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentBuildingRecipeBuilder;
 import moffy.ticex.datagen.general.recipes.ticex.embossment.SingleEmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -60,6 +61,12 @@ public class MekanismRecipeProvider implements ITicEXRecipeHelper, IEmbossmentTo
                     .addInput(TicEXRegistry.RADIATION_SHELDING_CORE.get())
                     .setSlots(SlotType.DEFENSE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.RADIATION_SHIELDING_MODIFIER.getId(), defenseFolder));
+        }
+
+        if (TicEXRegistry.MEKA_EDGE != null) {
+            EmbossmentBuildingRecipeBuilder.buildingRecipe(TicEXRegistry.MEKA_EDGE.get())
+                    .outputSize(1)
+                    .save(topConsumer, prefix(TicEXRegistry.MEKA_EDGE, buildingFolder));
         }
     }
 

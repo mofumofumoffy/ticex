@@ -16,6 +16,7 @@ public class TicEXStationSlotLayoutProvider extends GenericDataProvider {
     private final TaczStationSlotLayoutProvider taczLayoutProvider;
     private final SlashBladeStationSlotLayoutProvider slashBladeLayoutProvider;
     private final IronsStationSlotLayoutProvider ironsBladeLayoutProvider;
+    private final MekanismSlotLayoutProvider mekanismLayoutProvider;
 
     public TicEXStationSlotLayoutProvider(PackOutput packOutput) {
         super(packOutput, PackOutput.Target.DATA_PACK, "tinkering/station_layouts", StationSlotLayoutLoader.GSON);
@@ -23,6 +24,7 @@ public class TicEXStationSlotLayoutProvider extends GenericDataProvider {
         this.taczLayoutProvider = new TaczStationSlotLayoutProvider(packOutput);
         this.slashBladeLayoutProvider = new SlashBladeStationSlotLayoutProvider(packOutput);
         this.ironsBladeLayoutProvider = new IronsStationSlotLayoutProvider(packOutput);
+        this.mekanismLayoutProvider = new MekanismSlotLayoutProvider(packOutput);
     }
 
     public @NotNull CompletableFuture<?> run(@NotNull CachedOutput cache) {
@@ -32,6 +34,7 @@ public class TicEXStationSlotLayoutProvider extends GenericDataProvider {
         if (ModList.get().isLoaded("tacz")) tasks.add(taczLayoutProvider.run(cache));
         if (ModList.get().isLoaded("slashblade")) tasks.add(slashBladeLayoutProvider.run(cache));
         if (ModList.get().isLoaded("irons_spellbooks")) tasks.add(ironsBladeLayoutProvider.run(cache));
+        if (ModList.get().isLoaded("mekanism")) tasks.add(mekanismLayoutProvider.run(cache));
 
         return allOf(tasks);
     }

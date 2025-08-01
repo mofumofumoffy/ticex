@@ -38,6 +38,7 @@
   "item.ticex.catalyst_mekasuit_chestplate": "セラムカタリスト - MekaSuit ボディアーマー",
   "item.ticex.catalyst_mekasuit_leggings": "セラムカタリスト - MekaSuit パンツ",
   "item.ticex.catalyst_mekasuit_boots": "セラムカタリスト - MekaSuit ブーツ",
+  "item.ticex.catalyst_meka_tool": "セラムカタリスト - MekaEdge",
   "item.ticex.catalyst_slashblade": "セラムカタリスト - 抜刀剣",
   "item.ticex.catalyst_kinetic_gun": "セラムカタリスト - 現代式実体弾銃",
   "item.ticex.catalyst_irons_spellbook": "セラムカタリスト - Iron's スペルブック",
@@ -255,5 +256,10 @@
   "curios.identifier.incomparable_offhand": "比類なきサブツール",
 
   "attribute.ticex.damage_taken": "被ダメージ軽減",
-  "attribute.ticex.healing_received": "回復量"
+  "attribute.ticex.healing_received": "回復量",
+  "item.ticex.exhausted_glove": "Exhausted Glove",
+  "item.ticex.exhausted_glove.desc": "In honor of the hero who fell three times to a mighty foe.",
+  "item.ticex.meka_tool": "MekaEdge",
+  "item.ticex.resonance_gauntlet": "[WIP]Resonance Gauntlet",
+  "gui.ticex.meka_tool": "MekaEdge"
 }
