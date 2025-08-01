@@ -33,7 +33,7 @@ public class TicEXUtils {
     }
 
     public static boolean canPlayerFly(Player player) {
-        boolean canFly = player.getAbilities().mayfly;
+        boolean canFly = false; // player.getAbilities().mayfly;
 
         if (ModList.get().isLoaded("avaritia")) {
             canFly = canFly || TicEXAvaritiaUtils.hasCelestial(player);
