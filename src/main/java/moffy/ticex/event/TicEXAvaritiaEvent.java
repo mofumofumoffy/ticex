@@ -2,9 +2,11 @@ package moffy.ticex.event;
 
 import moffy.ticex.client.rendering.ticex.ItemArrowRenderer;
 import moffy.ticex.entity.ItemArrow;
+import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -12,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangeGameModeEvent;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
@@ -49,6 +52,20 @@ public class TicEXAvaritiaEvent {
                     }
                 }
             }
+        }
+    }
+
+    public static void onChangeGameMode(PlayerChangeGameModeEvent event) {
+        if (event.getNewGameMode().isSurvival()) {
+            Player player = event.getEntity();
+            Abilities abilities = player.getAbilities();
+            if (TicEXAvaritiaUtils.hasCelestial(player)) {
+                abilities.mayfly = true;
+            } else {
+                abilities.mayfly = false;
+                abilities.flying = false;
+            }
+            player.onUpdateAbilities();
         }
     }
 
