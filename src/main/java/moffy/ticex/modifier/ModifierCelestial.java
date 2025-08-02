@@ -31,6 +31,7 @@ public class ModifierCelestial extends NoLevelsModifier implements EquipmentChan
         if (context.getEntity() instanceof Player player) {
             Abilities abilities = player.getAbilities();
             abilities.mayfly = true;
+            player.onUpdateAbilities();
         }
     }
 
@@ -41,6 +42,7 @@ public class ModifierCelestial extends NoLevelsModifier implements EquipmentChan
                 Abilities abilities = player.getAbilities();
                 abilities.mayfly = false;
                 abilities.flying = false;
+                player.onUpdateAbilities();
             }
         }
     }
