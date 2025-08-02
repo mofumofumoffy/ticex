@@ -4,12 +4,15 @@
   "refmap": "ticex.refmap.json",
   "plugin": "moffy.ticex.modules.mekanism.TicEXMekanismMixinPlugin",
   "mixins": [
-    "ModuleNutritionalInjectionUnitMixin",
-    "ModuleJetpackUnitMixin",
+    "MekanismIMCMixin",
+    "MekaSuitEnergyLevelMixin",
     "ModuleHelperMixin",
-    "MekanismIMCMixin"
+    "ModuleJetpackUnitMixin",
+    "ModuleNutritionalInjectionUnitMixin"
   ],
-  "client": ["HUDHandlerMixin"],
+  "client": [
+    "HUDHandlerMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1
