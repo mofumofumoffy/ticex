@@ -1,5 +1,6 @@
 package moffy.ticex.lib.utils;
 
+import com.google.common.collect.Iterables;
 import committee.nova.mods.avaritia.init.registry.ModDamageTypes;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.damagesource.DamageSource;
@@ -15,7 +16,12 @@ public class TicEXAvaritiaUtils {
     }
 
     public static boolean hasCelestial(Player player) {
-        for (ItemStack armorStack : player.getArmorSlots()) {
+        Iterable<ItemStack> slots = Iterables.concat(
+                player.getArmorSlots(),
+                player.getHandSlots()
+        );
+
+        for (ItemStack armorStack : slots) {
             if (armorStack.getItem() instanceof IModifiable) {
                 ToolStack armor = ToolStack.from(armorStack);
                 if (armor.getModifierLevel(TicEXRegistry.CELESTIAL_MODIFIER.get()) > 0) {
