@@ -243,14 +243,7 @@
   "gui.ticex.blitz_gun.description": "Blitz Gun is the tool of precision and swiftness, which has been reconstructed with the power of the star clusters.",
   "gui.ticex.revival_spellbook_irons": "Iron's Revival Spellbook",
   "gui.ticex.revival_spellbook_irons.description": "Revival Spellbook is the mystic tool, which has been reconstructed with the power of the star clusters.",
-  "gui.ticex.meka_tool": "MekaEdge",
-
-  "curios.identifier.incomparable_head": "Incomparable Helmet",
-  "curios.identifier.incomparable_chest": "Incomparable Chestplate",
-  "curios.identifier.incomparable_legs": "Incomparable Leggings",
-  "curios.identifier.incomparable_feet": "Incomparable Boots",
-  "curios.identifier.incomparable_mainhand": "Incomparable Main Hand Tool",
-  "curios.identifier.incomparable_offhand": "Incomparable Off Hand Tool",
+  "gui.ticex.meka_edge": "MekaEdge",
 
   "attribute.ticex.damage_taken": "Damage Taken",
   "attribute.ticex.healing_received": "Healing Received"
