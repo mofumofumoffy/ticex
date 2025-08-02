@@ -85,7 +85,7 @@ public class TicEXAvaritiaModule extends AddonModule {
 
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onGetHurt);
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onDeath);
-        MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onChangeGameMode);
+        MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onPlayerTick);
 
 
         DistExecutor.unsafeRunWhenOn(
