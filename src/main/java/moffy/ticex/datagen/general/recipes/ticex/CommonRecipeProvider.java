@@ -23,6 +23,7 @@ import slimeknights.mantle.registration.object.FluidObject;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.fluids.TinkerFluids;
 import slimeknights.tconstruct.library.data.recipe.IMaterialRecipeHelper;
+import slimeknights.tconstruct.library.recipe.FluidValues;
 import slimeknights.tconstruct.library.recipe.alloying.AlloyRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.casting.ItemCastingRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialFluidRecipeBuilder;
@@ -47,9 +48,9 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
         // other recipes
 
         AlloyRecipeBuilder.alloy(FluidOutput.fromTag(TicEXTags.Fluids.ETHERIC, 270), 2500)
-                .addInput(TinkerFluids.moltenSlimesteel.get(), 90)
-                .addInput(TicEXTags.Fluids.HEPATIZON, 90)
-                .addInput(TicEXTags.Fluids.GOLD, 90)
+                .addInput(TinkerFluids.moltenSlimesteel.get(), FluidValues.INGOT)
+                .addInput(TicEXTags.Fluids.HEPATIZON, FluidValues.INGOT)
+                .addInput(TicEXTags.Fluids.GOLD, FluidValues.INGOT)
                 .addInput(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
                 .save(pWriter, prefix(TicEXTags.Fluids.ETHERIC.location(), alloysFolder));
 
@@ -87,7 +88,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.ETHERIC_INGOT.get()))
                 .save(pWriter, prefix(itemsFolder + "etheric_block_from_ingot"));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TicEXRegistry.ETHERIC_INGOT.get(), 9)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TicEXRegistry.ETHERIC_INGOT.get(), FluidValues.METAL_BLOCK / FluidValues.INGOT)
                 .requires(TicEXRegistry.ETHERIC_BLOCK.get())
                 .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.ETHERIC_BLOCK.get()))
                 .save(pWriter, prefix(itemsFolder + "etheric_ingot_from_block"));
@@ -96,10 +97,10 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
     public void buildMaterialRecipes(Consumer<FinishedRecipe> pWriter) {
         MaterialFluidRecipeBuilder.material(TicEXMaterials.ETHERIC)
                 .setTemperature(2500)
-                .setFluid(TicEXTags.Fluids.ETHERIC, 90)
+                .setFluid(TicEXTags.Fluids.ETHERIC, FluidValues.INGOT)
                 .save(pWriter, prefix(TicEXMaterials.ETHERIC, materialCastingFolder));
 
-        MaterialMeltingRecipeBuilder.material(TicEXMaterials.ETHERIC, 2500, new FluidStack(TicEXRegistry.MOLTEN_ETHERIC.get().getSource(), 90))
+        MaterialMeltingRecipeBuilder.material(TicEXMaterials.ETHERIC, 2500, new FluidStack(TicEXRegistry.MOLTEN_ETHERIC.get().getSource(), FluidValues.INGOT))
                 .save(pWriter, prefix(TicEXMaterials.ETHERIC, materialMeltingFolder));
     }
 
