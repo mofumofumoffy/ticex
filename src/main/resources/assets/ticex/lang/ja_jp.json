@@ -29,8 +29,8 @@
   "item.ticex.singular_gem_leggings": "シンギュラー ジェム レギンス",
   "item.ticex.singular_gem_boots": "シンギュラー ジェム ブーツ",
   "item.ticex.reforged_slashblade": "再鍛抜刀剣",
-  "item.ticex.meka_tool": "Mekaエッジ",
-  "item.ticex.resonance_gauntlet": "[WIP]レゾナンス・ガントレット",
+  "item.ticex.meka_tool": "MekaEdge",
+  "item.ticex.resonance_gauntlet": "[WIP] レゾナンス・ガントレット",
 
   "tagtype.ticex.catalyst": "セラムカタリスト",
 
@@ -38,7 +38,7 @@
   "item.ticex.catalyst_mekasuit_chestplate": "セラムカタリスト - MekaSuit ボディアーマー",
   "item.ticex.catalyst_mekasuit_leggings": "セラムカタリスト - MekaSuit パンツ",
   "item.ticex.catalyst_mekasuit_boots": "セラムカタリスト - MekaSuit ブーツ",
-  "item.ticex.catalyst_meka_tool": "セラムカタリスト - MekaEdge",
+  "item.ticex.catalyst_meka_tool": "セラムカタリスト - Meka-Tool",
   "item.ticex.catalyst_slashblade": "セラムカタリスト - 抜刀剣",
   "item.ticex.catalyst_kinetic_gun": "セラムカタリスト - 現代式実体弾銃",
   "item.ticex.catalyst_irons_spellbook": "セラムカタリスト - Iron's スペルブック",
