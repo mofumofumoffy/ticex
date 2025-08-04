@@ -15,7 +15,7 @@ import moffy.ticex.item.modifiable.ModifiableGunItem;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -23,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class TicEXTaczUtils {
     @OnlyIn(Dist.CLIENT)
-    public static boolean renderGunTool(ItemRenderer itemRenderer, ItemStack stack, PoseStack pPoseStack, MultiBufferSource pBuffer, LivingEntity pLivingEntity, int pPackedLight){
+    public static boolean renderGunTool(ItemRenderer itemRenderer, ItemStack stack, PoseStack pPoseStack, MultiBufferSource pBuffer, Entity pLivingEntity, int pPackedLight){
         if(stack.getItem() instanceof ModifiableGunItem){
             pPoseStack.mulPose(Axis.YP.rotationDegrees(135f));
             itemRenderer.renderStatic(stack, ItemDisplayContext.GROUND, pPackedLight, OverlayTexture.NO_OVERLAY, pPoseStack, pBuffer, pLivingEntity.level(), pLivingEntity.getId());

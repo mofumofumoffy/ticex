@@ -1,4 +1,4 @@
-package moffy.ticex.client.rendering.ticex;
+package moffy.ticex.client.modules.curios;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fml.ModList;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class LayerResonanceTools <T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
@@ -31,9 +32,9 @@ public class LayerResonanceTools <T extends LivingEntity, M extends EntityModel<
     }
 
     @Override
-    public void render(PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity,
-            float pLimbSwing, float pLimbSwingAmount, float pPartialTick, float pAgeInTicks, float pNetHeadYaw,
-            float pHeadPitch) {
+    public void render(@NotNull PoseStack pPoseStack, @NotNull MultiBufferSource pBuffer, int pPackedLight, @NotNull T pLivingEntity,
+                       float pLimbSwing, float pLimbSwingAmount, float pPartialTick, float pAgeInTicks, float pNetHeadYaw,
+                       float pHeadPitch) {
 
         CuriosApi.getCuriosInventory(pLivingEntity).ifPresent(handler -> {
             handler.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).ifPresent(slotResult -> {
@@ -60,7 +61,7 @@ public class LayerResonanceTools <T extends LivingEntity, M extends EntityModel<
                             pPoseStack.scale(1.5f, 1.5f, 1.5f);
 
                             if(ModList.get().isLoaded("slashblade")){
-                                isNormalRender = isNormalRender && !TicEXSBUtils.renderBladeTool(toolStack, pPartialTick, pPoseStack, pBuffer, pPackedLight);
+                                isNormalRender = !TicEXSBUtils.renderBladeTool(toolStack, pPartialTick, pPoseStack, pBuffer, pPackedLight);
                             }
 
                             if(ModList.get().isLoaded("tacz")){

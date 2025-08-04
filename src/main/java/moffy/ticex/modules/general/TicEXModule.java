@@ -205,23 +205,10 @@ public class TicEXModule extends AddonModule {
                 List.of()
             );
         }
-        DistExecutor.unsafeRunWhenOn(
-            Dist.CLIENT,
-            () ->
-                () -> {
-                    initClient();
-                }
-        );
     }
 
     @Override
     public void setup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> CatalystMaterialStatsType.RegisterStats());
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void initClient(){
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(TicEXEvent::addLayers);
     }
 }

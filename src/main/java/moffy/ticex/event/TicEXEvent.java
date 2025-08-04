@@ -2,10 +2,7 @@ package moffy.ticex.event;
 
 import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.client.modules.ticex.MaterialOverrideModel;
-import moffy.ticex.client.rendering.ticex.LayerResonanceTools;
 import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,12 +11,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -142,22 +135,6 @@ public class TicEXEvent {
 
     public static void onRegisterCaps(RegisterCapabilitiesEvent event) {
         event.register(EmbossmentMaterialCapability.class);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public static void addLayers(EntityRenderersEvent.AddLayers event) {
-        addPlayerLayer(event, "default");
-        addPlayerLayer(event, "slim");
-    }
-
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    @OnlyIn(Dist.CLIENT)
-    public static void addPlayerLayer(EntityRenderersEvent.AddLayers event, String skin) {
-        EntityRenderer<? extends Player> renderer = event.getSkin(skin);
-        if (renderer instanceof LivingEntityRenderer livingRenderer) {
-            livingRenderer.addLayer(new LayerResonanceTools<>(livingRenderer));
-        }
     }
 
     public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
