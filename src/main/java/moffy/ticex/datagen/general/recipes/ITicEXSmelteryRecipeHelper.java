@@ -8,6 +8,7 @@ import net.minecraft.world.level.material.Fluid;
 import slimeknights.mantle.recipe.condition.TagFilledCondition;
 import slimeknights.mantle.recipe.helper.ItemOutput;
 import slimeknights.tconstruct.library.data.recipe.SmelteryRecipeBuilder;
+import slimeknights.tconstruct.library.recipe.FluidValues;
 import slimeknights.tconstruct.library.recipe.casting.ItemCastingRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.melting.IMeltingContainer;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
@@ -25,15 +26,15 @@ public interface ITicEXSmelteryRecipeHelper extends ITicEXRecipeHelper {
                 .optional()
                 .oreRate(IMeltingContainer.OreRateType.METAL)
                 .temperature(temperature)
-                .baseUnit(90)
-                .damageUnit(10)
+                .baseUnit(FluidValues.INGOT)
+                .damageUnit(FluidValues.NUGGET)
                 .melting(9.0F, "block", "storage_blocks", 3.0F, false, false)
                 .meltingCasting(1.0F, TinkerSmeltery.ingotCast, 1.0F, false);
 
         Consumer<FinishedRecipe> wrapped = this.withCondition(consumer, new TagFilledCondition<>(storageTag));
         ItemCastingRecipeBuilder.basinRecipe(ItemOutput.fromTag(storageTag))
-                .setFluid(fluidTag, 810)
-                .setCoolingTime(temperature, 810)
+                .setFluid(fluidTag, FluidValues.METAL_BLOCK)
+                .setCoolingTime(temperature, FluidValues.METAL_BLOCK)
                 .save(wrapped, this.location(smelteryCastingFolder + "metal/" + name.getPath() + "/block"));
     }
 }
