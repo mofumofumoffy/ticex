@@ -1,4 +1,4 @@
-package moffy.ticex.datagen.blockstate;
+package moffy.ticex.datagen.models;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;

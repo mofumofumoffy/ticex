@@ -1,4 +1,4 @@
-package moffy.ticex.client.modules.ticex;
+package moffy.ticex.client.modules.ticex.models;
 
 import com.mojang.math.Transformation;
 import net.minecraft.client.renderer.block.model.BakedQuad;

@@ -12,12 +12,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArrowItem;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
@@ -33,6 +30,7 @@ import net.minecraftforge.registries.RegistryObject;
 import slimeknights.mantle.fluid.UnplaceableFluid;
 import slimeknights.mantle.recipe.helper.TypeAwareRecipeSerializer;
 import slimeknights.mantle.registration.deferred.FluidDeferredRegister;
+import slimeknights.mantle.registration.deferred.MenuTypeDeferredRegister;
 import slimeknights.mantle.registration.object.EnumObject;
 import slimeknights.mantle.registration.object.FlowingFluidObject;
 import slimeknights.mantle.registration.object.FluidObject;
@@ -50,6 +48,7 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
+import slimeknights.tconstruct.tools.menu.ToolContainerMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,6 +146,9 @@ public class TicEXRegistry {
         Registries.RECIPE_TYPE,
         TicEX.MODID
     );
+    public static final MenuTypeDeferredRegister MENUS = new MenuTypeDeferredRegister(
+            TicEX.MODID
+    );
 
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
@@ -157,6 +159,8 @@ public class TicEXRegistry {
     public static RegistryObject<RecipeSerializer<SingleEmbossmentModifierRecipe>> SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = null;
     public static RegistryObject<RecipeSerializer<ValidatableIncrementalModifierRecipe>> VALIDATABLE_INCREMENTAL_RECIPE_SERIALIZER = null;
 
+
+    public static RegistryObject<MenuType<ToolContainerMenu>> UNSYNCED_TOOL_CONTAINER = null;
 
 
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;

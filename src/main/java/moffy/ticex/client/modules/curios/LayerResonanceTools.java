@@ -23,7 +23,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 public class LayerResonanceTools <T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
-    private static final float RADIUS = 1.4f;
+    public static final float RADIUS = 1.4f;
     protected ItemRenderer itemRenderer;
 
     public LayerResonanceTools(RenderLayerParent<T, M> pRenderer) {

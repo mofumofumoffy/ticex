@@ -2,16 +2,16 @@ package moffy.ticex.event;
 
 import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.modules.ticex.TicEXSpriteSourceProvider;
-import moffy.ticex.datagen.blockstate.TicEXBlockstateProvider;
 import moffy.ticex.datagen.fluid.FluidTextureProvider;
 import moffy.ticex.datagen.general.LootProvider;
 import moffy.ticex.datagen.general.TicEXDamageTypeProvider;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
+import moffy.ticex.datagen.general.sprite.TicEXSpriteSourceProvider;
 import moffy.ticex.datagen.general.tag.BlockTagProvider;
 import moffy.ticex.datagen.general.tag.FluidTagProvider;
 import moffy.ticex.datagen.general.tag.ItemTagProvider;
 import moffy.ticex.datagen.layout.TicEXStationSlotLayoutProvider;
+import moffy.ticex.datagen.models.TicEXBlockstateProvider;
 import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
 import moffy.ticex.datagen.tool.*;

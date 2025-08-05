@@ -3,31 +3,29 @@ package moffy.ticex.event;
 import moffy.ticex.TicEX;
 import moffy.ticex.client.modules.curios.LayerResonanceTools;
 import moffy.ticex.client.modules.curios.ResonanceToolProjectileRenderer;
+import moffy.ticex.client.modules.ticex.TicEXKeyBindings;
 import moffy.ticex.entity.curios.ResonanceToolProjectile;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.network.curios.TicEXShootGauntletPacket;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.entity.PartEntity;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 
@@ -80,7 +78,8 @@ public class TicEXCuriosEvent {
                     if(arrowTarget == null){
                         arrowTarget = player.level().getNearestEntity(
                                 LivingEntity.class,
-                                TargetingConditions.DEFAULT,
+                                TargetingConditions.forCombat()
+                                        .selector(livingEntity -> livingEntity != player),
                                 player,
                                 player.getX(),
                                 player.getY(),
@@ -106,15 +105,31 @@ public class TicEXCuriosEvent {
     }
 
     public static void shootTool(Player player, LivingEntity livingTarget, ItemStack toolStack){
-        if (!player.level().isClientSide) {
-            ResonanceToolProjectile arrow = new ResonanceToolProjectile(player, player.level());
-            //arrow.setPos(new Vec3(player.getX(), player.getY(), player.getZ()).add(new Vec3(0,0,-1).yRot(player.getYRot() + (float) ((player.getRandom().nextFloat() - 0.5f) * Math.PI / 2f))));
-            arrow.setItem(toolStack);
-            double dx = livingTarget.getX() - player.getX();
-            double dy = livingTarget.getY(0.5D) - player.getEyeY();
-            double dz = livingTarget.getZ() - player.getZ();
-            arrow.shoot(dx, dy, dz, 3.0F, 1.0F);
-            player.level().addFreshEntity(arrow);
+        ResonanceToolProjectile arrow = new ResonanceToolProjectile(player, player.level());
+        arrow.setPos(player.getEyePosition().add(player.getLookAngle().scale(1)));
+
+        arrow.setItem(toolStack);
+        double dx = livingTarget.getX() - player.getX();
+        double dy = livingTarget.getY(0.5D) - player.getEyeY();
+        double dz = livingTarget.getZ() - player.getZ();
+        player.level().addFreshEntity(arrow);
+
+        arrow.shoot(dx, dy, dz, 3.0F, 1.0F);
+    }
+
+    public static void registerBindings(RegisterKeyMappingsEvent event) {
+        event.register(TicEXKeyBindings.SHOOT_GAUNTLET.get());
+    }
+
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            while (TicEXKeyBindings.SHOOT_GAUNTLET.get().consumeClick()) {
+                LocalPlayer player = Minecraft.getInstance().player;
+                if (player == null) continue;
+
+                TicEXShootGauntletPacket packet = new TicEXShootGauntletPacket(player.getId());
+                TicEX.CHANNEL.sendToServer(packet);
+            }
         }
     }
 }

@@ -246,5 +246,7 @@
   "gui.ticex.meka_edge": "MekaEdge",
 
   "attribute.ticex.damage_taken": "Damage Taken",
-  "attribute.ticex.healing_received": "Healing Received"
+  "attribute.ticex.healing_received": "Healing Received",
+  "ticex.modid": "TicEX",
+  "key.ticex.shoot_gauntlet": "Shoot Gauntlet"
 }
