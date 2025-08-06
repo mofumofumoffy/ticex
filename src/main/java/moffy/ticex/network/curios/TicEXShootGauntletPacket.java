@@ -1,7 +1,7 @@
 package moffy.ticex.network.curios;
 
 import moffy.ticex.event.TicEXCuriosEvent;
-import moffy.ticex.network.IPacket;
+import moffy.ticex.network.TicEXPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fml.ModList;
@@ -10,18 +10,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-public class TicEXShootGauntletPacket implements IPacket {
+public class TicEXShootGauntletPacket extends TicEXPacket.ServerBoundPacket {
     private final int playerId;
 
     public TicEXShootGauntletPacket(int playerId) {
         this.playerId = playerId;
     }
 
-    public static TicEXShootGauntletPacket decode(FriendlyByteBuf buf) {
-        int playerId = buf.readVarInt();
-        return new TicEXShootGauntletPacket(
-                playerId
-        );
+    public TicEXShootGauntletPacket(FriendlyByteBuf buf) {
+        this.playerId = buf.readVarInt();
     }
 
     public void encode(@NotNull FriendlyByteBuf buf) {
@@ -40,7 +37,7 @@ public class TicEXShootGauntletPacket implements IPacket {
                 .enqueueWork(() -> {
                     ServerPlayer sender = context.getSender();
                     if (playerId == sender.getId()) {
-                        TicEXCuriosEvent.shootGauntletTools(sender, null);
+                        TicEXCuriosEvent.shootGauntletTools(sender);
                     }
                 });
     }
