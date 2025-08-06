@@ -2,7 +2,6 @@ package moffy.ticex.client.modules.curios;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-
 import moffy.ticex.lib.utils.TicEXSBUtils;
 import moffy.ticex.lib.utils.TicEXTaczUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -49,7 +48,7 @@ public class LayerResonanceTools <T extends LivingEntity, M extends EntityModel<
 
                             float time = pLivingEntity.tickCount + pPartialTick;
                             double baseAngle = 2 * Math.PI / amount * i;
-                            double rotationAngle = baseAngle + (time * 0.07);
+                            double rotationAngle = baseAngle + (time * 0.07) + Math.PI / 4;
 
                             double x = RADIUS * Math.cos(rotationAngle);
                             double z = RADIUS * Math.sin(rotationAngle);

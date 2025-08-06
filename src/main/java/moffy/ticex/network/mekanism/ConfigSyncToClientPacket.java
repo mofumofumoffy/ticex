@@ -9,7 +9,7 @@ import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.ModuleConfigItem;
 import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.network.to_server.PacketUpdateModuleSettings;
-import moffy.ticex.network.IPacket;
+import moffy.ticex.network.TicEXPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class ConfigSyncToClientPacket implements IPacket {
+public class ConfigSyncToClientPacket extends TicEXPacket.ClientBoundPacket {
 
     private final ModuleData<?> moduleType;
     private final EquipmentSlot slot;
@@ -63,16 +63,17 @@ public class ConfigSyncToClientPacket implements IPacket {
         this.value = value;
     }
 
-    public int getConfigIndex() {
-        return configIndex;
-    }
-
-    public ModuleDataType getDataType() {
-        return dataType;
-    }
-
-    public ModuleData<?> getModuleType() {
-        return moduleType;
+    public ConfigSyncToClientPacket(FriendlyByteBuf buf) {
+        this.slot = buf.readEnum(EquipmentSlot.class);
+        this.moduleType = buf.readRegistryIdSafe(ModuleData.class);
+        this.configIndex = buf.readInt();
+        this.dataType = buf.readEnum(ModuleDataType.class);
+        this.value =
+                switch (dataType) {
+                    case BOOLEAN -> buf.readBoolean();
+                    case COLOR -> buf.readInt();
+                    case INTEGER, ENUM -> buf.readVarInt();
+                };
     }
 
     public EquipmentSlot getSlot() {
@@ -81,20 +82,6 @@ public class ConfigSyncToClientPacket implements IPacket {
 
     public Object getValue() {
         return value;
-    }
-
-    public static ConfigSyncToClientPacket decode(FriendlyByteBuf buf) {
-        EquipmentSlot slot = buf.readEnum(EquipmentSlot.class);
-        ModuleData<?> moduleData = buf.readRegistryIdSafe(ModuleData.class);
-        int configDataIndex = buf.readInt();
-        ModuleDataType dataType = buf.readEnum(ModuleDataType.class);
-        Object data =
-                switch (dataType) {
-                    case BOOLEAN -> buf.readBoolean();
-                    case COLOR -> buf.readInt();
-                    case INTEGER, ENUM -> buf.readVarInt();
-                };
-        return new ConfigSyncToClientPacket(moduleData, slot, configDataIndex, dataType, data);
     }
 
     @Override
@@ -167,7 +154,7 @@ public class ConfigSyncToClientPacket implements IPacket {
         }
     }
 
-    private static enum ModuleDataType {
+    public enum ModuleDataType {
         BOOLEAN(data -> data instanceof ModuleBooleanData),
         COLOR(data -> data instanceof ModuleColorData),
         INTEGER(data -> data instanceof ModuleIntegerData),

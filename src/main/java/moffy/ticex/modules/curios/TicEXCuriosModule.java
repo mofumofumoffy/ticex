@@ -13,6 +13,7 @@ import moffy.ticex.item.modifiable.ModifiableGauntlet;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
+import moffy.ticex.network.curios.TicEXSyncEntity;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -60,8 +61,16 @@ public class TicEXCuriosModule extends AddonModule {
                 TicEXPacketID.SHOOT_GAUNTLET,
                 TicEXShootGauntletPacket.class,
                 TicEXShootGauntletPacket::encode,
-                TicEXShootGauntletPacket::decode,
+                TicEXShootGauntletPacket::new,
                 TicEXShootGauntletPacket::handle
+        );
+
+        TicEX.CHANNEL.registerMessage(
+                TicEXPacketID.SHOT_GAUNTLET,
+                TicEXSyncEntity.class,
+                TicEXSyncEntity::encode,
+                TicEXSyncEntity::new,
+                TicEXSyncEntity::handle
         );
 
         TicEXKeyBindings.SHOOT_GAUNTLET = Lazy.of(() ->

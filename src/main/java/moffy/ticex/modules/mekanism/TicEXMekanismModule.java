@@ -83,7 +83,7 @@ public class TicEXMekanismModule extends AddonModule {
             TicEXPacketID.MEK_CONFIG_SYNC,
             ConfigSyncToClientPacket.class,
             ConfigSyncToClientPacket::encode,
-            ConfigSyncToClientPacket::decode,
+                ConfigSyncToClientPacket::new,
             ConfigSyncToClientPacket::handle
         );
 

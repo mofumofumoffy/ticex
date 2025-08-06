@@ -20,10 +20,12 @@ import slimeknights.tconstruct.library.utils.Util;
 
 import java.util.List;
 
-public class ModifiableGauntlet extends ModifiableItem{
+public class ModifiableGauntlet extends ModifiableItem {
+    private int[] cooldowns;
 
     public ModifiableGauntlet(Properties properties, ToolDefinition toolDefinition) {
         super(properties, toolDefinition);
+        this.cooldowns = new int[6]; // max slots;
     }
 
     @Override
@@ -35,6 +37,7 @@ public class ModifiableGauntlet extends ModifiableItem{
                 return new InteractionResultHolder<>(result, stack);
             }
         }
+
         return super.use(levelIn, playerIn, handIn);
     }
 

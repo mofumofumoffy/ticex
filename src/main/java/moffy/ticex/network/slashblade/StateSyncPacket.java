@@ -1,7 +1,7 @@
 package moffy.ticex.network.slashblade;
 
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import moffy.ticex.network.IPacket;
+import moffy.ticex.network.TicEXPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +11,7 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 
 import java.util.function.Supplier;
 
-public class StateSyncPacket implements IPacket {
+public class StateSyncPacket extends TicEXPacket.ClientBoundPacket {
 
     protected CompoundTag stateNbt;
 
@@ -19,12 +19,8 @@ public class StateSyncPacket implements IPacket {
         this.stateNbt = stateNbt;
     }
 
-    public CompoundTag getStateNbt() {
-        return stateNbt;
-    }
-
-    public static StateSyncPacket decode(FriendlyByteBuf buf) {
-        return new StateSyncPacket(buf.readAnySizeNbt());
+    public StateSyncPacket(FriendlyByteBuf buf) {
+        this.stateNbt = buf.readNbt();
     }
 
     public void encode(FriendlyByteBuf buf) {

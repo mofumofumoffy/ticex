@@ -87,7 +87,7 @@ public class TicEXSlashBladeModule extends AddonModule {
             TicEXPacketID.SB_STATE_SYNC,
             StateSyncPacket.class,
             StateSyncPacket::encode,
-            StateSyncPacket::decode,
+                StateSyncPacket::new,
             StateSyncPacket::handle
         );
 
