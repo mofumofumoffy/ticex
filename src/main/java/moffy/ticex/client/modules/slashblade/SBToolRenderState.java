@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.Face;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
 import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
-import mods.flammpfeil.slashblade.event.client.RenderOverrideEvent;
 import moffy.ticex.client.modules.slashblade.SBToolRenderType.PartType;
 import moffy.ticex.client.rendering.ItemRenderContext;
 import moffy.ticex.client.rendering.shader.ShaderProvider;
@@ -102,18 +101,6 @@ public class SBToolRenderState {
                 optional.ifPresent(materialRenderInfo -> col = new Color(materialRenderInfo.vertexColor()));
             });
 
-            RenderOverrideEvent event = RenderOverrideEvent.onRenderOverride(
-                    stack,
-                    model,
-                    target,
-                    null,
-                    matrixStackIn,
-                    bufferIn,
-                    packedLightIn,
-                    resourceLocation -> rt,
-                    enableEffect
-            );
-
             renderVC(
                     stack,
                     itemRenderContext,
@@ -121,7 +108,7 @@ public class SBToolRenderState {
                     bufferIn,
                     rt,
                     matrixStackIn,
-                    event,
+                    model,
                     packedLightIn,
                     enableEffect,
                     target,
@@ -138,7 +125,7 @@ public class SBToolRenderState {
             MultiBufferSource bufferIn,
             RenderType rt,
             PoseStack matrixStackIn,
-            RenderOverrideEvent event,
+            WavefrontObject model,
             int packedLightIn,
             boolean enableEffect,
             String target,
@@ -150,13 +137,13 @@ public class SBToolRenderState {
         Face.setCol(col);
         Face.setLightMap(packedLightIn);
         Face.setMatrix(matrixStackIn);
-        TicEXSBUtils.tessellateWithShader(stack, itemRenderContext, shaderProvider, material, event.getModel(), vb, bufferIn, partType, event.getTarget());
+        TicEXSBUtils.tessellateWithShader(stack, itemRenderContext, shaderProvider, material, model, vb, bufferIn, partType, target);
 
         if (stack.hasFoil() && enableEffect) {
             vb = bufferIn.getBuffer(
                     target.startsWith("item_") ? BladeRenderState.SLASHBLADE_ITEM_GLINT : BladeRenderState.SLASHBLADE_GLINT
             );
-            event.getModel().tessellateOnly(vb, event.getTarget());
+            model.tessellateOnly(vb, target);
         }
 
         Face.resetMatrix();
