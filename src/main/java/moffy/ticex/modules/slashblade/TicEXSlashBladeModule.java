@@ -98,6 +98,7 @@ public class TicEXSlashBladeModule extends AddonModule {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingFall);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingHurt);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onPlayerFlyableFall);
+        MinecraftForge.EVENT_BUS.addListener(TicEXSBEvent::onHit);
 
         DistExecutor.unsafeRunWhenOn(
             Dist.CLIENT,
