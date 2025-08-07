@@ -11,13 +11,13 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class TicEXSyncEntity extends TicEXPacket.ServerBoundPacket {
+public class TicEXSyncEntityMovements extends TicEXPacket.ServerBoundPacket {
     public final int entityId;
     public final Vec3 position;
     public final Vec3 velocityVec;
     public final Vec2 rotationVec;
 
-    public TicEXSyncEntity(Entity entity) {
+    public TicEXSyncEntityMovements(Entity entity) {
         this(
                 entity.getId(),
                 entity.position(),
@@ -26,14 +26,14 @@ public class TicEXSyncEntity extends TicEXPacket.ServerBoundPacket {
         );
     }
 
-    public TicEXSyncEntity(int entityId, Vec3 position, Vec3 velocityVec, Vec2 rotationVec) {
+    public TicEXSyncEntityMovements(int entityId, Vec3 position, Vec3 velocityVec, Vec2 rotationVec) {
         this.entityId = entityId;
         this.position = position;
         this.velocityVec = velocityVec;
         this.rotationVec = rotationVec;
     }
 
-    public TicEXSyncEntity(FriendlyByteBuf buf) {
+    public TicEXSyncEntityMovements(FriendlyByteBuf buf) {
         super(buf);
         this.entityId = buf.readVarInt();
         this.position = new Vec3(buf.readVector3f());
@@ -63,5 +63,7 @@ public class TicEXSyncEntity extends TicEXPacket.ServerBoundPacket {
             entity.setXRot(this.rotationVec.x);
             entity.setYRot(this.rotationVec.y);
         });
+
+        context.setPacketHandled(true);
     }
 }

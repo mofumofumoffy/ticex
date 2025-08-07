@@ -48,7 +48,7 @@ public class LayerResonanceTools <T extends LivingEntity, M extends EntityModel<
 
                             float time = pLivingEntity.tickCount + pPartialTick;
                             double baseAngle = 2 * Math.PI / amount * i;
-                            double rotationAngle = baseAngle + (time * 0.07) + Math.PI / 4;
+                            double rotationAngle = baseAngle + (time * 0.07);
 
                             double x = RADIUS * Math.cos(rotationAngle);
                             double z = RADIUS * Math.sin(rotationAngle);

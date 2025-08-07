@@ -18,6 +18,8 @@ import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.modifier.ModifierEmbossment;
 import moffy.ticex.modifier.ModifierSassy;
+import moffy.ticex.network.TicEXPacketID;
+import moffy.ticex.network.curios.TicEXSyncEntityMovements;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -51,6 +53,12 @@ public class TicEXModule extends AddonModule {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ToolCapabilityProvider.register(TiCEXToolCapabilityProvider::new);
+
+        TicEX.CHANNEL.messageBuilder(TicEXSyncEntityMovements.class, TicEXPacketID.SHOT_GAUNTLET)
+                .encoder(TicEXSyncEntityMovements::encode)
+                .decoder(TicEXSyncEntityMovements::new)
+                .consumerMainThread(TicEXSyncEntityMovements::handle)
+                .add();
 
         TicEXRegistry.MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
             "embossment_modifier",

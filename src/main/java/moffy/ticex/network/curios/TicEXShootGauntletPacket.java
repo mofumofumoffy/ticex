@@ -1,6 +1,6 @@
 package moffy.ticex.network.curios;
 
-import moffy.ticex.event.TicEXCuriosEvent;
+import moffy.ticex.item.ResonanceTools;
 import moffy.ticex.network.TicEXPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -37,8 +37,10 @@ public class TicEXShootGauntletPacket extends TicEXPacket.ServerBoundPacket {
                 .enqueueWork(() -> {
                     ServerPlayer sender = context.getSender();
                     if (playerId == sender.getId()) {
-                        TicEXCuriosEvent.shootGauntletTools(sender);
+                        ResonanceTools.shoot(sender);
                     }
                 });
+
+        context.setPacketHandled(true);
     }
 }

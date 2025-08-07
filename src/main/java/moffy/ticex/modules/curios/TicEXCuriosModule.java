@@ -13,7 +13,6 @@ import moffy.ticex.item.modifiable.ModifiableGauntlet;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
-import moffy.ticex.network.curios.TicEXSyncEntity;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -57,21 +56,11 @@ public class TicEXCuriosModule extends AddonModule {
         MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onLivingDeath);
         MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onClientTick);
 
-        TicEX.CHANNEL.registerMessage(
-                TicEXPacketID.SHOOT_GAUNTLET,
-                TicEXShootGauntletPacket.class,
-                TicEXShootGauntletPacket::encode,
-                TicEXShootGauntletPacket::new,
-                TicEXShootGauntletPacket::handle
-        );
-
-        TicEX.CHANNEL.registerMessage(
-                TicEXPacketID.SHOT_GAUNTLET,
-                TicEXSyncEntity.class,
-                TicEXSyncEntity::encode,
-                TicEXSyncEntity::new,
-                TicEXSyncEntity::handle
-        );
+        TicEX.CHANNEL.messageBuilder(TicEXShootGauntletPacket.class, TicEXPacketID.SHOOT_GAUNTLET)
+                .encoder(TicEXShootGauntletPacket::encode)
+                .decoder(TicEXShootGauntletPacket::new)
+                .consumerMainThread(TicEXShootGauntletPacket::handle)
+                .add();
 
         TicEXKeyBindings.SHOOT_GAUNTLET = Lazy.of(() ->
                 new KeyMapping(

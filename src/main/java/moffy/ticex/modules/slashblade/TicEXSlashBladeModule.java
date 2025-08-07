@@ -83,13 +83,11 @@ public class TicEXSlashBladeModule extends AddonModule {
         TicEXRegistry.KOSHIRAE_MODIFIER = TicEXRegistry.MODIFIERS.register("koshirae", ModifierKoshirae::new);
         TicEXRegistry.PROUD_MODIFIER = TicEXRegistry.MODIFIERS.register("hidden_proud", ModifierHiddenProud::new);
 
-        TicEX.CHANNEL.registerMessage(
-            TicEXPacketID.SB_STATE_SYNC,
-            StateSyncPacket.class,
-            StateSyncPacket::encode,
-                StateSyncPacket::new,
-            StateSyncPacket::handle
-        );
+        TicEX.CHANNEL.messageBuilder(StateSyncPacket.class, TicEXPacketID.SB_STATE_SYNC)
+                .encoder(StateSyncPacket::encode)
+                .decoder(StateSyncPacket::new)
+                .consumerMainThread(StateSyncPacket::handle)
+                .add();
 
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onBladeMotion);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onInputCommand);

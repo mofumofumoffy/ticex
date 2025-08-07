@@ -4,7 +4,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.modules.general.TicEXRegistry;
-import moffy.ticex.network.curios.TicEXSyncEntity;
+import moffy.ticex.network.curios.TicEXSyncEntityMovements;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -144,7 +144,7 @@ public class ResonanceToolProjectile extends ItemArrow {
 
         this.shoot(velocityVec.x, velocityVec.y, velocityVec.z, velocity, inaccuracy);
 
-        TicEXSyncEntity packet = new TicEXSyncEntity(this);
+        TicEXSyncEntityMovements packet = new TicEXSyncEntityMovements(this);
         TicEX.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), packet);
     }
 
@@ -170,8 +170,7 @@ public class ResonanceToolProjectile extends ItemArrow {
             return;
         }
 
-
-        handleDespawn();
+        this.handleDespawn();
 
         if (this.isRemoved()) {
             return;
