@@ -17,7 +17,6 @@ import slimeknights.tconstruct.library.tools.SlotType;
 public class AbstractModifierRecipeMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void modifyLevel(ResourceLocation id, Ingredient toolRequirement, int maxToolSize, ModifierId result, IntRange level, SlotType.SlotCount slots, boolean allowCrystal, boolean checkTraitLevel, CallbackInfo ci) {
-        TicEX.LOGGER.debug("At Resource Location {}, level range is from {} to {}", id, level.min(), level.max());
         TicEXConfig.MODIFIER_CONFIG.forEach((rl, i) -> {
             if (id.equals(rl)) {
                 ((AbstractModifierRecipeAccessor) this).setLevel(new IntRange(1, i.get()));

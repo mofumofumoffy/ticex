@@ -26,6 +26,7 @@ public class TicEXConfig {
     public static List<ForgeConfigSpec.ConfigValue<Integer>> RF_FURNACE_FUEL_RATE = new ArrayList<>();
     public static Map<ResourceLocation, ToolSlotPreset.SlotConfigSpec> SLOTS_CONFIG = new HashMap<>();
     public static Map<ResourceLocation, ForgeConfigSpec.ConfigValue<Integer>> MODIFIER_CONFIG = new HashMap<>();
+    public static ForgeConfigSpec.ConfigValue<Boolean> SHOULD_CONSUME_SLASHBLADE;
 
     public static void registerConfig() {
         final ForgeConfigSpec.Builder COMMON = new ForgeConfigSpec.Builder();
@@ -134,6 +135,10 @@ public class TicEXConfig {
                 MODIFIER_CONFIG.put(preset.rl(), MORE_CONFIG.comment("Max Level of " + preset.name())
                         .define(preset.configName() + "MaxLevel", preset.max()))
         );
+        MORE_CONFIG.pop();
+        MORE_CONFIG.push("Catalyst Settings");
+        SHOULD_CONSUME_SLASHBLADE = MORE_CONFIG.comment("If set to true, the catalyst will consume the Slashblade upon use.")
+                .define("shouldConsumeSlashblade", true);
         MORE_CONFIG.pop();
 
         CLIENT.comment("Client Settings").push("client");
