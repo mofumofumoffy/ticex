@@ -4,6 +4,7 @@ import java.util.List;
 import mods.flammpfeil.slashblade.SlashBladeConfig;
 import mods.flammpfeil.slashblade.capability.concentrationrank.ConcentrationRankCapabilityProvider;
 import mods.flammpfeil.slashblade.capability.concentrationrank.IConcentrationRank;
+import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.util.AttackManager;
 import mods.flammpfeil.slashblade.util.PlayerAttackHelper;
@@ -29,6 +30,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -41,256 +43,117 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 @Mixin(value = PlayerAttackHelper.class, remap = false)
-public class PlayerAttackHelperMixin {
+public abstract class PlayerAttackHelperMixin {
 
-    @Inject(at = @At("invoke"), method = "attack", cancellable = true)
+    @Shadow
+    public static float getSweepingBonus(Player attacker) {
+        return 0;
+    }
+
+    @Shadow
+    public static float getRankBonus(Player attacker) {
+        return 0;
+    }
+
+    @Shadow
+    public static float getEnchantmentBonus(Player attacker, Entity target) {
+        return 0;
+    }
+
+    @Shadow
+    public static float calculateKnockback(Player attacker) {
+        return 0;
+    }
+
+    @Shadow
+    public static boolean isCriticalHit(Player attacker, Entity target) {
+        return false;
+    }
+
+    @Shadow
+    public static PlayerAttackHelper.FireAspectResult handleFireAspect(Player attacker, Entity target) {
+        return null;
+    }
+
+    @Shadow
+    public static void applyKnockback(Player attacker, Entity target, float knockback) {
+    }
+
+    @Shadow
+    public static void restoreTargetMotionIfNeeded(Entity target, Vec3 originalMotion) {
+    }
+
+    @Shadow
+    public static void playAttackEffects(Player attacker, Entity target, boolean isCritical) {
+    }
+
+    @Shadow
+    public static void handleEnchantmentsAndDurability(Player attacker, Entity target) {
+    }
+
+    @Shadow
+    public static void handlePostAttackEffects(Player attacker, Entity target, PlayerAttackHelper.FireAspectResult fireAspectResult, boolean isCritical) {
+    }
+
+    @Shadow
+    public static void handleFailedAttack(Player attacker, Entity target, PlayerAttackHelper.FireAspectResult fireAspectResult) {
+    }
+
+    @Inject(at = @At("HEAD"), method = "attack", cancellable = true)
     private static void attackExtension(Player attacker, Entity target, float comboRatio, CallbackInfo cb) {
-        if (!ForgeHooks.onPlayerAttackTarget(attacker, target)) {
-            cb.cancel();
-        }
-        ItemStack mainHandStack = attacker.getMainHandItem();
-        if (mainHandStack != null && mainHandStack.getItem() instanceof IModifiable) {
-            boolean isCritical =
-                attacker.fallDistance > 0.0F &&
-                !attacker.onGround() &&
-                !attacker.onClimbable() &&
-                !attacker.isInWater() &&
-                !attacker.hasEffect(MobEffects.BLINDNESS) &&
-                !attacker.isPassenger() &&
-                target instanceof LivingEntity &&
-                !attacker.isSprinting();
-
-            ToolStack tool = ToolStack.from(mainHandStack);
-            ToolAttackContext context = new ToolAttackContext(
-                attacker,
-                attacker,
-                InteractionHand.MAIN_HAND,
-                target,
-                target instanceof LivingEntity ? (LivingEntity) target : null,
-                isCritical,
-                0,
-                false
-            );
-            if (
-                (target.isAttackable() && !target.skipAttackInteraction(attacker)) ||
-                tool.getModifierLevel(TicEXRegistry.DEFLECTION_MODIFIER.get()) > 0
-            ) {
-                ModifierLootingHandler.setLootingSlot(context.getAttacker(), EquipmentSlot.MAINHAND);
-
-                float baseDamage = ToolAttackUtil.getAttributeAttackDamage(tool, attacker, EquipmentSlot.MAINHAND);
-                float baseDamageTmp = baseDamage;
-
-                List<ModifierEntry> modifiers = tool.getModifierList();
-                for (ModifierEntry modifier : modifiers) {
-                    baseDamage = modifier
-                        .getHook(ModifierHooks.MELEE_DAMAGE)
-                        .getMeleeDamage(tool, modifier, context, baseDamageTmp, baseDamage);
-                }
-
-                baseDamage += 10 * (EnchantmentHelper.getSweepingDamageRatio(attacker) * 0.5f);
-
-                IConcentrationRank.ConcentrationRanks rankBonus = attacker
-                    .getCapability(ConcentrationRankCapabilityProvider.RANK_POINT)
-                    .map(rp -> rp.getRank(attacker.getCommandSenderWorld().getGameTime()))
-                    .orElse(IConcentrationRank.ConcentrationRanks.NONE);
-                float rankDamageBonus = rankBonus.level / 2.0f;
-                if (IConcentrationRank.ConcentrationRanks.S.level <= rankBonus.level) {
-                    int refine = attacker
-                        .getMainHandItem()
-                        .getCapability(ItemSlashBlade.BLADESTATE)
-                        .map(rp -> rp.getRefine())
-                        .orElse(0);
-                    int level = attacker.experienceLevel;
-                    rankDamageBonus = (float) Math.max(
-                        rankDamageBonus,
-                        Math.min(level, refine) * SlashBladeConfig.REFINE_DAMAGE_MULTIPLIER.get()
-                    );
-                }
-                baseDamage += rankDamageBonus;
-
-                float enchantmentDamageBonus;
-                if (target instanceof LivingEntity) {
-                    enchantmentDamageBonus = EnchantmentHelper.getDamageBonus(
-                        attacker.getMainHandItem(),
-                        ((LivingEntity) target).getMobType()
-                    );
-                } else {
-                    enchantmentDamageBonus = EnchantmentHelper.getDamageBonus(
-                        attacker.getMainHandItem(),
-                        MobType.UNDEFINED
-                    );
-                }
-                baseDamage += enchantmentDamageBonus;
-
-                baseDamage *=
-                    comboRatio *
-                    AttackManager.getSlashBladeDamageScale(attacker) *
-                    SlashBladeConfig.SLASHBLADE_DAMAGE_MULTIPLIER.get();
-
-                if (baseDamage > 0.0F) {
-                    float knockback = (float) attacker.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
-                    knockback += EnchantmentHelper.getKnockbackBonus(attacker);
-                    if (attacker.isSprinting()) {
-                        attacker
-                            .level()
-                            .playSound(
-                                null,
-                                attacker.getX(),
-                                attacker.getY(),
-                                attacker.getZ(),
-                                SoundEvents.PLAYER_ATTACK_KNOCKBACK,
-                                attacker.getSoundSource(),
-                                1.0F,
-                                1.0F
-                            );
-                        ++knockback;
-                    }
-                    float knockbackTmp = knockback;
-
-                    CriticalHitEvent hitResult = ForgeHooks.getCriticalHit(
-                        attacker,
-                        target,
-                        isCritical,
-                        isCritical ? 1.5F : 1.0F
-                    );
+        ItemStack stack = attacker.getMainHandItem();
+        if(stack.getItem() instanceof IModifiable){
+            if (ForgeHooks.onPlayerAttackTarget(attacker, target)) {
+                float baseDamage = (float)attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
+                baseDamage += getSweepingBonus(attacker);
+                baseDamage += getRankBonus(attacker);
+                baseDamage += getEnchantmentBonus(attacker, target);
+                baseDamage = (float)((double)baseDamage * (double)(comboRatio * AttackManager.getSlashBladeDamageScale(attacker)) * (Double)SlashBladeConfig.SLASHBLADE_DAMAGE_MULTIPLIER.get());
+                if (!(baseDamage <= 0.0F)) {
+                    float knockback = calculateKnockback(attacker);
+                    boolean isCritical = isCriticalHit(attacker, target);
+                    CriticalHitEvent hitResult = ForgeHooks.getCriticalHit(attacker, target, isCritical, isCritical ? 1.5F : 1.0F);
                     isCritical = hitResult != null;
                     if (isCritical) {
                         baseDamage *= hitResult.getDamageModifier();
                     }
 
-                    float preAttackHealth = 0.0F;
-                    boolean shouldSetFire = false;
-                    int fireAspectLevel = EnchantmentHelper.getFireAspect(attacker);
-                    if (target instanceof LivingEntity) {
-                        preAttackHealth = ((LivingEntity) target).getHealth();
-                        if (fireAspectLevel > 0 && !target.isOnFire()) {
-                            shouldSetFire = true;
-                            target.setSecondsOnFire(1);
-                        }
+                    PlayerAttackHelper.FireAspectResult fireAspectResult = handleFireAspect(attacker, target);
+                    Vec3 originalMotion = target.getDeltaMovement();
+
+                    ToolStack bladeTool = ToolStack.from(stack);
+                    float baseDamageTmp = baseDamage;
+
+                    ToolAttackContext context = new ToolAttackContext(attacker, attacker, InteractionHand.MAIN_HAND, target, target instanceof  LivingEntity ? (LivingEntity) target : null, isCritical, 1, false);
+
+                    for(ModifierEntry entry : bladeTool.getModifiers()){
+                        baseDamage = entry.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(bladeTool, entry, context, baseDamageTmp, baseDamage);
                     }
 
-                    Vec3 vec3 = target.getDeltaMovement();
-
-                    for (ModifierEntry modifier : modifiers) {
-                        knockback = modifier
-                            .getHook(ModifierHooks.MELEE_HIT)
-                            .beforeMeleeHit(tool, modifier, context, baseDamage, knockbackTmp, knockback);
+                    if(baseDamage <= 0.0F){
+                        cb.cancel();
                     }
-                    boolean damageSuccess = ToolAttackUtil.dealDefaultDamage(attacker, target, baseDamage);
+
+                    float knockbackTmp = knockback;
+                    for(ModifierEntry entry : bladeTool.getModifiers()){
+                        knockback = entry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(bladeTool, entry, context, baseDamage, knockbackTmp, knockback);
+                    }
+
+                    boolean damageSuccess = target.hurt(attacker.damageSources().playerAttack(attacker), baseDamage);
                     if (damageSuccess) {
-                        if (knockback > 0) {
-                            if (target instanceof LivingEntity living) {
-                                living.knockback(
-                                    knockback * 0.5D,
-                                    Mth.sin(attacker.getYRot() * ((float) Math.PI / 180F)),
-                                    -Mth.cos(attacker.getYRot() * ((float) Math.PI / 180F))
-                                );
-                            } else {
-                                target.push(
-                                    -Mth.sin(attacker.getYRot() * ((float) Math.PI / 180F)) * knockback * 0.5D,
-                                    0.1D,
-                                    Mth.cos(attacker.getYRot() * ((float) Math.PI / 180F)) * knockback * 0.5D
-                                );
-                            }
+                        applyKnockback(attacker, target, knockback);
+                        restoreTargetMotionIfNeeded(target, originalMotion);
+                        playAttackEffects(attacker, target, isCritical);
+                        handleEnchantmentsAndDurability(attacker, target);
+                        handlePostAttackEffects(attacker, target, fireAspectResult, isCritical);
 
-                            attacker.setDeltaMovement(attacker.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
-                            attacker.setSprinting(false);
+                        for(ModifierEntry entry : bladeTool.getModifiers()){
+                            entry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(bladeTool, entry, context, baseDamage);
                         }
-
-                        if (target instanceof ServerPlayer && target.hurtMarked) {
-                            ((ServerPlayer) target).connection.send(new ClientboundSetEntityMotionPacket(target));
-                            target.hurtMarked = false;
-                            target.setDeltaMovement(vec3);
-                        }
-
-                        attacker
-                            .level()
-                            .playSound(
-                                null,
-                                attacker.getX(),
-                                attacker.getY(),
-                                attacker.getZ(),
-                                SoundEvents.PLAYER_ATTACK_CRIT,
-                                attacker.getSoundSource(),
-                                1.0F,
-                                1.0F
-                            );
-                        if (isCritical) {
-                            attacker.crit(target);
-                        }
-
-                        attacker.setLastHurtMob(target);
-                        if (target instanceof LivingEntity) {
-                            EnchantmentHelper.doPostHurtEffects((LivingEntity) target, attacker);
-                        }
-
-                        EnchantmentHelper.doPostDamageEffects(attacker, target);
-                        ItemStack itemstack1 = attacker.getMainHandItem();
-                        Entity entity = target;
-                        if (target instanceof net.minecraftforge.entity.PartEntity) {
-                            entity = ((net.minecraftforge.entity.PartEntity<?>) target).getParent();
-                        }
-
-                        if (
-                            itemstack1 != null &&
-                            !attacker.level().isClientSide() &&
-                            !itemstack1.isEmpty() &&
-                            entity instanceof LivingEntity
-                        ) {
-                            itemstack1.hurtEnemy((LivingEntity) entity, attacker);
-                        }
-
-                        if (target instanceof LivingEntity) {
-                            float damageDealt = preAttackHealth - ((LivingEntity) target).getHealth();
-                            attacker.awardStat(Stats.DAMAGE_DEALT, Math.round(damageDealt * 10.0F));
-                            if (fireAspectLevel > 0) {
-                                target.setSecondsOnFire(fireAspectLevel * 4);
-                            }
-
-                            if (attacker.level() instanceof ServerLevel && damageDealt > 2.0F) {
-                                int k = (int) (damageDealt * 0.5D);
-                                ((ServerLevel) attacker.level()).sendParticles(
-                                        ParticleTypes.DAMAGE_INDICATOR,
-                                        target.getX(),
-                                        target.getY(0.5D),
-                                        target.getZ(),
-                                        k,
-                                        0.1D,
-                                        0.0D,
-                                        0.1D,
-                                        0.2D
-                                    );
-                            }
-
-                            for (ModifierEntry modifier : modifiers) {
-                                modifier
-                                    .getHook(ModifierHooks.MELEE_HIT)
-                                    .afterMeleeHit(tool, modifier, context, damageDealt);
-                            }
-                        }
-
-                        attacker.causeFoodExhaustion(0.1F);
                     } else {
-                        attacker
-                            .level()
-                            .playSound(
-                                null,
-                                attacker.getX(),
-                                attacker.getY(),
-                                attacker.getZ(),
-                                SoundEvents.PLAYER_ATTACK_NODAMAGE,
-                                attacker.getSoundSource(),
-                                1.0F,
-                                1.0F
-                            );
-                        if (shouldSetFire) {
-                            target.clearFire();
-                        }
-
-                        for (ModifierEntry modifier : modifiers) {
-                            modifier
-                                .getHook(ModifierHooks.MELEE_HIT)
-                                .failedMeleeHit(tool, modifier, context, baseDamage);
+                        handleFailedAttack(attacker, target, fireAspectResult);
+                        for(ModifierEntry entry : bladeTool.getModifiers()){
+                            entry.getHook(ModifierHooks.MELEE_HIT).failedMeleeHit(bladeTool, entry, context, baseDamage);
                         }
                     }
                 }
