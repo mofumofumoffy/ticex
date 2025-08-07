@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemArrowRenderer extends ArrowRenderer<ItemArrow> {
 
@@ -50,13 +51,16 @@ public class ItemArrowRenderer extends ArrowRenderer<ItemArrow> {
                     pEntity.getId()
             );
             pPoseStack.popPose();
-            super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
         }
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public ResourceLocation getTextureLocation(ItemArrow pEntity) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull ItemArrow pEntity) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
+
+    
+
+
 }

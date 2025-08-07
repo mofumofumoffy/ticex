@@ -12,6 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import slimeknights.mantle.data.predicate.IJsonPredicate;
 import slimeknights.mantle.data.predicate.item.ItemPredicate;
+import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.data.tinkering.AbstractModifierProvider;
 import slimeknights.tconstruct.library.modifiers.modules.behavior.AttributeModule;
 import slimeknights.tconstruct.library.modifiers.modules.behavior.ReduceToolDamageModule;
@@ -22,6 +23,8 @@ import slimeknights.tconstruct.library.modifiers.modules.combat.LootingModule;
 import slimeknights.tconstruct.library.modifiers.modules.display.DurabilityBarColorModule;
 import slimeknights.tconstruct.library.modifiers.util.ModifierLevelDisplay;
 import slimeknights.tconstruct.library.tools.SlotType;
+import slimeknights.tconstruct.library.tools.capability.inventory.InventoryMenuModule;
+import slimeknights.tconstruct.library.tools.capability.inventory.InventoryModule;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
 
 public class ModifierProvider extends AbstractModifierProvider implements IConditionBuilder {
@@ -99,6 +102,9 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
         //curios
         if (TicEXRegistry.INCOMPARABLE_MODIFIER != null) buildModifier(
             TicEXRegistry.INCOMPARABLE_MODIFIER
-        ).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        )
+        .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
+        .addModule(InventoryModule.builder().filter(ItemPredicate.tag(TinkerTags.Items.MULTIPART_TOOL)).slotsPerLevel(6))
+        .addModule(InventoryMenuModule.ANY);
     }
 }

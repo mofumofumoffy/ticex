@@ -13,6 +13,8 @@
   "item.ticex.wyvern_crystal": "飞龙晶",
   "item.ticex.draconic_crystal": "神龙晶",
   "item.ticex.chaotic_crystal": "混沌晶",
+  "item.ticex.exhausted_glove": "力尽手套",
+  "item.ticex.exhausted_glove.desc": "向三次栽于强敌之手的英雄致敬。",
 
   "item.ticex.mekaplate_helmet": "Meka镶板头盔",
   "item.ticex.mekaplate_chestplate": "Meka镶板胸甲",
@@ -23,11 +25,13 @@
   "item.ticex.singular_gem_leggings": "Singular重力护腿",
   "item.ticex.singular_gem_boots": "Singular飓风长靴",
   "item.ticex.reforged_slashblade": "重铸拔刀剑",
+  "item.ticex.resonance_gauntlet": "[WIP] 谐振手套",
 
   "item.ticex.catalyst_mekasuit_helmet": "§b星构素催化剂 - MekaSuit头盔",
   "item.ticex.catalyst_mekasuit_chestplate": "§b星构素催化剂 - MekaSuit胸甲",
   "item.ticex.catalyst_mekasuit_leggings": "§b星构素催化剂 - MekaSuit护腿",
   "item.ticex.catalyst_mekasuit_boots": "§b星构素催化剂 - MekaSuit靴子",
+  "item.ticex.catalyst_meka_tool": "§b星构素催化剂 - Meka-Tool",
   "item.ticex.catalyst_slashblade": "星构素催化剂 - 拔刀剑",
   "item.ticex.catalyst_gem_helmet": "§b星构素催化剂 - 深渊头盔",
   "item.ticex.catalyst_gem_chestplate": "§b星构素催化剂 - 炼狱胸甲",

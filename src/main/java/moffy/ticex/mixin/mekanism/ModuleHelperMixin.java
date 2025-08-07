@@ -71,7 +71,7 @@ public abstract class ModuleHelperMixin {
         mixinMapSupportedModules(
                 event,
                 TicEXMekanismModule.ADD_MEKA_TOOL_MODULES,
-                TicEXRegistry.MEKA_TOOL.get(),
+                TicEXRegistry.MEKA_EDGE.get(),
                 supportedContainersBuilderMap
         );
     }

@@ -47,7 +47,7 @@ public abstract class QuadRenderContext {
                 BakedQuad quad,
                 PoseStack poseStack
         ) {
-            vc.putBulkData(poseStack.last(), quad, red, green, blue, light, overlay);
+            vc.putBulkData(poseStack.last(), quad, red, green, blue, 1.0F, light, overlay, true);
         }
     }
 

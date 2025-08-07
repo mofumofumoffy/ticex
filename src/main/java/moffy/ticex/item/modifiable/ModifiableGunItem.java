@@ -1,5 +1,13 @@
 package moffy.ticex.item.modifiable;
 
+/*
+ * This file is part of the TicEXTaczModule.
+ *
+ * Licensed under the GNU General Public License v3.0.
+ * See the LICENSES/GPL-3.0.md file for details.
+ * 2025 Moffy
+ */
+
 import com.google.common.collect.Sets;
 import com.tacz.guns.item.ModernKineticGunItem;
 import net.minecraft.core.BlockPos;

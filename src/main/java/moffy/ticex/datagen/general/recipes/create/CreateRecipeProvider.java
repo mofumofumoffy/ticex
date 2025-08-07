@@ -23,7 +23,7 @@ public class CreateRecipeProvider implements ITicEXRecipeHelper {
             ModifierRecipeBuilder.modifier(TicEXRegistry.CARDBOARD_MODIFIER)
                     .allowCrystal()
                     .addInput(TicEXRegistry.CARDBOARD_CORE.get())
-                    .addInput(TinkerTags.Items.WORN_ARMOR)
+                    .setTools(TinkerTags.Items.WORN_ARMOR)
                     .setSlots(SlotType.UPGRADE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.CARDBOARD_MODIFIER, upgradeFolder));
         }

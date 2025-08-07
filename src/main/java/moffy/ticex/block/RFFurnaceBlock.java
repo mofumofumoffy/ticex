@@ -16,12 +16,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.fluids.FluidType;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.smeltery.block.component.OrientableSmelteryBlock;
 import slimeknights.tconstruct.smeltery.block.component.SearedTankBlock;
 
 public class RFFurnaceBlock extends SearedTankBlock {
 
-    private boolean isCreative;
+    private final boolean isCreative;
 
     public RFFurnaceBlock(Properties pProperties, boolean isCreative) {
         super(pProperties, FluidType.BUCKET_VOLUME, PushReaction.DESTROY);
@@ -29,15 +30,15 @@ public class RFFurnaceBlock extends SearedTankBlock {
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
         return new RFFurnaceBlockEntity(TicEXRegistry.RF_FURNACE_ENTITY.get(), pPos, pState, isCreative);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
-        Level pLevel,
-        BlockState pState,
-        BlockEntityType<T> pBlockEntityType
+            @NotNull Level pLevel,
+            @NotNull BlockState pState,
+            @NotNull BlockEntityType<T> pBlockEntityType
     ) {
         if (pBlockEntityType == TicEXRegistry.RF_FURNACE_ENTITY.get() && !pLevel.isClientSide()) {
             return (Level level, BlockPos pos, BlockState state, T pBlockEntity) ->

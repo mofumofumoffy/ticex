@@ -15,6 +15,8 @@
   "item.ticex.wyvern_crystal": "Wyvern Crystal",
   "item.ticex.draconic_crystal": "Draconic Crystal",
   "item.ticex.chaotic_crystal": "Chaotic Crystal",
+  "item.ticex.exhausted_glove": "Exhausted Glove",
+  "item.ticex.exhausted_glove.desc": "In honor of the hero who fell three times to a mighty foe.",
 
   "item.ticex.mekaplate_helmet": "MekaPlate Helmet",
   "item.ticex.mekaplate_chestplate": "MekaPlate Chestplate",
@@ -28,6 +30,7 @@
   "item.ticex.blitz_gun": "Blitz Gun",
   "item.ticex.revival_spellbook_irons": "Iron's Revival Spellbook",
   "item.ticex.meka_tool": "MekaEdge",
+  "item.ticex.resonance_gauntlet": "[WIP] Resonance Gauntlet",
 
   "tagtype.ticex.catalyst": "Seram Catalyst",
 
@@ -35,6 +38,7 @@
   "item.ticex.catalyst_mekasuit_chestplate": "Seram Catalyst - MekaSuit Bodyarmor",
   "item.ticex.catalyst_mekasuit_leggings": "Seram Catalyst - MekaSuit Pants",
   "item.ticex.catalyst_mekasuit_boots": "Seram Catalyst - MekaSuit Boots",
+  "item.ticex.catalyst_meka_tool": "Seram Catalyst - Meka-Tool",
   "item.ticex.catalyst_slashblade": "Seram Catalyst - SlashBlade",
   "item.ticex.catalyst_kinetic_gun": "Seram Catalyst - Modern Kinetic Gun",
   "item.ticex.catalyst_irons_spellbook": "Seram Catalyst - Iron's Spellbook",
@@ -239,14 +243,7 @@
   "gui.ticex.blitz_gun.description": "Blitz Gun is the tool of precision and swiftness, which has been reconstructed with the power of the star clusters.",
   "gui.ticex.revival_spellbook_irons": "Iron's Revival Spellbook",
   "gui.ticex.revival_spellbook_irons.description": "Revival Spellbook is the mystic tool, which has been reconstructed with the power of the star clusters.",
-  "gui.ticex.meka_tool": "MekaEdge",
-
-  "curios.identifier.incomparable_head": "Incomparable Helmet",
-  "curios.identifier.incomparable_chest": "Incomparable Chestplate",
-  "curios.identifier.incomparable_legs": "Incomparable Leggings",
-  "curios.identifier.incomparable_feet": "Incomparable Boots",
-  "curios.identifier.incomparable_mainhand": "Incomparable Main Hand Tool",
-  "curios.identifier.incomparable_offhand": "Incomparable Off Hand Tool",
+  "gui.ticex.meka_edge": "MekaEdge",
 
   "attribute.ticex.damage_taken": "Damage Taken",
   "attribute.ticex.healing_received": "Healing Received"

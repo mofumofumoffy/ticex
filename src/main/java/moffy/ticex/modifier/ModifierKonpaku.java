@@ -3,7 +3,7 @@ package moffy.ticex.modifier;
 import java.util.Map;
 import java.util.Map.Entry;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.lib.utils.TicEXSBUtil;
+import moffy.ticex.lib.utils.TicEXSBUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -30,11 +30,11 @@ public class ModifierKonpaku extends NoLevelsModifier implements EmbossmentModif
             Map<Enchantment, Integer> bookEnchantments = EnchantmentHelper.getEnchantments(input);
 
             for (Entry<Enchantment, Integer> entry : bookEnchantments.entrySet()) {
-                if (TicEXSBUtil.disallowedEnchantments.contains(entry.getKey())) {
+                if (TicEXSBUtils.disallowedEnchantments.contains(entry.getKey())) {
                     context.setErrorMsg(Component.translatable("recipe.ticex.not_allowed_enchantment_slashblade"));
                     return false;
                 }
-                if (TicEXSBUtil.applyEnchantment(toolStack, entry.getKey(), entry.getValue())) {
+                if (TicEXSBUtils.applyEnchantment(toolStack, entry.getKey(), entry.getValue())) {
                     result = true;
                 }
             }

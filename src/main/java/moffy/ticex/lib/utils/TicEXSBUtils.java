@@ -5,16 +5,25 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
+import com.mojang.math.Axis;
+
+import mods.flammpfeil.slashblade.client.renderer.model.BladeModelManager;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.Face;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.GroupObject;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.Vertex;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
+import mods.flammpfeil.slashblade.client.renderer.util.MSAutoCloser;
+import mods.flammpfeil.slashblade.init.DefaultResources;
+import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
+import moffy.ticex.client.modules.slashblade.SBToolBladeItemRenderer;
 import moffy.ticex.client.modules.slashblade.SBToolRenderType.PartType;
 import moffy.ticex.client.rendering.ItemRenderContext;
 import moffy.ticex.client.rendering.shader.ShaderProvider;
 import moffy.ticex.client.rendering.ticex.TicEXToolRenders;
+import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderStateShard.ShaderStateShard;
@@ -27,7 +36,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -45,7 +57,7 @@ import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import java.util.*;
 import java.util.function.Supplier;
 
-public class TicEXSBUtil {
+public class TicEXSBUtils {
 
     public static Set<Enchantment> disallowedEnchantments = new HashSet<>();
 
@@ -259,8 +271,72 @@ public class TicEXSBUtil {
         return renderType;
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public static boolean renderBladeTool(ItemStack stack, float partialTicks, PoseStack matrixStackIn,
+            MultiBufferSource bufferIn, int packedLightIn){
+        Item itemIn = stack.getItem();
+        if (itemIn instanceof ModifiableSlashBladeItem) {
+            matrixStackIn.mulPose(Axis.ZP.rotationDegrees(-135));
+            try (MSAutoCloser msac = MSAutoCloser.pushMatrix(matrixStackIn)){
+                EnumSet<SwordType> types = SwordType.from(stack);
+                ResourceLocation modelLocation = stack.getCapability(ItemSlashBlade.BLADESTATE).map(state->{
+                    return state.getModel().orElse(DefaultResources.resourceDefaultModel);
+                }).orElse(DefaultResources.resourceDefaultModel);
+                Optional<ResourceLocation> textureLoc = stack
+                        .getCapability(ItemSlashBlade.BLADESTATE)
+                        .map(state -> {
+                            return state.getTexture().orElse(DefaultResources.resourceDefaultTexture);
+                        });
+                ResourceLocation textureLocation = textureLoc.orElse(DefaultResources.resourceDefaultTexture);
+                WavefrontObject model = BladeModelManager.getInstance().getModel(modelLocation);
+                float scale = 0.00625F;
+
+                try (MSAutoCloser msac2 = MSAutoCloser.pushMatrix(matrixStackIn)){
+                    float xOffset = 0.0F;
+                    String renderTarget;
+                    if (types.contains(SwordType.EDGEFRAGMENT)) {
+                        xOffset = 200.0F;
+                        renderTarget = "blade_fragment";
+                    } else if (types.contains(SwordType.BROKEN)) {
+                        xOffset = 30.0F;
+                        renderTarget = "blade_damaged";
+                    } else {
+                        xOffset = 120.0F;
+                        renderTarget = "blade";
+                    }
+
+                    matrixStackIn.scale(scale, scale, scale);
+                    matrixStackIn.translate(xOffset, -1.25F, 0.0F);
+
+                    ItemRenderContext itemRenderContext = new ItemRenderContext(
+                        stack,
+                        ItemDisplayContext.GROUND,
+                        false,
+                        matrixStackIn,
+                        bufferIn,
+                        packedLightIn,
+                        OverlayTexture.NO_OVERLAY
+                    );
+
+                    SBToolBladeItemRenderer.renderToolSlashBlade(
+                            stack,
+                            itemRenderContext,
+                            model,
+                            textureLocation,
+                            renderTarget,
+                            matrixStackIn,
+                            bufferIn,
+                            packedLightIn
+                    );
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public static boolean applyEnchantment(ItemStack toolStack, Enchantment enchantment, int level) {
-        for (Enchantment disallowed : TicEXSBUtil.disallowedEnchantments) {
+        for (Enchantment disallowed : TicEXSBUtils.disallowedEnchantments) {
             if (!enchantment.getDescriptionId().equals(disallowed.getDescriptionId())) {
                 if (toolStack.getEnchantmentLevel(enchantment) > 0) {
                     CompoundTag nbt = toolStack.getOrCreateTag();

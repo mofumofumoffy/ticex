@@ -178,7 +178,7 @@ dependencies {
     implementation fg.deobf("curse.maven:codechicken-lib-1-8-242818:5753868")
     implementation fg.deobf("curse.maven:draconic-evolution-223565:6065044")
 
-    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6731971")
+    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6845813")
 
     implementation fg.deobf("curse.maven:timeless-and-classics-zero-1028108:6518539")
 

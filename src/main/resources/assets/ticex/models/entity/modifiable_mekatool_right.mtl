@@ -1,0 +1,9 @@
+# Made in Blockbench 4.12.5
+newmtl m_cfa406a2-b54a-988a-b456-6d98117c5bfe
+map_Kd mekanism:entity/armor/mekatool
+newmtl m_a1603751-1e28-74b2-2f04-3430bdcd4edb
+map_Kd ticex:entity/white_blank
+newmtl m_6a65c9d4-a292-1dcc-a7aa-30cc066e12e3
+map_Kd mekanism:entity/armor/mekasuit_armor_body
+newmtl m_ac57f6f4-57c6-e0b1-ce54-cdd0d8ce98f2
+map_Kd mekanism:block/models/leds

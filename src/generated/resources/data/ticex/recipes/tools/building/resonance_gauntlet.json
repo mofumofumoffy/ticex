@@ -1,0 +1,14 @@
+{
+  "type": "tconstruct:table_tool_casting",
+  "cast": {
+    "item": "ticex:exhausted_glove"
+  },
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:curios_compat"
+    }
+  ],
+  "item_cost": 8,
+  "result": "ticex:resonance_gauntlet"
+}

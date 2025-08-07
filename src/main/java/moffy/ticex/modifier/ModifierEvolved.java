@@ -15,9 +15,6 @@ import com.brandon3055.draconicevolution.api.modules.data.DamageData;
 import com.brandon3055.draconicevolution.client.keybinding.KeyBindings;
 import com.brandon3055.draconicevolution.init.EquipCfg;
 import com.mojang.datafixers.util.Pair;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
@@ -66,6 +63,10 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 import slimeknights.tconstruct.tools.data.ModifierIds;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class ModifierEvolved
     extends Modifier
@@ -224,7 +225,7 @@ public class ModifierEvolved
 
         List<LivingEntity> entities = player
             .level()
-            .getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(aoe, 0.25D, aoe));
+                .getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(aoe, 0.25D, aoe), LivingEntity::isAlive);
         double aoeAngle = 100;
         double yaw = player.getYRot() - 180;
         int fireAspect = EnchantmentHelper.getFireAspect(player);

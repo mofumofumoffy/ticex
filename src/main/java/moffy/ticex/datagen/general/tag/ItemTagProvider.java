@@ -122,13 +122,13 @@ public class ItemTagProvider extends ItemTagsProvider {
     }
 
     public void addCast(CastItemObject cast) {
-        this.tag(TinkerTags.Items.GOLD_CASTS).add(cast.get());
-        this.tag(TinkerTags.Items.SAND_CASTS).add(cast.getSand());
-        this.tag(TinkerTags.Items.RED_SAND_CASTS).add(cast.getRedSand());
+        this.tag(TinkerTags.Items.GOLD_CASTS).addOptional(cast.getName().withSuffix("_cast"));
+        this.tag(TinkerTags.Items.SAND_CASTS).addOptional(cast.getName().withSuffix("_sand_cast"));
+        this.tag(TinkerTags.Items.RED_SAND_CASTS).addOptional(cast.getName().withSuffix("_red_sand_cast"));
         this.tag(SINGLE_USE_CASTS).addTag(cast.getSingleUseTag());
-        this.tag(cast.getSingleUseTag()).add(cast.getSand(), cast.getRedSand());
+        this.tag(cast.getSingleUseTag()).addOptional(cast.getName().withSuffix("_sand_cast")).addOptional(cast.getName().withSuffix("_red_sand_cast"));
         this.tag(MULTI_USE_CASTS).addTag(cast.getMultiUseTag());
-        this.tag(cast.getMultiUseTag()).add(cast.get());
+        this.tag(cast.getMultiUseTag()).addOptional(cast.getName().withSuffix("_cast"));
 
     }
 

@@ -46,7 +46,7 @@ public class TicEXIronsEvent {
                         target,
                         target,
                         false,
-                        0,
+                        1,
                         false
                     );
 
