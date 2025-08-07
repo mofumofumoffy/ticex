@@ -1,4 +1,4 @@
-package moffy.ticex.client.modules.ticex;
+package moffy.ticex.datagen.general.sprite;
 
 import moffy.ticex.TicEX;
 import net.minecraft.client.renderer.texture.atlas.sources.DirectoryLister;

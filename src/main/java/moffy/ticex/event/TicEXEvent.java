@@ -1,7 +1,7 @@
 package moffy.ticex.event;
 
 import moffy.ticex.caps.EmbossmentMaterialCapability;
-import moffy.ticex.client.modules.ticex.MaterialOverrideModel;
+import moffy.ticex.client.modules.ticex.models.MaterialOverrideModel;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -19,7 +19,6 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 

@@ -43,5 +43,6 @@ public class TicEX {
         TicEXRegistry.CREATIVE_TABS.register(bus);
         TicEXRegistry.RECIPE_SERIALIZERS.register(bus);
         TicEXRegistry.RECIPE_TYPES.register(bus);
+        TicEXRegistry.MENUS.register(bus);
     }
 }

@@ -6,13 +6,25 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig.Type;
 
-public class TicEXConfig {
+import java.util.List;
 
+public class TicEXConfig {
+    // TicEX
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
+    public static ForgeConfigSpec.ConfigValue<Integer> GAUNTLET_REMAIN_TICKS;
+    public static ForgeConfigSpec.ConfigValue<List<String>> GLOVE_DROP_BLACKLIST;
+
+    // Avaritia
     public static ForgeConfigSpec.ConfigValue<Float> CONDENSING_DROP_PROBABILITY;
+
+    // Mekanism
     public static ForgeConfigSpec.ConfigValue<Boolean> MEKAPLATE_USE_POWER_SHIELD;
+
+    // Apotheosis
     public static ForgeConfigSpec.ConfigValue<Integer> OVERRIDE_LIMIT;
+
+    // CC: Tweaked
     public static ForgeConfigSpec.ConfigValue<Boolean> PROVIDE_PROPERTIES;
 
     public static void registerConfig() {
@@ -52,6 +64,10 @@ public class TicEXConfig {
 
         CLIENT.comment("Client Settings").push("client");
         USE_SHADER = CLIENT.comment("Rendering with shaders for some tools/armors").define("useShader", true);
+        GAUNTLET_REMAIN_TICKS = CLIENT.comment("Ticks remaining on the gauntlet after a gauntlet shot hits")
+                .define("gantletRemainTicks", 40);
+        GLOVE_DROP_BLACKLIST = CLIENT.comment("Blacklist of entities that do not drop the glove.")
+                .define("gloveDropBlacklist", List.of("minecraft:armor_stand", "dummmmmmy:target_dummy"));
         CLIENT.pop();
 
         AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(), COMMON);

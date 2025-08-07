@@ -79,13 +79,11 @@ public class TicEXMekanismModule extends AddonModule {
 
         MinecraftForge.EVENT_BUS.register(new TicEXMekanismEvent());
 
-        TicEX.CHANNEL.registerMessage(
-            TicEXPacketID.MEK_CONFIG_SYNC,
-            ConfigSyncToClientPacket.class,
-            ConfigSyncToClientPacket::encode,
-            ConfigSyncToClientPacket::decode,
-            ConfigSyncToClientPacket::handle
-        );
+        TicEX.CHANNEL.messageBuilder(ConfigSyncToClientPacket.class, TicEXPacketID.MEK_CONFIG_SYNC)
+                .encoder(ConfigSyncToClientPacket::encode)
+                .decoder(ConfigSyncToClientPacket::new)
+                .consumerMainThread(ConfigSyncToClientPacket::handle)
+                .add();
 
         DistExecutor.unsafeRunWhenOn(
             Dist.CLIENT,

@@ -1,4 +1,4 @@
-package moffy.ticex.client.modules.ticex;
+package moffy.ticex.client.modules.ticex.models;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

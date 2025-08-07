@@ -1,7 +1,7 @@
 package moffy.ticex.network.slashblade;
 
-import java.util.function.Supplier;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import moffy.ticex.network.TicEXPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -9,7 +9,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 
-public class StateSyncPacket {
+import java.util.function.Supplier;
+
+public class StateSyncPacket extends TicEXPacket.ClientBoundPacket {
 
     protected CompoundTag stateNbt;
 
@@ -17,19 +19,15 @@ public class StateSyncPacket {
         this.stateNbt = stateNbt;
     }
 
-    public CompoundTag getStateNbt() {
-        return stateNbt;
+    public StateSyncPacket(FriendlyByteBuf buf) {
+        this.stateNbt = buf.readNbt();
     }
 
-    public static StateSyncPacket decode(FriendlyByteBuf buf) {
-        return new StateSyncPacket(buf.readAnySizeNbt());
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeNbt(stateNbt);
     }
 
-    public static void encode(StateSyncPacket packet, FriendlyByteBuf buf) {
-        buf.writeNbt(packet.stateNbt);
-    }
-
-    public static void handle(StateSyncPacket packet, Supplier<NetworkEvent.Context> ctx) {
+    public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx
             .get()
             .enqueueWork(() -> {
@@ -40,7 +38,7 @@ public class StateSyncPacket {
                         mainHandStack
                             .getCapability(ItemSlashBlade.BLADESTATE)
                             .ifPresent(stateClient -> {
-                                stateClient.deserializeNBT(packet.getStateNbt());
+                                stateClient.deserializeNBT(stateNbt);
                             });
                     }
                 }

@@ -5,6 +5,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.block.RFFurnaceBlock;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
 import moffy.ticex.caps.TiCEXToolCapabilityProvider;
+import moffy.ticex.client.modules.ticex.UnsyncedToolContainerMenu;
 import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.cores.ItemFlickeringCore;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -17,6 +18,9 @@ import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.modifier.ModifierEmbossment;
 import moffy.ticex.modifier.ModifierSassy;
+import moffy.ticex.network.TicEXPacketID;
+import moffy.ticex.network.curios.TicEXSyncEntityMovements;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -27,13 +31,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.mantle.recipe.helper.LoadableRecipeSerializer;
@@ -41,6 +43,7 @@ import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.module.ModuleHook;
 import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+import slimeknights.tconstruct.tools.client.ToolContainerScreen;
 
 import java.util.List;
 
@@ -50,6 +53,12 @@ public class TicEXModule extends AddonModule {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ToolCapabilityProvider.register(TiCEXToolCapabilityProvider::new);
+
+        TicEX.CHANNEL.messageBuilder(TicEXSyncEntityMovements.class, TicEXPacketID.SHOT_GAUNTLET)
+                .encoder(TicEXSyncEntityMovements::encode)
+                .decoder(TicEXSyncEntityMovements::new)
+                .consumerMainThread(TicEXSyncEntityMovements::handle)
+                .add();
 
         TicEXRegistry.MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
             "embossment_modifier",
@@ -182,6 +191,11 @@ public class TicEXModule extends AddonModule {
         TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
         TicEXRegistry.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
 
+        TicEXRegistry.UNSYNCED_TOOL_CONTAINER = TicEXRegistry.MENUS.register(
+                "unsynced_tool_container",
+                UnsyncedToolContainerMenu::forClient
+        );
+
         bus.addListener(TicEXEvent::onEntityAttributeModification);
         bus.addListener(TicEXEvent::onRegisterCaps);
         bus.addListener(TicEXEvent::registerModelLoaders);
@@ -208,7 +222,14 @@ public class TicEXModule extends AddonModule {
     }
 
     @Override
+    public void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            MenuScreens.register(TicEXRegistry.UNSYNCED_TOOL_CONTAINER.get(), ToolContainerScreen::new);
+        });
+    }
+
+    @Override
     public void setup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> CatalystMaterialStatsType.RegisterStats());
+        event.enqueueWork(CatalystMaterialStatsType::RegisterStats);
     }
 }

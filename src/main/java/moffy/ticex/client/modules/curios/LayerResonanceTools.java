@@ -2,7 +2,6 @@ package moffy.ticex.client.modules.curios;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-
 import moffy.ticex.lib.utils.TicEXSBUtils;
 import moffy.ticex.lib.utils.TicEXTaczUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -23,7 +22,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 public class LayerResonanceTools <T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
-    private static final float RADIUS = 1.4f;
+    public static final float RADIUS = 1.4f;
     protected ItemRenderer itemRenderer;
 
     public LayerResonanceTools(RenderLayerParent<T, M> pRenderer) {

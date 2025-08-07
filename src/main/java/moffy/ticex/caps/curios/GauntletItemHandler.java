@@ -1,7 +1,5 @@
 package moffy.ticex.caps.curios;
 
-import java.util.function.Supplier;
-
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -12,15 +10,19 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
-public class GauntletItemHandler extends ToolInventoryCapability implements ICurio{
+import java.util.function.Supplier;
+
+public class GauntletItemHandler extends ToolInventoryCapability implements ICurio {
 
     protected IToolStackView tool;
     protected ItemStack stack;
+    protected int[] itemCooldowns;
 
     public GauntletItemHandler(ItemStack stack, Supplier<? extends IToolStackView> tool) {
         super(tool);
         this.tool = tool.get();
         this.stack = stack;
+        this.itemCooldowns = new int[getSlots()];
     }
 
     @Override
@@ -43,8 +45,27 @@ public class GauntletItemHandler extends ToolInventoryCapability implements ICur
         LivingEntity livingEntity = slotContext.entity();
         if(CuriosApi.getCuriosInventory(livingEntity).isPresent()){
             ICuriosItemHandler itemHandler = CuriosApi.getCuriosInventory(livingEntity).orElseThrow(IllegalStateException::new);
-            return !itemHandler.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).isPresent();
+            return itemHandler.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).isEmpty();
         }
         return ICurio.super.canEquip(slotContext);
+    }
+
+    public int getItemCooldown(int index) {
+        return (index >= 0 && index < getSlots()) ? this.itemCooldowns[index] : 0;
+    }
+
+    public void setItemCooldown(int index, int cooldown) {
+        if (index >= 0 && index < getSlots()) {
+            this.itemCooldowns[index] = cooldown;
+        }
+    }
+
+    @Override
+    public void curioTick(SlotContext slotContext) {
+        for (int i = 0; i < this.itemCooldowns.length; i++) {
+            if (this.itemCooldowns[i] > 0) {
+                this.itemCooldowns[i] = this.itemCooldowns[i] - 1;
+            }
+        }
     }
 }
