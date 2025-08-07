@@ -87,7 +87,7 @@ public class ItemTagProvider extends ItemTagsProvider {
             new ResourceLocation(TicEX.MODID, "catalyst_slashblade"),
             new ResourceLocation(TicEX.MODID, "catalyst_kinetic_gun"),
             new ResourceLocation(TicEX.MODID, "catalyst_irons_spellbook"),
-            new ResourceLocation(TicEX.MODID, "catalyst_meka_tool")
+            new ResourceLocation(TicEX.MODID, "catalyst_meka_tool.json")
         );
 
         //catalyst_armors

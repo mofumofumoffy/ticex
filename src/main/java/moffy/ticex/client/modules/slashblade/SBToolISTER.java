@@ -438,8 +438,8 @@ public class SBToolISTER extends BlockEntityWithoutLevelRenderer {
             );
         } else if (tool.getMaterials().size() > 0) {
             model = BladeModelManager.getInstance().getModel(modelLocation);
-            SBToolRenderState.renderOverrided(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
-            SBToolRenderState.renderOverridedLuminous(
+            SBToolRenderState.renderOverride(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
+            SBToolRenderState.renderOverrideLuminous(
                     stack,
                     itemRenderContext,
                     tool,

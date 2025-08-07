@@ -261,8 +261,8 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
                     packedLightIn
             );
         } else if (tool.getMaterials().size() > 0) {
-            SBToolRenderState.renderOverrided(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
-            SBToolRenderState.renderOverridedLuminous(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
+            SBToolRenderState.renderOverride(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
+            SBToolRenderState.renderOverrideLuminous(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
         } else {
             BladeRenderState.renderOverrided(
                     stack,

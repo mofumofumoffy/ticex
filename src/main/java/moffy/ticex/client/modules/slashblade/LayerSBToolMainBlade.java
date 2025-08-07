@@ -60,7 +60,7 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
             try {
                 mmp.setPmd(pmd);
             } catch (MmdException e) {
-                LOGGER.error("Error occured", e);
+                LOGGER.error("Error occurred", e);
             }
         });
         return mmp;
@@ -514,8 +514,8 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
         } else if (tool.getMaterials().size() > 0) {
             model = BladeModelManager.getInstance()
                     .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
-            SBToolRenderState.renderOverrided(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
-            SBToolRenderState.renderOverridedLuminous(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
+            SBToolRenderState.renderOverride(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
+            SBToolRenderState.renderOverrideLuminous(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
         } else {
             model = BladeModelManager.getInstance()
                     .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));

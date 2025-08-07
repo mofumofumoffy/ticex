@@ -28,7 +28,7 @@ public class SBToolRenderState {
     private static final Color defaultColor = Color.white;
     private static Color col = defaultColor;
 
-    public static void renderOverrided(
+    public static void renderOverride(
             ItemStack stack,
             ItemRenderContext itemRenderContext,
             ToolStack tool,
@@ -38,7 +38,7 @@ public class SBToolRenderState {
             MultiBufferSource bufferIn,
             int packedLightIn
     ) {
-        renderOverrided(
+        renderOverride(
                 stack,
                 itemRenderContext,
                 tool,
@@ -52,7 +52,7 @@ public class SBToolRenderState {
         );
     }
 
-    public static void renderOverridedLuminous(
+    public static void renderOverrideLuminous(
             ItemStack stack,
             ItemRenderContext itemRenderContext,
             ToolStack tool,
@@ -62,7 +62,7 @@ public class SBToolRenderState {
             MultiBufferSource bufferIn,
             int packedLightIn
     ) {
-        renderOverrided(
+        renderOverride(
                 stack,
                 itemRenderContext,
                 tool,
@@ -76,7 +76,7 @@ public class SBToolRenderState {
         );
     }
 
-    public static void renderOverrided(
+    public static void renderOverride(
             ItemStack stack,
             ItemRenderContext itemRenderContext,
             ToolStack tool,
@@ -89,18 +89,10 @@ public class SBToolRenderState {
             boolean enableEffect
     ) {
         MaterialNBT materials = tool.getMaterials();
-
-        RenderOverrideEvent event = RenderOverrideEvent.onRenderOverride(
-                stack,
-                model,
-                target,
-                null,
-                matrixStackIn,
-                bufferIn
-        );
-
         for (int i = 0; i < materials.size(); i++) {
             MaterialVariantId material = materials.get(i).getVariant();
+
+
             SBToolRenderType.PartType partType = SBToolRenderType.PartType.byIndex(i);
             ShaderProvider.Tool shaderProvider = TicEXRenders.TOOL_SHADERS.getShaderProvider(material.getId());
             if (partType == null) continue;
@@ -109,6 +101,18 @@ public class SBToolRenderState {
                 Optional<MaterialRenderInfo> optional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(material);
                 optional.ifPresent(materialRenderInfo -> col = new Color(materialRenderInfo.vertexColor()));
             });
+
+            RenderOverrideEvent event = RenderOverrideEvent.onRenderOverride(
+                    stack,
+                    model,
+                    target,
+                    null,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn,
+                    resourceLocation -> rt,
+                    enableEffect
+            );
 
             renderVC(
                     stack,
