@@ -5,11 +5,11 @@
   "flip_v": true,
   "material_overrides": [
     {
-      "prefix": "handle_",
+      "prefix": "blade_",
       "index": 0
     },
     {
-      "prefix": "blade_",
+      "prefix": "handle_",
       "index": 1
     }
   ],
