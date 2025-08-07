@@ -1,0 +1,19 @@
+{
+  "type": "ticex:embossment_casting",
+  "cast": {
+    "item": "slashblade_addon:slashblade_tofu_metal"
+  },
+  "cast_consumed": true,
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "slashblade_addon"
+    },
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:slashblade_compat"
+    }
+  ],
+  "item_cost": 1,
+  "result": "ticex:catalyst_slashblade"
+}
