@@ -23,7 +23,6 @@ public class ResonanceTools {
         CuriosApi.getCuriosInventory(player).ifPresent(curioItemHandler -> {
             curioItemHandler.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).ifPresent(slotResult -> {
                 shootGauntletStack(player, slotResult.stack());
-                player.playNotifySound(SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0f, 1.0f);
             });
         });
     }
@@ -51,7 +50,7 @@ public class ResonanceTools {
 
             Vec3 center = player.position();
             float time = player.tickCount;
-            double baseAngle = 2 * Math.PI / itemHandler.getSlots() * shootSlot - time * 0.07 + Math.toRadians(player.getYRot());
+            double baseAngle = 2 * Math.PI / availableSlots.size() * shootSlot - time * 0.07 + Math.toRadians(player.getYRot());
             ;
             double radius = 1.4f;
 
@@ -84,6 +83,7 @@ public class ResonanceTools {
 
             arrow.shoot(lookAngle.x, lookAngle.y, lookAngle.z, velocity, inaccuracy);
             level.addFreshEntity(arrow);
+            player.playNotifySound(SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0f, 1.0f);
 
             TicEXSyncEntityMovements packet = new TicEXSyncEntityMovements(arrow);
             TicEX.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> arrow), packet);
