@@ -5,6 +5,8 @@ import moffy.ticex.caps.curios.GauntletItemHandler;
 import moffy.ticex.entity.curios.ResonanceToolProjectile;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -21,6 +23,7 @@ public class ResonanceTools {
         CuriosApi.getCuriosInventory(player).ifPresent(curioItemHandler -> {
             curioItemHandler.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).ifPresent(slotResult -> {
                 shootGauntletStack(player, slotResult.stack());
+                player.playNotifySound(SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0f, 1.0f);
             });
         });
     }

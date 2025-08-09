@@ -45,7 +45,7 @@ public class LayerResonanceTools <T extends LivingEntity, M extends EntityModel<
                              amount++;
                          }
                     }
-                    for(int i = 0; i < amount; i++){
+                    for(int i = 0; i < itemHandler.getSlots(); i++){
                         ItemStack toolStack = itemHandler.getStackInSlot(i);
                         if(!toolStack.isEmpty()){
                             boolean isNormalRender = true;
