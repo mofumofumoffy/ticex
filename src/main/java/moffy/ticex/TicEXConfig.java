@@ -12,8 +12,6 @@ public class TicEXConfig {
     // TicEX
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
-    public static ForgeConfigSpec.ConfigValue<Integer> GAUNTLET_REMAIN_TICKS;
-    public static ForgeConfigSpec.ConfigValue<List<String>> GLOVE_DROP_BLACKLIST;
 
     // Avaritia
     public static ForgeConfigSpec.ConfigValue<Float> CONDENSING_DROP_PROBABILITY;
@@ -24,8 +22,10 @@ public class TicEXConfig {
     // Apotheosis
     public static ForgeConfigSpec.ConfigValue<Integer> OVERRIDE_LIMIT;
 
-    // CC: Tweaked
-    public static ForgeConfigSpec.ConfigValue<Boolean> PROVIDE_PROPERTIES;
+    // Curios
+    public static ForgeConfigSpec.ConfigValue<Integer> GAUNTLET_REMAIN_TICKS;
+    public static ForgeConfigSpec.ConfigValue<List<String>> GLOVE_DROP_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<Boolean> GLOVE_DROP_BLACKLIST_AS_WHITELIST;
 
     public static void registerConfig() {
         final ForgeConfigSpec.Builder COMMON = new ForgeConfigSpec.Builder();
@@ -55,20 +55,18 @@ public class TicEXConfig {
         );
         COMMON.pop();
 
-        COMMON.push("cc:tweaked");
-        PROVIDE_PROPERTIES = COMMON.comment(
-            "",
-            "CAUTION: Setting the value to \"true\" may BREAK the game balance and your world!"
-        ).define("provideProperties", false);
+        COMMON.push("curios");
+        GAUNTLET_REMAIN_TICKS = COMMON.comment("Ticks remaining on the gauntlet after a gauntlet shot hits")
+                .define("gantletRemainTicks", 40);
+        GLOVE_DROP_BLACKLIST = COMMON.comment("Blacklist of entities that do not drop the glove.")
+                .define("gloveDropBlacklist", List.of("minecraft:armor_stand", "dummmmmmy:target_dummy"));
+        GLOVE_DROP_BLACKLIST_AS_WHITELIST = COMMON.comment("Use gloveDropBlacklist as whitelist")
+                .define("gloveDropBlacklistAsWhitelist", false);
         COMMON.pop();
 
         CLIENT.comment("Client Settings").push("client");
         USE_SHADER = CLIENT.comment("Rendering with shaders for some tools/armors").define("useShader", true);
-        GAUNTLET_REMAIN_TICKS = CLIENT.comment("Ticks remaining on the gauntlet after a gauntlet shot hits")
-                .define("gantletRemainTicks", 40);
-        GLOVE_DROP_BLACKLIST = CLIENT.comment("Blacklist of entities that do not drop the glove.")
-                .define("gloveDropBlacklist", List.of("minecraft:armor_stand", "dummmmmmy:target_dummy"));
-        CLIENT.pop();
+
 
         AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(), COMMON);
 
