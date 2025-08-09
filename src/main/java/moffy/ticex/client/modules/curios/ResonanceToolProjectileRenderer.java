@@ -26,7 +26,8 @@ public class ResonanceToolProjectileRenderer extends ItemArrowRenderer {
     @Override
     public void render(ItemArrow pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         pPoseStack.pushPose();
-        
+
+        pPoseStack.mulPose(Axis.XP.rotationDegrees(45));
         pPoseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.yRotO, pEntity.getYRot()) - 90.0F));
         pPoseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.xRotO, pEntity.getXRot())));
 

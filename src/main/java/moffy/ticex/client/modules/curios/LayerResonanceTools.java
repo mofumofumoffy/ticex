@@ -39,7 +39,12 @@ public class LayerResonanceTools <T extends LivingEntity, M extends EntityModel<
             handler.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).ifPresent(slotResult -> {
                 ItemStack stack = slotResult.stack();
                 stack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(itemHandler -> {
-                    int amount = itemHandler.getSlots();
+                    int amount = 0;
+                    for(int i = 0; i < itemHandler.getSlots(); i++) {
+                         if(!itemHandler.getStackInSlot(i).isEmpty()){
+                             amount++;
+                         }
+                    }
                     for(int i = 0; i < amount; i++){
                         ItemStack toolStack = itemHandler.getStackInSlot(i);
                         if(!toolStack.isEmpty()){
