@@ -18,7 +18,9 @@ public class TicEXConfig {
     // TicEX
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
-  
+    public static ForgeConfigSpec.ConfigValue<Boolean> USE_MORE_CONFIG;
+
+    // More Config
     public static ForgeConfigSpec.ConfigValue<Boolean> PROVIDE_PROPERTIES;
     public static List<ForgeConfigSpec.ConfigValue<Integer>> RF_FURNACE_FUEL_TEMP = new ArrayList<>();
     public static List<ForgeConfigSpec.ConfigValue<Integer>> RF_FURNACE_FUEL_RATE = new ArrayList<>();
@@ -34,7 +36,7 @@ public class TicEXConfig {
 
     // Apotheosis
     public static ForgeConfigSpec.ConfigValue<Integer> OVERRIDE_LIMIT;
-  
+
     // Curios
     public static ForgeConfigSpec.ConfigValue<Integer> GAUNTLET_REMAIN_TICKS;
     public static ForgeConfigSpec.ConfigValue<List<String>> GLOVE_DROP_BLACKLIST;
@@ -45,7 +47,8 @@ public class TicEXConfig {
         final ForgeConfigSpec.Builder CLIENT = new ForgeConfigSpec.Builder();
         final ForgeConfigSpec.Builder MORE_CONFIG = new ForgeConfigSpec.Builder();
 
-        COMMON.comment("RFFurnace Settings").push("rf_furnace");
+        COMMON.comment("General").push("general");
+        USE_MORE_CONFIG = COMMON.comment("Using ticex-more-config.toml(If true, it will override your datapack!)").define("useMoreConfig", true);
         RF_FURNACE_RATE_CAPACITY = COMMON.comment("MAX Rate Capacity(RF/t)").define("rateCapacity", 100000);
         COMMON.pop();
 

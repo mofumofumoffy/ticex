@@ -12,6 +12,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,18 +27,21 @@ import java.util.Optional;
 public class ToolDefinitionLoaderMixin {
     @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V", at = @At("HEAD"))
     private void modify(@NotNull Map<ResourceLocation, JsonElement> splashList, ResourceManager resourceManagerIn, ProfilerFiller profilerIn, CallbackInfo ci) {
-        splashList.forEach((resourceLocation, jsonElement) -> {
-            TicEXConfig.SLOTS_CONFIG.forEach((rl, spec) -> {
-                if (rl.equals(resourceLocation)) {
-                    SlotValues slots = SlotValues.fromSpec(spec);
-                    if (slots != null) {
-                        modifySlots(resourceLocation, jsonElement, slots);
+        if(TicEXConfig.USE_MORE_CONFIG.get()){
+            splashList.forEach((resourceLocation, jsonElement) -> {
+                TicEXConfig.SLOTS_CONFIG.forEach((rl, spec) -> {
+                    if (rl.equals(resourceLocation)) {
+                        SlotValues slots = SlotValues.fromSpec(spec);
+                        if (slots != null) {
+                            modifySlots(resourceLocation, jsonElement, slots);
+                        }
                     }
-                }
+                });
             });
-        });
+        }
     }
 
+    @Unique
     private void modifySlots(ResourceLocation rl, JsonElement json, SlotValues slots) {
         JsonArray modules = json.getAsJsonObject().getAsJsonArray("modules");
         if (modules != null) {
