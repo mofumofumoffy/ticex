@@ -8,7 +8,15 @@
     "DataItemAccessor",
     "EntityMixin",
     "MeleeAttributeModuleMixin",
-    "RandomMaterialMixin"
+    "RandomMaterialMixin",
+    "RomanNumeralHelperMixin",
+    "config.AbstractCastingRecipeAccessor",
+    "config.AbstractCastingRecipeMixin",
+    "config.AbstractModifierRecipeAccessor",
+    "config.AbstractModifierRecipeMixin",
+    "config.MeltingFuelAccessor",
+    "config.MeltingFuelMixin",
+    "config.ToolDefinitionLoaderMixin"
   ],
   "client": [
     "ItemRendererMixin",
