@@ -1,22 +1,15 @@
 package moffy.ticex.network.mekanism;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 import mekanism.api.MekanismAPI;
 import mekanism.api.gear.ModuleData;
-import mekanism.api.gear.config.ModuleBooleanData;
-import mekanism.api.gear.config.ModuleColorData;
-import mekanism.api.gear.config.ModuleConfigData;
-import mekanism.api.gear.config.ModuleEnumData;
-import mekanism.api.gear.config.ModuleIntegerData;
+import mekanism.api.gear.config.*;
 import mekanism.api.math.MathUtils;
 import mekanism.common.Mekanism;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.ModuleConfigItem;
 import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.network.to_server.PacketUpdateModuleSettings;
+import moffy.ticex.network.TicEXPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -25,7 +18,12 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
-public class ConfigSyncToClientPacket {
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
+public class ConfigSyncToClientPacket extends TicEXPacket.ClientBoundPacket {
 
     private final ModuleData<?> moduleType;
     private final EquipmentSlot slot;
@@ -65,16 +63,17 @@ public class ConfigSyncToClientPacket {
         this.value = value;
     }
 
-    public int getConfigIndex() {
-        return configIndex;
-    }
-
-    public ModuleDataType getDataType() {
-        return dataType;
-    }
-
-    public ModuleData<?> getModuleType() {
-        return moduleType;
+    public ConfigSyncToClientPacket(FriendlyByteBuf buf) {
+        this.slot = buf.readEnum(EquipmentSlot.class);
+        this.moduleType = buf.readRegistryIdSafe(ModuleData.class);
+        this.configIndex = buf.readInt();
+        this.dataType = buf.readEnum(ModuleDataType.class);
+        this.value =
+                switch (dataType) {
+                    case BOOLEAN -> buf.readBoolean();
+                    case COLOR -> buf.readInt();
+                    case INTEGER, ENUM -> buf.readVarInt();
+                };
     }
 
     public EquipmentSlot getSlot() {
@@ -85,51 +84,38 @@ public class ConfigSyncToClientPacket {
         return value;
     }
 
-    public static ConfigSyncToClientPacket decode(FriendlyByteBuf buf) {
-        EquipmentSlot slot = buf.readEnum(EquipmentSlot.class);
-        ModuleData<?> moduleData = buf.readRegistryIdSafe(ModuleData.class);
-        int configDataIndex = buf.readInt();
-        ModuleDataType dataType = buf.readEnum(ModuleDataType.class);
-        Object data =
-            switch (dataType) {
-                case BOOLEAN -> buf.readBoolean();
-                case COLOR -> buf.readInt();
-                case INTEGER, ENUM -> buf.readVarInt();
-            };
-        return new ConfigSyncToClientPacket(moduleData, slot, configDataIndex, dataType, data);
-    }
-
-    public static void encode(ConfigSyncToClientPacket packet, FriendlyByteBuf buf) {
-        buf.writeEnum(packet.getSlot());
-        buf.writeRegistryId(MekanismAPI.moduleRegistry(), packet.getModuleType());
-        buf.writeInt(packet.getConfigIndex());
-        buf.writeEnum(packet.getDataType());
-        switch (packet.getDataType()) {
-            case BOOLEAN -> buf.writeBoolean((boolean) packet.getValue());
-            case COLOR -> buf.writeInt((int) packet.getValue());
-            case INTEGER, ENUM -> buf.writeVarInt((int) packet.getValue());
+    @Override
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeEnum(slot);
+        buf.writeRegistryId(MekanismAPI.moduleRegistry(), moduleType);
+        buf.writeInt(configIndex);
+        buf.writeEnum(dataType);
+        switch (dataType) {
+            case BOOLEAN -> buf.writeBoolean((boolean) value);
+            case COLOR -> buf.writeInt((int) value);
+            case INTEGER, ENUM -> buf.writeVarInt((int) value);
         }
     }
 
-    public static void handle(ConfigSyncToClientPacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
+    public void handle(Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             Player player = Minecraft.getInstance().player;
-            ItemStack stack = player.getItemBySlot(packet.getSlot());
+            ItemStack stack = player.getItemBySlot(slot);
             if (!stack.isEmpty() && stack.getItem() instanceof IModuleContainerItem) {
-                mekanism.common.content.gear.Module<?> module = ModuleHelper.get().load(stack, packet.getModuleType());
+                mekanism.common.content.gear.Module<?> module = ModuleHelper.get().load(stack, moduleType);
                 if (module != null) {
                     List<ModuleConfigItem<?>> configItems = module.getConfigItems();
-                    if (packet.getConfigIndex() < configItems.size()) {
-                        ModuleConfigItem<?> configItem = configItems.get(packet.getConfigIndex());
-                        setValue(configItem, packet.getDataType(), packet.getValue());
+                    if (configIndex < configItems.size()) {
+                        ModuleConfigItem<?> configItem = configItems.get(configIndex);
+                        setValue(configItem, dataType, value);
                         if (stack.getItem() instanceof ArmorItem) {
                             Mekanism.packetHandler()
                                 .sendToServer(
                                     PacketUpdateModuleSettings.create(
-                                        36 + (3 - packet.getSlot().getIndex()),
+                                            36 + (3 - slot.getIndex()),
                                         module.getData(),
-                                        packet.getConfigIndex(),
+                                            configIndex,
                                         configItem.getData()
                                     )
                                 );
@@ -145,7 +131,7 @@ public class ConfigSyncToClientPacket {
                                         PacketUpdateModuleSettings.create(
                                             player.getInventory().findSlotMatchingItem(optionalStack.get()),
                                             module.getData(),
-                                            packet.getConfigIndex(),
+                                                configIndex,
                                             configItem.getData()
                                         )
                                     );
@@ -168,7 +154,7 @@ public class ConfigSyncToClientPacket {
         }
     }
 
-    private static enum ModuleDataType {
+    public enum ModuleDataType {
         BOOLEAN(data -> data instanceof ModuleBooleanData),
         COLOR(data -> data instanceof ModuleColorData),
         INTEGER(data -> data instanceof ModuleIntegerData),

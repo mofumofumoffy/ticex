@@ -4,7 +4,9 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.client.modules.avaritia.TicEXCosmicShaderProvider;
 import moffy.ticex.client.rendering.PartPredicate;
+import moffy.ticex.client.rendering.ticex.ItemArrowRenderer;
 import moffy.ticex.client.rendering.ticex.TicEXRenders;
+import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.event.TicEXAvaritiaEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -12,6 +14,7 @@ import moffy.ticex.item.projectile.EndestShotItem;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.*;
 import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -23,6 +26,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.fluids.block.BurningLiquidBlock;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
@@ -110,5 +114,13 @@ public class TicEXAvaritiaModule extends AddonModule {
         TicEXRenders.ARMOR_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Armor());
 
         bus.addListener(TicEXAvaritiaEvent::onRegisterRenderers);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            EntityRenderers.register((EntityType<ItemArrow>)TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), context -> new ItemArrowRenderer(context, 1));
+        });
     }
 }

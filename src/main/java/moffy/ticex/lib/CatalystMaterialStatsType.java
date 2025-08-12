@@ -22,6 +22,8 @@ public record CatalystMaterialStatsType(MaterialStatType<?> getType) implements 
 
     private static final HashMap<String, MaterialStatType<CatalystMaterialStatsType>> TYPES;
 
+    public static final MaterialStatType<CatalystMaterialStatsType> SERAM;
+
     public CatalystMaterialStatsType(MaterialStatType<?> getType) {
         this.getType = getType;
     }
@@ -100,6 +102,7 @@ public record CatalystMaterialStatsType(MaterialStatType<?> getType) implements 
         LOADABLE = RecordLoadable.create(MaterialStatType.CONTEXT_KEY.requiredField(), CatalystMaterialStatsType::new);
         DESCRIPTION = List.of(Component.empty());
         TYPES = new HashMap<>();
+        SERAM = getOrMakeType("seram");
     }
 
 

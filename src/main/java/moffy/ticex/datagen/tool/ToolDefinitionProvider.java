@@ -1,6 +1,7 @@
 package moffy.ticex.datagen.tool;
 
 import moffy.ticex.TicEX;
+import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -10,12 +11,9 @@ import slimeknights.tconstruct.library.data.tinkering.AbstractToolDefinitionData
 import slimeknights.tconstruct.library.materials.RandomMaterial;
 import slimeknights.tconstruct.library.tools.SlotType;
 import slimeknights.tconstruct.library.tools.definition.module.ToolModule;
-import slimeknights.tconstruct.library.tools.definition.module.build.MultiplyStatsModule;
-import slimeknights.tconstruct.library.tools.definition.module.build.SetStatsModule;
-import slimeknights.tconstruct.library.tools.definition.module.build.ToolActionsModule;
-import slimeknights.tconstruct.library.tools.definition.module.build.ToolSlotsModule;
-import slimeknights.tconstruct.library.tools.definition.module.build.ToolTraitsModule;
+import slimeknights.tconstruct.library.tools.definition.module.build.*;
 import slimeknights.tconstruct.library.tools.definition.module.material.DefaultMaterialsModule;
+import slimeknights.tconstruct.library.tools.definition.module.material.MaterialStatsModule;
 import slimeknights.tconstruct.library.tools.definition.module.material.PartStatsModule;
 import slimeknights.tconstruct.library.tools.definition.module.mining.IsEffectiveModule;
 import slimeknights.tconstruct.library.tools.nbt.MultiplierNBT;
@@ -166,10 +164,20 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                                     .part(TicEXRegistry.CATALYST_MEKA_TOOL, 1)
                                     .build()
                     )
-                    .module(DefaultMaterialsModule.builder().material(tier1Material, tier1Material, tier1Material).build())
+                    .module(defaultTwoParts)
                     .smallToolStartingSlots()
                     .module(ToolTraitsModule.builder().trait(TicEXRegistry.MEKANIC_MODIFIER).build())
                     .module(IsEffectiveModule.tag(BlockTags.MINEABLE_WITH_AXE));
+        }
+
+        if (TicEXRegistry.GAUNTLET_DEFINITION != null) {
+            define(TicEXRegistry.GAUNTLET_DEFINITION)
+                    .module(MaterialStatsModule.stats()
+                        .stat(CatalystMaterialStatsType.SERAM.getId())
+                        .primaryPart(0).build())
+                    .module(DefaultMaterialsModule.builder().material(randomCatalystMaterial).build())
+                    .smallToolStartingSlots()
+                    .module(ToolTraitsModule.builder().trait(TicEXRegistry.INCOMPARABLE_MODIFIER).build());
         }
     }
 

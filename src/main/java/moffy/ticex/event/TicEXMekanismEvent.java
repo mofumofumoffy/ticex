@@ -16,6 +16,7 @@ import mekanism.common.content.gear.mekasuit.ModuleHydraulicPropulsionUnit;
 import mekanism.common.content.gear.mekasuit.ModuleLocomotiveBoostingUnit;
 import mekanism.common.item.gear.ItemFreeRunners;
 import mekanism.common.registries.MekanismModules;
+import mekanism.common.tags.MekanismTags;
 import mekanism.common.util.StorageUtils;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
@@ -33,6 +34,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
@@ -43,6 +45,28 @@ import java.util.Map;
 import java.util.Optional;
 
 public class TicEXMekanismEvent {
+
+    @SubscribeEvent
+    public void onEntityAttack(LivingAttackEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (event.getAmount() <= 0 || !entity.isAlive()) {
+            return;
+        }
+        if (event.getSource().is(MekanismTags.DamageTypes.IS_PREVENTABLE_MAGIC)) {
+            ItemStack headStack = entity.getItemBySlot(EquipmentSlot.HEAD);
+        }
+        if (event.getSource().is(DamageTypeTags.IS_FALL)) {
+            FallEnergyInfo info = getFallAbsorptionEnergyInfo(entity);
+            if (info != null && tryAbsorbAll(event, info.container, info.damageRatio, info.energyCost)) {
+                return;
+            }
+        }
+        if (entity instanceof Player player) {
+            if (ModifiableMekaSuitArmor.tryAbsorbAll(player, event.getSource(), event.getAmount())) {
+                event.setCanceled(true);
+            }
+        }
+    }
 
     @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
@@ -66,9 +90,6 @@ public class TicEXMekanismEvent {
                 if (ratioAbsorbed > 0) {
                     float damageRemaining = event.getAmount() * Math.max(0, 1 - ratioAbsorbed);
                     if (damageRemaining <= 0) {
-                        entity.setDeltaMovement(0, 0, 0);
-                        entity.hurtTime = 0;
-                        entity.hurtDuration = 0;
                         event.setCanceled(true);
                     } else {
                         event.setAmount(damageRemaining);
@@ -76,6 +97,23 @@ public class TicEXMekanismEvent {
                 }
             }
         }
+    }
+
+    private boolean tryAbsorbAll(LivingAttackEvent event, @Nullable IEnergyContainer energyContainer, FloatSupplier absorptionRatio, FloatingLongSupplier energyCost) {
+        if (energyContainer != null && absorptionRatio.getAsFloat() == 1) {
+            FloatingLong energyRequirement = energyCost.get().multiply(event.getAmount());
+            if (energyRequirement.isZero()) {
+                event.setCanceled(true);
+                return true;
+            }
+            FloatingLong simulatedExtract = energyContainer.extract(energyRequirement, Action.SIMULATE, AutomationType.MANUAL);
+            if (simulatedExtract.equals(energyRequirement)) {
+                energyContainer.extract(energyRequirement, Action.EXECUTE, AutomationType.MANUAL);
+                event.setCanceled(true);
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean handleDamage(

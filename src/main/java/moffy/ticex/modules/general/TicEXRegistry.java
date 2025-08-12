@@ -12,11 +12,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
@@ -32,6 +30,7 @@ import net.minecraftforge.registries.RegistryObject;
 import slimeknights.mantle.fluid.UnplaceableFluid;
 import slimeknights.mantle.recipe.helper.TypeAwareRecipeSerializer;
 import slimeknights.mantle.registration.deferred.FluidDeferredRegister;
+import slimeknights.mantle.registration.deferred.MenuTypeDeferredRegister;
 import slimeknights.mantle.registration.object.EnumObject;
 import slimeknights.mantle.registration.object.FlowingFluidObject;
 import slimeknights.mantle.registration.object.FluidObject;
@@ -49,6 +48,7 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.smeltery.block.component.SearedBlock;
+import slimeknights.tconstruct.tools.menu.ToolContainerMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +108,10 @@ public class TicEXRegistry {
         new ResourceLocation(TicEX.MODID, "revival_spellbook")
     );
     public static final ToolDefinition MEKA_TOOL_DEFINITION = ToolDefinition.create(
-            new ResourceLocation(TicEX.MODID, "meka_tool")
+            new ResourceLocation(TicEX.MODID, "meka_edge")
+    );
+    public static final ToolDefinition GAUNTLET_DEFINITION = ToolDefinition.create(
+            new ResourceLocation(TicEX.MODID, "resonance_gauntlet")
     );
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
@@ -143,6 +146,9 @@ public class TicEXRegistry {
         Registries.RECIPE_TYPE,
         TicEX.MODID
     );
+    public static final MenuTypeDeferredRegister MENUS = new MenuTypeDeferredRegister(
+            TicEX.MODID
+    );
 
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
@@ -154,10 +160,13 @@ public class TicEXRegistry {
     public static RegistryObject<RecipeSerializer<ValidatableIncrementalModifierRecipe>> VALIDATABLE_INCREMENTAL_RECIPE_SERIALIZER = null;
 
 
+    public static RegistryObject<MenuType<ToolContainerMenu>> UNSYNCED_TOOL_CONTAINER = null;
+
 
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
     public static ModuleHook<ProvidePropertyModifierHook> PROPERTY_PROVIDER_HOOK = null;
 
+    public static RegistryObject<Item> EXHAUSTED_GLOVE = null;
     public static RegistryObject<Item> ETHERIC_INGOT = null;
     public static RegistryObject<Item> DRACONIUM_CRYSTAL = null;
     public static RegistryObject<Item> WYVERN_CRYSTAL = null;
@@ -201,7 +210,8 @@ public class TicEXRegistry {
     public static ItemObject<? extends Item> REFORGED_SLASHBLADE = null;
     public static ItemObject<? extends Item> BLITZ_GUN = null;
     public static ItemObject<? extends Item> REVIVAL_SPELLBOOK_IRONS = null;
-    public static ItemObject<? extends ModifiableItem> MEKA_TOOL = null;
+    public static ItemObject<? extends ModifiableItem> MEKA_EDGE = null;
+    public static ItemObject<? extends Item> RESONANCE_GAUNTLET = null;
 
     public static EnumObject<ArmorItem.Type, ? extends IModifiable> MEKAPLATE_ARMOR = null;
     public static EnumObject<ArmorItem.Type, ? extends IModifiable> SINGULAR_GEM_ARMOR = null;
@@ -222,9 +232,9 @@ public class TicEXRegistry {
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_CRYSTAL_MATRIX = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
 
-    public static RegistryObject<EntityType<?>> FAKE_LIVING_ENTITY = null;
     public static RegistryObject<EntityType<?>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
     public static RegistryObject<EntityType<?>> ENDESTSHOT_PROJECTILE = null;
+    public static RegistryObject<EntityType<?>> RESONANCE_TOOL_PROJECTILE = null;
 
     public static RegistryObject<Attribute> HEALING_RECEIVED = null;
     public static RegistryObject<Attribute> DAMAGE_TAKEN = null;
@@ -272,7 +282,7 @@ public class TicEXRegistry {
     public static void addTabItems(ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         for (RegistryObject<Item> itemObject : ITEMS.getEntries()) {
             Item item = itemObject.get();
-            if (!(item instanceof ToolPartItem || item instanceof IModifiable)) {
+            if (!(item instanceof ToolPartItem || item instanceof IModifiable || item instanceof ArrowItem)) {
                 output.accept(itemObject.get());
             }
         }
@@ -290,6 +300,8 @@ public class TicEXRegistry {
         acceptPart(output, SLASHBLADE_BLADE);
         acceptPart(output, SLASHBLADE_SAYA);
 
+        acceptTool(output, MEKA_EDGE);
+        acceptTool(output, RESONANCE_GAUNTLET);
         acceptTool(output, REFORGED_SLASHBLADE);
         //acceptTool(output, BLITZ_GUN);
         //acceptTool(output, REVIVAL_SPELLBOOK_IRONS);
@@ -299,8 +311,6 @@ public class TicEXRegistry {
 
         acceptCast(output, SLASHBLADE_BLADE_CAST);
         acceptCast(output, SLASHBLADE_SAYA_CAST);
-
-        acceptTool(output, MEKA_TOOL);
     }
 
     private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends Item> toolObject) {

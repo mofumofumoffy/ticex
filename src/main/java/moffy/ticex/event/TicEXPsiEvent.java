@@ -25,7 +25,7 @@ public class TicEXPsiEvent {
                     String eventType = getEvent(armorStack);
                     int timesCast = armor.getPersistentData().getInt(ModifierPsionizingRadiation.TIMES_CAST_LOC);
 
-                    if (eventType != null && event.type.equals(eventType)) {
+                    if (event.type.equals(eventType)) {
                         TicEXPsiUtils.CastSpell(player, armorStack, context -> {
                             context.loopcastIndex = timesCast;
                         });

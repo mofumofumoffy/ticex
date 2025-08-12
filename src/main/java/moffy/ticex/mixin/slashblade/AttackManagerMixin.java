@@ -26,7 +26,7 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 @Mixin(value = AttackManager.class, remap = false)
 public class AttackManagerMixin {
 
-    @Inject(at = @At("head"), method = "doAttackWith", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "doAttackWith", cancellable = true)
     private static void doAttackWith(
         DamageSource src,
         float amount,
@@ -40,7 +40,7 @@ public class AttackManagerMixin {
         Entity attacker = src.getEntity();
         if (attacker instanceof LivingEntity livingAttacker) {
             ItemStack mainHandStack = livingAttacker.getMainHandItem();
-            if (mainHandStack != null && mainHandStack.getItem() instanceof IModifiable) {
+            if (mainHandStack.getItem() instanceof IModifiable) {
                 ToolStack tool = ToolStack.from(mainHandStack);
                 ToolAttackContext context = new ToolAttackContext(
                     livingAttacker,
@@ -53,7 +53,7 @@ public class AttackManagerMixin {
                     false
                 );
 
-                dealToolDamage(tool, context, livingAttacker, src, amount, target, forceHit, resetHit);
+                ticex_1_20_1$dealToolDamage(tool, context, livingAttacker, src, amount, target, forceHit, resetHit);
 
                 cb.cancel();
             }
@@ -61,7 +61,7 @@ public class AttackManagerMixin {
     }
 
     @Unique
-    private static void dealToolDamage(
+    private static void ticex_1_20_1$dealToolDamage(
         IToolStackView tool,
         ToolAttackContext context,
         LivingEntity livingAttacker,

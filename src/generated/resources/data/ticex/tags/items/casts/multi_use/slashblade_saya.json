@@ -1,5 +1,8 @@
 {
   "values": [
-    "ticex:slashblade_saya_cast"
+    {
+      "id": "ticex:slashblade_saya_cast",
+      "required": false
+    }
   ]
 }

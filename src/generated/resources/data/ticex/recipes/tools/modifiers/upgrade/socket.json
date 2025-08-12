@@ -11,7 +11,9 @@
   "input": {
     "item": "psi:cad_socket_basic"
   },
-  "level": 5,
+  "level": {
+    "max": 5
+  },
   "needed_per_level": 1,
   "result": "ticex:socket",
   "slots": {

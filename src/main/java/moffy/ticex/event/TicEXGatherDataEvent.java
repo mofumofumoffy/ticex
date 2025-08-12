@@ -2,16 +2,16 @@ package moffy.ticex.event;
 
 import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
-import moffy.ticex.datagen.blockstate.TicEXBlockstateProvider;
-import moffy.ticex.datagen.curios.TicEXCuriosDataProvider;
 import moffy.ticex.datagen.fluid.FluidTextureProvider;
 import moffy.ticex.datagen.general.LootProvider;
 import moffy.ticex.datagen.general.TicEXDamageTypeProvider;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
+import moffy.ticex.datagen.general.sprite.TicEXSpriteSourceProvider;
 import moffy.ticex.datagen.general.tag.BlockTagProvider;
 import moffy.ticex.datagen.general.tag.FluidTagProvider;
 import moffy.ticex.datagen.general.tag.ItemTagProvider;
 import moffy.ticex.datagen.layout.TicEXStationSlotLayoutProvider;
+import moffy.ticex.datagen.models.TicEXBlockstateProvider;
 import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
 import moffy.ticex.datagen.tool.*;
@@ -45,7 +45,6 @@ public class TicEXGatherDataEvent {
 
         boolean server = event.includeServer();
         boolean client = event.includeClient();
-        boolean both = client || server;
 
         TicEXDamageTypeProvider.register(registrySetBuilder);
 
@@ -67,9 +66,7 @@ public class TicEXGatherDataEvent {
         generator.addProvider(server, new LootProvider(packOutput));
         generator.addProvider(client, new FluidBlockstateModelProvider(packOutput, TicEX.MODID));
         generator.addProvider(client, new TicEXBlockstateProvider(packOutput, existingFileHelper));
-
-        //curio
-        generator.addProvider(both, new TicEXCuriosDataProvider(packOutput, existingFileHelper, lookupProvider));
+        generator.addProvider(client, new TicEXSpriteSourceProvider(packOutput, existingFileHelper));
 
         //tinkers slot
         generator.addProvider(server, new TicEXStationSlotLayoutProvider(packOutput));

@@ -6,7 +6,7 @@ import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.init.SBItems;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.lib.utils.TicEXSBUtil;
+import moffy.ticex.lib.utils.TicEXSBUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -43,7 +43,7 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
         if (input.isEnchanted()) {
             Random random = new Random();
             for (Entry<Enchantment, Integer> enchantmentEntry : input.getAllEnchantments().entrySet()) {
-                if (TicEXSBUtil.disallowedEnchantments.contains(enchantmentEntry.getKey())) {
+                if (TicEXSBUtils.disallowedEnchantments.contains(enchantmentEntry.getKey())) {
                     context.setErrorMsg(Component.translatable("recipe.ticex.not_allowed_enchantment_slashblade"));
                     return false;
                 }
@@ -52,7 +52,7 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
                 if (input.is(SBItems.proudsoul)) probability = 0.5F;
                 if (input.is(SBItems.proudsoul_ingot)) probability = 0.75F;
                 if (random.nextFloat() <= probability) {
-                    TicEXSBUtil.applyEnchantment(toolStack, enchantmentEntry.getKey(), enchantmentLevel);
+                    TicEXSBUtils.applyEnchantment(toolStack, enchantmentEntry.getKey(), enchantmentLevel);
                 }
             }
         }

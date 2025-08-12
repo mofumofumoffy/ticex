@@ -83,13 +83,11 @@ public class TicEXSlashBladeModule extends AddonModule {
         TicEXRegistry.KOSHIRAE_MODIFIER = TicEXRegistry.MODIFIERS.register("koshirae", ModifierKoshirae::new);
         TicEXRegistry.PROUD_MODIFIER = TicEXRegistry.MODIFIERS.register("hidden_proud", ModifierHiddenProud::new);
 
-        TicEX.CHANNEL.registerMessage(
-            TicEXPacketID.SB_STATE_SYNC,
-            StateSyncPacket.class,
-            StateSyncPacket::encode,
-            StateSyncPacket::decode,
-            StateSyncPacket::handle
-        );
+        TicEX.CHANNEL.messageBuilder(StateSyncPacket.class, TicEXPacketID.SB_STATE_SYNC)
+                .encoder(StateSyncPacket::encode)
+                .decoder(StateSyncPacket::new)
+                .consumerMainThread(StateSyncPacket::handle)
+                .add();
 
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onBladeMotion);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onInputCommand);
@@ -98,6 +96,7 @@ public class TicEXSlashBladeModule extends AddonModule {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingFall);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingHurt);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onPlayerFlyableFall);
+        MinecraftForge.EVENT_BUS.addListener(TicEXSBEvent::onHit);
 
         DistExecutor.unsafeRunWhenOn(
             Dist.CLIENT,

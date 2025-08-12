@@ -1,10 +1,7 @@
 package moffy.ticex.event;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
 import moffy.ticex.caps.EmbossmentMaterialCapability;
+import moffy.ticex.client.modules.ticex.models.MaterialOverrideModel;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -13,30 +10,26 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
 public class TicEXEvent {
 
     public static UUID EXTRA_DAMAGE_UUID = UUID.fromString("39f1e204-7c3b-4d51-9a3c-65e1db213f08");
-
-    @SuppressWarnings("unchecked")
-    public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-        event.put(
-            (EntityType<? extends LivingEntity>) TicEXRegistry.FAKE_LIVING_ENTITY.get(),
-            AttributeSupplier.builder().add(Attributes.MAX_HEALTH, Float.MAX_VALUE).build()
-        );
-    }
 
     @SuppressWarnings("unchecked")
     public static void onEntityAttributeModification(EntityAttributeModificationEvent event) {
@@ -141,5 +134,9 @@ public class TicEXEvent {
 
     public static void onRegisterCaps(RegisterCapabilitiesEvent event) {
         event.register(EmbossmentMaterialCapability.class);
+    }
+
+    public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
+        event.register("mat_override_obj", MaterialOverrideModel.LOADER);
     }
 }

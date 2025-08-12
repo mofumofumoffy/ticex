@@ -27,10 +27,6 @@ public class EndestShotProjectile extends ItemArrow {
         super((EntityType<EndestShotProjectile>) TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), shooter, level);
     }
 
-    public void setShooter(LivingEntity shooter) {
-        this.shooter = shooter;
-    }
-
     @Override
     public ItemStack getItem() {
         return new ItemStack(ModItems.endest_pearl.get());

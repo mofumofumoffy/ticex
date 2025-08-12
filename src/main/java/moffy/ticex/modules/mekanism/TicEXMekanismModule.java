@@ -66,7 +66,7 @@ public class TicEXMekanismModule extends AddonModule {
             type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId())
         );
 
-        TicEXRegistry.MEKA_TOOL = TicEXRegistry.ITEMS_EXTENDED.register("meka_tool",
+        TicEXRegistry.MEKA_EDGE = TicEXRegistry.ITEMS_EXTENDED.register("meka_tool",
                 () -> new ModifiableMekaTool(new Item.Properties().stacksTo(1))
         );
 
@@ -79,13 +79,11 @@ public class TicEXMekanismModule extends AddonModule {
 
         MinecraftForge.EVENT_BUS.register(new TicEXMekanismEvent());
 
-        TicEX.CHANNEL.registerMessage(
-            TicEXPacketID.MEK_CONFIG_SYNC,
-            ConfigSyncToClientPacket.class,
-            ConfigSyncToClientPacket::encode,
-            ConfigSyncToClientPacket::decode,
-            ConfigSyncToClientPacket::handle
-        );
+        TicEX.CHANNEL.messageBuilder(ConfigSyncToClientPacket.class, TicEXPacketID.MEK_CONFIG_SYNC)
+                .encoder(ConfigSyncToClientPacket::encode)
+                .decoder(ConfigSyncToClientPacket::new)
+                .consumerMainThread(ConfigSyncToClientPacket::handle)
+                .add();
 
         DistExecutor.unsafeRunWhenOn(
             Dist.CLIENT,

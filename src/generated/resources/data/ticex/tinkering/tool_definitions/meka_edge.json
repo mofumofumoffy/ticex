@@ -22,7 +22,10 @@
         },
         {
           "type": "tconstruct:random",
-          "tier": 1
+          "tier": {
+            "max": 6,
+            "min": 3
+          }
         }
       ]
     },

@@ -1,6 +1,12 @@
 {
   "values": [
-    "ticex:slashblade_saya_sand_cast",
-    "ticex:slashblade_saya_red_sand_cast"
+    {
+      "id": "ticex:slashblade_saya_sand_cast",
+      "required": false
+    },
+    {
+      "id": "ticex:slashblade_saya_red_sand_cast",
+      "required": false
+    }
   ]
 }
