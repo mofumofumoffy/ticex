@@ -17,6 +17,7 @@ import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.ModifierDeflection;
 import moffy.ticex.modifier.ModifierEmbossment;
+import moffy.ticex.modifier.ModifierEnchantmentSupplier;
 import moffy.ticex.modifier.ModifierSassy;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
@@ -188,6 +189,7 @@ public class TicEXModule extends AddonModule {
 
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
         TicEXRegistry.EMBOSSMENT_MODIFIER = TicEXRegistry.MODIFIERS.register("embossment", ModifierEmbossment::new);
+        TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER = TicEXRegistry.MODIFIERS.register("enchantment_supplier", ModifierEnchantmentSupplier::new);
         TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
         TicEXRegistry.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
 

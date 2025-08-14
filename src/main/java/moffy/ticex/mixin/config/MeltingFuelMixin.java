@@ -13,13 +13,15 @@ import slimeknights.tconstruct.library.recipe.fuel.MeltingFuel;
 public class MeltingFuelMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void modifyTemp(ResourceLocation id, FluidIngredient input, int duration, int temperature, int rate, CallbackInfo ci) {
-        if(TicEXConfig.USE_MORE_CONFIG.get()){
-            for (int i = 0; i < 20; i++) {
-                if (id.getNamespace().equals("ticex") && id.getPath().equals("smeltery/melting/fuel/rf_furnace_fuel_" + i)) {
-                    ((MeltingFuelAccessor) this).setTemperature(TicEXConfig.RF_FURNACE_FUEL_TEMP.get(i).get());
-                    ((MeltingFuelAccessor) this).setRate(TicEXConfig.RF_FURNACE_FUEL_RATE.get(i).get());
+        try {
+            if(TicEXConfig.USE_MORE_CONFIG.get()){
+                for (int i = 0; i < 20; i++) {
+                    if (id.getNamespace().equals("ticex") && id.getPath().equals("smeltery/melting/fuel/rf_furnace_fuel_" + i)) {
+                        ((MeltingFuelAccessor) this).setTemperature(TicEXConfig.RF_FURNACE_FUEL_TEMP.get(i).get());
+                        ((MeltingFuelAccessor) this).setRate(TicEXConfig.RF_FURNACE_FUEL_RATE.get(i).get());
+                    }
                 }
             }
-        }
+        } catch (IllegalStateException ignored){}
     }
 }

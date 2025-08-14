@@ -17,12 +17,14 @@ import slimeknights.tconstruct.library.tools.SlotType;
 public class AbstractModifierRecipeMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void modifyLevel(ResourceLocation id, Ingredient toolRequirement, int maxToolSize, ModifierId result, IntRange level, SlotType.SlotCount slots, boolean allowCrystal, boolean checkTraitLevel, CallbackInfo ci) {
-        if(TicEXConfig.USE_MORE_CONFIG.get()){
-            TicEXConfig.MODIFIER_CONFIG.forEach((rl, i) -> {
-                if (id.equals(rl)) {
-                    ((AbstractModifierRecipeAccessor) this).setLevel(new IntRange(1, i.get()));
-                }
-            });
-        }
+        try {
+            if(TicEXConfig.USE_MORE_CONFIG.get()){
+                TicEXConfig.MODIFIER_CONFIG.forEach((rl, i) -> {
+                    if (id.equals(rl)) {
+                        ((AbstractModifierRecipeAccessor) this).setLevel(new IntRange(1, i.get()));
+                    }
+                });
+            }
+        } catch (IllegalStateException ignored){}
     }
 }

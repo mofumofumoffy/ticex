@@ -12,6 +12,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
+import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class ModifierKonpaku extends NoLevelsModifier implements EmbossmentModifierHook {
 
@@ -27,6 +29,7 @@ public class ModifierKonpaku extends NoLevelsModifier implements EmbossmentModif
 
         boolean result = false;
         if (input.getItem().equals(Items.ENCHANTED_BOOK)) {
+            ToolStack tool = ToolStack.from(toolStack);
             Map<Enchantment, Integer> bookEnchantments = EnchantmentHelper.getEnchantments(input);
 
             for (Entry<Enchantment, Integer> entry : bookEnchantments.entrySet()) {
@@ -36,6 +39,9 @@ public class ModifierKonpaku extends NoLevelsModifier implements EmbossmentModif
                 }
                 if (TicEXSBUtils.applyEnchantment(toolStack, entry.getKey(), entry.getValue())) {
                     result = true;
+                    if(tool.getModifierLevel(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.get()) < 1){
+                        tool.addModifier(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.getId(), 1);
+                    }
                 }
             }
         } else {

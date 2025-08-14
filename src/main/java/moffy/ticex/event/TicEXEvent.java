@@ -53,7 +53,7 @@ public class TicEXEvent {
         Entity source = event.getSource().getEntity();
         LivingEntity target = event.getEntity();
 
-        //damage bonus
+        /*//damage bonus
         if (source instanceof LivingEntity livingSource) {
             ItemStack weapon = livingSource.getMainHandItem();
             float bonus = EnchantmentHelper.getDamageBonus(weapon, target.getMobType());
@@ -73,7 +73,7 @@ public class TicEXEvent {
         if (protection > 0) {
             newAmount *= (1 - Math.min(20, protection) / 25.0f);
         }
-
+*/
         //attribute reduce
         AttributeInstance attributeInstance = target.getAttribute(TicEXRegistry.DAMAGE_TAKEN.get());
         if (attributeInstance != null) {

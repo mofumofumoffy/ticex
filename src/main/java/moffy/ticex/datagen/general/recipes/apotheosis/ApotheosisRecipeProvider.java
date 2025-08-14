@@ -28,7 +28,6 @@ public class ApotheosisRecipeProvider implements ITicEXRecipeHelper {
                     .addInput(SizedIngredient.fromItems(TicEXRegistry.OVERLOAD_CORE.get()))
                     .addEmbossItem(SizedIngredient.fromItems(Items.ENCHANTED_BOOK))
                     .setTools(TinkerTags.Items.MODIFIABLE)
-                    .setSlots(SlotType.UPGRADE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.OVERLOAD_MODIFIER, upgradeFolder));
         }
 
@@ -37,7 +36,6 @@ public class ApotheosisRecipeProvider implements ITicEXRecipeHelper {
                     .addInput(SizedIngredient.fromItems(TicEXRegistry.OVERRIDE_CORE.get()))
                     .addEmbossItem(SizedIngredient.fromItems(Items.ENCHANTED_BOOK))
                     .setTools(TinkerTags.Items.MODIFIABLE)
-                    .setSlots(SlotType.UPGRADE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.OVERRIDE_MODIFIER, upgradeFolder));
         }
 

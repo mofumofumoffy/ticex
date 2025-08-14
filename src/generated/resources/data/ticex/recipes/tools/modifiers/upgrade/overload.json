@@ -17,9 +17,6 @@
     }
   ],
   "result": "ticex:overload",
-  "slots": {
-    "upgrades": 1
-  },
   "tools": {
     "tag": "tconstruct:modifiable"
   }

@@ -16,8 +16,10 @@ public class AbstractCastingRecipeMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void modifyRecipe(RecipeType type, ResourceLocation id, String group, Ingredient cast, boolean consumed, boolean switchSlots, CallbackInfo ci) {
         LogUtils.getLogger().debug(String.valueOf(id));
-        if (TicEXConfig.USE_MORE_CONFIG.get() && !TicEXConfig.SHOULD_CONSUME_SLASHBLADE.get() && id.equals(new ResourceLocation("ticex", "tools/parts/casting/catalyst_slashblade"))) {
-            ((AbstractCastingRecipeAccessor) this).setConsumed(false);
-        }
+        try{
+            if (TicEXConfig.USE_MORE_CONFIG.get() && !TicEXConfig.SHOULD_CONSUME_SLASHBLADE.get() && id.equals(new ResourceLocation("ticex", "tools/parts/casting/catalyst_slashblade"))) {
+                ((AbstractCastingRecipeAccessor) this).setConsumed(false);
+            }
+        }catch (IllegalStateException ignored){}
     }
 }

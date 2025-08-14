@@ -17,9 +17,6 @@
     }
   ],
   "result": "ticex:override",
-  "slots": {
-    "upgrades": 1
-  },
   "tools": {
     "tag": "tconstruct:modifiable"
   }

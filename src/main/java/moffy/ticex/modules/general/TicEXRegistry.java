@@ -242,6 +242,7 @@ public class TicEXRegistry {
     public static DynamicModifier REBIRTH_MODIFIER = null;
     public static StaticModifier<Modifier> DEFLECTION_MODIFIER = null;
     public static StaticModifier<Modifier> EMBOSSMENT_MODIFIER = null;
+    public static StaticModifier<Modifier> ENCHANTMENT_SUPPLIER_MODIFIER = null;
     public static StaticModifier<Modifier> OMNIPOTENCE_MODIFIER = null;
     public static DynamicModifier COSMIC_UNBREAKABLE_MODIFIER = null;
     public static DynamicModifier COSMIC_LUCK_MODIFIER = null;

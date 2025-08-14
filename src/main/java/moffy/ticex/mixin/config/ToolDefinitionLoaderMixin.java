@@ -27,18 +27,20 @@ import java.util.Optional;
 public class ToolDefinitionLoaderMixin {
     @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V", at = @At("HEAD"))
     private void modify(@NotNull Map<ResourceLocation, JsonElement> splashList, ResourceManager resourceManagerIn, ProfilerFiller profilerIn, CallbackInfo ci) {
-        if(TicEXConfig.USE_MORE_CONFIG.get()){
-            splashList.forEach((resourceLocation, jsonElement) -> {
-                TicEXConfig.SLOTS_CONFIG.forEach((rl, spec) -> {
-                    if (rl.equals(resourceLocation)) {
-                        SlotValues slots = SlotValues.fromSpec(spec);
-                        if (slots != null) {
-                            modifySlots(resourceLocation, jsonElement, slots);
+        try {
+            if(TicEXConfig.USE_MORE_CONFIG.get()){
+                splashList.forEach((resourceLocation, jsonElement) -> {
+                    TicEXConfig.SLOTS_CONFIG.forEach((rl, spec) -> {
+                        if (rl.equals(resourceLocation)) {
+                            SlotValues slots = SlotValues.fromSpec(spec);
+                            if (slots != null) {
+                                modifySlots(resourceLocation, jsonElement, slots);
+                            }
                         }
-                    }
+                    });
                 });
-            });
-        }
+            }
+        } catch (IllegalStateException ignored){}
     }
 
     @Unique
