@@ -98,13 +98,5 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
         if (TicEXRegistry.MODEM_MODIFIER != null) buildModifier(TicEXRegistry.MODEM_MODIFIER)
             .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
             .addModule(ModifierSlotModule.slot(SlotType.ABILITY).flat(1));
-
-        //curios
-        if (TicEXRegistry.INCOMPARABLE_MODIFIER != null) buildModifier(
-            TicEXRegistry.INCOMPARABLE_MODIFIER
-        )
-        .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
-        .addModule(InventoryModule.builder().filter(ItemPredicate.tag(TinkerTags.Items.MULTIPART_TOOL)).slotsPerLevel(6))
-        .addModule(InventoryMenuModule.ANY);
     }
 }

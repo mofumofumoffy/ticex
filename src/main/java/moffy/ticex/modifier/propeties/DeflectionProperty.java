@@ -16,8 +16,8 @@ public class DeflectionProperty {
         return (user, stack) -> {
             Map<String, Object> result = new HashMap<>();
 
-            result.put("getModuleProps", isDisabled(user, stack));
-            result.put("setConfigValue", setDisabled(user, stack));
+            result.put("isDisabled", isDisabled(user, stack));
+            result.put("setDisabled", setDisabled(user, stack));
 
             return result;
         };

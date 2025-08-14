@@ -242,7 +242,7 @@ public class TicEXRegistry {
     public static DynamicModifier REBIRTH_MODIFIER = null;
     public static StaticModifier<Modifier> DEFLECTION_MODIFIER = null;
     public static StaticModifier<Modifier> EMBOSSMENT_MODIFIER = null;
-    public static StaticModifier<Modifier> OMNIPOTEMCE_MODIFIER = null;
+    public static StaticModifier<Modifier> OMNIPOTENCE_MODIFIER = null;
     public static DynamicModifier COSMIC_UNBREAKABLE_MODIFIER = null;
     public static DynamicModifier COSMIC_LUCK_MODIFIER = null;
     public static StaticModifier<Modifier> BEDROCK_BREAKER_MODIFIER = null;
@@ -262,9 +262,10 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> KOSHIRAE_MODIFIER = null;
     public static StaticModifier<Modifier> PROUD_MODIFIER = null;
     public static StaticModifier<Modifier> LAMELLAR_MODIFIER = null;
+    public static StaticModifier<Modifier> APOTH_SUPPLIER_MODIFIER = null;
     public static StaticModifier<Modifier> OVERLOAD_MODIFIER = null;
     public static StaticModifier<Modifier> OVERRIDE_MODIFIER = null;
-    public static DynamicModifier INCOMPARABLE_MODIFIER = null;
+    public static StaticModifier<Modifier> INCOMPARABLE_MODIFIER = null;
     public static DynamicModifier CARDBOARD_MODIFIER = null;
     public static StaticModifier<Modifier> FLOWERSTORM_MODIFIER = null;
     public static StaticModifier<Modifier> OVERCASTING_MODIFIER = null;

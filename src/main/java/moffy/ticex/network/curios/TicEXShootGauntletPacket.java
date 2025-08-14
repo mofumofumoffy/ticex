@@ -1,6 +1,6 @@
 package moffy.ticex.network.curios;
 
-import moffy.ticex.item.ResonanceTools;
+import moffy.ticex.lib.ResonanceTools;
 import moffy.ticex.network.TicEXPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

@@ -6,8 +6,8 @@ import mods.flammpfeil.slashblade.capability.concentrationrank.ConcentrationRank
 import mods.flammpfeil.slashblade.capability.concentrationrank.IConcentrationRank;
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.util.AttackHelper;
 import mods.flammpfeil.slashblade.util.AttackManager;
-import mods.flammpfeil.slashblade.util.PlayerAttackHelper;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -42,41 +42,41 @@ import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-@Mixin(value = PlayerAttackHelper.class, remap = false)
+@Mixin(value = AttackHelper.class, remap = false)
 public abstract class PlayerAttackHelperMixin {
 
     @Shadow
-    public static float getSweepingBonus(Player attacker) {
+    public static float getSweepingBonus(LivingEntity attacker) {
         return 0;
     }
 
     @Shadow
-    public static float getRankBonus(Player attacker) {
+    public static float getRankBonus(LivingEntity attacker) {
         return 0;
     }
 
     @Shadow
-    public static float getEnchantmentBonus(Player attacker, Entity target) {
+    public static float getEnchantmentBonus(LivingEntity attacker, Entity target) {
         return 0;
     }
 
     @Shadow
-    public static float calculateKnockback(Player attacker) {
+    public static float calculateKnockback(LivingEntity attacker) {
         return 0;
     }
 
     @Shadow
-    public static boolean isCriticalHit(Player attacker, Entity target) {
+    public static boolean isCriticalHit(LivingEntity attacker, Entity target) {
         return false;
     }
 
     @Shadow
-    public static PlayerAttackHelper.FireAspectResult handleFireAspect(Player attacker, Entity target) {
+    public static AttackHelper.FireAspectResult handleFireAspect(LivingEntity attacker, Entity target) {
         return null;
     }
 
     @Shadow
-    public static void applyKnockback(Player attacker, Entity target, float knockback) {
+    public static void applyKnockback(LivingEntity attacker, Entity target, float knockback) {
     }
 
     @Shadow
@@ -84,54 +84,54 @@ public abstract class PlayerAttackHelperMixin {
     }
 
     @Shadow
-    public static void playAttackEffects(Player attacker, Entity target, boolean isCritical) {
+    public static void playAttackEffects(LivingEntity attacker, Entity target, boolean isCritical) {
     }
 
     @Shadow
-    public static void handleEnchantmentsAndDurability(Player attacker, Entity target) {
+    public static void handleEnchantmentsAndDurability(LivingEntity attacker, Entity target) {
     }
 
     @Shadow
-    public static void handlePostAttackEffects(Player attacker, Entity target, PlayerAttackHelper.FireAspectResult fireAspectResult, boolean isCritical) {
+    public static void handlePostAttackEffects(LivingEntity attacker, Entity target, AttackHelper.FireAspectResult fireAspectResult) {
     }
 
     @Shadow
-    public static void handleFailedAttack(Player attacker, Entity target, PlayerAttackHelper.FireAspectResult fireAspectResult) {
+    public static void handleFailedAttack(LivingEntity attacker, Entity target, AttackHelper.FireAspectResult fireAspectResult) {
     }
 
     @Inject(at = @At("HEAD"), method = "attack", cancellable = true)
-    private static void attackExtension(Player attacker, Entity target, float comboRatio, CallbackInfo cb) {
+    private static void attackExtension(LivingEntity attacker, Entity target, float comboRatio, CallbackInfo ci) {
         ItemStack stack = attacker.getMainHandItem();
-        if(stack.getItem() instanceof IModifiable){
-            if (ForgeHooks.onPlayerAttackTarget(attacker, target)) {
+        if(attacker instanceof Player player && stack.getItem() instanceof IModifiable){
+            if (ForgeHooks.onPlayerAttackTarget(player, target)) {
                 float baseDamage = (float)attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
-                baseDamage += getSweepingBonus(attacker);
-                baseDamage += getRankBonus(attacker);
-                baseDamage += getEnchantmentBonus(attacker, target);
+                baseDamage += getSweepingBonus(player);
+                baseDamage += getRankBonus(player);
+                baseDamage += getEnchantmentBonus(player, target);
                 baseDamage = (float)((double)baseDamage * (double)(comboRatio * AttackManager.getSlashBladeDamageScale(attacker)) * (Double)SlashBladeConfig.SLASHBLADE_DAMAGE_MULTIPLIER.get());
                 if (!(baseDamage <= 0.0F)) {
-                    float knockback = calculateKnockback(attacker);
-                    boolean isCritical = isCriticalHit(attacker, target);
-                    CriticalHitEvent hitResult = ForgeHooks.getCriticalHit(attacker, target, isCritical, isCritical ? 1.5F : 1.0F);
+                    float knockback = calculateKnockback(player);
+                    boolean isCritical = isCriticalHit(player, target);
+                    CriticalHitEvent hitResult = ForgeHooks.getCriticalHit(player, target, isCritical, isCritical ? 1.5F : 1.0F);
                     isCritical = hitResult != null;
                     if (isCritical) {
                         baseDamage *= hitResult.getDamageModifier();
                     }
 
-                    PlayerAttackHelper.FireAspectResult fireAspectResult = handleFireAspect(attacker, target);
+                    AttackHelper.FireAspectResult fireAspectResult = handleFireAspect(player, target);
                     Vec3 originalMotion = target.getDeltaMovement();
 
                     ToolStack bladeTool = ToolStack.from(stack);
                     float baseDamageTmp = baseDamage;
 
-                    ToolAttackContext context = new ToolAttackContext(attacker, attacker, InteractionHand.MAIN_HAND, target, target instanceof  LivingEntity ? (LivingEntity) target : null, isCritical, 1, false);
+                    ToolAttackContext context = new ToolAttackContext(attacker, player, InteractionHand.MAIN_HAND, target, target instanceof  LivingEntity ? (LivingEntity) target : null, isCritical, 1, false);
 
                     for(ModifierEntry entry : bladeTool.getModifiers()){
                         baseDamage = entry.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(bladeTool, entry, context, baseDamageTmp, baseDamage);
                     }
 
                     if(baseDamage <= 0.0F){
-                        cb.cancel();
+                        ci.cancel();
                     }
 
                     float knockbackTmp = knockback;
@@ -139,13 +139,13 @@ public abstract class PlayerAttackHelperMixin {
                         knockback = entry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(bladeTool, entry, context, baseDamage, knockbackTmp, knockback);
                     }
 
-                    boolean damageSuccess = target.hurt(attacker.damageSources().playerAttack(attacker), baseDamage);
+                    boolean damageSuccess = target.hurt(attacker.damageSources().playerAttack(player), baseDamage);
                     if (damageSuccess) {
                         applyKnockback(attacker, target, knockback);
                         restoreTargetMotionIfNeeded(target, originalMotion);
                         playAttackEffects(attacker, target, isCritical);
                         handleEnchantmentsAndDurability(attacker, target);
-                        handlePostAttackEffects(attacker, target, fireAspectResult, isCritical);
+                        handlePostAttackEffects(attacker, target, fireAspectResult);
 
                         for(ModifierEntry entry : bladeTool.getModifiers()){
                             entry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(bladeTool, entry, context, baseDamage);
@@ -158,7 +158,7 @@ public abstract class PlayerAttackHelperMixin {
                     }
                 }
             }
-            cb.cancel();
+            ci.cancel();
         }
     }
 }

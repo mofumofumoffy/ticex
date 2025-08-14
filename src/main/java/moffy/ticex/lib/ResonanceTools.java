@@ -1,4 +1,4 @@
-package moffy.ticex.item;
+package moffy.ticex.lib;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.curios.GauntletItemHandler;
@@ -27,7 +27,11 @@ public class ResonanceTools {
         });
     }
 
-    public static void shootGauntletStack(Player player, ItemStack gauntletStack) {
+    public static void shootGauntletStack(Player player, ItemStack gauntletStack){
+        shootGauntletStack(player, gauntletStack, true);
+    }
+
+    public static void shootGauntletStack(Player player, ItemStack gauntletStack, boolean useCooldown) {
         gauntletStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(itemHandler -> {
             if (!(itemHandler instanceof GauntletItemHandler gauntletItemHandler)) {
                 return;
@@ -65,7 +69,9 @@ public class ResonanceTools {
 
             shootProjectile(player, toolStack, originPos);
 
-            gauntletItemHandler.setItemCooldown(shootSlot, 15);
+            if(useCooldown){
+                gauntletItemHandler.setItemCooldown(shootSlot, 15);
+            }
         });
     }
 

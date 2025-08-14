@@ -42,7 +42,8 @@ mixins = [
     "ticex.mekanism.mixins.json",
     "ticex.draconicevolution.mixins.json",
     "ticex.slashblade.mixins.json",
-    "ticex.curios.mixisn.json",
+    "ticex.curios.mixins.json",
+    "ticex.apotheosis.mixins.json",
     "ticex.create.mixins.json",
     "ticex.projecte.mixins.json"
 ]

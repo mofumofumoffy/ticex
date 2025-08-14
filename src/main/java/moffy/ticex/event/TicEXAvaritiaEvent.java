@@ -28,8 +28,8 @@ public class TicEXAvaritiaEvent {
                 ToolStack tool = ToolStack.from(player.getMainHandItem());
                 if (
                     !player.getMainHandItem().isEmpty() &&
-                    TicEXRegistry.OMNIPOTEMCE_MODIFIER != null &&
-                    tool.getModifierLevel(TicEXRegistry.OMNIPOTEMCE_MODIFIER.get()) > 0 &&
+                    TicEXRegistry.OMNIPOTENCE_MODIFIER != null &&
+                    tool.getModifierLevel(TicEXRegistry.OMNIPOTENCE_MODIFIER.get()) > 0 &&
                     player.getMainHandItem().useOnRelease()
                 ) {
                     event.setCanceled(true);

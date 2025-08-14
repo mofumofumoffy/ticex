@@ -6,7 +6,7 @@ import mods.flammpfeil.slashblade.event.SlashBladeEvent;
 import mods.flammpfeil.slashblade.event.handler.InputCommandEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.util.AttackManager;
-import mods.flammpfeil.slashblade.util.PlayerAttackHelper;
+import mods.flammpfeil.slashblade.util.AttackHelper;
 import moffy.ticex.TicEX;
 import moffy.ticex.client.modules.slashblade.SBToolBladeItemRenderer;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
@@ -89,7 +89,7 @@ public class TicEXSBEvent {
                 LivingEntity target = event.getTarget();
                 ToolAttackContext context = new ToolAttackContext(player, player, InteractionHand.MAIN_HAND, target, target, false, 1, false);
 
-                float damage = (float) calculateTotalDamage(player, target, 1.0f, player.isFallFlying());
+                float damage = (float) AttackHelper.calculateTotalDamage(player, target, 1.0f, player.isFallFlying());
                 float damageTmp = damage;
 
                 for (ModifierEntry modifierEntry : tool.getModifierList()) {
@@ -116,22 +116,6 @@ public class TicEXSBEvent {
             (EntityType<SBToolItemEntity>) TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
             SBToolBladeItemRenderer::new
         );
-    }
-
-    public static double calculateTotalDamage(Player attacker, Entity target, float comboRatio, boolean isCritical) {
-        double baseDamage = attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
-
-        baseDamage += PlayerAttackHelper.getSweepingBonus(attacker);
-        baseDamage += PlayerAttackHelper.getRankBonus(attacker);
-        baseDamage += PlayerAttackHelper.getEnchantmentBonus(attacker, target);
-        baseDamage *= comboRatio * AttackManager.getSlashBladeDamageScale(attacker) * SlashBladeConfig.SLASHBLADE_DAMAGE_MULTIPLIER.get();
-
-        CriticalHitEvent hitResult = ForgeHooks.getCriticalHit(attacker, target, isCritical, isCritical ? 1.5F : 1.0F);
-        isCritical = hitResult != null;
-        if (isCritical) {
-            baseDamage *= hitResult.getDamageModifier();
-        }
-        return baseDamage;
     }
 
     public static void syncState(ServerPlayer player) {

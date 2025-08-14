@@ -10,6 +10,7 @@ import moffy.ticex.event.TicEXCuriosEvent;
 import moffy.ticex.item.GloveItem;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableGauntlet;
+import moffy.ticex.modifier.ModifierIncomparable;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
@@ -51,7 +52,7 @@ public class TicEXCuriosModule extends AddonModule {
             new ItemReconstCore(new Properties(), "incomparable")
         );
 
-        TicEXRegistry.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("incomparable");
+        TicEXRegistry.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.register("incomparable", ModifierIncomparable::new);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onLivingDeath);
         MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onClientTick);

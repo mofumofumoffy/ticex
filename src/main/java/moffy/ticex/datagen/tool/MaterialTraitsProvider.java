@@ -55,7 +55,7 @@ public class MaterialTraitsProvider extends AbstractMaterialTraitDataProvider {
 
         addDefaultTraits(
             TicEXMaterials.INFINITY,
-            TicEXRegistry.OMNIPOTEMCE_MODIFIER,
+            TicEXRegistry.OMNIPOTENCE_MODIFIER,
             TicEXRegistry.COSMIC_LUCK_MODIFIER,
             TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER,
             TicEXRegistry.BEDROCK_BREAKER_MODIFIER
