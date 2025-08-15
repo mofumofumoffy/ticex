@@ -205,6 +205,7 @@ public class TicEXModule extends AddonModule {
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::modifyAttribute);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHeal);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHurt);
+        MinecraftForge.EVENT_BUS.addListener(TicEXEvent::supplierBouncer);
 
         if (TierSortingRegistry.isTierSorted(InfinityTier.instance)) {
             TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(

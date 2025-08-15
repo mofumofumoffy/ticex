@@ -30,6 +30,7 @@ public class TicEXApotheosisModule extends AddonModule {
         TicEXRegistry.OVERRIDE_MODIFIER = TicEXRegistry.MODIFIERS.register("override", ModifierOverride::new);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXApotheosisEvent::onSocketGem);
+        MinecraftForge.EVENT_BUS.addListener(TicEXApotheosisEvent::supplierBouncer);
     }
 
     @Override

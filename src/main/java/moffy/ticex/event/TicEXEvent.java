@@ -17,10 +17,13 @@ import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -128,6 +131,16 @@ public class TicEXEvent {
                 } else {
                     event.removeModifier(Attributes.ATTACK_DAMAGE, modifier);
                 }
+            }
+        }
+    }
+
+    public static void supplierBouncer(LivingEquipmentChangeEvent event){
+        ItemStack stack = event.getTo();
+        if(stack.getItem() instanceof IModifiable){
+            ToolStack tool = ToolStack.from(stack);
+            if(stack.isEnchanted() && tool.getModifierLevel(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.get()) < 1){
+                tool.addModifier(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.getId(), 1);
             }
         }
     }
