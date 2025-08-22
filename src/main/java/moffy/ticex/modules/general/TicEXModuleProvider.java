@@ -9,6 +9,7 @@ import moffy.ticex.modules.create.TicEXCreateModule;
 import moffy.ticex.modules.curios.TicEXCuriosModule;
 import moffy.ticex.modules.draconicevolution.TicEXDEModule;
 import moffy.ticex.modules.irons.TicEXIronsModule;
+import moffy.ticex.modules.jei.TicEXJeiModule;
 import moffy.ticex.modules.mekanism.TicEXMekanismModule;
 import moffy.ticex.modules.projecte.TicEXPEModule;
 import moffy.ticex.modules.psi.TicEXPsiModule;
@@ -112,6 +113,12 @@ public class TicEXModuleProvider extends AddonModuleProvider {
             "Tinkers' Things Compat",
             TicEXThingsModule.class,
             new String[] { "tconstruct", "tinkers_things" }
+        );
+        addRawModule(
+                new ResourceLocation(TicEX.MODID, "jei_compat"),
+                "JEI Compat",
+                TicEXJeiModule.class,
+                new String[]{"tconstruct", "jei"}
         );
     }
 

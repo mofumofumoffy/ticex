@@ -19,6 +19,8 @@ public class TicEXConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_MORE_CONFIG;
+    public static ForgeConfigSpec.ConfigValue<List<String>> FLUID_TRANSMUTER_PATTERNS;
+    public static ForgeConfigSpec.ConfigValue<List<String>> FLUID_TRANSMUTER_EXCLUDE_PATTERNS;
 
     // More Config
     public static ForgeConfigSpec.ConfigValue<Boolean> PROVIDE_PROPERTIES;
@@ -50,6 +52,12 @@ public class TicEXConfig {
         COMMON.comment("General").push("general");
         USE_MORE_CONFIG = COMMON.comment("Using ticex-more-config.toml(If true, it will override your datapack!)").define("useMoreConfig", true);
         RF_FURNACE_RATE_CAPACITY = COMMON.comment("MAX Rate Capacity(RF/t)").define("rateCapacity", 100000);
+        FLUID_TRANSMUTER_PATTERNS = COMMON.comment(
+                "Fluid Transmuter valid tag prefix list"
+        ).define("fluid_transmuter_patterns", List.of("forge:"));
+        FLUID_TRANSMUTER_EXCLUDE_PATTERNS = COMMON.comment(
+                "Fluid Transmuter invalid tag prefix list"
+        ).define("fluid_transmuter_exclude_patterns", List.of("forge:water", "forge:lava"));
         COMMON.pop();
 
         COMMON.push("avaritia");

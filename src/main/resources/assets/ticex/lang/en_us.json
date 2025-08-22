@@ -62,6 +62,7 @@
   "block.ticex.scorched_rf_furnace": "Scorched RF Furnace",
   "block.ticex.creative_seared_rf_furnace": "Creative Seared RF Furnace",
   "block.ticex.creative_scorched_rf_furnace": "Creative Scorched RF Furnace",
+  "block.ticex.fluid_transmuter": "Fluid Transmuter",
 
   "fluid.tconstruct.rf_furnace_fuel_0": "Basic RF Furnace Fuel",
   "fluid.tconstruct.rf_furnace_fuel_1": "Decent RF Furnace Fuel",
@@ -248,5 +249,6 @@
   "attribute.ticex.damage_taken": "Damage Taken",
   "attribute.ticex.healing_received": "Healing Received",
   "ticex.modid": "TicEX",
-  "key.ticex.shoot_gauntlet": "Shoot Gauntlet"
+  "key.ticex.shoot_gauntlet": "Shoot Gauntlet",
+  "jei.ticex.fluid_transmuter.title": "Fluid Transmuting"
 }

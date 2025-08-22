@@ -1,6 +1,5 @@
 package moffy.ticex.datagen.general.tag;
 
-import java.util.concurrent.CompletableFuture;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -14,6 +13,8 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.common.TinkerTags;
+
+import java.util.concurrent.CompletableFuture;
 
 public class BlockTagProvider extends BlockTagsProvider {
 
@@ -37,6 +38,9 @@ public class BlockTagProvider extends BlockTagsProvider {
         addMetalTags(TicEXTags.Blocks.CRYSTAL_MATRIX, new ResourceLocation("avaritia", "crystal_matrix"), true);
 
         addMetalTags(TicEXTags.Blocks.ETHERIC, new ResourceLocation(TicEX.MODID, "etheric_block"), true);
+
+        tag(TicEXTags.Blocks.FLUID_TRANSMUTER_TANK)
+                .addOptionalTag(TinkerTags.Blocks.ALLOYER_TANKS);
 
         addPickaxeBlock(BlockTags.NEEDS_IRON_TOOL, new ResourceLocation(TicEX.MODID, "etheric_block"));
 
