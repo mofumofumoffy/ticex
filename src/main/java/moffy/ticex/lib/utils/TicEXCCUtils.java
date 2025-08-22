@@ -1,5 +1,6 @@
 package moffy.ticex.lib.utils;
 
+import com.ibm.icu.impl.locale.XCldrStub;
 import dan200.computercraft.api.lua.ILuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import moffy.ticex.lib.IEntityDataAccessor;
@@ -43,7 +44,7 @@ public class TicEXCCUtils {
                 entityMap.put(
                     "getData",
                     (ILuaFunction) args -> {
-                        return MethodResult.of((accessor.getAllFields()));
+                        return MethodResult.of(XCldrStub.ImmutableMap.copyOf(accessor.getAllFields()));
                     }
                 );
             }
