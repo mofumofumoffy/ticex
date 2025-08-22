@@ -1,16 +1,13 @@
 package moffy.ticex.lib.registry;
 
-import cpw.mods.util.Lazy;
 import moffy.ticex.jei.IJeiIntegration;
 import net.minecraft.resources.ResourceLocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.minecraftforge.common.util.Lazy;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class JeiIntegrationsRegistry {
     private final Map<ResourceLocation, Lazy<? extends IJeiIntegration>> entries;
