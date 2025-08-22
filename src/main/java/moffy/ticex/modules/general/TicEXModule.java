@@ -1,5 +1,6 @@
 package moffy.ticex.modules.general;
 
+import cpw.mods.util.Lazy;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.RFFurnaceBlock;
@@ -225,7 +226,7 @@ public class TicEXModule extends AddonModule {
 
         TicEXRegistry.JEI_INTEGRATIONS.register(
                 new ResourceLocation(TicEX.MODID, "ticex_compat"),
-                TicEXJEIIntegration::new
+                Lazy.of(TicEXJEIIntegration::new)
         );
 
         bus.addListener(TicEXEvent::onEntityAttributeModification);
