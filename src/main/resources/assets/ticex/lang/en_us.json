@@ -250,5 +250,6 @@
   "attribute.ticex.healing_received": "Healing Received",
   "ticex.modid": "TicEX",
   "key.ticex.shoot_gauntlet": "Shoot Gauntlet",
-  "jei.ticex.fluid_transmuter.title": "Fluid Transmuting"
+  "jei.ticex.fluid_transmuter.title": "Fluid Transmuting",
+  "gui.ticex.fluid_transmuter": "Fluid Transmuter"
 }

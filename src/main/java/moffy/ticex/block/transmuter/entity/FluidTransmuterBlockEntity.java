@@ -1,5 +1,6 @@
 package moffy.ticex.block.transmuter.entity;
 
+import moffy.ticex.TicEX;
 import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
 import moffy.ticex.block.transmuter.module.TransmutationProcessor;
 import moffy.ticex.block.transmuter.tank.TransmuterFluidTank;
@@ -37,7 +38,7 @@ public class FluidTransmuterBlockEntity extends NameableBlockEntity implements I
     public static final BlockEntityTicker<FluidTransmuterBlockEntity> SERVER_TICKER =
             (level, blockPos, blockState, blockEntity) -> blockEntity.serverTick(level, blockPos, blockState);
 
-    private static final Component NAME = TConstruct.makeTranslation("gui", "fluid_transmuter");
+    private static final Component NAME = TConstruct.makeTranslation("gui", TicEX.MODID);
     private static final int TANK_CAPACITY = SearedTankBlock.TankType.INGOT_TANK.getCapacity();
 
     private final FluidTankAnimated tank;

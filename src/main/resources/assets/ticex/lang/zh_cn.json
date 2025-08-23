@@ -256,5 +256,6 @@
 
   "stat.ticex.catalyst_kinetic_gun": "催化剂（现代实弹枪械）",
   "stat.ticex.catalyst_irons_spellbook": "催化剂（复兴法术书）",
-  "jei.ticex.fluid_transmuter.title": "流体转化器"
+  "jei.ticex.fluid_transmuter.title": "流体转化",
+  "gui.ticex.fluid_transmuter": "流体转化器"
 }

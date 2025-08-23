@@ -254,5 +254,6 @@
   "attribute.ticex.healing_received": "回復量",
   "ticex.modid": "TicEX",
   "key.ticex.shoot_gauntlet": "ガントレット発射",
-  "jei.ticex.fluid_transmuter.title": "液体変換"
+  "jei.ticex.fluid_transmuter.title": "液体変換",
+  "gui.ticex.fluid_transmuter": "液体変換器"
 }
