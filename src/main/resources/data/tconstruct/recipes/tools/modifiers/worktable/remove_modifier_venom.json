@@ -1,0 +1,34 @@
+{
+  "type": "tconstruct:remove_modifier",
+  "inputs": [
+    {
+      "ingredient": [
+        {
+          "type": "mantle:fluid_container",
+          "amount": 1000,
+          "display": {
+            "item": "tconstruct:venom_bucket"
+          },
+          "tag": "tconstruct:venom"
+        },
+        {
+          "type": "mantle:fluid_container",
+          "amount": 250,
+          "display": {
+            "item": "tconstruct:venom_bottle"
+          },
+          "tag": "tconstruct:venom"
+        }
+      ]
+    }
+  ],
+  "modifier_predicate": {
+    "type": "mantle:inverted",
+    "inverted_type": "tconstruct:tag",
+    "tag": "ticex:removal_blacklist"
+  },
+  "name": "modifiers",
+  "tools": {
+    "tag": "tconstruct:modifiable"
+  }
+}

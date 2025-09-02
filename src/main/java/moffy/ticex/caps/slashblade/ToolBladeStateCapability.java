@@ -17,7 +17,7 @@ public class ToolBladeStateCapability extends SlashBladeState {
         this.toolStack = toolStack;
         this.tool = tool;
         CompoundTag persistentTag = tool.getPersistentData().getCompound(ModifiableSlashBladeItem.BLADE_STATE_LOCATION);
-        if (persistentTag != null && !persistentTag.isEmpty()) {
+        if (!persistentTag.isEmpty()) {
             CompoundTag copy = persistentTag.copy();
             deserializeNBT(copy);
             toolStack.getOrCreateTag().put("bladeState", copy);
