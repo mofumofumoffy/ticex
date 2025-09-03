@@ -35,22 +35,23 @@ import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TicEXAvaritiaModule extends AddonModule {
+public class TicEXAvaritiaModule implements AddonModule {
 
-    public TicEXAvaritiaModule() {
+    @Override
+    public void init(FMLJavaModLoadingContext context) {
         TicEXRegistry.CELESTIAL_CORE = TicEXRegistry.ITEMS.register("celestial_core", () ->
-            new ItemReconstCore(new Item.Properties(), "celestial")
+                new ItemReconstCore(new Item.Properties(), "celestial")
         );
         TicEXRegistry.ENDESTSHOT_ARROW = TicEXRegistry.ITEMS.register("endestshot", () ->
-            new EndestShotItem(new Item.Properties())
+                new EndestShotItem(new Item.Properties())
         );
 
         TicEXRegistry.OMNIPOTENCE_MODIFIER = TicEXRegistry.MODIFIERS.register("omnipotence", ModifierOmnipotence::new);
         TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_unbreakable");
         TicEXRegistry.COSMIC_LUCK_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_luck");
         TicEXRegistry.BEDROCK_BREAKER_MODIFIER = TicEXRegistry.MODIFIERS.register(
-            "bedrock_breaker",
-            ModifierBedrockBreaker::new
+                "bedrock_breaker",
+                ModifierBedrockBreaker::new
         );
         TicEXRegistry.CELESTIAL_MODIFIER = TicEXRegistry.MODIFIERS.register("celestial", ModifierCelestial::new);
         TicEXRegistry.CONDENSING_MODIFIER = TicEXRegistry.MODIFIERS.register("condensing", ModifierCondensing::new);
@@ -60,31 +61,31 @@ public class TicEXAvaritiaModule extends AddonModule {
         TicEXRegistry.ENDESTSHOT_MODIFIER = TicEXRegistry.MODIFIERS.register("endestshot", ModifierEndestShot::new);
 
         TicEXRegistry.MOLTEN_INFINITY = TicEXRegistry.FLUIDS.register("molten_infinity")
-            .type(TicEXFluidUtils.hot("molten_infinity").temperature(6360).lightLevel(15))
-            .block(BurningLiquidBlock.createBurning(MapColor.EMERALD, 15, 20, 20f))
-            .bucket()
-            .commonTag()
-            .flowing();
+                .type(TicEXFluidUtils.hot("molten_infinity").temperature(6360).lightLevel(15))
+                .block(BurningLiquidBlock.createBurning(MapColor.EMERALD, 15, 20, 20f))
+                .bucket()
+                .commonTag()
+                .flowing();
         TicEXRegistry.MOLTEN_NEUTRON = TicEXRegistry.FLUIDS.register("molten_neutron")
-            .type(TicEXFluidUtils.cool().temperature(1000))
-            .block(MapColor.COLOR_BLACK, 0)
-            .bucket()
-            .commonTag()
-            .flowing();
+                .type(TicEXFluidUtils.cool().temperature(1000))
+                .block(MapColor.COLOR_BLACK, 0)
+                .bucket()
+                .commonTag()
+                .flowing();
         TicEXRegistry.MOLTEN_CRYSTAL_MATRIX = TicEXRegistry.FLUIDS.register("molten_crystal_matrix")
-            .type(TicEXFluidUtils.cool().temperature(1000))
-            .block(MapColor.COLOR_LIGHT_BLUE, 0)
-            .bucket()
-            .commonTag()
-            .flowing();
+                .type(TicEXFluidUtils.cool().temperature(1000))
+                .block(MapColor.COLOR_LIGHT_BLUE, 0)
+                .bucket()
+                .commonTag()
+                .flowing();
 
         TicEXRegistry.ENDESTSHOT_PROJECTILE = TicEXRegistry.ENTITIES.register("endestshot", () ->
-            EntityType.Builder.<EndestShotProjectile>of(EndestShotProjectile::new, MobCategory.MISC)
-                .sized(0.5f, 0.5f)
-                .setTrackingRange(10)
-                .setUpdateInterval(20)
-                .setShouldReceiveVelocityUpdates(false)
-                .build(TicEX.MODID + ":endestshot")
+                EntityType.Builder.<EndestShotProjectile>of(EndestShotProjectile::new, MobCategory.MISC)
+                        .sized(0.5f, 0.5f)
+                        .setTrackingRange(10)
+                        .setUpdateInterval(20)
+                        .setShouldReceiveVelocityUpdates(false)
+                        .build(TicEX.MODID + ":endestshot")
         );
 
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onGetHurt);
@@ -92,14 +93,11 @@ public class TicEXAvaritiaModule extends AddonModule {
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onPlayerTick);
 
 
-        DistExecutor.unsafeRunWhenOn(
-            Dist.CLIENT,
-                () -> this::initClient
-        );
     }
 
     @OnlyIn(Dist.CLIENT)
-    void initClient() {
+    @Override
+    public void initClient(FMLJavaModLoadingContext context) {
         List<MaterialVariantId> infinityMaterials = new ArrayList<>();
         infinityMaterials.add(new MaterialId(new ResourceLocation(TicEX.MODID, "infinity")));
 
@@ -117,6 +115,7 @@ public class TicEXAvaritiaModule extends AddonModule {
     }
 
     @SuppressWarnings("unchecked")
+    @OnlyIn(Dist.CLIENT)
     @Override
     @OnlyIn(Dist.CLIENT)
     public void clientSetup(FMLClientSetupEvent event) {

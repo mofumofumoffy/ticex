@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig.Type;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public class TicEXConfig {
     public static ForgeConfigSpec.ConfigValue<List<String>> GLOVE_DROP_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<Boolean> GLOVE_DROP_BLACKLIST_AS_WHITELIST;
 
-    public static void registerConfig() {
+    public static void registerConfig(FMLJavaModLoadingContext context) {
         final ForgeConfigSpec.Builder COMMON = new ForgeConfigSpec.Builder();
         final ForgeConfigSpec.Builder CLIENT = new ForgeConfigSpec.Builder();
         final ForgeConfigSpec.Builder MORE_CONFIG = new ForgeConfigSpec.Builder();
@@ -162,7 +163,7 @@ public class TicEXConfig {
         USE_SHADER = CLIENT.comment("Rendering with shaders for some tools/armors").define("useShader", true);
 
 
-        AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(), COMMON);
+        AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(context), COMMON);
 
         ModLoadingContext.get().registerConfig(Type.COMMON, COMMON.build());
         ModLoadingContext.get().registerConfig(Type.COMMON, MORE_CONFIG.build(), "ticex-more-config.toml");

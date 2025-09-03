@@ -12,31 +12,33 @@ import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
-public class TicEXPEModule extends AddonModule {
+public class TicEXPEModule implements AddonModule {
 
-    public TicEXPEModule() {
+    @Override
+    public void init(FMLJavaModLoadingContext context) {
         TicEXRegistry.SINGULAR_GEM_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum(
-            "singular_gem",
-            ArmorItem.Type.values(),
-            type ->
-                new ModifiableGemArmor(
-                    type,
-                    TicEXRegistry.SINGULAR_GEM_DEFINITION,
-                    1,
-                    new Item.Properties().fireResistant()
-                )
+                "singular_gem",
+                ArmorItem.Type.values(),
+                type ->
+                        new ModifiableGemArmor(
+                                type,
+                                TicEXRegistry.SINGULAR_GEM_DEFINITION,
+                                1,
+                                new Item.Properties().fireResistant()
+                        )
         );
 
         TicEXRegistry.CATALYST_GEM = TicEXRegistry.ITEMS_EXTENDED.registerEnum(
-            "catalyst_gem",
-            ArmorItem.Type.values(),
-            type ->
-                new ToolPartItem(
-                    new Item.Properties(),
-                    CatalystMaterialStatsType.getOrMakeType("catalyst_gem", type).getId()
-                )
+                "catalyst_gem",
+                ArmorItem.Type.values(),
+                type ->
+                        new ToolPartItem(
+                                new Item.Properties(),
+                                CatalystMaterialStatsType.getOrMakeType("catalyst_gem", type).getId()
+                        )
         );
 
         TicEXRegistry.ABYSSAL_MODIFIER = TicEXRegistry.MODIFIERS.register("abyssal", ModifierAbyssal::new);

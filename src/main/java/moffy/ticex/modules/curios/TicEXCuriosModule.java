@@ -31,9 +31,10 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.lwjgl.glfw.GLFW;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 
-public class TicEXCuriosModule extends AddonModule {
+public class TicEXCuriosModule implements AddonModule {
 
-    public TicEXCuriosModule() {
+    @Override
+    public void init(FMLJavaModLoadingContext context) {
         ToolCapabilityProvider.register(CuriosCapProvider::new);
 
         TicEXRegistry.RESONANCE_TOOL_PROJECTILE = TicEXRegistry.ENTITIES.register("resonance_tool", () ->
@@ -49,7 +50,7 @@ public class TicEXCuriosModule extends AddonModule {
         TicEXRegistry.RESONANCE_GAUNTLET = TicEXRegistry.ITEMS_EXTENDED.register("resonance_gauntlet", ()->new ModifiableGauntlet(new Item.Properties().stacksTo(1), TicEXRegistry.GAUNTLET_DEFINITION));
 
         TicEXRegistry.INCOMPARABLE_CORE = TicEXRegistry.ITEMS.register("incomparable_core", () ->
-            new ItemReconstCore(new Properties(), "incomparable")
+                new ItemReconstCore(new Properties(), "incomparable")
         );
 
         TicEXRegistry.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.register("incomparable", ModifierIncomparable::new);
@@ -72,12 +73,11 @@ public class TicEXCuriosModule extends AddonModule {
                         GLFW.GLFW_KEY_G,
                         "ticex.modid"
                 ));
-
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()-> this::initClient);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void initClient(){
+    @Override
+    public void initClient(FMLJavaModLoadingContext context) {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(TicEXCuriosEvent::onRegisterRenderers);
         bus.addListener(TicEXCuriosEvent::addLayers);
