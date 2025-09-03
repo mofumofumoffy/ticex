@@ -61,6 +61,7 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                 .module(
                     new MultiplyStatsModule(
                         MultiplierNBT.builder()
+                            .set(ToolStats.ATTACK_SPEED, 2.6f)
                             .set(ToolStats.MINING_SPEED, 0.5f)
                             .set(ToolStats.DURABILITY, 1.1f)
                             .build()
