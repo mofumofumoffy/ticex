@@ -32,7 +32,7 @@ import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
-public class TicEXMekanismModule extends AddonModule {
+public class TicEXMekanismModule implements AddonModule {
 
     public static final String ADD_MEKAPLATE_HELMET_MODULES = "add_mekaplate_helmet_modules";
     public static final String ADD_MEKAPLATE_CHESTPLATE_MODULES = "add_mekaplate_chestplate_modules";
@@ -42,7 +42,8 @@ public class TicEXMekanismModule extends AddonModule {
 
     public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
 
-    public TicEXMekanismModule() {
+    @Override
+    public void init(FMLJavaModLoadingContext context) {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         Item.Properties PROPS = new Item.Properties();
 
@@ -50,20 +51,20 @@ public class TicEXMekanismModule extends AddonModule {
         ToolCapabilityProvider.register(RadiationShieldingCapabilityProvider::new);
 
         TicEXRegistry.RADIATION_SHELDING_CORE = TicEXRegistry.ITEMS.register("radiation_shielding_core", () ->
-            new ItemReconstCore(PROPS, "radiation_shielding")
+                new ItemReconstCore(PROPS, "radiation_shielding")
         );
 
         TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum(
-            "mekaplate",
-            ArmorItem.Type.values(),
-            type ->
-                new ModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE_DEFINITION, type, new Item.Properties().stacksTo(1))
+                "mekaplate",
+                ArmorItem.Type.values(),
+                type ->
+                        new ModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE_DEFINITION, type, new Item.Properties().stacksTo(1))
         );
 
         TicEXRegistry.CATALYST_MEKASUIT = TicEXRegistry.ITEMS_EXTENDED.registerEnum(
-            "catalyst_mekasuit",
-            ArmorItem.Type.values(),
-            type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId())
+                "catalyst_mekasuit",
+                ArmorItem.Type.values(),
+                type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId())
         );
 
         TicEXRegistry.MEKA_EDGE = TicEXRegistry.ITEMS_EXTENDED.register("meka_tool",
@@ -84,15 +85,14 @@ public class TicEXMekanismModule extends AddonModule {
                 .decoder(ConfigSyncToClientPacket::new)
                 .consumerMainThread(ConfigSyncToClientPacket::handle)
                 .add();
+    }
 
-        DistExecutor.unsafeRunWhenOn(
-            Dist.CLIENT,
-            () ->
-                () -> {
-                    bus.addListener(TicEXMekanismEvent::onLoadAdditionalModel);
-                    bus.addListener(TicEXMekanismEvent::onModelBake);
-                }
-        );
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void initClient(FMLJavaModLoadingContext context) {
+        IEventBus bus = context.getModEventBus();
+        bus.addListener(TicEXMekanismEvent::onLoadAdditionalModel);
+        bus.addListener(TicEXMekanismEvent::onModelBake);
     }
 
     @OnlyIn(Dist.CLIENT)

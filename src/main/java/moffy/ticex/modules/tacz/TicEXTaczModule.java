@@ -20,19 +20,21 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
-public class TicEXTaczModule extends AddonModule {
+public class TicEXTaczModule implements AddonModule {
 
-    public TicEXTaczModule() {
+    @Override
+    public void init(FMLJavaModLoadingContext context) {
         Item.Properties defaultProperties = new Item.Properties();
 
         TicEXRegistry.CATALYST_KINETIC_GUN = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_kinetic_gun", () ->
-            new ToolPartItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_kinetic_gun").getId())
+                new ToolPartItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_kinetic_gun").getId())
         );
 
         TicEXRegistry.BLITZ_GUN = TicEXRegistry.ITEMS_EXTENDED.register("blitz_gun", () ->
-            new ModifiableGunItem(TicEXRegistry.GUN_DEFINITION, 1)
+                new ModifiableGunItem(TicEXRegistry.GUN_DEFINITION, 1)
         );
 
         MinecraftForge.EVENT_BUS.addListener(TicEXTaczEvent::onBeforeHit);

@@ -12,17 +12,19 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-public class TicEXApotheosisModule extends AddonModule {
+public class TicEXApotheosisModule implements AddonModule {
 
-    public TicEXApotheosisModule() {
+    @Override
+    public void init(FMLJavaModLoadingContext context) {
         Item.Properties defaultProperties = new Item.Properties();
 
         TicEXRegistry.OVERLOAD_CORE = TicEXRegistry.ITEMS.register("overload_core", () ->
-            new ItemReconstCore(defaultProperties, "overload")
+                new ItemReconstCore(defaultProperties, "overload")
         );
         TicEXRegistry.OVERRIDE_CORE = TicEXRegistry.ITEMS.register("override_core", () ->
-            new ItemReconstCore(defaultProperties, "override")
+                new ItemReconstCore(defaultProperties, "override")
         );
 
         TicEXRegistry.APOTH_SUPPLIER_MODIFIER = TicEXRegistry.MODIFIERS.register("apoth_supplier", ModifierApothSupplier::new);

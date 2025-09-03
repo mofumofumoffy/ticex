@@ -24,9 +24,10 @@ import slimeknights.tconstruct.tools.data.ModifierIds;
 import java.util.List;
 import java.util.Objects;
 
-public class TicEXDEModule extends AddonModule {
+public class TicEXDEModule implements AddonModule {
 
-    public TicEXDEModule() {
+    @Override
+    public void init(FMLJavaModLoadingContext context) {
         ToolCapabilityProvider.register(DEItemCapabilityProvider::new);
 
         Item.Properties defaultProps = new Item.Properties();
@@ -38,37 +39,33 @@ public class TicEXDEModule extends AddonModule {
         TicEXRegistry.CHAOTIC_CRYSTAL = TicEXRegistry.ITEMS.register("chaotic_crystal", () -> new Item(defaultProps));
 
         TicEXRegistry.DRACONIUM_EVOLVED_CORE = TicEXRegistry.ITEMS.register("draconium_evolved_core", () ->
-            new ItemReconstCore(defaultProps, "evolved", 1)
+                new ItemReconstCore(defaultProps, "evolved", 1)
         );
         TicEXRegistry.WYVERN_EVOLVED_CORE = TicEXRegistry.ITEMS.register("wyvern_evolved_core", () ->
-            new ItemReconstCore(defaultProps, "evolved", 2)
+                new ItemReconstCore(defaultProps, "evolved", 2)
         );
         TicEXRegistry.DRACONIC_EVOLVED_CORE = TicEXRegistry.ITEMS.register("draconic_evolved_core", () ->
-            new ItemReconstCore(defaultProps, "evolved", 3)
+                new ItemReconstCore(defaultProps, "evolved", 3)
         );
         TicEXRegistry.CHAOTIC_EVOLVED_CORE = TicEXRegistry.ITEMS.register("chaotic_evolved_core", () ->
-            new ItemReconstCore(defaultProps, "evolved", 4)
+                new ItemReconstCore(defaultProps, "evolved", 4)
         );
         TicEXRegistry.INJECT_CORE = TicEXRegistry.ITEMS.register("inject_core", () ->
-            new ItemReconstCore(defaultProps, "inject")
+                new ItemReconstCore(defaultProps, "inject")
         );
 
         TicEXRegistry.SOUL_RENDING_MODIFIER = TicEXRegistry.MODIFIERS.register(
-            "soul_rending",
-            ModifierSoulRending::new
+                "soul_rending",
+                ModifierSoulRending::new
         );
         TicEXRegistry.INJECT_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("inject");
         TicEXRegistry.EVOLVED_MODIFIER = TicEXRegistry.MODIFIERS.register("evolved", ModifierEvolved::new);
-
-        DistExecutor.unsafeRunWhenOn(
-            Dist.CLIENT,
-            () -> this::initClient
-        );
     }
 
     @OnlyIn(Dist.CLIENT)
-    void initClient() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+    @Override
+    public void initClient(FMLJavaModLoadingContext context) {
+        IEventBus bus = context.getModEventBus();
 
         TicEXDEShaderProvider.init(bus);
         List<MaterialId> materials = List.of(
