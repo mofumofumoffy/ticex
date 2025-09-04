@@ -12,6 +12,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.LogicalSidedProvider;
+import net.minecraftforge.fml.LogicalSide;
 
 public class OmnipotenceProperty {
 
@@ -29,15 +31,17 @@ public class OmnipotenceProperty {
         return args -> {
             Level level = user.level();
             if (!level.isClientSide && !user.getCooldowns().isOnCooldown(stack.getItem())) {
-                ToolUtils.aoeAttack(
-                    user,
-                    ModConfig.swordAttackRange.get(),
-                    ModConfig.swordRangeDamage.get(),
-                    ModConfig.isSwordAttackAnimal.get(),
-                    ModConfig.isSwordAttackLightning.get()
-                );
-                user.getCooldowns().addCooldown(stack.getItem(), 20);
-                level.playSound(user, user.getOnPos(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 5.0f);
+                LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
+                    ToolUtils.aoeAttack(
+                            user,
+                            ModConfig.swordAttackRange.get(),
+                            ModConfig.swordRangeDamage.get(),
+                            ModConfig.isSwordAttackAnimal.get(),
+                            ModConfig.isSwordAttackLightning.get()
+                    );
+                    user.getCooldowns().addCooldown(stack.getItem(), 20);
+                    level.playSound(user, user.getOnPos(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 5.0f);
+                });
             }
             return MethodResult.of();
         };

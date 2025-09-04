@@ -171,7 +171,7 @@ dependencies {
     implementation fg.deobf("curse.maven:mantle-74924:6635380")
     implementation fg.deobf("curse.maven:tinkers-construct-74072:6635554")
 
-    implementation fg.deobf("curse.maven:re-avaritia-623969:6264467")
+    implementation fg.deobf("curse.maven:re-avaritia-623969:6958116")
 
     implementation fg.deobf("curse.maven:mekanism-268560:6258796")
 

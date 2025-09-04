@@ -1,10 +1,10 @@
 package moffy.ticex.client.modules.avaritia;
 
+import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import committee.nova.mods.avaritia.Static;
+import committee.nova.mods.avaritia.Const;
 import committee.nova.mods.avaritia.api.client.shader.CCShaderInstance;
-import committee.nova.mods.avaritia.api.client.shader.CCUniform;
 import moffy.ticex.TicEX;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -27,12 +27,12 @@ public final class TicEXCosmicShader {
     public float internalRenderFrame;
 
     public CCShaderInstance shaderInstance;
-    public CCUniform cosmicTime;
-    public CCUniform cosmicYaw;
-    public CCUniform cosmicPitch;
-    public CCUniform cosmicExternalScale;
-    public CCUniform cosmicOpacity;
-    public CCUniform cosmicUVs;
+    public Uniform cosmicTime;
+    public Uniform cosmicYaw;
+    public Uniform cosmicPitch;
+    public Uniform cosmicExternalScale;
+    public Uniform cosmicOpacity;
+    public Uniform cosmicUVs;
 
     public TicEXCosmicShader() {
         stateShard = new RenderStateShard.ShaderStateShard(() -> shaderInstance);
@@ -57,7 +57,7 @@ public final class TicEXCosmicShader {
         for (int i = 0; i < 10; ++i) {
             TextureAtlasSprite sprite = Minecraft.getInstance()
                     .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
-                    .apply(Static.rl("misc/cosmic_" + i));
+                    .apply(Const.rl("misc/cosmic_" + i));
             COSMIC_UVS[i * 4] = sprite.getU0();
             COSMIC_UVS[i * 4 + 1] = sprite.getV0();
             COSMIC_UVS[i * 4 + 2] = sprite.getU1();
