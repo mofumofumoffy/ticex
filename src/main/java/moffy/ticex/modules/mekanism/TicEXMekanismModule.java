@@ -32,15 +32,18 @@ import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TicEXMekanismModule implements AddonModule {
+
+    public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
 
     public static final String ADD_MEKAPLATE_HELMET_MODULES = "add_mekaplate_helmet_modules";
     public static final String ADD_MEKAPLATE_CHESTPLATE_MODULES = "add_mekaplate_chestplate_modules";
     public static final String ADD_MEKAPLATE_LEGGINGS_MODULES = "add_mekaplate_leggings_modules";
     public static final String ADD_MEKAPLATE_BOOTS_MODULES = "add_mekaplate_boots_modules";
     public static final String ADD_MEKA_TOOL_MODULES = "add_modifiable_meka_tool_modules";
-
-    public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
@@ -78,7 +81,13 @@ public class TicEXMekanismModule implements AddonModule {
         TicEXRegistry.MEKANIC_MODIFIER = TicEXRegistry.MODIFIERS.register("mekanic", ModifierMekanic::new);
         TicEXRegistry.RADIATION_SHIELDING_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("radiation_shielding");
 
-        MinecraftForge.EVENT_BUS.register(new TicEXMekanismEvent());
+        bus.addListener(TicEXMekanismEvent::onRegisterCaps);
+        MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::getBreakSpeed);
+        MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::onEntityAttack);
+        MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::onLivingHurt);
+        MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::onTick);
+        MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::onModifyAttribute);
+        MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::onLivingJump);
 
         TicEX.CHANNEL.messageBuilder(ConfigSyncToClientPacket.class, TicEXPacketID.MEK_CONFIG_SYNC)
                 .encoder(ConfigSyncToClientPacket::encode)
@@ -91,6 +100,7 @@ public class TicEXMekanismModule implements AddonModule {
     @Override
     public void initClient(FMLJavaModLoadingContext context) {
         IEventBus bus = context.getModEventBus();
+        MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::handleItemToolTip);
         bus.addListener(TicEXMekanismEvent::onLoadAdditionalModel);
         bus.addListener(TicEXMekanismEvent::onModelBake);
     }

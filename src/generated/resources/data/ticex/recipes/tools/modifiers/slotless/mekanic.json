@@ -18,10 +18,13 @@
     },
     {
       "item": "ticex:catalyst_mekasuit_boots"
+    },
+    {
+      "item": "ticex:catalyst_meka_tool"
     }
   ],
   "result": "ticex:mekanic",
   "tools": {
-    "tag": "ticex:plate"
+    "tag": "tconstruct:modifiable/multipart"
   }
 }

@@ -117,7 +117,6 @@ public class TicEXAvaritiaModule implements AddonModule {
     @SuppressWarnings("unchecked")
     @OnlyIn(Dist.CLIENT)
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             EntityRenderers.register((EntityType<ItemArrow>)TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), context -> new ItemArrowRenderer(context, 1));

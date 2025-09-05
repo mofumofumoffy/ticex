@@ -39,9 +39,10 @@ public class MekanismRecipeProvider implements ITicEXRecipeHelper, IEmbossmentTo
                     TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.HELMET),
                     TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.CHESTPLATE),
                     TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.LEGGINGS),
-                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.BOOTS)
+                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.BOOTS),
+                    TicEXRegistry.CATALYST_MEKA_TOOL.get()
             ))
-                    .setTools(TicEXTags.Items.PLATE)
+                    .setTools(TinkerTags.Items.MULTIPART_TOOL)
                     .save(topConsumer, prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder));
         }
 
