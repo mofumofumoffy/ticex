@@ -120,10 +120,11 @@ public class TicEXModuleProvider extends AddonModuleProvider {
             new String[] { "tconstruct", "tinkers_things" }
         );
         addRawModule(
-                new ResourceLocation(TicEX.MODID, "jei_compat"),
+                "jei_compat",
                 "JEI Compat",
                 TicEXJeiModule.class,
-                new String[]{"tconstruct", "jei"}
+                new String[]{"tconstruct", "jei"},
+                true
         );
     }
 

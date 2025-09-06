@@ -309,7 +309,7 @@ public class TicEXRegistry {
         acceptPart(output, CATALYST_SLASHBLADE);
         acceptPart(output, CATALYST_MEKA_TOOL);
         acceptPart(output, CATALYST_MEKA_TANA);
-        acceptTool(output, CATALYST_MEKA_BOW);
+        acceptPart(output, CATALYST_MEKA_BOW);
         //acceptPart(output, CATALYST_KINETIC_GUN);
         //acceptPart(output, CATALYST_IRONS_SPELLBOOK);
 

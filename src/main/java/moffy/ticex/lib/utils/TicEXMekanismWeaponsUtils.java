@@ -3,11 +3,14 @@ package moffy.ticex.lib.utils;
 import mekanism.api.energy.IEnergyContainer;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleHelper;
+import mekanism.api.gear.ModuleData;
 import mekanism.api.math.FloatingLong;
+import mekanism.api.providers.IModuleDataProvider;
 import mekanism.common.registries.MekanismItems;
 import mekanism.common.util.StorageUtils;
 import meranha.mekaweapons.MekaWeapons;
-import meranha.mekaweapons.items.ModuleWeaponAttackAmplificationUnit;
+import meranha.mekaweapons.items.modules.WeaponAttackAmplificationUnit;
+import meranha.mekaweapons.items.modules.WeaponsModules;
 import moffy.ticex.TicEX;
 import moffy.ticex.entity.mekanism.MekanicProjectile;
 import moffy.ticex.item.projectile.MekanicShotItem;
@@ -19,6 +22,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
@@ -54,7 +58,7 @@ public class TicEXMekanismWeaponsUtils {
     public static float getAmplifier(ItemStack stack){
         if(stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
             IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
-            IModule<ModuleWeaponAttackAmplificationUnit> unit = mekaGear.getModule(stack, MekaWeapons.ATTACKAMPLIFICATION_UNIT);
+            IModule<WeaponAttackAmplificationUnit> unit = mekaGear.getModule(stack, WeaponsModules.ATTACKAMPLIFICATION_UNIT);
             if(unit != null){
                 IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
                 FloatingLong energy = energyContainer != null ? energyContainer.getEnergy() : FloatingLong.ZERO;
