@@ -1,7 +1,5 @@
 package moffy.ticex.mixin.mekanism;
 
-import java.util.function.Consumer;
-import mekanism.api.chemical.gas.Gas;
 import mekanism.api.chemical.gas.GasStack;
 import mekanism.api.gear.IHUDElement;
 import mekanism.api.gear.IModule;
@@ -12,7 +10,9 @@ import mekanism.common.content.gear.mekasuit.ModuleJetpackUnit;
 import mekanism.common.item.interfaces.IJetpackItem;
 import mekanism.common.registries.MekanismGases;
 import mekanism.common.util.StorageUtils;
-import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
+import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
+import moffy.ticex.lib.modules.mekanism.interfaces.IGasTankItem;
+import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +20,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import slimeknights.tconstruct.library.tools.item.IModifiable;
+
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 @Mixin(value = ModuleJetpackUnit.class, remap = false)
 public class ModuleJetpackUnitMixin {
@@ -28,28 +30,32 @@ public class ModuleJetpackUnitMixin {
     @Shadow
     private IModuleConfigItem<IJetpackItem.JetpackMode> jetpackMode;
 
-    @Inject(at = @At("head"), method = "addHUDElements", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "addHUDElements", cancellable = true)
     public void addHUDElements(
         IModule<ModuleJetpackUnit> module,
         Player player,
         Consumer<IHUDElement> hudElementAdder,
         CallbackInfo cb
     ) {
+        Predicate<ItemStack> hasCap = stack -> stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent();
         ItemStack container = module.getContainer();
-        if (container.getItem() instanceof IModifiable) {
+        if (hasCap.test(container)) {
+            IMekaGear mekaGear = container.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
             if (module.isEnabled()) {
-                GasStack stored =
-                    ((ModifiableMekaSuitArmor) container.getItem()).getContainedGas(
+                GasStack stored = null;
+                if(mekaGear instanceof IGasTankItem gasTankGear){
+                    stored = gasTankGear.getContainedGas(
                             container,
-                            (Gas) MekanismGases.HYDROGEN.get()
-                        );
+                            MekanismGases.HYDROGEN.get()
+                    );
+                }
                 double ratio = StorageUtils.getRatio(
-                    stored.getAmount(),
+                    stored != null ? stored.getAmount() : 0,
                     MekanismConfig.gear.mekaSuitJetpackMaxStorage.getAsLong()
                 );
                 hudElementAdder.accept(
                     IModuleHelper.INSTANCE.hudElementPercent(
-                        ((IJetpackItem.JetpackMode) this.jetpackMode.get()).getHUDIcon(),
+                        (this.jetpackMode.get()).getHUDIcon(),
                         ratio
                     )
                 );

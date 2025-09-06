@@ -1,7 +1,5 @@
 package moffy.ticex.mixin.mekanism;
 
-import java.util.Optional;
-import java.util.function.Consumer;
 import mekanism.api.gear.IHUDElement;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleHelper;
@@ -11,7 +9,9 @@ import mekanism.common.content.gear.mekasuit.ModuleNutritionalInjectionUnit;
 import mekanism.common.registries.MekanismFluids;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
-import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
+import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
+import moffy.ticex.lib.modules.mekanism.interfaces.IFluidTankItem;
+import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +25,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import slimeknights.tconstruct.library.tools.item.IModifiable;
+
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 @Mixin(value = ModuleNutritionalInjectionUnit.class, remap = false)
 public class ModuleNutritionalInjectionUnitMixin {
@@ -34,18 +37,23 @@ public class ModuleNutritionalInjectionUnitMixin {
     @Final
     private static ResourceLocation icon;
 
-    @Inject(at = @At("head"), method = "tickServer", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "tickServer", cancellable = true)
     public void tickServer(IModule<ModuleNutritionalInjectionUnit> module, Player player, CallbackInfo cb) {
+        Predicate<ItemStack> hasCap = stack -> stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent();
         ItemStack container = module.getContainer();
-        if (container.getItem() instanceof IModifiable) {
+        if (hasCap.test(container)) {
+            IMekaGear mekaGear = container.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
             FloatingLong usage = (FloatingLong) MekanismConfig.gear.mekaSuitEnergyUsageNutritionalInjection.get();
             if (MekanismUtils.isPlayingMode(player) && player.canEat(false)) {
-                ModifiableMekaSuitArmor item = (ModifiableMekaSuitArmor) container.getItem();
-                int needed = Math.min(
-                    20 - player.getFoodData().getFoodLevel(),
-                    item.getContainedFluid(container, MekanismFluids.NUTRITIONAL_PASTE.getFluidStack(1)).getAmount() /
-                    MekanismConfig.general.nutritionalPasteMBPerFood.get()
-                );
+                int needed = 0;
+
+                if(mekaGear instanceof IFluidTankItem fluidTankGear){
+                    needed = Math.min(
+                            20 - player.getFoodData().getFoodLevel(),
+                            fluidTankGear.getContainedFluid(container, MekanismFluids.NUTRITIONAL_PASTE.getFluidStack(1)).getAmount() /
+                                    MekanismConfig.general.nutritionalPasteMBPerFood.get()
+                    );
+                }
                 int toFeed = Math.min(module.getContainerEnergy().divideToInt(usage), needed);
                 if (toFeed > 0) {
                     module.useEnergy(player, usage.multiply((long) toFeed));
@@ -64,7 +72,7 @@ public class ModuleNutritionalInjectionUnitMixin {
         }
     }
 
-    @Inject(at = @At("head"), method = "addHUDElements", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "addHUDElements", cancellable = true)
     public void addHUDElements(
         IModule<ModuleNutritionalInjectionUnit> module,
         Player player,
@@ -72,7 +80,9 @@ public class ModuleNutritionalInjectionUnitMixin {
         CallbackInfo cb
     ) {
         ItemStack container = module.getContainer();
-        if (container.getItem() instanceof IModifiable) {
+        Predicate<ItemStack> hasCap = stack -> stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent();
+        if (hasCap.test(container)) {
+            IMekaGear mekaGear = container.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
             Optional<IFluidHandlerItem> capability = FluidUtil.getFluidHandler(container).resolve();
             if (capability.isPresent()) {
                 IFluidHandlerItem handler = (IFluidHandlerItem) capability.get();
@@ -80,13 +90,15 @@ public class ModuleNutritionalInjectionUnitMixin {
                 handler.drain(MekanismFluids.NUTRITIONAL_PASTE.getFluidStack(max), FluidAction.SIMULATE);
             }
 
-            FluidStack stored =
-                ((ModifiableMekaSuitArmor) container.getItem()).getContainedFluid(
+            FluidStack stored = null;
+            if(mekaGear instanceof IFluidTankItem fluidTankGear){
+                stored = fluidTankGear.getContainedFluid(
                         container,
                         MekanismFluids.NUTRITIONAL_PASTE.getFluidStack(1)
-                    );
+                );
+            }
             double ratio = StorageUtils.getRatio(
-                (long) stored.getAmount(),
+                (long) (stored != null ? stored.getAmount() : 0),
                 (long) MekanismConfig.gear.mekaSuitNutritionalMaxStorage.get()
             );
             hudElementAdder.accept(IModuleHelper.INSTANCE.hudElementPercent(icon, ratio));

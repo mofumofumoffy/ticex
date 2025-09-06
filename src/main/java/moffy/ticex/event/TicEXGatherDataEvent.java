@@ -38,7 +38,6 @@ public class TicEXGatherDataEvent {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
-        CraftingHelper.register(new ModsAvailableCondition.Serializer());
 
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<Provider> lookupProvider = event.getLookupProvider();

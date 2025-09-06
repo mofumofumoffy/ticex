@@ -76,7 +76,7 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
     modId="addonapi"
     mandatory=true
-    versionRange="[1.0.0,)"
+    versionRange="[2.0.0-SNAPSHOT,3.0.0)"
     ordering="AFTER"
     side="BOTH"
 

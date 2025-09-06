@@ -1,114 +1,57 @@
 package moffy.ticex.mixin.mekanism;
 
-import com.google.common.collect.ImmutableSet;
-import java.util.Map;
-import java.util.Set;
 import mekanism.api.gear.ModuleData;
-import mekanism.api.providers.IModuleDataProvider;
-import mekanism.common.Mekanism;
 import mekanism.common.content.gear.ModuleHelper;
-import moffy.ticex.modules.general.TicEXRegistry;
-import moffy.ticex.modules.mekanism.TicEXMekanismModule;
+import mekanism.common.registries.MekanismItems;
+import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
+import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fml.ModList;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 
-@Mixin(value = ModuleHelper.class, remap = false, priority = 900)
-public abstract class ModuleHelperMixin {
+import java.util.Map;
+import java.util.Set;
+
+@Mixin(value = ModuleHelper.class, remap = false)
+public class ModuleHelperMixin {
 
     @Shadow
-    private void logDebugReceivedIMC(String imcMethod, String senderModId, IModuleDataProvider<?> moduleDataProvider) {}
-
-    @Shadow
-    protected Map<Item, Set<ModuleData<?>>> supportedModules;
+    @Final
+    private Map<Item, Set<ModuleData<?>>> supportedModules;
 
     @Inject(
-        method = "processIMC",
-        at = @At(
-            value = "INVOKE",
-            ordinal = 4,
-            shift = At.Shift.AFTER,
-            target = "Lmekanism/common/content/gear/ModuleHelper;mapSupportedModules(Lnet/minecraftforge/fml/event/lifecycle/InterModProcessEvent;Ljava/lang/String;Lmekanism/api/providers/IItemProvider;Ljava/util/Map;)V"
-        ),
-        locals = LocalCapture.CAPTURE_FAILHARD
+            at = @At("RETURN"),
+            method = "getSupported(Lnet/minecraft/world/item/ItemStack;)Ljava/util/Set;",
+            cancellable = true
     )
-    void processIMC(
-        InterModProcessEvent event,
-        CallbackInfo ci,
-        Map<ModuleData<?>, ImmutableSet.Builder<Item>> supportedContainersBuilderMap
-    ) {
-        mixinMapSupportedModules(
-            event,
-            TicEXMekanismModule.ADD_MEKAPLATE_HELMET_MODULES,
-            TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.HELMET),
-            supportedContainersBuilderMap
-        );
-        mixinMapSupportedModules(
-            event,
-            TicEXMekanismModule.ADD_MEKAPLATE_CHESTPLATE_MODULES,
-            TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.CHESTPLATE),
-            supportedContainersBuilderMap
-        );
-        mixinMapSupportedModules(
-            event,
-            TicEXMekanismModule.ADD_MEKAPLATE_LEGGINGS_MODULES,
-            TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.LEGGINGS),
-            supportedContainersBuilderMap
-        );
-        mixinMapSupportedModules(
-            event,
-            TicEXMekanismModule.ADD_MEKAPLATE_BOOTS_MODULES,
-            TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.BOOTS),
-            supportedContainersBuilderMap
-        );
-        mixinMapSupportedModules(
-                event,
-                TicEXMekanismModule.ADD_MEKA_TOOL_MODULES,
-                TicEXRegistry.MEKA_EDGE.get(),
-                supportedContainersBuilderMap
-        );
+    public void getSupported(ItemStack container, CallbackInfoReturnable<Set<ModuleData<?>>> cir){
+        if(container.getItem() instanceof IModifiable && container.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
+            cir.setReturnValue(supportedModules.getOrDefault(ticex_1_20_1$getAlternativeItem(container), cir.getReturnValue()));
+        }
     }
 
-    private void mixinMapSupportedModules(
-        InterModProcessEvent event,
-        String imcMethod,
-        IModifiable item,
-        Map<ModuleData<?>, ImmutableSet.Builder<Item>> supportedContainersBuilderMap
-    ) {
-        ImmutableSet.Builder<ModuleData<?>> supportedModulesBuilder = ImmutableSet.builder();
-        event
-            .getIMCStream(imcMethod::equals)
-            .forEach(message -> {
-                Object body = message.messageSupplier().get();
-                if (body instanceof IModuleDataProvider<?> moduleDataProvider) {
-                    supportedModulesBuilder.add(moduleDataProvider.getModuleData());
-                    logDebugReceivedIMC(imcMethod, message.senderModId(), moduleDataProvider);
-                } else if (body instanceof IModuleDataProvider<?>[] providers) {
-                    for (IModuleDataProvider<?> moduleDataProvider : providers) {
-                        supportedModulesBuilder.add(moduleDataProvider.getModuleData());
-                        logDebugReceivedIMC(imcMethod, message.senderModId(), moduleDataProvider);
-                    }
-                } else {
-                    Mekanism.logger.warn(
-                        "Received IMC message for '{}' from mod '{}' with an invalid body.",
-                        imcMethod,
-                        message.senderModId()
-                    );
-                }
-            });
-        Set<ModuleData<?>> supported = supportedModulesBuilder.build();
-        if (!supported.isEmpty() && item instanceof Item) {
-            supportedModules.put((Item) item, supported);
-            for (ModuleData<?> data : supported) {
-                supportedContainersBuilderMap.computeIfAbsent(data, d -> ImmutableSet.builder()).add((Item) item);
-            }
+    @Unique
+    private Item ticex_1_20_1$getAlternativeItem(ItemStack stack){
+        if(stack.getItem() instanceof ArmorItem armorItem){
+            return switch (armorItem.getType()){
+                case HELMET -> MekanismItems.MEKASUIT_HELMET.get();
+                case CHESTPLATE -> MekanismItems.MEKASUIT_BODYARMOR.get();
+                case LEGGINGS -> MekanismItems.MEKASUIT_PANTS.get();
+                case BOOTS -> MekanismItems.MEKASUIT_BOOTS.get();
+            };
+        } else if(stack.is(TinkerTags.Items.MELEE_WEAPON) && ModList.get().isLoaded("mekaweapons")){
+            return TicEXMekanismWeaponsUtils.getAlternativeWeapon(stack);
         }
+        return MekanismItems.MEKA_TOOL.get();
     }
 }

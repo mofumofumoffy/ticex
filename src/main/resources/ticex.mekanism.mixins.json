@@ -4,13 +4,18 @@
   "refmap": "ticex.refmap.json",
   "plugin": "moffy.ticex.modules.mekanism.TicEXMekanismMixinPlugin",
   "mixins": [
-    "MekanismIMCMixin",
+    "ArmorModelDispatcherMixin",
+    "IModifiableMixin",
+    "ItemMixin",
     "MekaSuitEnergyLevelMixin",
+    "ModifierUtilMixin",
     "ModuleHelperMixin",
     "ModuleJetpackUnitMixin",
-    "ModuleNutritionalInjectionUnitMixin"
+    "ModuleNutritionalInjectionUnitMixin",
+    "ModuleTweakerContainerMixin"
   ],
   "client": [
+    "AbstractArmorModelMixin",
     "HUDHandlerMixin"
   ],
   "server": [],
