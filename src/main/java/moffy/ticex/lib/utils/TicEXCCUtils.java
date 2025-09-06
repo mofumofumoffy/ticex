@@ -1,11 +1,8 @@
 package moffy.ticex.lib.utils;
 
-import com.google.common.collect.ImmutableMap;
+import com.ibm.icu.impl.locale.XCldrStub;
 import dan200.computercraft.api.lua.ILuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import moffy.ticex.lib.IEntityDataAccessor;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
@@ -16,6 +13,10 @@ import net.minecraftforge.fml.ModList;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TicEXCCUtils {
 
@@ -43,7 +44,7 @@ public class TicEXCCUtils {
                 entityMap.put(
                     "getData",
                     (ILuaFunction) args -> {
-                        return MethodResult.of(ImmutableMap.copyOf(accessor.getAllFields()));
+                        return MethodResult.of(XCldrStub.ImmutableMap.copyOf(accessor.getAllFields()));
                     }
                 );
             }

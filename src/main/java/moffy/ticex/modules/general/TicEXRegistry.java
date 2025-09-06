@@ -2,9 +2,12 @@ package moffy.ticex.modules.general;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
+import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
+import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.recipe.*;
+import moffy.ticex.lib.registry.JeiIntegrationsRegistry;
 import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -149,6 +152,7 @@ public class TicEXRegistry {
     public static final MenuTypeDeferredRegister MENUS = new MenuTypeDeferredRegister(
             TicEX.MODID
     );
+    public static final JeiIntegrationsRegistry JEI_INTEGRATIONS = new JeiIntegrationsRegistry();
 
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
 
@@ -160,6 +164,7 @@ public class TicEXRegistry {
 
 
     public static RegistryObject<MenuType<ToolContainerMenu>> UNSYNCED_TOOL_CONTAINER = null;
+    public static RegistryObject<MenuType<FluidTransmuterContainerMenu>> FLUID_TRANSMUTER_MENU = null;
 
 
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
@@ -224,9 +229,11 @@ public class TicEXRegistry {
     public static RegistryObject<Block> CREATIVE_SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> SCORCHED_RF_FURNACE = null;
     public static RegistryObject<Block> CREATIVE_SCORCHED_RF_FURNACE = null;
+    public static RegistryObject<Block> FLUID_TRANSMUTER = null;
 
     public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> RF_FURNACE_ENTITY = null;
     public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> CREATIVE_RF_FURNACE_ENTITY = null;
+    public static RegistryObject<BlockEntityType<FluidTransmuterBlockEntity>> FLUID_TRANSMUTER_ENTITY = null;
 
     public static FluidObject<UnplaceableFluid> MOLTEN_RECONSTRUCTION_CORE = null;
     public static List<FluidObject<UnplaceableFluid>> RF_FURNACE_FUELS = new ArrayList<>();

@@ -54,6 +54,7 @@
   "block.ticex.scorched_rf_furnace": "焦灼RF熔炉",
   "block.ticex.creative_seared_rf_furnace": "创造模式灼热RF熔炉",
   "block.ticex.creative_scorched_rf_furnace": "创造模式焦灼RF熔炉",
+  "block.ticex.fluid_transmuter": "流体转化",
 
   "fluid.tconstruct.rf_furnace_fuel_0": "基础级RF熔炉燃料",
   "fluid.tconstruct.rf_furnace_fuel_1": "优良级RF熔炉燃料",
@@ -254,5 +255,7 @@
   "item.ticex.catalyst_irons_spellbook": "§b星构素催化剂 - 复兴法术书",
 
   "stat.ticex.catalyst_kinetic_gun": "催化剂（现代实弹枪械）",
-  "stat.ticex.catalyst_irons_spellbook": "催化剂（复兴法术书）"
+  "stat.ticex.catalyst_irons_spellbook": "催化剂（复兴法术书）",
+  "jei.ticex.fluid_transmuter.title": "流体转化",
+  "gui.ticex.fluid_transmuter": "流体转化器"
 }

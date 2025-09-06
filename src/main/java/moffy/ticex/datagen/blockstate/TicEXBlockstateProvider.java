@@ -1,4 +1,4 @@
-package moffy.ticex.datagen.models;
+package moffy.ticex.datagen.blockstate;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -20,6 +20,8 @@ public class TicEXBlockstateProvider extends BlockStateProvider {
 
         activatableBlock(TicEXRegistry.SEARED_RF_FURNACE.get(), "block/smeltery/seared_rf_furnace", 180);
         activatableBlock(TicEXRegistry.SCORCHED_RF_FURNACE.get(), "block/foundry/scorched_rf_furnace", 180);
+
+        activatableBlock(TicEXRegistry.FLUID_TRANSMUTER.get(), "block/foundry/fluid_transmuter", 180);
 
         simpleModelBlock(TicEXRegistry.ETHERIC_BLOCK.get(), "block/etheric_block");
     }

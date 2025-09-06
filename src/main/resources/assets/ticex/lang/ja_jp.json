@@ -64,6 +64,7 @@
   "block.ticex.scorched_rf_furnace": "焦熱RF炉",
   "block.ticex.creative_seared_rf_furnace": "クリエイティブ焼成RF炉",
   "block.ticex.creative_scorched_rf_furnace": "クリエイティブ焦熱RF炉",
+  "block.ticex.fluid_transmuter": "液体変換器",
 
   "fluid.tconstruct.rf_furnace_fuel_0": "基礎RF炉燃料",
   "fluid.tconstruct.rf_furnace_fuel_1": "標準的なRF炉燃料",
@@ -250,6 +251,9 @@
   "gui.ticex.meka_edge": "Mekaエッジ",
 
   "attribute.ticex.damage_taken": "被ダメージ軽減",
-  "attribute.ticex.healing_received": "回復量"
-
+  "attribute.ticex.healing_received": "回復量",
+  "ticex.modid": "TicEX",
+  "key.ticex.shoot_gauntlet": "ガントレット発射",
+  "jei.ticex.fluid_transmuter.title": "液体変換",
+  "gui.ticex.fluid_transmuter": "液体変換器"
 }

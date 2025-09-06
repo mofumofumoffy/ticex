@@ -1,8 +1,5 @@
 package moffy.ticex.datagen.general;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,6 +10,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LootProvider extends LootTableProvider {
 
@@ -56,6 +57,7 @@ public class LootProvider extends LootTableProvider {
             dropSelf(TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get());
             dropSelf(TicEXRegistry.SCORCHED_RF_FURNACE.get());
             dropSelf(TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get());
+            dropSelf(TicEXRegistry.FLUID_TRANSMUTER.get());
         }
     }
 }

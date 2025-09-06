@@ -4,11 +4,17 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.RFFurnaceBlock;
 import moffy.ticex.block.entity.RFFurnaceBlockEntity;
+import moffy.ticex.block.transmuter.FluidTransmuterBlock;
+import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
+import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
+import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.TiCEXToolCapabilityProvider;
 import moffy.ticex.client.modules.ticex.UnsyncedToolContainerMenu;
+import moffy.ticex.client.modules.ticex.screen.FluidTransmuterScreen;
 import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.cores.ItemFlickeringCore;
 import moffy.ticex.item.cores.ItemReconstCore;
+import moffy.ticex.jei.ticex.TicEXJEIIntegration;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.InfinityTier;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
@@ -36,6 +42,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.TierSortingRegistry;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -128,6 +135,10 @@ public class TicEXModule implements AddonModule {
         TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE = TicEXRegistry.BLOCKS.register("creative_scorched_rf_furnace", () ->
                 new RFFurnaceBlock(TicEXRegistry.SCORCHED, true)
         );
+        TicEXRegistry.FLUID_TRANSMUTER = TicEXRegistry.BLOCKS.register("fluid_transmuter", () ->
+                new FluidTransmuterBlock(BlockBehaviour.Properties.of().noOcclusion())
+        );
+
         TicEXRegistry.ITEMS.register("etheric_block", () ->
                 new BlockItem(TicEXRegistry.ETHERIC_BLOCK.get(), new Item.Properties())
         );
@@ -143,6 +154,9 @@ public class TicEXModule implements AddonModule {
         TicEXRegistry.ITEMS.register("creative_scorched_rf_furnace", () ->
                 new BlockItem(TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get(), new Item.Properties())
         );
+        TicEXRegistry.ITEMS.register("fluid_transmuter", () ->
+                new BlockItem(TicEXRegistry.FLUID_TRANSMUTER.get(), new Item.Properties())
+        );
 
         TicEXRegistry.RF_FURNACE_ENTITY = TicEXRegistry.BLOCK_ENTITIES.register("rf_furnace_entity", () ->
                 BlockEntityType.Builder.of(
@@ -152,6 +166,14 @@ public class TicEXModule implements AddonModule {
                         TicEXRegistry.SCORCHED_RF_FURNACE.get(),
                         TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get(),
                         TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get()
+                ).build(null)
+        );
+
+        TicEXRegistry.FLUID_TRANSMUTER_ENTITY = TicEXRegistry.BLOCK_ENTITIES.register("fluid_transmuter", () ->
+                BlockEntityType.Builder.of(
+                        (BlockPos pPos, BlockState pState) ->
+                                new FluidTransmuterBlockEntity(TicEXRegistry.FLUID_TRANSMUTER_ENTITY.get(), pPos, pState),
+                        TicEXRegistry.FLUID_TRANSMUTER.get()
                 ).build(null)
         );
 
@@ -200,15 +222,26 @@ public class TicEXModule implements AddonModule {
                 "unsynced_tool_container",
                 UnsyncedToolContainerMenu::forClient
         );
+        TicEXRegistry.FLUID_TRANSMUTER_MENU = TicEXRegistry.MENUS.register(
+                "fluid_transmuter",
+                FluidTransmuterContainerMenu::new
+        );
+
+        TicEXRegistry.JEI_INTEGRATIONS.register(
+                new ResourceLocation(TicEX.MODID, "ticex_compat"),
+                Lazy.of(TicEXJEIIntegration::new)
+        );
 
         bus.addListener(TicEXEvent::onEntityAttributeModification);
         bus.addListener(TicEXEvent::onRegisterCaps);
         bus.addListener(TicEXEvent::registerModelLoaders);
+        bus.addListener(TicEXEvent::registerRenderers);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::modifyAttribute);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHeal);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHurt);
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::supplierBouncer);
+        MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onRecipesUpdated);
 
         if (TierSortingRegistry.isTierSorted(InfinityTier.instance)) {
             TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(
@@ -232,11 +265,15 @@ public class TicEXModule implements AddonModule {
     public void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             MenuScreens.register(TicEXRegistry.UNSYNCED_TOOL_CONTAINER.get(), ToolContainerScreen::new);
+            MenuScreens.register(TicEXRegistry.FLUID_TRANSMUTER_MENU.get(), FluidTransmuterScreen::new);
         });
     }
 
     @Override
     public void setup(FMLCommonSetupEvent event) {
-        event.enqueueWork(CatalystMaterialStatsType::RegisterStats);
+        event.enqueueWork(() -> {
+            CatalystMaterialStatsType.RegisterStats();
+            FluidTransmutationResolver.INSTANCE.initConfig();
+        });
     }
 }
