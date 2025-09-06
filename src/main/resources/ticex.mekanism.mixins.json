@@ -7,7 +7,6 @@
     "ArmorModelDispatcherMixin",
     "IModifiableMixin",
     "ItemMixin",
-    "MekanismIMCMixin",
     "MekaSuitEnergyLevelMixin",
     "ModifierUtilMixin",
     "ModuleHelperMixin",

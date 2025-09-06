@@ -3,6 +3,7 @@ package moffy.ticex.modifier;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
@@ -41,6 +42,7 @@ import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.modules.mekanism.interfaces.IGasTankItem;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
+import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
 import moffy.ticex.modifier.propeties.MekanicProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.BlockPos;
@@ -56,6 +58,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -68,6 +71,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -84,6 +88,7 @@ import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickM
 import slimeknights.tconstruct.library.modifiers.hook.interaction.UsingToolModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.mining.BlockBreakModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.ranged.BowAmmoModifierHook;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
@@ -96,11 +101,11 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModifierHook, ProvidePropertyModifierHook, ToolActionModifierHook,UsingToolModifierHook, ToolDamageModifierHook, EntityInteractionModifierHook, BreakSpeedModifierHook, BlockBreakModifierHook, MeleeDamageModifierHook, EnchantmentModifierHook, ElytraFlightModifierHook, InventoryTickModifierHook {
+public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModifierHook, ProvidePropertyModifierHook, ToolActionModifierHook,UsingToolModifierHook, ToolDamageModifierHook, EntityInteractionModifierHook, BreakSpeedModifierHook, BlockBreakModifierHook, MeleeDamageModifierHook, EnchantmentModifierHook, ElytraFlightModifierHook, InventoryTickModifierHook, BowAmmoModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK, TicEXRegistry.PROPERTY_PROVIDER_HOOK, ModifierHooks.TOOL_USING, ModifierHooks.TOOL_ACTION, ModifierHooks.ENTITY_INTERACT, ModifierHooks.BREAK_SPEED, ModifierHooks.BLOCK_BREAK, ModifierHooks.MELEE_DAMAGE, ModifierHooks.ENCHANTMENTS, ModifierHooks.ELYTRA_FLIGHT, ModifierHooks.INVENTORY_TICK);
+        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK, TicEXRegistry.PROPERTY_PROVIDER_HOOK, ModifierHooks.TOOL_USING, ModifierHooks.TOOL_ACTION, ModifierHooks.ENTITY_INTERACT, ModifierHooks.BREAK_SPEED, ModifierHooks.BLOCK_BREAK, ModifierHooks.MELEE_DAMAGE, ModifierHooks.ENCHANTMENTS, ModifierHooks.ELYTRA_FLIGHT, ModifierHooks.INVENTORY_TICK, ModifierHooks.BOW_AMMO);
     }
 
     @Override
@@ -305,7 +310,18 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
                         if (energyContainer != null && !energyContainer.isEmpty()) {
                             energyContainer.extract(MekanismConfig.gear.mekaToolEnergyUsageWeapon.get().multiply(unitDamage / 4D), Action.EXECUTE, AutomationType.MANUAL);
                         }
+                        FloatingLong energyCost = MekanismConfig.gear.mekaToolEnergyUsageWeapon.get().multiply(unitDamage / 4D);
+                        FloatingLong energy = energyContainer == null ? FloatingLong.ZERO : energyContainer.getEnergy();
+                        if (energy.smallerThan(energyCost)) {
+                            double bonusDamage = unitDamage * energy.divideToLevel(energyCost);
+                            if(bonusDamage > 0){
+                                return v1 + (float) bonusDamage;
+                            }
+                        }
                     }
+                }
+                if(ModList.get().isLoaded("mekaweapons")){
+                    return v1 * (TicEXMekanismWeaponsUtils.getAmplifier(stack) + 1);
                 }
             }
         }
@@ -421,5 +437,13 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
             }
         }
 
+    }
+
+    @Override
+    public @NotNull ItemStack findAmmo(IToolStackView iToolStackView, ModifierEntry modifierEntry, LivingEntity livingEntity, ItemStack itemStack, Predicate<ItemStack> predicate) {
+        if(ModList.get().isLoaded("mekaweapons")){
+            return new ItemStack(TicEXRegistry.MEKANIC_ARROW.get());
+        }
+        return new ItemStack(Items.ARROW);
     }
 }

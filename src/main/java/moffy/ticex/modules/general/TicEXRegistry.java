@@ -151,7 +151,6 @@ public class TicEXRegistry {
     );
 
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
-    public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
 
     public static RegistryObject<TypeAwareRecipeSerializer<EmbossmentCastingRecipe>> CASTING_EMBOSSMENT_RECIPE_SERIALIZER = null;
     public static RegistryObject<RecipeSerializer<EmbossmentBuildingRecipe>> BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = null;
@@ -192,7 +191,9 @@ public class TicEXRegistry {
     public static RegistryObject<Item> MODEM_CORE = null;
     public static RegistryObject<Item> PSIONIZING_RADIATION_CORE = null;
     public static RegistryObject<Item> SOCKET_CORE = null;
+
     public static RegistryObject<Item> ENDESTSHOT_ARROW = null;
+    public static RegistryObject<Item> MEKANIC_ARROW = null;
 
     public static ItemObject<ToolPartItem> SLASHBLADE_BLADE = null;
     public static ItemObject<ToolPartItem> SLASHBLADE_SAYA = null;
@@ -206,6 +207,8 @@ public class TicEXRegistry {
     public static ItemObject<ToolPartItem> CATALYST_KINETIC_GUN = null;
     public static ItemObject<ToolPartItem> CATALYST_IRONS_SPELLBOOK = null;
     public static ItemObject<ToolPartItem> CATALYST_MEKA_TOOL = null;
+    public static ItemObject<ToolPartItem> CATALYST_MEKA_TANA = null;
+    public static ItemObject<ToolPartItem> CATALYST_MEKA_BOW = null;
 
     public static ItemObject<? extends Item> REFORGED_SLASHBLADE = null;
     public static ItemObject<? extends Item> BLITZ_GUN = null;
@@ -235,6 +238,7 @@ public class TicEXRegistry {
     public static RegistryObject<EntityType<?>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
     public static RegistryObject<EntityType<?>> ENDESTSHOT_PROJECTILE = null;
     public static RegistryObject<EntityType<?>> RESONANCE_TOOL_PROJECTILE = null;
+    public static RegistryObject<EntityType<?>> MEKANIC_PROJECTILE = null;
 
     public static RegistryObject<Attribute> HEALING_RECEIVED = null;
     public static RegistryObject<Attribute> DAMAGE_TAKEN = null;
@@ -296,6 +300,9 @@ public class TicEXRegistry {
         acceptCatalystArmor(output, CATALYST_MEKASUIT);
         acceptCatalystArmor(output, CATALYST_GEM);
         acceptPart(output, CATALYST_SLASHBLADE);
+        acceptPart(output, CATALYST_MEKA_TOOL);
+        acceptPart(output, CATALYST_MEKA_TANA);
+        acceptTool(output, CATALYST_MEKA_BOW);
         //acceptPart(output, CATALYST_KINETIC_GUN);
         //acceptPart(output, CATALYST_IRONS_SPELLBOOK);
 

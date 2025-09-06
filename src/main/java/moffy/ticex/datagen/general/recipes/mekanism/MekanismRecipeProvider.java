@@ -4,6 +4,7 @@ import mekanism.api.datagen.recipe.builder.PressurizedReactionRecipeBuilder;
 import mekanism.api.recipes.ingredients.creator.IngredientCreatorAccess;
 import mekanism.common.registries.MekanismGases;
 import mekanism.common.registries.MekanismItems;
+import meranha.mekaweapons.MekaWeapons;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.IEmbossmentToolRecipeHelper;
@@ -18,6 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.crafting.DifferenceIngredient;
+import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
+import net.minecraftforge.common.crafting.conditions.NotCondition;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingRecipe;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
@@ -36,14 +39,35 @@ public class MekanismRecipeProvider implements ITicEXRecipeHelper, IEmbossmentTo
 
         if(TicEXRegistry.MEKANIC_MODIFIER != null) {
             SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.MEKANIC_MODIFIER.getId(), Ingredient.of(
-                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.HELMET),
-                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.CHESTPLATE),
-                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.LEGGINGS),
-                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.BOOTS),
-                    TicEXRegistry.CATALYST_MEKA_TOOL.get()
+                    TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.HELMET)
             ))
-                    .setTools(TinkerTags.Items.MULTIPART_TOOL)
-                    .save(topConsumer, prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder));
+                    .setTools(TinkerTags.Items.HELMETS)
+                    .save(topConsumer, prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder).withSuffix("_helmet"));
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.MEKANIC_MODIFIER.getId(), Ingredient.of(
+                            TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.CHESTPLATE)
+                    ))
+                    .setTools(TinkerTags.Items.CHESTPLATES)
+                    .save(topConsumer, prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder).withSuffix("_chestplate"));
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.MEKANIC_MODIFIER.getId(), Ingredient.of(
+                            TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.LEGGINGS)
+                    ))
+                    .setTools(TinkerTags.Items.LEGGINGS)
+                    .save(topConsumer, prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder).withSuffix("_leggings"));
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.MEKANIC_MODIFIER.getId(), Ingredient.of(
+                            TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.BOOTS)
+                    ))
+                    .setTools(TinkerTags.Items.BOOTS)
+                    .save(topConsumer, prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder).withSuffix("_boots"));
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.MEKANIC_MODIFIER.getId(), Ingredient.of(
+                            TicEXRegistry.CATALYST_MEKA_TOOL.get()
+                    ))
+                    .setTools(TinkerTags.Items.HARVEST)
+                    .save(topConsumer, prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder).withSuffix("_harvest"));
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.MEKANIC_MODIFIER.getId(), Ingredient.of(
+                            TicEXRegistry.CATALYST_MEKA_TOOL.get()
+                    ))
+                    .setTools(TinkerTags.Items.MELEE_WEAPON)
+                    .save(withCondition(topConsumer, new NotCondition(new ModLoadedCondition("mekaweapons"))), prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder).withSuffix("_melee"));
         }
 
         if (TicEXRegistry.RADIATION_SHELDING_CORE != null) {
@@ -74,6 +98,24 @@ public class MekanismRecipeProvider implements ITicEXRecipeHelper, IEmbossmentTo
                     .outputSize(1)
                     .save(topConsumer, prefix(TicEXRegistry.MEKA_EDGE, buildingFolder));
         }
+
+        Consumer<FinishedRecipe> weaponsConsumer = withCondition(topConsumer, new ModLoadedCondition("mekaweapons"));
+        if(TicEXRegistry.CATALYST_MEKA_TANA != null){
+            embossmentCasting(weaponsConsumer, TicEXRegistry.CATALYST_MEKA_TANA.get(), 1, MekaWeapons.MEKA_TANA.get(), true, prefix(TicEXRegistry.CATALYST_MEKA_TANA.get().getStatType(), partsCastingFolder));
+        }
+        if(TicEXRegistry.CATALYST_MEKA_BOW != null){
+            embossmentCasting(weaponsConsumer, TicEXRegistry.CATALYST_MEKA_BOW.get(), 1, MekaWeapons.MEKA_BOW.get(), true, prefix(TicEXRegistry.CATALYST_MEKA_BOW.get().getStatType(), partsCastingFolder));
+        }
+        SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.MEKANIC_MODIFIER.getId(), Ingredient.of(
+                        TicEXRegistry.CATALYST_MEKA_TANA.get()
+                ))
+                .setTools(TinkerTags.Items.MELEE_WEAPON)
+                .save(weaponsConsumer, prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder).withSuffix("_melee_weapons"));
+        SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.MEKANIC_MODIFIER.getId(), Ingredient.of(
+                        TicEXRegistry.CATALYST_MEKA_BOW.get()
+                ))
+                .setTools(TinkerTags.Items.RANGED)
+                .save(weaponsConsumer, prefix(TicEXRegistry.MEKANIC_MODIFIER, slotlessFolder).withSuffix("_ranged_weapons"));
     }
 
     public void buildArmorRecipes(Consumer<FinishedRecipe> topConsumer) {

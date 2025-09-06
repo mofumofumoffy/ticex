@@ -12,6 +12,7 @@ import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import moffy.ticex.item.modifiable.ModifiableMekaTool;
 import moffy.ticex.lib.CatalystMaterialStatsType;
+import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
 import moffy.ticex.modifier.ModifierMekanic;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
@@ -26,6 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
@@ -36,14 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicEXMekanismModule implements AddonModule {
-
-    public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
-
-    public static final String ADD_MEKAPLATE_HELMET_MODULES = "add_mekaplate_helmet_modules";
-    public static final String ADD_MEKAPLATE_CHESTPLATE_MODULES = "add_mekaplate_chestplate_modules";
-    public static final String ADD_MEKAPLATE_LEGGINGS_MODULES = "add_mekaplate_leggings_modules";
-    public static final String ADD_MEKAPLATE_BOOTS_MODULES = "add_mekaplate_boots_modules";
-    public static final String ADD_MEKA_TOOL_MODULES = "add_modifiable_meka_tool_modules";
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
@@ -94,6 +88,10 @@ public class TicEXMekanismModule implements AddonModule {
                 .decoder(ConfigSyncToClientPacket::new)
                 .consumerMainThread(ConfigSyncToClientPacket::handle)
                 .add();
+
+        if(ModList.get().isLoaded("mekaweapons")){
+            TicEXMekanismWeaponsUtils.register();
+        }
     }
 
     @OnlyIn(Dist.CLIENT)

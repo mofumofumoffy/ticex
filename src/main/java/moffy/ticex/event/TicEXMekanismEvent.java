@@ -32,6 +32,7 @@ import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
 import moffy.ticex.lib.modules.mekanism.interfaces.IAbsorbableItem;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
+import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -59,7 +60,9 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
+import slimeknights.tconstruct.common.TinkerTags;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -70,7 +73,7 @@ import java.util.function.Predicate;
 
 public class TicEXMekanismEvent {
     public static final UUID ATTACK_DAMAGE_ADDITION = UUID.fromString("435fee9c-f619-40fd-96a3-f9a7d75ec04a");
-    public static final UUID ATTACK_SPEED_ADDITION = UUID.fromString("d94399a2-ce80-42cb-855d-29d1e93dc588");
+    public static final UUID ATTACK_DAMAGE_AMPLIFIER = UUID.fromString("f6847795-2993-4c62-9532-f34c8c0a8acf");
 
     public static void onModifyAttribute(ItemAttributeModifierEvent event){
         ItemStack stack = event.getItemStack();
@@ -90,14 +93,15 @@ public class TicEXMekanismEvent {
                             if (bonusDamage > 0) {
                                 ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
                                 builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_ADDITION, "Weapon modifier",
-                                        MekanismConfig.gear.mekaToolBaseDamage.get() + bonusDamage, AttributeModifier.Operation.ADDITION));
-                                builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_ADDITION, "Weapon modifier",
-                                        MekanismConfig.gear.mekaToolAttackSpeed.get(), AttributeModifier.Operation.ADDITION));
+                                        bonusDamage, AttributeModifier.Operation.ADDITION));
                                 builder.build().forEach(event::addModifier);
                                 return;
                             }
                         }
                     }
+                }
+                if(ModList.get().isLoaded("mekaweapons")){
+                    event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_AMPLIFIER, "Weapon amplifier", TicEXMekanismWeaponsUtils.getAmplifier(stack), AttributeModifier.Operation.MULTIPLY_BASE));
                 }
             }
         }
