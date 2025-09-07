@@ -49,10 +49,6 @@ public class TicEXCuriosModule implements AddonModule {
         TicEXRegistry.EXHAUSTED_GLOVE = TicEXRegistry.ITEMS.register("exhausted_glove", () -> new GloveItem(new Item.Properties().stacksTo(1)));
         TicEXRegistry.RESONANCE_GAUNTLET = TicEXRegistry.ITEMS_EXTENDED.register("resonance_gauntlet", ()->new ModifiableGauntlet(new Item.Properties().stacksTo(1), TicEXRegistry.GAUNTLET_DEFINITION));
 
-        TicEXRegistry.INCOMPARABLE_CORE = TicEXRegistry.ITEMS.register("incomparable_core", () ->
-                new ItemReconstCore(new Properties(), "incomparable")
-        );
-
         TicEXRegistry.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.register("incomparable", ModifierIncomparable::new);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onLivingDeath);

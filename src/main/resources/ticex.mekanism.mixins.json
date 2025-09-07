@@ -16,6 +16,7 @@
   ],
   "client": [
     "AbstractArmorModelMixin",
+    "ElytraModelMixin",
     "HUDHandlerMixin"
   ],
   "server": [],

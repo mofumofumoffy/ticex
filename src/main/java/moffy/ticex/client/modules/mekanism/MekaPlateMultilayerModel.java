@@ -316,6 +316,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel {
             LivingEntity entity
     ) {
         ArmorQuads armorQuads = cache.getUnchecked(key(entity));
+        matrix.pushPose();
         render(
                 baseModel,
                 renderer,
@@ -328,6 +329,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel {
                 armorQuads.opaqueQuads(),
                 false
         );
+        matrix.popPose();
 
         if (type == EquipmentSlot.CHEST) {
             BoltRenderer boltRenderer = boltRenderMap.computeIfAbsent(entity.getUUID(), id -> new BoltRenderer());
@@ -364,19 +366,6 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel {
             boltRenderer.render(partialTicks, matrix, Minecraft.getInstance().renderBuffers().bufferSource());
             matrix.popPose();
         }
-
-        render(
-                baseModel,
-                renderer,
-                matrix,
-                light,
-                overlayLight,
-                Color.WHITE,
-                hasEffect,
-                entity,
-                armorQuads.transparentQuads(),
-                true
-        );
     }
 
     private void render(

@@ -11,6 +11,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import slimeknights.tconstruct.library.client.armor.AbstractArmorModel;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.tools.data.ModifierIds;
 
 @Mixin(value = AbstractArmorModel.class, remap = false)
 public class AbstractArmorModelMixin {
@@ -22,8 +25,11 @@ public class AbstractArmorModelMixin {
             method = "setup"
     )
     protected void setup(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> base, CallbackInfo ci) {
-        if(stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
-            hasWings = false;
+        if(stack.getItem() instanceof IModifiable){
+            ToolStack toolStack = ToolStack.from(stack);
+            if(toolStack.getModifierLevel(ModifierIds.wings) < 1 && stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
+                hasWings = false;
+            }
         }
     }
 }
