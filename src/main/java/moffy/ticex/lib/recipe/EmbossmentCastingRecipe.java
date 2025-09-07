@@ -3,9 +3,11 @@ package moffy.ticex.lib.recipe;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.mantle.data.loadable.field.ContextKey;
 import slimeknights.mantle.data.loadable.field.LoadableField;
 import slimeknights.mantle.data.loadable.record.RecordLoadable;
@@ -15,6 +17,8 @@ import slimeknights.tconstruct.library.json.TinkerLoadables;
 import slimeknights.tconstruct.library.recipe.casting.ICastingContainer;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingRecipe;
 import slimeknights.tconstruct.library.tools.part.IMaterialItem;
+
+import java.util.Arrays;
 
 public class EmbossmentCastingRecipe extends MaterialCastingRecipe {
 
@@ -59,6 +63,12 @@ public class EmbossmentCastingRecipe extends MaterialCastingRecipe {
         ItemStack cast = inv.getStack();
         if (cast.hasTag()) {
             assembled.getOrCreateTag().put("embossed", cast.getTag());
+        }
+        for (EquipmentSlot slot : Arrays.stream(EquipmentSlot.values()).toArray(EquipmentSlot[]::new)) {
+            cast.getAttributeModifiers(slot).forEach((attribute, modifier) -> {
+                String id = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
+                assembled.getOrCreateTagElement("embossed_attributes/" + slot.getName()).putDouble(id, modifier.getAmount());
+            });
         }
         return assembled;
     }

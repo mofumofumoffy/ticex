@@ -1,14 +1,21 @@
 package moffy.ticex.lib.recipe;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.IntStream;
+
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.mantle.data.loadable.Loadables;
 import slimeknights.mantle.data.loadable.common.IngredientLoadable;
 import slimeknights.mantle.data.loadable.field.ContextKey;
@@ -30,22 +37,22 @@ import slimeknights.tconstruct.library.tools.part.IMaterialItem;
 public class EmbossmentBuildingRecipe extends ToolBuildingRecipe {
 
     public static final RecordLoadable<EmbossmentBuildingRecipe> LOADER = RecordLoadable.create(
-        ContextKey.ID.requiredField(),
-        LoadableRecipeSerializer.RECIPE_GROUP,
-        TinkerLoadables.MODIFIABLE_ITEM.requiredField("result", r -> r.output),
-        IntLoadable.FROM_ONE.defaultField("result_count", 1, true, r -> r.outputCount),
-        Loadables.RESOURCE_LOCATION.nullableField("slot_layout", r -> r.layoutSlot),
-        IngredientLoadable.DISALLOW_EMPTY.list(0).defaultField("extra_requirements", List.of(), r -> r.ingredients),
-        EmbossmentBuildingRecipe::new
+            ContextKey.ID.requiredField(),
+            LoadableRecipeSerializer.RECIPE_GROUP,
+            TinkerLoadables.MODIFIABLE_ITEM.requiredField("result", r -> r.output),
+            IntLoadable.FROM_ONE.defaultField("result_count", 1, true, r -> r.outputCount),
+            Loadables.RESOURCE_LOCATION.nullableField("slot_layout", r -> r.layoutSlot),
+            IngredientLoadable.DISALLOW_EMPTY.list(0).defaultField("extra_requirements", List.of(), r -> r.ingredients),
+            EmbossmentBuildingRecipe::new
     );
 
     public EmbossmentBuildingRecipe(
-        ResourceLocation id,
-        String group,
-        IModifiable output,
-        int outputCount,
-        ResourceLocation layoutSlot,
-        List<Ingredient> ingredients
+            ResourceLocation id,
+            String group,
+            IModifiable output,
+            int outputCount,
+            ResourceLocation layoutSlot,
+            List<Ingredient> ingredients
     ) {
         super(id, group, output, outputCount, layoutSlot, ingredients);
     }
@@ -58,12 +65,12 @@ public class EmbossmentBuildingRecipe extends ToolBuildingRecipe {
     @Override
     public RecipeResult<LazyToolStack> getValidatedResult(ITinkerStationContainer inv, RegistryAccess access) {
         List<MaterialVariant> materials = IntStream.range(0, ToolPartsHook.parts(output.getToolDefinition()).size())
-            .mapToObj(i -> MaterialVariant.of(IMaterialItem.getMaterialFromStack(inv.getInput(i))))
-            .toList();
+                .mapToObj(i -> MaterialVariant.of(IMaterialItem.getMaterialFromStack(inv.getInput(i))))
+                .toList();
         ItemStack resultStack = ToolStack.createTool(
-            output.asItem(),
-            output.getToolDefinition(),
-            new MaterialNBT(materials)
+                output.asItem(),
+                output.getToolDefinition(),
+                new MaterialNBT(materials)
         ).createStack(outputCount);
         IntStream.range(0, ToolPartsHook.parts(output.getToolDefinition()).size()).forEach(i -> {
             ItemStack inputStack = inv.getInput(i);
@@ -75,6 +82,20 @@ public class EmbossmentBuildingRecipe extends ToolBuildingRecipe {
                     CompoundTag embossedTag = inputNBT.getCompound("embossed");
                     for (String key : embossedTag.getAllKeys()) {
                         resultNBT.put(key, embossedTag.get(key));
+                    }
+                }
+                for (EquipmentSlot slot : Arrays.stream(EquipmentSlot.values()).toArray(EquipmentSlot[]::new)) {
+                    if (inputNBT.contains("embossed_attributes/" + slot.getName())) {
+                        CompoundTag attrTag = inputNBT.getCompound("embossed_attributes/" + slot.getName());
+                        for (String key : attrTag.getAllKeys()) {
+                            double val = attrTag.getDouble(key);
+                            Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(key));
+                            if (attribute != null) {
+                                UUID uuid = UUID.nameUUIDFromBytes(("embossed" + key + slot.getName()).getBytes());
+                                AttributeModifier modifier = new AttributeModifier(uuid, "embossed_" + key, val, AttributeModifier.Operation.ADDITION);
+                                resultStack.addAttributeModifier(attribute, modifier, slot);
+                            }
+                        }
                     }
                 }
             }
