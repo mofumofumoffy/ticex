@@ -111,42 +111,8 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
     @Override
     public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
         ItemStack toolStack = context.getToolStack().copy();
-        ItemStack inputStack = context.getInputStack(inputIndex);
 
-        if (toolStack.getItem() instanceof IModifiable) {
-            ToolStack armor = ToolStack.from(toolStack);
-
-            if (inputStack.hasTag() && inputStack.getTag().contains("embossed")) {
-                CompoundTag resultNBT = toolStack.getOrCreateTag();
-                CompoundTag embossedTag = inputStack.getTag().getCompound("embossed");
-                for (String key : embossedTag.getAllKeys()) {
-                    resultNBT.put(key, embossedTag.get(key));
-                }
-            }
-
-            if (toolStack.hasTag()) {
-                CompoundTag resultNBT = toolStack.getOrCreateTag();
-                CompoundTag toolTag = toolStack.getTag();
-                for (String key : toolTag.getAllKeys()) {
-                    resultNBT.put(key, toolTag.get(key));
-                }
-            }
-
-            if (toolStack.hasCustomHoverName()) {
-                toolStack.setHoverName(toolStack.getHoverName().copy());
-            }
-
-            ToolStack mekaPlate = ToolStack.from(toolStack);
-            if (armor.getModifierLevel(TicEXRegistry.REBIRTH_MODIFIER.get()) == 0) {
-                mekaPlate.addModifier(TicEXRegistry.REBIRTH_MODIFIER.get().getId(), 1);
-            }
-
-
-            context.setToolStack(mekaPlate.createStack());
-
-            return true;
-        }
-        return false;
+        return toolStack.getItem() instanceof IModifiable;
     }
 
     @Override

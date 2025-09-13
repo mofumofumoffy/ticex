@@ -2,6 +2,7 @@ package moffy.ticex.lib.recipe;
 
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -57,9 +58,7 @@ public class EmbossmentCastingRecipe extends MaterialCastingRecipe {
     public ItemStack assemble(ICastingContainer inv, RegistryAccess access) {
         ItemStack assembled = super.assemble(inv, access);
         ItemStack cast = inv.getStack();
-        if (cast.hasTag()) {
-            assembled.getOrCreateTag().put("embossed", cast.getTag());
-        }
+        assembled.getOrCreateTag().put("embossed", cast.save(new CompoundTag()));
         return assembled;
     }
 }
