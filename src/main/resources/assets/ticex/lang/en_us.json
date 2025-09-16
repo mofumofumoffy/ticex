@@ -231,6 +231,7 @@
   "recipe.ticex.not_allowed_enchantment_slashblade": "This modification DOESN'T support following enchantments: Sharpness, Smite, Bane of Arthropods, Fire Aspect, Knockback, Looting, Unbreaking, and Mending.",
   "recipe.ticex.not_be_witched": "This modification requires witched reforged-slashblade(has both of enchantments and custom name).",
   "recipe.ticex.needed_max_level": "This modification requires that both the tool and book enchantments are at MAXIMUM LEVEL.",
+  "recipe.ticex.modifier.mekanic_requirements": "Mekanic requires Netherite and Reinforced V to apply",
   "recipe.ticex.modifier.evolved_requirements_1": "§9Draconium§r-Evolved requires Netherite and Reinforced V to apply",
   "recipe.ticex.modifier.evolved_requirements_2": "§5Wyvern§r-Evolved requires §9Draconium§r-Evolved to apply",
   "recipe.ticex.modifier.evolved_requirements_3": "§eDraconic§r-Evolved requires §5Wyvern§r-Evolved to apply",

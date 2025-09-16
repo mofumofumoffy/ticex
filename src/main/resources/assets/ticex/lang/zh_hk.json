@@ -1,8 +1,9 @@
 {
   "itemGroup.tab.ticex": "TiCEX",
-
   "item.ticex.reconstruction_core": "星構核心",
   "item.ticex.reconstruction_core.desc": "羣星的召喚",
+  "item.ticex.flickering_reconstruction_core": "閃耀星構核心",
+  "item.ticex.flickering_reconstruction_core.desc": "星之信號",
   "item.ticex.etheric_ingot": "以太錠",
   "item.ticex.molten_reconstruction_core_bucket": "星構之流桶",
   "item.ticex.molten_infinity_bucket": "無盡之流桶",
@@ -15,7 +16,6 @@
   "item.ticex.chaotic_crystal": "混沌晶",
   "item.ticex.exhausted_glove": "力盡手套",
   "item.ticex.exhausted_glove.desc": "向三次栽於強敵之手的英雄致敬。",
-
   "item.ticex.mekaplate_helmet": "Meka鑲板頭盔",
   "item.ticex.mekaplate_chestplate": "Meka鑲板胸甲",
   "item.ticex.mekaplate_leggings": "Meka鑲板護腿",
@@ -25,38 +25,37 @@
   "item.ticex.singular_gem_leggings": "Singular重力護腿",
   "item.ticex.singular_gem_boots": "Singular颶風長靴",
   "item.ticex.reforged_slashblade": "重鑄拔刀劍",
+  "item.ticex.blitz_gun": "閃擊槍",
+  "item.ticex.revival_spellbook_irons": "復興法術書",
+  "item.ticex.meka_tool": "MekaEdge",
   "item.ticex.resonance_gauntlet": "[WIP] 諧振手套",
-
+  "tagtype.ticex.catalyst": "星構素催化劑",
   "item.ticex.catalyst_mekasuit_helmet": "§b星構素催化劑 - MekaSuit頭盔",
   "item.ticex.catalyst_mekasuit_chestplate": "§b星構素催化劑 - MekaSuit胸甲",
   "item.ticex.catalyst_mekasuit_leggings": "§b星構素催化劑 - MekaSuit護腿",
   "item.ticex.catalyst_mekasuit_boots": "§b星構素催化劑 - MekaSuit靴子",
   "item.ticex.catalyst_meka_tool": "§b星構素催化劑 - Meka-Tool",
+  "item.ticex.catalyst_slashblade": "星構素催化劑 - 拔刀劍",
+  "item.ticex.catalyst_kinetic_gun": "§b星構素催化劑 - 現代實彈槍械",
+  "item.ticex.catalyst_irons_spellbook": "§b星構素催化劑 - 復興法術書",
   "item.ticex.catalyst_gem_helmet": "§b星構素催化劑 - 深淵頭盔",
   "item.ticex.catalyst_gem_chestplate": "§b星構素催化劑 - 煉獄胸甲",
   "item.ticex.catalyst_gem_leggings": "§b星構素催化劑 - 重力護腿",
   "item.ticex.catalyst_gem_boots": "§b星構素催化劑 - 颶風長靴",
-
-  "item.ticex.catalyst_slashblade": "星構素催化劑 - 拔刀劍",
-
   "item.ticex.slashblade_blade": "刀身",
   "item.ticex.slashblade_saya": "刀鞘",
-
   "item.ticex.slashblade_blade_cast": "刀身金鑄模",
   "item.ticex.slashblade_blade_sand_cast": "刀身砂鑄模",
   "item.ticex.slashblade_blade_red_sand_cast": "刀身紅砂鑄模",
   "item.ticex.slashblade_saya_cast": "刀鞘金鑄模",
   "item.ticex.slashblade_saya_sand_cast": "刀鞘砂鑄模",
   "item.ticex.slashblade_saya_red_sand_cast": "刀鞘紅砂鑄模",
-
-  "tagtype.ticex.catalyst": "星構素催化劑",
   "block.ticex.etheric_block": "以太塊",
   "block.ticex.seared_rf_furnace": "灼熱RF熔爐",
   "block.ticex.scorched_rf_furnace": "焦灼RF熔爐",
   "block.ticex.creative_seared_rf_furnace": "創造模式灼熱RF熔爐",
   "block.ticex.creative_scorched_rf_furnace": "創造模式焦灼RF熔爐",
   "block.ticex.fluid_transmuter": "流體轉化",
-
   "fluid.tconstruct.rf_furnace_fuel_0": "基礎級RF熔爐燃料",
   "fluid.tconstruct.rf_furnace_fuel_1": "優良級RF熔爐燃料",
   "fluid.tconstruct.rf_furnace_fuel_2": "卓越級RF熔爐燃料",
@@ -82,7 +81,6 @@
   "fluid_type.ticex.molten_neutron": "超密中子流體",
   "fluid_type.ticex.molten_crystal_matrix": "非晶水晶矩陣",
   "fluid.tconstruct.molten_etheric": "以太之淚",
-
   "material.ticex.infinity": "無盡",
   "material.ticex.neutron": "中子素",
   "material.ticex.crystal_matrix": "水晶矩陣",
@@ -91,10 +89,8 @@
   "material.ticex.wyvern": "飛龍",
   "material.ticex.draconic": "神龍",
   "material.ticex.chaotic": "混沌",
-
   "pattern.ticex.slashblade_blade": "刀身",
   "pattern.ticex.slashblade_saya": "刀鞘",
-
   "modifier.ticex.omnipotence": "全能",
   "modifier.ticex.omnipotence.flavor": "萬物終將歸一！",
   "modifier.ticex.omnipotence.description": "工具獲得秒殺與瞬間挖掘能力",
@@ -122,10 +118,10 @@
   "modifier.ticex.aftershock": "餘震",
   "modifier.ticex.aftershock.flavor": "禁忌咒語！",
   "modifier.ticex.aftershock.description": "工具在滿蓄力攻擊時附加魔法傷害",
+  "modifier.ticex.rebirth": "重生",
   "modifier.ticex.endestshot": "最終之界彈",
   "modifier.ticex.endestshot.flavor": "\"虛無的召喚\"",
   "modifier.ticex.endestshot.description": "耗費耐久度以填充“最終之界彈”，在目的地生成類似「最終之界珍珠」 的黑洞",
-  "modifier.ticex.rebirth": "重生",
   "modifier.ticex.rebirth.flavor": "你好，世界！",
   "modifier.ticex.rebirth.description": "工具繼承材料的基礎能力",
   "modifier.ticex.mekanic": "Mekanic",
@@ -205,28 +201,28 @@
   "modifier.ticex.psionizing_radiation.flavor": "請保密。",
   "modifier.ticex.psionizing_radiation.description": "獲得擁有高Psi能量感受度的工具時，將啟動該術式。 / +1法術插槽",
   "modifier.ticex.socket": "插座",
-
+  "modifier.ticex.socket.flavor": "Spelling Gadget!",
   "modifier.ticex.socket.description": "+1 法術插槽",
   "modifier.ticex.sensor": "感受器",
   "modifier.ticex.sensor.flavor": "木已成舟。",
   "modifier.ticex.sensor.description": "該工具能在不同環境下啟動術式。",
-
   "stat.tconstruct.harvest_tier.ticex.infinity": "無盡",
   "stat.ticex.catalyst_mekasuit_helmet": "催化劑(MekaSuit頭盔)",
   "stat.ticex.catalyst_mekasuit_chestplate": "催化劑(MekaSuit胸甲)",
   "stat.ticex.catalyst_mekasuit_leggings": "催化劑(MekaSuit護腿)",
   "stat.ticex.catalyst_mekasuit_boots": "催化劑(MekaSuit靴子)",
   "stat.ticex.catalyst_slashblade": "催化劑(拔刀劍)",
-
+  "stat.ticex.catalyst_kinetic_gun": "催化劑（現代實彈槍械）",
+  "stat.ticex.catalyst_irons_spellbook": "催化劑（復興法術書）",
   "recipe.ticex.embossment_not_allowed": "待嵌入物品不符合應用條件",
   "recipe.ticex.not_allowed_enchantment_slashblade": "不支援以下附魔：鋒利，不死剋星，節肢剋星，燃燒，擊退，掠奪，耐久，修補。",
   "recipe.ticex.not_be_witched": "以下配方需要妖刀的升級形態(含有附魔與自定名稱)",
   "recipe.ticex.needed_max_level": "以下配方需要裝備與書達到該附魔的最大等級。",
+  "recipe.ticex.modifier.mekanic_requirements": "Mekanic requires Netherite and Reinforced V to apply",
   "recipe.ticex.modifier.evolved_requirements_1": "§9龍§r-覺醒需下界合金與強化V級以應用",
   "recipe.ticex.modifier.evolved_requirements_2": "§5飛龍§r-覺醒需§9龍§r-覺醒以應用",
   "recipe.ticex.modifier.evolved_requirements_3": "§e神龍§r-覺醒需§5飛龍§r-覺醒以應用",
   "recipe.ticex.modifier.evolved_requirements_4": "§8混沌§r-覺醒需§e神龍§r-覺醒以應用",
-
   "gui.ticex.seram_gear": "星構素裝備",
   "gui.ticex.seram_gear.description": "星構素裝備是藉助星之力重構的新世代護甲",
   "gui.ticex.reforged_slashblade": "重鑄拔刀劍",
@@ -235,28 +231,18 @@
   "gui.ticex.blitz_gun.description": "閃擊槍是藉助星之力重構的精準且迅捷的工具",
   "gui.ticex.revival_spellbook_irons": "復興法術書",
   "gui.ticex.revival_spellbook_irons.description": "復興法術書是藉助星之力重構的神秘工具",
-
-  "curios.identifier.incomparable_head": "無與倫比頭盔",
-  "curios.identifier.incomparable_chest": "無與倫比胸甲",
-  "curios.identifier.incomparable_legs": "無與倫比護腿",
-  "curios.identifier.incomparable_feet": "無與倫比靴子",
-  "curios.identifier.incomparable_mainhand": "無與倫比主手工具",
-  "curios.identifier.incomparable_offhand": "無與倫比副手工具",
-
+  "gui.ticex.meka_edge": "MekaEdge",
   "attribute.ticex.damage_taken": "承受傷害",
   "attribute.ticex.healing_received": "獲得治療",
-
-  "item.ticex.flickering_reconstruction_core": "閃耀星構核心",
-  "item.ticex.flickering_reconstruction_core.desc": "星之信號",
-
-  "item.ticex.blitz_gun": "閃擊槍",
-  "item.ticex.revival_spellbook_irons": "復興法術書",
-
-  "item.ticex.catalyst_kinetic_gun": "§b星構素催化劑 - 現代實彈槍械",
-  "item.ticex.catalyst_irons_spellbook": "§b星構素催化劑 - 復興法術書",
-
-  "stat.ticex.catalyst_kinetic_gun": "催化劑（現代實彈槍械）",
-  "stat.ticex.catalyst_irons_spellbook": "催化劑（復興法術書）",
+  "ticex.modid": "TicEX",
+  "key.ticex.shoot_gauntlet": "Shoot Gauntlet",
   "jei.ticex.fluid_transmuter.title": "流體轉化",
-  "gui.ticex.fluid_transmuter": "流體轉化器"
+  "gui.ticex.fluid_transmuter": "流體轉化器",
+  "curios.identifier.incomparable_chest": "無與倫比胸甲",
+  "curios.identifier.incomparable_feet": "無與倫比靴子",
+  "curios.identifier.incomparable_head": "無與倫比頭盔",
+  "curios.identifier.incomparable_legs": "無與倫比護腿",
+  "curios.identifier.incomparable_mainhand": "無與倫比主手工具",
+  "curios.identifier.incomparable_offhand": "無與倫比副手工具",
+  "gui.ticex.meka_tool": "MekaEdge"
 }

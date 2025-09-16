@@ -58,10 +58,11 @@ public class TicEXAvaritiaEvent {
     public static void onPlayerTick(PlayerTickEvent event) {
         Player player = event.player;
         Abilities abilities = player.getAbilities();
-        if (TicEXAvaritiaUtils.hasCelestial(player)) {
+        if (!abilities.mayfly && TicEXAvaritiaUtils.hasCelestial(player)) {
             abilities.mayfly = true;
+            player.onUpdateAbilities();
         }
-        player.onUpdateAbilities();
+
     }
 
     @SuppressWarnings("unchecked")

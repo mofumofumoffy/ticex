@@ -1,5 +1,7 @@
 package moffy.ticex.modifier;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -49,6 +51,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -80,8 +83,10 @@ import slimeknights.tconstruct.library.modifiers.hook.armor.ElytraFlightModifier
 import slimeknights.tconstruct.library.modifiers.hook.behavior.EnchantmentModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.ToolActionModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.ToolDamageModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.build.VolatileDataModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeDamageModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.display.RequirementsModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.EntityInteractionModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InteractionSource;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
@@ -100,12 +105,13 @@ import slimeknights.tconstruct.library.tools.nbt.IToolContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.tools.data.ModifierIds;
 
-public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModifierHook, ProvidePropertyModifierHook, ToolActionModifierHook,UsingToolModifierHook, ToolDamageModifierHook, EntityInteractionModifierHook, BreakSpeedModifierHook, BlockBreakModifierHook, MeleeDamageModifierHook, EnchantmentModifierHook, ElytraFlightModifierHook, InventoryTickModifierHook, BowAmmoModifierHook {
+public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModifierHook, ProvidePropertyModifierHook, ToolActionModifierHook,UsingToolModifierHook, ToolDamageModifierHook, EntityInteractionModifierHook, BreakSpeedModifierHook, BlockBreakModifierHook, MeleeDamageModifierHook, EnchantmentModifierHook, ElytraFlightModifierHook, InventoryTickModifierHook, BowAmmoModifierHook, ValidateModifierHook, RequirementsModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK, TicEXRegistry.PROPERTY_PROVIDER_HOOK, ModifierHooks.TOOL_USING, ModifierHooks.TOOL_ACTION, ModifierHooks.ENTITY_INTERACT, ModifierHooks.BREAK_SPEED, ModifierHooks.BLOCK_BREAK, ModifierHooks.MELEE_DAMAGE, ModifierHooks.ENCHANTMENTS, ModifierHooks.ELYTRA_FLIGHT, ModifierHooks.INVENTORY_TICK, ModifierHooks.BOW_AMMO);
+        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK, TicEXRegistry.PROPERTY_PROVIDER_HOOK, ModifierHooks.TOOL_USING, ModifierHooks.TOOL_ACTION, ModifierHooks.ENTITY_INTERACT, ModifierHooks.BREAK_SPEED, ModifierHooks.BLOCK_BREAK, ModifierHooks.MELEE_DAMAGE, ModifierHooks.ENCHANTMENTS, ModifierHooks.ELYTRA_FLIGHT, ModifierHooks.INVENTORY_TICK, ModifierHooks.BOW_AMMO, ModifierHooks.VALIDATE, ModifierHooks.REQUIREMENTS);
     }
 
     @Override
@@ -411,5 +417,31 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
             return new ItemStack(TicEXRegistry.MEKANIC_ARROW.get());
         }
         return new ItemStack(Items.ARROW);
+    }
+
+    @Override
+    public boolean shouldDisplay(boolean advanced) {
+        return advanced;
+    }
+
+    @Override
+    public @NotNull List<ModifierEntry> displayModifiers(ModifierEntry entry) {
+        List<ModifierEntry> entries = new ArrayList<>();
+        if (entry.getLevel() == 1) {
+            entries.add(new ModifierEntry(ModifierIds.reinforced, 5));
+            entries.add(new ModifierEntry(ModifierIds.netherite, 1));
+        }
+        return entries;
+    }
+
+    @Override
+    public Component validate(@NotNull IToolStackView tool, ModifierEntry entry) {
+        if (
+                entry.getLevel() == 1 &&
+                        (tool.getModifierLevel(ModifierIds.reinforced) < 5 || tool.getModifierLevel(ModifierIds.netherite) < 1)
+        ) {
+            return Component.translatable("recipe.ticex.modifier.mekanic_requirements");
+        }
+        return null;
     }
 }
