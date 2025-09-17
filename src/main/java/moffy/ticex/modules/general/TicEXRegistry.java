@@ -289,6 +289,13 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> PSIONIZING_RADIATION_MODIFIER = null;
     public static StaticModifier<Modifier> SOCKET_MODIFIER = null;
     public static StaticModifier<Modifier> SENSOR_MODIFIER = null;
+    public static DynamicModifier AHRIM = null;
+    public static DynamicModifier DHAROK = null;
+    public static DynamicModifier GUTHAN = null;
+    public static DynamicModifier TORAG = null;
+    public static DynamicModifier VERAC = null;
+    public static DynamicModifier KARIL = null;
+
 
     public static Tier INFINITY_TIER;
 
