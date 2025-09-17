@@ -10,12 +10,12 @@ import slimeknights.tconstruct.library.modifiers.util.DynamicModifier;
 public class TicEXBotaniaModule implements AddonModule {
     @Override
     public void init(FMLJavaModLoadingContext context) {
-        TicEXRegistry.AHRIM = TicEXRegistry.MODIFIERS.registerDynamic("ahrim");
-        TicEXRegistry.DHAROK = TicEXRegistry.MODIFIERS.registerDynamic("dharok");
-        TicEXRegistry.GUTHAN = TicEXRegistry.MODIFIERS.registerDynamic("guthan");
-        TicEXRegistry.TORAG = TicEXRegistry.MODIFIERS.registerDynamic("torag");
-        TicEXRegistry.VERAC = TicEXRegistry.MODIFIERS.registerDynamic("verac");
-        TicEXRegistry.KARIL = TicEXRegistry.MODIFIERS.registerDynamic("karil");
+        TicEXRegistry.AHRIM_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("ahrim");
+        TicEXRegistry.DHAROK_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("dharok");
+        TicEXRegistry.GUTHAN_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("guthan");
+        TicEXRegistry.TORAG_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("torag");
+        TicEXRegistry.VERAC_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("verac");
+        TicEXRegistry.KARIL_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("karil");
 
         MinecraftForge.EVENT_BUS.addListener(TicEXBotaniaEvent::onCritical);
         MinecraftForge.EVENT_BUS.addListener(TicEXBotaniaEvent::onLivingAttack);
