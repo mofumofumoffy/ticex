@@ -44,59 +44,73 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
 
         //general
         if (TicEXRegistry.REBIRTH_MODIFIER != null) buildModifier(TicEXRegistry.REBIRTH_MODIFIER).levelDisplay(
-            ModifierLevelDisplay.NO_LEVELS
+                ModifierLevelDisplay.NO_LEVELS
         );
 
         //avaritia
         LootingModule WEAPON_LOOTING = LootingModule.builder()
-            .toolItem(ItemPredicate.or(ItemPredicate.set(Items.AIR), ItemPredicate.tag(MELEE)))
-            .level(10)
-            .weapon();
+                .toolItem(ItemPredicate.or(ItemPredicate.set(Items.AIR), ItemPredicate.tag(MELEE)))
+                .level(10)
+                .weapon();
         EnchantmentModule CONSTANT_FORTUNE = EnchantmentModule.builder(Enchantments.BLOCK_FORTUNE)
-            .toolItem(harvest)
-            .level(10)
-            .constant();
+                .toolItem(harvest)
+                .level(10)
+                .constant();
 
         if (TicEXRegistry.COSMIC_LUCK_MODIFIER != null) buildModifier(TicEXRegistry.COSMIC_LUCK_MODIFIER)
-            .addModules(WEAPON_LOOTING, CONSTANT_FORTUNE)
-            .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+                .addModules(WEAPON_LOOTING, CONSTANT_FORTUNE)
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
         if (TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER != null) buildModifier(TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER)
-            .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
-            .priority(125)
-            .addModule(new DurabilityBarColorModule(0xff0000))
-            .addModule(ReduceToolDamageModule.builder().flat(1.0f));
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
+                .priority(125)
+                .addModule(new DurabilityBarColorModule(0xff0000))
+                .addModule(ReduceToolDamageModule.builder().flat(1.0f));
         if (TicEXRegistry.TRANSCENDENTAL_MODIFIER != null) buildModifier(TicEXRegistry.TRANSCENDENTAL_MODIFIER)
-            .addModule(
-                AttributeModule.builder(TicEXRegistry.DAMAGE_TAKEN.get(), Operation.ADDITION)
-                    .unique("1dc2b568-1b38-47a0-97d6-ac83a390c67c")
-                    .eachLevel(-0.25f)
-            )
-            .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+                .addModule(
+                        AttributeModule.builder(TicEXRegistry.DAMAGE_TAKEN.get(), Operation.ADDITION)
+                                .unique("1dc2b568-1b38-47a0-97d6-ac83a390c67c")
+                                .eachLevel(-0.25f)
+                )
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
         if (TicEXRegistry.DENSE_MODIFIER != null) buildModifier(TicEXRegistry.DENSE_MODIFIER)
-            .addModule(StatBoostModule.add(ToolStats.KNOCKBACK_RESISTANCE).eachLevel(0.25f))
-            .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+                .addModule(StatBoostModule.add(ToolStats.KNOCKBACK_RESISTANCE).eachLevel(0.25f))
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
 
         //mekanism
         if (TicEXRegistry.RADIATION_SHIELDING_MODIFIER != null) buildModifier(
-            TicEXRegistry.RADIATION_SHIELDING_MODIFIER
+                TicEXRegistry.RADIATION_SHIELDING_MODIFIER
         ).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
 
         //draconicevolution
         if (TicEXRegistry.INJECT_MODIFIER != null) buildModifier(TicEXRegistry.INJECT_MODIFIER)
-            .addModules(
-                ModifierSlotModule.slot(SlotType.ABILITY).flat(1),
-                ModifierSlotModule.slot(SlotType.UPGRADE).flat(3)
-            )
-            .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+                .addModules(
+                        ModifierSlotModule.slot(SlotType.ABILITY).flat(1),
+                        ModifierSlotModule.slot(SlotType.UPGRADE).flat(3)
+                )
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
 
         //create
         if (TicEXRegistry.CARDBOARD_MODIFIER != null) buildModifier(TicEXRegistry.CARDBOARD_MODIFIER).levelDisplay(
-            ModifierLevelDisplay.NO_LEVELS
+                ModifierLevelDisplay.NO_LEVELS
         );
 
         //computercraft
         if (TicEXRegistry.MODEM_MODIFIER != null) buildModifier(TicEXRegistry.MODEM_MODIFIER)
-            .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
-            .addModule(ModifierSlotModule.slot(SlotType.ABILITY).flat(1));
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
+                .addModule(ModifierSlotModule.slot(SlotType.ABILITY).flat(1));
+
+        if (TicEXRegistry.AHRIM_MODIFIER != null) buildModifier(TicEXRegistry.AHRIM_MODIFIER)
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        if (TicEXRegistry.DHAROK_MODIFIER != null) buildModifier(TicEXRegistry.DHAROK_MODIFIER)
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        if (TicEXRegistry.GUTHAN_MODIFIER != null) buildModifier(TicEXRegistry.GUTHAN_MODIFIER)
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        if (TicEXRegistry.TORAG_MODIFIER != null) buildModifier(TicEXRegistry.TORAG_MODIFIER)
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        if (TicEXRegistry.VERAC_MODIFIER != null) buildModifier(TicEXRegistry.VERAC_MODIFIER)
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        if (TicEXRegistry.KARIL_MODIFIER != null) buildModifier(TicEXRegistry.KARIL_MODIFIER)
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+
     }
 }
