@@ -114,6 +114,6 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
                 .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
         if (TicEXRegistry.NECTAR_MODIFIER != null) buildModifier(TicEXRegistry.NECTAR_MODIFIER)
                 .levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
-                .addModule(ModifierSlotModule.slot(SlotType.DEFENSE).flat(1));
+                .addModule(ModifierSlotModule.slot(SlotType.DEFENSE).eachLevel(1));
     }
 }
