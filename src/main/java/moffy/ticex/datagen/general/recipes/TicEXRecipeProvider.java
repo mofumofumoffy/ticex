@@ -2,6 +2,7 @@ package moffy.ticex.datagen.general.recipes;
 
 import moffy.ticex.datagen.general.recipes.apotheosis.ApotheosisRecipeProvider;
 import moffy.ticex.datagen.general.recipes.avaritia.AvaritiaRecipeProvider;
+import moffy.ticex.datagen.general.recipes.botania.BotaniaRecipeProvider;
 import moffy.ticex.datagen.general.recipes.cc.CCRecipeProvider;
 import moffy.ticex.datagen.general.recipes.create.CreateRecipeProvider;
 import moffy.ticex.datagen.general.recipes.curios.CuriosRecipeProvider;
@@ -46,6 +47,7 @@ public class TicEXRecipeProvider extends RecipeProvider {
         if (ModList.get().isLoaded("irons_spellbooks")) new IronsRecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("projecte")) new PERecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("curios")) new CuriosRecipeProvider().buildRecipes(pWriter);
+        if (ModList.get().isLoaded("botania")) new BotaniaRecipeProvider().buildRecipes(pWriter);
     }
 
     public static InventoryChangeTrigger.TriggerInstance has(@NotNull ItemLike itemLike) {

@@ -64,13 +64,13 @@ public class TicEXRegistry {
 
     static {
         IntFunction<BlockBehaviour.Properties> solidProps = factor ->
-            builder(MapColor.COLOR_GRAY, SoundType.METAL)
-                .instrument(NoteBlockInstrument.BASEDRUM)
-                .requiresCorrectToolForDrops()
-                .strength(3.0F * factor, 9.0F * factor)
-                .isValidSpawn(
-                    (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
-                );
+                builder(MapColor.COLOR_GRAY, SoundType.METAL)
+                        .instrument(NoteBlockInstrument.BASEDRUM)
+                        .requiresCorrectToolForDrops()
+                        .strength(3.0F * factor, 9.0F * factor)
+                        .isValidSpawn(
+                                (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
+                        );
         SEARED = solidProps.apply(1);
     }
 
@@ -78,37 +78,37 @@ public class TicEXRegistry {
 
     static {
         IntFunction<BlockBehaviour.Properties> solidProps = factor ->
-            builder(MapColor.TERRACOTTA_BROWN, SoundType.BASALT)
-                .instrument(NoteBlockInstrument.BASEDRUM)
-                .requiresCorrectToolForDrops()
-                .strength(2.5F * factor, 8.0F * factor)
-                .isValidSpawn(
-                    (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
-                );
+                builder(MapColor.TERRACOTTA_BROWN, SoundType.BASALT)
+                        .instrument(NoteBlockInstrument.BASEDRUM)
+                        .requiresCorrectToolForDrops()
+                        .strength(2.5F * factor, 8.0F * factor)
+                        .isValidSpawn(
+                                (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
+                        );
         SCORCHED = solidProps.apply(1);
     }
 
     public static final TagKey<Item> KEY_MODIFIER_UNSTABLE = TagKey.create(
-        Registries.ITEM,
+            Registries.ITEM,
             new ResourceLocation(TicEX.MODID, "shader/unstable_modifier")
     );
 
     public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(
-        new ResourceLocation(TicEX.MODID, "mekaplate"),
-        SoundEvents.ARMOR_EQUIP_NETHERITE
+            new ResourceLocation(TicEX.MODID, "mekaplate"),
+            SoundEvents.ARMOR_EQUIP_NETHERITE
     );
     public static final ModifiableArmorMaterial SINGULAR_GEM_DEFINITION = ModifiableArmorMaterial.create(
-        new ResourceLocation(TicEX.MODID, "singular_gem"),
-        SoundEvents.ARMOR_EQUIP_NETHERITE
+            new ResourceLocation(TicEX.MODID, "singular_gem"),
+            SoundEvents.ARMOR_EQUIP_NETHERITE
     );
     public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(
-        new ResourceLocation(TicEX.MODID, "reforged_slashblade")
+            new ResourceLocation(TicEX.MODID, "reforged_slashblade")
     );
     public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(
-        new ResourceLocation(TicEX.MODID, "blitz_gun")
+            new ResourceLocation(TicEX.MODID, "blitz_gun")
     );
     public static final ToolDefinition SPELLBOOK_DEFINITION = ToolDefinition.create(
-        new ResourceLocation(TicEX.MODID, "revival_spellbook")
+            new ResourceLocation(TicEX.MODID, "revival_spellbook")
     );
     public static final ToolDefinition MEKA_TOOL_DEFINITION = ToolDefinition.create(
             new ResourceLocation(TicEX.MODID, "meka_edge")
@@ -119,35 +119,35 @@ public class TicEXRegistry {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
     public static final TicEXItemDeferredRegisterExtension ITEMS_EXTENDED = new TicEXItemDeferredRegisterExtension(
-        ITEMS,
-        TicEX.MODID
+            ITEMS,
+            TicEX.MODID
     );
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TicEX.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(
-        ForgeRegistries.BLOCK_ENTITY_TYPES,
-        TicEX.MODID
+            ForgeRegistries.BLOCK_ENTITY_TYPES,
+            TicEX.MODID
     );
     public static final FluidDeferredRegister FLUIDS = new FluidDeferredRegister(TicEX.MODID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(
-        ForgeRegistries.ENTITY_TYPES,
-        TicEX.MODID
+            ForgeRegistries.ENTITY_TYPES,
+            TicEX.MODID
     );
     public static final ModifierDeferredRegister MODIFIERS = ModifierDeferredRegister.create(TicEX.MODID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(
-        ForgeRegistries.ATTRIBUTES,
-        TicEX.MODID
+            ForgeRegistries.ATTRIBUTES,
+            TicEX.MODID
     );
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(
-        Registries.CREATIVE_MODE_TAB,
-        TicEX.MODID
+            Registries.CREATIVE_MODE_TAB,
+            TicEX.MODID
     );
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(
-        Registries.RECIPE_SERIALIZER,
-        TicEX.MODID
+            Registries.RECIPE_SERIALIZER,
+            TicEX.MODID
     );
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(
-        Registries.RECIPE_TYPE,
-        TicEX.MODID
+            Registries.RECIPE_TYPE,
+            TicEX.MODID
     );
     public static final MenuTypeDeferredRegister MENUS = new MenuTypeDeferredRegister(
             TicEX.MODID
@@ -196,6 +196,7 @@ public class TicEXRegistry {
     public static RegistryObject<Item> MODEM_CORE = null;
     public static RegistryObject<Item> PSIONIZING_RADIATION_CORE = null;
     public static RegistryObject<Item> SOCKET_CORE = null;
+    public static RegistryObject<Item> NECTAR_CORE = null;
 
     public static RegistryObject<Item> ENDESTSHOT_ARROW = null;
     public static RegistryObject<Item> MEKANIC_ARROW = null;
@@ -295,6 +296,7 @@ public class TicEXRegistry {
     public static DynamicModifier TORAG_MODIFIER = null;
     public static DynamicModifier VERAC_MODIFIER = null;
     public static DynamicModifier KARIL_MODIFIER = null;
+    public static DynamicModifier NECTAR_MODIFIER = null;
 
 
     public static Tier INFINITY_TIER;
@@ -352,8 +354,8 @@ public class TicEXRegistry {
     }
 
     private static void acceptCatalystArmor(
-        CreativeModeTab.Output output,
-        EnumObject<ArmorItem.Type, ToolPartItem> catalystObject
+            CreativeModeTab.Output output,
+            EnumObject<ArmorItem.Type, ToolPartItem> catalystObject
     ) {
         if (catalystObject != null) {
             catalystObject.forEach(c -> c.addVariants(output::accept, ""));

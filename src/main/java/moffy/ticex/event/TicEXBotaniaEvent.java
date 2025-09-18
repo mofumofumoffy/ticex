@@ -28,8 +28,8 @@ public class TicEXBotaniaEvent {
     public static void onCritical(CriticalHitEvent event) {
         Player player = event.getEntity();
         Entity entity = event.getTarget();
-        criticalFlag.put(player.getUUID(), true);
         if (!player.level().isClientSide()) {
+            criticalFlag.put(player.getUUID(), true);
             for (ItemStack armorStack : player.getArmorSlots()) {
                 ToolStack armor = ToolStack.from(armorStack);
                 if (armorStack.getItem() instanceof IModifiable) {
