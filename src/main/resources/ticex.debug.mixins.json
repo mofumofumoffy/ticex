@@ -1,0 +1,15 @@
+{
+  "package": "moffy.ticex.mixin.debug",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ticex.refmap.json",
+  "plugin": "moffy.ticex.debug.DebuggingMixinPlugin",
+  "mixins": [
+    "ClassInstanceMultiMapMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": 0.7
+}

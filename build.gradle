@@ -88,10 +88,14 @@ minecraft {
         client {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', mod_id
+
+            jvmArg "-XX:+AllowEnhancedClassRedefinition"
         }
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
+
+            jvmArg "-XX:+AllowEnhancedClassRedefinition"
         }
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
@@ -114,6 +118,7 @@ minecraft {
 mixin {
     add sourceSets.main, 'ticex.refmap.json'
     config 'ticex.mixins.json'
+    config 'ticex.debug.mixins.json'
     config 'ticex.mekanism.mixins.json'
     config 'ticex.draconicevolution.mixins.json'
     config 'ticex.slashblade.mixins.json'
