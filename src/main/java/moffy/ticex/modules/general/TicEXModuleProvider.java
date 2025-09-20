@@ -4,6 +4,7 @@ import moffy.addonapi.AddonModuleProvider;
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.apotheosis.TicEXApotheosisModule;
 import moffy.ticex.modules.avaritia.TicEXAvaritiaModule;
+import moffy.ticex.modules.botania.TicEXBotaniaModule;
 import moffy.ticex.modules.cc_tweaked.TicEXCCModule;
 import moffy.ticex.modules.create.TicEXCreateModule;
 import moffy.ticex.modules.curios.TicEXCuriosModule;
@@ -29,95 +30,101 @@ public class TicEXModuleProvider extends AddonModuleProvider {
     @Override
     public void registerRawModules() {
         addRawModule(
-            "default",
-            "Default",
-            TicEXModule.class,
-            new String[] { "tconstruct" },
-            true
+                "default",
+                "Default",
+                TicEXModule.class,
+                new String[]{"tconstruct"},
+                true
         );
         addRawModule(
-            "avaritia_compat",
-            "Avaritia Compat",
-            TicEXAvaritiaModule.class,
-            new String[] { "tconstruct", "avaritia" }
+                "avaritia_compat",
+                "Avaritia Compat",
+                TicEXAvaritiaModule.class,
+                new String[]{"tconstruct", "avaritia"}
         );
         addRawModule(
-            "mekanism_compat",
-            "Mekanism Compat",
-            TicEXMekanismModule.class,
-            new String[] { "tconstruct", "mekanism" }
+                "mekanism_compat",
+                "Mekanism Compat",
+                TicEXMekanismModule.class,
+                new String[]{"tconstruct", "mekanism"}
         );
         addRawModule(
-            "draconicevolution_compat",
-            "Draconic Evolution Compat",
-            TicEXDEModule.class,
-            new String[] { "tconstruct", "draconicevolution" }
+                "draconicevolution_compat",
+                "Draconic Evolution Compat",
+                TicEXDEModule.class,
+                new String[]{"tconstruct", "draconicevolution"}
         );
         addRawModule(
-            "slashblade_compat",
-            "SlashBlade Compat",
-            TicEXSlashBladeModule.class,
-            new String[] { "tconstruct", "slashblade" }
+                "slashblade_compat",
+                "SlashBlade Compat",
+                TicEXSlashBladeModule.class,
+                new String[]{"tconstruct", "slashblade"}
         );
         addRawModule(
-            "apotheosis_compat",
-            "Apotheosis Compat",
-            TicEXApotheosisModule.class,
-            new String[] { "tconstruct", "apotheosis" }
+                "apotheosis_compat",
+                "Apotheosis Compat",
+                TicEXApotheosisModule.class,
+                new String[]{"tconstruct", "apotheosis"}
         );
         addRawModule(
-            "tacz_compat",
-            "TaCz Compat",
-            TicEXTaczModule.class,
-            new String[] { "tconstruct", "tacz" }
+                "tacz_compat",
+                "TaCz Compat",
+                TicEXTaczModule.class,
+                new String[]{"tconstruct", "tacz"}
         );
         addRawModule(
-            "create_compat",
-            "Create Compat",
-            TicEXCreateModule.class,
-            new String[] { "tconstruct", "create" }
+                "create_compat",
+                "Create Compat",
+                TicEXCreateModule.class,
+                new String[]{"tconstruct", "create"}
         );
         addRawModule(
-            "irons_spellbooks_compat",
-            "Iron's Spells n' Spellbooks Compat",
-            TicEXIronsModule.class,
-            new String[] { "tconstruct", "irons_spellbooks" }
+                "irons_spellbooks_compat",
+                "Iron's Spells n' Spellbooks Compat",
+                TicEXIronsModule.class,
+                new String[]{"tconstruct", "irons_spellbooks"}
         );
         addRawModule(
-            "projecte_compat",
-            "ProjectE Compat",
-            TicEXPEModule.class,
-            new String[] { "tconstruct", "projecte" }
+                "projecte_compat",
+                "ProjectE Compat",
+                TicEXPEModule.class,
+                new String[]{"tconstruct", "projecte"}
         );
         addRawModule(
-            "computercraft_compat",
-            "CC:Tweaked Compat",
-            TicEXCCModule.class,
-            new String[] { "tconstruct", "computercraft" }
+                "computercraft_compat",
+                "CC:Tweaked Compat",
+                TicEXCCModule.class,
+                new String[]{"tconstruct", "computercraft"}
         );
         addRawModule(
-            "psi_compat",
-            "Psi Compat",
-            TicEXPsiModule.class,
-            new String[] { "tconstruct", "psi" }
+                "psi_compat",
+                "Psi Compat",
+                TicEXPsiModule.class,
+                new String[]{"tconstruct", "psi"}
         );
         addRawModule(
-            "curios_compat",
-            "Curios API Compat",
-            TicEXCuriosModule.class,
-            new String[] { "tconstruct", "curios" }
+                "curios_compat",
+                "Curios API Compat",
+                TicEXCuriosModule.class,
+                new String[]{"tconstruct", "curios"}
         );
         addRawModule(
-            "sakura_compat",
-            "Sakura Tinker Compat",
-            TicEXSakuraModule.class,
-            new String[] { "tconstruct", "sakuratinker" }
+                "botania_compat",
+                "Botania Compat",
+                TicEXBotaniaModule.class,
+                new String[]{"tconstruct", "botania"}
         );
         addRawModule(
-            "things_compat",
-            "Tinkers' Things Compat",
-            TicEXThingsModule.class,
-            new String[] { "tconstruct", "tinkers_things" }
+                "sakura_compat",
+                "Sakura Tinker Compat",
+                TicEXSakuraModule.class,
+                new String[]{"tconstruct", "sakuratinker"}
+        );
+        addRawModule(
+                "things_compat",
+                "Tinkers' Things Compat",
+                TicEXThingsModule.class,
+                new String[]{"tconstruct", "tinkers_things"}
         );
         addRawModule(
                 "jei_compat",
