@@ -16,6 +16,7 @@ import slimeknights.mantle.data.predicate.IJsonPredicate;
 import slimeknights.mantle.data.predicate.item.ItemPredicate;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.data.tinkering.AbstractModifierProvider;
+import slimeknights.tconstruct.library.json.LevelingValue;
 import slimeknights.tconstruct.library.modifiers.modules.behavior.AttributeModule;
 import slimeknights.tconstruct.library.modifiers.modules.behavior.ReduceToolDamageModule;
 import slimeknights.tconstruct.library.modifiers.modules.build.EnchantmentModule;
@@ -25,6 +26,7 @@ import slimeknights.tconstruct.library.modifiers.modules.combat.LootingModule;
 import slimeknights.tconstruct.library.modifiers.modules.display.DurabilityBarColorModule;
 import slimeknights.tconstruct.library.modifiers.util.ModifierLevelDisplay;
 import slimeknights.tconstruct.library.tools.SlotType;
+import slimeknights.tconstruct.tools.modules.combat.FieryAttackModule;
 import slimeknights.tconstruct.library.tools.capability.inventory.InventoryMenuModule;
 import slimeknights.tconstruct.library.tools.capability.inventory.InventoryModule;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
@@ -63,7 +65,7 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
                 .level(4)
                 .constant();
         EnchantmentModule BLAZING_FIRE_ASPECT = EnchantmentModule.builder(Enchantments.FIRE_ASPECT)
-                .toolItem(ItemPredicate.or(ItemPredicate.set(Items.AIR), ItemPredicate.tag(MELEE)))
+                .toolItem(ItemPredicate.tag(MELEE))
                 .level(10)
                 .constant();
 
@@ -89,7 +91,7 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
                 .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
         if(TicEXRegistry.BLAZING_FORTUNE_MODIFIER != null) buildModifier(TicEXRegistry.BLAZING_FORTUNE_MODIFIER)
                 .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
-                .addModule(BLAZING_FORTUNE);
+                .addModule(new FieryAttackModule(LevelingValue.flat(800)));
         if(TicEXRegistry.BLAZING_FLAME_MODIFIER != null) buildModifier(TicEXRegistry.BLAZING_FLAME_MODIFIER)
                 .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
                 .addModule(BLAZING_FIRE_ASPECT);

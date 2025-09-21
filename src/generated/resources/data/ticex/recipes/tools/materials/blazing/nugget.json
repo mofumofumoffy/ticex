@@ -1,0 +1,19 @@
+{
+  "type": "tconstruct:material",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:nuggets/blazing"
+    },
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/blazing"
+  },
+  "material": "ticex:blazing",
+  "needed": 9,
+  "value": 1
+}

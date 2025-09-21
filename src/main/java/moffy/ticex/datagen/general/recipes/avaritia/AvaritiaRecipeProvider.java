@@ -35,7 +35,7 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
         metalMaterialRecipe(topConsumer, TicEXMaterials.INFINITY, materialFolder, "infinity", true);
         metalMaterialRecipe(topConsumer, TicEXMaterials.NEUTRON, materialFolder, "neutron", true);
         metalMaterialRecipe(topConsumer, TicEXMaterials.CRYSTAL_MATRIX, materialFolder, "crystal_matrix", true);
-        metalMaterialRecipe(topConsumer, TicEXMaterials.INFINITY, materialFolder, "blazing", true);
+        metalMaterialRecipe(topConsumer, TicEXMaterials.BLAZING, materialFolder, "blazing", true);
 
         // modifier
 

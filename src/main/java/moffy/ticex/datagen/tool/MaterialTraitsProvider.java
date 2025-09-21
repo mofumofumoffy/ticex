@@ -70,6 +70,7 @@ public class MaterialTraitsProvider extends AbstractMaterialTraitDataProvider {
         addTraits(TicEXMaterials.NEUTRON, ARMOR, TicEXRegistry.CONDENSING_MODIFIER, TicEXRegistry.DENSE_MODIFIER);
         addDefaultTraits(TicEXMaterials.BLAZING, TicEXRegistry.SKULLFIRE_MODIFIER, TicEXRegistry.BLAZING_FLAME_MODIFIER, TicEXRegistry.BLAZING_FORTUNE_MODIFIER);
 
+
         addDefaultTraits(TicEXMaterials.ETHERIC, TicEXRegistry.SASSY_MODIFIER, TicEXRegistry.DEFLECTION_MODIFIER);
         addDefaultTraits(TicEXMaterials.RECONSTRUCTION, TicEXRegistry.REBIRTH_MODIFIER);
         addTraits(TicEXMaterials.RECONSTRUCTION, ARMOR, TicEXRegistry.REBIRTH_MODIFIER);
