@@ -42,7 +42,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.TierSortingRegistry;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -229,7 +228,7 @@ public class TicEXModule implements AddonModule {
 
         TicEXRegistry.JEI_INTEGRATIONS.register(
                 new ResourceLocation(TicEX.MODID, "ticex_compat"),
-                Lazy.of(TicEXJEIIntegration::new)
+                TicEXJEIIntegration.class
         );
 
         bus.addListener(TicEXEvent::onEntityAttributeModification);
