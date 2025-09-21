@@ -297,6 +297,7 @@ public class TicEXRegistry {
     public static DynamicModifier VERAC_MODIFIER = null;
     public static DynamicModifier KARIL_MODIFIER = null;
     public static DynamicModifier NECTAR_MODIFIER = null;
+    public static StaticModifier<Modifier> REACTIVE_MODIFIER = null;
 
 
     public static Tier INFINITY_TIER;

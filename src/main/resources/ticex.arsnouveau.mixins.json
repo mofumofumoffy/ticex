@@ -1,0 +1,16 @@
+{
+  "package": "moffy.ticex.mixin.arsnouveau",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ticex.refmap.json",
+  "plugin": "moffy.ticex.modules.arsnouveau.TicEXArsMixinPlugin",
+  "mixins": [
+    "SpellWriteRecipeMixin"
+  ],
+  "client": [
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": 0.7
+}

@@ -40,6 +40,9 @@ public class TicEXConfig {
     // Apotheosis
     public static ForgeConfigSpec.ConfigValue<Integer> OVERRIDE_LIMIT;
 
+    // Ars Nouveau
+    public static ForgeConfigSpec.ConfigValue<Integer> REACTIVE_COOLDOWN_TICK;
+
     // Curios
     public static ForgeConfigSpec.ConfigValue<Integer> GAUNTLET_REMAIN_TICKS;
     public static ForgeConfigSpec.ConfigValue<List<String>> GLOVE_DROP_BLACKLIST;
@@ -78,6 +81,13 @@ public class TicEXConfig {
         OVERRIDE_LIMIT = COMMON.comment("Maximum level of enchantments granted by override").define(
             "overrideLevelLimit",
             255
+        );
+        COMMON.pop();
+
+        COMMON.push("ars nouveau");
+        REACTIVE_COOLDOWN_TICK = COMMON.comment("Cooldown ticks of reactive modifier (Setting it too low may cause freezing)").define(
+                "reactiveCooldownTick",
+                100
         );
         COMMON.pop();
 

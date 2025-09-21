@@ -3,6 +3,7 @@ package moffy.ticex.modules.general;
 import moffy.addonapi.AddonModuleProvider;
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.apotheosis.TicEXApotheosisModule;
+import moffy.ticex.modules.arsnouveau.TicEXArsModule;
 import moffy.ticex.modules.avaritia.TicEXAvaritiaModule;
 import moffy.ticex.modules.botania.TicEXBotaniaModule;
 import moffy.ticex.modules.cc_tweaked.TicEXCCModule;
@@ -115,6 +116,12 @@ public class TicEXModuleProvider extends AddonModuleProvider {
                 new String[]{"tconstruct", "botania"}
         );
         addRawModule(
+                "ars_compat",
+                "Ars Nouveau Compat",
+                TicEXArsModule.class,
+                new String[]{"tconstruct", "ars_nouveau"}
+        );
+        /*addRawModule(
                 "sakura_compat",
                 "Sakura Tinker Compat",
                 TicEXSakuraModule.class,
@@ -125,7 +132,7 @@ public class TicEXModuleProvider extends AddonModuleProvider {
                 "Tinkers' Things Compat",
                 TicEXThingsModule.class,
                 new String[]{"tconstruct", "tinkers_things"}
-        );
+        );*/
         addRawModule(
                 "jei_compat",
                 "JEI Compat",
