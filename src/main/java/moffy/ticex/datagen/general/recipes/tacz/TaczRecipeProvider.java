@@ -1,5 +1,13 @@
 package moffy.ticex.datagen.general.recipes.tacz;
 
+/*
+ * This file is part of the TicEXTaczModule.
+ *
+ * Licensed under the GNU General Public License v3.0.
+ * See the LICENSES/GPL-3.0.md file for details.
+ * 2025 Moffy
+ */
+
 import com.tacz.guns.init.ModItems;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
