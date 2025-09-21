@@ -39,7 +39,7 @@ public class TicEXCCUtils {
             entityMap.put("uuid", entity.getUUID().toString());
             entityMap.put("pos", new Object[] { entity.position().x, entity.position().y, entity.position().z });
 
-            if (entity instanceof IEntityDataAccessor) {
+            /*if (entity instanceof IEntityDataAccessor) {
                 IEntityDataAccessor accessor = (IEntityDataAccessor) entity;
                 entityMap.put(
                     "getData",
@@ -47,7 +47,7 @@ public class TicEXCCUtils {
                         return MethodResult.of(XCldrStub.ImmutableMap.copyOf(accessor.getAllFields()));
                     }
                 );
-            }
+            }*/
         }
 
         return entityMap;
