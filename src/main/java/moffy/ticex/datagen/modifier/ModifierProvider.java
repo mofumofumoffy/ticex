@@ -3,6 +3,8 @@ package moffy.ticex.datagen.modifier;
 import static slimeknights.tconstruct.common.TinkerTags.Items.HARVEST;
 import static slimeknights.tconstruct.common.TinkerTags.Items.MELEE;
 
+import dev.shadowsoffire.apotheosis.ench.Ench;
+import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -56,6 +58,14 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
                 .toolItem(harvest)
                 .level(10)
                 .constant();
+        EnchantmentModule BLAZING_FORTUNE = EnchantmentModule.builder(Enchantments.BLOCK_FORTUNE)
+                .toolItem(harvest)
+                .level(4)
+                .constant();
+        EnchantmentModule BLAZING_FIRE_ASPECT = EnchantmentModule.builder(Enchantments.FIRE_ASPECT)
+                .toolItem(ItemPredicate.or(ItemPredicate.set(Items.AIR), ItemPredicate.tag(MELEE)))
+                .level(10)
+                .constant();
 
         if (TicEXRegistry.COSMIC_LUCK_MODIFIER != null) buildModifier(TicEXRegistry.COSMIC_LUCK_MODIFIER)
                 .addModules(WEAPON_LOOTING, CONSTANT_FORTUNE)
@@ -75,6 +85,15 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
         if (TicEXRegistry.DENSE_MODIFIER != null) buildModifier(TicEXRegistry.DENSE_MODIFIER)
                 .addModule(StatBoostModule.add(ToolStats.KNOCKBACK_RESISTANCE).eachLevel(0.25f))
                 .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        if(TicEXRegistry.SKULLFIRE_MODIFIER != null) buildModifier(TicEXRegistry.SKULLFIRE_MODIFIER)
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+        if(TicEXRegistry.BLAZING_FORTUNE_MODIFIER != null) buildModifier(TicEXRegistry.BLAZING_FORTUNE_MODIFIER)
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
+                .addModule(BLAZING_FORTUNE);
+        if(TicEXRegistry.BLAZING_FLAME_MODIFIER != null) buildModifier(TicEXRegistry.BLAZING_FLAME_MODIFIER)
+                .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
+                .addModule(BLAZING_FIRE_ASPECT);
+
 
         //mekanism
         if (TicEXRegistry.RADIATION_SHIELDING_MODIFIER != null) buildModifier(

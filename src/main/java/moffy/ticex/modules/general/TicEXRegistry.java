@@ -242,6 +242,7 @@ public class TicEXRegistry {
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_NEUTRON = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_CRYSTAL_MATRIX = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
+    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_BLAZING = null;
 
     public static RegistryObject<EntityType<?>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
     public static RegistryObject<EntityType<?>> ENDESTSHOT_PROJECTILE = null;
@@ -265,6 +266,9 @@ public class TicEXRegistry {
     public static DynamicModifier DENSE_MODIFIER = null;
     public static StaticModifier<Modifier> AFTERSHOCK_MODIFIER = null;
     public static StaticModifier<Modifier> ENDESTSHOT_MODIFIER = null;
+    public static DynamicModifier SKULLFIRE_MODIFIER = null;
+    public static DynamicModifier BLAZING_FLAME_MODIFIER = null;
+    public static DynamicModifier BLAZING_FORTUNE_MODIFIER = null;
     public static StaticModifier<Modifier> MEKANIC_MODIFIER = null;
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
     public static StaticModifier<Modifier> SASSY_MODIFIER = null;
