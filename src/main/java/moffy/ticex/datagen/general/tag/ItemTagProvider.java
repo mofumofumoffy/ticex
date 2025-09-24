@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.registration.object.FluidObject;
@@ -100,6 +101,17 @@ public class ItemTagProvider extends ItemTagsProvider {
 
         addOptional(TinkerTags.Items.TOOL_PARTS, new ResourceLocation(TicEX.MODID, "slashblade_blade"));
         addOptional(TinkerTags.Items.TOOL_PARTS, new ResourceLocation(TicEX.MODID, "slashblade_saya"));
+
+        // other mods
+
+        if(ModList.get().isLoaded("slashblade")) {
+            this.tag(TicEXTags.Items.SLASHBLADE)
+                    .addOptional(new ResourceLocation("slashblade", "slashblade"))
+                    .addOptional(new ResourceLocation("slashblade_addon", "slashblade_tofu_diamond"))
+                    .addOptional(new ResourceLocation("yakumoblade", "slashblade"))
+                    .addOptional(new ResourceLocation("fantasy_ending", "fantasy_ending_blade"))
+                    .addOptional(new ResourceLocation("energyblade", "forge_energy_blade"));
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -113,12 +125,15 @@ public class ItemTagProvider extends ItemTagsProvider {
                 TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get().asItem()
             );
 
-        addCast(TicEXRegistry.SLASHBLADE_SAYA_CAST);
-        addCast(TicEXRegistry.SLASHBLADE_BLADE_CAST);
-
         this.tag(TinkerTags.Items.CASTS)
                 .addOptionalTags(TinkerTags.Items.GOLD_CASTS, TinkerTags.Items.SAND_CASTS, TinkerTags.Items.RED_SAND_CASTS, TinkerTags.Items.TABLE_EMPTY_CASTS, TinkerTags.Items.BASIN_EMPTY_CASTS);
 
+        // other mods
+
+        if(ModList.get().isLoaded("slashblade")) {
+            addCast(TicEXRegistry.SLASHBLADE_SAYA_CAST);
+            addCast(TicEXRegistry.SLASHBLADE_BLADE_CAST);
+        }
     }
 
     public void addCast(CastItemObject cast) {
@@ -137,7 +152,7 @@ public class ItemTagProvider extends ItemTagsProvider {
         //tools
         addToolTags(
             new ResourceLocation(TicEX.MODID, "reforged_slashblade"),
-            TicEXTags.Items.SLASHBLADE_TOOL,
+            TicEXTags.Items.REFORGED_SLASHBLADE_TOOL,
             MULTIPART_TOOL,
             DURABILITY,
             HARVEST,
@@ -206,7 +221,7 @@ public class ItemTagProvider extends ItemTagsProvider {
         );
 
         this.tag(TicEXTags.Items.SERAM).addTags(
-                TicEXTags.Items.SLASHBLADE_TOOL,
+                TicEXTags.Items.REFORGED_SLASHBLADE_TOOL,
                 TicEXTags.Items.KINETIC_GUN_TOOL,
                 TicEXTags.Items.IRONS_SPELLBOOK_TOOL,
                 TicEXTags.Items.MEKASUIT_ARMOR,

@@ -51,7 +51,8 @@ public class TicEXTags {
         public static final TagKey<Item> PLATE = local("plate");
         public static final TagKey<Item> MEKASUIT_ARMOR = local("seram/mekasuit");
         public static final TagKey<Item> GEM_ARMOR = local("seram/gem");
-        public static final TagKey<Item> SLASHBLADE_TOOL = local("seram/slashblade");
+        public static final TagKey<Item> SLASHBLADE = local("slashblade");
+        public static final TagKey<Item> REFORGED_SLASHBLADE_TOOL = local("seram/slashblade");
         public static final TagKey<Item> KINETIC_GUN_TOOL = local("seram/kinetic_gun");
         public static final TagKey<Item> IRONS_SPELLBOOK_TOOL = local("seram/irons_spellbook");
         public static final TagKey<Item> MEKA_TOOL = local("seram/meka_tool");
