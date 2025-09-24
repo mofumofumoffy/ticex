@@ -7,13 +7,13 @@
   "conditions": [
     {
       "type": "addonapi:mods_available",
-      "required_raw_module": "ticex:things_compat"
+      "required_raw_module": "ticex:botania_compat"
     }
   ],
   "input": {
     "item": "ticex:reconstruction_core"
   },
-  "mana": 27000,
+  "mana": 2000,
   "output": {
     "item": "ticex:nectar_core"
   }

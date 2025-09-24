@@ -21,14 +21,14 @@ public class TicEXManaInfusionProvider extends ManaInfusionProvider implements I
     public void buildRecipes(Consumer<net.minecraft.data.recipes.FinishedRecipe> consumer) {
         Consumer<net.minecraft.data.recipes.FinishedRecipe> topConsumer = withCondition(
                 consumer,
-                modsAvailable(new ResourceLocation(TicEX.MODID, "things_compat"))
+                modsAvailable(new ResourceLocation(TicEX.MODID, "botania_compat"))
         );
 
         topConsumer.accept(new FinishedRecipe(
                 prefix(TicEXRegistry.NECTAR_CORE, coresFolder),
                 new ItemStack(TicEXRegistry.NECTAR_CORE.get()),
                 ingr(TicEXRegistry.RECONSTRUCTION_CORE.get()),
-                27000,
+                2000,
                 "",
                 new BlockStateIngredient(TinkerSmeltery.searedBricks.get()))
         );
