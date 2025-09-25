@@ -1,5 +1,7 @@
 package moffy.ticex.modules.mekanism;
 
+import mekanism.common.registration.impl.BlockDeferredRegister;
+import mekanism.common.registration.impl.TileEntityTypeDeferredRegister;
 import mekanism.common.registries.MekanismModules;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
@@ -42,6 +44,9 @@ public class TicEXMekanismModule extends AddonModule {
 
     public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
 
+    public static BlockDeferredRegister BLOCKS;
+    public static TileEntityTypeDeferredRegister TILE_ENTITY_TYPES;
+
     public TicEXMekanismModule() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         Item.Properties PROPS = new Item.Properties();
@@ -76,6 +81,9 @@ public class TicEXMekanismModule extends AddonModule {
 
         TicEXRegistry.MEKANIC_MODIFIER = TicEXRegistry.MODIFIERS.register("mekanic", ModifierMekanic::new);
         TicEXRegistry.RADIATION_SHIELDING_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("radiation_shielding");
+
+        BLOCKS = new BlockDeferredRegister(TicEX.MODID);
+        TILE_ENTITY_TYPES = new TileEntityTypeDeferredRegister(TicEX.MODID);
 
         MinecraftForge.EVENT_BUS.register(new TicEXMekanismEvent());
 
