@@ -40,6 +40,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import slimeknights.mantle.client.SafeClientAccess;
+import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.AttributesModifierHook;
@@ -265,10 +266,31 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity target) {
         return (
-            stack.getCount() > 1 ||
-            EntityInteractionModifierHook.leftClickEntity(stack, player, target) ||
-            super.onLeftClickEntity(stack, player, target)
+            stack.getCount() > 1 || onEntityInteractLeftClick(stack, player, target) || super.onLeftClickEntity(stack, player, target)
         );
+    }
+
+    private boolean onEntityInteractLeftClick(ItemStack stack, Player player, Entity target){
+        ToolStack tool = ToolStack.from(stack);
+        if (stack.is(TinkerTags.Items.INTERACTABLE_LEFT) && !player.getCooldowns().isOnCooldown(stack.getItem())) {
+            List<ModifierEntry> modifiers = tool.getModifierList();
+
+            for(ModifierEntry entry : modifiers) {
+                if ((entry.getHook(ModifierHooks.ENTITY_INTERACT)).beforeEntityUse(tool, entry, player, target, InteractionHand.MAIN_HAND, InteractionSource.LEFT_CLICK).consumesAction()) {
+                    return true;
+                }
+            }
+
+            if (target instanceof LivingEntity living) {
+
+                for(ModifierEntry entry : modifiers) {
+                    if ((entry.getHook(ModifierHooks.ENTITY_INTERACT)).afterEntityUse(tool, entry, player, living, InteractionHand.MAIN_HAND, InteractionSource.LEFT_CLICK).consumesAction()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -338,19 +360,14 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
         );
     }
 
-    /* Right click hooks */
-
-    /** If true, this interaction hook should defer to the offhand */
     protected static boolean shouldInteract(@Nullable LivingEntity player, ToolStack toolStack, InteractionHand hand) {
         IModDataView volatileData = toolStack.getVolatileData();
         if (volatileData.getBoolean(NO_INTERACTION)) {
             return false;
         }
-        // off hand always can interact
         if (hand == InteractionHand.OFF_HAND) {
             return true;
         }
-        // main hand may wish to defer to the offhand if it has a shader
         return player == null || !volatileData.getBoolean(DEFER_OFFHAND) || player.getOffhandItem().isEmpty();
     }
 

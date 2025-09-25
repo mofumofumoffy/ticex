@@ -81,35 +81,6 @@ public class TicEXSBEvent {
         syncState(event.getEntity());
     }
 
-    public static void onHit(SlashBladeEvent.HitEvent event){
-        if(event.getUser() instanceof ServerPlayer player){
-            ItemStack mainHandStack = player.getMainHandItem();
-            if(mainHandStack.getItem() instanceof  ModifiableSlashBladeItem) {
-                ToolStack tool = ToolStack.from(mainHandStack);
-                LivingEntity target = event.getTarget();
-                ToolAttackContext context = new ToolAttackContext(player, player, InteractionHand.MAIN_HAND, target, target, false, 1, false);
-
-                float damage = (float) AttackHelper.calculateTotalDamage(player, target, 1.0f, player.isFallFlying());
-                float damageTmp = damage;
-
-                for (ModifierEntry modifierEntry : tool.getModifierList()) {
-                    damage = modifierEntry.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, modifierEntry, context, damageTmp, damage);
-                }
-
-                if (damage <= 0.0F) {
-                    event.setCanceled(true);
-                } else {
-                    for (ModifierEntry modifierEntry : tool.getModifierList()) {
-                        modifierEntry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifierEntry, context, damage, 0, 0);
-                    }
-                    for (ModifierEntry modifierEntry : tool.getModifierList()) {
-                        modifierEntry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifierEntry, context, damage);
-                    }
-                }
-            }
-        }
-    }
-
     @SuppressWarnings("unchecked")
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(

@@ -28,12 +28,10 @@ public class ClientHandlerMixin {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Inject(at = @At("head"), method = "addEntityLayer", cancellable = true)
-    private static void addEntityLayer(EntityRenderersEvent.AddLayers evt, EntityType type, CallbackInfo cb) {
-        EntityRenderer<?> renderer = evt.getRenderer(type);
-
+    private static void addEntityLayer(EntityRenderersEvent.AddLayers evt, EntityRenderer<?> renderer, CallbackInfo ci) {
         if (renderer instanceof LivingEntityRenderer livingRenderer) {
             livingRenderer.addLayer(new LayerSBToolMainBlade<>(livingRenderer));
-            cb.cancel();
+            ci.cancel();
         }
     }
 }
