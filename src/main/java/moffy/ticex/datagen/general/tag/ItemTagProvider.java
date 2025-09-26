@@ -72,6 +72,7 @@ public class ItemTagProvider extends ItemTagsProvider {
         addOptional(TicEXTags.Items.INFINITY_INGOT, new ResourceLocation("avaritia", "infinity_ingot"));
         addOptional(TicEXTags.Items.NEUTRON_INGOT, new ResourceLocation("avaritia", "neutron_ingot"));
         addOptional(TicEXTags.Items.CRYSTAL_MATRIX_INGOT, new ResourceLocation("avaritia", "crystal_matrix_ingot"));
+        addOptional(TicEXTags.Items.BLAZING_INGOT, new ResourceLocation("avaritia", "blaze_cube"));
 
         addOptional(TicEXTags.Items.ETHERIC_INGOT, new ResourceLocation(TicEX.MODID, "etheric_ingot"));
 
@@ -79,6 +80,7 @@ public class ItemTagProvider extends ItemTagsProvider {
         addOptional(TicEXTags.Items.INFINITY_BLOCK, new ResourceLocation("avaritia", "infinity"));
         addOptional(TicEXTags.Items.NEUTRON_BLOCK, new ResourceLocation("avaritia", "neutron"));
         addOptional(TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, new ResourceLocation("avaritia", "crystal_matrix"));
+        addOptional(TicEXTags.Items.BLAZING_BLOCK, new ResourceLocation("avaritia", "blaze_cube_block"));
 
         addOptional(TicEXTags.Items.ETHERIC_BLOCK, new ResourceLocation(TicEX.MODID, "etheric_block"));
 
