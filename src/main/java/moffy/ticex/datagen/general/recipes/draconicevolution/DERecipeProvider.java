@@ -104,7 +104,7 @@ public class DERecipeProvider implements ITicEXSmelteryRecipeHelper, ISmelteryRe
                     .ingredient(Items.NETHER_STAR)
                     .ingredient(Tags.Items.STORAGE_BLOCKS_NETHERITE)
                     .ingredient(Tags.Items.STORAGE_BLOCKS_NETHERITE)
-                    .ingredient(DEContent.CORE_AWAKENED)
+                    .ingredient(DEContent.CORE_WYVERN)
                     .ingredient(DEContent.SWORD_DRACONIC)
                     .ingredient(DEContent.SHOVEL_DRACONIC)
                     .ingredient(DEContent.PICKAXE_DRACONIC)
