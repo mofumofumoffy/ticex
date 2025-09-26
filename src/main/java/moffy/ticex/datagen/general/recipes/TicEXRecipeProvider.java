@@ -2,6 +2,7 @@ package moffy.ticex.datagen.general.recipes;
 
 import moffy.ticex.datagen.general.recipes.apotheosis.ApotheosisRecipeProvider;
 import moffy.ticex.datagen.general.recipes.avaritia.AvaritiaRecipeProvider;
+import moffy.ticex.datagen.general.recipes.botania.BotaniaRecipeProvider;
 import moffy.ticex.datagen.general.recipes.cc.CCRecipeProvider;
 import moffy.ticex.datagen.general.recipes.create.CreateRecipeProvider;
 import moffy.ticex.datagen.general.recipes.curios.CuriosRecipeProvider;
@@ -13,7 +14,6 @@ import moffy.ticex.datagen.general.recipes.psi.PsiRecipeProvider;
 import moffy.ticex.datagen.general.recipes.slashblade.SlashbladeRecipeProvider;
 import moffy.ticex.datagen.general.recipes.tacz.TaczRecipeProvider;
 import moffy.ticex.datagen.general.recipes.ticex.CommonRecipeProvider;
-import moffy.ticex.datagen.general.recipes.tinkersthings.ThingsRecipeProvider;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -26,8 +26,11 @@ import java.util.function.Consumer;
 
 public class TicEXRecipeProvider extends RecipeProvider {
 
+    private final BotaniaRecipeProvider botaniaRecipeProvider;
+
     public TicEXRecipeProvider(PackOutput pOutput) {
         super(pOutput);
+        botaniaRecipeProvider = new BotaniaRecipeProvider(pOutput);
     }
 
     @Override
@@ -40,12 +43,12 @@ public class TicEXRecipeProvider extends RecipeProvider {
         if (ModList.get().isLoaded("draconicevolution")) new DERecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("apotheosis")) new ApotheosisRecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("mekanism")) new MekanismRecipeProvider().buildRecipes(pWriter);
-        if (ModList.get().isLoaded("tinkers_things")) new ThingsRecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("slashblade")) new SlashbladeRecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("tacz")) new TaczRecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("irons_spellbooks")) new IronsRecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("projecte")) new PERecipeProvider().buildRecipes(pWriter);
         if (ModList.get().isLoaded("curios")) new CuriosRecipeProvider().buildRecipes(pWriter);
+        if (ModList.get().isLoaded("botania")) botaniaRecipeProvider.buildRecipes(pWriter);
     }
 
     public static InventoryChangeTrigger.TriggerInstance has(@NotNull ItemLike itemLike) {

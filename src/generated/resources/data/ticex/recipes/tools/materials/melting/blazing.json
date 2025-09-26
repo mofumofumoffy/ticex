@@ -1,0 +1,15 @@
+{
+  "type": "tconstruct:material_melting",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
+    }
+  ],
+  "input": "ticex:blazing",
+  "result": {
+    "amount": 90,
+    "fluid": "ticex:molten_blazing"
+  },
+  "temperature": 2500
+}

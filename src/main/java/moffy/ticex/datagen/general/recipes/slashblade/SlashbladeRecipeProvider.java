@@ -15,10 +15,8 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.recipe.ingredient.SizedIngredient;
 import slimeknights.mantle.registration.object.ItemObject;
@@ -49,13 +47,13 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
 
         if(TicEXRegistry.PROUD_MODIFIER != null) {
             SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.PROUD_MODIFIER.getId(), Ingredient.of(SlashBladeItemTags.PROUD_SOULS))
-                    .setTools(TicEXTags.Items.SLASHBLADE_TOOL)
+                    .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
                     .save(topConsumer, prefix(TicEXRegistry.PROUD_MODIFIER, slotlessFolder));
         }
 
         if(TicEXRegistry.KOSHIRAE_MODIFIER != null) {
             SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KOSHIRAE_MODIFIER.getId(), Ingredient.of(TicEXRegistry.CATALYST_SLASHBLADE))
-                    .setTools(TicEXTags.Items.SLASHBLADE_TOOL)
+                    .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
                     .save(topConsumer, prefix(TicEXRegistry.KOSHIRAE_MODIFIER, slotlessFolder));
         }
 
@@ -65,7 +63,7 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
             EmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KONPAKU_MODIFIER.getId())
                     .addInput(SizedIngredient.fromItems(TicEXRegistry.KONPAKU_CORE.get()))
                     .addEmbossItem(SizedIngredient.fromItems(Items.ENCHANTED_BOOK))
-                    .setTools(TicEXTags.Items.SLASHBLADE_TOOL)
+                    .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
                     .setSlots(SlotType.UPGRADE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.KONPAKU_MODIFIER, upgradeFolder));
         }
@@ -100,7 +98,7 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
         }
 
         if(TicEXRegistry.CATALYST_SLASHBLADE != null) {
-            embossmentCasting(topConsumer, TicEXRegistry.CATALYST_SLASHBLADE.get(), 1, SBItems.slashblade.asItem(), true,
+            embossmentCasting(topConsumer, TicEXRegistry.CATALYST_SLASHBLADE.get(), 1, TicEXTags.Items.SLASHBLADE, true,
                     prefix(TicEXRegistry.CATALYST_SLASHBLADE, partsCastingFolder));
         }
     }

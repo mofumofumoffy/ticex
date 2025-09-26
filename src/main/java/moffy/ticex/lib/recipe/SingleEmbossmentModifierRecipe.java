@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import moffy.ticex.lib.hook.EmbossmentModifierHook.EmbossmentContext;
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -96,7 +97,7 @@ public class SingleEmbossmentModifierRecipe extends AbstractModifierRecipe {
         }
 
         if (result) {
-            return LazyToolStack.success(context.getToolStack());
+            return LazyToolStack.success(TicEXUtils.applyCatalystEmbossment(context.getToolStack(), inv, false));
         }
         return RecipeResult.failure(context.getErrorMsg());
     }

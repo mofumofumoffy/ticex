@@ -1,0 +1,16 @@
+{
+  "type": "ticex:single_embossment_modifier",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:mekanism_compat"
+    }
+  ],
+  "emboss_input": {
+    "item": "ticex:catalyst_mekasuit_helmet"
+  },
+  "result": "ticex:mekanic",
+  "tools": {
+    "tag": "tconstruct:modifiable/armor/helmets"
+  }
+}

@@ -57,6 +57,17 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
             StatlessMaterialStats.BINDING
         );
         addMaterialStats(
+                TicEXMaterials.BLAZING,
+                new HeadMaterialStats(2800, 10.4f, Tiers.DIAMOND, 3.6f),
+                HandleMaterialStats.multipliers()
+                        .attackDamage(1.5f)
+                        .attackSpeed(1.5f)
+                        .durability(1.25f)
+                        .miningSpeed(1.5f)
+                        .build(),
+                StatlessMaterialStats.BINDING
+        );
+        addMaterialStats(
             TicEXMaterials.DRACONIUM,
             new HeadMaterialStats(512, 7.0f, Tiers.NETHERITE, 4.0f),
             HandleMaterialStats.multipliers()

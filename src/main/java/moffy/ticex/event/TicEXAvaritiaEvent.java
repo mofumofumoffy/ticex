@@ -1,24 +1,36 @@
 package moffy.ticex.event;
 
+import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.ticex.client.rendering.ticex.ItemArrowRenderer;
 import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class TicEXAvaritiaEvent {
+    private static ToolStack tool;
+
+    private static void addDrop(LivingDropsEvent event, ItemStack drop) {
+        ItemEntity entity = new ItemEntity(event.getEntity().level(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), drop);
+        entity.setDefaultPickUpDelay();
+        event.getDrops().add(entity);
+    }
 
     public static void onGetHurt(LivingHurtEvent event) {
         LivingEntity target = event.getEntity();
@@ -58,10 +70,38 @@ public class TicEXAvaritiaEvent {
     public static void onPlayerTick(PlayerTickEvent event) {
         Player player = event.player;
         Abilities abilities = player.getAbilities();
-        if (TicEXAvaritiaUtils.hasCelestial(player)) {
+        if (!abilities.mayfly && TicEXAvaritiaUtils.hasCelestial(player)) {
             abilities.mayfly = true;
+            player.onUpdateAbilities();
         }
-        player.onUpdateAbilities();
+
+    }
+
+    public static void onLivingDrops(LivingDropsEvent event) {
+        if (event.isRecentlyHit() &&
+                event.getEntity() instanceof AbstractSkeleton
+                && event.getSource().getEntity() instanceof Player player
+        ) {
+            if (player.getMainHandItem().getItem() instanceof IModifiable) {
+                ToolStack tool = ToolStack.from(player.getMainHandItem());
+                if(TicEXRegistry.SKULLFIRE_MODIFIER != null && tool.getModifierLevel(TicEXRegistry.SKULLFIRE_MODIFIER.get()) > 0){
+                    if (event.getDrops().isEmpty()) {
+                        addDrop(event, new ItemStack(Items.WITHER_SKELETON_SKULL, 1));
+                    } else {
+                        int skulls = 0;
+                        for (var drop : event.getDrops()) {
+                            ItemStack stack = drop.getItem();
+                            if (stack.is(Items.WITHER_SKELETON_SKULL)) {
+                                skulls++;
+                            }
+                        }
+                        if (skulls == 0) {
+                            addDrop(event, new ItemStack(Items.WITHER_SKELETON_SKULL, 1));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

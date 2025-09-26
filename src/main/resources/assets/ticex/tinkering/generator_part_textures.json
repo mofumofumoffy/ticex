@@ -42,6 +42,11 @@
       "allow_animated": false,
       "path": "ticex:tinker_armor/singular_gem/maille_leggings",
       "stat_type": "tconstruct:armor_maille"
+    },
+    {
+      "allow_animated": false,
+      "path": "ticex:tinker_armor/singular_gem/maille_wings",
+      "stat_type": "tconstruct:armor_maille"
     }
   ]
 }

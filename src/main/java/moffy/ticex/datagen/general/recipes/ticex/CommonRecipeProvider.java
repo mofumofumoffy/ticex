@@ -32,6 +32,7 @@ import slimeknights.tconstruct.library.recipe.melting.MaterialMeltingRecipeBuild
 import slimeknights.tconstruct.library.recipe.melting.MeltingRecipeBuilder;
 import slimeknights.tconstruct.shared.TinkerCommons;
 import slimeknights.tconstruct.shared.block.SlimeType;
+import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.world.TinkerWorld;
 
 import java.util.function.Consumer;
@@ -109,6 +110,11 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerTags.Items.FOUNDRY_BRICKS, true)
                 .save(pWriter, prefix(TicEXRegistry.SCORCHED_RF_FURNACE, smelteryCastingFolder + "scorched/"));
+
+        ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXRegistry.FLUID_TRANSMUTER.get()))
+                .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
+                .setCast(TinkerSmeltery.scorchedAlloyer.get(), true)
+                .save(pWriter, prefix(TicEXRegistry.FLUID_TRANSMUTER, smelteryCastingFolder + "scorched_"));
 
         ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXRegistry.SEARED_RF_FURNACE.get()))
                 .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)

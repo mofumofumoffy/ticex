@@ -35,7 +35,6 @@ import mekanism.common.lib.effect.BoltEffect.SpawnFunction;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.EnumUtils;
 import mekanism.common.util.MekanismUtils;
-import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
@@ -64,6 +63,7 @@ import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.client.armor.ArmorModelManager.ArmorModel;
 import slimeknights.tconstruct.library.client.armor.MultilayerArmorModel;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -316,6 +316,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel {
             LivingEntity entity
     ) {
         ArmorQuads armorQuads = cache.getUnchecked(key(entity));
+        matrix.pushPose();
         render(
                 baseModel,
                 renderer,
@@ -328,6 +329,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel {
                 armorQuads.opaqueQuads(),
                 false
         );
+        matrix.popPose();
 
         if (type == EquipmentSlot.CHEST) {
             BoltRenderer boltRenderer = boltRenderMap.computeIfAbsent(entity.getUUID(), id -> new BoltRenderer());
@@ -364,19 +366,6 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel {
             boltRenderer.render(partialTicks, matrix, Minecraft.getInstance().renderBuffers().bufferSource());
             matrix.popPose();
         }
-
-        render(
-                baseModel,
-                renderer,
-                matrix,
-                light,
-                overlayLight,
-                Color.WHITE,
-                hasEffect,
-                entity,
-                armorQuads.transparentQuads(),
-                true
-        );
     }
 
     private void render(
@@ -424,7 +413,7 @@ public final class MekaPlateMultilayerModel extends MultilayerArmorModel {
         IModuleHelper moduleHelper = IModuleHelper.INSTANCE;
         for (EquipmentSlot slotType : EnumUtils.ARMOR_SLOTS) {
             ItemStack wornItem = player.getItemBySlot(slotType);
-            if (!wornItem.isEmpty() && wornItem.getItem() instanceof ModifiableMekaSuitArmor) {
+            if (!wornItem.isEmpty() && wornItem.getItem() instanceof IModifiable) {
                 wornParts.add(slotType);
                 for (Map.Entry<ModuleData<?>, ModuleModelSpec> entry : moduleModelSpec.row(slotType).entrySet()) {
                     if (moduleHelper.isEnabled(wornItem, entry.getKey())) {

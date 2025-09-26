@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "active=false,facing=east,in_structure=false": {
+      "model": "ticex:block/foundry/fluid_transmuter_inactive",
+      "y": 90
+    },
+    "active=false,facing=east,in_structure=true": {
+      "model": "ticex:block/foundry/fluid_transmuter_active",
+      "y": 90
+    },
+    "active=false,facing=north,in_structure=false": {
+      "model": "ticex:block/foundry/fluid_transmuter_inactive"
+    },
+    "active=false,facing=north,in_structure=true": {
+      "model": "ticex:block/foundry/fluid_transmuter_active"
+    },
+    "active=false,facing=south,in_structure=false": {
+      "model": "ticex:block/foundry/fluid_transmuter_inactive",
+      "y": 180
+    },
+    "active=false,facing=south,in_structure=true": {
+      "model": "ticex:block/foundry/fluid_transmuter_active",
+      "y": 180
+    },
+    "active=false,facing=west,in_structure=false": {
+      "model": "ticex:block/foundry/fluid_transmuter_inactive",
+      "y": 270
+    },
+    "active=false,facing=west,in_structure=true": {
+      "model": "ticex:block/foundry/fluid_transmuter_active",
+      "y": 270
+    },
+    "active=true,facing=east,in_structure=false": {
+      "model": "ticex:block/foundry/fluid_transmuter_inactive",
+      "y": 90
+    },
+    "active=true,facing=east,in_structure=true": {
+      "model": "ticex:block/foundry/fluid_transmuter_active",
+      "y": 90
+    },
+    "active=true,facing=north,in_structure=false": {
+      "model": "ticex:block/foundry/fluid_transmuter_inactive"
+    },
+    "active=true,facing=north,in_structure=true": {
+      "model": "ticex:block/foundry/fluid_transmuter_active"
+    },
+    "active=true,facing=south,in_structure=false": {
+      "model": "ticex:block/foundry/fluid_transmuter_inactive",
+      "y": 180
+    },
+    "active=true,facing=south,in_structure=true": {
+      "model": "ticex:block/foundry/fluid_transmuter_active",
+      "y": 180
+    },
+    "active=true,facing=west,in_structure=false": {
+      "model": "ticex:block/foundry/fluid_transmuter_inactive",
+      "y": 270
+    },
+    "active=true,facing=west,in_structure=true": {
+      "model": "ticex:block/foundry/fluid_transmuter_active",
+      "y": 270
+    }
+  }
+}

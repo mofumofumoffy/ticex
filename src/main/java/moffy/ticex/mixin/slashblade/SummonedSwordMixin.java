@@ -23,7 +23,7 @@ public abstract class SummonedSwordMixin {
     @Shadow
     public abstract Entity getShooter();
 
-    @Inject(at = @At("head"), method = "onHitEntity", cancellable = true, remap = true)
+    @Inject(at = @At("HEAD"), method = "onHitEntity", cancellable = true)
     protected void onHitEntity(EntityHitResult entityHitResult, CallbackInfo cb) {
         Entity shooter = getShooter();
         Entity target = entityHitResult.getEntity();

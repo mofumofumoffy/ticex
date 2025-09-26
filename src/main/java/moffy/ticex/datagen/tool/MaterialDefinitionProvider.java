@@ -46,6 +46,14 @@ public class MaterialDefinitionProvider extends AbstractMaterialDataProvider {
             availableCondition("avaritia_compat")
         );
         addMaterial(
+            TicEXMaterials.BLAZING,
+            4,
+            ORDER_COMPAT + ORDER_WEAPON,
+            false,
+            false,
+            availableCondition("avaritia_compat")
+        );
+        addMaterial(
             TicEXMaterials.DRACONIUM,
             3,
             ORDER_COMPAT + ORDER_WEAPON,
