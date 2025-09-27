@@ -1,5 +1,7 @@
 package moffy.ticex.modules.mekanism;
 
+import mekanism.common.registration.impl.BlockDeferredRegister;
+import mekanism.common.registration.impl.TileEntityTypeDeferredRegister;
 import mekanism.common.registries.MekanismModules;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
@@ -38,7 +40,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicEXMekanismModule implements AddonModule {
+  
+    public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
 
+    public static BlockDeferredRegister BLOCKS;
+    public static TileEntityTypeDeferredRegister TILE_ENTITY_TYPES;
+
+    public TicEXMekanismModule() {
     @Override
     public void init(FMLJavaModLoadingContext context) {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -75,6 +83,10 @@ public class TicEXMekanismModule implements AddonModule {
         TicEXRegistry.MEKANIC_MODIFIER = TicEXRegistry.MODIFIERS.register("mekanic", ModifierMekanic::new);
         TicEXRegistry.RADIATION_SHIELDING_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("radiation_shielding");
 
+        BLOCKS = new BlockDeferredRegister(TicEX.MODID);
+        TILE_ENTITY_TYPES = new TileEntityTypeDeferredRegister(TicEX.MODID);
+
+        MinecraftForge.EVENT_BUS.register(new TicEXMekanismEvent());
         bus.addListener(TicEXMekanismEvent::onRegisterCaps);
         MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::getBreakSpeed);
         MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::onEntityAttack);

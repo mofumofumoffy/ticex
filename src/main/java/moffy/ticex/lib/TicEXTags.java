@@ -41,17 +41,21 @@ public class TicEXTags {
         public static final TagKey<Item> NEUTRON_INGOT = common("ingots/neutron");
         public static final TagKey<Item> CRYSTAL_MATRIX_INGOT = common("ingots/crystal_matrix");
         public static final TagKey<Item> ETHERIC_INGOT = common("ingots/etheric");
+        public static final TagKey<Item> BLAZING_INGOT = common("ingots/blazing");
 
         public static final TagKey<Item> INFINITY_BLOCK = common("storage_blocks/infinity");
         public static final TagKey<Item> NEUTRON_BLOCK = common("storage_blocks/neutron");
         public static final TagKey<Item> CRYSTAL_MATRIX_BLOCK = common("storage_blocks/crystal_matrix");
         public static final TagKey<Item> ETHERIC_BLOCK = common("storage_blocks/etheric");
+        public static final TagKey<Item> BLAZING_BLOCK = common("storage_blocks/blazing");
+
 
         public static final TagKey<Item> SERAM = local("seram");
         public static final TagKey<Item> PLATE = local("plate");
         public static final TagKey<Item> MEKASUIT_ARMOR = local("seram/mekasuit");
         public static final TagKey<Item> GEM_ARMOR = local("seram/gem");
-        public static final TagKey<Item> SLASHBLADE_TOOL = local("seram/slashblade");
+        public static final TagKey<Item> SLASHBLADE = local("slashblade");
+        public static final TagKey<Item> REFORGED_SLASHBLADE_TOOL = local("seram/slashblade");
         public static final TagKey<Item> KINETIC_GUN_TOOL = local("seram/kinetic_gun");
         public static final TagKey<Item> IRONS_SPELLBOOK_TOOL = local("seram/irons_spellbook");
         public static final TagKey<Item> MEKA_TOOL = local("seram/meka_tool");
@@ -70,6 +74,7 @@ public class TicEXTags {
         public static final TagKey<Fluid> INFINITY = common("molten_infinity");
         public static final TagKey<Fluid> NEUTRON = common("molten_neutron");
         public static final TagKey<Fluid> CRYSTAL_MATRIX = common("molten_crystal_matrix");
+        public static final TagKey<Fluid> BLAZING = common("molten_blazing");
         public static final TagKey<Fluid> ETHERIC = common("molten_etheric");
         public static final TagKey<Fluid> HEPATIZON = common("molten_hepatizon");
         public static final TagKey<Fluid> GOLD = common("molten_gold");

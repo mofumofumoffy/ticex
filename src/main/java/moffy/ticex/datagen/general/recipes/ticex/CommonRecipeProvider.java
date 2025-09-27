@@ -114,7 +114,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
         ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXRegistry.FLUID_TRANSMUTER.get()))
                 .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerSmeltery.scorchedAlloyer.get(), true)
-                .save(pWriter, prefix(TicEXRegistry.FLUID_TRANSMUTER, smelteryCastingFolder + "scorched"));
+                .save(pWriter, prefix(TicEXRegistry.FLUID_TRANSMUTER, smelteryCastingFolder + "scorched_"));
 
         ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXRegistry.SEARED_RF_FURNACE.get()))
                 .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)

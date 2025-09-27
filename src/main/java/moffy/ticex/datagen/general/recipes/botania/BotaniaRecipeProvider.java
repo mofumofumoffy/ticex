@@ -1,31 +1,34 @@
 package moffy.ticex.datagen.general.recipes.botania;
 
-import com.google.gson.JsonObject;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.data.recipe.IMaterialRecipeHelper;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
 import slimeknights.tconstruct.library.tools.SlotType;
-import vazkii.botania.api.recipe.ManaInfusionRecipe;
 import vazkii.botania.common.item.BotaniaItems;
-
 
 import java.util.function.Consumer;
 
 public class BotaniaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMaterialRecipeHelper {
+    private final TicEXManaInfusionProvider manaInfusionProvider;
+
+    public BotaniaRecipeProvider(PackOutput output) {
+        this.manaInfusionProvider = new TicEXManaInfusionProvider(output);
+    }
+
     public void buildRecipes(@NotNull Consumer<FinishedRecipe> pWriter){
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
                 modsAvailable(new ResourceLocation(TicEX.MODID, "botania_compat"))
         );
+
+        manaInfusionProvider.buildRecipes(pWriter);
 
         ModifierRecipeBuilder.modifier(TicEXRegistry.AHRIM_MODIFIER)
                 .allowCrystal()

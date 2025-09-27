@@ -59,6 +59,9 @@ public class TicEXAvaritiaModule implements AddonModule {
         TicEXRegistry.TRANSCENDENTAL_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("transcendental");
         TicEXRegistry.DENSE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("dense");
         TicEXRegistry.ENDESTSHOT_MODIFIER = TicEXRegistry.MODIFIERS.register("endestshot", ModifierEndestShot::new);
+        TicEXRegistry.SKULLFIRE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("skullfire");
+        TicEXRegistry.BLAZING_FLAME_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("blazing_flame");
+        TicEXRegistry.BLAZING_FORTUNE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("blazing_fortune");
 
         TicEXRegistry.MOLTEN_INFINITY = TicEXRegistry.FLUIDS.register("molten_infinity")
                 .type(TicEXFluidUtils.hot("molten_infinity").temperature(6360).lightLevel(15))
@@ -78,6 +81,12 @@ public class TicEXAvaritiaModule implements AddonModule {
                 .bucket()
                 .commonTag()
                 .flowing();
+        TicEXRegistry.MOLTEN_BLAZING = TicEXRegistry.FLUIDS.register("molten_blazing")
+                .type(TicEXFluidUtils.hot("molten_blazing").temperature(4800).lightLevel(15))
+                .block(BurningLiquidBlock.createBurning(MapColor.COLOR_ORANGE, 15, 20, 10f))
+                .bucket()
+                .commonTag()
+                .flowing();
 
         TicEXRegistry.ENDESTSHOT_PROJECTILE = TicEXRegistry.ENTITIES.register("endestshot", () ->
                 EntityType.Builder.<EndestShotProjectile>of(EndestShotProjectile::new, MobCategory.MISC)
@@ -91,6 +100,7 @@ public class TicEXAvaritiaModule implements AddonModule {
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onGetHurt);
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onDeath);
         MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(TicEXAvaritiaEvent::onLivingDrops);
 
 
     }
