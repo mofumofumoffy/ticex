@@ -10,6 +10,7 @@
     "MeleeAttributeModuleMixin",
     "RandomMaterialMixin",
     "RomanNumeralHelperMixin",
+    "TrimArmorTextureSupplierMixin",
     "config.AbstractCastingRecipeAccessor",
     "config.AbstractCastingRecipeMixin",
     "config.AbstractModifierRecipeAccessor",
