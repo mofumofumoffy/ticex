@@ -10,15 +10,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.client.resources.model.Material;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class TicEXCosmicShaderProvider {
     private static TicEXCosmicShader shader;
-    private static VertexConsumer buffer;
 
     public static void init(IEventBus eventBus) {
         shader = new TicEXCosmicShader();
@@ -26,6 +23,8 @@ public class TicEXCosmicShaderProvider {
     }
 
     public static class Tool extends ShaderProvider.Tool {
+        private VertexConsumer buffer;
+
         @Override
         public void renderQuadOverlay(QuadRenderContext.ToolQuadRenderContext quadContext) {
             if (buffer != null) {
@@ -81,9 +80,11 @@ public class TicEXCosmicShaderProvider {
     public static class Armor extends ShaderProvider.Armor {
         @Override
         public void renderQuadOverlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
-            VertexConsumer buffer = quadContext.sprite().wrap(
-                    quadContext.bufferSource().getBuffer(shader.getCosmicRenderTypeArmor(quadContext.sprite().contents().name()))
+            VertexConsumer buffer = quadContext.material().buffer(
+                    quadContext.bufferSource(),
+                    shader::getCosmicRenderTypeArmor
             );
+
             shader.setupUniform();
             shader.cosmicExternalScale.set(1.0f);
 

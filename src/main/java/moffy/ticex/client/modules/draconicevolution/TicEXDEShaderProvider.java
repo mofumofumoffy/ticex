@@ -9,8 +9,6 @@ import moffy.ticex.client.rendering.ticex.TicEXToolRenders;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.client.resources.model.Material;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -171,21 +169,17 @@ public class TicEXDEShaderProvider {
     }
 
     public static class Armor extends ShaderProvider.Armor {
-        public Armor(RenderType rt, TechLevel tl) {
-            renderType = rt;
-            techLevel = tl;
+        public Armor(@NotNull TechLevel techLevel) {
+            this.techLevel = techLevel;
         }
 
-        private final RenderType renderType;
-        @Nullable
-        private TechLevel techLevel;
-        @Nullable
-        private VertexConsumer vertexConsumer;
+        private final TechLevel techLevel;
 
         @Override
         public void renderQuadOverlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
-            VertexConsumer buffer = quadContext.sprite().wrap(
-                    quadContext.bufferSource().getBuffer(shader.createArmorsRenderType(quadContext.sprite().contents().name(), techLevel))
+            VertexConsumer buffer = quadContext.material().buffer(
+                    quadContext.bufferSource(),
+                    resourceLocation -> shader.getArmorRenderType(resourceLocation, techLevel)
             );
             shader.setupUniforms(techLevel);
 

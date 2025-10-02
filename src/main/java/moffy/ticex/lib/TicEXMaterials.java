@@ -17,4 +17,7 @@ public class TicEXMaterials {
     public static final MaterialId CHAOTIC = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "chaotic"));
     public static final MaterialId ETHERIC = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "etheric"));
     public static final MaterialId RECONSTRUCTION = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "reconstruction"));
+    public static final MaterialId[] TRIM_MATERIALS = new MaterialId[] {
+            ETHERIC
+    };
 }

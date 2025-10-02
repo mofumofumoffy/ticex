@@ -13,6 +13,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderType.CompositeState;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public final class TicEXDEShader extends BCShader<TicEXDEShader> {
@@ -24,6 +26,7 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
     };
     private final RenderStateShard.ShaderStateShard shaderState;
     private final Supplier<CompositeState.CompositeStateBuilder> shaderStateBaseFactory;
+    private final Map<ArmorCacheKey, RenderType> armorRenderTypeCache = new HashMap<>();
     private final RenderType modifierRenderType;
     private CCUniform scaleUniform;
     private CCUniform uv1OverrideUniform;
@@ -149,8 +152,13 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
         );
     }
 
-    public RenderType createArmorsRenderType(ResourceLocation texture, TechLevel techLevel) {
-        return RenderType.create(
+    public RenderType getArmorRenderType(ResourceLocation texture, TechLevel techLevel) {
+        ArmorCacheKey armorCacheKey = new ArmorCacheKey(texture, techLevel);
+        if (armorRenderTypeCache.containsKey(armorCacheKey)) {
+            return armorRenderTypeCache.get(armorCacheKey);
+        }
+
+        var renderType = RenderType.create(
                 TicEX.MODID + ":tool_evolved_trims_" + techLevel.name().toLowerCase(),
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
@@ -161,5 +169,10 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
                         .setTransparencyState(RenderType.NO_TRANSPARENCY)
                         .createCompositeState(true)
         );
+        armorRenderTypeCache.put(armorCacheKey, renderType);
+        return renderType;
+    }
+
+    record ArmorCacheKey(ResourceLocation resourceLocation, TechLevel techLevel) {
     }
 }

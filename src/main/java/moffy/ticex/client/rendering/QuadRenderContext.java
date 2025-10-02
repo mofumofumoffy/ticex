@@ -7,8 +7,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.client.armor.AbstractArmorModel;
@@ -54,11 +53,11 @@ public abstract class QuadRenderContext {
 
     public record ArmorPartRenderContext(Model model, PoseStack matrices, MultiBufferSource bufferSource,
                                          int packedLight, int packedOverlay, float red, float green, float blue,
-                                         float alpha, boolean hasGlint, TextureAtlasSprite sprite, int color) {
+                                         float alpha, boolean hasGlint, Material material, int color) {
 
         public void renderArmorNaked() {
             renderArmorOverrided(
-                    ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(sprite.contents().name()), false, hasGlint)
+                    ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(material.texture()), false, hasGlint)
             );
         }
 

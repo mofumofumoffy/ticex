@@ -4,24 +4,23 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import moffy.ticex.client.rendering.QuadRenderContext.ArmorPartRenderContext;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.resources.model.Material;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.client.armor.texture.TintedArmorTexture;
 
 public class TintedShaderArmorTexture extends TintedArmorTexture {
 
-    private final TextureAtlasSprite sprite;
+    private final Material textureMaterial;
     private final ShaderProvider.Armor provider;
     private int color;
 
     public TintedShaderArmorTexture(
-            TextureAtlasSprite sprite,
+            Material textureMaterial,
             int color,
             ShaderProvider.Armor armorProvider
     ) {
-        super(sprite.contents().name(), color);
-        this.sprite = sprite;
+        super(textureMaterial.texture(), color);
+        this.textureMaterial = textureMaterial;
         this.color = color;
         this.provider = armorProvider;
     }
@@ -64,7 +63,7 @@ public class TintedShaderArmorTexture extends TintedArmorTexture {
                             blue,
                             alpha,
                             hasGlint,
-                            this.sprite,
+                            this.textureMaterial,
                             this.color
                     )
             );

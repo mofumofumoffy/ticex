@@ -1,7 +1,5 @@
 package moffy.ticex.datagen.general.tag;
 
-import java.util.concurrent.CompletableFuture;
-
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -24,6 +22,8 @@ import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.common.registration.CastItemObject;
 import slimeknights.tconstruct.library.data.recipe.CostTagAppender;
+
+import java.util.concurrent.CompletableFuture;
 
 import static net.minecraft.tags.ItemTags.TRIM_MATERIALS;
 import static slimeknights.tconstruct.common.TinkerTags.Items.*;
@@ -88,7 +88,8 @@ public class ItemTagProvider extends ItemTagsProvider {
         addOptional(TicEXTags.Items.ETHERIC_BLOCK, new ResourceLocation(TicEX.MODID, "etheric_block"));
 
         //trim_materials
-        addOptional(TRIM_MATERIALS, new ResourceLocation(TicEX.MODID, "etheric_ingot"));
+        tag(TRIM_MATERIALS)
+                .addOptional(TicEXRegistry.ETHERIC_INGOT.getId());
 
         //catalyst_tools
         addCatalysts(

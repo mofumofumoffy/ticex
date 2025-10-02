@@ -1,0 +1,45 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:paletted_permutations",
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
+      "permutations": {
+        "ticex_etheric": "ticex:trims/color_palettes/etheric"
+      },
+      "textures": [
+        "minecraft:trims/models/armor/coast",
+        "minecraft:trims/models/armor/coast_leggings",
+        "minecraft:trims/models/armor/sentry",
+        "minecraft:trims/models/armor/sentry_leggings",
+        "minecraft:trims/models/armor/dune",
+        "minecraft:trims/models/armor/dune_leggings",
+        "minecraft:trims/models/armor/wild",
+        "minecraft:trims/models/armor/wild_leggings",
+        "minecraft:trims/models/armor/ward",
+        "minecraft:trims/models/armor/ward_leggings",
+        "minecraft:trims/models/armor/eye",
+        "minecraft:trims/models/armor/eye_leggings",
+        "minecraft:trims/models/armor/vex",
+        "minecraft:trims/models/armor/vex_leggings",
+        "minecraft:trims/models/armor/tide",
+        "minecraft:trims/models/armor/tide_leggings",
+        "minecraft:trims/models/armor/snout",
+        "minecraft:trims/models/armor/snout_leggings",
+        "minecraft:trims/models/armor/rib",
+        "minecraft:trims/models/armor/rib_leggings",
+        "minecraft:trims/models/armor/spire",
+        "minecraft:trims/models/armor/spire_leggings",
+        "minecraft:trims/models/armor/wayfinder",
+        "minecraft:trims/models/armor/wayfinder_leggings",
+        "minecraft:trims/models/armor/shaper",
+        "minecraft:trims/models/armor/shaper_leggings",
+        "minecraft:trims/models/armor/silence",
+        "minecraft:trims/models/armor/silence_leggings",
+        "minecraft:trims/models/armor/raiser",
+        "minecraft:trims/models/armor/raiser_leggings",
+        "minecraft:trims/models/armor/host",
+        "minecraft:trims/models/armor/host_leggings"
+      ]
+    }
+  ]
+}
