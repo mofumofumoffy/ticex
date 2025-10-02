@@ -40,16 +40,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicEXMekanismModule implements AddonModule {
-  
+
     public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
 
     public static BlockDeferredRegister BLOCKS;
     public static TileEntityTypeDeferredRegister TILE_ENTITY_TYPES;
 
-    public TicEXMekanismModule() {
     @Override
     public void init(FMLJavaModLoadingContext context) {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus bus = context.getModEventBus();
         Item.Properties PROPS = new Item.Properties();
 
         ToolCapabilityProvider.register(MekItemCapabilityProvider::new);
