@@ -166,7 +166,9 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
                 true,
                 false,
                 shaderStateBaseFactory.get()
-                        .setTransparencyState(RenderType.NO_TRANSPARENCY)
+                        .setTransparencyState(RenderType.LIGHTNING_TRANSPARENCY)
+                        .setCullState(RenderType.NO_CULL)
+                        .setLayeringState(RenderType.VIEW_OFFSET_Z_LAYERING)
                         .createCompositeState(true)
         );
         armorRenderTypeCache.put(armorCacheKey, renderType);

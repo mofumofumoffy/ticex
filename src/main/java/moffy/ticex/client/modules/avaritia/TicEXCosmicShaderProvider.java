@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -56,6 +57,7 @@ public class TicEXCosmicShaderProvider {
                 pitch = -(float) ((mainCamera.getXRot() * 2.0f * Math.PI) / 360.0);
             }
 
+            shader.cosmicUVs.set(shader.cosmicUVGetter.apply(InventoryMenu.BLOCK_ATLAS));
             shader.cosmicYaw.set(yaw);
             shader.cosmicPitch.set(pitch);
             shader.cosmicExternalScale.set(scale);
@@ -84,6 +86,10 @@ public class TicEXCosmicShaderProvider {
                     quadContext.bufferSource(),
                     shader::getCosmicRenderTypeArmor
             );
+
+            float[] cosmicUvs = shader.cosmicUVGetter.apply(quadContext.material().atlasLocation());
+            shader.cosmicUVs.set(cosmicUvs);
+
 
             shader.setupUniform();
             shader.cosmicExternalScale.set(1.0f);
