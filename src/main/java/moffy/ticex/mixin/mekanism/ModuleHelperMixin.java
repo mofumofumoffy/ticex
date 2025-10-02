@@ -36,12 +36,12 @@ public class ModuleHelperMixin {
     )
     public void getSupported(ItemStack container, CallbackInfoReturnable<Set<ModuleData<?>>> cir){
         if(container.getItem() instanceof IModifiable && container.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
-            cir.setReturnValue(supportedModules.getOrDefault(ticex_1_20_1$getAlternativeItem(container), cir.getReturnValue()));
+            cir.setReturnValue(supportedModules.getOrDefault(ticex$getAlternativeItem(container), cir.getReturnValue()));
         }
     }
 
     @Unique
-    private Item ticex_1_20_1$getAlternativeItem(ItemStack stack){
+    private Item ticex$getAlternativeItem(ItemStack stack){
         if(stack.getItem() instanceof ArmorItem armorItem){
             return switch (armorItem.getType()){
                 case HELMET -> MekanismItems.MEKASUIT_HELMET.get();

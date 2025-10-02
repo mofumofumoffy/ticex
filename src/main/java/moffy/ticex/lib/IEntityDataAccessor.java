@@ -4,13 +4,13 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 public interface IEntityDataAccessor {
-    public Map<String, Object> getAllFields();
+    Map<String, Object> ticex$getAllFields();
 
-    public Field getField(String keyName);
+    Field ticex$getField(String keyName);
 
-    public <T> boolean setValue(Field field, Class<T> cls, Object value);
+    <T> boolean ticex$setValue(Field field, Class<T> cls, Object value);
 
-    public default <T> boolean setValue(Field field, Object value) {
-        return setValue(field, value.getClass(), value);
+    default <T> boolean setValue(Field field, T value) {
+        return ticex$setValue(field, value.getClass(), value);
     }
 }

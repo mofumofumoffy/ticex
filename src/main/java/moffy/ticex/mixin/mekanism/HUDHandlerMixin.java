@@ -47,7 +47,7 @@ public abstract class HUDHandlerMixin {
         int posX = 0;
         Predicate<ItemStack> showArmorPercent = stack -> stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent();
         for (int i = 0; i < EnumUtils.ARMOR_SLOTS.length; i++) {
-            posX += mekanism_capable_tool$renderEnergyIcon(
+            posX += ticex$renderEnergyIconCustom(
                 player,
                 font,
                 guiGraphics,
@@ -62,7 +62,7 @@ public abstract class HUDHandlerMixin {
     }
 
     @Unique
-    private int mekanism_capable_tool$renderEnergyIcon(Player player, Font font, GuiGraphics guiGraphics, int posX, int color, ResourceLocation icon, EquipmentSlot slot, Predicate<ItemStack> showPercent) {
+    private int ticex$renderEnergyIconCustom(Player player, Font font, GuiGraphics guiGraphics, int posX, int color, ResourceLocation icon, EquipmentSlot slot, Predicate<ItemStack> showPercent) {
         ItemStack stack = player.getItemBySlot(slot);
         if (showPercent.test(stack)) {
             this.renderHUDElement(font, guiGraphics, posX, 0, IModuleHelper.INSTANCE.hudElementPercent(icon, StorageUtils.getEnergyRatio(stack)), color, false);

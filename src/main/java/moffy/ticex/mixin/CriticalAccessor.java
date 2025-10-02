@@ -9,5 +9,5 @@ import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 public interface CriticalAccessor {
     @Mutable
     @Accessor("isCritical")
-    public void setCritical(boolean critical);
+    void setCritical(boolean critical);
 }
