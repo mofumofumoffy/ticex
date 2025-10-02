@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -53,11 +54,11 @@ public abstract class QuadRenderContext {
 
     public record ArmorPartRenderContext(Model model, PoseStack matrices, MultiBufferSource bufferSource,
                                          int packedLight, int packedOverlay, float red, float green, float blue,
-                                         float alpha, boolean hasGlint, ResourceLocation texture, int color) {
+                                         float alpha, boolean hasGlint, TextureAtlasSprite sprite, int color) {
 
         public void renderArmorNaked() {
             renderArmorOverrided(
-                    ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(texture), false, hasGlint)
+                    ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(sprite.contents().name()), false, hasGlint)
             );
         }
 

@@ -184,14 +184,8 @@ public class TicEXDEShaderProvider {
 
         @Override
         public void renderQuadOverlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
-            net.minecraft.client.resources.model.Material material = new net.minecraft.client.resources.model.Material(
-                    InventoryMenu.BLOCK_ATLAS,
-                    quadContext.texture()
-            );
-
-            VertexConsumer buffer = material.buffer(
-                    quadContext.bufferSource(),
-                    resourceLocation -> renderType
+            VertexConsumer buffer = quadContext.sprite().wrap(
+                    quadContext.bufferSource().getBuffer(shader.createArmorsRenderType(quadContext.sprite().contents().name(), techLevel))
             );
             shader.setupUniforms(techLevel);
 

@@ -81,14 +81,8 @@ public class TicEXCosmicShaderProvider {
     public static class Armor extends ShaderProvider.Armor {
         @Override
         public void renderQuadOverlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
-            Material material = new Material(
-                    InventoryMenu.BLOCK_ATLAS,
-                    quadContext.texture()
-            );
-
-            VertexConsumer buffer = material.buffer(
-                    quadContext.bufferSource(),
-                    shader::getCosmicRenderTypeArmor
+            VertexConsumer buffer = quadContext.sprite().wrap(
+                    quadContext.bufferSource().getBuffer(shader.getCosmicRenderTypeArmor(quadContext.sprite().contents().name()))
             );
             shader.setupUniform();
             shader.cosmicExternalScale.set(1.0f);

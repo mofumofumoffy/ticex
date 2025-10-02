@@ -5,7 +5,11 @@ import moffy.ticex.client.rendering.shader.ShaderProvider;
 import moffy.ticex.client.rendering.shader.TintedShaderArmorTexture;
 import moffy.ticex.client.rendering.ticex.TicEXRenders;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -41,6 +45,7 @@ public abstract class MaterialArmorTextureSupplierMixin {
                     if (!materialStr.isEmpty()) {
                         MaterialVariantId material = MaterialVariantId.tryParse(materialStr);
                         ShaderProvider.Armor shaderProvider = TicEXRenders.ARMOR_SHADERS.getShaderProvider(material);
+                        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(name);
                         int color = -1;
                         if (material != null) {
                             Optional<MaterialRenderInfo> infoOptional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(material);
@@ -50,14 +55,14 @@ public abstract class MaterialArmorTextureSupplierMixin {
                                 if (untinted != null) {
                                     ArmorTexture texture = tryTexture(name, -1, '_' + untinted.getNamespace() + '_' + untinted.getPath());
                                     if (texture != ArmorTexture.EMPTY) {
-                                        return ticex$getArmorTexture(texture, ticex$getAtlasLocation(name), color, shaderProvider);
+                                        return ticex$getArmorTexture(texture, sprite, color, shaderProvider);
                                     }
                                 }
                                 color = info.vertexColor();
                                 for (String fallback : info.fallbacks()) {
                                     ArmorTexture texture = tryTexture(name, color, '_' + fallback);
                                     if (texture != ArmorTexture.EMPTY) {
-                                        return ticex$getArmorTexture(texture, ticex$getAtlasLocation(name), color, shaderProvider);
+                                        return ticex$getArmorTexture(texture, sprite, color, shaderProvider);
                                     }
                                 }
                             }
@@ -65,7 +70,7 @@ public abstract class MaterialArmorTextureSupplierMixin {
 
                             return ticex$getArmorTexture(
                                     new TintedArmorTexture(ArmorTextureSupplier.getTexturePath(name), -1),
-                                    ticex$getAtlasLocation(name),
+                                    sprite,
                                     -1,
                                     shaderProvider
                             );
@@ -118,9 +123,9 @@ public abstract class MaterialArmorTextureSupplierMixin {
     */
 
     @Unique
-    private static ArmorTexture ticex$getArmorTexture(ArmorTexture texture, ResourceLocation path, int color, ShaderProvider.Armor shaderProvider) {
+    private static ArmorTexture ticex$getArmorTexture(ArmorTexture texture, TextureAtlasSprite sprite, int color, ShaderProvider.Armor shaderProvider) {
         if (shaderProvider != null && TicEXConfig.USE_SHADER.get()) {
-            return new TintedShaderArmorTexture(path, color, shaderProvider);
+            return new TintedShaderArmorTexture(sprite, color, shaderProvider);
         }
         return texture;
     }

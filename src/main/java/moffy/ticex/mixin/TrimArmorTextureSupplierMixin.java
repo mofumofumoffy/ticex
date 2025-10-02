@@ -9,10 +9,15 @@ import moffy.ticex.client.modules.avaritia.TicEXCosmicShaderProvider;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShader;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShaderProvider;
 import moffy.ticex.client.rendering.shader.TintedShaderArmorTexture;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import slimeknights.tconstruct.library.client.armor.texture.ArmorTextureSupplier;
 import slimeknights.tconstruct.library.client.armor.texture.TrimArmorTextureSupplier;
@@ -31,17 +36,17 @@ public abstract class TrimArmorTextureSupplierMixin {
         TicEXDEShader shader = Objects.requireNonNull(TicEXDEShaderProvider.getShader());
         TechLevel techLevel = TechLevel.VALUES[3];
 //        return original.call(root, material);
-
+        TextureAtlas atlas = Minecraft.getInstance().getModelManager().getAtlas(Sheets.ARMOR_TRIMS_SHEET);
+        TextureAtlasSprite sprite = atlas.getSprite(root.withSuffix('_' + material.assetName()));
         return new TintedShaderArmorTexture(
-                root,
+                sprite,
                 -1,
-                new TicEXCosmicShaderProvider.Armor()
-//                new TicEXDEShaderProvider.Armor(
-//                        shader.createArmorsRenderType(root, techLevel),
-//                        techLevel
-//                )
+                //new TicEXCosmicShaderProvider.Armor()
+                new TicEXDEShaderProvider.Armor(
+                        shader.createArmorsRenderType(root, techLevel),
+                        techLevel
+                )
         );
 
     }
-
 }
