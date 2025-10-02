@@ -45,7 +45,7 @@ public abstract class MaterialArmorTextureSupplierMixin {
                     if (!materialStr.isEmpty()) {
                         MaterialVariantId material = MaterialVariantId.tryParse(materialStr);
                         ShaderProvider.Armor shaderProvider = TicEXRenders.ARMOR_SHADERS.getShaderProvider(material);
-                        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(name);
+                        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ArmorTextureSupplier.getTexturePath(name));
                         int color = -1;
                         if (material != null) {
                             Optional<MaterialRenderInfo> infoOptional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(material);

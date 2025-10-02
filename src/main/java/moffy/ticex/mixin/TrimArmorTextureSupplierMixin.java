@@ -9,6 +9,8 @@ import moffy.ticex.client.modules.avaritia.TicEXCosmicShaderProvider;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShader;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShaderProvider;
 import moffy.ticex.client.rendering.shader.TintedShaderArmorTexture;
+import moffy.ticex.client.rendering.ticex.TicEXRenders;
+import moffy.ticex.lib.TicEXMaterials;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -41,11 +43,11 @@ public abstract class TrimArmorTextureSupplierMixin {
         return new TintedShaderArmorTexture(
                 sprite,
                 -1,
-                //new TicEXCosmicShaderProvider.Armor()
-                new TicEXDEShaderProvider.Armor(
-                        shader.createArmorsRenderType(root, techLevel),
-                        techLevel
-                )
+                TicEXRenders.ARMOR_SHADERS.getShaderProvider(TicEXMaterials.INFINITY)
+//                new TicEXDEShaderProvider.Armor(
+//                        shader.createArmorsRenderType(root, techLevel),
+//                        techLevel
+//                )
         );
 
     }
