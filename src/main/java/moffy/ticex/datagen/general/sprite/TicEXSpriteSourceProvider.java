@@ -47,6 +47,7 @@ public class TicEXSpriteSourceProvider extends SpriteSourceProvider {
                                 new ResourceLocation(trimFolder + name + "_leggings"))
                         ).toList(),
                         trimPalette, materialMap)
-                );
+                )
+                .addSource(new DirectoryLister("misc", "misc/"));
     }
 }
