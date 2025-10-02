@@ -179,9 +179,10 @@ public class TicEXDEShaderProvider {
         public void renderQuadOverlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
             VertexConsumer buffer = quadContext.material().buffer(
                     quadContext.bufferSource(),
-                    resourceLocation -> shader.getArmorRenderType(resourceLocation, techLevel)
+                    shader::getArmorRenderType
             );
             shader.setupUniforms(techLevel);
+            shader.getScaleUniform().glUniform1f(1.0f);
 
             quadContext.renderArmorOverrided(buffer);
         }

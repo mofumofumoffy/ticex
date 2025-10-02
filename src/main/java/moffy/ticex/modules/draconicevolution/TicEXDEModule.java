@@ -81,7 +81,7 @@ public class TicEXDEModule implements AddonModule {
         for (int i = 0; i < materials.size(); i++) {
             TechLevel techLevel = TechLevel.VALUES[i];
             TicEXRenders.TOOL_SHADERS.addShader(materials.get(i).getId(), new TicEXDEShaderProvider.Material(
-                    shader.createMaterialsRenderType(techLevel),
+                    shader.createMaterialsRenderType(),
                     techLevel
             ));
             TicEXRenders.ARMOR_SHADERS.addShader(materials.get(i).getId(), new TicEXDEShaderProvider.Armor(techLevel));
