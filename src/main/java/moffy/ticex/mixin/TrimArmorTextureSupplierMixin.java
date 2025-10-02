@@ -5,6 +5,7 @@ import com.brandon3055.brandonscore.api.TechLevel;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import moffy.ticex.client.modules.avaritia.TicEXCosmicShaderProvider;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShader;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShaderProvider;
 import moffy.ticex.client.rendering.shader.TintedShaderArmorTexture;
@@ -29,14 +30,18 @@ public abstract class TrimArmorTextureSupplierMixin {
     private ArmorTextureSupplier.ArmorTexture insertTexture(ResourceLocation root, TrimMaterial material, Operation<ArmorTextureSupplier.ArmorTexture> original) {
         TicEXDEShader shader = Objects.requireNonNull(TicEXDEShaderProvider.getShader());
         TechLevel techLevel = TechLevel.VALUES[3];
+//        return original.call(root, material);
+
         return new TintedShaderArmorTexture(
                 root,
                 -1,
-                new TicEXDEShaderProvider.Armor(
-                        shader.createMaterialsRenderType(techLevel),
-                        techLevel
-                )
+                new TicEXCosmicShaderProvider.Armor()
+//                new TicEXDEShaderProvider.Armor(
+//                        shader.createArmorsRenderType(root, techLevel),
+//                        techLevel
+//                )
         );
+
     }
 
 }

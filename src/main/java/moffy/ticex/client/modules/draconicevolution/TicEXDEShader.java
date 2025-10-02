@@ -148,4 +148,18 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
                         .createCompositeState(true)
         );
     }
+
+    public RenderType createArmorsRenderType(ResourceLocation texture, TechLevel techLevel) {
+        return RenderType.create(
+                TicEX.MODID + ":tool_evolved_trims_" + techLevel.name().toLowerCase(),
+                DefaultVertexFormat.NEW_ENTITY,
+                VertexFormat.Mode.QUADS,
+                2097152,
+                true,
+                false,
+                shaderStateBaseFactory.get()
+                        .setTransparencyState(RenderType.NO_TRANSPARENCY)
+                        .createCompositeState(true)
+        );
+    }
 }
