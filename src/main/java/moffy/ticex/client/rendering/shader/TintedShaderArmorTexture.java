@@ -49,7 +49,7 @@ public class TintedShaderArmorTexture extends TintedArmorTexture {
             float alpha,
             boolean hasGlint
     ) {
-//        super.renderTexture(model, matrices, bufferSource, packedLight, packedOverlay, red, green, blue, alpha, hasGlint);
+//        super.renderTexture(model, poseStack, bufferSource, packedLight, packedOverlay, red, green, blue, alpha, hasGlint);
         if (this.provider != null) {
             this.provider.renderQuadOverlay(
                     new ArmorPartRenderContext(

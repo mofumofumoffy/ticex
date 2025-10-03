@@ -4,7 +4,12 @@
       "type": "minecraft:paletted_permutations",
       "palette_key": "minecraft:trims/color_palettes/trim_palette",
       "permutations": {
-        "ticex_etheric": "ticex:trims/color_palettes/etheric"
+        "ticex_chaotic": "ticex:trims/color_palettes/chaotic",
+        "ticex_draconic": "ticex:trims/color_palettes/draconic",
+        "ticex_draconium": "ticex:trims/color_palettes/draconium",
+        "ticex_etheric": "ticex:trims/color_palettes/etheric",
+        "ticex_infinity": "ticex:trims/color_palettes/infinity",
+        "ticex_wyvern": "ticex:trims/color_palettes/wyvern"
       },
       "textures": [
         "minecraft:trims/models/armor/coast",

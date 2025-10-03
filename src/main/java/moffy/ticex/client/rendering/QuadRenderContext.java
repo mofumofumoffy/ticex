@@ -51,7 +51,7 @@ public abstract class QuadRenderContext {
         }
     }
 
-    public record ArmorPartRenderContext(Model model, PoseStack matrices, MultiBufferSource bufferSource,
+    public record ArmorPartRenderContext(Model model, PoseStack poseStack, MultiBufferSource bufferSource,
                                          int packedLight, int packedOverlay, float red, float green, float blue,
                                          float alpha, boolean hasGlint, Material material, int color) {
 
@@ -74,7 +74,7 @@ public abstract class QuadRenderContext {
             renderArmorOverrided(
                     buffer,
                     model,
-                    matrices,
+                    poseStack,
                     packedLight,
                     packedOverlay,
                     red,

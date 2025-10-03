@@ -1,6 +1,26 @@
 {
   "values": [
     {
+      "id": "avaritia:infinity_ingot",
+      "required": false
+    },
+    {
+      "id": "ticex:draconium_crystal",
+      "required": false
+    },
+    {
+      "id": "ticex:wyvern_crystal",
+      "required": false
+    },
+    {
+      "id": "ticex:draconic_crystal",
+      "required": false
+    },
+    {
+      "id": "ticex:chaotic_crystal",
+      "required": false
+    },
+    {
       "id": "ticex:etheric_ingot",
       "required": false
     }

@@ -1,0 +1,14 @@
+{
+  "asset_name": "ticex_chaotic",
+  "description": {
+    "color": "#555555",
+    "translate": "trim_material.tconstruct.format",
+    "with": [
+      {
+        "translate": "material.ticex.chaotic"
+      }
+    ]
+  },
+  "ingredient": "ticex:chaotic_crystal",
+  "item_model_index": 0.4
+}

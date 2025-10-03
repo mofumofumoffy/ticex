@@ -29,6 +29,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.fluids.data.FluidBlockstateModelProvider;
+import slimeknights.tconstruct.library.client.data.material.MaterialPartTextureGenerator;
 import slimeknights.tconstruct.library.client.data.material.TrimMaterialPaletteGenerator;
 
 import java.util.Set;
@@ -90,8 +91,13 @@ public class TicEXGatherDataEvent {
         generator.addProvider(server, new MaterialTraitsProvider(packOutput, materialDefinitionProvider));
         generator.addProvider(server, new MaterialTagProvider(packOutput, existingFileHelper));
 
+//        TinkerPartSpriteProvider tinkerPartSprites = new TinkerPartSpriteProvider();
         TicEXMaterialSpriteProvider spriteProvider = new TicEXMaterialSpriteProvider();
 
+        MaterialPartTextureGenerator.runCallbacks(existingFileHelper, null);
+
+
+//        generator.addProvider(client, new MaterialPartTextureGenerator(packOutput, existingFileHelper, tinkerPartSprites, spriteProvider));
         generator.addProvider(client, new TrimMaterialPaletteGenerator(packOutput, TicEX.MODID, existingFileHelper, spriteProvider, TicEXMaterials.TRIM_MATERIALS));
 
         //tools

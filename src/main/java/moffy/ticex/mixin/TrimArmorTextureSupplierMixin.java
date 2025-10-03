@@ -4,10 +4,10 @@ package moffy.ticex.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.rendering.shader.ShaderProvider;
 import moffy.ticex.client.rendering.shader.TintedShaderArmorTexture;
 import moffy.ticex.client.rendering.ticex.TicEXRenders;
-import moffy.ticex.lib.TicEXMaterials;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
@@ -21,9 +21,7 @@ import slimeknights.tconstruct.library.client.armor.texture.TrimArmorTextureSupp
 import slimeknights.tconstruct.library.client.materials.MaterialRenderInfo;
 import slimeknights.tconstruct.library.client.materials.MaterialRenderInfoLoader;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
-import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
-import slimeknights.tconstruct.library.tools.item.IModifiable;
-import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 
 import java.util.Optional;
 
@@ -39,38 +37,30 @@ public abstract class TrimArmorTextureSupplierMixin {
     private ArmorTextureSupplier.ArmorTexture insertTexture(ResourceLocation root, TrimMaterial material, Operation<ArmorTextureSupplier.ArmorTexture> original,
                                                             @Local(argsOnly = true) ItemStack stack,
                                                             @Local(index = 5) String materialId) {
-        if(!(stack.getItem() instanceof IModifiable)) {
-            return original.call(root, material);
-        }
-
-        ToolStack tool = ToolStack.from(stack);
         Material textureMaterial = new Material(
                 Sheets.ARMOR_TRIMS_SHEET,
                 root.withSuffix('_' + material.assetName())
         );
 
-        for (MaterialVariant materialVariant : tool.getMaterials().getList()) {
-            if(materialVariant.getId().getPath().equals(materialId)) {
-                // マテリアル一致時の処理
+        MaterialVariantId materialVariantId = MaterialVariantId.tryParse(materialId);
+        if(materialVariantId != null && TicEXConfig.USE_SHADER.get()) {
+            MaterialId id = materialVariantId.getId();
+
+            ShaderProvider.Armor shaderProvider = TicEXRenders.ARMOR_SHADERS.getShaderProvider(id);
+            Optional<MaterialRenderInfo> infoOptional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(id);
+
+            int color = -1;
+            if (infoOptional.isPresent()) {
+                color = infoOptional.get().vertexColor();
             }
-        }
 
-        MaterialId chaotic = TicEXMaterials.CHAOTIC;
-
-        ShaderProvider.Armor shaderProvider = TicEXRenders.ARMOR_SHADERS.getShaderProvider(chaotic);
-        Optional<MaterialRenderInfo> infoOptional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(chaotic);
-
-        int color = -1;
-        if (infoOptional.isPresent()) {
-            color = infoOptional.get().vertexColor();
-        }
-
-        if(shaderProvider != null) {
-            return new TintedShaderArmorTexture(
-                    textureMaterial,
-                    color,
-                    shaderProvider
-            );
+            if (shaderProvider != null) {
+                return new TintedShaderArmorTexture(
+                        textureMaterial,
+                        color,
+                        shaderProvider
+                );
+            }
         }
 
         return original.call(root, material);

@@ -89,6 +89,11 @@ public class ItemTagProvider extends ItemTagsProvider {
 
         //trim_materials
         tag(TRIM_MATERIALS)
+                .addOptional(new ResourceLocation("avaritia", "infinity_ingot"))
+                .addOptional(TicEXRegistry.DRACONIUM_CRYSTAL.getId())
+                .addOptional(TicEXRegistry.WYVERN_CRYSTAL.getId())
+                .addOptional(TicEXRegistry.DRACONIC_CRYSTAL.getId())
+                .addOptional(TicEXRegistry.CHAOTIC_CRYSTAL.getId())
                 .addOptional(TicEXRegistry.ETHERIC_INGOT.getId());
 
         //catalyst_tools
