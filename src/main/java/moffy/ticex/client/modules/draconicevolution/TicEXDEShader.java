@@ -13,6 +13,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderType.CompositeState;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public final class TicEXDEShader extends BCShader<TicEXDEShader> {
@@ -24,6 +26,7 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
     };
     private final RenderStateShard.ShaderStateShard shaderState;
     private final Supplier<CompositeState.CompositeStateBuilder> shaderStateBaseFactory;
+    private final Map<ResourceLocation, RenderType> armorRenderTypeCache = new HashMap<>();
     private final RenderType modifierRenderType;
     private CCUniform scaleUniform;
     private CCUniform uv1OverrideUniform;
@@ -135,9 +138,9 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
         return modifierRenderType;
     }
 
-    public RenderType createMaterialsRenderType(TechLevel techLevel) {
+    public RenderType createMaterialsRenderType() {
         return RenderType.create(
-                TicEX.MODID + ":tool_evolved_materials_" + techLevel.name().toLowerCase(),
+                TicEX.MODID + ":tool_evolved",
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
                 2097152,
@@ -147,5 +150,26 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
                         .setTransparencyState(RenderType.NO_TRANSPARENCY)
                         .createCompositeState(true)
         );
+    }
+
+    public RenderType getArmorRenderType(ResourceLocation atlasTexture) {
+        if (armorRenderTypeCache.containsKey(atlasTexture)) {
+            return armorRenderTypeCache.get(atlasTexture);
+        }
+
+        var renderType = RenderType.create(
+                TicEX.MODID + ":tool_evolved",
+                DefaultVertexFormat.NEW_ENTITY,
+                VertexFormat.Mode.QUADS,
+                2097152,
+                true,
+                false,
+                shaderStateBaseFactory.get()
+                        .setTextureState(new RenderStateShard.TextureStateShard(atlasTexture, false, false))
+                        .setLayeringState(RenderType.VIEW_OFFSET_Z_LAYERING)
+                        .createCompositeState(true)
+        );
+        armorRenderTypeCache.put(atlasTexture, renderType);
+        return renderType;
     }
 }

@@ -1,0 +1,14 @@
+{
+  "asset_name": "ticex_wyvern",
+  "description": {
+    "color": "#AA00AA",
+    "translate": "trim_material.tconstruct.format",
+    "with": [
+      {
+        "translate": "material.ticex.wyvern"
+      }
+    ]
+  },
+  "ingredient": "ticex:wyvern_crystal",
+  "item_model_index": 0.3
+}

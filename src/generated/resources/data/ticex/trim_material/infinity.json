@@ -1,0 +1,14 @@
+{
+  "asset_name": "ticex_infinity",
+  "description": {
+    "color": "#FFFFFF",
+    "translate": "trim_material.tconstruct.format",
+    "with": [
+      {
+        "translate": "material.ticex.infinity"
+      }
+    ]
+  },
+  "ingredient": "avaritia:infinity_ingot",
+  "item_model_index": 0.8
+}

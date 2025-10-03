@@ -5,6 +5,7 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.caps.draconicevolution.DEItemCapabilityProvider;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShader;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShaderProvider;
+import moffy.ticex.client.rendering.PartPredicate;
 import moffy.ticex.client.rendering.ticex.TicEXRenders;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.TicEXMaterials;
@@ -15,7 +16,6 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
@@ -76,14 +76,15 @@ public class TicEXDEModule implements AddonModule {
         );
 
         TicEXDEShader shader = Objects.requireNonNull(TicEXDEShaderProvider.getShader());
-        TicEXRenders.TOOL_SHADERS.addShader(ModifierIds.reinforced, new TicEXDEShaderProvider.Modifier());
+        TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Modifier(ModifierIds.reinforced), new TicEXDEShaderProvider.Modifier());
 
         for (int i = 0; i < materials.size(); i++) {
             TechLevel techLevel = TechLevel.VALUES[i];
             TicEXRenders.TOOL_SHADERS.addShader(materials.get(i).getId(), new TicEXDEShaderProvider.Material(
-                    shader.createMaterialsRenderType(techLevel),
+                    shader.createMaterialsRenderType(),
                     techLevel
             ));
+            TicEXRenders.ARMOR_SHADERS.addShader(materials.get(i).getId(), new TicEXDEShaderProvider.Armor(techLevel));
         }
     }
 }

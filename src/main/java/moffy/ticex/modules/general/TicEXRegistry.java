@@ -18,6 +18,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
+import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
@@ -150,6 +151,10 @@ public class TicEXRegistry {
             TicEX.MODID
     );
     public static final MenuTypeDeferredRegister MENUS = new MenuTypeDeferredRegister(
+            TicEX.MODID
+    );
+    public static final DeferredRegister<TrimMaterial> TRIM_MATERIAL = DeferredRegister.create(
+            Registries.TRIM_MATERIAL,
             TicEX.MODID
     );
     public static final JeiIntegrationsRegistry JEI_INTEGRATIONS = new JeiIntegrationsRegistry();
@@ -303,6 +308,7 @@ public class TicEXRegistry {
     public static DynamicModifier NECTAR_MODIFIER = null;
     public static StaticModifier<Modifier> REACTIVE_MODIFIER = null;
 
+    public static TrimMaterial ETHERIC_TRIM = null;
 
     public static Tier INFINITY_TIER;
 
