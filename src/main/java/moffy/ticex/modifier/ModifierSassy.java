@@ -1,6 +1,7 @@
 package moffy.ticex.modifier;
 
 import moffy.ticex.mixin.CriticalAccessor;
+import net.minecraftforge.common.ForgeHooks;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeDamageModifierHook;
@@ -30,6 +31,9 @@ public class ModifierSassy extends NoLevelsModifier implements MeleeDamageModifi
         float damage
     ) {
         ((CriticalAccessor) context).setCritical(true);
+        if(context.getPlayerAttacker() != null){
+            ForgeHooks.getCriticalHit(context.getPlayerAttacker(), context.getTarget(), false, 1.5f);
+        }
         return damage * 1.5f;
     }
 }
