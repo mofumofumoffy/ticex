@@ -32,6 +32,7 @@ import java.util.Map;
 
 @Mixin(value = TooltipUtil.class, remap = false)
 public class ToolTipUtilMixin {
+    @SuppressWarnings("deprecation")
     @Inject(at=@At("HEAD"), method = "addModifierNames", cancellable = true)
     private static void addModifierNameWithModify(ItemStack stack, IToolStackView tool, Player player, List<Component> tooltips, TooltipFlag flag, CallbackInfo ci){
         if(!SocketHelper.getGems(stack).isEmpty()){
@@ -63,18 +64,18 @@ public class ToolTipUtilMixin {
                                     if(level == realLevel){
                                         tooltips.add(enchantment.getFullname(level));
                                     } else {
-                                        ticex_1_20_1$appendModifiedEnchTooltip(tooltips, enchantment, realLevel, level);
+                                        ticex$appendModifiedEnchTooltip(tooltips, enchantment, realLevel, level);
                                     }
                                 });
                     }
                 }
             }
             ci.cancel();
-        };
+        }
     }
 
     @Unique
-    private static void ticex_1_20_1$appendModifiedEnchTooltip(List<Component> tooltip, Enchantment ench, int realLevel, int nbtLevel) {
+    private static void ticex$appendModifiedEnchTooltip(List<Component> tooltip, Enchantment ench, int realLevel, int nbtLevel) {
         MutableComponent mc = ench.getFullname(realLevel).copy();
         mc.getSiblings().clear();
         Component nbtLevelComp = Component.translatable("enchantment.level." + nbtLevel);

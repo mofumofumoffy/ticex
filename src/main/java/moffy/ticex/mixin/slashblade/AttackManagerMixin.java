@@ -53,7 +53,7 @@ public class AttackManagerMixin {
                     false
                 );
 
-                ticex_1_20_1$dealToolDamage(tool, context, livingAttacker, src, amount, target, forceHit, resetHit);
+                ticex$dealToolDamage(tool, context, livingAttacker, src, amount, target, forceHit, resetHit);
 
                 cb.cancel();
             }
@@ -61,7 +61,7 @@ public class AttackManagerMixin {
     }
 
     @Unique
-    private static void ticex_1_20_1$dealToolDamage(
+    private static void ticex$dealToolDamage(
         IToolStackView tool,
         ToolAttackContext context,
         LivingEntity livingAttacker,

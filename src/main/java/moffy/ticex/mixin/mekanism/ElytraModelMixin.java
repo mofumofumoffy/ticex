@@ -30,7 +30,7 @@ public class ElytraModelMixin<T extends LivingEntity> {
             method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V"
     )
     public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch, CallbackInfo ci) {
-        if(ticex_1_20_1$isElytraModuleEnabled(pEntity) && pEntity.isFallFlying()){
+        if(ticex$isElytraModuleEnabled(pEntity) && pEntity.isFallFlying()){
             float yScale = (float) 0.15;
             float zScale = (float) -0.5;
             leftWing.yRot *= yScale;
@@ -41,7 +41,7 @@ public class ElytraModelMixin<T extends LivingEntity> {
     }
 
     @Unique
-    private boolean ticex_1_20_1$isElytraModuleEnabled(T pEntity){
+    private boolean ticex$isElytraModuleEnabled(T pEntity){
         ItemStack chestStack = pEntity.getItemBySlot(EquipmentSlot.CHEST);
         if(chestStack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
             IMekaGear mekaGear = chestStack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);

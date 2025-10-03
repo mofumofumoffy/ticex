@@ -17,17 +17,12 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 @Mixin(value = CardboardArmorHandler.class, remap = false)
 public class CardboardArmorHandlerMixin {
 
-    @Inject(at = @At("return"), method = "testForStealth", cancellable = true)
-    private static void testForStealth(Entity entityIn, CallbackInfoReturnable<Boolean> cb) {
-        boolean result = cb.getReturnValue();
+    @Inject(at = @At("RETURN"), method = "testForStealth", cancellable = true)
+    private static void testForStealth(Entity entityIn, CallbackInfoReturnable<Boolean> ci) {
+        if (!(entityIn instanceof LivingEntity entity)) return;
 
-        boolean resultByModifiers = true;
-        if (entityIn != null) {}
-
-        if (!(entityIn instanceof LivingEntity)) return;
-
-        LivingEntity entity = (LivingEntity) entityIn;
         if (entity.getPose() != Pose.CROUCHING) return;
+
         if (entity instanceof Player player && player.getAbilities().flying) return;
         if (TicEXRegistry.CARDBOARD_MODIFIER != null) {
             for (ItemStack armorStack : entityIn.getArmorSlots()) {
@@ -40,9 +35,8 @@ public class CardboardArmorHandlerMixin {
                     return;
                 }
             }
-        } else {
-            return;
         }
-        cb.setReturnValue(result || resultByModifiers);
+
+        ci.setReturnValue(true);
     }
 }
