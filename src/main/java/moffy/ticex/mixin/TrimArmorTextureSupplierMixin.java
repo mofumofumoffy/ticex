@@ -47,17 +47,11 @@ public abstract class TrimArmorTextureSupplierMixin {
             MaterialId id = materialVariantId.getId();
 
             ShaderProvider.Armor shaderProvider = TicEXRenders.ARMOR_SHADERS.getShaderProvider(id);
-            Optional<MaterialRenderInfo> infoOptional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(id);
-
-            int color = -1;
-            if (infoOptional.isPresent()) {
-                color = infoOptional.get().vertexColor();
-            }
 
             if (shaderProvider != null) {
                 return new TintedShaderArmorTexture(
                         textureMaterial,
-                        color,
+                        -1,
                         shaderProvider
                 );
             }
