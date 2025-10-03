@@ -40,6 +40,9 @@ public class TicEXConfig {
     // Apotheosis
     public static ForgeConfigSpec.ConfigValue<Integer> OVERRIDE_LIMIT;
 
+    // Ars Nouveau
+    public static ForgeConfigSpec.ConfigValue<Integer> REACTIVE_COOLDOWN;
+
     // Curios
     public static ForgeConfigSpec.ConfigValue<Integer> GAUNTLET_REMAIN_TICKS;
     public static ForgeConfigSpec.ConfigValue<List<String>> GLOVE_DROP_BLACKLIST;
@@ -80,6 +83,9 @@ public class TicEXConfig {
             255
         );
         COMMON.pop();
+
+        COMMON.push("ars nouveau");
+        REACTIVE_COOLDOWN = COMMON.comment("Internal cooldown ticks of spellcasting").define("reactiveCooldown", 100);
 
         COMMON.push("curios");
         GAUNTLET_REMAIN_TICKS = COMMON.comment("Ticks remaining on the gauntlet after a gauntlet shot hits")
