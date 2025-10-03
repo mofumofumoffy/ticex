@@ -20,6 +20,7 @@
     "config.ToolDefinitionLoaderMixin"
   ],
   "client": [
+    "HumanoidArmorLayerMixin",
     "ItemRendererMixin",
     "MaterialArmorTextureSupplierMixin",
     "NormalModifierModelMixin",
