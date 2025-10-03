@@ -39,6 +39,7 @@ import mekanism.common.tags.MekanismTags;
 import mekanism.common.util.ItemDataUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
+import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
@@ -438,7 +439,9 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
     public Component validate(@NotNull IToolStackView tool, ModifierEntry entry) {
         if (
                 entry.getLevel() == 1 &&
+                        !tool.hasTag(TicEXTags.Items.MEKASUIT_ARMOR) &&
                         (tool.getModifierLevel(ModifierIds.reinforced) < 5 || tool.getModifierLevel(ModifierIds.netherite) < 1)
+
         ) {
             return Component.translatable("recipe.ticex.modifier.mekanic_requirements");
         }
