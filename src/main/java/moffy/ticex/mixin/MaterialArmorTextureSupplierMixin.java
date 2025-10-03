@@ -43,7 +43,7 @@ public abstract class MaterialArmorTextureSupplierMixin {
                     if (!materialStr.isEmpty()) {
                         MaterialVariantId material = MaterialVariantId.tryParse(materialStr);
                         ShaderProvider.Armor shaderProvider = TicEXRenders.ARMOR_SHADERS.getShaderProvider(material);
-                        Material textureMaterial = new Material(InventoryMenu.BLOCK_ATLAS, ArmorTextureSupplier.getTexturePath(name));
+                        Material textureMaterial = new Material(InventoryMenu.BLOCK_ATLAS, ticex$getAtlasLocation(name));
                         int color = -1;
                         if (material != null) {
                             Optional<MaterialRenderInfo> infoOptional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(material);
