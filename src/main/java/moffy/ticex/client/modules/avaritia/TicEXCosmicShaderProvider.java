@@ -10,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +17,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 public class TicEXCosmicShaderProvider {
     private static TicEXCosmicShader shader;
-    private static VertexConsumer buffer;
 
     public static void init(IEventBus eventBus) {
         shader = new TicEXCosmicShader();
@@ -26,6 +24,8 @@ public class TicEXCosmicShaderProvider {
     }
 
     public static class Tool extends ShaderProvider.Tool {
+        private VertexConsumer buffer;
+
         @Override
         public void renderQuadOverlay(QuadRenderContext.ToolQuadRenderContext quadContext) {
             if (buffer != null) {
@@ -57,6 +57,7 @@ public class TicEXCosmicShaderProvider {
                 pitch = -(float) ((mainCamera.getXRot() * 2.0f * Math.PI) / 360.0);
             }
 
+            shader.cosmicUVs.set(shader.cosmicUVGetter.apply(InventoryMenu.BLOCK_ATLAS));
             shader.cosmicYaw.set(yaw);
             shader.cosmicPitch.set(pitch);
             shader.cosmicExternalScale.set(scale);
@@ -81,15 +82,15 @@ public class TicEXCosmicShaderProvider {
     public static class Armor extends ShaderProvider.Armor {
         @Override
         public void renderQuadOverlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
-            Material material = new Material(
-                    InventoryMenu.BLOCK_ATLAS,
-                    quadContext.texture()
-            );
-
-            VertexConsumer buffer = material.buffer(
+            VertexConsumer buffer = quadContext.material().buffer(
                     quadContext.bufferSource(),
                     shader::getCosmicRenderTypeArmor
             );
+
+            float[] cosmicUvs = shader.cosmicUVGetter.apply(quadContext.material().atlasLocation());
+            shader.cosmicUVs.set(cosmicUvs);
+
+
             shader.setupUniform();
             shader.cosmicExternalScale.set(1.0f);
 
