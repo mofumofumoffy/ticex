@@ -120,6 +120,8 @@ public abstract class MaterialArmorTextureSupplierMixin {
         }
     }
 
+*/
+
     @Unique
     private static ArmorTexture ticex$getArmorTexture(ArmorTexture texture, Material textureMaterial, int color, ShaderProvider.Armor shaderProvider) {
         if (shaderProvider != null && TicEXConfig.USE_SHADER.get()) {
