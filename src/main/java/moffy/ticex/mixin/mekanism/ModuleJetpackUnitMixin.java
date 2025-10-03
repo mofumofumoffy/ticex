@@ -39,28 +39,30 @@ public class ModuleJetpackUnitMixin {
     ) {
         Predicate<ItemStack> hasCap = stack -> stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent();
         ItemStack container = module.getContainer();
-        if (hasCap.test(container)) {
-            IMekaGear mekaGear = container.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
-            if (module.isEnabled()) {
-                GasStack stored = null;
-                if(mekaGear instanceof IGasTankItem gasTankGear){
-                    stored = gasTankGear.getContainedGas(
-                            container,
-                            MekanismGases.HYDROGEN.get()
-                    );
-                }
-                double ratio = StorageUtils.getRatio(
-                    stored != null ? stored.getAmount() : 0,
-                    MekanismConfig.gear.mekaSuitJetpackMaxStorage.getAsLong()
-                );
-                hudElementAdder.accept(
-                    IModuleHelper.INSTANCE.hudElementPercent(
-                        (this.jetpackMode.get()).getHUDIcon(),
-                        ratio
-                    )
+        if (!hasCap.test(container)) {
+            return;
+        }
+
+        IMekaGear mekaGear = container.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+        if (module.isEnabled()) {
+            GasStack stored = null;
+            if(mekaGear instanceof IGasTankItem gasTankGear){
+                stored = gasTankGear.getContainedGas(
+                        container,
+                        MekanismGases.HYDROGEN.get()
                 );
             }
-            cb.cancel();
+            double ratio = StorageUtils.getRatio(
+                stored != null ? stored.getAmount() : 0,
+                MekanismConfig.gear.mekaSuitJetpackMaxStorage.getAsLong()
+            );
+            hudElementAdder.accept(
+                IModuleHelper.INSTANCE.hudElementPercent(
+                    (this.jetpackMode.get()).getHUDIcon(),
+                    ratio
+                )
+            );
         }
+        cb.cancel();
     }
 }

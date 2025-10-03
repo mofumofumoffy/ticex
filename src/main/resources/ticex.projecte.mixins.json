@@ -10,5 +10,5 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "minVersion": 0.7
+  "minVersion": "0.7"
 }

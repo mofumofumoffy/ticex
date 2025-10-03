@@ -51,119 +51,119 @@ mixins = [
 # The description text for the mod (multi line!) (#mandatory)
 description='''${mod_description}'''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.${mod_id}]] #optional
-    # the modid of the dependency
-    modId="forge" #mandatory
-    # Does this dependency have to exist - if not, ordering below must be specified
-    mandatory=true #mandatory
-    # The version range of the dependency
-    versionRange="${forge_version_range}" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the dependency is not mandatory
-    # BEFORE - This mod is loaded BEFORE the dependency
-    # AFTER - This mod is loaded AFTER the dependency
-    ordering="AFTER"
-    # Side this dependency is applied on - BOTH, CLIENT, or SERVER
-    side="BOTH"
+[[dependencies."${mod_id}"]] #optional
+# the modid of the dependency
+modId="forge" #mandatory
+# Does this dependency have to exist - if not, ordering below must be specified
+mandatory=true #mandatory
+# The version range of the dependency
+versionRange="${forge_version_range}" #mandatory
+# An ordering relationship for the dependency - BEFORE or AFTER required if the dependency is not mandatory
+# BEFORE - This mod is loaded BEFORE the dependency
+# AFTER - This mod is loaded AFTER the dependency
+ordering="AFTER"
+# Side this dependency is applied on - BOTH, CLIENT, or SERVER
+side="BOTH"
 # Here's another dependency
-[[dependencies.${mod_id}]]
-    modId="minecraft"
-    mandatory=true
-    # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="${minecraft_version_range}"
-    ordering="NONE"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="minecraft"
+mandatory=true
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="addonapi"
-    mandatory=true
-    versionRange="[2.0.0-SNAPSHOT,3.0.0)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="addonapi"
+mandatory=true
+versionRange="[2.0.0-SNAPSHOT,3.0.0)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="tconstruct"
-    mandatory=true
-    versionRange="[3.10.0.67,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="tconstruct"
+mandatory=true
+versionRange="[3.10.2.92,)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="avaritia"
-    mandatory=false
-    versionRange="[1.3.9.1,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="avaritia"
+mandatory=false
+versionRange="[1.3.9.1,)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="mekanism"
-    mandatory=false
-    versionRange="[10.4.10,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="mekanism"
+mandatory=false
+versionRange="[10.4.10,)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="mekaweapons"
-    mandatory=false
-    versionRange="[3.0,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="mekaweapons"
+mandatory=false
+versionRange="[3.0,)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="draconicevolution"
-    mandatory=false
-    versionRange="[3.1.2.604,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="draconicevolution"
+mandatory=false
+versionRange="[3.1.2.604,)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="slashblade"
-    mandatory=false
-    versionRange="[1.4.46,1.6.0)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="slashblade"
+mandatory=false
+versionRange="[1.4.46,1.6.0)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="apotheosis"
-    mandatory=false
-    versionRange="[7.4.6,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="apotheosis"
+mandatory=false
+versionRange="[7.4.6,)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="curios"
-    mandatory=false
-    versionRange="[5.11.1,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="curios"
+mandatory=false
+versionRange="[5.11.1,)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="create"
-    mandatory=false
-    versionRange="[0.5.1,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="create"
+mandatory=false
+versionRange="[0.5.1,)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="irons_spellbook"
-    mandatory=false
-    versionRange="[3.4.0.8,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="irons_spellbooks"
+mandatory=false
+versionRange="[3.4.0.8,)"
+ordering="AFTER"
+side="BOTH"
 
 
-[[dependencies.${mod_id}]]
-    modId="tinkers_things"
-    mandatory=false
-    versionRange="[1.3.1,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="tinkers_things"
+mandatory=false
+versionRange="[1.3.1,)"
+ordering="AFTER"
+side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="sakuratinker"
-    mandatory=false
-    versionRange="[1.0.0,)"
-    ordering="AFTER"
-    side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="sakuratinker"
+mandatory=false
+versionRange="[1.0.0,)"
+ordering="AFTER"
+side="BOTH"
 
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't

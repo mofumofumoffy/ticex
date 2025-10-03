@@ -22,23 +22,26 @@ public class ItemMixin {
             cancellable = true
     )
     public void useOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
-        if(cir.getReturnValue().consumesAction()){
-            ItemStack stack = context.getItemInHand();
-            stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).ifPresent(mekagear -> {
-                for (Module<?> module : mekagear.getModules(context.getItemInHand())) {
-                    if (module.isEnabled()) {
-                        InteractionResult result = ticex_1_20_1$onModuleUse(module, context);
-                        if (result != InteractionResult.PASS) {
-                            cir.setReturnValue(result);
-                        }
+        InteractionResult interaction = cir.getReturnValue();
+        if (!interaction.consumesAction()) {
+            return;
+        }
+
+        ItemStack stack = context.getItemInHand();
+        stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).ifPresent(mekagear -> {
+            for (Module<?> module : mekagear.getModules(context.getItemInHand())) {
+                if (module.isEnabled()) {
+                    InteractionResult moduleResult = ticex$onModuleUse(module, context);
+                    if (moduleResult != InteractionResult.PASS) {
+                        cir.setReturnValue(moduleResult);
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
     @Unique
-    private <MODULE extends ICustomModule<MODULE>> InteractionResult ticex_1_20_1$onModuleUse(IModule<MODULE> module, UseOnContext context) {
+    private <MODULE extends ICustomModule<MODULE>> InteractionResult ticex$onModuleUse(IModule<MODULE> module, UseOnContext context) {
         return module.getCustomInstance().onItemUse(module, context);
     }
 }

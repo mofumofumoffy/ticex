@@ -19,8 +19,8 @@ public class ModuleEntityMixin {
     @Shadow(remap = false)
     protected ModuleHost host;
 
-    @Inject(at = @At("TAIL"), method = "clientModuleClicked", cancellable = true, remap = false)
-    public boolean clientModuleClickedExtension(
+    @Inject(at = @At("TAIL"), method = "clientModuleClicked", remap = false)
+    public void clientModuleClickedExtension(
         GuiElement<?> parent,
         Player player,
         int x,
@@ -30,15 +30,13 @@ public class ModuleEntityMixin {
         double mouseX,
         double mouseY,
         int button,
-        CallbackInfoReturnable<Boolean> cb
+        CallbackInfoReturnable<Boolean> ci
     ) {
-        if ((ModuleEntity<?>) ((Object) this) instanceof FilteredModuleEntity && host instanceof EvolvedModuleHost) {
-            EvolvedModuleHost evolvedModuleHost = (EvolvedModuleHost) host;
+        if ((ModuleEntity<?>) ((Object) this) instanceof FilteredModuleEntity && host instanceof EvolvedModuleHost evolvedModuleHost) {
             evolvedModuleHost
                 .getToolSupplier()
                 .getPersistentData()
                 .put(ModifierEvolved.MODULE_HOST_LOCATION, evolvedModuleHost.serializeNBT());
         }
-        return cb.getReturnValue();
     }
 }

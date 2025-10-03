@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(SynchedEntityData.class)
 public interface DataItemAccessor {
     @Accessor("itemsById")
-    public Int2ObjectMap<SynchedEntityData.DataItem<?>> getItems();
+    Int2ObjectMap<SynchedEntityData.DataItem<?>> getItems();
 
     @Accessor("isDirty")
-    public void setDirtyByTicEX(boolean dirty);
+    void setDirtyByTicEX(boolean dirty);
 }

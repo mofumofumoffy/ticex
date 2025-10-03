@@ -48,7 +48,7 @@ public class TicEXMekanismModule implements AddonModule {
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus bus = context.getModEventBus();
         Item.Properties PROPS = new Item.Properties();
 
         ToolCapabilityProvider.register(MekItemCapabilityProvider::new);

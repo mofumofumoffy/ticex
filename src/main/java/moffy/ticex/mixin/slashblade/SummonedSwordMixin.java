@@ -1,12 +1,14 @@
 package moffy.ticex.mixin.slashblade;
 
 import mods.flammpfeil.slashblade.entity.EntityAbstractSummonedSword;
+import mods.flammpfeil.slashblade.entity.Projectile;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -18,14 +20,15 @@ import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 @Mixin(value = EntityAbstractSummonedSword.class, remap=false)
-public abstract class SummonedSwordMixin {
+public abstract class SummonedSwordMixin extends Projectile {
 
-    @Shadow
-    public abstract Entity getShooter();
+    protected SummonedSwordMixin(EntityType<? extends net.minecraft.world.entity.projectile.Projectile> entityType, Level level) {
+        super(entityType, level);
+    }
 
     @Inject(at = @At("HEAD"), method = "onHitEntity", cancellable = true)
-    protected void onHitEntity(EntityHitResult entityHitResult, CallbackInfo cb) {
-        Entity shooter = getShooter();
+    protected void onHitEntity(EntityHitResult entityHitResult, CallbackInfo ci) {
+        Entity shooter = getOwner();
         Entity target = entityHitResult.getEntity();
         if (shooter instanceof LivingEntity livingShooter) {
             ItemStack mainHandStack = livingShooter.getMainHandItem();
@@ -35,7 +38,7 @@ public abstract class SummonedSwordMixin {
                 ModifierNBT modifiers = tool.getModifiers();
                 ModDataNBT persistentData = tool.getPersistentData();
                 for (ModifierEntry modifier : tool.getModifierList()) {
-                    boolean cancel = modifier
+                    boolean cancelFlag = modifier
                         .getHook(ModifierHooks.PROJECTILE_HIT)
                         .onProjectileHitEntity(
                             modifiers,
@@ -46,8 +49,8 @@ public abstract class SummonedSwordMixin {
                             livingShooter,
                             target instanceof LivingEntity livingTarget ? livingTarget : null
                         );
-                    if (cancel) {
-                        cb.cancel();
+                    if (cancelFlag) {
+                        ci.cancel();
                     }
                 }
             }

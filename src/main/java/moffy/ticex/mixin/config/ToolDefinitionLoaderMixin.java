@@ -3,10 +3,8 @@ package moffy.ticex.mixin.config;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.lib.config.SlotValues;
-import moffy.ticex.lib.config.ToolSlotPreset;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -16,12 +14,9 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import slimeknights.tconstruct.library.tools.definition.ToolDefinitionData;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinitionLoader;
-import slimeknights.tconstruct.library.tools.definition.module.ToolHooks;
 
 import java.util.Map;
-import java.util.Optional;
 
 @Mixin(value = ToolDefinitionLoader.class, remap = false)
 public class ToolDefinitionLoaderMixin {
@@ -34,7 +29,7 @@ public class ToolDefinitionLoaderMixin {
                         if (rl.equals(resourceLocation)) {
                             SlotValues slots = SlotValues.fromSpec(spec);
                             if (slots != null) {
-                                modifySlots(resourceLocation, jsonElement, slots);
+                                ticex$modifySlots(jsonElement, slots);
                             }
                         }
                     });
@@ -44,7 +39,7 @@ public class ToolDefinitionLoaderMixin {
     }
 
     @Unique
-    private void modifySlots(ResourceLocation rl, JsonElement json, SlotValues slots) {
+    private void ticex$modifySlots(JsonElement json, SlotValues slots) {
         JsonArray modules = json.getAsJsonObject().getAsJsonArray("modules");
         if (modules != null) {
             modules.forEach(elem -> {
