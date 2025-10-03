@@ -6,17 +6,18 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import committee.nova.mods.avaritia.Const;
 import committee.nova.mods.avaritia.api.client.shader.CCShaderInstance;
 import moffy.ticex.TicEX;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.client.event.RegisterShadersEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 public final class TicEXCosmicShader {
     private final RenderStateShard.ShaderStateShard stateShard;
@@ -33,6 +34,20 @@ public final class TicEXCosmicShader {
     public Uniform cosmicExternalScale;
     public Uniform cosmicOpacity;
     public Uniform cosmicUVs;
+
+    public final Function<ResourceLocation, float[]> cosmicUVGetter = Util.memoize(resourceLocation -> {
+        float[] cosmicUV = new float[40];
+        for (int i = 0; i < 10; ++i) {
+            TextureAtlasSprite sprite = Minecraft.getInstance()
+                    .getTextureAtlas(resourceLocation)
+                    .apply(Const.rl("misc/cosmic_" + i));
+            cosmicUV[i * 4] = sprite.getU0();
+            cosmicUV[i * 4 + 1] = sprite.getV0();
+            cosmicUV[i * 4 + 2] = sprite.getU1();
+            cosmicUV[i * 4 + 3] = sprite.getV1();
+        }
+        return cosmicUV;
+    });
 
     public TicEXCosmicShader() {
         stateShard = new RenderStateShard.ShaderStateShard(() -> shaderInstance);
@@ -53,20 +68,7 @@ public final class TicEXCosmicShader {
     }
 
     public void initialize() {
-        float[] COSMIC_UVS = new float[40];
-        for (int i = 0; i < 10; ++i) {
-            TextureAtlasSprite sprite = Minecraft.getInstance()
-                    .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
-                    .apply(Const.rl("misc/cosmic_" + i));
-            COSMIC_UVS[i * 4] = sprite.getU0();
-            COSMIC_UVS[i * 4 + 1] = sprite.getV0();
-            COSMIC_UVS[i * 4 + 2] = sprite.getU1();
-            COSMIC_UVS[i * 4 + 3] = sprite.getV1();
-        }
 
-        if (cosmicUVs != null) {
-            cosmicUVs.set(COSMIC_UVS);
-        }
     }
 
     public CCShaderInstance getShaderInstance() {

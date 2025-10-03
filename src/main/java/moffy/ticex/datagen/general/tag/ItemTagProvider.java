@@ -1,6 +1,5 @@
 package moffy.ticex.datagen.general.tag;
 
-import java.util.concurrent.CompletableFuture;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -24,6 +23,9 @@ import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.common.registration.CastItemObject;
 import slimeknights.tconstruct.library.data.recipe.CostTagAppender;
 
+import java.util.concurrent.CompletableFuture;
+
+import static net.minecraft.tags.ItemTags.TRIM_MATERIALS;
 import static slimeknights.tconstruct.common.TinkerTags.Items.*;
 
 public class ItemTagProvider extends ItemTagsProvider {
@@ -33,10 +35,10 @@ public class ItemTagProvider extends ItemTagsProvider {
      */
 
     public ItemTagProvider(
-        PackOutput pOutput,
-        CompletableFuture<Provider> pLookupProvider,
-        CompletableFuture<TagLookup<Block>> pBlockTags,
-        @Nullable ExistingFileHelper existingFileHelper
+            PackOutput pOutput,
+            CompletableFuture<Provider> pLookupProvider,
+            CompletableFuture<TagLookup<Block>> pBlockTags,
+            @Nullable ExistingFileHelper existingFileHelper
     ) {
         super(pOutput, pLookupProvider, pBlockTags, TicEX.MODID, existingFileHelper);
     }
@@ -51,22 +53,22 @@ public class ItemTagProvider extends ItemTagsProvider {
 
     private void addCommon() {
         addCores(
-            new ResourceLocation(TicEX.MODID, "reconstruction_core"),
-            new ResourceLocation(TicEX.MODID, "flickering_reconstruction_core"),
-            new ResourceLocation(TicEX.MODID, "celestial_core"),
-            new ResourceLocation(TicEX.MODID, "radiation_shelding_core"),
-            new ResourceLocation(TicEX.MODID, "draconium_evolved_core"),
-            new ResourceLocation(TicEX.MODID, "wyvern_evolved_core"),
-            new ResourceLocation(TicEX.MODID, "draconic_evolved_core"),
-            new ResourceLocation(TicEX.MODID, "chaotic_evolved_core"),
-            new ResourceLocation(TicEX.MODID, "inject_core"),
-            new ResourceLocation(TicEX.MODID, "konpaku_core"),
-            new ResourceLocation(TicEX.MODID, "koshirae_core"),
-            new ResourceLocation(TicEX.MODID, "lamellar_core"),
-            new ResourceLocation(TicEX.MODID, "overload_core"),
-            new ResourceLocation(TicEX.MODID, "override_core"),
-            new ResourceLocation(TicEX.MODID, "incomparable_core"),
-            new ResourceLocation(TicEX.MODID, "cardboard_core")
+                new ResourceLocation(TicEX.MODID, "reconstruction_core"),
+                new ResourceLocation(TicEX.MODID, "flickering_reconstruction_core"),
+                new ResourceLocation(TicEX.MODID, "celestial_core"),
+                new ResourceLocation(TicEX.MODID, "radiation_shelding_core"),
+                new ResourceLocation(TicEX.MODID, "draconium_evolved_core"),
+                new ResourceLocation(TicEX.MODID, "wyvern_evolved_core"),
+                new ResourceLocation(TicEX.MODID, "draconic_evolved_core"),
+                new ResourceLocation(TicEX.MODID, "chaotic_evolved_core"),
+                new ResourceLocation(TicEX.MODID, "inject_core"),
+                new ResourceLocation(TicEX.MODID, "konpaku_core"),
+                new ResourceLocation(TicEX.MODID, "koshirae_core"),
+                new ResourceLocation(TicEX.MODID, "lamellar_core"),
+                new ResourceLocation(TicEX.MODID, "overload_core"),
+                new ResourceLocation(TicEX.MODID, "override_core"),
+                new ResourceLocation(TicEX.MODID, "incomparable_core"),
+                new ResourceLocation(TicEX.MODID, "cardboard_core")
         );
 
         //ingots
@@ -85,19 +87,28 @@ public class ItemTagProvider extends ItemTagsProvider {
 
         addOptional(TicEXTags.Items.ETHERIC_BLOCK, new ResourceLocation(TicEX.MODID, "etheric_block"));
 
+        //trim_materials
+        tag(TRIM_MATERIALS)
+                .addOptional(new ResourceLocation("avaritia", "infinity_ingot"))
+                .addOptional(TicEXRegistry.DRACONIUM_CRYSTAL.getId())
+                .addOptional(TicEXRegistry.WYVERN_CRYSTAL.getId())
+                .addOptional(TicEXRegistry.DRACONIC_CRYSTAL.getId())
+                .addOptional(TicEXRegistry.CHAOTIC_CRYSTAL.getId())
+                .addOptional(TicEXRegistry.ETHERIC_INGOT.getId());
+
         //catalyst_tools
         addCatalysts(
-            new ResourceLocation(TicEX.MODID, "catalyst_slashblade"),
-            new ResourceLocation(TicEX.MODID, "catalyst_kinetic_gun"),
-            new ResourceLocation(TicEX.MODID, "catalyst_irons_spellbook"),
-            new ResourceLocation(TicEX.MODID, "catalyst_meka_tool")
+                new ResourceLocation(TicEX.MODID, "catalyst_slashblade"),
+                new ResourceLocation(TicEX.MODID, "catalyst_kinetic_gun"),
+                new ResourceLocation(TicEX.MODID, "catalyst_irons_spellbook"),
+                new ResourceLocation(TicEX.MODID, "catalyst_meka_tool")
         );
 
         //catalyst_armors
         for (ArmorItem.Type type : ArmorItem.Type.values()) {
             addCatalysts(
-                new ResourceLocation(TicEX.MODID, "catalyst_mekasuit").withSuffix("_" + type.getName()),
-                new ResourceLocation(TicEX.MODID, "catalyst_gem").withSuffix("_" + type.getName())
+                    new ResourceLocation(TicEX.MODID, "catalyst_mekasuit").withSuffix("_" + type.getName()),
+                    new ResourceLocation(TicEX.MODID, "catalyst_gem").withSuffix("_" + type.getName())
             );
         }
 
@@ -106,7 +117,7 @@ public class ItemTagProvider extends ItemTagsProvider {
 
         // other mods
 
-        if(ModList.get().isLoaded("slashblade")) {
+        if (ModList.get().isLoaded("slashblade")) {
             this.tag(TicEXTags.Items.SLASHBLADE)
                     .addOptional(new ResourceLocation("slashblade", "slashblade"))
                     .addOptional(new ResourceLocation("slashblade_addon", "slashblade_tofu_diamond"))
@@ -121,18 +132,18 @@ public class ItemTagProvider extends ItemTagsProvider {
         this.tag(TinkerTags.Items.SEARED_TANKS).add(
                 TicEXRegistry.SEARED_RF_FURNACE.get().asItem(),
                 TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get().asItem()
-            );
+        );
         this.tag(TinkerTags.Items.SCORCHED_TANKS).add(
                 TicEXRegistry.SCORCHED_RF_FURNACE.get().asItem(),
                 TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get().asItem()
-            );
+        );
 
         this.tag(TinkerTags.Items.CASTS)
                 .addOptionalTags(TinkerTags.Items.GOLD_CASTS, TinkerTags.Items.SAND_CASTS, TinkerTags.Items.RED_SAND_CASTS, TinkerTags.Items.TABLE_EMPTY_CASTS, TinkerTags.Items.BASIN_EMPTY_CASTS);
 
         // other mods
 
-        if(ModList.get().isLoaded("slashblade")) {
+        if (ModList.get().isLoaded("slashblade")) {
             addCast(TicEXRegistry.SLASHBLADE_SAYA_CAST);
             addCast(TicEXRegistry.SLASHBLADE_BLADE_CAST);
         }
@@ -153,45 +164,45 @@ public class ItemTagProvider extends ItemTagsProvider {
     private void addTools() {
         //tools
         addToolTags(
-            new ResourceLocation(TicEX.MODID, "reforged_slashblade"),
-            TicEXTags.Items.REFORGED_SLASHBLADE_TOOL,
-            MULTIPART_TOOL,
-            DURABILITY,
-            HARVEST,
-            MELEE_PRIMARY,
-            INTERACTABLE_RIGHT,
-            PARRY,
-            SMALL_TOOLS,
-            BONUS_SLOTS,
-            LONGBOWS,
-            ItemTags.SWORDS,
-            UNSALVAGABLE
+                new ResourceLocation(TicEX.MODID, "reforged_slashblade"),
+                TicEXTags.Items.REFORGED_SLASHBLADE_TOOL,
+                MULTIPART_TOOL,
+                DURABILITY,
+                HARVEST,
+                MELEE_PRIMARY,
+                INTERACTABLE_RIGHT,
+                PARRY,
+                SMALL_TOOLS,
+                BONUS_SLOTS,
+                LONGBOWS,
+                ItemTags.SWORDS,
+                UNSALVAGABLE
         );
         addToolTags(
-            new ResourceLocation(TicEX.MODID, "blitz_gun"),
-            TicEXTags.Items.KINETIC_GUN_TOOL,
-            MULTIPART_TOOL,
-            DURABILITY,
-            HARVEST,
-            MELEE_PRIMARY,
-            INTERACTABLE_RIGHT,
-            PARRY,
-            SMALL_TOOLS,
-            BONUS_SLOTS,
-            UNSALVAGABLE
+                new ResourceLocation(TicEX.MODID, "blitz_gun"),
+                TicEXTags.Items.KINETIC_GUN_TOOL,
+                MULTIPART_TOOL,
+                DURABILITY,
+                HARVEST,
+                MELEE_PRIMARY,
+                INTERACTABLE_RIGHT,
+                PARRY,
+                SMALL_TOOLS,
+                BONUS_SLOTS,
+                UNSALVAGABLE
         );
         addToolTags(
-            new ResourceLocation(TicEX.MODID, "revival_spellbook_irons"),
-            TicEXTags.Items.IRONS_SPELLBOOK_TOOL,
-            MULTIPART_TOOL,
-            DURABILITY,
-            HARVEST,
-            MELEE_PRIMARY,
-            INTERACTABLE_RIGHT,
-            PARRY,
-            SMALL_TOOLS,
-            BONUS_SLOTS,
-            UNSALVAGABLE
+                new ResourceLocation(TicEX.MODID, "revival_spellbook_irons"),
+                TicEXTags.Items.IRONS_SPELLBOOK_TOOL,
+                MULTIPART_TOOL,
+                DURABILITY,
+                HARVEST,
+                MELEE_PRIMARY,
+                INTERACTABLE_RIGHT,
+                PARRY,
+                SMALL_TOOLS,
+                BONUS_SLOTS,
+                UNSALVAGABLE
         );
         addToolTags(
                 new ResourceLocation(TicEX.MODID, "meka_tool"),
@@ -206,20 +217,20 @@ public class ItemTagProvider extends ItemTagsProvider {
         //armors
         addArmorTags(new ResourceLocation(TConstruct.MOD_ID, "plate"), TicEXTags.Items.PLATE);
         addArmorTags(
-            new ResourceLocation(TicEX.MODID, "mekaplate"),
-            TicEXTags.Items.MEKASUIT_ARMOR,
-            MULTIPART_TOOL,
-            DURABILITY,
-            BONUS_SLOTS,
-            TRIM
+                new ResourceLocation(TicEX.MODID, "mekaplate"),
+                TicEXTags.Items.MEKASUIT_ARMOR,
+                MULTIPART_TOOL,
+                DURABILITY,
+                BONUS_SLOTS,
+                TRIM
         );
         addArmorTags(
-            new ResourceLocation(TicEX.MODID, "singular_gem"),
-            TicEXTags.Items.GEM_ARMOR,
-            MULTIPART_TOOL,
-            DURABILITY,
-            BONUS_SLOTS,
-            TRIM
+                new ResourceLocation(TicEX.MODID, "singular_gem"),
+                TicEXTags.Items.GEM_ARMOR,
+                MULTIPART_TOOL,
+                DURABILITY,
+                BONUS_SLOTS,
+                TRIM
         );
 
         this.tag(TicEXTags.Items.SERAM).addTags(
@@ -229,7 +240,7 @@ public class ItemTagProvider extends ItemTagsProvider {
                 TicEXTags.Items.MEKASUIT_ARMOR,
                 TicEXTags.Items.GEM_ARMOR,
                 TicEXTags.Items.MEKA_TOOL
-            );
+        );
     }
 
     private void addTag(TagKey<Item> tagKey, ResourceLocation coreItem) {

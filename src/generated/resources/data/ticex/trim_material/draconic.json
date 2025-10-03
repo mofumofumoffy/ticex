@@ -1,0 +1,14 @@
+{
+  "asset_name": "ticex_draconic",
+  "description": {
+    "color": "#FFFF55",
+    "translate": "trim_material.tconstruct.format",
+    "with": [
+      {
+        "translate": "material.ticex.draconic"
+      }
+    ]
+  },
+  "ingredient": "ticex:draconic_crystal",
+  "item_model_index": 0.3
+}

@@ -1,0 +1,10 @@
+{
+  "pairs": {
+    "ticex:trims/color_palettes/chaotic": "ticex_chaotic",
+    "ticex:trims/color_palettes/draconic": "ticex_draconic",
+    "ticex:trims/color_palettes/draconium": "ticex_draconium",
+    "ticex:trims/color_palettes/etheric": "ticex_etheric",
+    "ticex:trims/color_palettes/infinity": "ticex_infinity",
+    "ticex:trims/color_palettes/wyvern": "ticex_wyvern"
+  }
+}

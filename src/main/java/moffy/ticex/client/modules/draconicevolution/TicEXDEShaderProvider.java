@@ -167,4 +167,33 @@ public class TicEXDEShaderProvider {
         }
 
     }
+
+    public static class Armor extends ShaderProvider.Armor {
+        public Armor(@NotNull TechLevel techLevel) {
+            this.techLevel = techLevel;
+        }
+
+        private final TechLevel techLevel;
+
+        @Override
+        public void renderQuadOverlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
+            VertexConsumer buffer = quadContext.material().buffer(
+                    quadContext.bufferSource(),
+                    shader::getArmorRenderType
+            );
+            shader.setupUniforms(techLevel);
+            shader.getScaleUniform().glUniform1f(1.0f);
+
+            quadContext.renderArmorOverrided(buffer);
+        }
+
+        @Override
+        public void renderQuadUnderlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
+        }
+
+        @Override
+        public ShaderInstance getShaderInstance() {
+            return shader.getShaderInstance();
+        }
+    }
 }
