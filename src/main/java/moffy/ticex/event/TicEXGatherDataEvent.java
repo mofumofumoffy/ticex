@@ -14,6 +14,7 @@ import moffy.ticex.datagen.general.tag.FluidTagProvider;
 import moffy.ticex.datagen.general.tag.ItemTagProvider;
 import moffy.ticex.datagen.layout.TicEXStationSlotLayoutProvider;
 import moffy.ticex.datagen.material.TicEXMaterialSpriteProvider;
+import moffy.ticex.datagen.material.trim.TicEXConditionProvider;
 import moffy.ticex.datagen.material.trim.TicEXTrimMaterialProvider;
 import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
@@ -50,7 +51,7 @@ public class TicEXGatherDataEvent {
         boolean server = event.includeServer();
         boolean client = event.includeClient();
 
-        //TicEXTrimMaterialProvider.register(registrySetBuilder);
+        TicEXTrimMaterialProvider.register(registrySetBuilder);
         TicEXDamageTypeProvider.register(registrySetBuilder);
 
         DatapackBuiltinEntriesProvider registryProvider = new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, registrySetBuilder, Set.of(TicEX.MODID));
@@ -102,5 +103,8 @@ public class TicEXGatherDataEvent {
 
         //tools
         generator.addProvider(server, new ToolDefinitionProvider(packOutput));
+
+        // final modifier
+        generator.addProvider(server, new TicEXConditionProvider(packOutput));
     }
 }
