@@ -22,7 +22,7 @@ import java.util.function.Predicate;
 @Mixin(value = ModuleNutritionalInjectionUnit.class, remap = false)
 public class ModuleNutritionalInjectionUnitMixin {
 
-    @WrapOperation(method = "tickServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"))
+    @WrapOperation(method = "tickServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;", remap = true))
     public Item disableDefaultArmor(ItemStack instance, Operation<Item> original) {
         Predicate<ItemStack> hasCap = stack -> stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent();
         if(hasCap.test(instance)) {
@@ -45,7 +45,7 @@ public class ModuleNutritionalInjectionUnitMixin {
         return FluidStack.EMPTY;
     }
 
-    @WrapOperation(method = "addHUDElements", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"))
+    @WrapOperation(method = "addHUDElements", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;", remap = true))
     public Item disableHUDDefaultArmor(ItemStack instance, Operation<Item> original) {
         Predicate<ItemStack> hasCap = stack -> stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent();
         if(hasCap.test(instance)) {
