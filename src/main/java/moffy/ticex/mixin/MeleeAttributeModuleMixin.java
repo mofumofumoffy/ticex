@@ -9,7 +9,7 @@ import slimeknights.tconstruct.library.modifiers.modules.combat.MeleeAttributeMo
 
 @Mixin(value = MeleeAttributeModule.class, remap = false)
 public class MeleeAttributeModuleMixin {
-    @WrapWithCondition(method = "beforeMeleeHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addTransientModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V"))
+    @WrapWithCondition(method = "beforeMeleeHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addTransientModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V", remap = true))
     public boolean beforeMeleeHitCheck(AttributeInstance instance, AttributeModifier pModifier) {
         return !instance.hasModifier(pModifier);
     }

@@ -100,6 +100,9 @@ public class TicEXMekanismModule implements AddonModule {
                 .consumerMainThread(ConfigSyncToClientPacket::handle)
                 .add();
 
+        TicEXMekanismModule.BLOCKS.register(bus);
+        TicEXMekanismModule.TILE_ENTITY_TYPES.register(bus);
+
         if(ModList.get().isLoaded("mekaweapons")){
             TicEXMekanismWeaponsUtils.register();
         }

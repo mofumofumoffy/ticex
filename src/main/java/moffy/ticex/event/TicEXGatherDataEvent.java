@@ -50,7 +50,7 @@ public class TicEXGatherDataEvent {
         boolean server = event.includeServer();
         boolean client = event.includeClient();
 
-        TicEXTrimMaterialProvider.register(registrySetBuilder);
+        //TicEXTrimMaterialProvider.register(registrySetBuilder);
         TicEXDamageTypeProvider.register(registrySetBuilder);
 
         DatapackBuiltinEntriesProvider registryProvider = new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, registrySetBuilder, Set.of(TicEX.MODID));
