@@ -46,6 +46,10 @@ public class TicEXTrimMaterialProvider {
     }
 
     private static void material(BootstapContext<TrimMaterial> context, MaterialId material, ItemLike ingredient, int color, float modelIndex) {
-        context.register(ResourceKey.create(Registries.TRIM_MATERIAL, material), TrimMaterial.create(material.getSuffix(), ingredient.asItem(), modelIndex, Component.translatable(TRIM_FORMAT, new Object[]{Component.translatable(Util.makeDescriptionId("material", material))}).withStyle((style) -> style.withColor(color)), Map.of()));
+        context.register(
+                ResourceKey.create(Registries.TRIM_MATERIAL, material),
+                TrimMaterial.create(material.getSuffix(), ingredient.asItem(), modelIndex, Component.translatable(TRIM_FORMAT, Component.translatable(Util.makeDescriptionId("material", material)))
+                        .withStyle((style) -> style.withColor(color)), Map.of())
+        );
     }
 }
