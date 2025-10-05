@@ -11,6 +11,7 @@ package moffy.ticex.mixin.arsnouveau;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.IWrappedCaster;
+import moffy.ticex.lib.modules.arsnouveau.interfaces.OriginalStackAccessor;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -22,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(value = SpellContext.class, remap = false)
-public class SpellContextMixin implements OriginalStackAccessor{
+public class SpellContextMixin implements OriginalStackAccessor {
     @Unique
     private ItemStack ticex_1_20_1$originalStack = ItemStack.EMPTY;
 

@@ -8,11 +8,9 @@ package moffy.ticex.event;
  * 2025 Moffy
  */
 
-import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.event.SpellResolveEvent;
-import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.mixin.arsnouveau.OriginalStackAccessor;
+import moffy.ticex.lib.modules.arsnouveau.interfaces.OriginalStackAccessor;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
@@ -34,7 +32,7 @@ public class TicEXArsEvent {
             ItemStack toolStack = ((OriginalStackAccessor)event.context).getOriginalStack();
             if(!toolStack.isEmpty() && toolStack.getItem() instanceof IModifiable){
                 CompoundTag nbt = toolStack.getOrCreateTag();
-                //nbt.putInt("reactive_cooldown", TicEXConfig.REACTIVE_COOLDOWN.get());
+                nbt.putInt("reactive_cooldown", TicEXConfig.REACTIVE_COOLDOWN.get());
             }
 
         }

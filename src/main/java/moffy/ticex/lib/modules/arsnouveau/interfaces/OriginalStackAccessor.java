@@ -1,4 +1,4 @@
-package moffy.ticex.mixin.arsnouveau;
+package moffy.ticex.lib.modules.arsnouveau.interfaces;
 
 import net.minecraft.world.item.ItemStack;
 
