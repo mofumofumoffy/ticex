@@ -4,6 +4,8 @@
   "refmap": "ticex.refmap.json",
   "plugin": "moffy.ticex.modules.arsnouveau.TicEXArsMixinPlugin",
   "mixins": [
+    "ReactiveEnchantmentRecipeMixin",
+    "SpellContextMixin",
     "SpellWriteRecipeMixin"
   ],
   "client": [

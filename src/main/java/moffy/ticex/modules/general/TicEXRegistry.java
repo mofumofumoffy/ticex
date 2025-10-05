@@ -191,17 +191,12 @@ public class TicEXRegistry {
     public static RegistryObject<Item> CHAOTIC_EVOLVED_CORE = null;
     public static RegistryObject<Item> INJECT_CORE = null;
     public static RegistryObject<Item> KONPAKU_CORE = null;
-    public static RegistryObject<Item> KOSHIRAE_CORE = null;
-    public static RegistryObject<Item> LAMELLAR_CORE = null;
     public static RegistryObject<Item> OVERLOAD_CORE = null;
     public static RegistryObject<Item> OVERRIDE_CORE = null;
-    public static RegistryObject<Item> INCOMPARABLE_CORE = null;
     public static RegistryObject<Item> CARDBOARD_CORE = null;
-    public static RegistryObject<Item> ENDESTSHOT_CORE = null;
-    public static RegistryObject<Item> MODEM_CORE = null;
     public static RegistryObject<Item> PSIONIZING_RADIATION_CORE = null;
-    public static RegistryObject<Item> SOCKET_CORE = null;
     public static RegistryObject<Item> NECTAR_CORE = null;
+    public static RegistryObject<Item> REACTIVE_CORE = null;
 
     public static RegistryObject<Item> ENDESTSHOT_ARROW = null;
     public static RegistryObject<Item> MEKANIC_ARROW = null;
