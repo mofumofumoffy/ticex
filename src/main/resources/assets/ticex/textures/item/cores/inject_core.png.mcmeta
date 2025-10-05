@@ -1,4 +1,4 @@
-{ 
+{
 	"animation":{
 		"frametime": 1,
 		"frames": [
@@ -8,15 +8,15 @@
 			},
 			{
 			"index": 1,
-			 "time": 1
+			 "time": 4
 			},
 			{
 			"index": 2,
-			 "time": 1
+			 "time": 30
 			},
 			{
 			"index": 1,
-			 "time": 1
+			 "time": 4
 			},
 			{
 			"index": 0,
@@ -24,15 +24,15 @@
 			},
 			{
 			"index": 3,
-			 "time": 1
+			 "time": 4
 			},
 			{
 			"index": 4,
-			 "time": 1
+			 "time": 30
 			},
 			{
 			"index": 3,
-			 "time": 1
+			 "time": 4
 			}
 		]
 	}
