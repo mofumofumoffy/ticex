@@ -38,8 +38,7 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
                 new ResourceLocation(TicEX.MODID, "hidden_proud"),
                 new ResourceLocation(TicEX.MODID, "overload"),
                 new ResourceLocation(TicEX.MODID, "override"),
-                new ResourceLocation(TicEX.MODID, "lamellar"),
-                new ResourceLocation(TicEX.MODID, "flowerstorm")
+                new ResourceLocation(TicEX.MODID, "reactive")
             );
 
         this.tag(EXTRACT_MODIFIER_BLACKLIST).addOptional(
@@ -50,8 +49,7 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
                 new ResourceLocation(TicEX.MODID, "hidden_proud"),
                 new ResourceLocation(TicEX.MODID, "overload"),
                 new ResourceLocation(TicEX.MODID, "override"),
-                new ResourceLocation(TicEX.MODID, "lamellar"),
-                new ResourceLocation(TicEX.MODID, "flowerstorm")
+                new ResourceLocation(TicEX.MODID, "reactive")
             );
 
         this.tag(TicEXTags.Modifiers.REMOVAL_BLACKLIST).addOptional(
@@ -61,8 +59,7 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
                 new ResourceLocation(TicEX.MODID, "hidden_proud"),
                 new ResourceLocation(TicEX.MODID, "overload"),
                 new ResourceLocation(TicEX.MODID, "override"),
-                new ResourceLocation(TicEX.MODID, "lamellar"),
-                new ResourceLocation(TicEX.MODID, "flowerstorm")
+                new ResourceLocation(TicEX.MODID, "reactive")
         );
     }
 }

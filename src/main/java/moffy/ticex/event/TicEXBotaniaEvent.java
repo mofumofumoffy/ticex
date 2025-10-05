@@ -31,8 +31,8 @@ public class TicEXBotaniaEvent {
         if (!player.level().isClientSide()) {
             criticalFlag.put(player.getUUID(), true);
             for (ItemStack armorStack : player.getArmorSlots()) {
-                ToolStack armor = ToolStack.from(armorStack);
                 if (armorStack.getItem() instanceof IModifiable) {
+                    ToolStack armor = ToolStack.from(armorStack);
                     if (TicEXRegistry.DHAROK_MODIFIER != null && armor.getModifierLevel(TicEXRegistry.DHAROK_MODIFIER.get()) > 0) {
                         event.setDamageModifier(event.getDamageModifier() * (1F + (1F - player.getHealth() / player.getMaxHealth()) * 0.5F));
                     }

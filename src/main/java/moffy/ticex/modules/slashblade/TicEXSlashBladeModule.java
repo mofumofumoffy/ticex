@@ -52,9 +52,9 @@ public class TicEXSlashBladeModule implements AddonModule {
         TicEXRegistry.KONPAKU_CORE = TicEXRegistry.ITEMS.register("konpaku_core", () ->
                 new ItemReconstCore(defaultProperties, "konpaku")
         );
-        TicEXRegistry.KOSHIRAE_CORE = TicEXRegistry.ITEMS.register("koshirae_core", () ->
+        /*TicEXRegistry.KOSHIRAE_CORE = TicEXRegistry.ITEMS.register("koshirae_core", () ->
                 new ItemReconstCore(defaultProperties, "koshirae")
-        );
+        );*/
 
         TicEXRegistry.CATALYST_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_slashblade", () ->
                 new ToolPartItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_slashblade").getId())

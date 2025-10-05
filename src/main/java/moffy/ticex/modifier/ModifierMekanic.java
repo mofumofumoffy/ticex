@@ -439,7 +439,7 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
     public Component validate(@NotNull IToolStackView tool, ModifierEntry entry) {
         if (
                 entry.getLevel() == 1 &&
-                        !tool.hasTag(TicEXTags.Items.MEKASUIT_ARMOR) &&
+                        tool.getModifierLevel(this) < 1 &&
                         (tool.getModifierLevel(ModifierIds.reinforced) < 5 || tool.getModifierLevel(ModifierIds.netherite) < 1)
 
         ) {
