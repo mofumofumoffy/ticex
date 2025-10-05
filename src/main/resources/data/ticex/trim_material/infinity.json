@@ -9,6 +9,12 @@
       }
     ]
   },
+  "forge:conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
+    }
+  ],
   "ingredient": "avaritia:infinity_ingot",
   "item_model_index": 0.8
 }
