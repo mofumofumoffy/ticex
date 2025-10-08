@@ -6,7 +6,6 @@
   "mixins": [
     "CriticalAccessor",
     "DataItemAccessor",
-    "EntityMixin",
     "MeleeAttributeModuleMixin",
     "RandomMaterialMixin",
     "RomanNumeralHelperMixin",

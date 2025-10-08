@@ -85,7 +85,7 @@ public class TicEXConfig {
         COMMON.pop();
 
         COMMON.push("ars nouveau");
-        REACTIVE_COOLDOWN = COMMON.comment("Internal cooldown ticks of spellcasting").define("reactiveCooldown", 100);
+        REACTIVE_COOLDOWN = COMMON.comment("Internal cooldown ticks of spellcasting").define("reactiveCooldown", 10);
 
         COMMON.push("curios");
         GAUNTLET_REMAIN_TICKS = COMMON.comment("Ticks remaining on the gauntlet after a gauntlet shot hits")

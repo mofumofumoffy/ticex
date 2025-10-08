@@ -25,11 +25,7 @@
       "required": false
     },
     {
-      "id": "ticex:lamellar",
-      "required": false
-    },
-    {
-      "id": "ticex:flowerstorm",
+      "id": "ticex:reactive",
       "required": false
     }
   ]

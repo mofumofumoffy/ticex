@@ -13,9 +13,9 @@ public class TicEXThingsModule implements AddonModule {
     public void init(FMLJavaModLoadingContext context) {
         Item.Properties defaultProperties = new Item.Properties();
 
-        TicEXRegistry.LAMELLAR_CORE = TicEXRegistry.ITEMS.register("lamellar_core", () ->
+        /*TicEXRegistry.LAMELLAR_CORE = TicEXRegistry.ITEMS.register("lamellar_core", () ->
                 new ItemReconstCore(defaultProperties, "lamellar")
-        );
+        );*/
 
         TicEXRegistry.LAMELLAR_MODIFIER = TicEXRegistry.MODIFIERS.register("lamellar", ModifierLamellar::new);
     }
