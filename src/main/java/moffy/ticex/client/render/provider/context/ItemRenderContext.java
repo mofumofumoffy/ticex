@@ -1,4 +1,4 @@
-package moffy.ticex.client.rendering;
+package moffy.ticex.client.render.provider.context;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;

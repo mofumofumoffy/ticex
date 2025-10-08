@@ -9,7 +9,7 @@ import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
 import mods.flammpfeil.slashblade.client.renderer.util.MSAutoCloser;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
-import moffy.ticex.client.rendering.ItemRenderContext;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -57,6 +57,68 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
         } else {
             partialTicks = (float) ((double) itemIn.bobOffs * 20.0 - (double) itemIn.getAge());
             super.render(itemIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        }
+    }
+
+    public static void renderToolSlashBlade(
+            ItemStack stack,
+            ItemRenderContext itemRenderContext,
+            WavefrontObject model,
+            ResourceLocation textureLocation,
+            String target,
+            PoseStack matrixStackIn,
+            MultiBufferSource bufferIn,
+            int packedLightIn
+    ) {
+        ToolStack tool = ToolStack.from(stack);
+
+        if (tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0) {
+            CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
+            if (persistentTag.contains("ModelName")) {
+                model = BladeModelManager.getInstance()
+                        .getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
+                textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));
+            }
+            BladeRenderState.renderOverrided(
+                    stack,
+                    model,
+                    target,
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
+            );
+            BladeRenderState.renderOverridedLuminous(
+                    stack,
+                    model,
+                    target + "_luminous",
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
+            );
+        } else if (tool.getMaterials().size() > 0) {
+            SBToolRenderState.renderOverride(stack, itemRenderContext, tool, model, target);
+            SBToolRenderState.renderOverrideLuminous(stack, itemRenderContext, tool, model, target);
+        } else {
+            BladeRenderState.renderOverrided(
+                    stack,
+                    model,
+                    target,
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
+            );
+            BladeRenderState.renderOverridedLuminous(
+                    stack,
+                    model,
+                    target + "_luminous",
+                    textureLocation,
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
+            );
         }
     }
 
@@ -151,20 +213,16 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
                             packedLightIn
                     );
                 } catch (Throwable var23) {
-                    if (msac2 != null) {
-                        try {
-                            msac2.close();
-                        } catch (Throwable var21) {
-                            var23.addSuppressed(var21);
-                        }
+                    try {
+                        msac2.close();
+                    } catch (Throwable var21) {
+                        var23.addSuppressed(var21);
                     }
 
                     throw var23;
                 }
 
-                if (msac2 != null) {
-                    msac2.close();
-                }
+                msac2.close();
 
                 if (itemIn.isInWater() || (itemIn.onGround() && !types.contains(SwordType.NOSCABBARD))) {
                     msac2 = MSAutoCloser.pushMatrix(matrixStackIn);
@@ -189,99 +247,29 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
                                 bufferIn,
                                 packedLightIn
                         );
-                    } catch (Throwable var24) {
-                        if (msac2 != null) {
-                            try {
-                                msac2.close();
-                            } catch (Throwable var22) {
-                                var24.addSuppressed(var22);
-                            }
+                    } catch (Throwable err) {
+                        try {
+                            msac2.close();
+                        } catch (Throwable var22) {
+                            err.addSuppressed(var22);
                         }
 
-                        throw var24;
+                        throw err;
                     }
 
-                    if (msac2 != null) {
-                        msac2.close();
-                    }
+                    msac2.close();
                 }
-            } catch (Throwable var25) {
-                if (msac != null) {
-                    try {
-                        msac.close();
-                    } catch (Throwable var20) {
-                        var25.addSuppressed(var20);
-                    }
+            } catch (Throwable err) {
+                try {
+                    msac.close();
+                } catch (Throwable var20) {
+                    err.addSuppressed(var20);
                 }
 
-                throw var25;
+                throw err;
             }
 
-            if (msac != null) {
-                msac.close();
-            }
-        }
-    }
-
-    public static void renderToolSlashBlade(
-            ItemStack stack,
-            ItemRenderContext itemRenderContext,
-            WavefrontObject model,
-            ResourceLocation textureLocation,
-            String target,
-            PoseStack matrixStackIn,
-            MultiBufferSource bufferIn,
-            int packedLightIn
-    ) {
-        ToolStack tool = ToolStack.from(stack);
-
-        if (tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0) {
-            CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
-            if (persistentTag.contains("ModelName")) {
-                model = BladeModelManager.getInstance()
-                        .getModel(ResourceLocation.tryParse(persistentTag.getString("ModelName")));
-                textureLocation = ResourceLocation.tryParse(persistentTag.getString("TextureName"));
-            }
-            BladeRenderState.renderOverrided(
-                    stack,
-                    model,
-                    target,
-                    textureLocation,
-                    matrixStackIn,
-                    bufferIn,
-                    packedLightIn
-            );
-            BladeRenderState.renderOverridedLuminous(
-                    stack,
-                    model,
-                    target + "_luminous",
-                    textureLocation,
-                    matrixStackIn,
-                    bufferIn,
-                    packedLightIn
-            );
-        } else if (tool.getMaterials().size() > 0) {
-            SBToolRenderState.renderOverride(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
-            SBToolRenderState.renderOverrideLuminous(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
-        } else {
-            BladeRenderState.renderOverrided(
-                    stack,
-                    model,
-                    target,
-                    textureLocation,
-                    matrixStackIn,
-                    bufferIn,
-                    packedLightIn
-            );
-            BladeRenderState.renderOverridedLuminous(
-                    stack,
-                    model,
-                    target + "_luminous",
-                    textureLocation,
-                    matrixStackIn,
-                    bufferIn,
-                    packedLightIn
-            );
+            msac.close();
         }
     }
 }

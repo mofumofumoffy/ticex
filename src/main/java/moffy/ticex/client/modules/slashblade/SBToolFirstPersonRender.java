@@ -3,7 +3,7 @@ package moffy.ticex.client.modules.slashblade;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import mods.flammpfeil.slashblade.client.renderer.util.MSAutoCloser;
-import moffy.ticex.client.rendering.ItemRenderContext;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -22,6 +22,10 @@ public class SBToolFirstPersonRender {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public SBToolFirstPersonRender() {
         Minecraft mc = Minecraft.getInstance();
+        if(mc.player == null) {
+            return;
+        }
+
         EntityRenderer<?> renderer = mc.getEntityRenderDispatcher().getRenderer(mc.player);
         if (renderer instanceof RenderLayerParent) {
             this.layer = new LayerSBToolMainBlade((RenderLayerParent) renderer);
@@ -51,7 +55,7 @@ public class SBToolFirstPersonRender {
         if (stack.isEmpty()) return;
         if (!(stack.getItem() instanceof ModifiableSlashBladeItem)) return;
 
-        try (MSAutoCloser msac = MSAutoCloser.pushMatrix(matrixStack)) {
+        try (MSAutoCloser ignored = MSAutoCloser.pushMatrix(matrixStack)) {
             PoseStack.Pose me = matrixStack.last();
             me.pose().identity();
             me.normal().identity();

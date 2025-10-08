@@ -2,15 +2,20 @@ package moffy.ticex.client.modules.draconicevolution;
 
 import com.brandon3055.brandonscore.api.TechLevel;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.rendering.ItemRenderContext;
-import moffy.ticex.client.rendering.QuadRenderContext;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.ticex.TicEXToolRenders;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import moffy.ticex.client.render.provider.context.RenderContext;
+import moffy.ticex.client.render.provider.context.armor.RenderArmorPartContext;
+import moffy.ticex.client.render.provider.context.tool.RenderGenericContext;
+import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
+import moffy.ticex.client.render.provider.renderer.IArmorPartContextRenderer;
+import moffy.ticex.client.render.provider.renderer.IGenericRenderer;
+import moffy.ticex.client.render.provider.renderer.IQuadContextRenderer;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.ticex.TicEXToolRenders;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
@@ -24,6 +29,7 @@ public class TicEXDEShaderProvider {
 
     public static void init(IEventBus eventBus) {
         shader = new TicEXDEShader();
+
         // register shaders
         shader.register(eventBus);
     }
@@ -34,6 +40,7 @@ public class TicEXDEShaderProvider {
     }
 
     public static class Material extends ShaderProvider.Tool {
+
         private final RenderType renderType;
         @NotNull
         private final TechLevel techLevel;
@@ -46,22 +53,27 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void renderQuadOverlay(QuadRenderContext.ToolQuadRenderContext quadContext) {
+        public void renderOverlay(RenderQuadContext quadContext, IQuadContextRenderer renderer) {
+
             if (vertexConsumer == null) {
                 return;
             }
 
-            quadContext.renderQuadOverrided(
+            RenderContext renderContext = quadContext.renderContext();
+            renderer.render(
+                    renderContext,
+                    quadContext.quad(),
                     vertexConsumer,
-                    techLevel == TechLevel.CHAOTIC ? 0.9f : quadContext.red(),
-                    quadContext.green(),
-                    quadContext.blue(),
-                    quadContext.quad()
+                    techLevel == TechLevel.CHAOTIC ? 0.9f : renderContext.red(),
+                    renderContext.green(),
+                    renderContext.blue(),
+                    renderContext.alpha()
             );
         }
 
         @Override
-        public void renderQuadUnderlay(QuadRenderContext.ToolQuadRenderContext quadContext) {
+        public void renderUnderlay(RenderQuadContext quadContext, IQuadContextRenderer renderer) {
+
         }
 
         @Override
@@ -70,7 +82,7 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void beginRender(ItemStack stack, ItemRenderContext itemRenderContext) {
+        public void prepareRenderItem(ItemRenderContext itemRenderContext) {
         }
 
         @Override
@@ -78,11 +90,7 @@ public class TicEXDEShaderProvider {
             vertexConsumer = context.bufferSource().getBuffer(renderType);
 
             // setup uniform
-            shader.setupUniforms(techLevel);
-            if (shader.hasScaleUniform()) {
-                ItemDisplayContext itemDisplayContext = context.displayContext();
-                shader.getScaleUniform().glUniform1f(itemDisplayContext == ItemDisplayContext.GUI ? 0.1f : 1.0f);
-            }
+            shader.setupUniforms(techLevel, context.displayContext() == ItemDisplayContext.GUI ? 0.1f : 1.0f);
         }
 
         @Override
@@ -91,12 +99,13 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void preRenderMaterial(ItemStack stack, MaterialVariantId materialId) {
-            shader.setupUniforms(techLevel);
+        public void preRenderMaterial(ItemRenderContext context, MaterialVariantId materialId) {
+            shader.setupUniforms(techLevel, context.displayContext() == ItemDisplayContext.GUI ? 0.1f : 1.0f);
         }
     }
 
     public static class Modifier extends ShaderProvider.Tool {
+
         private final RenderType renderType;
         @Nullable
         private TechLevel techLevel;
@@ -108,26 +117,35 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void renderQuadOverlay(QuadRenderContext.ToolQuadRenderContext quadContext) {
+        public void renderOverlay(RenderQuadContext quadContext, IQuadContextRenderer renderer) {
+
             if (vertexConsumer == null) {
                 return;
             }
 
+            RenderContext renderContext = quadContext.renderContext();
             if (techLevel != null) {
-                quadContext.renderQuadOverrided(
+                renderer.render(
+                        renderContext,
+                        quadContext.quad(),
                         vertexConsumer,
-                        techLevel == TechLevel.CHAOTIC ? 0.9f : quadContext.red(),
-                        quadContext.green(),
-                        quadContext.blue(),
-                        quadContext.quad()
+                        techLevel == TechLevel.CHAOTIC ? 0.9f : renderContext.red(),
+                        renderContext.green(),
+                        renderContext.blue(),
+                        renderContext.alpha()
                 );
             } else {
-                quadContext.renderQuadNaked();
+                renderer.render(
+                        renderContext,
+                        quadContext.quad(),
+                        vertexConsumer
+                );
             }
         }
 
         @Override
-        public void renderQuadUnderlay(QuadRenderContext.ToolQuadRenderContext renderContext) {
+        public void renderUnderlay(RenderQuadContext quadContext, IQuadContextRenderer renderer) {
+
         }
 
         @Override
@@ -136,7 +154,7 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void beginRender(ItemStack stack, ItemRenderContext context) {
+        public void prepareRenderItem(ItemRenderContext context) {
             techLevel = null;
         }
 
@@ -149,10 +167,10 @@ public class TicEXDEShaderProvider {
             vertexConsumer = context.bufferSource().getBuffer(renderType);
 
             // setup uniform
-            shader.setupUniforms(techLevel);
-            if (shader.hasScaleUniform()) {
-                ItemDisplayContext itemDisplayContext = context.displayContext();
-                shader.getScaleUniform().glUniform1f(itemDisplayContext == ItemDisplayContext.GUI ? 0.1f : 1.0f);
+            shader.setupUniforms(techLevel, context.displayContext() == ItemDisplayContext.GUI ? 0.1f : 1.0f);
+
+            if (context.displayContext() == ItemDisplayContext.GUI) {
+                shader.getScaleUniform().glUniform1f(0.1f);
             }
         }
 
@@ -169,26 +187,63 @@ public class TicEXDEShaderProvider {
     }
 
     public static class Armor extends ShaderProvider.Armor {
+
+        private final TechLevel techLevel;
+
         public Armor(@NotNull TechLevel techLevel) {
             this.techLevel = techLevel;
         }
 
-        private final TechLevel techLevel;
-
         @Override
-        public void renderQuadOverlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
+        public void renderOverlay(RenderArmorPartContext quadContext, IArmorPartContextRenderer renderer) {
             VertexConsumer buffer = quadContext.material().buffer(
-                    quadContext.bufferSource(),
-                    shader::getArmorRenderType
+                    quadContext.renderContext().bufferSource(),
+                    shader::createArmorRenderType
             );
-            shader.setupUniforms(techLevel);
-            shader.getScaleUniform().glUniform1f(1.0f);
+            shader.setupUniforms(techLevel, 0.1f);
 
-            quadContext.renderArmorOverrided(buffer);
+            renderer.render(
+                    quadContext.renderContext(),
+                    quadContext.model(),
+                    buffer
+            );
         }
 
         @Override
-        public void renderQuadUnderlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
+        public void renderUnderlay(RenderArmorPartContext quadContext, IArmorPartContextRenderer renderer) {
+        }
+
+        @Override
+        public ShaderInstance getShaderInstance() {
+            return shader.getShaderInstance();
+        }
+    }
+
+    public static class Generic extends ShaderProvider.Generic {
+
+        private final RenderType renderType;
+        private final TechLevel techLevel;
+
+        public Generic(RenderType renderType, TechLevel techLevel) {
+            this.techLevel = techLevel;
+            this.renderType = renderType;
+        }
+
+        @Override
+        public void renderOverlay(RenderGenericContext context, IGenericRenderer renderer) {
+            VertexConsumer buffer = context.bufferGetter().get(renderType);
+
+            shader.setupUniforms(techLevel, context.onGui() ? 0.1f : 1.0f);
+
+            renderer.render(
+                    context.renderContext(),
+                    buffer
+            );
+        }
+
+        @Override
+        public void renderUnderlay(RenderGenericContext context, IGenericRenderer renderer) {
+
         }
 
         @Override

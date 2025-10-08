@@ -14,7 +14,7 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeDetune;
 import mods.flammpfeil.slashblade.item.SwordType;
 import mods.flammpfeil.slashblade.registry.slashblade.SlashBladeDefinition;
-import moffy.ticex.client.rendering.ItemRenderContext;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.Minecraft;
@@ -438,16 +438,13 @@ public class SBToolISTER extends BlockEntityWithoutLevelRenderer {
             );
         } else if (tool.getMaterials().size() > 0) {
             model = BladeModelManager.getInstance().getModel(modelLocation);
-            SBToolRenderState.renderOverride(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
+            SBToolRenderState.renderOverride(stack, itemRenderContext, tool, model, target);
             SBToolRenderState.renderOverrideLuminous(
                     stack,
                     itemRenderContext,
                     tool,
                     model,
-                    target + "_luminous",
-                    matrixStackIn,
-                    bufferIn,
-                    packedLightIn
+                    target + "_luminous"
             );
         } else {
             model = BladeModelManager.getInstance().getModel(modelLocation);

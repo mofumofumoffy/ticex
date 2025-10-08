@@ -2,9 +2,11 @@ package moffy.ticex.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.client.rendering.QuadRenderContext;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
+import moffy.ticex.client.render.provider.ArmorContextRenderer;
+import moffy.ticex.client.render.provider.context.RenderContext;
+import moffy.ticex.client.render.provider.context.armor.RenderArmorPartContext;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.ticex.TicEXRenders;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
@@ -51,20 +53,17 @@ public class HumanoidArmorLayerMixin {
                         pInnerTexture ? armorTrim.innerTexture(armorMaterial) : armorTrim.outerTexture(armorMaterial)
                 );
 
-                shaderProvider.renderQuadOverlay(new QuadRenderContext.ArmorPartRenderContext(
-                        model,
-                        poseStack,
+                RenderContext renderContext = new RenderContext(
                         bufferSource,
-                        pPackedLight,
-                        OverlayTexture.NO_OVERLAY,
-                        1.0f,
-                        1.0f,
-                        1.0f,
-                        1.0f,
-                        false,
+                        1.0f, 1.0f, 1.0f, 1.0f,
+                        poseStack, pPackedLight, OverlayTexture.NO_OVERLAY
+                );
+                shaderProvider.renderOverlay(new RenderArmorPartContext(
+                        renderContext,
+                        model,
                         textureMaterial,
-                        -1
-                ));
+                        false
+                ), ArmorContextRenderer.RENDERER);
             }
 
             ci.cancel();

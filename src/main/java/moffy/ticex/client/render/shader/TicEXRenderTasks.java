@@ -1,9 +1,10 @@
-package moffy.ticex.client.rendering.shader;
+package moffy.ticex.client.render.shader;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.rendering.ItemRenderContext;
-import moffy.ticex.client.rendering.QuadRenderContext;
-import moffy.ticex.client.rendering.ticex.TicEXToolRenders;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
+import moffy.ticex.client.render.provider.renderer.IQuadContextRenderer;
+import moffy.ticex.client.render.ticex.TicEXToolRenders;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 
@@ -39,20 +40,30 @@ public class TicEXRenderTasks {
     }
 
     public static class NakedRenderTask extends RenderTask {
-        private final QuadRenderContext.ToolQuadRenderContext context;
+        private final RenderQuadContext context;
+        private final IQuadContextRenderer renderer;
 
-        public NakedRenderTask(TicEXToolRenders.RenderPhase phase, QuadRenderContext.ToolQuadRenderContext context) {
+        public NakedRenderTask(TicEXToolRenders.RenderPhase phase, RenderQuadContext context, IQuadContextRenderer renderer) {
             super(phase);
             this.context = context;
+            this.renderer = renderer;
         }
 
         @Override
         public void applyRenderTask() {
-            context.renderQuadOverrided(context.bufferSource().getBuffer(context.renderType()));
+            renderer.render(
+                    context.renderContext(),
+                    context.quad(),
+                    context.getConsumer()
+            );
         }
 
         public void applyRenderTask(VertexConsumer consumer) {
-            context.renderQuadOverrided(consumer);
+            renderer.render(
+                    context.renderContext(),
+                    context.quad(),
+                    consumer
+            );
         }
     }
 

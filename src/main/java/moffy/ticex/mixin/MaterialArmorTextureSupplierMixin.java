@@ -1,12 +1,9 @@
 package moffy.ticex.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.sugar.Local;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.shader.TintedShaderArmorTexture;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.shader.TintedShaderArmorTexture;
+import moffy.ticex.client.render.ticex.TicEXRenders;
 import net.minecraft.Util;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
@@ -56,14 +53,14 @@ public abstract class MaterialArmorTextureSupplierMixin {
                                 if (untinted != null) {
                                     ArmorTexture texture = tryTexture(name, -1, '_' + untinted.getNamespace() + '_' + untinted.getPath());
                                     if (texture != ArmorTexture.EMPTY) {
-                                        return ticex$getArmorTexture(texture, textureMaterial, color, shaderProvider);
+                                        return ticex$getArmorTexture(texture, textureMaterial, color, shaderProvider, material);
                                     }
                                 }
                                 color = info.vertexColor();
                                 for (String fallback : info.fallbacks()) {
                                     ArmorTexture texture = tryTexture(name, color, '_' + fallback);
                                     if (texture != ArmorTexture.EMPTY) {
-                                        return ticex$getArmorTexture(texture, textureMaterial, color, shaderProvider);
+                                        return ticex$getArmorTexture(texture, textureMaterial, color, shaderProvider, material);
                                     }
                                 }
                             }
@@ -73,11 +70,12 @@ public abstract class MaterialArmorTextureSupplierMixin {
                                     new TintedArmorTexture(ArmorTextureSupplier.getTexturePath(name), -1),
                                     textureMaterial,
                                     -1,
-                                    shaderProvider
+                                    shaderProvider,
+                                    material
                             );
                         }
 
-                        // base texture guaranteed to exist, else we would not be in this function
+                        // base material guaranteed to exist, else we would not be in this function
                         return new TintedArmorTexture(ArmorTextureSupplier.getTexturePath(name), color);
                     }
                     return ArmorTexture.EMPTY;
@@ -125,9 +123,9 @@ public abstract class MaterialArmorTextureSupplierMixin {
 */
 
     @Unique
-    private static ArmorTexture ticex$getArmorTexture(ArmorTexture texture, Material textureMaterial, int color, ShaderProvider.Armor shaderProvider) {
+    private static ArmorTexture ticex$getArmorTexture(ArmorTexture texture, Material textureMaterial, int color, ShaderProvider.Armor shaderProvider, MaterialVariantId material) {
         if (shaderProvider != null && TicEXConfig.USE_SHADER.get()) {
-            return new TintedShaderArmorTexture(textureMaterial, color, shaderProvider);
+            return new TintedShaderArmorTexture(textureMaterial, color, shaderProvider, material);
         }
         return texture;
     }

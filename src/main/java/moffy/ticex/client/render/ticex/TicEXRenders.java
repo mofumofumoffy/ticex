@@ -1,10 +1,10 @@
-package moffy.ticex.client.rendering.ticex;
+package moffy.ticex.client.render.ticex;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.shader.TicEXRenderTasks.RenderTask;
-import moffy.ticex.client.rendering.shader.ToolShaderMap;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.shader.TicEXRenderTasks.RenderTask;
+import moffy.ticex.client.render.shader.ToolShaderMap;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
@@ -30,13 +30,14 @@ public class TicEXRenders {
 
     public static final ToolShaderMap.Tool TOOL_SHADERS = new ToolShaderMap.Tool();
     public static final ToolShaderMap.Armor ARMOR_SHADERS = new ToolShaderMap.Armor();
+    public static final ToolShaderMap.Generic GENERIC_SHADERS = new ToolShaderMap.Generic();
 
     public static boolean shouldRenderWithShader(ItemStack stack) {
         return !stack.isEmpty() && TicEXConfig.USE_SHADER.get() &&
                 !TicEXRenders.CUSTOM_MODELS.containsKey(stack.getItem());
     }
 
-    public static Map<MaterialVariantId, ShaderProvider.Tool> collectMaterialShaderProviders(ItemStack itemStack) {
+    public static Map<MaterialVariantId, ShaderProvider.Tool> collectShadersForMaterials(ItemStack itemStack) {
         Map<MaterialVariantId, ShaderProvider.Tool> shaderProviders = new HashMap<>();
 
         Item item = itemStack.getItem();
@@ -64,7 +65,7 @@ public class TicEXRenders {
         return shaderProviders;
     }
 
-    public static Map<ModifierId, ShaderProvider.Tool> collectModifierShaderProviders(ItemStack itemStack) {
+    public static Map<ModifierId, ShaderProvider.Tool> collectShadersForModifiers(ItemStack itemStack) {
         Map<ModifierId, ShaderProvider.Tool> shaderProviders = new HashMap<>();
 
         Item item = itemStack.getItem();
@@ -88,7 +89,7 @@ public class TicEXRenders {
             BakedModel pModel,
             ItemDisplayContext pDisplayContext,
             boolean pLeftHand,
-            RenderTaskFunction renderTaskFunction
+            RenderTaskProcessor renderTaskProcessor
     ) {
         List<RenderTask> renderQueue = new ArrayList<>();
 
@@ -109,11 +110,11 @@ public class TicEXRenders {
 
                 for (Direction direction : Direction.values()) {
                     randomSource.setSeed(42L);
-                    renderQueue.addAll(renderTaskFunction.getRenderTasks(renderType, model.getQuads(null, direction, randomSource)));
+                    renderQueue.addAll(renderTaskProcessor.getRenderTasks(renderType, model.getQuads(null, direction, randomSource)));
                 }
 
                 randomSource.setSeed(42L);
-                renderQueue.addAll(renderTaskFunction.getRenderTasks(renderType, model.getQuads(null, null, randomSource)));
+                renderQueue.addAll(renderTaskProcessor.getRenderTasks(renderType, model.getQuads(null, null, randomSource)));
             }
         }
 
@@ -129,7 +130,7 @@ public class TicEXRenders {
     }
 
     @FunctionalInterface
-    public interface RenderTaskFunction {
+    public interface RenderTaskProcessor {
         List<RenderTask> getRenderTasks(RenderType renderType, List<BakedQuad> quads);
     }
 }

@@ -1,4 +1,4 @@
-package moffy.ticex.client.rendering.ticex;
+package moffy.ticex.client.render.ticex;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -29,8 +29,8 @@ public class ItemArrowRenderer extends ArrowRenderer<ItemArrow> {
             ItemArrow pEntity,
             float pEntityYaw,
             float pPartialTicks,
-            PoseStack pPoseStack,
-            MultiBufferSource pBuffer,
+            @NotNull PoseStack pPoseStack,
+            @NotNull MultiBufferSource pBuffer,
             int pPackedLight
     ) {
         if (
@@ -60,7 +60,7 @@ public class ItemArrowRenderer extends ArrowRenderer<ItemArrow> {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 
-    
+
 
 
 }

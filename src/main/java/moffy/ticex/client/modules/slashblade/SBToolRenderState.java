@@ -7,10 +7,10 @@ import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
 import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
 import mods.flammpfeil.slashblade.event.client.RenderOverrideEvent;
 import moffy.ticex.client.modules.slashblade.SBToolRenderType.PartType;
-import moffy.ticex.client.rendering.ItemRenderContext;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
-import moffy.ticex.lib.utils.TicEXSBUtils;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.slashblade.TicEXSBRenderers;
+import moffy.ticex.client.render.ticex.TicEXRenders;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.ItemStack;
@@ -33,10 +33,7 @@ public class SBToolRenderState {
             ItemRenderContext itemRenderContext,
             ToolStack tool,
             WavefrontObject model,
-            String target,
-            PoseStack matrixStackIn,
-            MultiBufferSource bufferIn,
-            int packedLightIn
+            String target
     ) {
         renderOverride(
                 stack,
@@ -44,9 +41,6 @@ public class SBToolRenderState {
                 tool,
                 model,
                 target,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn,
                 SBToolRenderType.instance::getSlashBladeBlend,
                 true
         );
@@ -57,10 +51,7 @@ public class SBToolRenderState {
             ItemRenderContext itemRenderContext,
             ToolStack tool,
             WavefrontObject model,
-            String target,
-            PoseStack matrixStackIn,
-            MultiBufferSource bufferIn,
-            int packedLightIn
+            String target
     ) {
         renderOverride(
                 stack,
@@ -68,9 +59,6 @@ public class SBToolRenderState {
                 tool,
                 model,
                 target,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn,
                 SBToolRenderType.instance::getSlashBladeLuminousBlend,
                 false
         );
@@ -82,22 +70,23 @@ public class SBToolRenderState {
             ToolStack tool,
             WavefrontObject model,
             String target,
-            PoseStack matrixStackIn,
-            MultiBufferSource bufferIn,
-            int packedLightIn,
             RenderGetter<MaterialVariantId, Runnable, RenderType> getRenderType,
             boolean enableEffect
     ) {
+        MultiBufferSource bufferSource = itemRenderContext.bufferSource();
+        PoseStack poseStack = itemRenderContext.poseStack();
+        int packedLight = itemRenderContext.combinedLight();
+
         MaterialNBT materials = tool.getMaterials();
         for (int i = 0; i < materials.size(); i++) {
             MaterialVariantId material = materials.get(i).getVariant();
 
 
             SBToolRenderType.PartType partType = SBToolRenderType.PartType.byIndex(i);
-            ShaderProvider.Tool shaderProvider = TicEXRenders.TOOL_SHADERS.getShaderProvider(material.getId());
+            ShaderProvider.Generic shaderProvider = TicEXRenders.GENERIC_SHADERS.getShaderProvider(material);
             if (partType == null) continue;
 
-            RenderType rt = getRenderType.getRenderType(material, partType, () -> {
+            RenderType renderType = getRenderType.getRenderType(material, partType, () -> {
                 Optional<MaterialRenderInfo> optional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(material);
                 optional.ifPresent(materialRenderInfo -> col = new Color(materialRenderInfo.vertexColor()));
             });
@@ -107,10 +96,10 @@ public class SBToolRenderState {
                     model,
                     target,
                     null,
-                    matrixStackIn,
-                    bufferIn,
-                    packedLightIn,
-                    resourceLocation -> rt,
+                    poseStack,
+                    bufferSource,
+                    packedLight,
+                    resourceLocation -> renderType,
                     enableEffect
             );
 
@@ -118,11 +107,8 @@ public class SBToolRenderState {
                     stack,
                     itemRenderContext,
                     shaderProvider,
-                    bufferIn,
-                    rt,
-                    matrixStackIn,
+                    renderType,
                     event,
-                    packedLightIn,
                     enableEffect,
                     target,
                     material,
@@ -134,29 +120,33 @@ public class SBToolRenderState {
     public static void renderVC(
             ItemStack stack,
             ItemRenderContext itemRenderContext,
-            ShaderProvider.Tool shaderProvider,
-            MultiBufferSource bufferIn,
+            ShaderProvider.Generic shaderProvider,
             RenderType rt,
-            PoseStack matrixStackIn,
             RenderOverrideEvent event,
-            int packedLightIn,
             boolean enableEffect,
             String target,
             MaterialVariantId material,
             PartType partType
     ) {
-        VertexConsumer vb = bufferIn.getBuffer(rt);
+        MultiBufferSource bufferSource = itemRenderContext.bufferSource();
 
         Face.setCol(col);
-        Face.setLightMap(packedLightIn);
-        Face.setMatrix(matrixStackIn);
-        TicEXSBUtils.tessellateWithShader(stack, itemRenderContext, shaderProvider, material, event.getModel(), vb, bufferIn, partType, event.getTarget());
+        Face.setLightMap(itemRenderContext.combinedLight());
+        Face.setMatrix(itemRenderContext.poseStack());
+        TicEXSBRenderers.tessellateWithShader(itemRenderContext, rt, shaderProvider, material, event.getModel(), partType, event.getTarget());
 
         if (stack.hasFoil() && enableEffect) {
-            vb = bufferIn.getBuffer(
+            VertexConsumer consumer = bufferSource.getBuffer(
                     target.startsWith("item_") ? BladeRenderState.SLASHBLADE_ITEM_GLINT : BladeRenderState.SLASHBLADE_GLINT
             );
-            event.getModel().tessellateOnly(vb, event.getTarget());
+            event.getModel().tessellateOnly(consumer, event.getTarget());
+        }
+
+        if (stack.hasFoil() && enableEffect) {
+            VertexConsumer vertexConsumer = bufferSource.getBuffer(
+                    target.startsWith("item_") ? BladeRenderState.SLASHBLADE_ITEM_GLINT : BladeRenderState.SLASHBLADE_GLINT
+            );
+            event.getModel().tessellateOnly(vertexConsumer, event.getTarget());
         }
 
         Face.resetMatrix();
