@@ -14,6 +14,24 @@
       "type": "minecraft:directory",
       "prefix": "obj_tool/",
       "source": "obj_tool"
+    },
+    {
+      "type": "minecraft:paletted_permutations",
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
+      "permutations": {
+        "ticex_chaotic": "ticex:trims/color_palettes/chaotic",
+        "ticex_draconic": "ticex:trims/color_palettes/draconic",
+        "ticex_draconium": "ticex:trims/color_palettes/draconium",
+        "ticex_etheric": "ticex:trims/color_palettes/etheric",
+        "ticex_infinity": "ticex:trims/color_palettes/infinity",
+        "ticex_wyvern": "ticex:trims/color_palettes/wyvern"
+      },
+      "textures": [
+        "minecraft:trims/items/helmet_trim",
+        "minecraft:trims/items/chestplate_trim",
+        "minecraft:trims/items/leggings_trim",
+        "minecraft:trims/items/boots_trim"
+      ]
     }
   ]
 }
