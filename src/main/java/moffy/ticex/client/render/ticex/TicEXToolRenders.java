@@ -142,7 +142,7 @@ public class TicEXToolRenders {
 
         if (!(bakedQuad instanceof ShaderToolQuad.Material shaderToolQuad)) {
             return List.of(new NakedRenderTask(
-                    RenderPhase.UNDERLAY_NORMAL,
+                    RenderPhase.OVERLAY_NORMAL,
                     context,
                     QuadContextRenderer.RENDERER
             ));
@@ -152,7 +152,7 @@ public class TicEXToolRenders {
 
         if (provider == null) {
             return List.of(new NakedRenderTask(
-                    RenderPhase.UNDERLAY_NORMAL,
+                    RenderPhase.OVERLAY_NORMAL,
                     context,
                     QuadContextRenderer.RENDERER
             ));
@@ -194,7 +194,7 @@ public class TicEXToolRenders {
         if (provider == null) {
             //normal modifier
             return List.of(new NakedRenderTask(
-                    RenderPhase.UNDERLAY_NORMAL,
+                    RenderPhase.OVERLAY_NORMAL,
                     context,
                     QuadContextRenderer.RENDERER
             ));
@@ -225,9 +225,9 @@ public class TicEXToolRenders {
 
     public enum RenderPhase {
         UNDERLAY(0),
-        UNDERLAY_NORMAL(1),
         OVERLAY_MATERIAL(2),
-        OVERLAY_MODIFIER(3);
+        OVERLAY_NORMAL(3),
+        OVERLAY_MODIFIER(4);
 
         private final int index;
 

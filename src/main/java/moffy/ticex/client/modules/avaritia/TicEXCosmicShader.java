@@ -98,6 +98,7 @@ public final class TicEXCosmicShader {
                         .setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
                         .setTransparencyState(RenderType.NO_TRANSPARENCY)
                         .setLightmapState(RenderType.LIGHTMAP)
+                        .setCullState(RenderType.NO_CULL)
                         .setOverlayState(RenderType.OVERLAY)
                         .setLayeringState(RenderType.VIEW_OFFSET_Z_LAYERING)
                         .createCompositeState(true)
