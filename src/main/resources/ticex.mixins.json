@@ -7,7 +7,6 @@
     "CriticalAccessor",
     "DataItemAccessor",
     "MeleeAttributeModuleMixin",
-    "RandomMaterialMixin",
     "RomanNumeralHelperMixin",
     "TrimArmorTextureSupplierMixin",
     "config.AbstractCastingRecipeAccessor",

@@ -175,7 +175,8 @@ dependencies {
 
     implementation fg.deobf("curse.maven:re-avaritia-623969:6958116")
 
-    implementation fg.deobf("curse.maven:mekanism-268560:6258796")
+    implementation fg.deobf("curse.maven:mekanism-268560:6552911")
+    implementation fg.deobf("curse.maven:mekanism-generators-268566:6552914")
     implementation fg.deobf("curse.maven:mekanism-weapons-929829:6949839")
 
     implementation fg.deobf("curse.maven:brandons-core-231382:5422013")

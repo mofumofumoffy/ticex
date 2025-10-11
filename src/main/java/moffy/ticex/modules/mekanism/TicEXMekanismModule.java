@@ -3,6 +3,7 @@ package moffy.ticex.modules.mekanism;
 import mekanism.common.registration.impl.BlockDeferredRegister;
 import mekanism.common.registration.impl.TileEntityTypeDeferredRegister;
 import mekanism.common.registries.MekanismModules;
+import mekanism.generators.common.registries.GeneratorsModules;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.mekanism.MekItemCapabilityProvider;
@@ -142,5 +143,13 @@ public class TicEXMekanismModule implements AddonModule {
             EquipmentSlot.CHEST,
             LivingEntity::isFallFlying
         );
+        if(ModList.get().isLoaded("mekanismgenerators")){
+            MekaPlateMultilayerModel.registerModule(
+                    "solar_helmet",
+                    GeneratorsModules.SOLAR_RECHARGING_UNIT,
+                    EquipmentSlot.HEAD,
+                    entity -> true
+            );
+        }
     }
 }
