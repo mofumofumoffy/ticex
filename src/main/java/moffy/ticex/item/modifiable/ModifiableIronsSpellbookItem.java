@@ -1,5 +1,6 @@
 package moffy.ticex.item.modifiable;
 
+import com.google.common.collect.Multimap;
 import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.item.SpellBook;
 import java.util.List;
@@ -9,7 +10,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.SlotAccess;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
@@ -20,7 +24,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.client.SafeClientAccess;
+import slimeknights.tconstruct.library.modifiers.hook.behavior.AttributesModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.EnchantmentModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.SlotStackModifierHook;
@@ -32,6 +38,7 @@ import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
 import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
 import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
+import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiableDisplay {
@@ -45,6 +52,16 @@ public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiab
         super(12, SpellRarity.LEGENDARY, new Item.Properties().stacksTo(maxStackSize));
         this.toolDefinition = toolDefinition;
         this.maxStackSize = maxStackSize;
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+        return getAttributeModifiers(ToolStack.from(stack), slot);
+    }
+
+    @Override
+    public @NotNull Multimap<Attribute, AttributeModifier> getAttributeModifiers(IToolStackView tool, EquipmentSlot slot) {
+        return AttributesModifierHook.getHeldAttributeModifiers(tool, slot);
     }
 
     @Override

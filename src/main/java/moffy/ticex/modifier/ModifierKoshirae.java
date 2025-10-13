@@ -30,17 +30,17 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
             toolStack
                 .getCapability(ItemSlashBlade.BLADESTATE)
                 .ifPresent(resultState -> {
-                    CompoundTag bladeStateTag = input
-                        .getOrCreateTag()
-                        .getCompound("embossed")
-                        .getCompound("bladeState");
-                    resultState.deserializeNBT(bladeStateTag);
+                    CompoundTag compoundTag = input
+                            .getOrCreateTag()
+                            .getCompound("embossed");
+                    CompoundTag bladeStateTag;
+                    if(compoundTag.contains("tag")){
+                        bladeStateTag = compoundTag.getCompound("tag").getCompound("bladeState");
+                    } else {
+                        bladeStateTag = compoundTag.getCompound("bladeState");
+                    }
                     toolStack.getOrCreateTag().put("bladeState", bladeStateTag);
                 });
-
-            if (tool.getModifierLevel(TicEXRegistry.REBIRTH_MODIFIER.get()) < 1) {
-                tool.addModifier(TicEXRegistry.REBIRTH_MODIFIER.getId(), 1);
-            }
 
             return true;
         } else {
