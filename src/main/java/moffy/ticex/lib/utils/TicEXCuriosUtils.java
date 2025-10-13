@@ -3,15 +3,19 @@ package moffy.ticex.lib.utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotResult;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 public class TicEXCuriosUtils {
@@ -95,5 +99,23 @@ public class TicEXCuriosUtils {
             default:
                 return null;
         }
+    }
+
+    @SuppressWarnings({"removal", "UnstableApiUsage"})
+    public static void addCurioAttribute(ItemStack toolItemStack, ItemStack embossedStack){
+        CuriosApi.getCurio(embossedStack).ifPresent(embossedCurio -> {
+            CuriosApi.getItemStackSlots(toolItemStack, FMLLoader.getDist() == Dist.CLIENT).forEach((s, iSlotType) -> {
+                if(embossedStack.getItem() instanceof ICurioItem embossedCurioItem){
+                    SlotContext slotContext = new SlotContext(iSlotType.getIdentifier(), null, 0, false, false);
+                    embossedCurioItem.getAttributeModifiers(slotContext, UUID.randomUUID(), embossedStack).forEach((attribute, attributeModifier) -> {
+                        CuriosApi.addModifier(toolItemStack, attribute, attributeModifier.getName(), attributeModifier.getId(), attributeModifier.getAmount(), attributeModifier.getOperation(), iSlotType.getIdentifier());
+                    });
+                } else {
+                    embossedCurio.getAttributeModifiers(s).forEach((attribute, attributeModifier) -> {
+                        CuriosApi.addModifier(toolItemStack, attribute, attributeModifier.getName(), attributeModifier.getId(), attributeModifier.getAmount(), attributeModifier.getOperation(), iSlotType.getIdentifier());
+                    });
+                }
+            });
+        });
     }
 }

@@ -27,11 +27,14 @@ import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 
 public class ModifierDeflection extends Modifier implements MeleeDamageModifierHook, ProjectileHitModifierHook, ProvidePropertyModifierHook {
 
     public static final ResourceLocation DEFLECTION_DISABLED = new ResourceLocation(TicEX.MODID, "deflection_disabled");
+
+    public static AtomicBoolean firstHurt = new AtomicBoolean(false);
 
     @Override
     public int getPriority() {
@@ -52,7 +55,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
         float baseDamage,
         float damage
     ) {
-        if (!context.isExtraAttack() && !tool.getPersistentData().getBoolean(DEFLECTION_DISABLED)) {
+        if (!context.isExtraAttack() && !tool.getPersistentData().getBoolean(DEFLECTION_DISABLED) && firstHurt.compareAndSet(false, true)) {
             LivingEntity target = context.getLivingTarget();
             Player attacker = context.getPlayerAttacker();
 
@@ -99,7 +102,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
                 }
 
             }
-
+            firstHurt.set(false);
             return 0;
         }
         return damage;

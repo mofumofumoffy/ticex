@@ -92,7 +92,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
         Multimap<Attribute, AttributeModifier> toolMultimap = ArrayListMultimap.create(
             getAttributeModifiers(ToolStack.from(stack), slot)
         );
-        if (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) {
+        if (slot == EquipmentSlot.MAINHAND) {
             stack
                 .getCapability(ItemSlashBlade.BLADESTATE)
                 .ifPresent(bladeState -> {
