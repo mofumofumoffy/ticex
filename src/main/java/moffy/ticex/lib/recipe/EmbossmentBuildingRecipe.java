@@ -2,6 +2,8 @@ package moffy.ticex.lib.recipe;
 
 import java.util.List;
 import java.util.stream.IntStream;
+
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
@@ -79,6 +81,6 @@ public class EmbossmentBuildingRecipe extends ToolBuildingRecipe {
                 }
             }
         });
-        return LazyToolStack.success(resultStack);
+        return LazyToolStack.success(TicEXUtils.applyCatalystEmbossment(resultStack, inv, true));
     }
 }
