@@ -85,4 +85,22 @@ public class TicEXCuriosUtils {
             });
         });
     }
+
+    @SuppressWarnings({"removal", "UnstableApiUsage"})
+    public static void addCurioAttribute(ItemStack toolItemStack, ItemStack embossedStack){
+        CuriosApi.getCurio(embossedStack).ifPresent(embossedCurio -> {
+            CuriosApi.getItemStackSlots(toolItemStack, FMLLoader.getDist() == Dist.CLIENT).forEach((s, iSlotType) -> {
+                if(embossedStack.getItem() instanceof ICurioItem embossedCurioItem){
+                    SlotContext slotContext = new SlotContext(iSlotType.getIdentifier(), null, 0, false, false);
+                    embossedCurioItem.getAttributeModifiers(slotContext, UUID.randomUUID(), embossedStack).forEach((attribute, attributeModifier) -> {
+                        CuriosApi.addModifier(toolItemStack, attribute, attributeModifier.getName(), attributeModifier.getId(), attributeModifier.getAmount(), attributeModifier.getOperation(), iSlotType.getIdentifier());
+                    });
+                } else {
+                    embossedCurio.getAttributeModifiers(s).forEach((attribute, attributeModifier) -> {
+                        CuriosApi.addModifier(toolItemStack, attribute, attributeModifier.getName(), attributeModifier.getId(), attributeModifier.getAmount(), attributeModifier.getOperation(), iSlotType.getIdentifier());
+                    });
+                }
+            });
+        });
+    }
 }
