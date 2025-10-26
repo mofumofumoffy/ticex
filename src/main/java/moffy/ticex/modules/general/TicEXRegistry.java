@@ -1,7 +1,8 @@
 package moffy.ticex.modules.general;
 
 import moffy.ticex.TicEX;
-import moffy.ticex.block.entity.RFFurnaceBlockEntity;
+import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
+import moffy.ticex.block.proxy.entity.ProxyBlockEntity;
 import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
@@ -231,9 +232,10 @@ public class TicEXRegistry {
     public static RegistryObject<Block> SCORCHED_RF_FURNACE = null;
     public static RegistryObject<Block> CREATIVE_SCORCHED_RF_FURNACE = null;
     public static RegistryObject<Block> FLUID_TRANSMUTER = null;
+    public static RegistryObject<Block> INVENTORY_PROXY = null;
 
     public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> RF_FURNACE_ENTITY = null;
-    public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> CREATIVE_RF_FURNACE_ENTITY = null;
+    public static RegistryObject<BlockEntityType<ProxyBlockEntity>> INVENTORY_PROXY_ENTITY = null;
     public static RegistryObject<BlockEntityType<FluidTransmuterBlockEntity>> FLUID_TRANSMUTER_ENTITY = null;
 
     public static FluidObject<UnplaceableFluid> MOLTEN_RECONSTRUCTION_CORE = null;
@@ -302,8 +304,6 @@ public class TicEXRegistry {
     public static DynamicModifier KARIL_MODIFIER = null;
     public static DynamicModifier NECTAR_MODIFIER = null;
     public static StaticModifier<Modifier> REACTIVE_MODIFIER = null;
-
-    public static TrimMaterial ETHERIC_TRIM = null;
 
     public static Tier INFINITY_TIER;
 

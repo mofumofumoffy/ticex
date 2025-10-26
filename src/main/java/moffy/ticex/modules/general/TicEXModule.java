@@ -2,8 +2,10 @@ package moffy.ticex.modules.general;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
-import moffy.ticex.block.RFFurnaceBlock;
-import moffy.ticex.block.entity.RFFurnaceBlockEntity;
+import moffy.ticex.block.furnace.RFFurnaceBlock;
+import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
+import moffy.ticex.block.proxy.ProxyBlock;
+import moffy.ticex.block.proxy.entity.ProxyBlockEntity;
 import moffy.ticex.block.transmuter.FluidTransmuterBlock;
 import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
@@ -137,6 +139,9 @@ public class TicEXModule implements AddonModule {
         TicEXRegistry.FLUID_TRANSMUTER = TicEXRegistry.BLOCKS.register("fluid_transmuter", () ->
                 new FluidTransmuterBlock(BlockBehaviour.Properties.of().noOcclusion())
         );
+        TicEXRegistry.INVENTORY_PROXY = TicEXRegistry.BLOCKS.register("inventory_proxy", () ->
+                new ProxyBlock(BlockBehaviour.Properties.of().noOcclusion())
+        );
 
         TicEXRegistry.ITEMS.register("etheric_block", () ->
                 new BlockItem(TicEXRegistry.ETHERIC_BLOCK.get(), new Item.Properties())
@@ -156,6 +161,9 @@ public class TicEXModule implements AddonModule {
         TicEXRegistry.ITEMS.register("fluid_transmuter", () ->
                 new BlockItem(TicEXRegistry.FLUID_TRANSMUTER.get(), new Item.Properties())
         );
+        TicEXRegistry.ITEMS.register("inventory_proxy", () ->
+            new BlockItem(TicEXRegistry.INVENTORY_PROXY.get(), new Item.Properties())
+        );
 
         TicEXRegistry.RF_FURNACE_ENTITY = TicEXRegistry.BLOCK_ENTITIES.register("rf_furnace_entity", () ->
                 BlockEntityType.Builder.of(
@@ -174,6 +182,13 @@ public class TicEXModule implements AddonModule {
                                 new FluidTransmuterBlockEntity(TicEXRegistry.FLUID_TRANSMUTER_ENTITY.get(), pPos, pState),
                         TicEXRegistry.FLUID_TRANSMUTER.get()
                 ).build(null)
+        );
+
+        TicEXRegistry.INVENTORY_PROXY_ENTITY = TicEXRegistry.BLOCK_ENTITIES.register("inventory_proxy", () ->
+            BlockEntityType.Builder.of(
+                    ProxyBlockEntity::new,
+                    TicEXRegistry.INVENTORY_PROXY.get()
+            ).build(null)
         );
 
         TicEXRegistry.MOLTEN_ETHERIC = TicEXRegistry.FLUIDS.register("molten_etheric")
@@ -240,6 +255,7 @@ public class TicEXModule implements AddonModule {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHeal);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHurt);
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::supplierBouncer);
+        MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onDatapackSync);
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onRecipesUpdated);
 
         if (TierSortingRegistry.isTierSorted(InfinityTier.instance)) {
@@ -257,6 +273,11 @@ public class TicEXModule implements AddonModule {
                     List.of()
             );
         }
+    }
+
+    @Override
+    public void initClient(FMLJavaModLoadingContext context) {
+
     }
 
     @Override

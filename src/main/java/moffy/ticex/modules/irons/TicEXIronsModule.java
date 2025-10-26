@@ -28,7 +28,6 @@ public class TicEXIronsModule implements AddonModule {
 
         TicEXRegistry.OVERCASTING_MODIFIER = TicEXRegistry.MODIFIERS.register("overcasting", ModifierOvercasting::new);
 
-        MinecraftForge.EVENT_BUS.addListener(TicEXIronsEvent::onCastSpell);
         MinecraftForge.EVENT_BUS.addListener(TicEXIronsEvent::onLivingHurt);
     }
 }

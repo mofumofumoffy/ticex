@@ -18,6 +18,7 @@ import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
@@ -156,6 +157,10 @@ public class TicEXEvent {
         event.registerBlockEntityRenderer(TicEXRegistry.FLUID_TRANSMUTER_ENTITY.get(), TankBlockEntityRenderer::new);
     }
 
+
+    public static void onDatapackSync(OnDatapackSyncEvent event) {
+        FluidTransmutationResolver.INSTANCE.load();
+    }
 
     public static void onRecipesUpdated(RecipesUpdatedEvent event) {
         FluidTransmutationResolver.INSTANCE.load();
