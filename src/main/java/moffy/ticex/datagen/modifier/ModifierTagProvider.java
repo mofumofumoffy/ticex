@@ -38,7 +38,9 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
                 new ResourceLocation(TicEX.MODID, "hidden_proud"),
                 new ResourceLocation(TicEX.MODID, "overload"),
                 new ResourceLocation(TicEX.MODID, "override"),
-                new ResourceLocation(TicEX.MODID, "reactive")
+                new ResourceLocation(TicEX.MODID, "reactive"),
+                new ResourceLocation(TicEX.MODID, "apoth_supplier"),
+                new ResourceLocation(TicEX.MODID, "enchantment_supplier")
             );
 
         this.tag(EXTRACT_MODIFIER_BLACKLIST).addOptional(
@@ -49,7 +51,9 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
                 new ResourceLocation(TicEX.MODID, "hidden_proud"),
                 new ResourceLocation(TicEX.MODID, "overload"),
                 new ResourceLocation(TicEX.MODID, "override"),
-                new ResourceLocation(TicEX.MODID, "reactive")
+                new ResourceLocation(TicEX.MODID, "reactive"),
+                new ResourceLocation(TicEX.MODID, "apoth_supplier"),
+                new ResourceLocation(TicEX.MODID, "enchantment_supplier")
             );
 
         this.tag(TicEXTags.Modifiers.REMOVAL_BLACKLIST).addOptional(

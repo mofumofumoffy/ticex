@@ -59,6 +59,12 @@ public class TicEXCuriosModule implements AddonModule {
                 .decoder(TicEXShootGauntletPacket::new)
                 .consumerMainThread(TicEXShootGauntletPacket::handle)
                 .add();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void initClient(FMLJavaModLoadingContext context) {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         TicEXKeyBindings.SHOOT_GAUNTLET = Lazy.of(() ->
                 new KeyMapping(
@@ -69,12 +75,7 @@ public class TicEXCuriosModule implements AddonModule {
                         GLFW.GLFW_KEY_G,
                         "ticex.modid"
                 ));
-    }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void initClient(FMLJavaModLoadingContext context) {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(TicEXCuriosEvent::onRegisterRenderers);
         bus.addListener(TicEXCuriosEvent::addLayers);
         bus.addListener(TicEXCuriosEvent::registerBindings);

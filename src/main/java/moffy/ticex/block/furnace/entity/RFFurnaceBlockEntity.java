@@ -1,4 +1,4 @@
-package moffy.ticex.block.entity;
+package moffy.ticex.block.furnace.entity;
 
 import javax.annotation.Nonnull;
 import moffy.ticex.TicEXConfig;
@@ -19,6 +19,7 @@ import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import slimeknights.tconstruct.common.config.Config;
 import slimeknights.tconstruct.library.client.SafeClient;
 import slimeknights.tconstruct.library.client.model.ModelProperties;
 import slimeknights.tconstruct.library.fluid.FluidTankAnimated;
@@ -43,7 +44,7 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
     public RFFurnaceBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, boolean isCreative) {
         super(pType, pPos, pBlockState);
         this.isCreative = isCreative;
-        this.maxEnergyRate = TicEXConfig.RF_FURNACE_RATE_CAPACITY.get();
+        this.maxEnergyRate = TicEXConfig.RF_FURNACE_RATE_CAPACITY != null ? TicEXConfig.RF_FURNACE_RATE_CAPACITY.get() : 100000;
         this.energyStorage = new RFFurnaceEnergyStorage(maxEnergyRate);
         this.lastStrength = -1;
 
@@ -154,7 +155,7 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
     @Override
     public void updateFluidTo(FluidStack fluid) {
         this.tank.setFluid(fluid);
-        if (this.isFluidInModel()) {
+        if (this.level != null && this.level.isClientSide() && this.isFluidInModel()) {
             SafeClient.updateFluidModel(this.getTE(), tank, this.tankCapacity, this.tankCapacity);
         }
     }

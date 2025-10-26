@@ -28,6 +28,7 @@ public class FluidTagProvider extends FluidTagsProvider {
         fluidTag(TicEXTags.Fluids.INFINITY, new ResourceLocation(TicEX.MODID, "molten_infinity"));
         fluidTag(TicEXTags.Fluids.NEUTRON, new ResourceLocation(TicEX.MODID, "molten_neutron"));
         fluidTag(TicEXTags.Fluids.CRYSTAL_MATRIX, new ResourceLocation(TicEX.MODID, "molten_crystal_matrix"));
+        fluidTag(TicEXTags.Fluids.BLAZING, new ResourceLocation(TicEX.MODID, "molten_blazing"));
 
         fluidTag(TicEXTags.Fluids.ETHERIC, new ResourceLocation(TicEX.MODID, "molten_etheric"));
 
@@ -38,6 +39,7 @@ public class FluidTagProvider extends FluidTagsProvider {
             new ResourceLocation(TicEX.MODID, "molten_infinity"),
             new ResourceLocation(TicEX.MODID, "molten_neutron"),
             new ResourceLocation(TicEX.MODID, "molten_crystal_matrix"),
+                new ResourceLocation(TicEX.MODID, "molten_blazing"),
             new ResourceLocation(TicEX.MODID, "molten_etheric")
         );
     }

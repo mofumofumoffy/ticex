@@ -13,6 +13,10 @@
       "required": false
     },
     {
+      "id": "ticex:molten_blazing",
+      "required": false
+    },
+    {
       "id": "ticex:molten_etheric",
       "required": false
     }

@@ -1,4 +1,4 @@
-package moffy.ticex.block.entity;
+package moffy.ticex.block.furnace.entity;
 
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
