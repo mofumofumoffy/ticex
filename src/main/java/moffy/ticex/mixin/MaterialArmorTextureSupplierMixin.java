@@ -1,12 +1,10 @@
 package moffy.ticex.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.sugar.Local;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.shader.TintedShaderArmorTexture;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.shader.TintedShaderArmorTexture;
+import moffy.ticex.client.render.ticex.TicEXRenders;
+import net.minecraft.Util;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;

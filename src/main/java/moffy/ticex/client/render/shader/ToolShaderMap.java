@@ -1,8 +1,9 @@
-package moffy.ticex.client.rendering.shader;
+package moffy.ticex.client.render.shader;
 
-import moffy.ticex.client.rendering.PartPredicate;
-import moffy.ticex.client.rendering.QuadRenderContext.ArmorPartRenderContext;
-import moffy.ticex.client.rendering.QuadRenderContext.ToolQuadRenderContext;
+import moffy.ticex.client.render.custom.PartPredicate;
+import moffy.ticex.client.render.provider.context.armor.RenderArmorPartContext;
+import moffy.ticex.client.render.provider.context.tool.RenderGenericContext;
+import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -13,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class ToolShaderMap<WRAPPER, PROVIDER extends ShaderProvider<WRAPPER>> {
+public abstract class ToolShaderMap<WRAPPER, PROVIDER extends ShaderProvider<WRAPPER, ?>> {
     private final Map<MaterialVariantId, PROVIDER> cacheByMaterial = new HashMap<>();
     private final Map<ModifierId, PROVIDER> cacheByModifier = new HashMap<>();
     protected Map<PROVIDER, PartPredicate<?>> shaderMap;
@@ -80,7 +81,7 @@ public abstract class ToolShaderMap<WRAPPER, PROVIDER extends ShaderProvider<WRA
         addShader(new PartPredicate.Modifier(modifierId), provider);
     }
 
-    public static class Tool extends ToolShaderMap<ToolQuadRenderContext, ShaderProvider.Tool> {
+    public static class Tool extends ToolShaderMap<RenderQuadContext, ShaderProvider.Tool> {
         public boolean isToolTarget(IToolStackView tool) {
             for (MaterialVariant variant : tool.getMaterials().getList()) {
                 ShaderProvider.Tool shaderProvider = getShaderProvider(variant.getId());
@@ -100,6 +101,9 @@ public abstract class ToolShaderMap<WRAPPER, PROVIDER extends ShaderProvider<WRA
         }
     }
 
-    public static class Armor extends ToolShaderMap<ArmorPartRenderContext, ShaderProvider.Armor> {
+    public static class Armor extends ToolShaderMap<RenderArmorPartContext, ShaderProvider.Armor> {
+    }
+
+    public static class Generic extends ToolShaderMap<RenderGenericContext, ShaderProvider.Generic> {
     }
 }

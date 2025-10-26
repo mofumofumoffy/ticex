@@ -1,14 +1,16 @@
-package moffy.ticex.client.rendering.ticex;
+package moffy.ticex.client.render.ticex;
 
-import moffy.ticex.client.rendering.ItemRenderContext;
-import moffy.ticex.client.rendering.QuadRenderContext.ToolQuadRenderContext;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.shader.ShaderToolQuad;
-import moffy.ticex.client.rendering.shader.TicEXRenderTasks;
-import moffy.ticex.client.rendering.shader.TicEXRenderTasks.InstantRenderTask;
-import moffy.ticex.client.rendering.shader.TicEXRenderTasks.NakedRenderTask;
-import moffy.ticex.client.rendering.shader.TicEXRenderTasks.RenderBatchTask;
-import moffy.ticex.client.rendering.shader.TicEXRenderTasks.RenderTask;
+import moffy.ticex.client.render.provider.QuadContextRenderer;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import moffy.ticex.client.render.provider.context.RenderContext;
+import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.shader.ShaderToolQuad;
+import moffy.ticex.client.render.shader.TicEXRenderTasks;
+import moffy.ticex.client.render.shader.TicEXRenderTasks.InstantRenderTask;
+import moffy.ticex.client.render.shader.TicEXRenderTasks.NakedRenderTask;
+import moffy.ticex.client.render.shader.TicEXRenderTasks.RenderBatchTask;
+import moffy.ticex.client.render.shader.TicEXRenderTasks.RenderTask;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.renderer.RenderType;
@@ -36,7 +38,7 @@ public class TicEXToolRenders {
 
         ItemStack pItemStack = itemRenderContext.itemStack();
 
-        List<ToolQuadRenderContext> renderContexts = new ArrayList<>();
+        List<RenderQuadContext> renderContexts = new ArrayList<>();
 
         // prepare contexts
         for (BakedQuad bakedQuad : pQuads) {
@@ -51,21 +53,25 @@ public class TicEXToolRenders {
             float g = overridedColor != -1 ? ((float) ((overridedColor >> 8) & 255) / 255.0F) : 1.0f;
             float b = overridedColor != -1 ? ((float) (overridedColor & 255) / 255.0F) : 1.0f;
 
-            ToolQuadRenderContext context = new ToolQuadRenderContext(
+            RenderContext renderContext = new RenderContext(
+                    itemRenderContext.bufferSource(),
+                    r, g, b, 1.0f,
+                    itemRenderContext.poseStack(),
+                    itemRenderContext.combinedLight(),
+                    itemRenderContext.combinedOverlay()
+            );
+            RenderQuadContext context = new RenderQuadContext(
+                    itemRenderContext.itemStack(),
                     renderType,
-                    bakedQuad,
-                    r, g, b, 1f,
-                    pItemStack,
-                    itemRenderContext.displayContext(), itemRenderContext.leftHand(),
-                    itemRenderContext.poseStack(), itemRenderContext.bufferSource(),
-                    itemRenderContext.combinedLight(), itemRenderContext.combinedOverlay()
+                    renderContext,
+                    bakedQuad
             );
 
             renderContexts.add(context);
         }
 
         // add render batch task
-        List<ToolRenderBatch> renderBatches = processRenderBatches(renderContexts, tool, seenList);
+        List<ToolRenderBatch> renderBatches = processRenderBatches(itemRenderContext, renderContexts, tool, seenList);
 
         for (ToolRenderBatch renderBatch : renderBatches) {
             if (renderBatch.shaderProvider == null) {
@@ -78,11 +84,11 @@ public class TicEXToolRenders {
         return renderTasks;
     }
 
-    public static List<ToolRenderBatch> processRenderBatches(List<ToolQuadRenderContext> contexts, @Nullable ToolStack toolStack, List<ShaderProvider.Tool> seenList) {
+    public static List<ToolRenderBatch> processRenderBatches(ItemRenderContext itemRenderContext, List<RenderQuadContext> contexts, @Nullable ToolStack toolStack, List<ShaderProvider.Tool> seenList) {
 
         EnumMap<RenderPhase, ShaderRenderTasksMap> phaseTasksMap = new EnumMap<>(RenderPhase.class);
 
-        for (ToolQuadRenderContext context : contexts) {
+        for (RenderQuadContext context : contexts) {
             BakedQuad quad = context.quad();
 
             ShaderProvider.Tool shaderProvider;
@@ -93,7 +99,7 @@ public class TicEXToolRenders {
             }
 
             List<RenderTask> renderTasks = new ArrayList<>(
-                    getMaterialQuadRenderTasks(context, seenList)
+                    getMaterialQuadRenderTasks(context, itemRenderContext, seenList)
             );
 
             if (toolStack != null && context.itemStack().getItem() instanceof IModifiable) {
@@ -130,14 +136,15 @@ public class TicEXToolRenders {
         return batches;
     }
 
-    public static List<RenderTask> getMaterialQuadRenderTasks(ToolQuadRenderContext context, List<ShaderProvider.Tool> seenList) {
+    public static List<RenderTask> getMaterialQuadRenderTasks(RenderQuadContext context, ItemRenderContext itemRenderContext, List<ShaderProvider.Tool> seenList) {
         List<RenderTask> renderTasks = new ArrayList<>();
         BakedQuad bakedQuad = context.quad();
 
         if (!(bakedQuad instanceof ShaderToolQuad.Material shaderToolQuad)) {
             return List.of(new NakedRenderTask(
-                    RenderPhase.NORMAL_MATERIAL,
-                    context
+                    RenderPhase.OVERLAY_NORMAL,
+                    context,
+                    QuadContextRenderer.RENDERER
             ));
         }
 
@@ -145,8 +152,9 @@ public class TicEXToolRenders {
 
         if (provider == null) {
             return List.of(new NakedRenderTask(
-                    RenderPhase.NORMAL_MATERIAL,
-                    context
+                    RenderPhase.OVERLAY_NORMAL,
+                    context,
+                    QuadContextRenderer.RENDERER
             ));
         }
 
@@ -154,8 +162,8 @@ public class TicEXToolRenders {
             renderTasks.add(new InstantRenderTask(
                     RenderPhase.UNDERLAY,
                     () -> {
-                        provider.preRenderMaterial(context.itemStack(), shaderToolQuad.getMaterialId());
-                        provider.renderQuadUnderlay(context);
+                        provider.preRenderMaterial(itemRenderContext, shaderToolQuad.getMaterialId());
+                        provider.renderUnderlay(context, QuadContextRenderer.RENDERER);
                     }
             ));
             seenList.add(provider);
@@ -165,15 +173,15 @@ public class TicEXToolRenders {
         renderTasks.add(new InstantRenderTask(
                 RenderPhase.OVERLAY_MATERIAL,
                 () -> {
-                    provider.preRenderMaterial(context.itemStack(), shaderToolQuad.getMaterialId());
-                    provider.renderQuadOverlay(context);
+                    provider.preRenderMaterial(itemRenderContext, shaderToolQuad.getMaterialId());
+                    provider.renderOverlay(context, QuadContextRenderer.RENDERER);
                 }
         ));
 
         return renderTasks;
     }
 
-    public static List<RenderTask> getModifierQuadRenderTasks(ToolQuadRenderContext context, ToolStack tool, List<ShaderProvider.Tool> seenList) {
+    public static List<RenderTask> getModifierQuadRenderTasks(RenderQuadContext context, ToolStack tool, List<ShaderProvider.Tool> seenList) {
         List<RenderTask> renderTasks = new ArrayList<>();
         BakedQuad bakedQuad = context.quad();
 
@@ -186,8 +194,9 @@ public class TicEXToolRenders {
         if (provider == null) {
             //normal modifier
             return List.of(new NakedRenderTask(
-                    RenderPhase.NORMAL_MODIFIER,
-                    context
+                    RenderPhase.OVERLAY_NORMAL,
+                    context,
+                    QuadContextRenderer.RENDERER
             ));
         }
 
@@ -196,7 +205,7 @@ public class TicEXToolRenders {
                     RenderPhase.UNDERLAY,
                     () -> {
                         provider.preRenderModifier(tool, shaderToolQuad.getModifierId());
-                        provider.renderQuadUnderlay(context);
+                        provider.renderUnderlay(context, QuadContextRenderer.RENDERER);
                     }
             ));
             seenList.add(provider);
@@ -207,7 +216,7 @@ public class TicEXToolRenders {
                 RenderPhase.OVERLAY_MODIFIER,
                 () -> {
                     provider.preRenderModifier(tool, shaderToolQuad.getModifierId());
-                    provider.renderQuadOverlay(context);
+                    provider.renderOverlay(context, QuadContextRenderer.RENDERER);
                 }
         ));
 
@@ -216,9 +225,8 @@ public class TicEXToolRenders {
 
     public enum RenderPhase {
         UNDERLAY(0),
-        OVERLAY_MATERIAL(1),
-        NORMAL_MATERIAL(2),
-        NORMAL_MODIFIER(3),
+        OVERLAY_MATERIAL(2),
+        OVERLAY_NORMAL(3),
         OVERLAY_MODIFIER(4);
 
         private final int index;

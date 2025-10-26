@@ -3,9 +3,9 @@ package moffy.ticex.modules.avaritia;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.client.modules.avaritia.TicEXCosmicShaderProvider;
-import moffy.ticex.client.rendering.PartPredicate;
-import moffy.ticex.client.rendering.ticex.ItemArrowRenderer;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
+import moffy.ticex.client.render.custom.PartPredicate;
+import moffy.ticex.client.render.ticex.ItemArrowRenderer;
+import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.event.TicEXAvaritiaEvent;
@@ -24,7 +24,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -118,8 +117,9 @@ public class TicEXAvaritiaModule implements AddonModule {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         TicEXCosmicShaderProvider.init(bus);
-        TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Tool());
+        TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Material());
         TicEXRenders.ARMOR_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Armor());
+        TicEXRenders.GENERIC_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Generic());
 
         bus.addListener(TicEXAvaritiaEvent::onRegisterRenderers);
     }

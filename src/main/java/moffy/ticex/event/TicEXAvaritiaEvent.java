@@ -1,7 +1,6 @@
 package moffy.ticex.event;
 
-import committee.nova.mods.avaritia.init.registry.ModItems;
-import moffy.ticex.client.rendering.ticex.ItemArrowRenderer;
+import moffy.ticex.client.render.ticex.ItemArrowRenderer;
 import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.modules.general.TicEXRegistry;

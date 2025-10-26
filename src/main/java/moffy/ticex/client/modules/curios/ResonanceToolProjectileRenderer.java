@@ -2,9 +2,9 @@ package moffy.ticex.client.modules.curios;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import moffy.ticex.client.rendering.ticex.ItemArrowRenderer;
+import moffy.ticex.client.render.slashblade.TicEXSBRenderers;
+import moffy.ticex.client.render.ticex.ItemArrowRenderer;
 import moffy.ticex.entity.ItemArrow;
-import moffy.ticex.lib.utils.TicEXSBUtils;
 import moffy.ticex.lib.utils.TicEXTaczUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -14,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
+import org.jetbrains.annotations.NotNull;
 
 public class ResonanceToolProjectileRenderer extends ItemArrowRenderer {
     private final ItemRenderer itemRenderer;
@@ -24,7 +25,7 @@ public class ResonanceToolProjectileRenderer extends ItemArrowRenderer {
     }
 
     @Override
-    public void render(ItemArrow pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
+    public void render(ItemArrow pEntity, float pEntityYaw, float pPartialTicks, @NotNull PoseStack pPoseStack, @NotNull MultiBufferSource pBuffer, int pPackedLight) {
         pPoseStack.pushPose();
 
         pPoseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.yRotO, pEntity.getYRot()) - 90.0F));
@@ -37,7 +38,7 @@ public class ResonanceToolProjectileRenderer extends ItemArrowRenderer {
 
         boolean isNormalRender = true;
         if(ModList.get().isLoaded("slashblade")){
-            isNormalRender = !TicEXSBUtils.renderBladeTool(toolStack, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
+            isNormalRender = !TicEXSBRenderers.renderBladeTool(toolStack, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
         }
 
         if(ModList.get().isLoaded("tacz")){

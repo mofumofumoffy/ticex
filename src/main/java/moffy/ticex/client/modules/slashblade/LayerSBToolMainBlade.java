@@ -19,7 +19,7 @@ import mods.flammpfeil.slashblade.registry.ComboStateRegistry;
 import mods.flammpfeil.slashblade.registry.combo.ComboState;
 import mods.flammpfeil.slashblade.util.TimeValueHelper;
 import mods.flammpfeil.slashblade.util.VectorHelper;
-import moffy.ticex.client.rendering.ItemRenderContext;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.CameraType;
@@ -514,8 +514,8 @@ public class LayerSBToolMainBlade<T extends LivingEntity, M extends EntityModel<
         } else if (tool.getMaterials().size() > 0) {
             model = BladeModelManager.getInstance()
                     .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));
-            SBToolRenderState.renderOverride(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
-            SBToolRenderState.renderOverrideLuminous(stack, itemRenderContext, tool, model, target, matrixStackIn, bufferIn, packedLightIn);
+            SBToolRenderState.renderOverride(stack, itemRenderContext, tool, model, target);
+            SBToolRenderState.renderOverrideLuminous(stack, itemRenderContext, tool, model, target);
         } else {
             model = BladeModelManager.getInstance()
                     .getModel(state.getModel().orElse(DefaultResources.resourceDefaultModel));

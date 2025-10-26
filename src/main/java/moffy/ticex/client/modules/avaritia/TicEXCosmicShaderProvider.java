@@ -1,19 +1,22 @@
 package moffy.ticex.client.modules.avaritia;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.rendering.ItemRenderContext;
-import moffy.ticex.client.rendering.QuadRenderContext;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.ticex.TicEXToolRenders;
-import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import moffy.ticex.client.render.provider.context.armor.RenderArmorPartContext;
+import moffy.ticex.client.render.provider.context.tool.RenderGenericContext;
+import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
+import moffy.ticex.client.render.provider.renderer.IArmorPartContextRenderer;
+import moffy.ticex.client.render.provider.renderer.IGenericRenderer;
+import moffy.ticex.client.render.provider.renderer.IQuadContextRenderer;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.ticex.TicEXToolRenders;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
+
+import java.util.Objects;
 
 public class TicEXCosmicShaderProvider {
     private static TicEXCosmicShader shader;
@@ -23,50 +26,33 @@ public class TicEXCosmicShaderProvider {
         eventBus.addListener(shader::registerShader);
     }
 
-    public static class Tool extends ShaderProvider.Tool {
+    public static class Material extends ShaderProvider.Tool {
         private VertexConsumer buffer;
 
         @Override
-        public void renderQuadOverlay(QuadRenderContext.ToolQuadRenderContext quadContext) {
-            if (buffer != null) {
-                quadContext.renderQuadOverrided(buffer);
-            } else {
-                quadContext.renderQuadNaked();
-            }
+        public void renderOverlay(RenderQuadContext quadContext, IQuadContextRenderer renderer) {
+            VertexConsumer consumer = Objects.requireNonNullElseGet(buffer, quadContext::getConsumer);
+
+            renderer.render(quadContext.renderContext(), quadContext.quad(), consumer);
         }
 
         @Override
-        public void renderQuadUnderlay(QuadRenderContext.ToolQuadRenderContext quadContext) {
+        public void renderUnderlay(RenderQuadContext quadContext, IQuadContextRenderer consumer) {
         }
 
         @Override
-        public void beginRender(ItemStack stack, ItemRenderContext context) {
+        public void prepareRenderItem(ItemRenderContext context) {
             buffer = null;
-            shader.setupUniform();
-
-            GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
-            Camera mainCamera = gameRenderer.getMainCamera();
-
-            float yaw = 0.0f;
-            float pitch = 0.0f;
-            float scale = 1.0f;
-            if (context.displayContext() == ItemDisplayContext.GUI) {
-                scale = 100.0f;
-            } else {
-                yaw = (float) ((mainCamera.getYRot() * 2.0f * Math.PI) / 360.0);
-                pitch = -(float) ((mainCamera.getXRot() * 2.0f * Math.PI) / 360.0);
-            }
-
-            shader.cosmicUVs.set(shader.cosmicUVGetter.apply(InventoryMenu.BLOCK_ATLAS));
-            shader.cosmicYaw.set(yaw);
-            shader.cosmicPitch.set(pitch);
-            shader.cosmicExternalScale.set(scale);
         }
 
         @Override
         public void startRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
-            RenderType renderType = shader.getCosmicToolRenderType();
+            RenderType renderType = shader.getCosmicRenderType();
             buffer = context.bufferSource().getBuffer(renderType);
+
+            // setup uniform
+            shader.setupUniform(InventoryMenu.BLOCK_ATLAS,
+                    context.displayContext() == ItemDisplayContext.GUI);
         }
 
         @Override
@@ -81,24 +67,50 @@ public class TicEXCosmicShaderProvider {
 
     public static class Armor extends ShaderProvider.Armor {
         @Override
-        public void renderQuadOverlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
+        public void renderOverlay(RenderArmorPartContext quadContext, IArmorPartContextRenderer renderer) {
             VertexConsumer buffer = quadContext.material().buffer(
-                    quadContext.bufferSource(),
+                    quadContext.renderContext().bufferSource(),
                     shader::getCosmicRenderTypeArmor
             );
 
-            float[] cosmicUvs = shader.cosmicUVGetter.apply(quadContext.material().atlasLocation());
-            shader.cosmicUVs.set(cosmicUvs);
 
 
-            shader.setupUniform();
-            shader.cosmicExternalScale.set(1.0f);
+            shader.setupUniform(quadContext.material().atlasLocation(), false);
 
-            quadContext.renderArmorOverrided(buffer);
+            renderer.render(
+                    quadContext.renderContext(),
+                    quadContext.model(),
+                    buffer
+            );
         }
 
         @Override
-        public void renderQuadUnderlay(QuadRenderContext.ArmorPartRenderContext quadContext) {
+        public void renderUnderlay(RenderArmorPartContext quadContext, IArmorPartContextRenderer bakedConsumer) {
+        }
+
+        @Override
+        public ShaderInstance getShaderInstance() {
+            return shader.getShaderInstance();
+        }
+    }
+
+    public static class Generic extends ShaderProvider.Generic {
+
+        @Override
+        public void renderOverlay(RenderGenericContext context, IGenericRenderer renderer) {
+            VertexConsumer vertexConsumer = context.bufferGetter().get(shader.getCosmicRenderType());
+
+            shader.setupUniform(context.atlasLocation(), context.onGui());
+
+            renderer.render(
+                    context.renderContext(),
+                    vertexConsumer,
+                    1.0f, 1.0f, 1.0f, 1.0f
+            );
+        }
+
+        @Override
+        public void renderUnderlay(RenderGenericContext quadContext, IGenericRenderer renderer) {
         }
 
         @Override

@@ -7,7 +7,9 @@ import committee.nova.mods.avaritia.Const;
 import committee.nova.mods.avaritia.api.client.shader.CCShaderInstance;
 import moffy.ticex.TicEX;
 import net.minecraft.Util;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -21,7 +23,7 @@ import java.util.function.Function;
 
 public final class TicEXCosmicShader {
     private final RenderStateShard.ShaderStateShard stateShard;
-    private final RenderType cosmicToolRenderType;
+    private final RenderType cosmicRenderType;
     private final Map<ResourceLocation, RenderType> cosmicArmorRenderTypeCache = new HashMap<>();
 
     public int internalRenderTime;
@@ -51,7 +53,7 @@ public final class TicEXCosmicShader {
 
     public TicEXCosmicShader() {
         stateShard = new RenderStateShard.ShaderStateShard(() -> shaderInstance);
-        cosmicToolRenderType = RenderType.create(
+        cosmicRenderType = RenderType.create(
                 "ticex:cosmic",
                 DefaultVertexFormat.BLOCK,
                 VertexFormat.Mode.QUADS,
@@ -75,8 +77,8 @@ public final class TicEXCosmicShader {
         return shaderInstance;
     }
 
-    public RenderType getCosmicToolRenderType() {
-        return cosmicToolRenderType;
+    public RenderType getCosmicRenderType() {
+        return cosmicRenderType;
     }
 
     public RenderType getCosmicRenderTypeArmor(ResourceLocation texture) {
@@ -95,8 +97,8 @@ public final class TicEXCosmicShader {
                         .setShaderState(stateShard)
                         .setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
                         .setTransparencyState(RenderType.NO_TRANSPARENCY)
-                        .setCullState(RenderType.NO_CULL)
                         .setLightmapState(RenderType.LIGHTMAP)
+                        .setCullState(RenderType.NO_CULL)
                         .setOverlayState(RenderType.OVERLAY)
                         .setLayeringState(RenderType.VIEW_OFFSET_Z_LAYERING)
                         .createCompositeState(true)
@@ -128,9 +130,26 @@ public final class TicEXCosmicShader {
         );
     }
 
-    public void setupUniform() {
+    public void setupUniform(ResourceLocation atlas, boolean onGui) {
         cosmicTime.set(
                 (System.currentTimeMillis() - internalRenderTime) / 2000.0F
         );
+
+        float externalScale = onGui ? 100.0f : 1.0f;
+        float yaw = 0f;
+        float pitch = 0f;
+
+        if(!onGui) {
+            GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
+            Camera mainCamera = gameRenderer.getMainCamera();
+
+            yaw = (float) ((mainCamera.getYRot() * 2.0f * Math.PI) / 360.0);
+            pitch = -(float) ((mainCamera.getXRot() * 2.0f * Math.PI) / 360.0);
+        }
+
+        cosmicUVs.set(this.cosmicUVGetter.apply(atlas));
+        cosmicYaw.set(yaw);
+        cosmicPitch.set(pitch);
+        cosmicExternalScale.set(externalScale);
     }
 }
