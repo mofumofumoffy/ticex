@@ -126,6 +126,11 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .setCoolingTime(60)
                 .save(pWriter, prefix(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE, smelteryCastingFolder + "slime/"));
 
+        ItemCastingRecipeBuilder.basinRecipe(ItemOutput.fromItem(TicEXRegistry.INVENTORY_PROXY.get()))
+                .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
+                .setCast(Ingredient.of(TinkerSmeltery.searedBasin.get(), TinkerSmeltery.scorchedBasin.get()), true)
+                .save(pWriter, prefix(TicEXRegistry.INVENTORY_PROXY, smelteryCastingFolder));
+
         MaterialFluidRecipeBuilder.material(TicEXMaterials.RECONSTRUCTION)
                 .setTemperature(1000)
                 .setFluid(TicEXTags.Fluids.RECONSTRUCTION_CORE, 2000)

@@ -9,6 +9,10 @@
       "required": false
     },
     {
+      "id": "slashblade_addon:slashblade_tofu_metal",
+      "required": false
+    },
+    {
       "id": "yakumoblade:slashblade",
       "required": false
     },

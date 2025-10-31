@@ -6,6 +6,7 @@
   "mixins": [
     "CriticalAccessor",
     "DataItemAccessor",
+    "MaterialCastingLookupMixin",
     "MeleeAttributeModuleMixin",
     "RomanNumeralHelperMixin",
     "TrimArmorTextureSupplierMixin",

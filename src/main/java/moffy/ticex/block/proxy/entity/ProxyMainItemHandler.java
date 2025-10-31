@@ -2,14 +2,15 @@ package moffy.ticex.block.proxy.entity;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.POWERED;
 
-public class ProxyItemHandler extends ItemStackHandler {
+public class ProxyMainItemHandler extends ItemStackHandler {
 
     protected final ProxyBlockEntity proxyBlockEntity;
 
-    public ProxyItemHandler(ProxyBlockEntity proxyBlockEntity){
+    public ProxyMainItemHandler(ProxyBlockEntity proxyBlockEntity){
         super();
         this.proxyBlockEntity = proxyBlockEntity;
     }
@@ -23,5 +24,10 @@ public class ProxyItemHandler extends ItemStackHandler {
     @Override
     public boolean isItemValid(int s, ItemStack stack) {
         return !proxyBlockEntity.getBlockState().getValue(POWERED);
+    }
+
+    @Override
+    protected int getStackLimit(int slot, @NotNull ItemStack stack) {
+        return 1;
     }
 }

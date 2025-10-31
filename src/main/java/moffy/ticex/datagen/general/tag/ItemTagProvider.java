@@ -121,6 +121,7 @@ public class ItemTagProvider extends ItemTagsProvider {
             this.tag(TicEXTags.Items.SLASHBLADE)
                     .addOptional(new ResourceLocation("slashblade", "slashblade"))
                     .addOptional(new ResourceLocation("slashblade_addon", "slashblade_tofu_diamond"))
+                    .addOptional(new ResourceLocation("slashblade_addon", "slashblade_tofu_metal"))
                     .addOptional(new ResourceLocation("yakumoblade", "slashblade"))
                     .addOptional(new ResourceLocation("fantasy_ending", "fantasy_ending_blade"))
                     .addOptional(new ResourceLocation("energyblade", "forge_energy_blade"));
