@@ -48,7 +48,7 @@ public class TicEXTaczEvent {
 
             shader.setDamage(shader.getDamage() + lostStability); */
 
-            if(!mainHandStack.is(TicEXRegistry.KEY_MODIFIER_UNSTABLE) || !tool.isBroken()){
+            if(!tool.isBroken()){
                 for(ModifierEntry modifier : tool.getModifierList()){
                     damage = modifier.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, modifier, context, initialDamage, damage);
                 }

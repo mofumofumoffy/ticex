@@ -228,7 +228,6 @@ public class TicEXRegistry {
     public static RegistryObject<Block> SCORCHED_RF_FURNACE = null;
     public static RegistryObject<Block> CREATIVE_SCORCHED_RF_FURNACE = null;
     public static RegistryObject<Block> FLUID_TRANSMUTER = null;
-    public static RegistryObject<Block> INVENTORY_PROXY = null;
 
     public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> RF_FURNACE_ENTITY = null;
     public static RegistryObject<BlockEntityType<ProxyBlockEntity>> INVENTORY_PROXY_ENTITY = null;
