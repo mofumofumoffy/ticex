@@ -58,12 +58,29 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
 
         this.tag(TicEXTags.Modifiers.REMOVAL_BLACKLIST).addOptional(
                 new ResourceLocation(TicEX.MODID, "embossment"),
+                new ResourceLocation(TicEX.MODID, "mekanic"),
                 new ResourceLocation(TicEX.MODID, "konpaku"),
                 new ResourceLocation(TicEX.MODID, "koshirae"),
                 new ResourceLocation(TicEX.MODID, "hidden_proud"),
                 new ResourceLocation(TicEX.MODID, "overload"),
                 new ResourceLocation(TicEX.MODID, "override"),
-                new ResourceLocation(TicEX.MODID, "reactive")
+                new ResourceLocation(TicEX.MODID, "reactive"),
+                new ResourceLocation(TicEX.MODID, "apoth_supplier"),
+                new ResourceLocation(TicEX.MODID, "enchantment_supplier")
+        );
+
+        this.tag(TicEXTags.Modifiers.REBIRTH).addOptional(
+                new ResourceLocation(TicEX.MODID, "rebirth")
+        );
+
+        this.tag(TicEXTags.Modifiers.REBIRTH_BASED).addOptional(
+                new ResourceLocation(TicEX.MODID, "mekanic"),
+                new ResourceLocation(TicEX.MODID, "koshirae"),
+                new ResourceLocation(TicEX.MODID, "abyssal"),
+                new ResourceLocation(TicEX.MODID, "infernal"),
+                new ResourceLocation(TicEX.MODID, "gravity"),
+                new ResourceLocation(TicEX.MODID, "hurricane"),
+                new ResourceLocation(TicEX.MODID, "overcasting")
         );
     }
 }

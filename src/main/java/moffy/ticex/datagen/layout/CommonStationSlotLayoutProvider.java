@@ -20,7 +20,7 @@ public class CommonStationSlotLayoutProvider extends AbstractStationSlotLayoutPr
 
     @Override
     protected void addLayouts() {
-        ResourceLocation seramGear = new ResourceLocation("ticex", "seram_gear");
+        /*ResourceLocation seramGear = new ResourceLocation("ticex", "seram_gear");
         define(seramGear)
                 .icon(new Pattern(seramGear))
                 .addInputSlot(Patterns.PLATING, "pattern.tconstruct.plating", 33, 29,
@@ -36,7 +36,7 @@ public class CommonStationSlotLayoutProvider extends AbstractStationSlotLayoutPr
                         Ingredient.of(TicEXTags.Items.CATALYSTS))
                 .sortIndex(15)
                 .translationKey("gui.ticex.seram_gear")
-                .build();
+                .build();*/
     }
 
     @Override

@@ -2,8 +2,8 @@ package moffy.ticex.datagen.general.recipes.psi;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.SingleEmbossmentModifierRecipeBuilder;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.ValidatableIncrementalModifierRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.SingleEmbossmentModifierRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.ValidatableIncrementalModifierRecipeBuilder;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;

@@ -1,4 +1,4 @@
-package moffy.ticex.datagen.general.recipes.ticex.embossment;
+package moffy.ticex.datagen.general.recipes.ticex.builder;
 
 import moffy.ticex.lib.recipe.EmbossmentCastingRecipe;
 import moffy.ticex.modules.general.TicEXRegistry;

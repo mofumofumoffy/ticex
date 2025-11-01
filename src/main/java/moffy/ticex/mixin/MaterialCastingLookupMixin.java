@@ -1,5 +1,6 @@
 package moffy.ticex.mixin;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -36,9 +37,9 @@ public class MaterialCastingLookupMixin {
 
         if(!matchedRecipes.isEmpty()){
             for(MaterialFluidRecipe matchedRecipe: matchedRecipes){
-                ResourceLocation recipeKey = ForgeRegistries.RECIPE_TYPES.getKey(matchedRecipe.getType());
-                ResourceLocation fluidKey = ForgeRegistries.FLUIDS.getKey(fluid);
-                if(recipeKey != null && fluidKey != null && recipeKey.getNamespace().equals(fluidKey.getNamespace())){
+                ResourceLocation recipeKey = BuiltInRegistries.RECIPE_TYPE.getKey(matchedRecipe.getType());
+                ResourceLocation fluidKey = BuiltInRegistries.FLUID.getKey(fluid);
+                if(recipeKey != null && recipeKey.getNamespace().equals(fluidKey.getNamespace())){
                     cir.setReturnValue(matchedRecipe);
                     return;
                 }

@@ -87,6 +87,8 @@ public class TicEXTags {
     }
 
     public static class Modifiers {
+        public static final TagKey<Modifier> REBIRTH = local("rebirth");
+        public static final TagKey<Modifier> REBIRTH_BASED = local("rebirth_based");
         public static final TagKey<Modifier> REMOVAL_BLACKLIST = local("removal_blacklist");
 
         private static TagKey<Modifier> local(String name) {

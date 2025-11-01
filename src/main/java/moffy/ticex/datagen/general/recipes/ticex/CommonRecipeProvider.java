@@ -3,7 +3,7 @@ package moffy.ticex.datagen.general.recipes.ticex;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentModifierRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;

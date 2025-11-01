@@ -61,10 +61,6 @@ public class PERecipeProvider implements ITicEXRecipeHelper, IToolRecipeHelper {
 
         if(TicEXRegistry.SINGULAR_GEM_ARMOR != null) {
             ResourceLocation seramGear = new ResourceLocation(TicEX.MODID, "seram_gear");
-            toolBuilding(topConsumer, TicEXRegistry.SINGULAR_GEM_ARMOR.get(ArmorItem.Type.HELMET), armorFolder, seramGear);
-            toolBuilding(topConsumer, TicEXRegistry.SINGULAR_GEM_ARMOR.get(ArmorItem.Type.CHESTPLATE), armorFolder, seramGear);
-            toolBuilding(topConsumer, TicEXRegistry.SINGULAR_GEM_ARMOR.get(ArmorItem.Type.LEGGINGS), armorFolder, seramGear);
-            toolBuilding(topConsumer, TicEXRegistry.SINGULAR_GEM_ARMOR.get(ArmorItem.Type.BOOTS), armorFolder, seramGear);
         }
 
         if(TicEXRegistry.CATALYST_GEM != null) {

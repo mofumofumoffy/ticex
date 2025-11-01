@@ -1,4 +1,4 @@
-package moffy.ticex.datagen.general.recipes.ticex.embossment;
+package moffy.ticex.datagen.general.recipes.ticex.builder;
 
 import moffy.ticex.lib.recipe.ValidatableIncrementalModifierRecipe;
 import net.minecraft.data.recipes.FinishedRecipe;
