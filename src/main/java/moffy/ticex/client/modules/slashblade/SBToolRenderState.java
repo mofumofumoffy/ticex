@@ -146,22 +146,35 @@ public class SBToolRenderState {
             PartType partType
     ) {
         VertexConsumer vb = bufferIn.getBuffer(rt);
-
-        Face.setCol(col);
-        Face.setLightMap(packedLightIn);
-        Face.setMatrix(matrixStackIn);
-        TicEXSBUtils.tessellateWithShader(stack, itemRenderContext, shaderProvider, material, event.getModel(), vb, bufferIn, partType, event.getTarget());
-
+        TicEXSBUtils.tessellateWithShader(
+                stack,
+                itemRenderContext,
+                shaderProvider,
+                material,
+                event.getModel(),
+                vb,
+                bufferIn,
+                partType,
+                matrixStackIn,
+                packedLightIn,
+                col.getRGB(),
+                event.getTarget()
+        );
         if (stack.hasFoil() && enableEffect) {
             vb = bufferIn.getBuffer(
                     target.startsWith("item_") ? BladeRenderState.SLASHBLADE_ITEM_GLINT : BladeRenderState.SLASHBLADE_GLINT
             );
-            event.getModel().tessellateOnly(vb, event.getTarget());
+            WavefrontObject model = event.getModel();
+            String targetGroup = event.getTarget();
+            for (mods.flammpfeil.slashblade.client.renderer.model.obj.GroupObject group : model.groupObjects) {
+                if (group.name.equalsIgnoreCase(targetGroup)) {
+                    for (mods.flammpfeil.slashblade.client.renderer.model.obj.Face face : group.faces) {
+                        face.addFaceForRender(vb, matrixStackIn, packedLightIn, 0xFFFFFFFF);
+                    }
+                    break;
+                }
+            }
         }
-
-        Face.resetMatrix();
-        Face.resetLightMap();
-        Face.resetCol();
 
         Face.resetAlphaOverride();
         Face.resetUvOperator();
