@@ -1,12 +1,10 @@
 package moffy.ticex.lib.utils;
 
-import com.google.common.base.Suppliers;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 import com.mojang.math.Axis;
-
 import mods.flammpfeil.slashblade.client.renderer.model.BladeModelManager;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.Face;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.GroupObject;
@@ -36,7 +34,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -44,7 +42,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -55,7 +52,6 @@ import org.joml.Vector4f;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 public class TicEXSBUtils {
 
@@ -72,12 +68,6 @@ public class TicEXSBUtils {
         disallowedEnchantments.add(Enchantments.MOB_LOOTING);
     }
 
-    public static Supplier<Matrix4f> defaultTransform = Suppliers.memoize(() -> {
-        Matrix4f m = new Matrix4f();
-        m.identity();
-        return m;
-    });
-
     private static final Map<ShaderProvider.Tool, RenderType> renderTypeCache = new HashMap<>();
 
     @OnlyIn(Dist.CLIENT)
@@ -90,13 +80,16 @@ public class TicEXSBUtils {
             VertexConsumer tessellator,
             MultiBufferSource bufferSource,
             PartType partType,
+            PoseStack matrixStack,
+            int packedLightIn,
+            int color,
             String... groupNames
     ) {
         boolean needShader = shaderProvider != null && TicEXConfig.USE_SHADER.get();
 
         Material atlasMaterial = new Material(
-            InventoryMenu.BLOCK_ATLAS,
-            new ResourceLocation(TicEX.MODID, "obj_tool/slashblade_tool/" + partType.getName())
+                InventoryMenu.BLOCK_ATLAS,
+                new ResourceLocation(TicEX.MODID, "obj_tool/slashblade_tool/" + partType.getName())
         );
         TextureAtlasSprite sprite = atlasMaterial.sprite();
         VertexConsumer vertexConsumer = null;
@@ -106,10 +99,7 @@ public class TicEXSBUtils {
             shaderProvider.beginRender(stack, itemRenderContext);
             shaderProvider.beginRenderMaterial(stack, material.getId());
             shaderProvider.preRenderMaterial(stack, material.getId());
-
-            // fake batch
             shaderProvider.startRenderBatch(itemRenderContext, TicEXToolRenders.RenderPhase.OVERLAY_MATERIAL);
-
             vertexConsumer = bufferSource.getBuffer(getBladeRenderType(shaderProvider));
         }
 
@@ -122,10 +112,15 @@ public class TicEXSBUtils {
                     renderWithShader(
                             groupObject,
                             vertexConsumer,
-                            sprite
+                            sprite,
+                            matrixStack,
+                            packedLightIn,
+                            color
                     );
                 } else {
-                    groupObject.render(tessellator);
+                    for (Face face : groupObject.faces) {
+                        face.addFaceForRender(tessellator, matrixStack, packedLightIn, color);
+                    }
                 }
             }
         }
@@ -134,24 +129,27 @@ public class TicEXSBUtils {
             shaderProvider.endRenderBatch(itemRenderContext, TicEXToolRenders.RenderPhase.OVERLAY_MATERIAL);
         }
     }
-
     @OnlyIn(Dist.CLIENT)
     public static void renderWithShader(
-        GroupObject groupObject,
-        VertexConsumer tessellator,
-        TextureAtlasSprite sprite
+            GroupObject groupObject,
+            VertexConsumer tessellator,
+            TextureAtlasSprite sprite,
+            // ===== MODIFIED: Add parameters =====
+            PoseStack matrixStack,
+            int packedLightIn,
+            int color
     ) {
         if (groupObject.faces.isEmpty()) {
             return;
         }
 
         for (Face face : groupObject.faces) {
-            addFaceForRender(face, tessellator, sprite);
+            addFaceForRender(face, tessellator, sprite, matrixStack, packedLightIn, color);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void addFaceForRender(Face face, VertexConsumer tessellator, TextureAtlasSprite sprite) {
+    public static void addFaceForRender(Face face, VertexConsumer tessellator, TextureAtlasSprite sprite, PoseStack matrixStack, int packedLightIn, int color) {
         final float textureOffset = 5.0E-4F;
 
         if (face.faceNormal == null) {
@@ -170,38 +168,42 @@ public class TicEXSBUtils {
             averageV /= (float) face.textureCoordinates.length;
         }
 
-        Matrix4f transform;
-        if (Face.matrix != null) {
-            PoseStack.Pose me = Face.matrix.last();
-            transform = me.pose();
-        } else {
-            transform = defaultTransform.get();
-        }
+        // ===== MODIFIED: Get transform from the matrixStack parameter =====
+        Matrix4f transform = matrixStack.last().pose();
 
         for (int i = 0; i < face.vertices.length; ++i) {
-            putVertex(face, tessellator, i, transform, textureOffset, sprite, averageU, averageV);
+            putVertex(face, tessellator, i, transform, textureOffset, sprite, averageU, averageV, packedLightIn, color);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void putVertex(
-        Face face,
-        VertexConsumer wr,
-        int i,
-        Matrix4f transform,
-        float textureOffset,
-        TextureAtlasSprite sprite,
-        float averageU,
-        float averageV
+            Face face,
+            VertexConsumer wr,
+            int i,
+            Matrix4f transform,
+            float textureOffset,
+            TextureAtlasSprite sprite,
+            float averageU,
+            float averageV,
+            // ===== MODIFIED: Add light and color parameters =====
+            int packedLightIn,
+            int color
     ) {
         wr.vertex(transform, face.vertices[i].x, face.vertices[i].y, face.vertices[i].z);
+
+        // ===== MODIFIED: Use the color parameter instead of Face.col =====
+        int r = FastColor.ARGB32.red(color);
+        int g = FastColor.ARGB32.green(color);
+        int b = FastColor.ARGB32.blue(color);
+        int a = FastColor.ARGB32.alpha(color);
         wr.color(
-            1.0f,
-            1.0f,
-            1.0f,
+                r,
+                g,
+                b,
                 Face.alphaOverride.apply(
                         new Vector4f(face.vertices[i].x, face.vertices[i].y, face.vertices[i].z, 1.0F),
-                        Face.col.getAlpha()
+                        a
                 )
         );
         if (face.textureCoordinates != null && face.textureCoordinates.length > 0) {
@@ -218,20 +220,21 @@ public class TicEXSBUtils {
             }
 
             wr.uv(
-                sprite.getU0() + (textureU + offsetU) * (sprite.getU1() - sprite.getU0()),
-                sprite.getV0() + (textureV + offsetV) * (sprite.getV1() - sprite.getV0())
+                    sprite.getU0() + (textureU + offsetU) * (sprite.getU1() - sprite.getU0()),
+                    sprite.getV0() + (textureV + offsetV) * (sprite.getV1() - sprite.getV0())
             );
         } else {
             wr.uv(0.0F, 0.0F);
         }
 
         wr.overlayCoords(OverlayTexture.NO_OVERLAY);
-        wr.uv2(Face.lightmap);
+        // ===== MODIFIED: Use the packedLightIn parameter instead of Face.lightmap =====
+        wr.uv2(packedLightIn);
         Vector3f vector3f;
-        if (Face.isSmoothShade && face.vertexNormals != null) {
+        // ===== MODIFIED: Removed Face.isSmoothShade, just check if vertexNormals exist =====
+        if (face.vertexNormals != null) {
             Vertex normal = face.vertexNormals[i];
-            Vec3 nol = new Vec3(normal.x, normal.y, normal.z);
-            vector3f = new Vector3f((float) nol.x, (float) nol.y, (float) nol.z);
+            vector3f = new Vector3f(normal.x, normal.y, normal.z);
         } else {
             vector3f = new Vector3f(face.faceNormal.x, face.faceNormal.y, face.faceNormal.z);
         }
@@ -241,6 +244,7 @@ public class TicEXSBUtils {
         wr.normal(vector3f.x(), vector3f.y(), vector3f.z());
         wr.endVertex();
     }
+
 
     @OnlyIn(Dist.CLIENT)
     public static RenderType getBladeRenderType(ShaderProvider.Tool shaderProvider) {
