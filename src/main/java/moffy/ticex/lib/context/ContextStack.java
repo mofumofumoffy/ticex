@@ -1,5 +1,7 @@
 package moffy.ticex.lib.context;
 
+import org.jetbrains.annotations.ApiStatus;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -26,8 +28,7 @@ public class ContextStack<T> {
         return defaultValue;
     }
 
-    @SuppressWarnings("DeprecatedIsStillUsed")
-    @Deprecated
+    @ApiStatus.Internal
     public void close(ContextFrame<T> local) {
         if(localDeque.peek() == local) {
             localDeque.pop();

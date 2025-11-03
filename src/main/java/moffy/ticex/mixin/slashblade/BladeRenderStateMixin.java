@@ -29,7 +29,7 @@ public abstract class BladeRenderStateMixin {
 
     @WrapOperation(
             method = "renderOverrided(Lnet/minecraft/world/item/ItemStack;Lmods/flammpfeil/slashblade/client/renderer/model/obj/WavefrontObject;Ljava/lang/String;Lnet/minecraft/resources/ResourceLocation;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILjava/util/function/Function;Z)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;", ordinal = 0))
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;", ordinal = 0, remap = true))
     private static VertexConsumer swapBuffer(MultiBufferSource instance, RenderType renderType, Operation<VertexConsumer> original) {
         VertexConsumer vertexConsumer = TicEXContexts.SB_SWAP_VC.get();
         return vertexConsumer != null ? vertexConsumer : original.call(instance, renderType);

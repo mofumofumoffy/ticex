@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(value = Face.class, remap = false)
 public class FaceMixin {
-    @WrapOperation(method = "putVertex", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/VertexConsumer;uv(FF)Lcom/mojang/blaze3d/vertex/VertexConsumer;", ordinal = 0))
+    @WrapOperation(method = "putVertex", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/VertexConsumer;uv(FF)Lcom/mojang/blaze3d/vertex/VertexConsumer;", remap = true))
     public VertexConsumer modifyUV(VertexConsumer instance, float u, float v, Operation<VertexConsumer> original) {
         TextureAtlasSprite sprite = TicEXContexts.SB_FACE_SPRITE.get();
         if(sprite == null) {
