@@ -1,0 +1,11 @@
+package moffy.ticex.lib.context;
+
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+
+public class TicEXContexts {
+    public static final ContextStack<ItemRenderContext> RENDERING_CONTEXT = new ContextStack<>();
+    public static final ContextStack<VertexConsumer> SB_SWAP_VC = new ContextStack<>();
+    public static final ContextStack<TextureAtlasSprite> SB_FACE_SPRITE = new ContextStack<>();
+}

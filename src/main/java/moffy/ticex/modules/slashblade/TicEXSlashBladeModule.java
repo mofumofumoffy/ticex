@@ -3,7 +3,6 @@ package moffy.ticex.modules.slashblade;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.slashblade.SBItemCapabilityProvider;
-import moffy.ticex.client.modules.slashblade.SBToolRenderType;
 import moffy.ticex.client.render.custom.CustomModel;
 import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
@@ -102,7 +101,6 @@ public class TicEXSlashBladeModule implements AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void initClient(FMLJavaModLoadingContext context) {
-        SBToolRenderType.init();
         IEventBus bus = context.getModEventBus();
         bus.addListener(TicEXSBEvent::onRegisterRenderers);
     }

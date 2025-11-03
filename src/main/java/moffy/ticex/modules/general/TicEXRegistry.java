@@ -5,6 +5,10 @@ import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
 import moffy.ticex.block.proxy.entity.ProxyBlockEntity;
 import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
+import moffy.ticex.entity.avaritia.EndestShotProjectile;
+import moffy.ticex.entity.curios.ResonanceToolProjectile;
+import moffy.ticex.entity.mekanism.MekanicProjectile;
+import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.recipe.*;
@@ -241,10 +245,10 @@ public class TicEXRegistry {
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_BLAZING = null;
 
-    public static RegistryObject<EntityType<?>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
-    public static RegistryObject<EntityType<?>> ENDESTSHOT_PROJECTILE = null;
-    public static RegistryObject<EntityType<?>> RESONANCE_TOOL_PROJECTILE = null;
-    public static RegistryObject<EntityType<?>> MEKANIC_PROJECTILE = null;
+    public static RegistryObject<EntityType<SBToolItemEntity>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
+    public static RegistryObject<EntityType<EndestShotProjectile>> ENDESTSHOT_PROJECTILE = null;
+    public static RegistryObject<EntityType<ResonanceToolProjectile>> RESONANCE_TOOL_PROJECTILE = null;
+    public static RegistryObject<EntityType<MekanicProjectile>> MEKANIC_PROJECTILE = null;
 
     public static RegistryObject<Attribute> HEALING_RECEIVED = null;
     public static RegistryObject<Attribute> DAMAGE_TAKEN = null;

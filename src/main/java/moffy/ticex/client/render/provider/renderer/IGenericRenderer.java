@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import moffy.ticex.client.render.provider.context.RenderContext;
 
 public interface IGenericRenderer {
-    default void render(RenderContext context, VertexConsumer vertexConsumer) {
+    default void render(VertexConsumer vertexConsumer, RenderContext context) {
         this.render(
                 vertexConsumer,
                 context.red(),
@@ -18,7 +18,7 @@ public interface IGenericRenderer {
         );
     }
 
-    default void render(RenderContext context, VertexConsumer vertexConsumer,
+    default void render(VertexConsumer vertexConsumer, RenderContext context,
                         float red, float green, float blue, float alpha) {
         this.render(
                 vertexConsumer,
