@@ -15,11 +15,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
 
 @Mixin(value = LayerMainBlade.class, remap = false)
 public class LayerMainBladeMixin {
     @WrapMethod(method = "lambda$render$4")
     private void renderWith(ISlashBladeState s, LivingEntity entity, float partialTicks, PoseStack matrixStack, float motionYOffset, double motionScale, double modelScaleBase, ItemStack stack, MultiBufferSource bufferIn, int lightIn, MmdMotionPlayerGL2 mmp, Operation<Void> original) {
+        if(!(stack.getItem() instanceof IModifiable)) {
+            original.call(s, entity, partialTicks, matrixStack, motionYOffset, motionScale, modelScaleBase, stack, bufferIn, lightIn, mmp);
+        }
+
         ItemRenderContext itemRenderContext = new ItemRenderContext(
                 stack,
                 ItemDisplayContext.FIXED,
@@ -30,7 +35,7 @@ public class LayerMainBladeMixin {
                 OverlayTexture.NO_OVERLAY
         );
 
-        try(ContextFrame<ItemRenderContext> local = TicEXContexts.RENDERING_CONTEXT.open(itemRenderContext)) {
+        try(ContextFrame<ItemRenderContext> local = TicEXContexts.SB_RENDERING_CONTEXT.open(itemRenderContext)) {
             original.call(s, entity, partialTicks, matrixStack, motionYOffset, motionScale, modelScaleBase, stack, bufferIn, lightIn, mmp);
         }
     }

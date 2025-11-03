@@ -30,7 +30,7 @@ public class SBToolISTER extends SlashBladeTEISR {
                 combinedOverlayIn
         );
 
-        try(ContextFrame<ItemRenderContext> local = TicEXContexts.RENDERING_CONTEXT.open(itemRenderContext)) {
+        try(ContextFrame<ItemRenderContext> local = TicEXContexts.SB_RENDERING_CONTEXT.open(itemRenderContext)) {
             super.renderByItem(itemStackIn, type, matrixStack, bufferIn, combinedLightIn, combinedOverlayIn);
         }
     }

@@ -29,7 +29,7 @@ public class SBToolBladeItemRenderer extends BladeItemEntityRenderer {
                 OverlayTexture.NO_OVERLAY
         );
 
-        try(ContextFrame<ItemRenderContext> local = TicEXContexts.RENDERING_CONTEXT.open(itemRenderContext)) {
+        try(ContextFrame<ItemRenderContext> local = TicEXContexts.SB_RENDERING_CONTEXT.open(itemRenderContext)) {
             super.render(itemIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         }
     }

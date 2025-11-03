@@ -70,7 +70,7 @@ public abstract class SlashBladeTEISRMixin {
                 @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/client/renderer/util/BladeRenderState;renderOverrided(Lnet/minecraft/world/item/ItemStack;Lmods/flammpfeil/slashblade/client/renderer/model/obj/WavefrontObject;Ljava/lang/String;Lnet/minecraft/resources/ResourceLocation;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", ordinal = 2)
             })
     public void renderIcon(ItemStack stack, WavefrontObject model, String target, ResourceLocation texture, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, Operation<Void> original) {
-        try(ContextFrame<ItemRenderContext> frame = TicEXContexts.RENDERING_CONTEXT.open(null)) {
+        try(ContextFrame<ItemRenderContext> frame = TicEXContexts.SB_RENDERING_CONTEXT.open(null)) {
             original.call(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn);
         }
     }

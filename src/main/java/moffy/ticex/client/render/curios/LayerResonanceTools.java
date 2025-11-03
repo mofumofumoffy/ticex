@@ -79,9 +79,8 @@ public class LayerResonanceTools<T extends LivingEntity, M extends EntityModel<T
             double x = RADIUS * Math.cos(rotationAngle);
             double z = RADIUS * Math.sin(rotationAngle);
 
-            pPoseStack.translate(x, 1.25f, 0.5 + z);
+            pPoseStack.translate(x, 0.25f, z);
             pPoseStack.mulPose(Axis.ZP.rotation(-Mth.PI*0.5f));
-            pPoseStack.translate(-0.5, -0.5, -0.5);
 
             pPoseStack.scale(1.5f, 1.5f, 1.5f);
 
