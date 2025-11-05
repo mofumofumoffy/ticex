@@ -9,6 +9,8 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+import java.awt.*;
+
 @Mixin(value = Face.class, remap = false)
 public class FaceMixin {
     @WrapOperation(method = "putVertex", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/VertexConsumer;uv(FF)Lcom/mojang/blaze3d/vertex/VertexConsumer;", remap = true))
@@ -23,5 +25,15 @@ public class FaceMixin {
                 sprite.getU0() + u * (sprite.getU1() - sprite.getU0()),
                 sprite.getV0() + v * (sprite.getV1() - sprite.getV0())
         );
+    }
+
+    @WrapOperation(method = "putVertex", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/VertexConsumer;color(IIII)Lcom/mojang/blaze3d/vertex/VertexConsumer;", remap = true))
+    public VertexConsumer modifyColor(VertexConsumer instance, int r, int g, int b, int a, Operation<VertexConsumer> original) {
+        Color color = TicEXContexts.SB_COLOR_OVERRIDE.get();
+        if(color == null) {
+            return original.call(instance, r, g, b, a);
+        }
+
+        return original.call(instance, color.getRed(), color.getGreen(), color.getBlue(), a);
     }
 }

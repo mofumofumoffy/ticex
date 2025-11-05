@@ -5,6 +5,8 @@
   "plugin": "moffy.ticex.modules.slashblade.TicEXSlashBladeMixinPlugin",
   "mixins": [
     "AttackManagerMixin",
+    "InputCommandEventMixin$Later",
+    "InputCommandEventMixin$Older",
     "ItemSlashBladeMixin",
     "PlayerAttackHelperMixin",
     "SummonedSwordMixin"

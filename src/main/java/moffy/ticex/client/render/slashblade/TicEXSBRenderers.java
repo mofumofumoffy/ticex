@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
-import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
 import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.render.custom.DecoratedRenderType;
@@ -14,6 +13,7 @@ import moffy.ticex.client.render.provider.context.tool.RenderGenericContext;
 import moffy.ticex.client.render.provider.renderer.IGenericRenderer;
 import moffy.ticex.client.render.shader.ShaderProvider;
 import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.lib.context.ContextFrame;
 import moffy.ticex.lib.context.ContextFrameScope;
 import moffy.ticex.lib.context.TicEXContexts;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -26,6 +26,8 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.commons.lang3.mutable.Mutable;
+import org.apache.commons.lang3.mutable.MutableObject;
 import slimeknights.tconstruct.library.client.materials.MaterialRenderInfo;
 import slimeknights.tconstruct.library.client.materials.MaterialRenderInfoLoader;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
@@ -69,11 +71,13 @@ public class TicEXSBRenderers {
             ShaderProvider.Generic shaderProvider = TicEXRenders.GENERIC_SHADERS.getShaderProvider(material.getVariant());
             boolean useShader = shaderProvider != null && TicEXConfig.USE_SHADER.get();
 
+            Mutable<Color> color = new MutableObject<>(null);
+
             ResourceLocation bladeTexture = partType.tryTexture(material.getVariant(), () -> {
                 if(!useShader) {
                     Optional<MaterialRenderInfo> optional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(material.getVariant());
                     optional.ifPresent(materialRenderInfo -> {
-                        BladeRenderState.setCol(new Color(materialRenderInfo.vertexColor()));
+                        color.setValue(new Color(materialRenderInfo.vertexColor()));
                     });
                 }
             });
@@ -81,10 +85,12 @@ public class TicEXSBRenderers {
             RenderType renderType = renderTypeGetter.apply(bladeTexture);
             Function<ResourceLocation, RenderType> paintedRenderTypeGetter = loc -> renderType;
 
-            if(useShader) {
-                renderWithShader(renderer, material.getVariant(), partType, shaderProvider, itemRenderContext, model, target, texture, paintedRenderTypeGetter, enableEffect);
-            } else {
-                renderer.render(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn, paintedRenderTypeGetter, enableEffect);
+            try(ContextFrame<Color> frame = TicEXContexts.SB_COLOR_OVERRIDE.open(color.getValue())) {
+                if (useShader) {
+                    renderWithShader(renderer, material.getVariant(), partType, shaderProvider, itemRenderContext, model, target, texture, paintedRenderTypeGetter, enableEffect);
+                } else {
+                    renderer.render(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn, paintedRenderTypeGetter, enableEffect);
+                }
             }
         }
     }
