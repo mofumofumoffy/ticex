@@ -1,5 +1,13 @@
 package moffy.ticex.mixin.arsnouveau;
 
+/*
+ * This file is part of the TicEXArsModule.
+ *
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+ * See the LICENSES/LGPL-3.0.md file for details.
+ * 2025 Moffy
+ */
+
 import com.hollingsworth.arsnouveau.api.perk.IPerkProvider;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
