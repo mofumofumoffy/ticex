@@ -47,12 +47,14 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
                     context.setErrorMsg(Component.translatable("recipe.ticex.not_allowed_enchantment_slashblade"));
                     return false;
                 }
-                var probability = 1.0F;
-                if (input.is(SBItems.proudsoul_tiny)) probability = 0.25F;
-                if (input.is(SBItems.proudsoul)) probability = 0.5F;
-                if (input.is(SBItems.proudsoul_ingot)) probability = 0.75F;
-                if (random.nextFloat() <= probability) {
-                    TicEXSBUtils.applyEnchantment(toolStack, enchantmentEntry.getKey(), enchantmentLevel);
+                for(int i = 0; i < input.getCount(); i++){
+                    var probability = 1.0F;
+                    if (input.is(SBItems.proudsoul_tiny)) probability = 0.25F;
+                    if (input.is(SBItems.proudsoul)) probability = 0.5F;
+                    if (input.is(SBItems.proudsoul_ingot)) probability = 0.75F;
+                    if (random.nextFloat() <= probability) {
+                        TicEXSBUtils.applyEnchantment(toolStack, enchantmentEntry.getKey(), enchantmentEntry.getValue());
+                    }
                 }
             }
         }
