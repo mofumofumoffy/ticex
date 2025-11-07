@@ -6,7 +6,6 @@
   "mixins": [
     "ArmorModelDispatcherMixin",
     "IModifiableMixin",
-    "ItemMixin",
     "MekanismHUDMixin",
     "MekaSuitEnergyLevelMixin",
     "ModifierUtilMixin",

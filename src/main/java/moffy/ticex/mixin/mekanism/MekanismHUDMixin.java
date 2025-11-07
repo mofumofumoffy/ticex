@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MekanismHUDMixin {
     @WrapOperation(
             method = "render",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z", remap = true)
     )
     public boolean allowMekanicModifier(ItemStack instance, TagKey<Item> pTag, Operation<Boolean> original){
         return instance.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent() || original.call(instance, pTag);

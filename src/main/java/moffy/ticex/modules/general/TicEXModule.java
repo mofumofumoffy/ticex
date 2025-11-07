@@ -4,8 +4,6 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.furnace.RFFurnaceBlock;
 import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
-import moffy.ticex.block.proxy.ProxyBlock;
-import moffy.ticex.block.proxy.entity.ProxyBlockEntity;
 import moffy.ticex.block.transmuter.FluidTransmuterBlock;
 import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;

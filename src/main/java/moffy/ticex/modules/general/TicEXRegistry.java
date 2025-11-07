@@ -2,7 +2,6 @@ package moffy.ticex.modules.general;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
-import moffy.ticex.block.proxy.entity.ProxyBlockEntity;
 import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
@@ -230,7 +229,6 @@ public class TicEXRegistry {
     public static RegistryObject<Block> FLUID_TRANSMUTER = null;
 
     public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> RF_FURNACE_ENTITY = null;
-    public static RegistryObject<BlockEntityType<ProxyBlockEntity>> INVENTORY_PROXY_ENTITY = null;
     public static RegistryObject<BlockEntityType<FluidTransmuterBlockEntity>> FLUID_TRANSMUTER_ENTITY = null;
 
     public static FluidObject<UnplaceableFluid> MOLTEN_RECONSTRUCTION_CORE = null;
@@ -332,8 +330,8 @@ public class TicEXRegistry {
         //acceptTool(output, BLITZ_GUN);
         //acceptTool(output, REVIVAL_SPELLBOOK_IRONS);
 
-        acceptArmor(output, MEKAPLATE_ARMOR);
-        acceptArmor(output, SINGULAR_GEM_ARMOR);
+        //acceptArmor(output, MEKAPLATE_ARMOR);
+        //acceptArmor(output, SINGULAR_GEM_ARMOR);
 
         acceptCast(output, SLASHBLADE_BLADE_CAST);
         acceptCast(output, SLASHBLADE_SAYA_CAST);
