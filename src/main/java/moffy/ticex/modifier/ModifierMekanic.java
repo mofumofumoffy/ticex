@@ -21,6 +21,7 @@ import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
 import mekanism.api.math.FloatingLong;
 import mekanism.common.Mekanism;
+import mekanism.common.capabilities.Capabilities;
 import mekanism.common.config.MekanismConfig;
 import mekanism.common.content.gear.IBlastingItem;
 import mekanism.common.content.gear.IModuleContainerItem;
@@ -40,6 +41,7 @@ import mekanism.common.util.ItemDataUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
 import moffy.ticex.lib.TicEXTags;
+import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
@@ -107,18 +109,11 @@ import slimeknights.tconstruct.library.tools.nbt.ToolDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 
-public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModifierHook, ProvidePropertyModifierHook, ToolActionModifierHook,UsingToolModifierHook, ToolDamageModifierHook, EntityInteractionModifierHook, BreakSpeedModifierHook, BlockBreakModifierHook, MeleeDamageModifierHook, EnchantmentModifierHook, ElytraFlightModifierHook, InventoryTickModifierHook, BowAmmoModifierHook, ValidateModifierHook, RequirementsModifierHook, BlockInteractionModifierHook {
+public class ModifierMekanic extends NoLevelsModifier implements ProvidePropertyModifierHook, ToolActionModifierHook,UsingToolModifierHook, ToolDamageModifierHook, EntityInteractionModifierHook, BreakSpeedModifierHook, BlockBreakModifierHook, MeleeDamageModifierHook, EnchantmentModifierHook, ElytraFlightModifierHook, InventoryTickModifierHook, BowAmmoModifierHook, ValidateModifierHook, RequirementsModifierHook, BlockInteractionModifierHook, EnergyModifierHook, EmbossmentModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK, TicEXRegistry.PROPERTY_PROVIDER_HOOK, ModifierHooks.TOOL_USING, ModifierHooks.TOOL_ACTION, ModifierHooks.ENTITY_INTERACT, ModifierHooks.BREAK_SPEED, ModifierHooks.BLOCK_BREAK, ModifierHooks.MELEE_DAMAGE, ModifierHooks.ENCHANTMENTS, ModifierHooks.ELYTRA_FLIGHT, ModifierHooks.INVENTORY_TICK, ModifierHooks.BOW_AMMO, ModifierHooks.VALIDATE, ModifierHooks.REQUIREMENTS, ModifierHooks.BLOCK_INTERACT);
-    }
-
-    @Override
-    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
-        ItemStack toolStack = context.getToolStack().copy();
-
-        return toolStack.getItem() instanceof IModifiable;
+        hookBuilder.addHook(this, TicEXRegistry.PROPERTY_PROVIDER_HOOK, ModifierHooks.TOOL_USING, ModifierHooks.TOOL_ACTION, ModifierHooks.ENTITY_INTERACT, ModifierHooks.BREAK_SPEED, ModifierHooks.BLOCK_BREAK, ModifierHooks.MELEE_DAMAGE, ModifierHooks.ENCHANTMENTS, ModifierHooks.ELYTRA_FLIGHT, ModifierHooks.INVENTORY_TICK, ModifierHooks.BOW_AMMO, ModifierHooks.VALIDATE, ModifierHooks.REQUIREMENTS, ModifierHooks.BLOCK_INTERACT, TicEXRegistry.ENERGY_HOOK, TicEXRegistry.EMBOSSMENT_HOOK);
     }
 
     @Override
@@ -449,5 +444,40 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
             return Component.translatable("recipe.ticex.modifier.mekanic_requirements");
         }
         return null;
+    }
+
+    @Override
+    public int receiveEnergy(IToolStackView tool, ItemStack stack, int received, boolean simulate) {
+        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.insertEnergy(FloatingLong.create(received), simulate ? Action.SIMULATE : Action.EXECUTE).getValue()).orElse(0);
+    }
+
+    @Override
+    public int extractEnergy(IToolStackView tool, ItemStack stack, int extracted, boolean simulate) {
+        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.extractEnergy(FloatingLong.create(extracted), simulate ? Action.SIMULATE : Action.EXECUTE).getValue()).orElse(0);
+    }
+
+    @Override
+    public int getEnergyStored(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.getEnergy(0).getValue()).orElse(0);
+    }
+
+    @Override
+    public int getMaxEnergyStored(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.getMaxEnergy(0).getValue()).orElse(0);
+    }
+
+    @Override
+    public boolean canExtract(IToolStackView tool, ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean canReceive(IToolStackView tool, ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
+        return true;
     }
 }

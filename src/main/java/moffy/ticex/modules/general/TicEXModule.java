@@ -18,6 +18,7 @@ import moffy.ticex.jei.ticex.TicEXJEIIntegration;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.InfinityTier;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
@@ -105,6 +106,14 @@ public class TicEXModule implements AddonModule {
                         ProvidePropertyModifierHook.class,
                         ProvidePropertyModifierHook.AllMerger::new,
                         new ProvidePropertyModifierHook.DefaultClass()
+                )
+        );
+        TicEXRegistry.ENERGY_HOOK = ModifierHooks.LOADER.register(
+                new ModuleHook<>(
+                        new ResourceLocation(TicEX.MODID, "energy"),
+                        EnergyModifierHook.class,
+                        EnergyModifierHook.AllMerger::new,
+                        new EnergyModifierHook.DefaultClass()
                 )
         );
 

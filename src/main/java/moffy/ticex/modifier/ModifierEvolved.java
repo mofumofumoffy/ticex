@@ -16,6 +16,7 @@ import com.brandon3055.draconicevolution.client.keybinding.KeyBindings;
 import com.brandon3055.draconicevolution.init.EquipCfg;
 import com.mojang.datafixers.util.Pair;
 import moffy.ticex.TicEX;
+import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -43,6 +44,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.ModList;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -76,7 +78,8 @@ public class ModifierEvolved
         MeleeHitModifierHook,
         BlockBreakModifierHook,
         RequirementsModifierHook,
-        ValidateModifierHook {
+        ValidateModifierHook,
+        EnergyModifierHook {
 
     public static final ResourceLocation MODULE_HOST_LOCATION = new ResourceLocation(TicEX.MODID, "module_host");
     public static final ResourceLocation OP_STORAGE_LOCATION = new ResourceLocation(TicEX.MODID, "op_storage");
@@ -95,7 +98,8 @@ public class ModifierEvolved
             ModifierHooks.MELEE_HIT,
             ModifierHooks.BLOCK_BREAK,
             ModifierHooks.REQUIREMENTS,
-            ModifierHooks.VALIDATE
+            ModifierHooks.VALIDATE,
+            TicEXRegistry.ENERGY_HOOK
         );
     }
 
@@ -592,7 +596,7 @@ public class ModifierEvolved
     }
 
     @Override
-    public List<ModifierEntry> displayModifiers(ModifierEntry entry) {
+    public @NotNull List<ModifierEntry> displayModifiers(ModifierEntry entry) {
         List<ModifierEntry> entries = new ArrayList<>();
         if (entry.getLevel() == 1) {
             entries.add(new ModifierEntry(ModifierIds.reinforced, 5));
@@ -610,5 +614,35 @@ public class ModifierEvolved
             return Component.translatable("recipe.ticex.modifier.evolved_requirements_1");
         }
         return null;
+    }
+
+    @Override
+    public int receiveEnergy(IToolStackView tool, ItemStack stack, int received, boolean simulate) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(iopStorage -> iopStorage.receiveEnergy(received, simulate)).orElse(0);
+    }
+
+    @Override
+    public int extractEnergy(IToolStackView tool, ItemStack stack, int extracted, boolean simulate) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(iopStorage -> iopStorage.extractEnergy(extracted, simulate)).orElse(0);
+    }
+
+    @Override
+    public int getEnergyStored(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::getEnergyStored).orElse(0);
+    }
+
+    @Override
+    public int getMaxEnergyStored(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::getMaxEnergyStored).orElse(0);
+    }
+
+    @Override
+    public boolean canExtract(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::canExtract).orElse(false);
+    }
+
+    @Override
+    public boolean canReceive(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::canReceive).orElse(false);
     }
 }

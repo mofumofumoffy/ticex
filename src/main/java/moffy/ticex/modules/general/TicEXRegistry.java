@@ -5,6 +5,7 @@ import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
 import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.registry.JeiIntegrationsRegistry;
@@ -167,9 +168,9 @@ public class TicEXRegistry {
     public static RegistryObject<MenuType<ToolContainerMenu>> UNSYNCED_TOOL_CONTAINER = null;
     public static RegistryObject<MenuType<FluidTransmuterContainerMenu>> FLUID_TRANSMUTER_MENU = null;
 
-
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
     public static ModuleHook<ProvidePropertyModifierHook> PROPERTY_PROVIDER_HOOK = null;
+    public static ModuleHook<EnergyModifierHook> ENERGY_HOOK = null;
 
     public static RegistryObject<Item> EXHAUSTED_GLOVE = null;
     public static RegistryObject<Item> ETHERIC_INGOT = null;
