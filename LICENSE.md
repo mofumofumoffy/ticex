@@ -9,6 +9,7 @@ Please refer to the license comments within each file for specific terms.
 
 - If a file contains a license comment header (e.g., in `.java` or `.json` files), **the license stated in the comment takes precedence**.
 - If no license is specified in a file, it is licensed under the MIT License by default.
+- When distributing this mod, please comply with the license of other mods that enable each module.
 
 ---
 

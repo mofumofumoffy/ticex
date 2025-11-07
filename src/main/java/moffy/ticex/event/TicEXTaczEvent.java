@@ -48,16 +48,14 @@ public class TicEXTaczEvent {
 
             shader.setDamage(shader.getDamage() + lostStability); */
 
-            if(!tool.isBroken()){
-                for(ModifierEntry modifier : tool.getModifierList()){
-                    damage = modifier.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, modifier, context, initialDamage, damage);
-                }
+            for(ModifierEntry modifier : tool.getModifierList()){
+                damage = modifier.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, modifier, context, initialDamage, damage);
+            }
 
-                event.setBaseAmount(damage);
+            event.setBaseAmount(damage);
 
-                for(ModifierEntry modifier : tool.getModifierList()){
-                    modifier.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifier, context, event.getBaseAmount(), 0, 0);
-                }
+            for(ModifierEntry modifier : tool.getModifierList()){
+                modifier.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifier, context, event.getBaseAmount(), 0, 0);
             }
         }
     }
@@ -78,10 +76,8 @@ public class TicEXTaczEvent {
                 0,
                 false
             );
-            if (!tool.isBroken()) {
-                for (ModifierEntry modifier : tool.getModifierList()) {
-                    modifier.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifier, context, event.getAmount());
-                }
+            for (ModifierEntry modifier : tool.getModifierList()) {
+                modifier.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifier, context, event.getAmount());
             }
         }
     }
