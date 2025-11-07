@@ -1,12 +1,15 @@
 package moffy.ticex.lib.utils;
 
 import com.ibm.icu.impl.locale.XCldrStub;
+import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.ILuaFunction;
+import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
 import moffy.ticex.lib.IEntityDataAccessor;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
@@ -28,6 +31,12 @@ public class TicEXCCUtils {
                 return MethodResult.of(gatherProperties(player));
             }
         );
+        entityMap.put(
+                "getProps",
+                (ILuaFunction) args -> {
+                    return MethodResult.of(gatherProperties(player));
+                }
+        );
         return entityMap;
     }
 
@@ -38,16 +47,12 @@ public class TicEXCCUtils {
             entityMap.put("name", entity.getDisplayName().getString());
             entityMap.put("uuid", entity.getUUID().toString());
             entityMap.put("pos", new Object[] { entity.position().x, entity.position().y, entity.position().z });
-
-            /*if (entity instanceof IEntityDataAccessor) {
-                IEntityDataAccessor accessor = (IEntityDataAccessor) entity;
-                entityMap.put(
-                    "getData",
-                    (ILuaFunction) args -> {
-                        return MethodResult.of(XCldrStub.ImmutableMap.copyOf(accessor.getAllFields()));
-                    }
-                );
-            }*/
+            if(entity instanceof LivingEntity living){
+                entityMap.put("health", living.getHealth());
+                entityMap.put("maxHealth", living.getMaxHealth());
+            }
+            entityMap.put("persistentData", entity.getPersistentData().hashCode());
+            entityMap.put("getPersistentData", (ILuaFunction) iArguments -> MethodResult.of(entity.getPersistentData().toString()));
         }
 
         return entityMap;

@@ -478,6 +478,10 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
 
     @Override
     public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
+        ToolStack toolStack = ToolStack.from(context.getToolStack());
+        if(toolStack.getModifierLevel(TicEXRegistry.REBIRTH_MODIFIER.get()) <= 0){
+            toolStack.addModifier(TicEXRegistry.REBIRTH_MODIFIER.getId(), 1);
+        }
         return true;
     }
 }

@@ -194,6 +194,7 @@ public class TicEXRegistry {
     public static RegistryObject<Item> PSIONIZING_RADIATION_CORE = null;
     public static RegistryObject<Item> NECTAR_CORE = null;
     public static RegistryObject<Item> REACTIVE_CORE = null;
+    public static RegistryObject<Item> ALTERATIVE_CORE = null;
 
     public static RegistryObject<Item> ENDESTSHOT_ARROW = null;
     public static RegistryObject<Item> MEKANIC_ARROW = null;
@@ -298,6 +299,7 @@ public class TicEXRegistry {
     public static DynamicModifier KARIL_MODIFIER = null;
     public static DynamicModifier NECTAR_MODIFIER = null;
     public static StaticModifier<Modifier> REACTIVE_MODIFIER = null;
+    public static StaticModifier<Modifier> ALTERATIVE_MODIFIER = null;
 
     public static Tier INFINITY_TIER;
 

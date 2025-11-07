@@ -8,6 +8,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import slimeknights.tconstruct.common.TinkerTags;
+import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
 
 import java.util.function.Consumer;
 
@@ -21,5 +22,10 @@ public class ArsRecipeProvider implements ITicEXRecipeHelper {
         SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.REACTIVE_MODIFIER.getId(), Ingredient.of(TicEXRegistry.REACTIVE_CORE.get()))
                 .setTools(TinkerTags.Items.DURABILITY)
                 .save(topConsumer, prefix(TicEXRegistry.REACTIVE_MODIFIER, slotlessFolder));
+
+        ModifierRecipeBuilder.modifier(TicEXRegistry.ALTERATIVE_MODIFIER)
+                .addInput(TicEXRegistry.ALTERATIVE_CORE.get())
+                .setTools(TinkerTags.Items.WORN_ARMOR)
+                .save(topConsumer, prefix(TicEXRegistry.ALTERATIVE_MODIFIER, defenseFolder));
     }
 }
