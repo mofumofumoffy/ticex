@@ -3,7 +3,6 @@ package moffy.ticex.modules.slashblade;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.slashblade.SBItemCapabilityProvider;
-import moffy.ticex.client.modules.slashblade.SBToolRenderType;
 import moffy.ticex.client.render.custom.CustomModel;
 import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
@@ -89,8 +88,8 @@ public class TicEXSlashBladeModule implements AddonModule {
                 .consumerMainThread(StateSyncPacket::handle)
                 .add();
 
+        TicEXSBEvent.registerEventsByVersion();
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onBladeMotion);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onInputCommand);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingDeath);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingExperienceDrop);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingFall);
@@ -102,7 +101,6 @@ public class TicEXSlashBladeModule implements AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void initClient(FMLJavaModLoadingContext context) {
-        SBToolRenderType.init();
         IEventBus bus = context.getModEventBus();
         bus.addListener(TicEXSBEvent::onRegisterRenderers);
     }

@@ -1,19 +1,15 @@
-package moffy.ticex.client.modules.curios;
+package moffy.ticex.client.render.curios;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import moffy.ticex.client.render.slashblade.TicEXSBRenderers;
 import moffy.ticex.client.render.ticex.ItemArrowRenderer;
+import moffy.ticex.client.render.ticex.TicEXRenderUtils;
 import moffy.ticex.entity.ItemArrow;
-import moffy.ticex.lib.utils.TicEXTaczUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
 public class ResonanceToolProjectileRenderer extends ItemArrowRenderer {
@@ -36,20 +32,8 @@ public class ResonanceToolProjectileRenderer extends ItemArrowRenderer {
 
         ItemStack toolStack = pEntity.getItem();
 
-        boolean isNormalRender = true;
-        if(ModList.get().isLoaded("slashblade")){
-            isNormalRender = !TicEXSBRenderers.renderBladeTool(toolStack, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
-        }
+        TicEXRenderUtils.renderTool(entityRenderDispatcher, itemRenderer, toolStack, pPoseStack, pBuffer, pEntity, pPackedLight);
 
-        if(ModList.get().isLoaded("tacz")){
-            isNormalRender = isNormalRender && !TicEXTaczUtils.renderGunTool(itemRenderer,toolStack, pPoseStack, pBuffer, pEntity, pPackedLight);
-        }
-
-        if(isNormalRender){
-
-            itemRenderer.renderStatic(toolStack, ItemDisplayContext.GROUND, pPackedLight, OverlayTexture.NO_OVERLAY, pPoseStack, pBuffer, pEntity.level(), pEntity.getId());
-
-        }
         pPoseStack.popPose();
     }
 }

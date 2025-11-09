@@ -1,23 +1,21 @@
-package moffy.ticex.client.modules.curios;
+package moffy.ticex.client.render.curios;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import moffy.ticex.client.render.slashblade.TicEXSBRenderers;
-import moffy.ticex.lib.utils.TicEXTaczUtils;
+import moffy.ticex.client.render.ticex.TicEXRenderUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,12 +26,14 @@ public class LayerResonanceTools<T extends LivingEntity, M extends EntityModel<T
 
     public static final float RADIUS = 1.4f;
     protected ItemRenderer itemRenderer;
+    protected EntityRenderDispatcher entityRenderDispatcher;
     @Nullable
     private ICuriosItemHandler curiosInventory = null;
 
     public LayerResonanceTools(RenderLayerParent<T, M> pRenderer) {
         super(pRenderer);
-        itemRenderer = Minecraft.getInstance().getItemRenderer();
+        this.itemRenderer = Minecraft.getInstance().getItemRenderer();
+        this.entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
     }
 
     @Override
@@ -70,7 +70,6 @@ public class LayerResonanceTools<T extends LivingEntity, M extends EntityModel<T
                 continue;
             }
 
-            boolean isNormalRender = true;
             pPoseStack.pushPose();
 
             float time = pLivingEntity.tickCount + pPartialTick;
@@ -80,25 +79,12 @@ public class LayerResonanceTools<T extends LivingEntity, M extends EntityModel<T
             double x = RADIUS * Math.cos(rotationAngle);
             double z = RADIUS * Math.sin(rotationAngle);
 
-            pPoseStack.translate(x, 1.25f, 0.5 + z);
-            pPoseStack.mulPose(Axis.ZP.rotationDegrees(45));
-            pPoseStack.translate(-0.5, -0.5, -0.5);
+            pPoseStack.translate(x, 0.25f, z);
+            pPoseStack.mulPose(Axis.ZP.rotation(-Mth.PI*0.5f));
 
             pPoseStack.scale(1.5f, 1.5f, 1.5f);
 
-            if(ModList.get().isLoaded("slashblade")){
-                isNormalRender = !TicEXSBRenderers.renderBladeTool(toolStack, pPartialTick, pPoseStack, pBuffer, pPackedLight);
-            }
-
-            if(ModList.get().isLoaded("tacz")){
-                isNormalRender = isNormalRender && !TicEXTaczUtils.renderGunTool(itemRenderer,toolStack, pPoseStack, pBuffer, pLivingEntity, pPackedLight);
-            }
-
-            if(isNormalRender){
-
-                itemRenderer.renderStatic(toolStack, ItemDisplayContext.GROUND, pPackedLight, OverlayTexture.NO_OVERLAY, pPoseStack, pBuffer, pLivingEntity.level(), pLivingEntity.getId());
-
-            }
+            TicEXRenderUtils.renderTool(entityRenderDispatcher, itemRenderer, toolStack, pPoseStack, pBuffer, pLivingEntity, pPackedLight);
 
             pPoseStack.popPose();
         }
