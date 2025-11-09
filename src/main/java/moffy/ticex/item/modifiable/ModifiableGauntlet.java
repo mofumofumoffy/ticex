@@ -30,7 +30,7 @@ public class ModifiableGauntlet extends ModifiableItem {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level levelIn, Player playerIn, @NotNull InteractionHand handIn) {
-        if (playerIn.isCrouching()) {
+        if (playerIn.isShiftKeyDown()) {
             ItemStack stack = playerIn.getItemInHand(handIn);
             InteractionResult result = UnsyncedToolContainerMenu.tryOpenContainer(stack, null, getToolDefinition(), playerIn, Util.getSlotType(handIn));
             if (result.consumesAction()) {
