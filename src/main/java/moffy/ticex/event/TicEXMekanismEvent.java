@@ -153,9 +153,11 @@ public class TicEXMekanismEvent {
     @SubscribeEvent
     public void onLivingJump(LivingJumpEvent event) {
         if (event.getEntity() instanceof Player player) {
+            if (player.getAbilities().flying) return;
+
             IModule<ModuleHydraulicPropulsionUnit> module = IModuleHelper.INSTANCE.load(
-                player.getItemBySlot(EquipmentSlot.FEET),
-                MekanismModules.HYDRAULIC_PROPULSION_UNIT
+                    player.getItemBySlot(EquipmentSlot.FEET),
+                    MekanismModules.HYDRAULIC_PROPULSION_UNIT
             );
             if (module != null && module.isEnabled() && Mekanism.keyMap.has(player.getUUID(), KeySync.BOOST)) {
                 float boost = module.getCustomInstance().getBoost();
