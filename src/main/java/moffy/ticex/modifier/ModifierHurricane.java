@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 import moffy.ticex.TicEX;
+import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -44,6 +45,7 @@ public class ModifierHurricane
     private static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("A4334312-DFF8-4582-9F4F-62AD0C070475");
 
     private static final UUID STEP_ASSIST_MODIFIER_UUID = UUID.fromString("4726C09D-FD86-46D0-92DD-49ED952A12D2");
+    public static final UUID ATTRIBUTE_MODIFIER_UUID = UUID.fromString("39377487-3632-4a51-9128-6c211265b7c5");
     private static final AttributeModifier STEP_ASSIST = new AttributeModifier(
         STEP_ASSIST_MODIFIER_UUID,
         "Step Assist",
@@ -167,6 +169,7 @@ public class ModifierHurricane
                 new AttributeModifier(MOVEMENT_SPEED_MODIFIER_UUID, "Armor modifier", 1.0, Operation.MULTIPLY_TOTAL)
             );
         }
+        modifierGetter.accept(TicEXRegistry.DAMAGE_TAKEN.get(), new AttributeModifier(ATTRIBUTE_MODIFIER_UUID, "gem_modifier", -0.2f, AttributeModifier.Operation.ADDITION));
     }
 
     @Override
