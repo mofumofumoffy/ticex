@@ -1,9 +1,7 @@
-package moffy.ticex.client.modules.slashblade;
+package moffy.ticex.client.render.slashblade;
 
-import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
 import moffy.ticex.TicEX;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -12,24 +10,6 @@ import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import java.util.Optional;
 
 public class SBToolRenderType {
-
-    public static SBToolRenderType instance = null;
-
-    public static void init() {
-        instance = new SBToolRenderType();
-    }
-
-    public RenderType getSlashBladeBlend(MaterialVariantId material, PartType partType, Runnable whenIsDefault) {
-        return BladeRenderState.getSlashBladeBlend(partType.tryTexture(material, whenIsDefault));
-    }
-
-    public RenderType getSlashBladeLuminousBlend(
-            MaterialVariantId material,
-            PartType partType,
-            Runnable whenIsDefault
-    ) {
-        return BladeRenderState.getSlashBladeBlendLuminous(partType.tryTexture(material, whenIsDefault));
-    }
 
     public enum PartType {
         BLADE(0, "blade"),
@@ -54,16 +34,12 @@ public class SBToolRenderType {
         }
 
         public static PartType byIndex(int layerIndex) {
-            switch (layerIndex) {
-                case 0:
-                    return BLADE;
-                case 2:
-                    return HANDLE;
-                case 1:
-                    return SAYA;
-                default:
-                    return null;
-            }
+            return switch (layerIndex) {
+                case 0 -> BLADE;
+                case 2 -> HANDLE;
+                case 1 -> SAYA;
+                default -> null;
+            };
         }
 
         public int getIndex() {

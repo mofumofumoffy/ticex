@@ -7,7 +7,7 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ReachModifier;
 import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.modules.slashblade.SBToolISTER;
+import moffy.ticex.client.render.slashblade.SBToolISTER;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.Minecraft;
@@ -19,7 +19,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -46,7 +49,10 @@ import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.AttributesModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.EnchantmentModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.DurabilityDisplayModifierHook;
-import slimeknights.tconstruct.library.modifiers.hook.interaction.*;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.GeneralInteractionModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.InteractionSource;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.SlotStackModifierHook;
 import slimeknights.tconstruct.library.tools.IndestructibleItemEntity;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.capability.inventory.ToolInventoryCapability;
@@ -71,6 +77,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+@SuppressWarnings("NullableProblems")
 public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifiableDisplay {
 
     protected static final UUID ATTACK_DAMAGE_AMPLIFIER = UUID.fromString("2D988C13-595B-4E58-B254-39BB6FA077FD");
@@ -592,12 +599,11 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
         if (!(entity instanceof SBToolItemEntity)) {
             Level world = entity.level();
             SBToolItemEntity e = new SBToolItemEntity(
-                (EntityType<SBToolItemEntity>) TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
+                    TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
                 world
             );
             e.restoreFrom(entity);

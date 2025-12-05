@@ -1,4 +1,4 @@
-package moffy.ticex.client.modules.avaritia;
+package moffy.ticex.client.render.avaritia;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import moffy.ticex.client.render.provider.context.ItemRenderContext;
@@ -94,6 +94,10 @@ public class TicEXCosmicShaderProvider {
         }
     }
 
+    public static TicEXCosmicShader getShader() {
+        return shader;
+    }
+
     public static class Generic extends ShaderProvider.Generic {
 
         @Override
@@ -103,8 +107,7 @@ public class TicEXCosmicShaderProvider {
             shader.setupUniform(context.atlasLocation(), context.onGui());
 
             renderer.render(
-                    context.renderContext(),
-                    vertexConsumer,
+                    vertexConsumer, context.renderContext(),
                     1.0f, 1.0f, 1.0f, 1.0f
             );
         }

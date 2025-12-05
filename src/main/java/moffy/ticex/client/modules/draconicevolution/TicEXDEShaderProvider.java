@@ -236,8 +236,7 @@ public class TicEXDEShaderProvider {
             shader.setupUniforms(techLevel, context.onGui() ? 0.1f : 1.0f);
 
             renderer.render(
-                    context.renderContext(),
-                    buffer
+                    buffer, context.renderContext()
             );
         }
 

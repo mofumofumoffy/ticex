@@ -2,11 +2,10 @@ package moffy.ticex.modules.avaritia;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.modules.avaritia.TicEXCosmicShaderProvider;
+import moffy.ticex.client.render.avaritia.TicEXCosmicShaderProvider;
 import moffy.ticex.client.render.custom.PartPredicate;
 import moffy.ticex.client.render.ticex.ItemArrowRenderer;
 import moffy.ticex.client.render.ticex.TicEXRenders;
-import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.event.TicEXAvaritiaEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -124,12 +123,11 @@ public class TicEXAvaritiaModule implements AddonModule {
         bus.addListener(TicEXAvaritiaEvent::onRegisterRenderers);
     }
 
-    @SuppressWarnings("unchecked")
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            EntityRenderers.register((EntityType<ItemArrow>)TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), context -> new ItemArrowRenderer(context, 1));
+            EntityRenderers.register(TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), context -> new ItemArrowRenderer(context, 1));
         });
     }
 }
