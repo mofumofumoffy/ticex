@@ -23,6 +23,7 @@ public class LayerMainBladeMixin {
     private void renderWith(ISlashBladeState s, LivingEntity entity, float partialTicks, PoseStack matrixStack, float motionYOffset, double motionScale, double modelScaleBase, ItemStack stack, MultiBufferSource bufferIn, int lightIn, MmdMotionPlayerGL2 mmp, Operation<Void> original) {
         if(!(stack.getItem() instanceof IModifiable)) {
             original.call(s, entity, partialTicks, matrixStack, motionYOffset, motionScale, modelScaleBase, stack, bufferIn, lightIn, mmp);
+            return;
         }
 
         ItemRenderContext itemRenderContext = new ItemRenderContext(

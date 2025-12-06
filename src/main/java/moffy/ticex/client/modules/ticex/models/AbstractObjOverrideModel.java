@@ -1,6 +1,10 @@
 package moffy.ticex.client.modules.ticex.models;
 
 import com.mojang.math.Transformation;
+import moffy.ticex.mixin.ObjModel$ModelGroupAccessor;
+import moffy.ticex.mixin.ObjModel$ModelMeshAccessor;
+import moffy.ticex.mixin.ObjModel$ModelObjectAccessor;
+import moffy.ticex.mixin.ObjModelAccessor;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -40,7 +44,7 @@ public abstract class AbstractObjOverrideModel<MODEL extends AbstractObjOverride
     }
 
     protected void addQuads(ObjModel objModel, IGeometryBakingContext owner, IModelBuilder<?> modelBuilder, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ObjQuadWrapper quadWrapper) {
-        objModel.parts.values().stream()
+        ((ObjModelAccessor)objModel).getParts().values().stream()
                 .filter((part) ->
                         owner.isComponentVisible(part.name(), true))
                 .forEach((part) ->
@@ -48,7 +52,7 @@ public abstract class AbstractObjOverrideModel<MODEL extends AbstractObjOverride
     }
 
     protected void addGroupQuads(ObjModel.ModelGroup modelGroup, IGeometryBakingContext owner, IModelBuilder<?> modelBuilder, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ObjQuadWrapper quadWrapper) {
-        Map<String, ObjModel.ModelObject> parts = modelGroup.parts;
+        Map<String, ObjModel.ModelObject> parts = ((ObjModel$ModelGroupAccessor)modelGroup).getParts();
 
         addPartQuads(modelGroup, modelGroup, owner, modelBuilder, spriteGetter, modelState, quadWrapper);
 
@@ -58,8 +62,10 @@ public abstract class AbstractObjOverrideModel<MODEL extends AbstractObjOverride
     }
 
     public void addPartQuads(ObjModel.ModelObject partObject, ObjModel.ModelGroup modelGroup, IGeometryBakingContext owner, IModelBuilder<?> modelBuilder, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ObjQuadWrapper quadWrapper) {
-        for (var mesh : partObject.meshes) {
-            ObjMaterialLibrary.Material mat = mesh.mat;
+        ObjModel$ModelObjectAccessor accessor = (ObjModel$ModelObjectAccessor) partObject;
+        for (var mesh : accessor.getMeshes()) {
+            ObjModel$ModelMeshAccessor meshAccess = (ObjModel$ModelMeshAccessor) mesh;
+            ObjMaterialLibrary.Material mat = meshAccess.getMaterial();
             if (mat == null) {
                 continue;
             }
@@ -70,8 +76,8 @@ public abstract class AbstractObjOverrideModel<MODEL extends AbstractObjOverride
             Transformation rootTransform = owner.getRootTransform();
             Transformation transform = rootTransform.isIdentity() ? modelTransform.getRotation() : modelTransform.getRotation().compose(rootTransform);
 
-            for (int[][] face : mesh.faces) {
-                Pair<BakedQuad, Direction> quad = objModel.makeQuad(face, tintIndex, colorTint, mat.ambientColor, texture, transform);
+            for (int[][] face : meshAccess.getFaces()) {
+                Pair<BakedQuad, Direction> quad = ((ObjModelAccessor)objModel).invokeMakeQuad(face, tintIndex, colorTint, mat.ambientColor, texture, transform);
                 if (quad.getRight() == null) {
                     modelBuilder.addUnculledFace(quadWrapper.apply(quad.getLeft(), modelGroup, partObject));
                 } else {
