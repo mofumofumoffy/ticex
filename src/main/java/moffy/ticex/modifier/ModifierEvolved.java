@@ -254,7 +254,19 @@ public class ModifierEvolved
                 }
 
                 int extracted = opStorage.extractEnergy((int) (EquipCfg.energyAttack * damage), false);
-                ToolAttackUtil.extraEntityAttack(tool, player, context.getHand(), entity);
+
+                ToolAttackContext.Builder aoeContextBuilder = ToolAttackContext.attacker(context.getAttacker())
+                        .target(context.getTarget())
+                        .slot(context.getSlotType(), context.getHand())
+                        .cooldown(context.getCooldown())
+                        .projectile(context.getProjectile())
+                        .baseDamage(context.getBaseDamage())
+                        .baseKnockback(context.getBaseKnockback())
+                        .sound(context.getSound());
+                if(context.isExtraAttack()) aoeContextBuilder.extraAttack();
+
+                ToolAttackUtil.performAttack(tool, aoeContextBuilder.build().withAOETarget(entity));
+
                 if (hurt(player, entity, stack, Math.min(extracted, (int) damage))) {
                     float damageDealt = health - entity.getHealth();
                     entity.knockback(
@@ -428,7 +440,7 @@ public class ModifierEvolved
                         Component.translatable("item_prop.draconicevolution.aoe_safe.blocked")
                     );
                     else ((ServerPlayer) player).connection.send(
-                            new ClientboundBlockUpdatePacket(((ServerPlayer) player).level(), block)
+                            new ClientboundBlockUpdatePacket(player.level(), block)
                         );
                     return true;
                 }

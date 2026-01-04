@@ -1,12 +1,8 @@
 package moffy.ticex.lib.recipe;
 
-import java.util.List;
-import java.util.stream.IntStream;
-
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -30,6 +26,9 @@ import slimeknights.tconstruct.library.tools.nbt.MaterialNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.part.IMaterialItem;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 public class EmbossmentBuildingRecipe extends ToolBuildingRecipe {
 
     public static final RecordLoadable<EmbossmentBuildingRecipe> LOADER = RecordLoadable.create(
@@ -50,7 +49,7 @@ public class EmbossmentBuildingRecipe extends ToolBuildingRecipe {
         ResourceLocation layoutSlot,
         List<Ingredient> ingredients
     ) {
-        super(id, group, output, outputCount, layoutSlot, ingredients);
+        super(id, group, output, outputCount, layoutSlot, ingredients, null, List.of());
     }
 
     @Override
