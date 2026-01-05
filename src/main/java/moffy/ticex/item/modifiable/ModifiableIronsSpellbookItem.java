@@ -1,13 +1,8 @@
 package moffy.ticex.item.modifiable;
 
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.item.SpellBook;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -36,13 +31,17 @@ import slimeknights.tconstruct.library.modifiers.modules.build.RarityModule;
 import slimeknights.tconstruct.library.tools.IndestructibleItemEntity;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
+import slimeknights.tconstruct.library.tools.definition.module.display.ToolNameHook;
 import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
 import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
 import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
-import top.theillusivec4.curios.api.SlotContext;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Map;
 
 public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiableDisplay {
 
@@ -181,18 +180,18 @@ public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiab
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, List<Component> tooltip, @NotNull TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
         TooltipUtil.addInformation(this, stack, level, tooltip, SafeClientAccess.getTooltipKey(), flag);
     }
 
     @Override
-    public int getDefaultTooltipHideFlags(ItemStack stack) {
+    public int getDefaultTooltipHideFlags(@NotNull ItemStack stack) {
         return TooltipUtil.getModifierHideFlags(getToolDefinition());
     }
 
     @Override
-    public Component getName(ItemStack stack) {
-        return TooltipUtil.getDisplayName(stack, toolDefinition);
+    public @NotNull Component getName(@NotNull ItemStack stack) {
+        return ToolNameHook.getName(toolDefinition, stack);
     }
 }

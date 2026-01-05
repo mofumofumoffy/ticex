@@ -10,12 +10,11 @@ package moffy.ticex.event;
 
 import com.tacz.guns.api.event.common.EntityHurtByGunEvent;
 import com.tacz.guns.api.event.common.GunMeleeEvent;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.mixin.CriticalAccessor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -30,8 +29,11 @@ public class TicEXTaczEvent {
     public static void onBeforeHit(EntityHurtByGunEvent.Pre event) {
         LivingEntity attacker = event.getAttacker();
         Entity target = event.getHurtEntity();
+        if(attacker == null) return;
+        if(target == null) return;
+
         ItemStack mainHandStack = attacker.getMainHandItem();
-        if (mainHandStack != null && mainHandStack.getItem() instanceof IModifiable) {
+        if (mainHandStack.getItem() instanceof IModifiable) {
             ToolStack tool = ToolStack.from(mainHandStack);
             float originalDamage = event.getAmount();
             float attackDamageStat = tool.getStats().get(ToolStats.ATTACK_DAMAGE);
@@ -39,7 +41,11 @@ public class TicEXTaczEvent {
             float initialDamage = (float) Math.sqrt(originalDamage*originalDamage + attackDamageStat*attackDamageStat);
 
             float damage = initialDamage;
-            ToolAttackContext context = new ToolAttackContext(attacker, attacker instanceof Player ? (Player)attacker : null, InteractionHand.MAIN_HAND, target, target instanceof LivingEntity ? (LivingEntity)target : null, event.isHeadShot(), 1, false);
+            ToolAttackContext context = ToolAttackContext.attacker(attacker)
+                    .hand(InteractionHand.MAIN_HAND)
+                    .target(target)
+                    .build();
+            ((CriticalAccessor)context).setCriticalModifier(event.isHeadShot() ? event.getHeadshotMultiplier() : 0);
 
             /* int lostStability = 10;
             for(ModifierEntry modifier : shader.getModifierList()){
@@ -62,20 +68,19 @@ public class TicEXTaczEvent {
 
     public static void onAfterHit(EntityHurtByGunEvent.Post event) {
         LivingEntity attacker = event.getAttacker();
+        if(attacker == null) return;
+
         Entity target = event.getHurtEntity();
         ItemStack mainHandStack = attacker.getMainHandItem();
-        if (mainHandStack != null && target != null && mainHandStack.getItem() instanceof IModifiable) {
+        if (target != null && mainHandStack.getItem() instanceof IModifiable) {
             ToolStack tool = ToolStack.from(mainHandStack);
-            ToolAttackContext context = new ToolAttackContext(
-                attacker,
-                attacker instanceof Player ? (Player) attacker : null,
-                InteractionHand.MAIN_HAND,
-                target,
-                target instanceof LivingEntity ? (LivingEntity) target : null,
-                event.isHeadShot(),
-                0,
-                false
-            );
+            ToolAttackContext context = ToolAttackContext.attacker(attacker)
+                    .hand(InteractionHand.MAIN_HAND)
+                    .target(target)
+                    .build();
+            ((CriticalAccessor)context).setCriticalModifier(event.isHeadShot() ? event.getHeadshotMultiplier() : 0);
+
+
             for (ModifierEntry modifier : tool.getModifierList()) {
                 modifier.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, modifier, context, event.getAmount());
             }
@@ -90,16 +95,11 @@ public class TicEXTaczEvent {
         ItemStack gunStack = event.getGunItemStack();
         if (gunStack != null && target != null && gunStack.getItem() instanceof IModifiable) {
             ToolStack tool = ToolStack.from(gunStack);
-            ToolAttackContext context = new ToolAttackContext(
-                attacker,
-                attacker instanceof Player ? (Player) attacker : null,
-                InteractionHand.MAIN_HAND,
-                target,
-                target instanceof LivingEntity ? (LivingEntity) target : null,
-                false,
-                0,
-                false
-            );
+            ToolAttackContext context = ToolAttackContext.attacker(attacker)
+                    .hand(InteractionHand.MAIN_HAND)
+                    .target(target)
+                    .build();
+
             if (!tool.isBroken()) {
                 for (ModifierEntry modifier : tool.getModifierList()) {
                     modifier.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifier, context, 3, 0, 0);

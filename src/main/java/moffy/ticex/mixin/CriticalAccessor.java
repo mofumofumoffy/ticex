@@ -7,7 +7,8 @@ import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 
 @Mixin(value = ToolAttackContext.class, remap = false)
 public interface CriticalAccessor {
+
     @Mutable
-    @Accessor("isCritical")
-    void setCritical(boolean critical);
+    @Accessor("criticalModifier")
+    void setCriticalModifier(float criticalModifier);
 }

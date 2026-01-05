@@ -10,8 +10,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
+import slimeknights.mantle.data.predicate.IJsonPredicate;
 import slimeknights.mantle.recipe.data.AbstractRecipeBuilder;
 import slimeknights.mantle.recipe.helper.TypeAwareRecipeSerializer;
+import slimeknights.tconstruct.library.json.predicate.material.MaterialPredicate;
+import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import slimeknights.tconstruct.library.recipe.casting.material.AbstractMaterialCastingRecipe;
 import slimeknights.tconstruct.library.tools.part.IMaterialItem;
 
@@ -24,6 +27,7 @@ public class EmbossmentCastingRecipeBuilder extends AbstractRecipeBuilder<Emboss
     private final TypeAwareRecipeSerializer<? extends AbstractMaterialCastingRecipe> recipeSerializer;
     private Ingredient cast;
     private int itemCost;
+    private IJsonPredicate<MaterialVariantId> allowedMaterials = MaterialPredicate.ANY;
     private boolean consumed;
     private boolean switchSlots;
 
@@ -39,6 +43,10 @@ public class EmbossmentCastingRecipeBuilder extends AbstractRecipeBuilder<Emboss
         this.cast = cast;
         this.consumed = consumed;
         return this;
+    }
+
+    public void setAllowedMaterials(IJsonPredicate<MaterialVariantId> allowedMaterials) {
+        this.allowedMaterials = allowedMaterials;
     }
 
     public EmbossmentCastingRecipeBuilder setSwitchSlots() {
@@ -61,7 +69,7 @@ public class EmbossmentCastingRecipeBuilder extends AbstractRecipeBuilder<Emboss
         } else {
             ResourceLocation advancementId = this.buildOptionalAdvancement(id, "casting");
             consumer.accept(new LoadableFinishedRecipe<>(
-                    new EmbossmentCastingRecipe(this.recipeSerializer, id, this.group, this.cast, this.itemCost, this.result, this.consumed, this.switchSlots),
+                    new EmbossmentCastingRecipe(this.recipeSerializer, id, this.group, this.cast, this.itemCost, this.result, this.allowedMaterials, this.consumed, this.switchSlots),
                     EmbossmentCastingRecipe.LOADER, advancementId));
 
         }

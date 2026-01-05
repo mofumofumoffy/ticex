@@ -1,6 +1,5 @@
 package moffy.ticex.event;
 
-import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -29,16 +28,11 @@ public class TicEXIronsEvent {
                 IToolStackView book = ToolStack.from(bookStack);
 
                 if (book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0) {
-                    ToolAttackContext context = new ToolAttackContext(
-                        player,
-                        player,
-                        InteractionHand.MAIN_HAND,
-                        target,
-                        target,
-                        false,
-                        1,
-                        false
-                    );
+                    ToolAttackContext context = ToolAttackContext.attacker(player)
+                            .hand(InteractionHand.MAIN_HAND)
+                            .target(target)
+                            .cooldown(1)
+                            .build();
 
                     float originalDamage = event.getAmount();
                     float attackDamageStat = book.getStats().get(ToolStats.ATTACK_DAMAGE);

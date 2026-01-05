@@ -5,10 +5,10 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import mods.flammpfeil.slashblade.util.AttackHelper;
+import moffy.ticex.mixin.CriticalAccessor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,14 +27,14 @@ public abstract class PlayerAttackHelperMixin {
     private static void setContext(LivingEntity attacker, Entity target, float comboRatio, CallbackInfo ci,
                                    @Local boolean isCritical,
                                    @Share(value = "context") LocalRef<ToolAttackContext> contextRef) {
-        contextRef.set(new ToolAttackContext(
-                attacker, attacker instanceof Player player ? player : null,
-                InteractionHand.MAIN_HAND,
-                target, target instanceof LivingEntity livingEntity ? livingEntity : null,
-                isCritical,
-                1,
-                false
-        ));
+        ToolAttackContext context = ToolAttackContext.attacker(attacker)
+                .hand(InteractionHand.MAIN_HAND)
+                .target(target)
+                .cooldown(1)
+                .build();
+        ((CriticalAccessor)context).setCriticalModifier(isCritical ? 1.5F : 1.0F);
+        contextRef.set(context);
+
     }
 
     @ModifyExpressionValue(method = "attack", at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/util/AttackHelper;calculateTotalDamage(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;FZ)D"))

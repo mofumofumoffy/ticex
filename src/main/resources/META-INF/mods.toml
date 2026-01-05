@@ -83,7 +83,7 @@ side="BOTH"
 [[dependencies."${mod_id}"]]
 modId="tconstruct"
 mandatory=true
-versionRange="[3.10.2.92,)"
+versionRange="[3.11.0.148,)"
 ordering="AFTER"
 side="BOTH"
 

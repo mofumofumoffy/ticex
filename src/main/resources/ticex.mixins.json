@@ -9,7 +9,6 @@
     "MaterialCastingLookupMixin",
     "MeleeAttributeModuleMixin",
     "RomanNumeralHelperMixin",
-    "TrimArmorTextureSupplierMixin",
     "config.AbstractCastingRecipeAccessor",
     "config.AbstractCastingRecipeMixin",
     "config.AbstractModifierRecipeAccessor",
@@ -23,7 +22,8 @@
     "ItemRendererMixin",
     "MaterialArmorTextureSupplierMixin",
     "NormalModifierModelMixin",
-    "ToolModelMixin"
+    "ToolModelMixin",
+    "TrimArmorTextureSupplierMixin"
   ],
   "server": [],
   "injectors": {
