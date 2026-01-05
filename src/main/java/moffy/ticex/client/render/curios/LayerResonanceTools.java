@@ -18,17 +18,18 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LayerResonanceTools<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
     public static final float RADIUS = 1.4f;
     protected ItemRenderer itemRenderer;
     protected EntityRenderDispatcher entityRenderDispatcher;
-    @Nullable
-    private ICuriosItemHandler curiosInventory = null;
+    private final Map<LivingEntity, ICuriosItemHandler> curiosInventoryCache = new HashMap<>();
 
     public LayerResonanceTools(RenderLayerParent<T, M> pRenderer) {
         super(pRenderer);
@@ -41,13 +42,17 @@ public class LayerResonanceTools<T extends LivingEntity, M extends EntityModel<T
                        float pLimbSwing, float pLimbSwingAmount, float pPartialTick, float pAgeInTicks, float pNetHeadYaw,
                        float pHeadPitch) {
 
-        if(curiosInventory == null) {
+        if(!curiosInventoryCache.containsKey(pLivingEntity)) {
             LazyOptional<ICuriosItemHandler> cap = CuriosApi.getCuriosInventory(pLivingEntity);
-            curiosInventory = cap.isPresent() ? cap.orElseThrow(IllegalStateException::new) : null;
+            if(cap.isPresent()) {
+                curiosInventoryCache.put(pLivingEntity, cap.orElseThrow(IllegalStateException::new));
+            }
         }
 
-        if(curiosInventory != null) {
-            curiosInventory.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).ifPresent(slotResult -> {
+        if(curiosInventoryCache.containsKey(pLivingEntity)) {
+            ICuriosItemHandler curios = curiosInventoryCache.get(pLivingEntity);
+
+            curios.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).ifPresent(slotResult -> {
                 ItemStack stack = slotResult.stack();
                 stack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(itemHandler -> {
                     renderTools(pPoseStack, pBuffer, pPackedLight, pLivingEntity, pPartialTick, itemHandler);
