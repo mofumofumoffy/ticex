@@ -1,0 +1,16 @@
+{
+  "loader": "tconstruct:tool",
+  "parent": "forge:item/default",
+  "textures": {
+    "plating": "ticex:item/tool/armor/singular_gem/helmet/plating",
+    "maille": "ticex:item/tool/armor/singular_gem/helmet/maille",
+    "singular_gem": "ticex:item/tool/armor/singular_gem/helmet/gem"
+  },
+  "modifier_roots": ["tconstruct:item/tool/armor/plate/helmet/modifiers/"],
+  "first_modifiers": ["tconstruct:trim"],
+  "parts": [
+    { "name": "plating", "index": 0 },
+    { "name": "maille", "index": 1 },
+    { "name": "singular_gem", "index": 2 }
+  ]
+}

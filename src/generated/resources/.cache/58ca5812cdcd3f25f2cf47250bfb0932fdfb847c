@@ -1,0 +1,10 @@
+// 1.20.1	2025-11-01T15:37:08.0035877	TiCEX Modifier Tags
+5fb4a1facdc78a4b972e16c7534584e3a6c38ad0 data/tconstruct/tinkering/tags/modifiers/abilities.json
+131fed0cd2896dac35074a5b07e184368ed4b479 data/tconstruct/tinkering/tags/modifiers/defense.json
+10e1a3bd5860ddde4af7ad5948ca3f96e281dcb3 data/tconstruct/tinkering/tags/modifiers/extract_blacklist/slotless.json
+10e1a3bd5860ddde4af7ad5948ca3f96e281dcb3 data/tconstruct/tinkering/tags/modifiers/extract_blacklist/tools.json
+cc4085743976cb98885d0b5466650d35730b3668 data/tconstruct/tinkering/tags/modifiers/slotless/bonus.json
+66398782777d89ecb971bd85195ec7f42ae60927 data/tconstruct/tinkering/tags/modifiers/upgrades/general.json
+cf4174aeccaa09a971d510fe917d4e04111348fd data/ticex/tinkering/tags/modifiers/rebirth.json
+903b40a068e82c3c24cef705744a0752f630aed1 data/ticex/tinkering/tags/modifiers/rebirth_based.json
+10e1a3bd5860ddde4af7ad5948ca3f96e281dcb3 data/ticex/tinkering/tags/modifiers/removal_blacklist.json

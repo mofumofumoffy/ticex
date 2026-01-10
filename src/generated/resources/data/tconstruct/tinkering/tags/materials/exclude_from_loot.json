@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "ticex:infinity",
+      "required": false
+    },
+    {
+      "id": "ticex:etheric",
+      "required": false
+    }
+  ]
+}

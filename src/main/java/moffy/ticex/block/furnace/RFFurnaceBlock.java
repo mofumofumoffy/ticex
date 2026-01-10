@@ -1,0 +1,89 @@
+package moffy.ticex.block.furnace;
+
+import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
+import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fluids.FluidType;
+import org.jetbrains.annotations.NotNull;
+import slimeknights.tconstruct.smeltery.block.component.OrientableSmelteryBlock;
+import slimeknights.tconstruct.smeltery.block.component.SearedTankBlock;
+
+import javax.annotation.Nullable;
+
+public class RFFurnaceBlock extends SearedTankBlock {
+
+    private final boolean isCreative;
+
+    public RFFurnaceBlock(Properties pProperties, boolean isCreative) {
+        super(pProperties, FluidType.BUCKET_VOLUME, PushReaction.DESTROY);
+        this.isCreative = isCreative;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
+        return new RFFurnaceBlockEntity(TicEXRegistry.RF_FURNACE_ENTITY.get(), pPos, pState, isCreative);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        return super.getShape(pState, pLevel, pPos, pContext);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            @NotNull Level pLevel,
+            @NotNull BlockState pState,
+            @NotNull BlockEntityType<T> pBlockEntityType
+    ) {
+        if (pBlockEntityType == TicEXRegistry.RF_FURNACE_ENTITY.get() && !pLevel.isClientSide()) {
+            return (Level level, BlockPos pos, BlockState state, T pBlockEntity) ->
+                RFFurnaceBlockEntity.serverTick(level, pos, state, (RFFurnaceBlockEntity) pBlockEntity);
+        }
+        return null;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(OrientableSmelteryBlock.FACING);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState()
+            .setValue(OrientableSmelteryBlock.FACING, context.getHorizontalDirection().getOpposite());
+    }
+
+    @Deprecated
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(
+            OrientableSmelteryBlock.FACING,
+            rotation.rotate(state.getValue(OrientableSmelteryBlock.FACING))
+        );
+    }
+
+    @Deprecated
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return state.setValue(
+            OrientableSmelteryBlock.FACING,
+            mirror.mirror(state.getValue(OrientableSmelteryBlock.FACING))
+        );
+    }
+}

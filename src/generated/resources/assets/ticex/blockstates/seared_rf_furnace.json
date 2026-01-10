@@ -1,0 +1,484 @@
+{
+  "variants": {
+    "facing=east,in_structure=false,light=0": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=1": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=10": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=11": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=12": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=13": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=14": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=15": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=2": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=3": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=4": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=5": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=6": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=7": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=8": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=false,light=9": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=0": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=1": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=10": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=11": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=12": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=13": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=14": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=15": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=2": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=3": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=4": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=5": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=6": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=7": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=8": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=east,in_structure=true,light=9": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 90
+    },
+    "facing=north,in_structure=false,light=0": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=1": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=10": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=11": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=12": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=13": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=14": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=15": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=2": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=3": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=4": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=5": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=6": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=7": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=8": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=false,light=9": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive"
+    },
+    "facing=north,in_structure=true,light=0": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=1": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=10": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=11": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=12": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=13": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=14": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=15": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=2": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=3": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=4": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=5": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=6": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=7": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=8": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=north,in_structure=true,light=9": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active"
+    },
+    "facing=south,in_structure=false,light=0": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=1": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=10": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=11": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=12": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=13": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=14": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=15": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=2": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=3": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=4": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=5": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=6": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=7": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=8": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=false,light=9": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=0": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=1": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=10": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=11": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=12": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=13": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=14": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=15": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=2": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=3": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=4": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=5": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=6": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=7": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=8": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=south,in_structure=true,light=9": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 180
+    },
+    "facing=west,in_structure=false,light=0": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=1": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=10": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=11": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=12": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=13": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=14": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=15": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=2": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=3": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=4": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=5": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=6": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=7": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=8": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=false,light=9": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_inactive",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=0": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=1": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=10": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=11": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=12": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=13": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=14": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=15": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=2": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=3": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=4": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=5": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=6": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=7": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=8": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    },
+    "facing=west,in_structure=true,light=9": {
+      "model": "ticex:block/smeltery/seared_rf_furnace_active",
+      "y": 270
+    }
+  }
+}

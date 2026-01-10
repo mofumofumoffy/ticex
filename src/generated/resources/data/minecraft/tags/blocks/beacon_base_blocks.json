@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "avaritia:infinity",
+      "required": false
+    },
+    {
+      "id": "avaritia:neutron",
+      "required": false
+    },
+    {
+      "id": "avaritia:crystal_matrix",
+      "required": false
+    },
+    {
+      "id": "ticex:etheric_block",
+      "required": false
+    }
+  ]
+}

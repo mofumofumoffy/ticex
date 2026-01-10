@@ -1,0 +1,13 @@
+{
+  "loader": "tconstruct:tool",
+  "parent": "forge:item/default-tool",
+  "textures": {
+    "plate": "ticex:item/tool/revival_spellbook/large_plate",
+    "binding": "ticex:item/tool/revival_spellbook/tool_binding"
+  },
+  "modifier_roots": ["tconstruct:item/tool/rivival_spellbook/modifiers/"],
+  "parts": [
+    { "name": "plate", "index": 0 },
+    { "name": "binding", "index": 1 }
+  ]
+}

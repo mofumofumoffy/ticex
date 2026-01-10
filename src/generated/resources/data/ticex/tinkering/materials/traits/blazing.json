@@ -1,0 +1,16 @@
+{
+  "default": [
+    {
+      "level": 1,
+      "name": "ticex:skullfire"
+    },
+    {
+      "level": 1,
+      "name": "ticex:blazing_flame"
+    },
+    {
+      "level": 1,
+      "name": "ticex:blazing_fortune"
+    }
+  ]
+}

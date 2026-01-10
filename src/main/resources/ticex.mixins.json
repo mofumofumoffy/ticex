@@ -1,0 +1,33 @@
+{
+  "required": true,
+  "package": "moffy.ticex.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ticex.refmap.json",
+  "mixins": [
+    "CriticalAccessor",
+    "DataItemAccessor",
+    "MaterialCastingLookupMixin",
+    "MeleeAttributeModuleMixin",
+    "RomanNumeralHelperMixin",
+    "config.AbstractCastingRecipeAccessor",
+    "config.AbstractCastingRecipeMixin",
+    "config.AbstractModifierRecipeAccessor",
+    "config.AbstractModifierRecipeMixin",
+    "config.MeltingFuelAccessor",
+    "config.MeltingFuelMixin",
+    "config.ToolDefinitionLoaderMixin"
+  ],
+  "client": [
+    "HumanoidArmorLayerMixin",
+    "ItemRendererMixin",
+    "MaterialArmorTextureSupplierMixin",
+    "NormalModifierModelMixin",
+    "ToolModelMixin",
+    "TrimArmorTextureSupplierMixin"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.7"
+}

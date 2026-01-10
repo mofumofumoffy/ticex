@@ -1,0 +1,20 @@
+{
+  "type": "botania:mana_infusion",
+  "catalyst": {
+    "type": "block",
+    "block": "tconstruct:seared_bricks"
+  },
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:botania_compat"
+    }
+  ],
+  "input": {
+    "item": "ticex:reconstruction_core"
+  },
+  "mana": 2000,
+  "output": {
+    "item": "ticex:nectar_core"
+  }
+}

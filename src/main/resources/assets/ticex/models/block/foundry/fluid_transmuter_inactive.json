@@ -1,0 +1,6 @@
+{
+  "parent": "ticex:block/foundry/fluid_transmuter",
+  "textures": {
+    "front": "ticex:block/foundry/fluid_transmuter_inactivate"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "tconstruct:modifier",
+  "allow_crystal": true,
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:ars_compat"
+    }
+  ],
+  "inputs": [
+    {
+      "item": "ticex:alterative_core"
+    }
+  ],
+  "result": "ticex:alterative",
+  "tools": {
+    "tag": "tconstruct:modifiable/armor/worn"
+  }
+}

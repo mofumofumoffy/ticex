@@ -1,0 +1,12 @@
+// 1.20.1	2025-09-06T17:26:19.0262017	Tags for minecraft:block mod id ticex
+7deb6abf13d44913dee6500806d22c2f2b1eaffe data/forge/tags/blocks/storage_blocks/crystal_matrix.json
+5fa9649089794a719c2d1d4f18fb6c676ad5e5de data/forge/tags/blocks/storage_blocks/etheric.json
+17813a2cf83397ba15ff929dba2741012c355128 data/forge/tags/blocks/storage_blocks/infinity.json
+1bd61e5da9aa55090431479d3ccec26bc0aa7f80 data/forge/tags/blocks/storage_blocks/neutron.json
+e69e128b7bba11146421658f9b4ba1abe8c8dbc9 data/minecraft/tags/blocks/beacon_base_blocks.json
+243366ee7de23a3d7e1a8870385932f9637532b7 data/minecraft/tags/blocks/mineable/pickaxe.json
+5fa9649089794a719c2d1d4f18fb6c676ad5e5de data/minecraft/tags/blocks/needs_iron_tool.json
+d34a8f3347e91113baabcfeb527ca9389b531a67 data/minecraft/tags/blocks/needs_stone_tool.json
+66a6e470f9822c5129294e1fe11cf3be03c8c597 data/tconstruct/tags/blocks/scorched_tanks.json
+c8a68a5279544bac7b38918c7d6ba499e8a7ed37 data/tconstruct/tags/blocks/seared_tanks.json
+0cda000c8e56b837111ee116b7d2a5b5c68794f2 data/ticex/tags/blocks/transmuter_tank.json

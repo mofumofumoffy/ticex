@@ -1,0 +1,50 @@
+{
+  "modifier.ticex": {
+    "omnipotence": "#453ec7",
+    "cosmic_unbreakable": "#349ad1",
+    "cosmic_luck": "#34d170",
+    "bedrock_breaker": "#ced134",
+    "transcendental": "#8021b8",
+    "celestial": "#2ddbfa",
+    "condensing": "#ededed",
+    "dense": "#cfcfcf",
+    "aftershock": "#42e0f5",
+    "rebirth": "#3483eb",
+    "sassy": "#eb7a34",
+    "deflection": "#398f4d",
+    "evolved": "#8a0404",
+    "inject": "#555555",
+    "soul_rending": "#9A5CC6",
+    "konpaku": "#32a852",
+    "koshirae": "#66543a",
+    "hidden_proud": "#552885",
+    "lamellar": "#966b29",
+    "overload": "#74ff4a",
+    "override": "#de7631",
+    "abyssal": "#1d1b6e",
+    "infernal": "#591313",
+    "gravity": "#135944",
+    "hurricane": "#c4be66",
+    "incomparable": "#FF5555",
+    "cardboard": "#e69f6a",
+    "overcasting": "#d3381c",
+    "modem": "#e6f51d",
+    "psionizing_radiation": "#d18ede",
+    "socket": "#282629",
+    "sensor": "#dbdbdb"
+  },
+  "material.ticex": {
+    "infinity": "#FF5555",
+    "neutron": "#0d0d0d",
+    "crystal_matrix": "#42e0f5",
+    "reconstruction": "#3483eb",
+    "etheric": "#2deb59",
+    "draconium": "#0000aa",
+    "wyvern": "#aa00aa",
+    "draconic": "#ffff55",
+    "chaotic": "#555555"
+  },
+  "harvest_tier.ticex": {
+    "infinity": "#FF5555"
+  }
+}

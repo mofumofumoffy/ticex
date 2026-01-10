@@ -1,0 +1,16 @@
+{
+  "loader": "tconstruct:tool",
+  "parent": "forge:item/default",
+  "textures": {
+    "plating": "ticex:item/tool/armor/singular_gem/boots/plating",
+    "maille": "ticex:item/tool/armor/singular_gem/boots/maille",
+    "singular_gem": "ticex:item/tool/armor/singular_gem/boots/gem"
+  },
+  "modifier_roots": ["tconstruct:item/tool/armor/plate/boots/modifiers/"],
+  "first_modifiers": ["tconstruct:trim"],
+  "parts": [
+    { "name": "plating", "index": 0 },
+    { "name": "maille", "index": 1 },
+    { "name": "singular_gem", "index": 2 }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "asset_name": "ticex_infinity",
+  "description": {
+    "color": "#FFFFFF",
+    "translate": "trim_material.tconstruct.format",
+    "with": [
+      {
+        "translate": "material.ticex.infinity"
+      }
+    ]
+  },
+  "forge:conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
+    }
+  ],
+  "ingredient": "avaritia:infinity_ingot",
+  "item_model_index": 0.8
+}
