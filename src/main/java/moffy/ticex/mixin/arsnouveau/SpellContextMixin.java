@@ -35,6 +35,24 @@ public class SpellContextMixin implements OriginalStackAccessor {
         this.ticex_1_20_1$originalStack = casterTool;
     }
 
+    @Inject(
+            at = @At("TAIL"),
+            method = "<init>(Lnet/minecraft/world/level/Level;Lcom/hollingsworth/arsnouveau/api/spell/Spell;Lnet/minecraft/world/entity/LivingEntity;Lcom/hollingsworth/arsnouveau/api/spell/wrapped_caster/IWrappedCaster;)V"
+    )
+    public void setOriginalStackFromHand(Level level, Spell spell, LivingEntity caster, IWrappedCaster wrappedCaster, CallbackInfo ci){
+        if (caster != null) {
+            ItemStack mainHand = caster.getMainHandItem();
+            if (!mainHand.isEmpty() && mainHand.getItem() instanceof slimeknights.tconstruct.library.tools.item.IModifiable) {
+                this.ticex_1_20_1$originalStack = mainHand;
+                return;
+            }
+            ItemStack offHand = caster.getOffhandItem();
+            if (!offHand.isEmpty() && offHand.getItem() instanceof slimeknights.tconstruct.library.tools.item.IModifiable) {
+                this.ticex_1_20_1$originalStack = offHand;
+            }
+        }
+    }
+
     @Override
     public ItemStack getOriginalStack() {
         return this.ticex_1_20_1$originalStack;
