@@ -132,7 +132,7 @@ mixin {
     config 'ticex.create.mixins.json'
     config 'ticex.projecte.mixins.json'
     config 'ticex.curios.mixins.json'
-
+    config 'ticex.arsnouveau.mixins.json'
     debug.verbose = true
     debug.export = true
 }
