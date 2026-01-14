@@ -1,7 +1,5 @@
 package moffy.ticex.modifier;
 
-import java.util.Map;
-import java.util.function.BiFunction;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.utils.TicEXPsiUtils;
@@ -29,13 +27,16 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.utils.BlockSideHitListener;
 
+import java.util.Map;
+import java.util.function.BiFunction;
+
 public class ModifierPsionizingRadiation
     extends NoLevelsModifier
     implements MeleeHitModifierHook, BlockBreakModifierHook, ProvidePropertyModifierHook, ValidateModifierHook {
 
-    public static ResourceLocation AUTO_CASTING_LOC = new ResourceLocation(TicEX.MODID, "autocasting");
-    public static ResourceLocation SOCKETS_LOC = new ResourceLocation(TicEX.MODID, "cad_sockets");
-    public static final ResourceLocation TIMES_CAST_LOC = new ResourceLocation(TicEX.MODID, "timescast");
+    public static final ResourceLocation TIMES_CAST_LOC = TicEX.getResource("timescast");
+    public static ResourceLocation AUTO_CASTING_LOC = TicEX.getResource("autocasting");
+    public static ResourceLocation SOCKETS_LOC = TicEX.getResource("cad_sockets");
 
     @Override
     protected void registerHooks(Builder hookBuilder) {

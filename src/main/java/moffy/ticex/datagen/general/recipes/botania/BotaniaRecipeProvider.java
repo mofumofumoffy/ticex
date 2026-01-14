@@ -5,7 +5,6 @@ import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.data.recipe.IMaterialRecipeHelper;
@@ -25,7 +24,7 @@ public class BotaniaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMater
     public void buildRecipes(@NotNull Consumer<FinishedRecipe> pWriter){
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
-                modsAvailable(new ResourceLocation(TicEX.MODID, "botania_compat"))
+                modsAvailable(TicEX.getResource("botania_compat"))
         );
 
         manaInfusionProvider.buildRecipes(pWriter);

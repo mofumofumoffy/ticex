@@ -7,7 +7,6 @@ import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
@@ -17,19 +16,19 @@ public class TicEXDEUtils {
 
     public static ResourceKey<DamageType> TOOL_DRACONIUM = ResourceKey.create(
         Registries.DAMAGE_TYPE,
-        new ResourceLocation(TicEX.MODID, "tool_draconium")
+        TicEX.getResource("tool_draconium")
     );
     public static ResourceKey<DamageType> TOOL_WYVERN = ResourceKey.create(
         Registries.DAMAGE_TYPE,
-        new ResourceLocation(TicEX.MODID, "tool_wyvern")
+        TicEX.getResource("tool_wyvern")
     );
     public static ResourceKey<DamageType> TOOL_DRACONIC = ResourceKey.create(
         Registries.DAMAGE_TYPE,
-        new ResourceLocation(TicEX.MODID, "tool_draconic")
+        TicEX.getResource("tool_draconic")
     );
     public static ResourceKey<DamageType> TOOL_CHAOTIC = ResourceKey.create(
         Registries.DAMAGE_TYPE,
-        new ResourceLocation(TicEX.MODID, "tool_chaotic")
+        TicEX.getResource("tool_chaotic")
     );
 
     @Nullable

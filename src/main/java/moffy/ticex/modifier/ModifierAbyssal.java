@@ -1,10 +1,5 @@
 package moffy.ticex.modifier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.function.BiConsumer;
-
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.config.ProjectEConfig;
@@ -49,9 +44,14 @@ import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.function.BiConsumer;
+
 public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickModifierHook, AttributesModifierHook, TooltipModifierHook {
 
-    public static final ResourceLocation ABYSSAL_DATA = new ResourceLocation(TicEX.MODID, "abyssal");
+    public static final ResourceLocation ABYSSAL_DATA = TicEX.getResource("abyssal");
     public static final UUID ATTRIBUTE_MODIFIER_UUID = UUID.fromString("39377487-3632-4a51-9128-6c211265b7c5");
 
     public static void toggleNightVision(IToolStackView tool, Player player) {

@@ -97,6 +97,6 @@ public class TicEXTags {
     }
 
     public static ResourceLocation getResource(String name) {
-        return new ResourceLocation(TicEX.MODID, name);
+        return TicEX.getResource(name);
     }
 }

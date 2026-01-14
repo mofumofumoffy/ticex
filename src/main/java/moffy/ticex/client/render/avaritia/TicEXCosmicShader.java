@@ -112,7 +112,7 @@ public final class TicEXCosmicShader {
         event.registerShader(
                 CCShaderInstance.create(
                         event.getResourceProvider(),
-                        new ResourceLocation(TicEX.MODID, "avaritia/materials/infinity"),
+                        TicEX.getResource("avaritia/materials/infinity"),
                         DefaultVertexFormat.BLOCK
                 ),
                 e -> {

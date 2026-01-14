@@ -14,7 +14,7 @@ public class MekaPlateModelCache extends BaseModelCache {
 
     public static final MekaPlateModelCache INSTANCE = new MekaPlateModelCache();
     public final OBJModelData MEKASUIT_EXO = registerOBJ(
-            new ResourceLocation(TicEX.MODID, "models/entity/modifiable_mekasuit_exo.obj")
+            TicEX.getResource("models/entity/modifiable_mekasuit_exo.obj")
     );
     private final Set<Runnable> callbacks = new HashSet<>();
     private final Set<ModuleOBJModelData> mekaSuitModules = new HashSet<>();

@@ -81,8 +81,8 @@ public class ModifierEvolved
         ValidateModifierHook,
         EnergyModifierHook {
 
-    public static final ResourceLocation MODULE_HOST_LOCATION = new ResourceLocation(TicEX.MODID, "module_host");
-    public static final ResourceLocation OP_STORAGE_LOCATION = new ResourceLocation(TicEX.MODID, "op_storage");
+    public static final ResourceLocation MODULE_HOST_LOCATION = TicEX.getResource("module_host");
+    public static final ResourceLocation OP_STORAGE_LOCATION = TicEX.getResource("op_storage");
 
     @Override
     public int getPriority() {

@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class TicEXJeiPlugin implements IModPlugin {
     @Override
     public @NotNull ResourceLocation getPluginUid() {
-        return new ResourceLocation(TicEX.MODID, "jei_compat");
+        return TicEX.getResource("jei_compat");
     }
 
     @Override

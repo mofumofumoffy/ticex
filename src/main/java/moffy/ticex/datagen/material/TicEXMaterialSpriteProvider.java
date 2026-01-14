@@ -2,7 +2,6 @@ package moffy.ticex.datagen.material;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXMaterials;
-import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.client.data.material.AbstractMaterialSpriteProvider;
 import slimeknights.tconstruct.library.client.data.spritetransformer.AnimatedGreyToSpriteTransformer;
@@ -68,8 +67,8 @@ public class TicEXMaterialSpriteProvider extends AbstractMaterialSpriteProvider 
                 .fallbacks("metal").transformer(
                         GreyToSpriteTransformer.builder()
                                 .addARGB(0, 0xFF000000)
-                                .addTexture(63, new ResourceLocation(TicEX.MODID, "material/crystal_matrix_outline_dark"))
-                                .addTexture(102, new ResourceLocation(TicEX.MODID, "material/crystal_matrix_outline"))
+                                .addTexture(63, TicEX.getResource("material/crystal_matrix_outline_dark"))
+                                .addTexture(102, TicEX.getResource("material/crystal_matrix_outline"))
                                 .addARGB(140, 0xFF2D96B9)
                                 .addARGB(178, 0xFF35A6D6)
                                 .addARGB(216, 0xFF47BDEF)
@@ -92,17 +91,17 @@ public class TicEXMaterialSpriteProvider extends AbstractMaterialSpriteProvider 
                 .fallbacks("metal").transformer(
                         AnimatedGreyToSpriteTransformer.builder()
                                 .addARGB(0, 0xFF000000)
-                                .addTexture(63, new ResourceLocation(TicEX.MODID, "material/infinity_dark"))
-                                .addTexture(178, new ResourceLocation(TicEX.MODID, "material/infinity_medium"))
-                                .addTexture(255, new ResourceLocation(TicEX.MODID, "material/infinity_light"))
-                                .animated(new ResourceLocation(TicEX.MODID, "material/infinity_medium"), 9)
+                                .addTexture(63, TicEX.getResource("material/infinity_dark"))
+                                .addTexture(178, TicEX.getResource("material/infinity_medium"))
+                                .addTexture(255, TicEX.getResource("material/infinity_light"))
+                                .animated(TicEX.getResource("material/infinity_medium"), 9)
         );
         buildMaterial(TicEXMaterials.NEUTRON).armor()
                 .fallbacks("metal").transformer(
                         GreyToSpriteTransformer.builder()
                                 .addARGB(0, 0xFF000000)
-                                .addTexture(63, new ResourceLocation(TicEX.MODID, "material/neutron_outline_dark"))
-                                .addTexture(102, new ResourceLocation(TicEX.MODID, "material/neutron_outline"))
+                                .addTexture(63, TicEX.getResource("material/neutron_outline_dark"))
+                                .addTexture(102, TicEX.getResource("material/neutron_outline"))
                                 .addARGB(140, 0xFF3D3D3D)
                                 .addARGB(178, 0xFF303030)
                                 .addARGB(216, 0xFF2B2B2B)

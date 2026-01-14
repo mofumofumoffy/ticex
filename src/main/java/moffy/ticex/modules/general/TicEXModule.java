@@ -31,7 +31,6 @@ import moffy.ticex.network.curios.TicEXSyncEntityMovements;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
@@ -61,7 +60,7 @@ public class TicEXModule implements AddonModule {
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus bus = context.getModEventBus();
 
         ToolCapabilityProvider.register(TiCEXToolCapabilityProvider::new);
 
@@ -94,7 +93,7 @@ public class TicEXModule implements AddonModule {
 
         TicEXRegistry.EMBOSSMENT_HOOK = ModifierHooks.LOADER.register(
                 new ModuleHook<>(
-                        new ResourceLocation(TicEX.MODID, "embossment"),
+                        TicEX.getResource("embossment"),
                         EmbossmentModifierHook.class,
                         EmbossmentModifierHook.AllMerger::new,
                         new EmbossmentModifierHook.DefaultClass()
@@ -102,7 +101,7 @@ public class TicEXModule implements AddonModule {
         );
         TicEXRegistry.PROPERTY_PROVIDER_HOOK = ModifierHooks.LOADER.register(
                 new ModuleHook<>(
-                        new ResourceLocation(TicEX.MODID, "provide_property"),
+                        TicEX.getResource("provide_property"),
                         ProvidePropertyModifierHook.class,
                         ProvidePropertyModifierHook.AllMerger::new,
                         new ProvidePropertyModifierHook.DefaultClass()
@@ -110,7 +109,7 @@ public class TicEXModule implements AddonModule {
         );
         TicEXRegistry.ENERGY_HOOK = ModifierHooks.LOADER.register(
                 new ModuleHook<>(
-                        new ResourceLocation(TicEX.MODID, "energy"),
+                        TicEX.getResource("energy"),
                         EnergyModifierHook.class,
                         EnergyModifierHook.AllMerger::new,
                         new EnergyModifierHook.DefaultClass()
@@ -236,7 +235,7 @@ public class TicEXModule implements AddonModule {
         );
 
         TicEXRegistry.JEI_INTEGRATIONS.register(
-                new ResourceLocation(TicEX.MODID, "ticex_compat"),
+                TicEX.getResource("ticex_compat"),
                 TicEXJEIIntegration.class
         );
 
@@ -255,14 +254,14 @@ public class TicEXModule implements AddonModule {
         if (TierSortingRegistry.isTierSorted(InfinityTier.instance)) {
             TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(
                     InfinityTier.instance,
-                    new ResourceLocation(TicEX.MODID, "infinity"),
+                    TicEX.getResource("infinity"),
                     List.of(TierSortingRegistry.getSortedTiers().get(TierSortingRegistry.getSortedTiers().size() - 1)),
                     List.of()
             );
         } else {
             TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(
                     InfinityTier.instance,
-                    new ResourceLocation(TicEX.MODID, "infinity"),
+                    TicEX.getResource("infinity"),
                     List.of(Tiers.NETHERITE),
                     List.of()
             );

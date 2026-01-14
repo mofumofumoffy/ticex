@@ -22,7 +22,7 @@ import java.util.Map;
 public class MekaToolGearCapability extends MekaGearCapability implements IBlastingItem {
     @Override
     public ResourceLocation getRadialId() {
-        return new ResourceLocation(TicEX.MODID, "tinker_tool");
+        return TicEX.getResource("tinker_tool");
     }
 
     @Override

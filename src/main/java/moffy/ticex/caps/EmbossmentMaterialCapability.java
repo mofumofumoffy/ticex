@@ -1,8 +1,5 @@
 package moffy.ticex.caps;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import moffy.ticex.TicEX;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -21,12 +18,16 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class EmbossmentMaterialCapability {
 
     public static final Capability<EmbossmentMaterialCapability> EMBOSSMENT_MATERIAL_CAPABILITY = CapabilityManager.get(
         new CapabilityToken<EmbossmentMaterialCapability>() {}
     );
-    public static final ResourceLocation MATERIAL_MAP = new ResourceLocation(TicEX.MODID, "embossed_material_map");
+    public static final ResourceLocation MATERIAL_MAP = TicEX.getResource("embossed_material_map");
 
     protected final Map<String, MaterialId> embossedMaterials;
     protected final IToolStackView tool;

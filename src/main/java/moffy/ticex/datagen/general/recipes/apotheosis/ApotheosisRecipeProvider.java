@@ -5,7 +5,6 @@ import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentModifierRecipeBuilder;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import slimeknights.mantle.recipe.ingredient.SizedIngredient;
@@ -19,7 +18,7 @@ public class ApotheosisRecipeProvider implements ITicEXRecipeHelper {
 
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
-                modsAvailable(new ResourceLocation(TicEX.MODID, "apotheosis_compat"))
+                modsAvailable(TicEX.getResource("apotheosis_compat"))
         );
 
         if(TicEXRegistry.OVERLOAD_MODIFIER != null) {

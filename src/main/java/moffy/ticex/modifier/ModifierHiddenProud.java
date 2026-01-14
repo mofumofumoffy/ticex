@@ -1,7 +1,5 @@
 package moffy.ticex.modifier;
 
-import java.util.Map.Entry;
-import java.util.Random;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.init.SBItems;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -19,12 +17,15 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 
+import java.util.Map.Entry;
+import java.util.Random;
+
 public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentModifierHook {
 
     protected TagKey<Item> proudSoulKey;
 
     public ModifierHiddenProud() {
-        proudSoulKey = TagKey.create(Registries.ITEM, new ResourceLocation(SlashBlade.MODID, "proudsouls"));
+        proudSoulKey = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SlashBlade.MODID, "proudsouls"));
     }
 
     @Override
@@ -68,9 +69,9 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
                 if (input.hasTag()) {
                     CompoundTag nbt = input.getTag();
                     if (nbt.contains("SpecialAttackType")) {
-                        s.setSlashArtsKey(new ResourceLocation(nbt.getString("SpecialAttackType")));
+                        s.setSlashArtsKey(ResourceLocation.tryParse(nbt.getString("SpecialAttackType")));
                     } else if (nbt.contains("SpecialEffectType")) {
-                        s.addSpecialEffect(new ResourceLocation(nbt.getString("SpecialEffectType")));
+                        s.addSpecialEffect(ResourceLocation.tryParse(nbt.getString("SpecialEffectType")));
                     }
                 }
 

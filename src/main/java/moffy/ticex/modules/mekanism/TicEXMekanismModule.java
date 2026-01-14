@@ -20,7 +20,6 @@ import moffy.ticex.modifier.ModifierMekanic;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.mekanism.ConfigSyncToClientPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -29,16 +28,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TicEXMekanismModule implements AddonModule {
 
@@ -120,7 +114,7 @@ public class TicEXMekanismModule implements AddonModule {
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
         MekaPlateModelCache.INSTANCE.registerMekaSuitModuleModel(
-            new ResourceLocation(TicEX.MODID, "models/entity/modifiable_mekasuit_modules.obj")
+            TicEX.getResource("models/entity/modifiable_mekasuit_modules.obj")
         );
 
         MekaPlateMultilayerModel.registerModule(

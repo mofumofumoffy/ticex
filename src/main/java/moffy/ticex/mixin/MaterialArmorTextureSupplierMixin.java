@@ -83,7 +83,7 @@ public abstract class MaterialArmorTextureSupplierMixin {
 
     @Unique
     private static ResourceLocation ticex$getAtlasLocation(ResourceLocation name) {
-        return new ResourceLocation(name.getNamespace(), "tinker_armor/" + name.getPath());
+        return ResourceLocation.fromNamespaceAndPath(name.getNamespace(), "tinker_armor/" + name.getPath());
     }
 }
 

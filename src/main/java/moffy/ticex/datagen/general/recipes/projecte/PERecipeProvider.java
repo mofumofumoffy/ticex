@@ -24,13 +24,13 @@ public class PERecipeProvider implements ITicEXRecipeHelper, IToolRecipeHelper {
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
-                modsAvailable(new ResourceLocation(TicEX.MODID, "projecte_compat"))
+                modsAvailable(TicEX.getResource("projecte_compat"))
         );
 
         if(TicEXRegistry.ABYSSAL_MODIFIER != null) {
             ModifierRecipeBuilder.modifier(TicEXRegistry.ABYSSAL_MODIFIER)
                     .setTools(DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.HELMETS), Ingredient.of(TicEXTags.Items.GEM_ARMOR)))
-                    .addInput(item(new ResourceLocation(TicEX.MODID, "catalyst_gem_helmet")))
+                    .addInput(item(TicEX.getResource("catalyst_gem_helmet")))
                     .setSlots(SlotType.DEFENSE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.ABYSSAL_MODIFIER.getId(), defenseFolder));
         }
@@ -38,7 +38,7 @@ public class PERecipeProvider implements ITicEXRecipeHelper, IToolRecipeHelper {
         if(TicEXRegistry.GRAVITY_MODIFIER != null) {
             ModifierRecipeBuilder.modifier(TicEXRegistry.GRAVITY_MODIFIER)
                     .setTools(DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.LEGGINGS), Ingredient.of(TicEXTags.Items.GEM_ARMOR)))
-                    .addInput(item(new ResourceLocation(TicEX.MODID, "catalyst_gem_leggings")))
+                    .addInput(item(TicEX.getResource("catalyst_gem_leggings")))
                     .setSlots(SlotType.DEFENSE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.GRAVITY_MODIFIER.getId(), defenseFolder));
         }
@@ -46,7 +46,7 @@ public class PERecipeProvider implements ITicEXRecipeHelper, IToolRecipeHelper {
         if(TicEXRegistry.HURRICANE_MODIFIER != null) {
             ModifierRecipeBuilder.modifier(TicEXRegistry.HURRICANE_MODIFIER)
                     .setTools(DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.BOOTS), Ingredient.of(TicEXTags.Items.GEM_ARMOR)))
-                    .addInput(item(new ResourceLocation(TicEX.MODID, "catalyst_gem_boots")))
+                    .addInput(item(TicEX.getResource("catalyst_gem_boots")))
                     .setSlots(SlotType.DEFENSE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.HURRICANE_MODIFIER.getId(), defenseFolder));
         }
@@ -54,13 +54,13 @@ public class PERecipeProvider implements ITicEXRecipeHelper, IToolRecipeHelper {
         if(TicEXRegistry.INFERNAL_MODIFIER != null) {
             ModifierRecipeBuilder.modifier(TicEXRegistry.INFERNAL_MODIFIER)
                     .setTools(DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.CHESTPLATES), Ingredient.of(TicEXTags.Items.GEM_ARMOR)))
-                    .addInput(item(new ResourceLocation(TicEX.MODID, "catalyst_gem_chestplate")))
+                    .addInput(item(TicEX.getResource("catalyst_gem_chestplate")))
                     .setSlots(SlotType.DEFENSE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.INFERNAL_MODIFIER.getId(), defenseFolder));
         }
 
         if(TicEXRegistry.SINGULAR_GEM_ARMOR != null) {
-            ResourceLocation seramGear = new ResourceLocation(TicEX.MODID, "seram_gear");
+            ResourceLocation seramGear = TicEX.getResource("seram_gear");
         }
 
         if(TicEXRegistry.CATALYST_GEM != null) {

@@ -6,7 +6,6 @@ import moffy.ticex.datagen.general.recipes.ticex.builder.SingleEmbossmentModifie
 import moffy.ticex.datagen.general.recipes.ticex.builder.ValidatableIncrementalModifierRecipeBuilder;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
@@ -23,7 +22,7 @@ public class PsiRecipeProvider implements ITicEXRecipeHelper {
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
             pWriter,
-            modsAvailable(new ResourceLocation(TicEX.MODID, "psi_compat"))
+            modsAvailable(TicEX.getResource("psi_compat"))
         );
 
         if(TicEXRegistry.SENSOR_MODIFIER != null) {

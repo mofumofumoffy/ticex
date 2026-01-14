@@ -4,7 +4,6 @@ import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import vazkii.botania.common.crafting.BlockStateIngredient;
@@ -21,7 +20,7 @@ public class TicEXManaInfusionProvider extends ManaInfusionProvider implements I
     public void buildRecipes(Consumer<net.minecraft.data.recipes.FinishedRecipe> consumer) {
         Consumer<net.minecraft.data.recipes.FinishedRecipe> topConsumer = withCondition(
                 consumer,
-                modsAvailable(new ResourceLocation(TicEX.MODID, "botania_compat"))
+                modsAvailable(TicEX.getResource("botania_compat"))
         );
 
         topConsumer.accept(new FinishedRecipe(

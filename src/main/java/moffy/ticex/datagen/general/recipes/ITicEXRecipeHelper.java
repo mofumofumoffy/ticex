@@ -51,7 +51,7 @@ public interface ITicEXRecipeHelper extends IRecipeHelper, IConditionBuilder {
     String itemsFolder      = "items/";
 
     default ICondition modsAvailable(ResourceLocation rl) {
-        return new ModsAvailableCondition(new ResourceLocation(AddonAPI.MODID, "mods_available"), rl);
+        return new ModsAvailableCondition(ResourceLocation.fromNamespaceAndPath(AddonAPI.MODID, "mods_available"), rl);
     }
 
     default Item item(ResourceLocation resourceLocation) {

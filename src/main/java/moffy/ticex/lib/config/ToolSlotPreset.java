@@ -59,7 +59,7 @@ public record ToolSlotPreset(ResourceLocation rl, String name, int upgradeSlot, 
     );
 
     private static ToolSlotPreset of(String ns, String path, String name, int upgradeSlot, int abilitySlot, int defenseSlot) {
-        return new ToolSlotPreset(new ResourceLocation(ns, path), name, upgradeSlot, abilitySlot, defenseSlot);
+        return new ToolSlotPreset(ResourceLocation.fromNamespaceAndPath(ns, path), name, upgradeSlot, abilitySlot, defenseSlot);
     }
 
     public String configName() {

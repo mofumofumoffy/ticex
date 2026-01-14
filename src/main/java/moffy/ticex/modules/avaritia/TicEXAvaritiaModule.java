@@ -107,13 +107,13 @@ public class TicEXAvaritiaModule implements AddonModule {
     @Override
     public void initClient(FMLJavaModLoadingContext context) {
         List<MaterialVariantId> infinityMaterials = new ArrayList<>();
-        infinityMaterials.add(new MaterialId(new ResourceLocation(TicEX.MODID, "infinity")));
+        infinityMaterials.add(new MaterialId(TicEX.getResource("infinity")));
 
         if (ModList.get().isLoaded("sakuratinker")) {
-            infinityMaterials.add(new MaterialId(new ResourceLocation("sakuratinker", "infinity")));
+            infinityMaterials.add(new MaterialId(ResourceLocation.fromNamespaceAndPath("sakuratinker", "infinity")));
         }
 
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus bus = context.getModEventBus();
 
         TicEXCosmicShaderProvider.init(bus);
         TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Material());
