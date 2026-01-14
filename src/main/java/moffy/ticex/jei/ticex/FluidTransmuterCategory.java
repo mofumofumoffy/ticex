@@ -34,9 +34,9 @@ public class FluidTransmuterCategory extends AbstractRecipeCategory<FluidTransmu
         tooltipBuilder.addAll(tooltip);
     };
 
-    private static final ResourceLocation BACKGROUND_LOC = new ResourceLocation(TicEX.MODID, "textures/gui/jei/fluid_transmutation.png");
+    private static final ResourceLocation BACKGROUND_LOC = TicEX.getResource("textures/gui/jei/fluid_transmutation.png");
     private static final Component TITLE = Component.translatable(
-            Util.makeTranslationKey("jei", new ResourceLocation(TicEX.MODID, "fluid_transmuter.title"))
+            Util.makeTranslationKey("jei", TicEX.getResource("fluid_transmuter.title"))
     );
 
     private final IDrawable background;

@@ -105,7 +105,7 @@ public record ModifierLevelPreset(ResourceLocation rl, String name, int max) {
     );
 
     private static ModifierLevelPreset of(String ns, String path, String name, int max) {
-        return new ModifierLevelPreset(new ResourceLocation(ns, path), name, max);
+        return new ModifierLevelPreset(ResourceLocation.fromNamespaceAndPath(ns, path), name, max);
     }
 
     public String configName() {

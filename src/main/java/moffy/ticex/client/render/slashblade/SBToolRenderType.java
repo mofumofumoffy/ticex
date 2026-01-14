@@ -16,11 +16,11 @@ public class SBToolRenderType {
         HANDLE(2, "handle"),
         SAYA(1, "saya");
 
-        private static final ResourceLocation BLADE_TEXTURE_LOC = new ResourceLocation(
+        private static final ResourceLocation BLADE_TEXTURE_LOC = ResourceLocation.fromNamespaceAndPath(
                 TicEX.MODID,
                 "textures/item/shader/slashblade_tool/"
         );
-        private static final ResourceLocation DEFAULT_BLADE_TEXTURE_LOC = new ResourceLocation(
+        private static final ResourceLocation DEFAULT_BLADE_TEXTURE_LOC = ResourceLocation.fromNamespaceAndPath(
                 TicEX.MODID,
                 "textures/obj_tool/slashblade_tool/"
         );

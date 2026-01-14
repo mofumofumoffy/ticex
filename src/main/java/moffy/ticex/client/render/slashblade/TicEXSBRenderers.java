@@ -104,7 +104,7 @@ public class TicEXSBRenderers {
 
         Material atlasMaterial = new Material(
                 InventoryMenu.BLOCK_ATLAS,
-                new ResourceLocation(TicEX.MODID, "obj_tool/slashblade_tool/" + partType.getName())
+                TicEX.getResource("obj_tool/slashblade_tool/" + partType.getName())
         );
 
         shaderProvider.prepareRenderMaterial(material);

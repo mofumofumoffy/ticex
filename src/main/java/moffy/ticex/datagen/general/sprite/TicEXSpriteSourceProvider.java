@@ -31,7 +31,7 @@ public class TicEXSpriteSourceProvider extends SpriteSourceProvider {
 
         String paletteFolder = "trims/color_palettes/";
         String trimFolder = "trims/models/armor/";
-        ResourceLocation trimPalette = new ResourceLocation(paletteFolder + "trim_palette");
+        ResourceLocation trimPalette = ResourceLocation.parse(paletteFolder + "trim_palette");
         Map<String,ResourceLocation> materialMap = Arrays.stream(TicEXMaterials.TRIM_MATERIALS)
                 .collect(Collectors.toMap(
                         id -> id.getNamespace() + "_" + id.getPath(),
@@ -48,11 +48,11 @@ public class TicEXSpriteSourceProvider extends SpriteSourceProvider {
                         List.of(TrimModifierModel.TRIM_TEXTURES),
                         trimPalette, materialMap));
 
-        atlas(new ResourceLocation("armor_trims"))
+        atlas(ResourceLocation.parse("armor_trims"))
                 .addSource(new PalettedPermutations(
                         Arrays.stream(TRIMS).flatMap(name -> Stream.of(
-                                new ResourceLocation(trimFolder + name),
-                                new ResourceLocation(trimFolder + name + "_leggings"))
+                                ResourceLocation.parse(trimFolder + name),
+                                ResourceLocation.parse(trimFolder + name + "_leggings"))
                         ).toList(),
                         trimPalette, materialMap)
                 )

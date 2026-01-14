@@ -15,7 +15,6 @@ import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.registry.JeiIntegrationsRegistry;
 import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -95,31 +94,31 @@ public class TicEXRegistry {
 
     public static final TagKey<Item> KEY_MODIFIER_UNSTABLE = TagKey.create(
             Registries.ITEM,
-            new ResourceLocation(TicEX.MODID, "shader/unstable_modifier")
+            TicEX.getResource("shader/unstable_modifier")
     );
 
     public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(
-            new ResourceLocation(TicEX.MODID, "mekaplate"),
+            TicEX.getResource("mekaplate"),
             SoundEvents.ARMOR_EQUIP_NETHERITE
     );
     public static final ModifiableArmorMaterial SINGULAR_GEM_DEFINITION = ModifiableArmorMaterial.create(
-            new ResourceLocation(TicEX.MODID, "singular_gem"),
+            TicEX.getResource("singular_gem"),
             SoundEvents.ARMOR_EQUIP_NETHERITE
     );
     public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(
-            new ResourceLocation(TicEX.MODID, "reforged_slashblade")
+            TicEX.getResource("reforged_slashblade")
     );
     public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(
-            new ResourceLocation(TicEX.MODID, "blitz_gun")
+            TicEX.getResource("blitz_gun")
     );
     public static final ToolDefinition SPELLBOOK_DEFINITION = ToolDefinition.create(
-            new ResourceLocation(TicEX.MODID, "revival_spellbook")
+            TicEX.getResource("revival_spellbook")
     );
     public static final ToolDefinition MEKA_TOOL_DEFINITION = ToolDefinition.create(
-            new ResourceLocation(TicEX.MODID, "meka_edge")
+            TicEX.getResource("meka_edge")
     );
     public static final ToolDefinition GAUNTLET_DEFINITION = ToolDefinition.create(
-            new ResourceLocation(TicEX.MODID, "resonance_gauntlet")
+            TicEX.getResource("resonance_gauntlet")
     );
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);

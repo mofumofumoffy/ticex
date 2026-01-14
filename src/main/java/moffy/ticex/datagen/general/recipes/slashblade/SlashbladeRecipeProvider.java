@@ -14,7 +14,6 @@ import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
@@ -40,7 +39,7 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
-                modsAvailable(new ResourceLocation(TicEX.MODID, "slashblade_compat"))
+                modsAvailable(TicEX.getResource("slashblade_compat"))
         );
 
         // slotless
@@ -106,7 +105,7 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
     public void sbCasting(Consumer<FinishedRecipe> topConsumer, ItemObject<ToolPartItem> itemObj, CastItemObject castItem, String pattern, int cost, int partCost, int compositeCost) {
         PartRecipeBuilder.partRecipe(itemObj.get())
                 .setCost(cost)
-                .setPattern(new ResourceLocation(TicEX.MODID, pattern))
+                .setPattern(TicEX.getResource(pattern))
                 .setPatternItem(Ingredient.fromValues(Stream.of(
                         new Ingredient.TagValue(TinkerTags.Items.DEFAULT_PATTERNS)
                 )))

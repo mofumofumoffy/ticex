@@ -84,8 +84,8 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
     protected static final UUID ATTACK_DAMAGE_AMPLIFIER = UUID.fromString("2D988C13-595B-4E58-B254-39BB6FA077FD");
     protected static final UUID PLAYER_REACH_AMPLIFIER = UUID.fromString("2D988C13-595B-4E58-B254-39BB6FA077FE");
 
-    public static final ResourceLocation BLADE_STATE_LOCATION = new ResourceLocation(TicEX.MODID, "bladestate");
-    public static final ResourceLocation INPUT_STATE_LOCATION = new ResourceLocation(TicEX.MODID, "inputstate");
+    public static final ResourceLocation BLADE_STATE_LOCATION = TicEX.getResource("bladestate");
+    public static final ResourceLocation INPUT_STATE_LOCATION = TicEX.getResource("inputstate");
 
     private final ToolDefinition toolDefinition;
     private ItemStack toolForRendering;

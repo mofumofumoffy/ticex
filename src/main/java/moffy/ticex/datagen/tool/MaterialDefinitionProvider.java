@@ -91,8 +91,8 @@ public class MaterialDefinitionProvider extends AbstractMaterialDataProvider {
 
     public ModsAvailableCondition availableCondition(String path) {
         return new ModsAvailableCondition(
-            new ResourceLocation(AddonAPI.MODID, "mods_available"),
-            new ResourceLocation(TicEX.MODID, path)
+            ResourceLocation.fromNamespaceAndPath(AddonAPI.MODID, "mods_available"),
+            TicEX.getResource(path)
         );
     }
 }

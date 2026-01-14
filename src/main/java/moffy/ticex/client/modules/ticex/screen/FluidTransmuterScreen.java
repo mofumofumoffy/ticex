@@ -24,7 +24,7 @@ import java.util.Optional;
 
 public class FluidTransmuterScreen extends AbstractContainerScreen<FluidTransmuterContainerMenu> implements IScreenWithFluidTank {
     private static final int[] INPUT_TANK_START_X = {54, 22, 38, 70, 6};
-    private static final ResourceLocation BACKGROUND = new ResourceLocation(TicEX.MODID, "textures/gui/fluid_transmuter.png");
+    private static final ResourceLocation BACKGROUND = TicEX.getResource("textures/gui/fluid_transmuter.png");
     private static final ElementScreen SCALA = new ElementScreen(BACKGROUND, 176, 0, 34, 52, 256, 256);
     private static final ElementScreen FUEL_SLOT = new ElementScreen(BACKGROUND, 176, 52, 18, 36, 256, 256);
     private static final ElementScreen FUEL_TANK = new ElementScreen(BACKGROUND, 194, 52, 14, 38, 256, 256);

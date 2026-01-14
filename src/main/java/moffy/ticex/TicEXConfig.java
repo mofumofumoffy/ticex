@@ -6,7 +6,6 @@ import moffy.ticex.lib.config.ToolSlotPreset;
 import moffy.ticex.modules.general.TicEXModuleProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -179,8 +178,8 @@ public class TicEXConfig {
 
         AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(context), COMMON);
 
-        ModLoadingContext.get().registerConfig(Type.COMMON, COMMON.build());
-        ModLoadingContext.get().registerConfig(Type.COMMON, MORE_CONFIG.build(), "ticex-more-config.toml");
-        ModLoadingContext.get().registerConfig(Type.CLIENT, CLIENT.build());
+        context.registerConfig(Type.COMMON, COMMON.build());
+        context.registerConfig(Type.COMMON, MORE_CONFIG.build(), "ticex-more-config.toml");
+        context.registerConfig(Type.CLIENT, CLIENT.build());
     }
 }

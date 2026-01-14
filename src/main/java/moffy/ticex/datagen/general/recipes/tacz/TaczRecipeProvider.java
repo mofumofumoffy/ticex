@@ -16,7 +16,6 @@ import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentBuildingRecip
 import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentCastingRecipeBuilder;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 
 import java.util.function.Consumer;
@@ -25,7 +24,7 @@ public class TaczRecipeProvider implements ITicEXRecipeHelper, IEmbossmentToolRe
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
-                modsAvailable(new ResourceLocation(TicEX.MODID, "tacz_compat"))
+                modsAvailable(TicEX.getResource("tacz_compat"))
         );
 
         if(TicEXRegistry.BLITZ_GUN != null) {

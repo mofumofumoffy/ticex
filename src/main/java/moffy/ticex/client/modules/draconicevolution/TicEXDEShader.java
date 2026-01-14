@@ -34,7 +34,7 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
     private CCUniform baseColorUniform;
 
     public TicEXDEShader() {
-        super(new ResourceLocation(TicEX.MODID, "draconicevolution/trace"), DefaultVertexFormat.NEW_ENTITY);
+        super(TicEX.getResource("draconicevolution/trace"), DefaultVertexFormat.NEW_ENTITY);
         shaderState = new RenderStateShard.ShaderStateShard(this::getShaderInstance);
 
         shaderStateBaseFactory = () ->
