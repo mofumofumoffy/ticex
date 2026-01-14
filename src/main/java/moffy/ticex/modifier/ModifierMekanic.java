@@ -437,12 +437,12 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
 
     @Override
     public Component validate(@NotNull IToolStackView tool, ModifierEntry entry) {
-        if (
+        /*if (
                         tool.getModifierLevel(ModifierIds.reinforced) < 5 || tool.getModifierLevel(ModifierIds.netherite) < 1
 
         ) {
             return Component.translatable("recipe.ticex.modifier.mekanic_requirements");
-        }
+        }*/
         return null;
     }
 

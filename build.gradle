@@ -168,7 +168,7 @@ dependencies {
 
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
-    implementation fg.deobf("blank:addonapi-mc1.20.1:2.0.0-SNAPSHOT")
+    implementation fg.deobf("curse.maven:moffs-addonapi-dynload-1242459:7441442")
 
     implementation fg.deobf("curse.maven:mantle-74924:7414488")
     implementation fg.deobf("curse.maven:tinkers-construct-74072:7371800")

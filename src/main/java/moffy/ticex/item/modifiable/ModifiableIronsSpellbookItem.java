@@ -51,7 +51,7 @@ public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiab
     protected ItemStack toolForRendering;
 
     public ModifiableIronsSpellbookItem(ToolDefinition toolDefinition, int maxStackSize) {
-        super(12, SpellRarity.LEGENDARY, new Item.Properties().stacksTo(maxStackSize));
+        super(12, new Item.Properties().stacksTo(maxStackSize));
         this.toolDefinition = toolDefinition;
         this.maxStackSize = maxStackSize;
     }
