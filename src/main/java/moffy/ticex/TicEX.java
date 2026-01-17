@@ -31,8 +31,7 @@ public class TicEX {
     public TicEX(FMLJavaModLoadingContext context) {
         TicEXConfig.registerConfig();
 
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        //TicEXRegistry.ITEMS_EXTENDED.register(bus);
+        IEventBus bus = context.getModEventBus();
         TicEXRegistry.ITEMS.register(bus);
         TicEXRegistry.BLOCKS.register(bus);
         TicEXRegistry.BLOCK_ENTITIES.register(bus);
