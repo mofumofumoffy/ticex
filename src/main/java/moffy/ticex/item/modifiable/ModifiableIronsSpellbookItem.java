@@ -1,8 +1,8 @@
 package moffy.ticex.item.modifiable;
 
 import com.google.common.collect.Multimap;
-import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.item.SpellBook;
+import moffy.ticex.mixin.irons.SpellBookAccessor;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -14,7 +14,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
@@ -46,14 +45,13 @@ import java.util.Map;
 public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiableDisplay {
 
     private final ToolDefinition toolDefinition;
-    private final int maxStackSize;
 
     protected ItemStack toolForRendering;
 
-    public ModifiableIronsSpellbookItem(ToolDefinition toolDefinition, int maxStackSize) {
-        super(12, new Item.Properties().stacksTo(maxStackSize));
+    public ModifiableIronsSpellbookItem(ToolDefinition toolDefinition) {
+        // Backward compat
+        ((SpellBookAccessor) this).setMaxSpellSlots(12);
         this.toolDefinition = toolDefinition;
-        this.maxStackSize = maxStackSize;
     }
 
     @Override
@@ -73,7 +71,7 @@ public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiab
 
     @Override
     public int getMaxStackSize(ItemStack stack) {
-        return stack.isDamaged() ? 1 : maxStackSize;
+        return 1;
     }
 
     @Override
@@ -169,12 +167,12 @@ public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiab
 
     @Override
     public boolean overrideOtherStackedOnMe(
-        ItemStack slotStack,
-        ItemStack held,
-        Slot slot,
-        ClickAction action,
-        Player player,
-        SlotAccess access
+            ItemStack slotStack,
+            ItemStack held,
+            Slot slot,
+            ClickAction action,
+            Player player,
+            SlotAccess access
     ) {
         return SlotStackModifierHook.overrideOtherStackedOnMe(slotStack, held, slot, action, player, access);
     }
