@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class DecoratedRenderType extends RenderType {
 
@@ -15,12 +16,12 @@ public class DecoratedRenderType extends RenderType {
 
     private final VertexFormat formatOverride;
     private final VertexFormat.Mode modeOverride;
-    private final Runnable setupStateOverride;
-    private final Runnable clearStateOverride;
+    private final Consumer<Runnable> setupStateOverride;
+    private final Consumer<Runnable> clearStateOverride;
 
     private DecoratedRenderType(RenderType renderType,
                                @Nullable VertexFormat formatOverride, @Nullable VertexFormat.Mode modeOverride,
-                               @Nullable Runnable setupStateOverride, @Nullable Runnable clearStateOverride) {
+                               @Nullable Consumer<Runnable> setupStateOverride, @Nullable Consumer<Runnable> clearStateOverride) {
         super(
                 renderType.name,
                 renderType.format,
@@ -28,8 +29,8 @@ public class DecoratedRenderType extends RenderType {
                 renderType.bufferSize,
                 renderType.affectsCrumbling,
                 renderType.sortOnUpload,
-                setupStateOverride != null ? setupStateOverride : renderType.setupState,
-                clearStateOverride != null ? clearStateOverride : renderType.clearState
+                renderType.setupState,
+                renderType.clearState
         );
         this.delegate = renderType;
         this.formatOverride = formatOverride;
@@ -40,7 +41,7 @@ public class DecoratedRenderType extends RenderType {
 
     public static DecoratedRenderType decorate(RenderType renderType,
                                                @Nullable VertexFormat formatOverride, @Nullable VertexFormat.Mode modeOverride,
-                                               @Nullable Runnable setupStateOverride, @Nullable Runnable clearStateOverride) {
+                                               @Nullable Consumer<Runnable> setupStateOverride, @Nullable Consumer<Runnable> clearStateOverride) {
         return new DecoratedRenderType(renderType, formatOverride, modeOverride, setupStateOverride, clearStateOverride);
     }
 
@@ -50,7 +51,7 @@ public class DecoratedRenderType extends RenderType {
     }
 
     public static DecoratedRenderType decorate(RenderType renderType,
-                                               @Nullable Runnable setupStateOverride, @Nullable Runnable clearStateOverride) {
+                                               @Nullable Consumer<Runnable> setupStateOverride, @Nullable Consumer<Runnable> clearStateOverride) {
         return new DecoratedRenderType(renderType, null, null, setupStateOverride, clearStateOverride);
     }
 
@@ -102,7 +103,7 @@ public class DecoratedRenderType extends RenderType {
     @Override
     public void setupRenderState() {
         if (setupStateOverride != null) {
-            setupStateOverride.run();
+            setupStateOverride.accept(delegate::setupRenderState);
         } else {
             delegate.setupRenderState();
         }
@@ -111,7 +112,7 @@ public class DecoratedRenderType extends RenderType {
     @Override
     public void clearRenderState() {
         if (clearStateOverride != null) {
-            clearStateOverride.run();
+            clearStateOverride.accept(delegate::clearRenderState);
         } else {
             delegate.clearRenderState();
         }
