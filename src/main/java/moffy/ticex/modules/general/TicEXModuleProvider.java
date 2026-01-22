@@ -38,6 +38,18 @@ public class TicEXModuleProvider extends AddonModuleProvider {
                 true
         );
         addRawModule(
+                "default_material",
+                "TiCEX Original Materials and Modifiers",
+                TicEXMaterialModule.class,
+                new String[]{"tconstruct"}
+        );
+        addRawModule(
+                "default_utility",
+                "TiCEX Original Utilities",
+                TicEXUtilityModule.class,
+                new String[]{"tconstruct"}
+        );
+        addRawModule(
                 "avaritia_compat",
                 "Avaritia Compat",
                 TicEXAvaritiaModule.class,
@@ -121,18 +133,6 @@ public class TicEXModuleProvider extends AddonModuleProvider {
                 TicEXArsModule.class,
                 new String[]{"tconstruct", "ars_nouveau"}
         );
-        /*addRawModule(
-                "sakura_compat",
-                "Sakura Tinker Compat",
-                TicEXSakuraModule.class,
-                new String[]{"tconstruct", "sakuratinker"}
-        );
-        addRawModule(
-                "things_compat",
-                "Tinkers' Things Compat",
-                TicEXThingsModule.class,
-                new String[]{"tconstruct", "tinkers_things"}
-        );*/
         addRawModule(
                 "jei_compat",
                 "JEI Compat",
