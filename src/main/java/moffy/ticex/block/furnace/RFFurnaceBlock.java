@@ -66,7 +66,7 @@ public class RFFurnaceBlock extends SearedTankBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState()
-            .setValue(OrientableSmelteryBlock.FACING, context.getHorizontalDirection().getOpposite());
+            .setValue(OrientableSmelteryBlock.FACING, context.getHorizontalDirection());
     }
 
     @Deprecated
