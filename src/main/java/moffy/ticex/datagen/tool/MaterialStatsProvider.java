@@ -133,12 +133,12 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
         addMaterialStats(
             TicEXMaterials.CRYSTAL_MATRIX,
             new LimbMaterialStats(3200, -0.4f, 0.45f, -0.1f),
-            new GripMaterialStats(9.99f, 1.0f, 4995.5f)
+            new GripMaterialStats(9.99f, 1.0f, 15.5f)
         );
         addMaterialStats(
             TicEXMaterials.ETHERIC,
             new LimbMaterialStats(2434, 0.25f, -0.05f, -0.1f),
-            new GripMaterialStats(9.99f, 1.0f, 1137.5f)
+            new GripMaterialStats(9.99f, 1.0f, 32.5f)
         );
     }
 

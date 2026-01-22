@@ -60,17 +60,13 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
                 .toolItem(harvest)
                 .level(10)
                 .constant();
-        EnchantmentModule BLAZING_FORTUNE = EnchantmentModule.builder(Enchantments.BLOCK_FORTUNE)
-                .toolItem(harvest)
-                .level(4)
-                .constant();
         EnchantmentModule BLAZING_FIRE_ASPECT = EnchantmentModule.builder(Enchantments.FIRE_ASPECT)
                 .toolItem(ItemPredicate.tag(MELEE))
                 .level(10)
                 .constant();
 
         if (TicEXRegistry.COSMIC_LUCK_MODIFIER != null) buildModifier(TicEXRegistry.COSMIC_LUCK_MODIFIER)
-                .addModules(WEAPON_LOOTING, CONSTANT_FORTUNE)
+                .addModules(WEAPON_LOOTING, CONSTANT_FORTUNE, StatBoostModule.add(ToolStats.LURE).eachLevel(10))
                 .levelDisplay(ModifierLevelDisplay.NO_LEVELS);
         if (TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER != null) buildModifier(TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER)
                 .levelDisplay(ModifierLevelDisplay.NO_LEVELS)

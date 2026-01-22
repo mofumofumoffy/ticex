@@ -60,7 +60,7 @@ public class MaterialTraitsProvider extends AbstractMaterialTraitDataProvider {
                 TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER,
                 TicEXRegistry.BEDROCK_BREAKER_MODIFIER
         );
-        addDefaultTraits(TicEXMaterials.CRYSTAL_MATRIX, TicEXRegistry.AFTERSHOCK_MODIFIER, TinkerModifiers.insatiable);
+        addDefaultTraits(TicEXMaterials.CRYSTAL_MATRIX, TicEXRegistry.AFTERSHOCK_MODIFIER, TinkerModifiers.insatiable, TicEXRegistry.BEDROCK_BREAKER_MODIFIER);
         addTraits(
                 TicEXMaterials.INFINITY,
                 ARMOR,

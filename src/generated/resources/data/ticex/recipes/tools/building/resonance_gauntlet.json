@@ -3,6 +3,7 @@
   "cast": {
     "item": "ticex:exhausted_glove"
   },
+  "cast_purpose": "maybe_material",
   "conditions": [
     {
       "type": "addonapi:mods_available",
