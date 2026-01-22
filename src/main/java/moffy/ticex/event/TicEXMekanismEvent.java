@@ -28,8 +28,8 @@ import mekanism.common.registries.MekanismGameEvents;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.StorageUtils;
 import moffy.ticex.caps.mekanism.MekaArmorGearCapability;
-import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
+import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.modules.mekanism.interfaces.IAbsorbableItem;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
@@ -62,7 +62,6 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
-import slimeknights.tconstruct.common.TinkerTags;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -210,6 +209,8 @@ public class TicEXMekanismEvent {
 
     public static void onLivingJump(LivingEvent.LivingJumpEvent event) {
         if (event.getEntity() instanceof Player player) {
+            if (player.getAbilities().flying) return;
+
             IModule<ModuleHydraulicPropulsionUnit> module = IModuleHelper.INSTANCE.load(
                     player.getItemBySlot(EquipmentSlot.FEET),
                     MekanismModules.HYDRAULIC_PROPULSION_UNIT
