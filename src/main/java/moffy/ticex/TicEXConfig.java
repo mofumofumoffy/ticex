@@ -53,7 +53,7 @@ public class TicEXConfig {
         final ForgeConfigSpec.Builder MORE_CONFIG = new ForgeConfigSpec.Builder();
 
         COMMON.comment("General").push("general");
-        USE_MORE_CONFIG = COMMON.comment("Using ticex-more-config.toml(If true, it will override your datapack!)").define("useMoreConfig", true);
+        USE_MORE_CONFIG = COMMON.comment("Using ticex-more-config.toml(If true, it will override your datapack!)").define("useMoreConfig", false);
         RF_FURNACE_RATE_CAPACITY = COMMON.comment("MAX Rate Capacity(RF/t)").define("rateCapacity", 100000);
         FLUID_TRANSMUTER_PATTERNS = COMMON.comment(
                 "Fluid Transmuter valid tag prefix list"

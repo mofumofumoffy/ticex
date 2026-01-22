@@ -153,8 +153,9 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
     }
 
     public int calculateRfFuelTemperature(int n) {
-        // 23x^w + 5x/19 + 20
-        return 25*n*n + (5*n)/19 + 20;
+        int[] temps = new int[]{20, 90, 225, 402, 625, 902, 1230, 1603, 2026, 2494, 3036, 3594, 4240, 5095,
+                5647, 6397, 7242, 8101, 9039, 10000};
+        return temps[n];
     }
 
     @Override
