@@ -31,10 +31,10 @@ import java.util.Optional;
 public abstract class MaterialArmorTextureSupplierMixin {
 
 
-    @ModifyExpressionValue(method = "materialGetter", at = @At(value = "INVOKE", target = "Lslimeknights/mantle/data/listener/ResourceValidator;test(Lnet/minecraft/resources/ResourceLocation;)Z"))
+    /*@ModifyExpressionValue(method = "materialGetter", at = @At(value = "INVOKE", target = "Lslimeknights/mantle/data/listener/ResourceValidator;test(Lnet/minecraft/resources/ResourceLocation;)Z"))
     private static boolean ignoreValidator(boolean original) {
         return true;
-    }
+    }*/
 
     @ModifyReturnValue(method = "lambda$materialGetter$2", at = {
             @At(value = "RETURN", ordinal = 0),
