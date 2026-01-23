@@ -70,11 +70,11 @@ public class TicEXSlashBladeModule implements AddonModule {
         );
 
         TicEXRegistry.SLASHBLADE_BLADE_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
-                "slashblade_blade",
+                TicEXRegistry.SLASHBLADE_BLADE,
                 defaultProperties
         );
         TicEXRegistry.SLASHBLADE_SAYA_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
-                "slashblade_saya",
+                TicEXRegistry.SLASHBLADE_SAYA,
                 defaultProperties
         );
 

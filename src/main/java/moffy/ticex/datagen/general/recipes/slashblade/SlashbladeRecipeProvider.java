@@ -89,11 +89,11 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
         }
 
         if(TicEXRegistry.SLASHBLADE_BLADE != null) {
-            sbCasting(topConsumer, TicEXRegistry.SLASHBLADE_BLADE, TicEXRegistry.SLASHBLADE_BLADE_CAST, "slashblade_blade", 4, 2, 4);
+            sbCasting(topConsumer, TicEXRegistry.SLASHBLADE_BLADE, TicEXRegistry.SLASHBLADE_BLADE_CAST, "slashblade_blade", 4, 4, 4);
         }
 
         if(TicEXRegistry.SLASHBLADE_SAYA != null) {
-            sbCasting(topConsumer, TicEXRegistry.SLASHBLADE_SAYA, TicEXRegistry.SLASHBLADE_SAYA_CAST, "slashblade_saya", 6, 2, 6);
+            sbCasting(topConsumer, TicEXRegistry.SLASHBLADE_SAYA, TicEXRegistry.SLASHBLADE_SAYA_CAST, "slashblade_saya", 6, 6, 6);
         }
 
         if(TicEXRegistry.CATALYST_SLASHBLADE != null) {
