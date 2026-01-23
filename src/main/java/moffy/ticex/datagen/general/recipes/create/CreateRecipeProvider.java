@@ -1,6 +1,6 @@
 package moffy.ticex.datagen.general.recipes.create;
 
-import com.simibubi.create.foundation.data.recipe.MechanicalCraftingRecipeBuilder;
+import com.simibubi.create.api.data.recipe.MechanicalCraftingRecipeBuilder;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.modules.general.TicEXRegistry;
