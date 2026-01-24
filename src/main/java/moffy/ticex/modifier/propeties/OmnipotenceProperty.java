@@ -36,7 +36,7 @@ public class OmnipotenceProperty {
                             user,
                             ModConfig.swordAttackRange.get(),
                             ModConfig.swordRangeDamage.get(),
-                            ModConfig.isSwordAttackAnimal.get(),
+                            true,
                             ModConfig.isSwordAttackLightning.get()
                     );
                     user.getCooldowns().addCooldown(stack.getItem(), 20);
