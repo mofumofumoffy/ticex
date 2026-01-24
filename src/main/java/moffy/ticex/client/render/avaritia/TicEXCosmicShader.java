@@ -4,7 +4,6 @@ import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import committee.nova.mods.avaritia.Const;
-import committee.nova.mods.avaritia.api.client.shader.CCShaderInstance;
 import moffy.ticex.TicEX;
 import net.minecraft.Util;
 import net.minecraft.client.Camera;
@@ -12,10 +11,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RegisterShadersEvent;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,7 +30,7 @@ public final class TicEXCosmicShader {
     public int internalRenderTime;
     public float internalRenderFrame;
 
-    public CCShaderInstance shaderInstance;
+    public ShaderInstance shaderInstance;
     public Uniform cosmicTime;
     public Uniform cosmicYaw;
     public Uniform cosmicPitch;
@@ -73,7 +74,7 @@ public final class TicEXCosmicShader {
 
     }
 
-    public CCShaderInstance getShaderInstance() {
+    public ShaderInstance getShaderInstance() {
         return shaderInstance;
     }
 
@@ -109,25 +110,27 @@ public final class TicEXCosmicShader {
     }
 
     public void registerShader(RegisterShadersEvent event) {
-        event.registerShader(
-                CCShaderInstance.create(
-                        event.getResourceProvider(),
-                        TicEX.getResource("avaritia/materials/infinity"),
-                        DefaultVertexFormat.BLOCK
-                ),
-                e -> {
-                    shaderInstance = (CCShaderInstance) e;
-                    cosmicTime = Objects.requireNonNull(shaderInstance.getUniform("time"));
-                    cosmicYaw = Objects.requireNonNull(shaderInstance.getUniform("yaw"));
-                    cosmicPitch = Objects.requireNonNull(shaderInstance.getUniform("pitch"));
-                    cosmicExternalScale = Objects.requireNonNull(shaderInstance.getUniform("externalScale"));
-                    cosmicOpacity = Objects.requireNonNull(shaderInstance.getUniform("opacity"));
-                    cosmicUVs = Objects.requireNonNull(shaderInstance.getUniform("cosmicuvs"));
-                    cosmicTime.set((float) internalRenderTime + internalRenderFrame);
-                    shaderInstance.onApply(() -> cosmicTime.set((float) internalRenderTime + internalRenderFrame));
-                    initialize();
-                }
-        );
+        try{
+            event.registerShader(
+                    new ShaderInstance(
+                            event.getResourceProvider(),
+                            TicEX.getResource("avaritia/materials/infinity"),
+                            DefaultVertexFormat.BLOCK
+                    ),
+            e -> {
+                shaderInstance = e;
+                cosmicTime = Objects.requireNonNull(shaderInstance.getUniform("time"));
+                cosmicYaw = Objects.requireNonNull(shaderInstance.getUniform("yaw"));
+                cosmicPitch = Objects.requireNonNull(shaderInstance.getUniform("pitch"));
+                cosmicExternalScale = Objects.requireNonNull(shaderInstance.getUniform("externalScale"));
+                cosmicOpacity = Objects.requireNonNull(shaderInstance.getUniform("opacity"));
+                cosmicUVs = Objects.requireNonNull(shaderInstance.getUniform("cosmicuvs"));
+                cosmicTime.set((float) internalRenderTime + internalRenderFrame);
+                shaderInstance.apply();
+                initialize();
+            }
+            );
+        }catch (IOException ignore){}
     }
 
     public void setupUniform(ResourceLocation atlas, boolean onGui) {
