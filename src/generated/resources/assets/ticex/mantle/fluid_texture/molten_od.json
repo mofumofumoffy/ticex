@@ -1,0 +1,5 @@
+{
+  "color": "FFFFFFFF",
+  "flowing": "ticex:fluid/molten/od/flowing",
+  "still": "ticex:fluid/molten/od/still"
+}

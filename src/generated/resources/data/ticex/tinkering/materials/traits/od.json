@@ -1,0 +1,16 @@
+{
+  "default": [
+    {
+      "level": 1,
+      "name": "ticex:afloat"
+    },
+    {
+      "level": 1,
+      "name": "ticex:dungeon_master"
+    },
+    {
+      "level": 1,
+      "name": "ticex:unravel"
+    }
+  ]
+}
