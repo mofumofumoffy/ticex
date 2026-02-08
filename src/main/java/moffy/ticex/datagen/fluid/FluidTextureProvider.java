@@ -26,8 +26,9 @@ public class FluidTextureProvider extends AbstractFluidTextureProvider {
         molten(TicEXRegistry.MOLTEN_INFINITY);
         molten(TicEXRegistry.MOLTEN_NEUTRON);
         molten(TicEXRegistry.MOLTEN_CRYSTAL_MATRIX);
-        molten(TicEXRegistry.MOLTEN_ETHERIC);
         molten(TicEXRegistry.MOLTEN_BLAZING);
+        molten(TicEXRegistry.MOLTEN_ETHERIC);
+        molten(TicEXRegistry.MOLTEN_OD);
         molten(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE);
 
         int i = 0;

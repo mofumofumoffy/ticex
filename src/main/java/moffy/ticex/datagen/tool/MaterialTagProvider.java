@@ -15,7 +15,8 @@ public class MaterialTagProvider extends slimeknights.tconstruct.common.data.tag
     protected void addTags() {
         this.tag(TinkerTags.Materials.EXCLUDE_FROM_LOOT).addOptional(
                 TicEX.getResource("infinity"),
-                TicEX.getResource("etheric")
+                TicEX.getResource("etheric"),
+                TicEX.getResource("od")
             );
     }
 }

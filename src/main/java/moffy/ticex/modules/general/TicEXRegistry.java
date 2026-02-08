@@ -177,6 +177,7 @@ public class TicEXRegistry {
 
     public static RegistryObject<Item> EXHAUSTED_GLOVE = null;
     public static RegistryObject<Item> ETHERIC_INGOT = null;
+    public static RegistryObject<Item> OD_INGOT = null;
     public static RegistryObject<Item> DRACONIUM_CRYSTAL = null;
     public static RegistryObject<Item> WYVERN_CRYSTAL = null;
     public static RegistryObject<Item> DRACONIC_CRYSTAL = null;
@@ -227,6 +228,7 @@ public class TicEXRegistry {
     public static EnumObject<ArmorItem.Type, ? extends IModifiable> SINGULAR_GEM_ARMOR = null;
 
     public static RegistryObject<Block> ETHERIC_BLOCK = null;
+    public static RegistryObject<Block> OD_BLOCK = null;
     public static RegistryObject<Block> SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> CREATIVE_SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> SCORCHED_RF_FURNACE = null;
@@ -241,8 +243,9 @@ public class TicEXRegistry {
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_INFINITY = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_NEUTRON = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_CRYSTAL_MATRIX = null;
-    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_BLAZING = null;
+    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
+    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_OD = null;
 
     public static RegistryObject<EntityType<SBToolItemEntity>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
     public static RegistryObject<EntityType<EndestShotProjectile>> ENDESTSHOT_PROJECTILE = null;
@@ -303,6 +306,9 @@ public class TicEXRegistry {
     public static DynamicModifier NECTAR_MODIFIER = null;
     public static StaticModifier<Modifier> REACTIVE_MODIFIER = null;
     public static StaticModifier<Modifier> ALTERATIVE_MODIFIER = null;
+    public static StaticModifier<Modifier> AFLOAT_MODIFIER = null;
+    public static StaticModifier<Modifier> DUNGEON_MASTER_MODIFIER = null;
+    public static StaticModifier<Modifier> UNRAVEL_MODIFIER = null;
 
     public static Tier INFINITY_TIER;
 

@@ -46,6 +46,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
         );
 
         metalMaterialRecipe(pWriter, TicEXMaterials.ETHERIC, materialFolder, "etheric", false);
+        metalMaterialRecipe(pWriter, TicEXMaterials.OD, materialFolder, "od", false);
 
         buildShapedRecipes(pWriter);
         buildMaterialRecipes(pWriter);
@@ -60,6 +61,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .save(materialConsumer, prefix(TicEXTags.Fluids.ETHERIC.location(), alloysFolder));
 
         metalIngotOptional(pWriter, TicEXTags.Fluids.ETHERIC, TicEXTags.Items.ETHERIC_BLOCK, 5000, TicEXRegistry.MOLTEN_ETHERIC.getId());
+        metalIngotOptional(pWriter, TicEXTags.Fluids.OD, TicEXTags.Items.OD_BLOCK, 5000, TicEXRegistry.MOLTEN_OD.getId());
     }
 
     public void buildShapedRecipes(Consumer<FinishedRecipe> pWriter) {

@@ -122,6 +122,16 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
                 .build(),
             StatlessMaterialStats.BINDING
         );
+        addMaterialStats(
+                TicEXMaterials.OD,
+                new HeadMaterialStats(1992, 5.5f, Tiers.NETHERITE, 2.5f),
+                HandleMaterialStats.multipliers()
+                        .attackDamage(1.0f)
+                        .attackSpeed(1.6f)
+                        .miningSpeed(1f)
+                        .build(),
+                StatlessMaterialStats.BINDING
+        );
     }
 
     private void addRanged() {
@@ -139,6 +149,11 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
             TicEXMaterials.ETHERIC,
             new LimbMaterialStats(2434, 0.25f, -0.05f, -0.1f),
             new GripMaterialStats(9.99f, 1.0f, 32.5f)
+        );
+        addMaterialStats(
+                TicEXMaterials.OD,
+                new LimbMaterialStats(1992, 0.4f, -0.1f, -0.15f),
+                new GripMaterialStats(9.99f, 1.0f, 16.5f)
         );
     }
 

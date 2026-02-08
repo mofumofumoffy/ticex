@@ -38,11 +38,13 @@ public class BlockTagProvider extends BlockTagsProvider {
         addMetalTags(TicEXTags.Blocks.CRYSTAL_MATRIX, ResourceLocation.fromNamespaceAndPath("avaritia", "crystal_matrix"), true);
 
         addMetalTags(TicEXTags.Blocks.ETHERIC, TicEX.getResource("etheric_block"), true);
+        addMetalTags(TicEXTags.Blocks.OD, TicEX.getResource("od_block"), true);
 
         tag(TicEXTags.Blocks.FLUID_TRANSMUTER_TANK)
                 .addOptionalTag(TinkerTags.Blocks.ALLOYER_TANKS);
 
         addPickaxeBlock(BlockTags.NEEDS_IRON_TOOL, TicEX.getResource("etheric_block"));
+        addPickaxeBlock(BlockTags.NEEDS_IRON_TOOL, TicEX.getResource("od_block"));
 
         addPickaxeBlock(BlockTags.NEEDS_STONE_TOOL,
             TicEX.getResource("seared_rf_furnace"),

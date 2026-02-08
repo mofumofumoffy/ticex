@@ -20,6 +20,7 @@ public class TicEXTags {
         public static final TagKey<Block> NEUTRON = common("storage_blocks/neutron");
         public static final TagKey<Block> CRYSTAL_MATRIX = common("storage_blocks/crystal_matrix");
         public static final TagKey<Block> ETHERIC = common("storage_blocks/etheric");
+        public static final TagKey<Block> OD = common("storage_blocks/od");
 
         public static final TagKey<Block> FLUID_TRANSMUTER_TANK = local("transmuter_tank");
 
@@ -40,14 +41,16 @@ public class TicEXTags {
         public static final TagKey<Item> INFINITY_INGOT = common("ingots/infinity");
         public static final TagKey<Item> NEUTRON_INGOT = common("ingots/neutron");
         public static final TagKey<Item> CRYSTAL_MATRIX_INGOT = common("ingots/crystal_matrix");
-        public static final TagKey<Item> ETHERIC_INGOT = common("ingots/etheric");
         public static final TagKey<Item> BLAZING_INGOT = common("ingots/blazing");
+        public static final TagKey<Item> ETHERIC_INGOT = common("ingots/etheric");
+        public static final TagKey<Item> OD_INGOT = common("ingots/od");
 
         public static final TagKey<Item> INFINITY_BLOCK = common("storage_blocks/infinity");
         public static final TagKey<Item> NEUTRON_BLOCK = common("storage_blocks/neutron");
         public static final TagKey<Item> CRYSTAL_MATRIX_BLOCK = common("storage_blocks/crystal_matrix");
-        public static final TagKey<Item> ETHERIC_BLOCK = common("storage_blocks/etheric");
         public static final TagKey<Item> BLAZING_BLOCK = common("storage_blocks/blazing");
+        public static final TagKey<Item> ETHERIC_BLOCK = common("storage_blocks/etheric");
+        public static final TagKey<Item> OD_BLOCK = common("storage_blocks/od");
 
 
         public static final TagKey<Item> SERAM = local("seram");
@@ -75,9 +78,10 @@ public class TicEXTags {
         public static final TagKey<Fluid> NEUTRON = common("molten_neutron");
         public static final TagKey<Fluid> CRYSTAL_MATRIX = common("molten_crystal_matrix");
         public static final TagKey<Fluid> BLAZING = common("molten_blazing");
-        public static final TagKey<Fluid> ETHERIC = common("molten_etheric");
         public static final TagKey<Fluid> HEPATIZON = common("molten_hepatizon");
         public static final TagKey<Fluid> GOLD = common("molten_gold");
+        public static final TagKey<Fluid> ETHERIC = common("molten_etheric");
+        public static final TagKey<Fluid> OD = common("molten_od");
 
         public static final TagKey<Fluid> RECONSTRUCTION_CORE = common("molten_reconstruction_core");
 

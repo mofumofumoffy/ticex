@@ -19,6 +19,10 @@
     {
       "id": "ticex:molten_etheric",
       "required": false
+    },
+    {
+      "id": "ticex:molten_od",
+      "required": false
     }
   ]
 }

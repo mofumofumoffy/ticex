@@ -72,6 +72,7 @@ public class MaterialTraitsProvider extends AbstractMaterialTraitDataProvider {
 
 
         addDefaultTraits(TicEXMaterials.ETHERIC, TicEXRegistry.SASSY_MODIFIER, TicEXRegistry.DEFLECTION_MODIFIER);
+        addDefaultTraits(TicEXMaterials.OD, TicEXRegistry.AFLOAT_MODIFIER, TicEXRegistry.DUNGEON_MASTER_MODIFIER, TicEXRegistry.UNRAVEL_MODIFIER);
         addDefaultTraits(TicEXMaterials.RECONSTRUCTION, TicEXRegistry.REBIRTH_MODIFIER);
         addTraits(TicEXMaterials.RECONSTRUCTION, ARMOR, TicEXRegistry.REBIRTH_MODIFIER);
     }

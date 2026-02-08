@@ -32,6 +32,7 @@ public class FluidTagProvider extends FluidTagsProvider {
         fluidTag(TicEXTags.Fluids.BLAZING, TicEX.getResource("molten_blazing"));
 
         fluidTag(TicEXTags.Fluids.ETHERIC, TicEX.getResource("molten_etheric"));
+        fluidTag(TicEXTags.Fluids.OD, TicEX.getResource("molten_od"));
 
         fluidTag(TicEXTags.Fluids.RECONSTRUCTION_CORE, TicEX.getResource("molten_reconstruction_core"));
 
@@ -40,8 +41,9 @@ public class FluidTagProvider extends FluidTagsProvider {
             TicEX.getResource("molten_infinity"),
             TicEX.getResource("molten_neutron"),
             TicEX.getResource("molten_crystal_matrix"),
-                TicEX.getResource("molten_blazing"),
-            TicEX.getResource("molten_etheric")
+            TicEX.getResource("molten_blazing"),
+            TicEX.getResource("molten_etheric"),
+            TicEX.getResource("molten_od")
         );
     }
 

@@ -78,6 +78,7 @@ public class ItemTagProvider extends ItemTagsProvider {
         addOptional(TicEXTags.Items.BLAZING_INGOT, ResourceLocation.fromNamespaceAndPath("avaritia", "blaze_cube"));
 
         addOptional(TicEXTags.Items.ETHERIC_INGOT, TicEX.getResource("etheric_ingot"));
+        addOptional(TicEXTags.Items.OD_INGOT, TicEX.getResource("od_ingot"));
 
         //blocks
         addOptional(TicEXTags.Items.INFINITY_BLOCK, ResourceLocation.fromNamespaceAndPath("avaritia", "infinity"));
@@ -86,6 +87,7 @@ public class ItemTagProvider extends ItemTagsProvider {
         addOptional(TicEXTags.Items.BLAZING_BLOCK, ResourceLocation.fromNamespaceAndPath("avaritia", "blaze_cube_block"));
 
         addOptional(TicEXTags.Items.ETHERIC_BLOCK, TicEX.getResource("etheric_block"));
+        addOptional(TicEXTags.Items.OD_BLOCK, TicEX.getResource("od_block"));
 
         //trim_materials
         tag(TRIM_MATERIALS)

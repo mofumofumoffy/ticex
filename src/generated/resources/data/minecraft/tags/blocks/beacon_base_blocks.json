@@ -15,6 +15,10 @@
     {
       "id": "ticex:etheric_block",
       "required": false
+    },
+    {
+      "id": "ticex:od_block",
+      "required": false
     }
   ]
 }
