@@ -684,7 +684,7 @@ public class ModifierEvolved
      public void onBreakSpeed(IToolStackView iToolStackView, ModifierEntry modifierEntry, PlayerEvent.BreakSpeed breakSpeedEvent, Direction direction, boolean b, float f) {
         ItemStack toolStack = TicEXUtils.getToolStack(iToolStackView);
         if(!toolStack.isEmpty()){
-            breakSpeedEvent.setNewSpeed(getDestroySpeed(toolStack, breakSpeedEvent.getState(), breakSpeedEvent.getOriginalSpeed()));
+            breakSpeedEvent.setNewSpeed(getDestroySpeed(toolStack, breakSpeedEvent.getState(), breakSpeedEvent.getNewSpeed()));
         }
      }
 
