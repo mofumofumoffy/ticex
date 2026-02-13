@@ -31,12 +31,19 @@
     "modem": "#e6f51d",
     "psionizing_radiation": "#d18ede",
     "socket": "#282629",
-    "sensor": "#dbdbdb"
+    "sensor": "#dbdbdb",
+    "skullfire": "#696969",
+    "blazing_flame": "#d9ae38",
+    "blazing_fortune": "#c3cc41",
+    "afloat": "#419ecc",
+    "dungeon_master": "#21268a",
+    "unravel": "#3960ed"
   },
   "material.ticex": {
     "infinity": "#FF5555",
     "neutron": "#0d0d0d",
     "crystal_matrix": "#42e0f5",
+    "blazing": "#bf9626",
     "reconstruction": "#3483eb",
     "etheric": "#2deb59",
     "draconium": "#0000aa",
