@@ -27,6 +27,12 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public class TicEXUtils {
+    public static ItemStack getToolStack(IToolStackView tool){
+        if(tool instanceof ToolStack toolStack){
+            return toolStack.createStack();
+        }
+        return ItemStack.EMPTY;
+    }
 
     public static ItemStack getToolStack(IToolStackView tool, LivingEntity entity, Modifier modifier) {
         return getToolStack(tool, entity, stack -> ToolStack.from(stack).getModifierLevel(modifier) > 0);
