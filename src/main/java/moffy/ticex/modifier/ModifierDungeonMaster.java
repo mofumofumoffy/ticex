@@ -21,7 +21,7 @@ public class ModifierDungeonMaster extends NoLevelsModifier implements MeleeDama
         Player player = toolAttackContext.getPlayerAttacker();
         Level level = toolAttackContext.getLevel();
         if(player != null && !level.isClientSide()){
-            if(level.canSeeSky(player.blockPosition())){
+            if(!level.canSeeSky(player.blockPosition())){
                 return damage + 5;
             }
         }

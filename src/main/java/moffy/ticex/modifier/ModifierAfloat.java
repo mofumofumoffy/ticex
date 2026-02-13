@@ -21,7 +21,7 @@ public class ModifierAfloat extends NoLevelsModifier implements MeleeDamageModif
     public float getMeleeDamage(IToolStackView iToolStackView, ModifierEntry modifierEntry, ToolAttackContext toolAttackContext, float baseDamage, float damage) {
         Player player = toolAttackContext.getPlayerAttacker();
         if(player != null && !toolAttackContext.getLevel().isClientSide()){
-            if(player.isPassenger()){
+            if(player.isPassenger() || player.getVehicle() != null){
                 return damage + 5;
             }
         }
