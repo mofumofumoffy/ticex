@@ -41,6 +41,20 @@ public final class TicEXCosmicShader {
     public Uniform cosmicOpacity;
     public Uniform cosmicUVs;
 
+    public final Function<ResourceLocation, float[]> cosmicUVGetter = Util.memoize(resourceLocation -> {
+        float[] cosmicUV = new float[AvaritiaShaders.COSMIC_UVS.length];
+        for (int i = 0; i < AvaritiaShaders.COSMIC_SPRITES.length; ++i) {
+            TextureAtlasSprite sprite = Minecraft.getInstance()
+                    .getTextureAtlas(resourceLocation)
+                    .apply(Const.rl("misc/cosmic/cosmic_" + i));
+            cosmicUV[i * 4] = sprite.getU0();
+            cosmicUV[i * 4 + 1] = sprite.getV0();
+            cosmicUV[i * 4 + 2] = sprite.getU1();
+            cosmicUV[i * 4 + 3] = sprite.getV1();
+        }
+        return cosmicUV;
+    });
+
     public TicEXCosmicShader() {
         stateShard = new RenderStateShard.ShaderStateShard(() -> shaderInstance);
         cosmicRenderType = RenderType.create(
@@ -161,7 +175,7 @@ public final class TicEXCosmicShader {
         cosmicOpacity.set(1.0F);
 
         if (cosmicUVs != null) {
-            cosmicUVs.set(AvaritiaShaders.COSMIC_UVS);
+            cosmicUVs.set(this.cosmicUVGetter.apply(atlas));
         }
     }
 }
