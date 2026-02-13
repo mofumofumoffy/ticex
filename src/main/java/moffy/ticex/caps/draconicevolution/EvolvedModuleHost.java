@@ -51,8 +51,8 @@ public class EvolvedModuleHost extends ModuleHostImpl {
                     props.add(miningAoEProperty);
                     props.add(aoeSafeProperty);
                 }
+                props.add(new DecimalProperty("mining_speed", 1).range(0, 1).setFormatter(DecimalFormatter.PERCENT_1));
             });
-
         this.toolSupplier = toolSupplier;
     }
 

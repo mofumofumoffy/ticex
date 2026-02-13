@@ -12,6 +12,8 @@ import com.brandon3055.draconicevolution.api.modules.ModuleHelper;
 import com.brandon3055.draconicevolution.api.modules.ModuleTypes;
 import com.brandon3055.draconicevolution.api.modules.data.AOEData;
 import com.brandon3055.draconicevolution.api.modules.data.DamageData;
+import com.brandon3055.draconicevolution.api.modules.data.SpeedData;
+import com.brandon3055.draconicevolution.api.modules.lib.StackModuleContext;
 import com.brandon3055.draconicevolution.client.keybinding.KeyBindings;
 import com.brandon3055.draconicevolution.init.EquipCfg;
 import com.mojang.datafixers.util.Pair;
@@ -33,6 +35,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -43,6 +46,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.client.TooltipKey;
@@ -54,7 +58,9 @@ import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeHitModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.RequirementsModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.mining.BlockBreakModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedModifierHook;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.context.ToolHarvestContext;
@@ -77,9 +83,12 @@ public class ModifierEvolved
         TooltipModifierHook,
         MeleeHitModifierHook,
         BlockBreakModifierHook,
+        BreakSpeedModifierHook,
         RequirementsModifierHook,
         ValidateModifierHook,
-        EnergyModifierHook {
+        EnergyModifierHook,
+        InventoryTickModifierHook
+ {
 
     public static final ResourceLocation MODULE_HOST_LOCATION = TicEX.getResource("module_host");
     public static final ResourceLocation OP_STORAGE_LOCATION = TicEX.getResource("op_storage");
@@ -97,8 +106,10 @@ public class ModifierEvolved
             ModifierHooks.TOOLTIP,
             ModifierHooks.MELEE_HIT,
             ModifierHooks.BLOCK_BREAK,
+            ModifierHooks.BREAK_SPEED,
             ModifierHooks.REQUIREMENTS,
             ModifierHooks.VALIDATE,
+            ModifierHooks.INVENTORY_TICK,
             TicEXRegistry.ENERGY_HOOK
         );
     }
@@ -657,4 +668,55 @@ public class ModifierEvolved
     public boolean canReceive(IToolStackView tool, ItemStack stack) {
         return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::canReceive).orElse(false);
     }
-}
+
+     @Override
+     public void onInventoryTick(IToolStackView iToolStackView, ModifierEntry modifierEntry, Level level, LivingEntity livingEntity, int i, boolean b, boolean b1, ItemStack toolStack) {
+         toolStack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).ifPresent(moduleHost -> {
+             for(EquipmentSlot slot : EquipmentSlot.values()){
+                 if(ItemStack.isSameItem(livingEntity.getItemBySlot(slot), toolStack)) {
+                     moduleHost.handleTick(new StackModuleContext(toolStack, livingEntity, slot).setInEquipModSlot(true));
+                 }
+             }
+         });
+     }
+
+     @Override
+     public void onBreakSpeed(IToolStackView iToolStackView, ModifierEntry modifierEntry, PlayerEvent.BreakSpeed breakSpeedEvent, Direction direction, boolean b, float f) {
+        ItemStack toolStack = TicEXUtils.getToolStack(iToolStackView);
+        if(!toolStack.isEmpty()){
+            breakSpeedEvent.setNewSpeed(getDestroySpeed(toolStack, breakSpeedEvent.getState(), breakSpeedEvent.getOriginalSpeed()));
+        }
+     }
+
+     private float getDestroySpeed(ItemStack stack, BlockState state, float baseSpeed) {
+         ModuleHost host = stack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).orElseThrow(IllegalStateException::new);
+         SpeedData data = host.getModuleData(ModuleTypes.SPEED);
+         float moduleValue = data == null ? 0 : (float) data.speedMultiplier();
+         float multiplier = MathHelper.map((moduleValue + 1F) * (moduleValue + 1F), 1F, 2F, 1F, 1.65F);
+         float propVal = 1F;
+         if (host instanceof PropertyProvider && ((PropertyProvider) host).hasDecimal("mining_speed")) {
+             propVal = (float) ((PropertyProvider) host).getDecimal("mining_speed").getValue();
+             propVal *= propVal;
+         }
+
+         float aoe = host.getModuleData(ModuleTypes.AOE, new AOEData(0)).aoe();
+         if (host instanceof PropertyProvider && ((PropertyProvider) host).hasInt("mining_aoe")) {
+             aoe = ((PropertyProvider) host).getInt("mining_aoe").getValue();
+         }
+
+         if (getEnergyStored(ToolStack.from(stack), stack) < EquipCfg.energyHarvest) {
+             multiplier = 0;
+         } else if (aoe > 0) {
+             float userTarget = multiplier * propVal;
+             multiplier = Math.min(userTarget, multiplier / (1 + (aoe * 10)));
+         } else {
+             multiplier *= propVal;
+         }
+
+         if (multiplier > 0 || propVal == 0) {
+             return baseSpeed * multiplier;
+         } else {
+             return baseSpeed;
+         }
+     }
+ }
