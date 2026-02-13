@@ -80,6 +80,7 @@ public class LayerResonanceTools<T extends LivingEntity, M extends EntityModel<T
             float time = pLivingEntity.tickCount + pPartialTick;
             double baseAngle = 2 * Math.PI / tools * i;
             double rotationAngle = baseAngle + (time * 0.07);
+            //double rotationAngle = 0f;
 
             double x = RADIUS * Math.cos(rotationAngle);
             double z = RADIUS * Math.sin(rotationAngle);
@@ -88,6 +89,8 @@ public class LayerResonanceTools<T extends LivingEntity, M extends EntityModel<T
             pPoseStack.mulPose(Axis.ZP.rotation(-Mth.PI*0.5f));
 
             pPoseStack.scale(1.5f, 1.5f, 1.5f);
+            pPoseStack.mulPose(Axis.YP.rotationDegrees(-180f));
+            pPoseStack.mulPose(Axis.ZP.rotationDegrees(-45f));
 
             TicEXRenderUtils.renderTool(entityRenderDispatcher, itemRenderer, toolStack, pPoseStack, pBuffer, pLivingEntity, pPackedLight);
 

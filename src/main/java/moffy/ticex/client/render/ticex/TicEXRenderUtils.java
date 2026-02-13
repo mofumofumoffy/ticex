@@ -1,6 +1,7 @@
 package moffy.ticex.client.render.ticex;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import moffy.ticex.client.render.slashblade.SBItemEntityRenderUtils;
 import moffy.ticex.item.modifiable.ModifiableGunItem;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
@@ -18,6 +19,8 @@ public class TicEXRenderUtils {
 
     public static void renderTool(EntityRenderDispatcher entityRenderDispatcher, ItemRenderer itemRenderer, ItemStack toolStack, PoseStack pPoseStack, MultiBufferSource pBuffer, Entity pEntity, int pPackedLight) {
         if(ModList.get().isLoaded("slashblade") && toolStack.getItem() instanceof ModifiableSlashBladeItem){
+            pPoseStack.mulPose(Axis.ZP.rotationDegrees(45f));
+            pPoseStack.mulPose(Axis.YP.rotationDegrees(180f));
             SBItemEntityRenderUtils.render(entityRenderDispatcher, toolStack, pEntity.level(), pPoseStack, pBuffer, pPackedLight);
             return;
         }
