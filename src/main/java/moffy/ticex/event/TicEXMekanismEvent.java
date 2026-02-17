@@ -27,6 +27,7 @@ import mekanism.common.lib.radiation.RadiationManager;
 import mekanism.common.registries.MekanismGameEvents;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.StorageUtils;
+import moffy.ticex.TicEX;
 import moffy.ticex.caps.mekanism.MekaArmorGearCapability;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
@@ -78,16 +79,18 @@ public class TicEXMekanismEvent {
         ItemStack stack = event.getItemStack();
         EquipmentSlot slot = event.getSlotType();
         if(stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
+            IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
             if (slot == EquipmentSlot.MAINHAND) {
                 int unitDamage = 0;
-                IModule<ModuleAttackAmplificationUnit> attackAmplificationUnit = ((IModuleContainerItem)stack.getItem()).getModule(stack, MekanismModules.ATTACK_AMPLIFICATION_UNIT);
+                IModule<ModuleAttackAmplificationUnit> attackAmplificationUnit = mekaGear.getModule(stack, MekanismModules.ATTACK_AMPLIFICATION_UNIT);
                 if (attackAmplificationUnit != null && attackAmplificationUnit.isEnabled()) {
+
                     unitDamage = attackAmplificationUnit.getCustomInstance().getDamage();
                     if (unitDamage > 0) {
                         FloatingLong energyCost = MekanismConfig.gear.mekaToolEnergyUsageWeapon.get().multiply(unitDamage / 4D);
                         IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
                         FloatingLong energy = energyContainer == null ? FloatingLong.ZERO : energyContainer.getEnergy();
-                        if (energy.smallerThan(energyCost)) {
+                        if (energyCost.smallerThan(energy)) {
                             double bonusDamage = unitDamage * energy.divideToLevel(energyCost);
                             if (bonusDamage > 0) {
                                 ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
@@ -263,7 +266,7 @@ public class TicEXMekanismEvent {
                                 serverPlayer.connection.aboveGroundTickCount = 0;
                             }
                         }
-                        ((IJetpackItem) jetpack.getItem()).useJetpackFuel(jetpack);
+                        jetpackGear.useJetpackFuel(jetpack);
                         if (player.level().getGameTime() % 10 == 0) {
                             player.gameEvent(MekanismGameEvents.JETPACK_BURN.get());
                         }

@@ -113,7 +113,25 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.PROPERTY_PROVIDER_HOOK, ModifierHooks.TOOL_USING, ModifierHooks.TOOL_ACTION, ModifierHooks.ENTITY_INTERACT, ModifierHooks.BREAK_SPEED, ModifierHooks.BLOCK_BREAK, ModifierHooks.MELEE_DAMAGE, ModifierHooks.ENCHANTMENTS, ModifierHooks.ELYTRA_FLIGHT, ModifierHooks.INVENTORY_TICK, ModifierHooks.BOW_AMMO, ModifierHooks.VALIDATE, ModifierHooks.REQUIREMENTS, ModifierHooks.BLOCK_INTERACT, TicEXRegistry.ENERGY_HOOK, TicEXRegistry.EMBOSSMENT_HOOK);
+        hookBuilder.addHook(
+                this,
+                TicEXRegistry.PROPERTY_PROVIDER_HOOK,
+                ModifierHooks.TOOL_USING,
+                ModifierHooks.TOOL_ACTION,
+                ModifierHooks.ENTITY_INTERACT,
+                ModifierHooks.BREAK_SPEED,
+                ModifierHooks.BLOCK_BREAK,
+                ModifierHooks.MELEE_DAMAGE,
+                ModifierHooks.ENCHANTMENTS,
+                ModifierHooks.ELYTRA_FLIGHT,
+                ModifierHooks.INVENTORY_TICK,
+                ModifierHooks.BOW_AMMO,
+                ModifierHooks.VALIDATE,
+                ModifierHooks.REQUIREMENTS,
+                ModifierHooks.BLOCK_INTERACT,
+                TicEXRegistry.ENERGY_HOOK,
+                TicEXRegistry.EMBOSSMENT_HOOK
+        );
     }
 
     @Override
@@ -281,7 +299,7 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
                         Level world = player.level();
                         BlockPos pos = toolHarvestContext.getPos();
                         BlockState state = world.getBlockState(pos);
-                        boolean silk = ((IModuleContainerItem)stack.getItem()).isModuleEnabled(stack, MekanismModules.SILK_TOUCH_UNIT);
+                        boolean silk = mekaGear.isModuleEnabled(stack, MekanismModules.SILK_TOUCH_UNIT);
                         FloatingLong modDestroyEnergy = getDestroyEnergy(stack, silk);
                         FloatingLong energyRequired = getDestroyEnergy(modDestroyEnergy, state.getDestroySpeed(world, pos));
                         if (energyContainer.extract(energyRequired, Action.SIMULATE, AutomationType.MANUAL).greaterOrEqual(energyRequired) && mekaGear instanceof IBlastingItem blastingCapability) {
@@ -437,12 +455,12 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
 
     @Override
     public Component validate(@NotNull IToolStackView tool, ModifierEntry entry) {
-        /*if (
+        if (
                         tool.getModifierLevel(ModifierIds.reinforced) < 5 || tool.getModifierLevel(ModifierIds.netherite) < 1
 
         ) {
             return Component.translatable("recipe.ticex.modifier.mekanic_requirements");
-        }*/
+        }
         return null;
     }
 

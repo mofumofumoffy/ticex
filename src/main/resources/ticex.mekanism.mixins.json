@@ -8,6 +8,7 @@
     "IModifiableMixin",
     "MekanismHUDMixin",
     "MekaSuitEnergyLevelMixin",
+    "ModifiableArmorItemMixin",
     "ModuleHelperMixin",
     "ModuleJetpackUnitMixin",
     "ModuleNutritionalInjectionUnitMixin",
