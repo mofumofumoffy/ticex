@@ -200,7 +200,6 @@ public class TicEXRegistry {
     public static RegistryObject<Item> REACTIVE_CORE = null;
     public static RegistryObject<Item> ALTERATIVE_CORE = null;
 
-    public static RegistryObject<Item> ENDESTSHOT_ARROW = null;
     public static RegistryObject<Item> MEKANIC_ARROW = null;
 
     public static ItemObject<ToolPartItem> SLASHBLADE_BLADE = null;

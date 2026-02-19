@@ -62,7 +62,8 @@ public class TicEXMekanismWeaponsUtils {
             if(unit != null){
                 IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
                 FloatingLong energy = energyContainer != null ? energyContainer.getEnergy() : FloatingLong.ZERO;
-                int unitDamage = energy.greaterOrEqual(MekaWeapons.general.mekaTanaEnergyUsage.get()) ? unit.getCustomInstance().getCurrentUnit() : 0;
+                FloatingLong usage = stack.is(TinkerTags.Items.RANGED) ? MekaWeapons.general.mekaBowEnergyUsage.get() : MekaWeapons.general.mekaTanaEnergyUsage.get();
+                int unitDamage = energy.greaterOrEqual(usage) ? unit.getCustomInstance().getCurrentUnit() : 0;
                 if(unit.getInstalledCount() > 4){
                     return (unitDamage - 1) / 5f * (unit.getInstalledCount() + 1);
                 }

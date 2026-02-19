@@ -40,9 +40,6 @@ public class TicEXAvaritiaModule implements AddonModule {
         TicEXRegistry.CELESTIAL_CORE = TicEXRegistry.ITEMS.register("celestial_core", () ->
                 new ItemReconstCore(new Item.Properties(), "celestial")
         );
-        TicEXRegistry.ENDESTSHOT_ARROW = TicEXRegistry.ITEMS.register("endestshot", () ->
-                new EndestShotItem(new Item.Properties())
-        );
 
         TicEXRegistry.OMNIPOTENCE_MODIFIER = TicEXRegistry.MODIFIERS.register("omnipotence", ModifierOmnipotence::new);
         TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_unbreakable");

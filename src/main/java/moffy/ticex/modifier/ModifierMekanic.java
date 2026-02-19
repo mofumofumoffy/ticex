@@ -480,8 +480,10 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
 
     @Override
     public @NotNull ItemStack findAmmo(IToolStackView iToolStackView, ModifierEntry modifierEntry, LivingEntity livingEntity, ItemStack itemStack, Predicate<ItemStack> predicate) {
-        if(ModList.get().isLoaded("mekaweapons")){
-            return new ItemStack(TicEXRegistry.MEKANIC_ARROW.get());
+        if(ModList.get().isLoaded("mekaweapons") && iToolStackView instanceof ToolStack toolStack){
+            ItemStack mekaArrowStack = new ItemStack(TicEXRegistry.MEKANIC_ARROW.get());
+            mekaArrowStack.getOrCreateTag().put("shooterItem", toolStack.createStack().save(new CompoundTag()));
+            return mekaArrowStack;
         }
         return new ItemStack(Items.ARROW);
     }

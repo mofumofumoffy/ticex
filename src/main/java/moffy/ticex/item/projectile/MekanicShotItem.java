@@ -1,8 +1,6 @@
 package moffy.ticex.item.projectile;
 
 import moffy.ticex.entity.mekanism.MekanicProjectile;
-import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +15,7 @@ public class MekanicShotItem extends CrystalshotItem {
 
     @Override
     public @NotNull AbstractArrow createArrow(@NotNull Level pLevel, @NotNull ItemStack pStack, @NotNull LivingEntity pShooter) {
-        return new MekanicProjectile(super.createArrow(pLevel, pStack, pShooter), new ItemStack(this), pStack);
+        ItemStack shooterStack = ItemStack.of(pStack.getOrCreateTag().getCompound("shooterItem"));
+        return new MekanicProjectile(super.createArrow(pLevel, pStack, pShooter), pStack, shooterStack);
     }
 }
