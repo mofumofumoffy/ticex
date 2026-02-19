@@ -10,8 +10,11 @@ import mekanism.api.gear.IModuleHelper;
 import mekanism.api.math.FloatingLong;
 import mekanism.api.math.FloatingLongSupplier;
 import mekanism.api.text.EnumColor;
+import mekanism.client.ClientTickHandler;
+import mekanism.client.MekanismClient;
 import mekanism.client.key.MekKeyHandler;
 import mekanism.client.key.MekanismKeyHandler;
+import mekanism.common.CommonPlayerTickHandler;
 import mekanism.common.Mekanism;
 import mekanism.common.MekanismLang;
 import mekanism.common.base.KeySync;
@@ -34,6 +37,7 @@ import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.modules.mekanism.interfaces.IAbsorbableItem;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -255,7 +259,7 @@ public class TicEXMekanismEvent {
 
             ItemStack jetpack = getActiveJetpack(player);
             if (!jetpack.isEmpty() && mekaGear instanceof IJetpackItem jetpackGear) {
-                ItemStack primaryJetpack = IJetpackItem.getPrimaryJetpack(player);
+                ItemStack primaryJetpack = getPrimaryJetpack(player);
                 if (!primaryJetpack.isEmpty()) {
                     IJetpackItem.JetpackMode primaryMode = jetpackGear.getJetpackMode(primaryJetpack);
                     IJetpackItem.JetpackMode mode = IJetpackItem.getPlayerJetpackMode(player, primaryMode, () -> Mekanism.keyMap.has(player.getUUID(), KeySync.ASCEND));
@@ -419,5 +423,74 @@ public class TicEXMekanismEvent {
     @OnlyIn(Dist.CLIENT)
     public static void onModelBake(BakingCompleted event) {
         MekaPlateModelCache.INSTANCE.onBake(event);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            tickStart();
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void tickStart() {
+        MekanismClient.ticksPassed++;
+
+        Minecraft minecraft = Minecraft.getInstance();
+
+
+        if (minecraft.level != null && minecraft.player != null && !minecraft.isPaused()) {
+
+            RadiationManager.get().tickClient(minecraft.player);
+
+            UUID playerUUID = minecraft.player.getUUID();
+            ItemStack jetpack = getActiveJetpack(minecraft.player);
+
+            boolean jetpackInUse = isJetpackInUse(minecraft.player, jetpack);
+            Mekanism.playerState.setJetpackState(playerUUID, jetpackInUse, true);
+
+            if (!jetpack.isEmpty()) {
+                ItemStack primaryJetpack = getPrimaryJetpack(minecraft.player);
+                if (!primaryJetpack.isEmpty()) {
+                    LazyOptional<IMekaGear> mekaGearLazyOptional = primaryJetpack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY);
+                    if (mekaGearLazyOptional.isPresent()) {
+                        IMekaGear mekaGear = mekaGearLazyOptional.orElseThrow(IllegalStateException::new);
+                        IJetpackItem.JetpackMode primaryMode = ((IJetpackItem) mekaGear).getJetpackMode(primaryJetpack);
+                        IJetpackItem.JetpackMode mode = IJetpackItem.getPlayerJetpackMode(minecraft.player, primaryMode, () -> minecraft.player.input.jumping);
+                        MekanismClient.updateKey(minecraft.player.input.jumping, KeySync.ASCEND);
+                        if (jetpackInUse && IJetpackItem.handleJetpackMotion(minecraft.player, mode, () -> minecraft.player.input.jumping)) {
+                            minecraft.player.resetFallDistance();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static boolean isJetpackInUse(Player player, ItemStack jetpack) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LazyOptional<IMekaGear> mekaGearLazyOptional = jetpack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY);
+        if (!player.isSpectator() && !jetpack.isEmpty() && mekaGearLazyOptional.isPresent()) {
+            IMekaGear mekaGear = mekaGearLazyOptional.orElseThrow(IllegalStateException::new);
+            IJetpackItem.JetpackMode mode = ((IJetpackItem)mekaGear).getJetpackMode(jetpack);
+            boolean guiOpen = minecraft.screen != null;
+            boolean ascending = minecraft.player.input.jumping;
+            boolean rising = ascending && !guiOpen;
+            if (mode == IJetpackItem.JetpackMode.NORMAL) {
+                return rising;
+            }
+
+            if (mode == IJetpackItem.JetpackMode.HOVER) {
+                boolean descending = minecraft.player.input.shiftKeyDown;
+                if (rising && !descending) {
+                    return true;
+                }
+
+                return !CommonPlayerTickHandler.isOnGroundOrSleeping(player);
+            }
+        }
+
+        return false;
     }
 }

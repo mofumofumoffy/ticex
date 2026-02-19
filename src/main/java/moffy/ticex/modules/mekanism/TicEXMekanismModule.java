@@ -106,6 +106,7 @@ public class TicEXMekanismModule implements AddonModule {
     public void initClient(FMLJavaModLoadingContext context) {
         IEventBus bus = context.getModEventBus();
         MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::handleItemToolTip);
+        MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::onClientTick);
         bus.addListener(TicEXMekanismEvent::onLoadAdditionalModel);
         bus.addListener(TicEXMekanismEvent::onModelBake);
     }
