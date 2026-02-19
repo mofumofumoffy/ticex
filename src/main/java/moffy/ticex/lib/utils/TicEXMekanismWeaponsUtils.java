@@ -28,10 +28,10 @@ import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXMekanismWeaponsUtils {
     public static Item getAlternativeWeapon(ItemStack stack){
-        if(stack.is(TinkerTags.Items.MELEE_WEAPON)){
-            return MekaWeapons.MEKA_TANA.get();
-        } else if(stack.is(TinkerTags.Items.RANGED)){
+        if(stack.is(TinkerTags.Items.RANGED)){
             return MekaWeapons.MEKA_BOW.get();
+        } else if(stack.is(TinkerTags.Items.MELEE_WEAPON)){
+            return MekaWeapons.MEKA_TANA.get();
         }
         return MekanismItems.MEKA_TOOL.get();
     }
