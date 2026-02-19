@@ -123,6 +123,7 @@ mixin {
     config 'ticex.projecte.mixins.json'
     config 'ticex.arsnouveau.mixins.json'
     config 'ticex.curios.mixins.json'
+    config 'ticex.irons.mixins.json'
 
     debug.verbose = true
     debug.export = true
@@ -168,25 +169,26 @@ dependencies {
 
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
-    implementation fg.deobf("blank:addonapi-mc1.20.1:2.0.0-SNAPSHOT")
+    implementation fg.deobf("curse.maven:moffs-addonapi-dynload-1242459:7441442")
 
-    implementation fg.deobf("curse.maven:mantle-74924:6819217")
-    implementation fg.deobf("curse.maven:tinkers-construct-74072:6777068")
+    implementation fg.deobf("curse.maven:mantle-74924:7414488")
+    implementation fg.deobf("curse.maven:tinkers-construct-74072:7371800")
 
-    implementation fg.deobf("curse.maven:re-avaritia-623969:6958116")
+    implementation fg.deobf("curse.maven:re-avaritia-623969:7445855")
 
-    implementation fg.deobf("curse.maven:mekanism-268560:6258796")
+    implementation fg.deobf("curse.maven:mekanism-268560:6552911")
+    implementation fg.deobf("curse.maven:mekanism-generators-268566:6552914")
     implementation fg.deobf("curse.maven:mekanism-weapons-929829:6949839")
 
     implementation fg.deobf("curse.maven:brandons-core-231382:5422013")
     implementation fg.deobf("curse.maven:codechicken-lib-1-8-242818:5753868")
     implementation fg.deobf("curse.maven:draconic-evolution-223565:6065044")
 
-    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6879322")
+    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:7173026")
 
     implementation fg.deobf("curse.maven:timeless-and-classics-zero-1028108:6518539")
 
-    implementation fg.deobf("curse.maven:create-328085:6323270")
+    implementation fg.deobf("curse.maven:create-328085:7178761")
     implementation fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
     compileOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-api-${minecraft_version}:${flywheel_version}")
     runtimeOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}") {
@@ -196,7 +198,7 @@ dependencies {
         }
     }
 
-    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:6371701")
+    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:7402504")
     implementation fg.deobf("curse.maven:caelus-308989:5281700")
     implementation fg.deobf("curse.maven:geckolib-388172:6333474")
     implementation fg.deobf("curse.maven:playeranimator-658587:4587214")

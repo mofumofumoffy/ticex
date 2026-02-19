@@ -1,7 +1,7 @@
 package moffy.ticex.datagen.general.recipes.ticex;
 
-import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentBuildingRecipeBuilder;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentCastingRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentBuildingRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentCastingRecipeBuilder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;

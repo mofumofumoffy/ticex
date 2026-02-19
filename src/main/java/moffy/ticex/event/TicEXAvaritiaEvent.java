@@ -1,11 +1,8 @@
 package moffy.ticex.event;
 
-import committee.nova.mods.avaritia.init.registry.ModItems;
-import moffy.ticex.client.rendering.ticex.ItemArrowRenderer;
-import moffy.ticex.entity.ItemArrow;
+import moffy.ticex.client.render.ticex.ItemArrowRenderer;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
@@ -104,10 +101,9 @@ public class TicEXAvaritiaEvent {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @OnlyIn(Dist.CLIENT)
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer((EntityType<ItemArrow>) TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), pContext ->
+        event.registerEntityRenderer(TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), pContext ->
             new ItemArrowRenderer(pContext, 1f)
         );
     }

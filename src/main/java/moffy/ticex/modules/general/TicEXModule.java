@@ -2,8 +2,8 @@ package moffy.ticex.modules.general;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
-import moffy.ticex.block.RFFurnaceBlock;
-import moffy.ticex.block.entity.RFFurnaceBlockEntity;
+import moffy.ticex.block.furnace.RFFurnaceBlock;
+import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
 import moffy.ticex.block.transmuter.FluidTransmuterBlock;
 import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
@@ -18,6 +18,7 @@ import moffy.ticex.jei.ticex.TicEXJEIIntegration;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.InfinityTier;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
@@ -30,7 +31,6 @@ import moffy.ticex.network.curios.TicEXSyncEntityMovements;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
@@ -60,7 +60,7 @@ public class TicEXModule implements AddonModule {
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus bus = context.getModEventBus();
 
         ToolCapabilityProvider.register(TiCEXToolCapabilityProvider::new);
 
@@ -93,7 +93,7 @@ public class TicEXModule implements AddonModule {
 
         TicEXRegistry.EMBOSSMENT_HOOK = ModifierHooks.LOADER.register(
                 new ModuleHook<>(
-                        new ResourceLocation(TicEX.MODID, "embossment"),
+                        TicEX.getResource("embossment"),
                         EmbossmentModifierHook.class,
                         EmbossmentModifierHook.AllMerger::new,
                         new EmbossmentModifierHook.DefaultClass()
@@ -101,10 +101,18 @@ public class TicEXModule implements AddonModule {
         );
         TicEXRegistry.PROPERTY_PROVIDER_HOOK = ModifierHooks.LOADER.register(
                 new ModuleHook<>(
-                        new ResourceLocation(TicEX.MODID, "provide_property"),
+                        TicEX.getResource("provide_property"),
                         ProvidePropertyModifierHook.class,
                         ProvidePropertyModifierHook.AllMerger::new,
                         new ProvidePropertyModifierHook.DefaultClass()
+                )
+        );
+        TicEXRegistry.ENERGY_HOOK = ModifierHooks.LOADER.register(
+                new ModuleHook<>(
+                        TicEX.getResource("energy"),
+                        EnergyModifierHook.class,
+                        EnergyModifierHook.AllMerger::new,
+                        new EnergyModifierHook.DefaultClass()
                 )
         );
 
@@ -115,84 +123,12 @@ public class TicEXModule implements AddonModule {
                 "flickering_reconstruction_core",
                 () -> new ItemFlickeringCore(new Item.Properties())
         );
-        TicEXRegistry.ETHERIC_INGOT = TicEXRegistry.ITEMS.register("etheric_ingot", () ->
-                new Item(new Item.Properties())
-        );
 
-        TicEXRegistry.ETHERIC_BLOCK = TicEXRegistry.BLOCKS.register("etheric_block", () ->
-                new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).noOcclusion())
-        );
-        TicEXRegistry.SEARED_RF_FURNACE = TicEXRegistry.BLOCKS.register("seared_rf_furnace", () ->
-                new RFFurnaceBlock(TicEXRegistry.SEARED, false)
-        );
-        TicEXRegistry.SCORCHED_RF_FURNACE = TicEXRegistry.BLOCKS.register("scorched_rf_furnace", () ->
-                new RFFurnaceBlock(TicEXRegistry.SCORCHED, false)
-        );
-        TicEXRegistry.CREATIVE_SEARED_RF_FURNACE = TicEXRegistry.BLOCKS.register("creative_seared_rf_furnace", () ->
-                new RFFurnaceBlock(TicEXRegistry.SEARED, true)
-        );
-        TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE = TicEXRegistry.BLOCKS.register("creative_scorched_rf_furnace", () ->
-                new RFFurnaceBlock(TicEXRegistry.SCORCHED, true)
-        );
-        TicEXRegistry.FLUID_TRANSMUTER = TicEXRegistry.BLOCKS.register("fluid_transmuter", () ->
-                new FluidTransmuterBlock(BlockBehaviour.Properties.of().noOcclusion())
-        );
-
-        TicEXRegistry.ITEMS.register("etheric_block", () ->
-                new BlockItem(TicEXRegistry.ETHERIC_BLOCK.get(), new Item.Properties())
-        );
-        TicEXRegistry.ITEMS.register("seared_rf_furnace", () ->
-                new BlockItem(TicEXRegistry.SEARED_RF_FURNACE.get(), new Item.Properties())
-        );
-        TicEXRegistry.ITEMS.register("scorched_rf_furnace", () ->
-                new BlockItem(TicEXRegistry.SCORCHED_RF_FURNACE.get(), new Item.Properties())
-        );
-        TicEXRegistry.ITEMS.register("creative_seared_rf_furnace", () ->
-                new BlockItem(TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get(), new Item.Properties())
-        );
-        TicEXRegistry.ITEMS.register("creative_scorched_rf_furnace", () ->
-                new BlockItem(TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get(), new Item.Properties())
-        );
-        TicEXRegistry.ITEMS.register("fluid_transmuter", () ->
-                new BlockItem(TicEXRegistry.FLUID_TRANSMUTER.get(), new Item.Properties())
-        );
-
-        TicEXRegistry.RF_FURNACE_ENTITY = TicEXRegistry.BLOCK_ENTITIES.register("rf_furnace_entity", () ->
-                BlockEntityType.Builder.of(
-                        (BlockPos pPos, BlockState pState) ->
-                                new RFFurnaceBlockEntity(TicEXRegistry.RF_FURNACE_ENTITY.get(), pPos, pState, false),
-                        TicEXRegistry.SEARED_RF_FURNACE.get(),
-                        TicEXRegistry.SCORCHED_RF_FURNACE.get(),
-                        TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get(),
-                        TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get()
-                ).build(null)
-        );
-
-        TicEXRegistry.FLUID_TRANSMUTER_ENTITY = TicEXRegistry.BLOCK_ENTITIES.register("fluid_transmuter", () ->
-                BlockEntityType.Builder.of(
-                        (BlockPos pPos, BlockState pState) ->
-                                new FluidTransmuterBlockEntity(TicEXRegistry.FLUID_TRANSMUTER_ENTITY.get(), pPos, pState),
-                        TicEXRegistry.FLUID_TRANSMUTER.get()
-                ).build(null)
-        );
-
-        TicEXRegistry.MOLTEN_ETHERIC = TicEXRegistry.FLUIDS.register("molten_etheric")
-                .type(TicEXFluidUtils.hot("molten_etheric").temperature(1000).density(1600))
-                .block(MapColor.COLOR_LIGHT_GREEN, 0)
-                .bucket()
-                .commonTag()
-                .flowing();
         TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE = TicEXRegistry.FLUIDS.register("molten_reconstruction_core")
                 .type(TicEXFluidUtils.slime("reconstruction_core").temperature(1000).density(-1600))
                 .bucket()
                 .unplacable();
-        for (int i = 0; i < 20; i++) {
-            TicEXRegistry.RF_FURNACE_FUELS.add(
-                    TicEXRegistry.FLUIDS.register("rf_furnace_fuel_" + i)
-                            .type(TicEXFluidUtils.hot("rf_furnace_fuel_" + i).temperature(1000).density(-1600))
-                            .unplacable()
-            );
-        }
+
 
         TicEXRegistry.HEALING_RECEIVED = TicEXRegistry.ATTRIBUTES.register("healing_received", () ->
                 new RangedAttribute("attribute." + TicEX.MODID + ".healing_received", 1f, 0f, 1f)
@@ -212,10 +148,8 @@ public class TicEXModule implements AddonModule {
         );
 
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
-        TicEXRegistry.EMBOSSMENT_MODIFIER = TicEXRegistry.MODIFIERS.register("embossment", ModifierEmbossment::new);
         TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER = TicEXRegistry.MODIFIERS.register("enchantment_supplier", ModifierEnchantmentSupplier::new);
-        TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
-        TicEXRegistry.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
+
 
         TicEXRegistry.UNSYNCED_TOOL_CONTAINER = TicEXRegistry.MENUS.register(
                 "unsynced_tool_container",
@@ -227,7 +161,7 @@ public class TicEXModule implements AddonModule {
         );
 
         TicEXRegistry.JEI_INTEGRATIONS.register(
-                new ResourceLocation(TicEX.MODID, "ticex_compat"),
+                TicEX.getResource("ticex_compat"),
                 TicEXJEIIntegration.class
         );
 
@@ -240,23 +174,29 @@ public class TicEXModule implements AddonModule {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHeal);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHurt);
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::supplierBouncer);
+        MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onDatapackSync);
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onRecipesUpdated);
 
         if (TierSortingRegistry.isTierSorted(InfinityTier.instance)) {
             TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(
                     InfinityTier.instance,
-                    new ResourceLocation(TicEX.MODID, "infinity"),
+                    TicEX.getResource("infinity"),
                     List.of(TierSortingRegistry.getSortedTiers().get(TierSortingRegistry.getSortedTiers().size() - 1)),
                     List.of()
             );
         } else {
             TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(
                     InfinityTier.instance,
-                    new ResourceLocation(TicEX.MODID, "infinity"),
+                    TicEX.getResource("infinity"),
                     List.of(Tiers.NETHERITE),
                     List.of()
             );
         }
+    }
+
+    @Override
+    public void initClient(FMLJavaModLoadingContext context) {
+
     }
 
     @Override

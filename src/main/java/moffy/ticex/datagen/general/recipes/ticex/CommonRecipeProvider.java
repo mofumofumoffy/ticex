@@ -3,7 +3,7 @@ package moffy.ticex.datagen.general.recipes.ticex;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentModifierRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -40,22 +40,28 @@ import java.util.function.Consumer;
 public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMaterialRecipeHelper {
 
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
+        Consumer<FinishedRecipe> materialConsumer = withCondition(
+                pWriter,
+                modsAvailable(TicEX.getResource("default_material"))
+        );
+
         metalMaterialRecipe(pWriter, TicEXMaterials.ETHERIC, materialFolder, "etheric", false);
+        metalMaterialRecipe(pWriter, TicEXMaterials.OD, materialFolder, "od", false);
 
         buildShapedRecipes(pWriter);
         buildMaterialRecipes(pWriter);
         buildSmelteryRecipes(pWriter);
 
         // other recipes
-
         AlloyRecipeBuilder.alloy(FluidOutput.fromTag(TicEXTags.Fluids.ETHERIC, 270), 2500)
                 .addInput(TinkerFluids.moltenSlimesteel.get(), FluidValues.INGOT)
                 .addInput(TicEXTags.Fluids.HEPATIZON, FluidValues.INGOT)
                 .addInput(TicEXTags.Fluids.GOLD, FluidValues.INGOT)
                 .addInput(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
-                .save(pWriter, prefix(TicEXTags.Fluids.ETHERIC.location(), alloysFolder));
+                .save(materialConsumer, prefix(TicEXTags.Fluids.ETHERIC.location(), alloysFolder));
 
         metalIngotOptional(pWriter, TicEXTags.Fluids.ETHERIC, TicEXTags.Items.ETHERIC_BLOCK, 5000, TicEXRegistry.MOLTEN_ETHERIC.getId());
+        metalIngotOptional(pWriter, TicEXTags.Fluids.OD, TicEXTags.Items.OD_BLOCK, 5000, TicEXRegistry.MOLTEN_OD.getId());
     }
 
     public void buildShapedRecipes(Consumer<FinishedRecipe> pWriter) {
@@ -96,6 +102,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
     }
 
     public void buildMaterialRecipes(Consumer<FinishedRecipe> pWriter) {
+
         MaterialFluidRecipeBuilder.material(TicEXMaterials.ETHERIC)
                 .setTemperature(2500)
                 .setFluid(TicEXTags.Fluids.ETHERIC, FluidValues.INGOT)
@@ -106,20 +113,25 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
     }
 
     public void buildSmelteryRecipes(Consumer<FinishedRecipe> pWriter) {
+        Consumer<FinishedRecipe> utilityConsumer = withCondition(
+                pWriter,
+                modsAvailable(TicEX.getResource("default_utility"))
+        );
+
         ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXRegistry.SCORCHED_RF_FURNACE.get()))
                 .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerTags.Items.FOUNDRY_BRICKS, true)
-                .save(pWriter, prefix(TicEXRegistry.SCORCHED_RF_FURNACE, smelteryCastingFolder + "scorched/"));
+                .save(utilityConsumer, prefix(TicEXRegistry.SCORCHED_RF_FURNACE, smelteryCastingFolder + "scorched/"));
 
         ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXRegistry.FLUID_TRANSMUTER.get()))
                 .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerSmeltery.scorchedAlloyer.get(), true)
-                .save(pWriter, prefix(TicEXRegistry.FLUID_TRANSMUTER, smelteryCastingFolder + "scorched_"));
+                .save(utilityConsumer, prefix(TicEXRegistry.FLUID_TRANSMUTER, smelteryCastingFolder + "scorched_"));
 
         ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXRegistry.SEARED_RF_FURNACE.get()))
                 .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerTags.Items.SMELTERY_BRICKS, true)
-                .save(pWriter, prefix(TicEXRegistry.SEARED_RF_FURNACE, smelteryCastingFolder + "seared/"));
+                .save(utilityConsumer, prefix(TicEXRegistry.SEARED_RF_FURNACE, smelteryCastingFolder + "seared/"));
 
         ItemCastingRecipeBuilder.tableRecipe(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE.get())
                 .setFluid(TicEXTags.Fluids.RECONSTRUCTION_CORE, 2000)
@@ -153,8 +165,9 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
     }
 
     public int calculateRfFuelTemperature(int n) {
-        // 23x^w + 5x/19 + 20
-        return 25*n*n + (5*n)/19 + 20;
+        int[] temps = new int[]{20, 90, 225, 402, 625, 902, 1230, 1603, 2026, 2494, 3036, 3594, 4240, 5095,
+                5647, 6397, 7242, 8101, 9039, 10000};
+        return temps[n];
     }
 
     @Override

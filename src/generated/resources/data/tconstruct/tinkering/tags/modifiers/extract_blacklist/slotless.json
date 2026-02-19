@@ -31,6 +31,14 @@
     {
       "id": "ticex:reactive",
       "required": false
+    },
+    {
+      "id": "ticex:apoth_supplier",
+      "required": false
+    },
+    {
+      "id": "ticex:enchantment_supplier",
+      "required": false
     }
   ]
 }

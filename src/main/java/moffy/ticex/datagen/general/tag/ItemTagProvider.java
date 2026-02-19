@@ -53,43 +53,45 @@ public class ItemTagProvider extends ItemTagsProvider {
 
     private void addCommon() {
         addCores(
-                new ResourceLocation(TicEX.MODID, "reconstruction_core"),
-                new ResourceLocation(TicEX.MODID, "flickering_reconstruction_core"),
-                new ResourceLocation(TicEX.MODID, "celestial_core"),
-                new ResourceLocation(TicEX.MODID, "radiation_shelding_core"),
-                new ResourceLocation(TicEX.MODID, "draconium_evolved_core"),
-                new ResourceLocation(TicEX.MODID, "wyvern_evolved_core"),
-                new ResourceLocation(TicEX.MODID, "draconic_evolved_core"),
-                new ResourceLocation(TicEX.MODID, "chaotic_evolved_core"),
-                new ResourceLocation(TicEX.MODID, "inject_core"),
-                new ResourceLocation(TicEX.MODID, "konpaku_core"),
-                new ResourceLocation(TicEX.MODID, "koshirae_core"),
-                new ResourceLocation(TicEX.MODID, "lamellar_core"),
-                new ResourceLocation(TicEX.MODID, "overload_core"),
-                new ResourceLocation(TicEX.MODID, "override_core"),
-                new ResourceLocation(TicEX.MODID, "incomparable_core"),
-                new ResourceLocation(TicEX.MODID, "cardboard_core")
+                TicEX.getResource("reconstruction_core"),
+                TicEX.getResource("flickering_reconstruction_core"),
+                TicEX.getResource("celestial_core"),
+                TicEX.getResource("radiation_shelding_core"),
+                TicEX.getResource("draconium_evolved_core"),
+                TicEX.getResource("wyvern_evolved_core"),
+                TicEX.getResource("draconic_evolved_core"),
+                TicEX.getResource("chaotic_evolved_core"),
+                TicEX.getResource("inject_core"),
+                TicEX.getResource("konpaku_core"),
+                TicEX.getResource("koshirae_core"),
+                TicEX.getResource("lamellar_core"),
+                TicEX.getResource("overload_core"),
+                TicEX.getResource("override_core"),
+                TicEX.getResource("incomparable_core"),
+                TicEX.getResource("cardboard_core")
         );
 
         //ingots
-        addOptional(TicEXTags.Items.INFINITY_INGOT, new ResourceLocation("avaritia", "infinity_ingot"));
-        addOptional(TicEXTags.Items.NEUTRON_INGOT, new ResourceLocation("avaritia", "neutron_ingot"));
-        addOptional(TicEXTags.Items.CRYSTAL_MATRIX_INGOT, new ResourceLocation("avaritia", "crystal_matrix_ingot"));
-        addOptional(TicEXTags.Items.BLAZING_INGOT, new ResourceLocation("avaritia", "blaze_cube"));
+        addOptional(TicEXTags.Items.INFINITY_INGOT, ResourceLocation.fromNamespaceAndPath("avaritia", "infinity_ingot"));
+        addOptional(TicEXTags.Items.NEUTRON_INGOT, ResourceLocation.fromNamespaceAndPath("avaritia", "neutron_ingot"));
+        addOptional(TicEXTags.Items.CRYSTAL_MATRIX_INGOT, ResourceLocation.fromNamespaceAndPath("avaritia", "crystal_matrix_ingot"));
+        addOptional(TicEXTags.Items.BLAZING_INGOT, ResourceLocation.fromNamespaceAndPath("avaritia", "blaze_cube"));
 
-        addOptional(TicEXTags.Items.ETHERIC_INGOT, new ResourceLocation(TicEX.MODID, "etheric_ingot"));
+        addOptional(TicEXTags.Items.ETHERIC_INGOT, TicEX.getResource("etheric_ingot"));
+        addOptional(TicEXTags.Items.OD_INGOT, TicEX.getResource("od_ingot"));
 
         //blocks
-        addOptional(TicEXTags.Items.INFINITY_BLOCK, new ResourceLocation("avaritia", "infinity"));
-        addOptional(TicEXTags.Items.NEUTRON_BLOCK, new ResourceLocation("avaritia", "neutron"));
-        addOptional(TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, new ResourceLocation("avaritia", "crystal_matrix"));
-        addOptional(TicEXTags.Items.BLAZING_BLOCK, new ResourceLocation("avaritia", "blaze_cube_block"));
+        addOptional(TicEXTags.Items.INFINITY_BLOCK, ResourceLocation.fromNamespaceAndPath("avaritia", "infinity"));
+        addOptional(TicEXTags.Items.NEUTRON_BLOCK, ResourceLocation.fromNamespaceAndPath("avaritia", "neutron"));
+        addOptional(TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, ResourceLocation.fromNamespaceAndPath("avaritia", "crystal_matrix"));
+        addOptional(TicEXTags.Items.BLAZING_BLOCK, ResourceLocation.fromNamespaceAndPath("avaritia", "blaze_cube_block"));
 
-        addOptional(TicEXTags.Items.ETHERIC_BLOCK, new ResourceLocation(TicEX.MODID, "etheric_block"));
+        addOptional(TicEXTags.Items.ETHERIC_BLOCK, TicEX.getResource("etheric_block"));
+        addOptional(TicEXTags.Items.OD_BLOCK, TicEX.getResource("od_block"));
 
         //trim_materials
         tag(TRIM_MATERIALS)
-                .addOptional(new ResourceLocation("avaritia", "infinity_ingot"))
+                .addOptional(ResourceLocation.fromNamespaceAndPath("avaritia", "infinity_ingot"))
                 .addOptional(TicEXRegistry.DRACONIUM_CRYSTAL.getId())
                 .addOptional(TicEXRegistry.WYVERN_CRYSTAL.getId())
                 .addOptional(TicEXRegistry.DRACONIC_CRYSTAL.getId())
@@ -98,32 +100,33 @@ public class ItemTagProvider extends ItemTagsProvider {
 
         //catalyst_tools
         addCatalysts(
-                new ResourceLocation(TicEX.MODID, "catalyst_slashblade"),
-                new ResourceLocation(TicEX.MODID, "catalyst_kinetic_gun"),
-                new ResourceLocation(TicEX.MODID, "catalyst_irons_spellbook"),
-                new ResourceLocation(TicEX.MODID, "catalyst_meka_tool")
+                TicEX.getResource("catalyst_slashblade"),
+                TicEX.getResource("catalyst_kinetic_gun"),
+                TicEX.getResource("catalyst_irons_spellbook"),
+                TicEX.getResource("catalyst_meka_tool")
         );
 
         //catalyst_armors
         for (ArmorItem.Type type : ArmorItem.Type.values()) {
             addCatalysts(
-                    new ResourceLocation(TicEX.MODID, "catalyst_mekasuit").withSuffix("_" + type.getName()),
-                    new ResourceLocation(TicEX.MODID, "catalyst_gem").withSuffix("_" + type.getName())
+                    TicEX.getResource("catalyst_mekasuit").withSuffix("_" + type.getName()),
+                    TicEX.getResource("catalyst_gem").withSuffix("_" + type.getName())
             );
         }
 
-        addOptional(TinkerTags.Items.TOOL_PARTS, new ResourceLocation(TicEX.MODID, "slashblade_blade"));
-        addOptional(TinkerTags.Items.TOOL_PARTS, new ResourceLocation(TicEX.MODID, "slashblade_saya"));
+        addOptional(TinkerTags.Items.TOOL_PARTS, TicEX.getResource("slashblade_blade"));
+        addOptional(TinkerTags.Items.TOOL_PARTS, TicEX.getResource("slashblade_saya"));
 
         // other mods
 
         if (ModList.get().isLoaded("slashblade")) {
             this.tag(TicEXTags.Items.SLASHBLADE)
-                    .addOptional(new ResourceLocation("slashblade", "slashblade"))
-                    .addOptional(new ResourceLocation("slashblade_addon", "slashblade_tofu_diamond"))
-                    .addOptional(new ResourceLocation("yakumoblade", "slashblade"))
-                    .addOptional(new ResourceLocation("fantasy_ending", "fantasy_ending_blade"))
-                    .addOptional(new ResourceLocation("energyblade", "forge_energy_blade"));
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("slashblade", "slashblade"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("slashblade_addon", "slashblade_tofu_diamond"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("slashblade_addon", "slashblade_tofu_metal"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("yakumoblade", "slashblade"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("fantasy_ending", "fantasy_ending_blade"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("energyblade", "forge_energy_blade"));
         }
     }
 
@@ -164,7 +167,7 @@ public class ItemTagProvider extends ItemTagsProvider {
     private void addTools() {
         //tools
         addToolTags(
-                new ResourceLocation(TicEX.MODID, "reforged_slashblade"),
+                TicEX.getResource("reforged_slashblade"),
                 TicEXTags.Items.REFORGED_SLASHBLADE_TOOL,
                 MULTIPART_TOOL,
                 DURABILITY,
@@ -179,7 +182,7 @@ public class ItemTagProvider extends ItemTagsProvider {
                 UNSALVAGABLE
         );
         addToolTags(
-                new ResourceLocation(TicEX.MODID, "blitz_gun"),
+                TicEX.getResource("blitz_gun"),
                 TicEXTags.Items.KINETIC_GUN_TOOL,
                 MULTIPART_TOOL,
                 DURABILITY,
@@ -192,7 +195,7 @@ public class ItemTagProvider extends ItemTagsProvider {
                 UNSALVAGABLE
         );
         addToolTags(
-                new ResourceLocation(TicEX.MODID, "revival_spellbook_irons"),
+                TicEX.getResource("revival_spellbook_irons"),
                 TicEXTags.Items.IRONS_SPELLBOOK_TOOL,
                 MULTIPART_TOOL,
                 DURABILITY,
@@ -205,7 +208,7 @@ public class ItemTagProvider extends ItemTagsProvider {
                 UNSALVAGABLE
         );
         addToolTags(
-                new ResourceLocation(TicEX.MODID, "meka_tool"),
+                TicEX.getResource("meka_tool"),
                 TicEXTags.Items.MEKA_TOOL,
                 MULTIPART_TOOL,
                 MELEE_WEAPON,
@@ -215,9 +218,9 @@ public class ItemTagProvider extends ItemTagsProvider {
         );
 
         //armors
-        addArmorTags(new ResourceLocation(TConstruct.MOD_ID, "plate"), TicEXTags.Items.PLATE);
+        addArmorTags(ResourceLocation.fromNamespaceAndPath(TConstruct.MOD_ID, "plate"), TicEXTags.Items.PLATE);
         addArmorTags(
-                new ResourceLocation(TicEX.MODID, "mekaplate"),
+                TicEX.getResource("mekaplate"),
                 TicEXTags.Items.MEKASUIT_ARMOR,
                 MULTIPART_TOOL,
                 DURABILITY,
@@ -225,7 +228,7 @@ public class ItemTagProvider extends ItemTagsProvider {
                 TRIM
         );
         addArmorTags(
-                new ResourceLocation(TicEX.MODID, "singular_gem"),
+                TicEX.getResource("singular_gem"),
                 TicEXTags.Items.GEM_ARMOR,
                 MULTIPART_TOOL,
                 DURABILITY,

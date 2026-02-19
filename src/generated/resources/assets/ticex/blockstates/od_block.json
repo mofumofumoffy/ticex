@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ticex:block/od_block"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:ingots/od"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/od"
+  },
+  "result": {
+    "amount": 90,
+    "tag": "forge:molten_od"
+  },
+  "temperature": 5000,
+  "time": 151
+}

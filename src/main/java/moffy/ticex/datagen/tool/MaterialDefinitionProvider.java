@@ -86,13 +86,14 @@ public class MaterialDefinitionProvider extends AbstractMaterialDataProvider {
             availableCondition("draconicevolution_compat")
         );
         addMaterial(TicEXMaterials.ETHERIC, 6, ORDER_COMPAT + ORDER_WEAPON, false);
+        addMaterial(TicEXMaterials.OD, 6, ORDER_COMPAT + ORDER_WEAPON, false);
         addMaterial(TicEXMaterials.RECONSTRUCTION, 3, ORDER_COMPAT, false);
     }
 
     public ModsAvailableCondition availableCondition(String path) {
         return new ModsAvailableCondition(
-            new ResourceLocation(AddonAPI.MODID, "mods_available"),
-            new ResourceLocation(TicEX.MODID, path)
+            ResourceLocation.fromNamespaceAndPath(AddonAPI.MODID, "mods_available"),
+            TicEX.getResource(path)
         );
     }
 }

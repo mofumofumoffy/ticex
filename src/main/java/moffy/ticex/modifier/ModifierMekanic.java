@@ -21,6 +21,7 @@ import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
 import mekanism.api.math.FloatingLong;
 import mekanism.common.Mekanism;
+import mekanism.common.capabilities.Capabilities;
 import mekanism.common.config.MekanismConfig;
 import mekanism.common.content.gear.IBlastingItem;
 import mekanism.common.content.gear.IModuleContainerItem;
@@ -31,6 +32,7 @@ import mekanism.common.content.gear.mekatool.ModuleAttackAmplificationUnit;
 import mekanism.common.content.gear.mekatool.ModuleExcavationEscalationUnit;
 import mekanism.common.content.gear.mekatool.ModuleTeleportationUnit;
 import mekanism.common.content.gear.mekatool.ModuleVeinMiningUnit;
+import mekanism.common.item.gear.ItemAtomicDisassembler;
 import mekanism.common.item.interfaces.IJetpackItem;
 import mekanism.common.network.to_client.PacketPortalFX;
 import mekanism.common.registries.MekanismGases;
@@ -39,7 +41,9 @@ import mekanism.common.tags.MekanismTags;
 import mekanism.common.util.ItemDataUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
+import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
+import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
@@ -58,11 +62,13 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -88,11 +94,9 @@ import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook
 import slimeknights.tconstruct.library.modifiers.hook.build.VolatileDataModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeDamageModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.RequirementsModifierHook;
-import slimeknights.tconstruct.library.modifiers.hook.interaction.EntityInteractionModifierHook;
-import slimeknights.tconstruct.library.modifiers.hook.interaction.InteractionSource;
-import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
-import slimeknights.tconstruct.library.modifiers.hook.interaction.UsingToolModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.*;
 import slimeknights.tconstruct.library.modifiers.hook.mining.BlockBreakModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.mining.BlockHarvestModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.ranged.BowAmmoModifierHook;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
@@ -101,6 +105,7 @@ import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.context.ToolHarvestContext;
 import slimeknights.tconstruct.library.tools.helper.ToolHarvestLogic;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.item.armor.ModifiableArmorItem;
 import slimeknights.tconstruct.library.tools.nbt.IToolContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
@@ -108,18 +113,29 @@ import slimeknights.tconstruct.library.tools.nbt.ToolDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 
-public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModifierHook, ProvidePropertyModifierHook, ToolActionModifierHook,UsingToolModifierHook, ToolDamageModifierHook, EntityInteractionModifierHook, BreakSpeedModifierHook, BlockBreakModifierHook, MeleeDamageModifierHook, EnchantmentModifierHook, ElytraFlightModifierHook, InventoryTickModifierHook, BowAmmoModifierHook, ValidateModifierHook, RequirementsModifierHook {
+public class ModifierMekanic extends NoLevelsModifier implements ProvidePropertyModifierHook, ToolActionModifierHook,UsingToolModifierHook, ToolDamageModifierHook, EntityInteractionModifierHook, BreakSpeedModifierHook, BlockHarvestModifierHook, MeleeDamageModifierHook, EnchantmentModifierHook, ElytraFlightModifierHook, InventoryTickModifierHook, BowAmmoModifierHook, ValidateModifierHook, RequirementsModifierHook, BlockInteractionModifierHook, EnergyModifierHook, EmbossmentModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK, TicEXRegistry.PROPERTY_PROVIDER_HOOK, ModifierHooks.TOOL_USING, ModifierHooks.TOOL_ACTION, ModifierHooks.ENTITY_INTERACT, ModifierHooks.BREAK_SPEED, ModifierHooks.BLOCK_BREAK, ModifierHooks.MELEE_DAMAGE, ModifierHooks.ENCHANTMENTS, ModifierHooks.ELYTRA_FLIGHT, ModifierHooks.INVENTORY_TICK, ModifierHooks.BOW_AMMO, ModifierHooks.VALIDATE, ModifierHooks.REQUIREMENTS);
-    }
-
-    @Override
-    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
-        ItemStack toolStack = context.getToolStack().copy();
-
-        return toolStack.getItem() instanceof IModifiable;
+        hookBuilder.addHook(
+                this,
+                TicEXRegistry.PROPERTY_PROVIDER_HOOK,
+                ModifierHooks.TOOL_USING,
+                ModifierHooks.TOOL_ACTION,
+                ModifierHooks.ENTITY_INTERACT,
+                ModifierHooks.BREAK_SPEED,
+                ModifierHooks.BLOCK_HARVEST,
+                ModifierHooks.MELEE_DAMAGE,
+                ModifierHooks.ENCHANTMENTS,
+                ModifierHooks.ELYTRA_FLIGHT,
+                ModifierHooks.INVENTORY_TICK,
+                ModifierHooks.BOW_AMMO,
+                ModifierHooks.VALIDATE,
+                ModifierHooks.REQUIREMENTS,
+                ModifierHooks.BLOCK_INTERACT,
+                TicEXRegistry.ENERGY_HOOK,
+                TicEXRegistry.EMBOSSMENT_HOOK
+        );
     }
 
     @Override
@@ -136,11 +152,84 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
                 }
             }
         }
+        teleport(tool, player);
         return InteractionResult.PASS;
     }
 
+    @Override
+    public InteractionResult beforeBlockUse(IToolStackView tool, ModifierEntry modifier, UseOnContext context, InteractionSource source) {
+        ItemStack toolStack = context.getItemInHand();
+        if(toolStack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
+            IMekaGear mekaGear = toolStack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+            for (Module<?> module : mekaGear.getModules(toolStack)) {
+                if (module.isEnabled()) {
+                    InteractionResult result = onModuleUse(module, context);
+                    if (result != InteractionResult.PASS) {
+                        return result;
+                    }
+                }
+            }
+        }
+        return BlockInteractionModifierHook.super.beforeBlockUse(tool, modifier, context, source);
+    }
+
+    private <MODULE extends ICustomModule<MODULE>> InteractionResult onModuleUse(IModule<MODULE> module, UseOnContext context) {
+        return module.getCustomInstance().onItemUse(module, context);
+    }
+
+    @Override
+    public InteractionResult afterBlockUse(IToolStackView tool, ModifierEntry modifier, UseOnContext context, InteractionSource source) {
+        teleport(tool, context.getPlayer());
+        return BlockInteractionModifierHook.super.afterBlockUse(tool, modifier, context, source);
+    }
+
+    private void teleport(IToolStackView tool, Entity entity){
+        if(tool instanceof ToolStack toolStack) {
+            ItemStack stack = toolStack.createStack();
+            if (stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent() && entity instanceof Player player) {
+                IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+                if (!player.level().isClientSide()) {
+                    IModule<ModuleTeleportationUnit> module = mekaGear.getModule(stack, MekanismModules.TELEPORTATION_UNIT);
+                    if (module != null && module.isEnabled()) {
+                        BlockHitResult result = MekanismUtils.rayTrace(player, MekanismConfig.gear.mekaToolMaxTeleportReach.get());
+                        if (!module.getCustomInstance().requiresBlockTarget() || result.getType() != HitResult.Type.MISS) {
+                            BlockPos pos = result.getBlockPos();
+                            if (isValidDestinationBlock(player.level(), pos.above()) && isValidDestinationBlock(player.level(), pos.above(2))) {
+                                double distance = player.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
+                                if (distance < 5) {
+                                    return;
+                                }
+                                IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
+                                FloatingLong energyNeeded = MekanismConfig.gear.mekaToolEnergyUsageTeleport.get().multiply(distance / 10D);
+                                if (energyContainer == null || energyContainer.getEnergy().smallerThan(energyNeeded)) {
+                                    return;
+                                }
+                                double targetX = pos.getX() + 0.5;
+                                double targetY = pos.getY() + 1.5;
+                                double targetZ = pos.getZ() + 0.5;
+                                MekanismTeleportEvent.MekaTool event = new MekanismTeleportEvent.MekaTool(player, targetX, targetY, targetZ, stack, result);
+                                if (MinecraftForge.EVENT_BUS.post(event)) {
+                                    return;
+                                }
+                                Objects.requireNonNull(energyContainer).extract(energyNeeded, Action.EXECUTE, AutomationType.MANUAL);
+                                if (player.isPassenger()) {
+                                    player.dismountTo(targetX, targetY, targetZ);
+                                } else {
+                                    player.teleportTo(targetX, targetY, targetZ);
+                                }
+                                player.resetFallDistance();
+                                Mekanism.packetHandler().sendToAllTracking(new PacketPortalFX(pos.above()), player.level(), pos);
+                                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private <MODULE extends ICustomModule<MODULE>> InteractionResult onModuleInteract(IModule<MODULE> module, @NotNull Player player, @NotNull LivingEntity entity,
-                                                                                                            @NotNull InteractionHand hand) {
+                                                                                      @NotNull InteractionHand hand) {
         return module.getCustomInstance().onInteract(module, player, entity, hand);
     }
 
@@ -156,7 +245,25 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
             ItemStack stack = toolStack.createStack();
             if (stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()) {
                 IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+                if (ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(toolAction)) {
+                    return hasEnergyForDigAction(stack, mekaGear);
+                }
+                return mekaGear.getModules(stack).stream().anyMatch(module -> module.isEnabled() && canPerformAction(module, toolAction));
             }
+        }
+        return false;
+    }
+
+    private <MODULE extends ICustomModule<MODULE>> boolean canPerformAction(IModule<MODULE> module, ToolAction action) {
+        return module.getCustomInstance().canPerformAction(module, action);
+    }
+
+    public boolean hasEnergyForDigAction(ItemStack stack, IMekaGear mekaGear) {
+        IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
+        if (energyContainer != null) {
+            FloatingLong energyRequired = getDestroyEnergy(stack, 0, mekaGear.isModuleEnabled(stack, MekanismModules.SILK_TOUCH_UNIT));
+            FloatingLong energyAvailable = energyContainer.getEnergy();
+            return energyRequired.smallerOrEqual(energyAvailable) || !energyAvailable.divide(energyRequired).isZero();
         }
         return false;
     }
@@ -212,11 +319,10 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
         return FloatingLong.create(0);
     }
 
-
-
     @Override
-    public void afterBlockBreak(IToolStackView iToolStackView, ModifierEntry modifierEntry, ToolHarvestContext toolHarvestContext) {
-        if(iToolStackView instanceof ToolStack toolStack){
+    public void startHarvest(IToolStackView tool, ModifierEntry modifier, ToolHarvestContext toolHarvestContext) {
+        BlockHarvestModifierHook.super.startHarvest(tool, modifier, toolHarvestContext);
+        if(tool instanceof ToolStack toolStack){
             ItemStack stack = toolStack.createStack();
             if(stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
                 IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
@@ -235,7 +341,7 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
                         Level world = player.level();
                         BlockPos pos = toolHarvestContext.getPos();
                         BlockState state = world.getBlockState(pos);
-                        boolean silk = ((IModuleContainerItem)stack.getItem()).isModuleEnabled(stack, MekanismModules.SILK_TOUCH_UNIT);
+                        boolean silk = mekaGear.isModuleEnabled(stack, MekanismModules.SILK_TOUCH_UNIT);
                         FloatingLong modDestroyEnergy = getDestroyEnergy(stack, silk);
                         FloatingLong energyRequired = getDestroyEnergy(modDestroyEnergy, state.getDestroySpeed(world, pos));
                         if (energyContainer.extract(energyRequired, Action.SIMULATE, AutomationType.MANUAL).greaterOrEqual(energyRequired) && mekaGear instanceof IBlastingItem blastingCapability) {
@@ -247,9 +353,10 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
 
                             Object2IntMap<BlockPos> veinedBlocks = getVeinedBlocks(mekaGear, world, stack, blocks, oreTracker);
                             if (!veinedBlocks.isEmpty()) {
+                                TicEX.LOGGER.info("{}", veinedBlocks.size());
                                 FloatingLong baseDestroyEnergy = getDestroyEnergy(silk);
                                 veinedBlocks.forEach((pos1, integer) -> {
-                                    ToolHarvestLogic.breakExtraBlock(toolStack, stack, toolHarvestContext);
+                                    ToolHarvestLogic.breakExtraBlock(toolStack, stack, toolHarvestContext.forPosition(pos1, world.getBlockState(pos1)));
                                     energyContainer.extract(baseDestroyEnergy, Action.EXECUTE, AutomationType.MANUAL);
                                 });
                             }
@@ -258,6 +365,11 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
                 }
             }
         }
+    }
+
+    @Override
+    public void finishHarvest(IToolStackView iToolStackView, ModifierEntry modifierEntry, ToolHarvestContext toolHarvestContext, int i) {
+
     }
 
     private Object2IntMap<BlockPos> getVeinedBlocks(IMekaGear mekaGear, Level world, ItemStack stack, Map<BlockPos, BlockState> blocks, Reference2BooleanMap<Block> oreTracker) {
@@ -299,52 +411,6 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
             }
         }
         return v1;
-    }
-
-    @Override
-    public void afterStopUsing(IToolStackView tool, ModifierEntry modifier, LivingEntity entity, int useDuration, int timeLeft, ModifierEntry activeModifier) {
-        if(tool instanceof ToolStack toolStack) {
-            ItemStack stack = toolStack.createStack();
-            if (stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent() && entity instanceof Player player) {
-                IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
-                if (!player.level().isClientSide()) {
-                    IModule<ModuleTeleportationUnit> module = mekaGear.getModule(stack, MekanismModules.TELEPORTATION_UNIT);
-                    if (module != null && module.isEnabled()) {
-                        BlockHitResult result = MekanismUtils.rayTrace(player, MekanismConfig.gear.mekaToolMaxTeleportReach.get());
-                        if (!module.getCustomInstance().requiresBlockTarget() || result.getType() != HitResult.Type.MISS) {
-                            BlockPos pos = result.getBlockPos();
-                            if (isValidDestinationBlock(player.level(), pos.above()) && isValidDestinationBlock(player.level(), pos.above(2))) {
-                                double distance = player.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
-                                if (distance < 5) {
-                                    return;
-                                }
-                                IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
-                                FloatingLong energyNeeded = MekanismConfig.gear.mekaToolEnergyUsageTeleport.get().multiply(distance / 10D);
-                                if (energyContainer == null || energyContainer.getEnergy().smallerThan(energyNeeded)) {
-                                    return;
-                                }
-                                double targetX = pos.getX() + 0.5;
-                                double targetY = pos.getY() + 1.5;
-                                double targetZ = pos.getZ() + 0.5;
-                                MekanismTeleportEvent.MekaTool event = new MekanismTeleportEvent.MekaTool(player, targetX, targetY, targetZ, stack, result);
-                                if (MinecraftForge.EVENT_BUS.post(event)) {
-                                    return;
-                                }
-                                Objects.requireNonNull(energyContainer).extract(energyNeeded, Action.EXECUTE, AutomationType.MANUAL);
-                                if (player.isPassenger()) {
-                                    player.dismountTo(targetX, targetY, targetZ);
-                                } else {
-                                    player.teleportTo(targetX, targetY, targetZ);
-                                }
-                                player.resetFallDistance();
-                                Mekanism.packetHandler().sendToAllTracking(new PacketPortalFX(pos.above()), player.level(), pos);
-                                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 
     private boolean isValidDestinationBlock(Level world, BlockPos pos) {
@@ -414,8 +480,10 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
 
     @Override
     public @NotNull ItemStack findAmmo(IToolStackView iToolStackView, ModifierEntry modifierEntry, LivingEntity livingEntity, ItemStack itemStack, Predicate<ItemStack> predicate) {
-        if(ModList.get().isLoaded("mekaweapons")){
-            return new ItemStack(TicEXRegistry.MEKANIC_ARROW.get());
+        if(ModList.get().isLoaded("mekaweapons") && iToolStackView instanceof ToolStack toolStack){
+            ItemStack mekaArrowStack = new ItemStack(TicEXRegistry.MEKANIC_ARROW.get());
+            mekaArrowStack.getOrCreateTag().put("shooterItem", toolStack.createStack().save(new CompoundTag()));
+            return mekaArrowStack;
         }
         return new ItemStack(Items.ARROW);
     }
@@ -438,13 +506,50 @@ public class ModifierMekanic extends NoLevelsModifier implements EmbossmentModif
     @Override
     public Component validate(@NotNull IToolStackView tool, ModifierEntry entry) {
         if (
-                entry.getLevel() == 1 &&
-                        tool.getModifierLevel(this) < 1 &&
-                        (tool.getModifierLevel(ModifierIds.reinforced) < 5 || tool.getModifierLevel(ModifierIds.netherite) < 1)
+                        tool.getModifierLevel(ModifierIds.reinforced) < 5 || tool.getModifierLevel(ModifierIds.netherite) < 1
 
         ) {
             return Component.translatable("recipe.ticex.modifier.mekanic_requirements");
         }
         return null;
+    }
+
+    @Override
+    public int receiveEnergy(IToolStackView tool, ItemStack stack, int received, boolean simulate) {
+        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.insertEnergy(FloatingLong.create(received), simulate ? Action.SIMULATE : Action.EXECUTE).getValue()).orElse(0);
+    }
+
+    @Override
+    public int extractEnergy(IToolStackView tool, ItemStack stack, int extracted, boolean simulate) {
+        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.extractEnergy(FloatingLong.create(extracted), simulate ? Action.SIMULATE : Action.EXECUTE).getValue()).orElse(0);
+    }
+
+    @Override
+    public int getEnergyStored(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.getEnergy(0).getValue()).orElse(0);
+    }
+
+    @Override
+    public int getMaxEnergyStored(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.getMaxEnergy(0).getValue()).orElse(0);
+    }
+
+    @Override
+    public boolean canExtract(IToolStackView tool, ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean canReceive(IToolStackView tool, ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
+        ToolStack toolStack = ToolStack.from(context.getToolStack());
+        if(toolStack.getModifierLevel(TicEXRegistry.REBIRTH_MODIFIER.get()) <= 0){
+            toolStack.addModifier(TicEXRegistry.REBIRTH_MODIFIER.getId(), 1);
+        }
+        return true;
     }
 }

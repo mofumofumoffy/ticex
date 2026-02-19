@@ -1,0 +1,9 @@
+{
+  "type": "tconstruct:material",
+  "ingredient": {
+    "tag": "forge:nuggets/od"
+  },
+  "material": "ticex:od",
+  "needed": 9,
+  "value": 1
+}

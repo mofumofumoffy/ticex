@@ -10,8 +10,11 @@ import mekanism.api.gear.IModuleHelper;
 import mekanism.api.math.FloatingLong;
 import mekanism.api.math.FloatingLongSupplier;
 import mekanism.api.text.EnumColor;
+import mekanism.client.ClientTickHandler;
+import mekanism.client.MekanismClient;
 import mekanism.client.key.MekKeyHandler;
 import mekanism.client.key.MekanismKeyHandler;
+import mekanism.common.CommonPlayerTickHandler;
 import mekanism.common.Mekanism;
 import mekanism.common.MekanismLang;
 import mekanism.common.base.KeySync;
@@ -27,12 +30,14 @@ import mekanism.common.lib.radiation.RadiationManager;
 import mekanism.common.registries.MekanismGameEvents;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.StorageUtils;
+import moffy.ticex.TicEX;
 import moffy.ticex.caps.mekanism.MekaArmorGearCapability;
-import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
+import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.modules.mekanism.interfaces.IAbsorbableItem;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -62,7 +67,6 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
-import slimeknights.tconstruct.common.TinkerTags;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -79,16 +83,18 @@ public class TicEXMekanismEvent {
         ItemStack stack = event.getItemStack();
         EquipmentSlot slot = event.getSlotType();
         if(stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
+            IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
             if (slot == EquipmentSlot.MAINHAND) {
                 int unitDamage = 0;
-                IModule<ModuleAttackAmplificationUnit> attackAmplificationUnit = ((IModuleContainerItem)stack.getItem()).getModule(stack, MekanismModules.ATTACK_AMPLIFICATION_UNIT);
+                IModule<ModuleAttackAmplificationUnit> attackAmplificationUnit = mekaGear.getModule(stack, MekanismModules.ATTACK_AMPLIFICATION_UNIT);
                 if (attackAmplificationUnit != null && attackAmplificationUnit.isEnabled()) {
+
                     unitDamage = attackAmplificationUnit.getCustomInstance().getDamage();
                     if (unitDamage > 0) {
                         FloatingLong energyCost = MekanismConfig.gear.mekaToolEnergyUsageWeapon.get().multiply(unitDamage / 4D);
                         IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
                         FloatingLong energy = energyContainer == null ? FloatingLong.ZERO : energyContainer.getEnergy();
-                        if (energy.smallerThan(energyCost)) {
+                        if (energyCost.smallerThan(energy)) {
                             double bonusDamage = unitDamage * energy.divideToLevel(energyCost);
                             if (bonusDamage > 0) {
                                 ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
@@ -210,6 +216,8 @@ public class TicEXMekanismEvent {
 
     public static void onLivingJump(LivingEvent.LivingJumpEvent event) {
         if (event.getEntity() instanceof Player player) {
+            if (player.getAbilities().flying) return;
+
             IModule<ModuleHydraulicPropulsionUnit> module = IModuleHelper.INSTANCE.load(
                     player.getItemBySlot(EquipmentSlot.FEET),
                     MekanismModules.HYDRAULIC_PROPULSION_UNIT
@@ -251,7 +259,7 @@ public class TicEXMekanismEvent {
 
             ItemStack jetpack = getActiveJetpack(player);
             if (!jetpack.isEmpty() && mekaGear instanceof IJetpackItem jetpackGear) {
-                ItemStack primaryJetpack = IJetpackItem.getPrimaryJetpack(player);
+                ItemStack primaryJetpack = getPrimaryJetpack(player);
                 if (!primaryJetpack.isEmpty()) {
                     IJetpackItem.JetpackMode primaryMode = jetpackGear.getJetpackMode(primaryJetpack);
                     IJetpackItem.JetpackMode mode = IJetpackItem.getPlayerJetpackMode(player, primaryMode, () -> Mekanism.keyMap.has(player.getUUID(), KeySync.ASCEND));
@@ -262,7 +270,7 @@ public class TicEXMekanismEvent {
                                 serverPlayer.connection.aboveGroundTickCount = 0;
                             }
                         }
-                        ((IJetpackItem) jetpack.getItem()).useJetpackFuel(jetpack);
+                        jetpackGear.useJetpackFuel(jetpack);
                         if (player.level().getGameTime() % 10 == 0) {
                             player.gameEvent(MekanismGameEvents.JETPACK_BURN.get());
                         }
@@ -415,5 +423,74 @@ public class TicEXMekanismEvent {
     @OnlyIn(Dist.CLIENT)
     public static void onModelBake(BakingCompleted event) {
         MekaPlateModelCache.INSTANCE.onBake(event);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            tickStart();
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void tickStart() {
+        MekanismClient.ticksPassed++;
+
+        Minecraft minecraft = Minecraft.getInstance();
+
+
+        if (minecraft.level != null && minecraft.player != null && !minecraft.isPaused()) {
+
+            RadiationManager.get().tickClient(minecraft.player);
+
+            UUID playerUUID = minecraft.player.getUUID();
+            ItemStack jetpack = getActiveJetpack(minecraft.player);
+
+            boolean jetpackInUse = isJetpackInUse(minecraft.player, jetpack);
+            Mekanism.playerState.setJetpackState(playerUUID, jetpackInUse, true);
+
+            if (!jetpack.isEmpty()) {
+                ItemStack primaryJetpack = getPrimaryJetpack(minecraft.player);
+                if (!primaryJetpack.isEmpty()) {
+                    LazyOptional<IMekaGear> mekaGearLazyOptional = primaryJetpack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY);
+                    if (mekaGearLazyOptional.isPresent()) {
+                        IMekaGear mekaGear = mekaGearLazyOptional.orElseThrow(IllegalStateException::new);
+                        IJetpackItem.JetpackMode primaryMode = ((IJetpackItem) mekaGear).getJetpackMode(primaryJetpack);
+                        IJetpackItem.JetpackMode mode = IJetpackItem.getPlayerJetpackMode(minecraft.player, primaryMode, () -> minecraft.player.input.jumping);
+                        MekanismClient.updateKey(minecraft.player.input.jumping, KeySync.ASCEND);
+                        if (jetpackInUse && IJetpackItem.handleJetpackMotion(minecraft.player, mode, () -> minecraft.player.input.jumping)) {
+                            minecraft.player.resetFallDistance();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static boolean isJetpackInUse(Player player, ItemStack jetpack) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LazyOptional<IMekaGear> mekaGearLazyOptional = jetpack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY);
+        if (!player.isSpectator() && !jetpack.isEmpty() && mekaGearLazyOptional.isPresent()) {
+            IMekaGear mekaGear = mekaGearLazyOptional.orElseThrow(IllegalStateException::new);
+            IJetpackItem.JetpackMode mode = ((IJetpackItem)mekaGear).getJetpackMode(jetpack);
+            boolean guiOpen = minecraft.screen != null;
+            boolean ascending = minecraft.player.input.jumping;
+            boolean rising = ascending && !guiOpen;
+            if (mode == IJetpackItem.JetpackMode.NORMAL) {
+                return rising;
+            }
+
+            if (mode == IJetpackItem.JetpackMode.HOVER) {
+                boolean descending = minecraft.player.input.shiftKeyDown;
+                if (rising && !descending) {
+                    return true;
+                }
+
+                return !CommonPlayerTickHandler.isOnGroundOrSleeping(player);
+            }
+        }
+
+        return false;
     }
 }

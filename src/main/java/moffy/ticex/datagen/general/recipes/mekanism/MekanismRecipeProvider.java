@@ -8,12 +8,11 @@ import meranha.mekaweapons.MekaWeapons;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.IEmbossmentToolRecipeHelper;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentBuildingRecipeBuilder;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.SingleEmbossmentModifierRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentBuildingRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.SingleEmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -22,7 +21,6 @@ import net.minecraftforge.common.crafting.DifferenceIngredient;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 import slimeknights.tconstruct.common.TinkerTags;
-import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingRecipe;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
 import slimeknights.tconstruct.library.tools.SlotType;
 
@@ -32,7 +30,7 @@ public class MekanismRecipeProvider implements ITicEXRecipeHelper, IEmbossmentTo
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
-                modsAvailable(new ResourceLocation(TicEX.MODID, "mekanism_compat"))
+                modsAvailable(TicEX.getResource("mekanism_compat"))
         );
 
         buildArmorRecipes(topConsumer);
@@ -99,6 +97,7 @@ public class MekanismRecipeProvider implements ITicEXRecipeHelper, IEmbossmentTo
                     .save(topConsumer, prefix(TicEXRegistry.MEKA_EDGE, buildingFolder));
         }
 
+        //weapons
         Consumer<FinishedRecipe> weaponsConsumer = withCondition(topConsumer, new ModLoadedCondition("mekaweapons"));
         if(TicEXRegistry.CATALYST_MEKA_TANA != null){
             embossmentCasting(weaponsConsumer, TicEXRegistry.CATALYST_MEKA_TANA.get(), 1, MekaWeapons.MEKA_TANA.get(), true, prefix(TicEXRegistry.CATALYST_MEKA_TANA.get().getStatType(), partsCastingFolder));
@@ -120,12 +119,6 @@ public class MekanismRecipeProvider implements ITicEXRecipeHelper, IEmbossmentTo
 
     public void buildArmorRecipes(Consumer<FinishedRecipe> topConsumer) {
         if(TicEXRegistry.MEKAPLATE_ARMOR != null) {
-            ResourceLocation seramGear = new ResourceLocation(TicEX.MODID, "seram_gear");
-            embossmentBuilding(topConsumer, TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.HELMET), armorFolder, seramGear);
-            embossmentBuilding(topConsumer, TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.CHESTPLATE), armorFolder, seramGear);
-            embossmentBuilding(topConsumer, TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.LEGGINGS), armorFolder, seramGear);
-            embossmentBuilding(topConsumer, TicEXRegistry.MEKAPLATE_ARMOR.get(ArmorItem.Type.BOOTS), armorFolder, seramGear);
-
             embossmentCasting(topConsumer, TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.HELMET), 1, MekanismItems.MEKASUIT_HELMET.get(), true,
                     prefix(TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.HELMET).getStatType(), partsCastingFolder));
             embossmentCasting(topConsumer, TicEXRegistry.CATALYST_MEKASUIT.get(ArmorItem.Type.CHESTPLATE), 1, MekanismItems.MEKASUIT_BODYARMOR.get(), true,

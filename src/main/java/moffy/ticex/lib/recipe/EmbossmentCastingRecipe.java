@@ -10,9 +10,11 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import slimeknights.mantle.data.loadable.field.ContextKey;
 import slimeknights.mantle.data.loadable.field.LoadableField;
 import slimeknights.mantle.data.loadable.record.RecordLoadable;
+import slimeknights.mantle.data.predicate.IJsonPredicate;
 import slimeknights.mantle.recipe.helper.LoadableRecipeSerializer;
 import slimeknights.mantle.recipe.helper.TypeAwareRecipeSerializer;
 import slimeknights.tconstruct.library.json.TinkerLoadables;
+import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import slimeknights.tconstruct.library.recipe.casting.ICastingContainer;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingRecipe;
 import slimeknights.tconstruct.library.tools.part.IMaterialItem;
@@ -28,6 +30,7 @@ public class EmbossmentCastingRecipe extends MaterialCastingRecipe {
         CAST_FIELD,
         ITEM_COST_FIELD,
         RESULT_FIELD,
+        MATERIALS_FIELD,
         CAST_CONSUMED_FIELD,
         SWITCH_SLOTS_FIELD,
         EmbossmentCastingRecipe::new
@@ -42,10 +45,11 @@ public class EmbossmentCastingRecipe extends MaterialCastingRecipe {
         Ingredient cast,
         int itemCost,
         IMaterialItem result,
+        IJsonPredicate<MaterialVariantId> materials,
         boolean consumed,
         boolean switchSlots
     ) {
-        super(serializer, id, group, cast, itemCost, result, consumed, switchSlots);
+        super(serializer, id, group, cast, itemCost, result, materials, consumed, switchSlots);
         this.castIngredient = cast;
     }
 

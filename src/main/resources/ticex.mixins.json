@@ -6,10 +6,13 @@
   "mixins": [
     "CriticalAccessor",
     "DataItemAccessor",
+    "MaterialCastingLookupMixin",
     "MeleeAttributeModuleMixin",
-    "RandomMaterialMixin",
+    "ObjModel$ModelGroupAccessor",
+    "ObjModel$ModelMeshAccessor",
+    "ObjModel$ModelObjectAccessor",
+    "ObjModelAccessor",
     "RomanNumeralHelperMixin",
-    "TrimArmorTextureSupplierMixin",
     "config.AbstractCastingRecipeAccessor",
     "config.AbstractCastingRecipeMixin",
     "config.AbstractModifierRecipeAccessor",
@@ -23,7 +26,8 @@
     "ItemRendererMixin",
     "MaterialArmorTextureSupplierMixin",
     "NormalModifierModelMixin",
-    "ToolModelMixin"
+    "ToolModelMixin",
+    "TrimArmorTextureSupplierMixin"
   ],
   "server": [],
   "injectors": {

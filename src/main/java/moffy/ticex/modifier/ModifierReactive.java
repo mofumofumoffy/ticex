@@ -10,9 +10,12 @@ package moffy.ticex.modifier;
 
 import com.hollingsworth.arsnouveau.setup.registry.EnchantmentRegistry;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.modifier.propeties.ReactiveProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -27,12 +30,13 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 import java.util.Map;
+import java.util.function.BiFunction;
 
-public class ModifierReactive extends Modifier implements InventoryTickModifierHook, EnchantmentModifierHook, EmbossmentModifierHook {
+public class ModifierReactive extends Modifier implements InventoryTickModifierHook, EnchantmentModifierHook, EmbossmentModifierHook, ProvidePropertyModifierHook {
 
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.ENCHANTMENTS, TicEXRegistry.EMBOSSMENT_HOOK);
+        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.ENCHANTMENTS, TicEXRegistry.EMBOSSMENT_HOOK, TicEXRegistry.PROPERTY_PROVIDER_HOOK);
     }
 
     @Override
@@ -83,5 +87,10 @@ public class ModifierReactive extends Modifier implements InventoryTickModifierH
             }
         }
         return false;
+    }
+
+    @Override
+    public BiFunction<Player, ItemStack, Map<String, Object>> getPropertyProvider() {
+        return ReactiveProperty.getProperties();
     }
 }

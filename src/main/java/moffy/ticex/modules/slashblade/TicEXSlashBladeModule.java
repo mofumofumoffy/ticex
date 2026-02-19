@@ -3,9 +3,8 @@ package moffy.ticex.modules.slashblade;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.slashblade.SBItemCapabilityProvider;
-import moffy.ticex.client.modules.slashblade.SBToolRenderType;
-import moffy.ticex.client.rendering.CustomModel;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
+import moffy.ticex.client.render.custom.CustomModel;
+import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.event.TicEXSBEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -25,7 +24,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
@@ -72,11 +70,11 @@ public class TicEXSlashBladeModule implements AddonModule {
         );
 
         TicEXRegistry.SLASHBLADE_BLADE_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
-                "slashblade_blade",
+                TicEXRegistry.SLASHBLADE_BLADE,
                 defaultProperties
         );
         TicEXRegistry.SLASHBLADE_SAYA_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
-                "slashblade_saya",
+                TicEXRegistry.SLASHBLADE_SAYA,
                 defaultProperties
         );
 
@@ -90,8 +88,8 @@ public class TicEXSlashBladeModule implements AddonModule {
                 .consumerMainThread(StateSyncPacket::handle)
                 .add();
 
+        TicEXSBEvent.registerEventsByVersion();
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onBladeMotion);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onInputCommand);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingDeath);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingExperienceDrop);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, TicEXSBEvent::onLivingFall);
@@ -103,7 +101,6 @@ public class TicEXSlashBladeModule implements AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void initClient(FMLJavaModLoadingContext context) {
-        SBToolRenderType.init();
         IEventBus bus = context.getModEventBus();
         bus.addListener(TicEXSBEvent::onRegisterRenderers);
     }

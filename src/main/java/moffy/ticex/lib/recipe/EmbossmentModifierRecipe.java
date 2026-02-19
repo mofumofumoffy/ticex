@@ -7,6 +7,7 @@ import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -116,6 +117,11 @@ public class EmbossmentModifierRecipe extends AbstractModifierRecipe {
             ModifierId modifier = result.getId();
 
             tool = tool.copy();
+
+            Component error = tool.tryValidate();
+            if (error != null) {
+                return RecipeResult.failure(error);
+            }
 
             if (tool.getModifierLevel(modifier) == 0) {
                 SlotCount slots = getSlots();

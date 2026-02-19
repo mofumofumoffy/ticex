@@ -3,14 +3,12 @@
   "parent": "forge:item/default",
   "textures": {
     "plating": "tconstruct:item/tool/armor/plate/chestplate/plating",
-    "maille": "tconstruct:item/tool/armor/plate/chestplate/maille",
-    "mekaplate": "mekanism:item/mekasuit_bodyarmor"
+    "maille": "tconstruct:item/tool/armor/plate/chestplate/maille"
   },
   "modifier_roots": ["tconstruct:item/tool/armor/plate/chestplate/modifiers/"],
   "first_modifiers": ["tconstruct:trim"],
   "parts": [
     { "name": "plating", "index": 0 },
-    { "name": "maille", "index": 1 },
-    { "name": "mekaplate", "index": 2 }
+    { "name": "maille", "index": 1 }
   ]
 }

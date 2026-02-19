@@ -1,12 +1,19 @@
 package moffy.ticex.modifier;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.function.BiConsumer;
+
+import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.handlers.InternalTimers;
 import moze_intel.projecte.utils.WorldHelper;
 import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -17,17 +24,20 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
+import slimeknights.tconstruct.library.modifiers.hook.behavior.AttributesModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-public class ModifierInfernal extends NoLevelsModifier implements InventoryTickModifierHook, TooltipModifierHook {
+public class ModifierInfernal extends NoLevelsModifier implements InventoryTickModifierHook, TooltipModifierHook, AttributesModifierHook {
+
+    public static final UUID ATTRIBUTE_MODIFIER_UUID = UUID.fromString("39377487-3632-4a51-9128-6c211265b7c5");
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.TOOLTIP);
+        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.TOOLTIP, ModifierHooks.ATTRIBUTES);
     }
 
     @Override
@@ -84,5 +94,10 @@ public class ModifierInfernal extends NoLevelsModifier implements InventoryTickM
     @Override
     public boolean shouldDisplay(boolean advanced) {
         return advanced;
+    }
+
+    @Override
+    public void addAttributes(IToolStackView iToolStackView, ModifierEntry modifierEntry, EquipmentSlot equipmentSlot, BiConsumer<Attribute, AttributeModifier> biConsumer) {
+        biConsumer.accept(TicEXRegistry.DAMAGE_TAKEN.get(), new AttributeModifier(ATTRIBUTE_MODIFIER_UUID, "gem_modifier", -0.2f, AttributeModifier.Operation.ADDITION));
     }
 }

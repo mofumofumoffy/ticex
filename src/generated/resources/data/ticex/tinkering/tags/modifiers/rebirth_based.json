@@ -1,0 +1,32 @@
+{
+  "values": [
+    {
+      "id": "ticex:mekanic",
+      "required": false
+    },
+    {
+      "id": "ticex:koshirae",
+      "required": false
+    },
+    {
+      "id": "ticex:abyssal",
+      "required": false
+    },
+    {
+      "id": "ticex:infernal",
+      "required": false
+    },
+    {
+      "id": "ticex:gravity",
+      "required": false
+    },
+    {
+      "id": "ticex:hurricane",
+      "required": false
+    },
+    {
+      "id": "ticex:overcasting",
+      "required": false
+    }
+  ]
+}

@@ -24,6 +24,7 @@ public class TicEXBlockstateProvider extends BlockStateProvider {
         activatableBlock(TicEXRegistry.FLUID_TRANSMUTER.get(), "block/foundry/fluid_transmuter", 180);
 
         simpleModelBlock(TicEXRegistry.ETHERIC_BLOCK.get(), "block/etheric_block");
+        simpleModelBlock(TicEXRegistry.OD_BLOCK.get(), "block/od_block");
     }
 
     public void simpleModelBlock(Block block, String name) {

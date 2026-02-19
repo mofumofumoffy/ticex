@@ -8,6 +8,7 @@ import moffy.ticex.lib.hook.EmbossmentModifierHook.EmbossmentContext;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -70,6 +71,11 @@ public class SingleEmbossmentModifierRecipe extends AbstractModifierRecipe {
         ToolStack tool = inv.getTinkerable().copy();
 
         ModifierId modifier = result.getId();
+
+        Component error = tool.tryValidate();
+        if (error != null) {
+            return RecipeResult.failure(error);
+        }
 
         if (tool.getModifierLevel(modifier) == 0) {
             SlotCount slots = getSlots();

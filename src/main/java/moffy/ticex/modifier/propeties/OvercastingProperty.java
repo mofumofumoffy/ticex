@@ -13,6 +13,8 @@ import moffy.ticex.lib.utils.TicEXUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.LogicalSidedProvider;
+import net.minecraftforge.fml.LogicalSide;
 
 public class OvercastingProperty {
 
@@ -28,21 +30,24 @@ public class OvercastingProperty {
 
     public static ILuaFunction castIronsSpell(Player user, ItemStack stack) {
         return args -> {
+
             ISpellContainer container = ISpellContainer.get(stack);
             int page = args.getInt(0) - 1;
             if (page >= 0 && page < container.getMaxSpellCount() && user instanceof ServerPlayer) {
                 ISpellContainer spellContainer = ISpellContainer.get(stack);
                 SpellData spellData = spellContainer.getSpellAtIndex(page);
                 AbstractSpell spell = spellData.getSpell();
-                spell.attemptInitiateCast(
-                    stack,
-                    page,
-                    user.level(),
-                    user,
-                    CastSource.SPELLBOOK,
-                    true,
-                    TicEXUtils.getEquipmentSlotName(user, stack)
-                );
+                LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
+                    spell.attemptInitiateCast(
+                            stack,
+                            page,
+                            user.level(),
+                            user,
+                            CastSource.SPELLBOOK,
+                            true,
+                            TicEXUtils.getEquipmentSlotName(user, stack)
+                    );
+                });
                 return MethodResult.of(true);
             }
             return MethodResult.of(false);

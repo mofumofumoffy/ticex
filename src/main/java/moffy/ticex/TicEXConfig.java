@@ -6,7 +6,6 @@ import moffy.ticex.lib.config.ToolSlotPreset;
 import moffy.ticex.modules.general.TicEXModuleProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -54,7 +53,7 @@ public class TicEXConfig {
         final ForgeConfigSpec.Builder MORE_CONFIG = new ForgeConfigSpec.Builder();
 
         COMMON.comment("General").push("general");
-        USE_MORE_CONFIG = COMMON.comment("Using ticex-more-config.toml(If true, it will override your datapack!)").define("useMoreConfig", true);
+        USE_MORE_CONFIG = COMMON.comment("Using ticex-more-config.toml(If true, it will override your datapack!)").define("useMoreConfig", false);
         RF_FURNACE_RATE_CAPACITY = COMMON.comment("MAX Rate Capacity(RF/t)").define("rateCapacity", 100000);
         FLUID_TRANSMUTER_PATTERNS = COMMON.comment(
                 "Fluid Transmuter valid tag prefix list"
@@ -86,6 +85,7 @@ public class TicEXConfig {
 
         COMMON.push("ars nouveau");
         REACTIVE_COOLDOWN = COMMON.comment("Internal cooldown ticks of spellcasting").define("reactiveCooldown", 10);
+        COMMON.pop();
 
         COMMON.push("curios");
         GAUNTLET_REMAIN_TICKS = COMMON.comment("Ticks remaining on the gauntlet after a gauntlet shot hits")
@@ -179,8 +179,8 @@ public class TicEXConfig {
 
         AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(context), COMMON);
 
-        ModLoadingContext.get().registerConfig(Type.COMMON, COMMON.build());
-        ModLoadingContext.get().registerConfig(Type.COMMON, MORE_CONFIG.build(), "ticex-more-config.toml");
-        ModLoadingContext.get().registerConfig(Type.CLIENT, CLIENT.build());
+        context.registerConfig(Type.COMMON, COMMON.build());
+        context.registerConfig(Type.COMMON, MORE_CONFIG.build(), "ticex-more-config.toml");
+        context.registerConfig(Type.CLIENT, CLIENT.build());
     }
 }

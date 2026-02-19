@@ -34,7 +34,7 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
     private CCUniform baseColorUniform;
 
     public TicEXDEShader() {
-        super(new ResourceLocation(TicEX.MODID, "draconicevolution/trace"), DefaultVertexFormat.NEW_ENTITY);
+        super(TicEX.getResource("draconicevolution/trace"), DefaultVertexFormat.NEW_ENTITY);
         shaderState = new RenderStateShard.ShaderStateShard(this::getShaderInstance);
 
         shaderStateBaseFactory = () ->
@@ -88,8 +88,9 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
         }
     }
 
-    public void setupUniforms(TechLevel techLevel) {
+    public void setupUniforms(TechLevel techLevel, float scale) {
         glUniformBaseColor(this, techLevel, 1.0F);
+        scaleUniform.set(scale);
     }
 
     public CCUniform getUv1OverrideUniform() {
@@ -138,9 +139,9 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
         return modifierRenderType;
     }
 
-    public RenderType createMaterialsRenderType() {
+    public RenderType createMaterialsRenderType(TechLevel techLevel) {
         return RenderType.create(
-                TicEX.MODID + ":tool_evolved",
+                TicEX.MODID + ":tool_evolved_" + techLevel.name().toLowerCase(),
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
                 2097152,
@@ -152,7 +153,7 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
         );
     }
 
-    public RenderType getArmorRenderType(ResourceLocation atlasTexture) {
+    public RenderType createArmorRenderType(ResourceLocation atlasTexture) {
         if (armorRenderTypeCache.containsKey(atlasTexture)) {
             return armorRenderTypeCache.get(atlasTexture);
         }

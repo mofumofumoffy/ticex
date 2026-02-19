@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import meranha.mekaweapons.MekaWeapons;
 import meranha.mekaweapons.MekaWeaponsUtils;
 import meranha.mekaweapons.items.MekaArrowEntity;
+import moffy.ticex.TicEX;
 import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -22,12 +23,22 @@ import slimeknights.tconstruct.tools.item.CrystalshotItem;
 
 public class MekanicProjectile extends MekaArrowEntity {
 
+    private final ItemStack weaponStack;
+
     public MekanicProjectile(EntityType<MekanicProjectile> entityType, Level level) {
         super(entityType, level, new ItemStack(Items.ARROW));
+        this.weaponStack = new ItemStack(Items.ARROW);
     }
 
     public MekanicProjectile(AbstractArrow arrow, ItemStack projectileStack, ItemStack weaponStack) {
         super(arrow, projectileStack, weaponStack);
-        this.setBaseDamage(arrow.getBaseDamage() * TicEXMekanismWeaponsUtils.getAmplifier(weaponStack));
+        this.weaponStack = weaponStack;
+        this.setBaseDamage(arrow.getBaseDamage() * TicEXMekanismWeaponsUtils.getAmplifier(weaponStack) * 5);
+    }
+
+    @Override
+    public void onHitEntity(@NotNull EntityHitResult pResult) {
+        super.onHitEntity(pResult);
+        TicEX.LOGGER.info("{}", weaponStack.getDisplayName().getString());
     }
 }

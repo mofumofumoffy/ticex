@@ -6,23 +6,23 @@
   "mixins": [
     "ArmorModelDispatcherMixin",
     "IModifiableMixin",
-    "ItemMixin",
+    "MekanismHUDMixin",
     "MekaSuitEnergyLevelMixin",
-    "ModifierUtilMixin",
+    "ModifiableArmorItemMixin",
     "ModuleHelperMixin",
     "ModuleJetpackUnitMixin",
     "ModuleNutritionalInjectionUnitMixin",
     "ModuleTweakerContainerMixin"
   ],
   "client": [
-    "AbstractArmorModelMixin",
-    "ElytraModelMixin",
     "HUDHandlerMixin"
   ],
   "server": [],
   "injectors": {
     "defaultRequire": 1
   },
-  "mixinextras": {"minVersion": "0.5.0"},
+  "mixinextras": {
+    "minVersion": "0.5.0"
+  },
   "minVersion": "0.7"
 }

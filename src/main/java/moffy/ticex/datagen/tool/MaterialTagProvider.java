@@ -2,7 +2,6 @@ package moffy.ticex.datagen.tool;
 
 import moffy.ticex.TicEX;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import slimeknights.tconstruct.common.TinkerTags;
 
@@ -15,8 +14,9 @@ public class MaterialTagProvider extends slimeknights.tconstruct.common.data.tag
     @Override
     protected void addTags() {
         this.tag(TinkerTags.Materials.EXCLUDE_FROM_LOOT).addOptional(
-                new ResourceLocation(TicEX.MODID, "infinity"),
-                new ResourceLocation(TicEX.MODID, "etheric")
+                TicEX.getResource("infinity"),
+                TicEX.getResource("etheric"),
+                TicEX.getResource("od")
             );
     }
 }

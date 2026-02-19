@@ -3,6 +3,7 @@ package moffy.ticex.modules.mekanism;
 import mekanism.common.registration.impl.BlockDeferredRegister;
 import mekanism.common.registration.impl.TileEntityTypeDeferredRegister;
 import mekanism.common.registries.MekanismModules;
+import mekanism.generators.common.registries.GeneratorsModules;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.mekanism.MekItemCapabilityProvider;
@@ -19,7 +20,6 @@ import moffy.ticex.modifier.ModifierMekanic;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.mekanism.ConfigSyncToClientPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -28,20 +28,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TicEXMekanismModule implements AddonModule {
-
-    public static final MaterialStatsId CATALYST_MEKAPLATE = new MaterialStatsId(TicEX.MODID, "catalyst_mekaplate");
 
     public static BlockDeferredRegister BLOCKS;
     public static TileEntityTypeDeferredRegister TILE_ENTITY_TYPES;
@@ -113,6 +106,7 @@ public class TicEXMekanismModule implements AddonModule {
     public void initClient(FMLJavaModLoadingContext context) {
         IEventBus bus = context.getModEventBus();
         MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::handleItemToolTip);
+        MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::onClientTick);
         bus.addListener(TicEXMekanismEvent::onLoadAdditionalModel);
         bus.addListener(TicEXMekanismEvent::onModelBake);
     }
@@ -121,7 +115,7 @@ public class TicEXMekanismModule implements AddonModule {
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
         MekaPlateModelCache.INSTANCE.registerMekaSuitModuleModel(
-            new ResourceLocation(TicEX.MODID, "models/entity/modifiable_mekasuit_modules.obj")
+            TicEX.getResource("models/entity/modifiable_mekasuit_modules.obj")
         );
 
         MekaPlateMultilayerModel.registerModule(
@@ -142,5 +136,13 @@ public class TicEXMekanismModule implements AddonModule {
             EquipmentSlot.CHEST,
             LivingEntity::isFallFlying
         );
+        if(ModList.get().isLoaded("mekanismgenerators")){
+            MekaPlateMultilayerModel.registerModule(
+                    "solar_helmet",
+                    GeneratorsModules.SOLAR_RECHARGING_UNIT,
+                    EquipmentSlot.HEAD,
+                    entity -> true
+            );
+        }
     }
 }

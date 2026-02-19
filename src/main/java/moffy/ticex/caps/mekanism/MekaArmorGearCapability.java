@@ -137,7 +137,7 @@ public class MekaArmorGearCapability extends MekaGearCapability implements IAbso
 
     @Override
     public ResourceLocation getRadialId() {
-        return new ResourceLocation(TicEX.MODID, "tinker_armor");
+        return TicEX.getResource("tinker_armor");
     }
 
     @Override

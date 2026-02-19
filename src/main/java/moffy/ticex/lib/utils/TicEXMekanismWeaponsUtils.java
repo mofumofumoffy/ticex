@@ -28,10 +28,10 @@ import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXMekanismWeaponsUtils {
     public static Item getAlternativeWeapon(ItemStack stack){
-        if(stack.is(TinkerTags.Items.MELEE_WEAPON)){
-            return MekaWeapons.MEKA_TANA.get();
-        } else if(stack.is(TinkerTags.Items.RANGED)){
+        if(stack.is(TinkerTags.Items.RANGED)){
             return MekaWeapons.MEKA_BOW.get();
+        } else if(stack.is(TinkerTags.Items.MELEE_WEAPON)){
+            return MekaWeapons.MEKA_TANA.get();
         }
         return MekanismItems.MEKA_TOOL.get();
     }
@@ -62,7 +62,8 @@ public class TicEXMekanismWeaponsUtils {
             if(unit != null){
                 IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
                 FloatingLong energy = energyContainer != null ? energyContainer.getEnergy() : FloatingLong.ZERO;
-                int unitDamage = energy.greaterOrEqual(MekaWeapons.general.mekaTanaEnergyUsage.get()) ? unit.getCustomInstance().getCurrentUnit() : 0;
+                FloatingLong usage = stack.is(TinkerTags.Items.RANGED) ? MekaWeapons.general.mekaBowEnergyUsage.get() : MekaWeapons.general.mekaTanaEnergyUsage.get();
+                int unitDamage = energy.greaterOrEqual(usage) ? unit.getCustomInstance().getCurrentUnit() : 0;
                 if(unit.getInstalledCount() > 4){
                     return (unitDamage - 1) / 5f * (unit.getInstalledCount() + 1);
                 }

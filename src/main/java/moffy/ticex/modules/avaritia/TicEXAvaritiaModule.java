@@ -2,11 +2,10 @@ package moffy.ticex.modules.avaritia;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.modules.avaritia.TicEXCosmicShaderProvider;
-import moffy.ticex.client.rendering.PartPredicate;
-import moffy.ticex.client.rendering.ticex.ItemArrowRenderer;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
-import moffy.ticex.entity.ItemArrow;
+import moffy.ticex.client.render.avaritia.TicEXCosmicShaderProvider;
+import moffy.ticex.client.render.custom.PartPredicate;
+import moffy.ticex.client.render.ticex.ItemArrowRenderer;
+import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.event.TicEXAvaritiaEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -24,7 +23,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -41,9 +39,6 @@ public class TicEXAvaritiaModule implements AddonModule {
     public void init(FMLJavaModLoadingContext context) {
         TicEXRegistry.CELESTIAL_CORE = TicEXRegistry.ITEMS.register("celestial_core", () ->
                 new ItemReconstCore(new Item.Properties(), "celestial")
-        );
-        TicEXRegistry.ENDESTSHOT_ARROW = TicEXRegistry.ITEMS.register("endestshot", () ->
-                new EndestShotItem(new Item.Properties())
         );
 
         TicEXRegistry.OMNIPOTENCE_MODIFIER = TicEXRegistry.MODIFIERS.register("omnipotence", ModifierOmnipotence::new);
@@ -109,27 +104,27 @@ public class TicEXAvaritiaModule implements AddonModule {
     @Override
     public void initClient(FMLJavaModLoadingContext context) {
         List<MaterialVariantId> infinityMaterials = new ArrayList<>();
-        infinityMaterials.add(new MaterialId(new ResourceLocation(TicEX.MODID, "infinity")));
+        infinityMaterials.add(new MaterialId(TicEX.getResource("infinity")));
 
         if (ModList.get().isLoaded("sakuratinker")) {
-            infinityMaterials.add(new MaterialId(new ResourceLocation("sakuratinker", "infinity")));
+            infinityMaterials.add(new MaterialId(ResourceLocation.fromNamespaceAndPath("sakuratinker", "infinity")));
         }
 
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus bus = context.getModEventBus();
 
         TicEXCosmicShaderProvider.init(bus);
-        TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Tool());
+        TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Material());
         TicEXRenders.ARMOR_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Armor());
+        TicEXRenders.GENERIC_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Generic());
 
         bus.addListener(TicEXAvaritiaEvent::onRegisterRenderers);
     }
 
-    @SuppressWarnings("unchecked")
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            EntityRenderers.register((EntityType<ItemArrow>)TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), context -> new ItemArrowRenderer(context, 1));
+            EntityRenderers.register(TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), context -> new ItemArrowRenderer(context, 1));
         });
     }
 }

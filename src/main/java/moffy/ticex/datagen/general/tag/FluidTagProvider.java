@@ -1,6 +1,5 @@
 package moffy.ticex.datagen.general.tag;
 
-import java.util.concurrent.CompletableFuture;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import net.minecraft.core.HolderLookup.Provider;
@@ -12,6 +11,8 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.common.TinkerTags;
+
+import java.util.concurrent.CompletableFuture;
 
 public class FluidTagProvider extends FluidTagsProvider {
 
@@ -25,20 +26,24 @@ public class FluidTagProvider extends FluidTagsProvider {
 
     @Override
     protected void addTags(Provider pProvider) {
-        fluidTag(TicEXTags.Fluids.INFINITY, new ResourceLocation(TicEX.MODID, "molten_infinity"));
-        fluidTag(TicEXTags.Fluids.NEUTRON, new ResourceLocation(TicEX.MODID, "molten_neutron"));
-        fluidTag(TicEXTags.Fluids.CRYSTAL_MATRIX, new ResourceLocation(TicEX.MODID, "molten_crystal_matrix"));
+        fluidTag(TicEXTags.Fluids.INFINITY, TicEX.getResource("molten_infinity"));
+        fluidTag(TicEXTags.Fluids.NEUTRON, TicEX.getResource("molten_neutron"));
+        fluidTag(TicEXTags.Fluids.CRYSTAL_MATRIX, TicEX.getResource("molten_crystal_matrix"));
+        fluidTag(TicEXTags.Fluids.BLAZING, TicEX.getResource("molten_blazing"));
 
-        fluidTag(TicEXTags.Fluids.ETHERIC, new ResourceLocation(TicEX.MODID, "molten_etheric"));
+        fluidTag(TicEXTags.Fluids.ETHERIC, TicEX.getResource("molten_etheric"));
+        fluidTag(TicEXTags.Fluids.OD, TicEX.getResource("molten_od"));
 
-        fluidTag(TicEXTags.Fluids.RECONSTRUCTION_CORE, new ResourceLocation(TicEX.MODID, "molten_reconstruction_core"));
+        fluidTag(TicEXTags.Fluids.RECONSTRUCTION_CORE, TicEX.getResource("molten_reconstruction_core"));
 
         fluidTag(
             TinkerTags.Fluids.METAL_TOOLTIPS,
-            new ResourceLocation(TicEX.MODID, "molten_infinity"),
-            new ResourceLocation(TicEX.MODID, "molten_neutron"),
-            new ResourceLocation(TicEX.MODID, "molten_crystal_matrix"),
-            new ResourceLocation(TicEX.MODID, "molten_etheric")
+            TicEX.getResource("molten_infinity"),
+            TicEX.getResource("molten_neutron"),
+            TicEX.getResource("molten_crystal_matrix"),
+            TicEX.getResource("molten_blazing"),
+            TicEX.getResource("molten_etheric"),
+            TicEX.getResource("molten_od")
         );
     }
 

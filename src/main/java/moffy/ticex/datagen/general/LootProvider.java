@@ -50,6 +50,7 @@ public class LootProvider extends LootTableProvider {
         private void addCommon() {
             //materials
             dropSelf(TicEXRegistry.ETHERIC_BLOCK.get());
+            dropSelf(TicEXRegistry.OD_BLOCK.get());
         }
 
         private void addSmeltery() {

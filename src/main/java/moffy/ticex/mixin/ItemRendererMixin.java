@@ -1,10 +1,10 @@
 package moffy.ticex.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import moffy.ticex.client.rendering.ItemRenderContext;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
-import moffy.ticex.client.rendering.ticex.TicEXToolRenders;
+import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.render.ticex.TicEXToolRenders;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
@@ -41,10 +41,10 @@ public abstract class ItemRendererMixin {
         }
 
 
-        Map<MaterialVariantId, ShaderProvider.Tool> materialShaderProviderMap = TicEXRenders.collectMaterialShaderProviders(pItemStack);
-        Map<ModifierId, ShaderProvider.Tool> modifierShaderProviders = TicEXRenders.collectModifierShaderProviders(pItemStack);
+        Map<MaterialVariantId, ShaderProvider.Tool> materialShaderProviderMap = TicEXRenders.collectShadersForMaterials(pItemStack);
+        Map<ModifierId, ShaderProvider.Tool> modifierShaderProviderMap = TicEXRenders.collectShadersForModifiers(pItemStack);
 
-        if (materialShaderProviderMap.isEmpty() && modifierShaderProviders.isEmpty()) {
+        if (materialShaderProviderMap.isEmpty() && modifierShaderProviderMap.isEmpty()) {
             return;
         }
 
@@ -60,17 +60,17 @@ public abstract class ItemRendererMixin {
 
         if (!materialShaderProviderMap.isEmpty()) {
             materialShaderProviderMap.forEach((materialVariantId, shaderProvider) -> {
-                shaderProvider.beginRender(pItemStack, itemRenderContext);
-                shaderProvider.beginRenderMaterial(pItemStack, materialVariantId);
+                shaderProvider.prepareRenderItem(itemRenderContext);
+                shaderProvider.prepareRenderMaterial(materialVariantId);
             });
         }
 
         final ToolStack tool;
-        if (!modifierShaderProviders.isEmpty()) {
+        if (!modifierShaderProviderMap.isEmpty()) {
             tool = ToolStack.from(pItemStack);
-            modifierShaderProviders.forEach((modifierId, shaderProvider) -> {
-                shaderProvider.beginRender(pItemStack, itemRenderContext);
-                shaderProvider.beginRenderModifier(tool, modifierId);
+            modifierShaderProviderMap.forEach((modifierId, shaderProvider) -> {
+                shaderProvider.prepareRenderItem(itemRenderContext);
+                shaderProvider.prepareRenderModifier(tool, modifierId);
             });
         } else {
             tool = null;

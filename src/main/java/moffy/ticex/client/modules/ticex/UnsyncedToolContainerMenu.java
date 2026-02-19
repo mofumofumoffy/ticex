@@ -17,8 +17,8 @@ import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.inventory.EmptyItemHandler;
 import slimeknights.tconstruct.library.tools.capability.inventory.ToolInventoryCapability;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
+import slimeknights.tconstruct.library.tools.definition.module.display.ToolNameHook;
 import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
-import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.tools.menu.ToolContainerMenu;
 
@@ -58,7 +58,7 @@ public class UnsyncedToolContainerMenu extends ToolContainerMenu {
             return InteractionResult.PASS;
         } else {
             if (player instanceof ServerPlayer serverPlayer) {
-                NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, p) -> new UnsyncedToolContainerMenu(id, inventory, stack, handler, slotIndex), TooltipUtil.getDisplayName(stack, tool, definition)), (buf) -> {
+                NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, p) -> new UnsyncedToolContainerMenu(id, inventory, stack, handler, slotIndex), ToolNameHook.getName(definition, stack, tool)), (buf) -> {
                     buf.writeVarInt(slotIndex);
                 });
             }

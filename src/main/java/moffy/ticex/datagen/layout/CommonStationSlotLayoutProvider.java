@@ -1,16 +1,8 @@
 package moffy.ticex.datagen.layout;
 
-import moffy.ticex.TicEX;
-import moffy.ticex.lib.TicEXTags;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.data.tinkering.AbstractStationSlotLayoutProvider;
-import slimeknights.tconstruct.library.recipe.partbuilder.Pattern;
-import slimeknights.tconstruct.library.tools.layout.Patterns;
-import slimeknights.tconstruct.tools.TinkerToolParts;
 
 public class CommonStationSlotLayoutProvider extends AbstractStationSlotLayoutProvider {
 
@@ -20,7 +12,7 @@ public class CommonStationSlotLayoutProvider extends AbstractStationSlotLayoutPr
 
     @Override
     protected void addLayouts() {
-        ResourceLocation seramGear = new ResourceLocation("ticex", "seram_gear");
+        /*ResourceLocation seramGear = ResourceLocation.fromNamespaceAndPath("ticex", "seram_gear");
         define(seramGear)
                 .icon(new Pattern(seramGear))
                 .addInputSlot(Patterns.PLATING, "pattern.tconstruct.plating", 33, 29,
@@ -32,11 +24,11 @@ public class CommonStationSlotLayoutProvider extends AbstractStationSlotLayoutPr
                         ))
                 .addInputSlot(new Pattern(TinkerToolParts.maille.getId()), "item.tconstruct.maille", 33, 53,
                         Ingredient.of(TinkerToolParts.maille))
-                .addInputSlot(new Pattern(new ResourceLocation(TicEX.MODID, "catalyst")), "tagtype.ticex.catalyst", 13, 44,
+                .addInputSlot(new Pattern(TicEX.id("catalyst")), "tagtype.ticex.catalyst", 13, 44,
                         Ingredient.of(TicEXTags.Items.CATALYSTS))
                 .sortIndex(15)
                 .translationKey("gui.ticex.seram_gear")
-                .build();
+                .build();*/
     }
 
     @Override

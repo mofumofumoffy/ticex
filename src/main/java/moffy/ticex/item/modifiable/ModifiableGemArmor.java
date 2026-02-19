@@ -1,9 +1,5 @@
 package moffy.ticex.item.modifiable;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-import javax.annotation.Nullable;
 import moze_intel.projecte.gameObjs.items.armor.GemArmorBase;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,15 +12,12 @@ import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.client.SafeClientAccess;
 import slimeknights.tconstruct.library.client.armor.ArmorModelManager.ArmorModelDispatcher;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.EnchantmentModifierHook;
@@ -35,10 +28,16 @@ import slimeknights.tconstruct.library.tools.IndestructibleItemEntity;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
+import slimeknights.tconstruct.library.tools.definition.module.display.ToolNameHook;
 import slimeknights.tconstruct.library.tools.helper.*;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.item.armor.ModifiableArmorItem;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class ModifiableGemArmor extends GemArmorBase implements IModifiableDisplay {
 
@@ -180,13 +179,13 @@ public class ModifiableGemArmor extends GemArmorBase implements IModifiableDispl
     }
 
     @Override
-    public int getDefaultTooltipHideFlags(ItemStack stack) {
+    public int getDefaultTooltipHideFlags(@NotNull ItemStack stack) {
         return TooltipUtil.getModifierHideFlags(getToolDefinition());
     }
 
     @Override
-    public Component getName(ItemStack stack) {
-        return TooltipUtil.getDisplayName(stack, armorDefinition.getArmorDefinition(type));
+    public @NotNull Component getName(@NotNull ItemStack stack) {
+        return ToolNameHook.getName(armorDefinition.getArmorDefinition(type), stack);
     }
 
     @Nullable

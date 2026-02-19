@@ -38,8 +38,9 @@ public class KeyPressPKTMixin {
                 if (tool.getModifierLevel(TicEXRegistry.ABYSSAL_MODIFIER.get()) > 0) {
                     ModifierAbyssal.toggleNightVision(tool, player);
                 }
+                ci.cancel();
             }
-            ci.cancel();
+
         } else if (key == PEKeybind.BOOTS_TOGGLE) {
             ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
             if (!boots.isEmpty() && boots.getItem() instanceof IModifiable) {
@@ -47,8 +48,8 @@ public class KeyPressPKTMixin {
                 if (tool.getModifierLevel(TicEXRegistry.HURRICANE_MODIFIER.get()) > 0) {
                     ModifierHurricane.toggleStepAssist(tool, player);
                 }
+                ci.cancel();
             }
-            ci.cancel();
         }
     }
 }

@@ -3,14 +3,12 @@
   "parent": "forge:item/default",
   "textures": {
     "plating": "tconstruct:item/tool/armor/plate/boots/plating",
-    "maille": "tconstruct:item/tool/armor/plate/boots/maille",
-    "mekaplate": "mekanism:item/mekasuit_boots"
+    "maille": "tconstruct:item/tool/armor/plate/boots/maille"
   },
   "modifier_roots": ["tconstruct:item/tool/armor/plate/boots/modifiers/"],
   "first_modifiers": ["tconstruct:trim"],
   "parts": [
     { "name": "plating", "index": 0 },
-    { "name": "maille", "index": 1 },
-    { "name": "mekaplate", "index": 2 }
+    { "name": "maille", "index": 1 }
   ]
 }

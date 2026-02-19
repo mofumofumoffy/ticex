@@ -5,8 +5,8 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.caps.draconicevolution.DEItemCapabilityProvider;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShader;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShaderProvider;
-import moffy.ticex.client.rendering.PartPredicate;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
+import moffy.ticex.client.render.custom.PartPredicate;
+import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.modifier.ModifierEvolved;
@@ -79,12 +79,18 @@ public class TicEXDEModule implements AddonModule {
         TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Modifier(ModifierIds.reinforced), new TicEXDEShaderProvider.Modifier());
 
         for (int i = 0; i < materials.size(); i++) {
+            MaterialId variantId = materials.get(i);
             TechLevel techLevel = TechLevel.VALUES[i];
-            TicEXRenders.TOOL_SHADERS.addShader(materials.get(i).getId(), new TicEXDEShaderProvider.Material(
-                    shader.createMaterialsRenderType(),
+
+            TicEXRenders.TOOL_SHADERS.addShader(variantId, new TicEXDEShaderProvider.Material(
+                    shader.createMaterialsRenderType(techLevel),
                     techLevel
             ));
-            TicEXRenders.ARMOR_SHADERS.addShader(materials.get(i).getId(), new TicEXDEShaderProvider.Armor(techLevel));
+            TicEXRenders.ARMOR_SHADERS.addShader(variantId, new TicEXDEShaderProvider.Armor(techLevel));
+            TicEXRenders.GENERIC_SHADERS.addShader(new PartPredicate.Material(variantId), new TicEXDEShaderProvider.Generic(
+                    shader.createMaterialsRenderType(techLevel),
+                    techLevel
+            ));
         }
     }
 }

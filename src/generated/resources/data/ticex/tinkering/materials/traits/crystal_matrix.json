@@ -7,6 +7,10 @@
     {
       "level": 1,
       "name": "tconstruct:insatiable"
+    },
+    {
+      "level": 1,
+      "name": "ticex:bedrock_breaker"
     }
   ]
 }

@@ -10,6 +10,8 @@ import moffy.ticex.modifier.ModifierPsionizingRadiation;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.LogicalSidedProvider;
+import net.minecraftforge.fml.LogicalSide;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
@@ -49,7 +51,9 @@ public class PsionizingRadiationProperty {
                 ToolStack.from(stack).getModifierLevel(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER.get()) > 0
             ) {
                 try {
-                    TicEXPsiUtils.CastSpell(user, stack, spellContext -> {});
+                    LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
+                        TicEXPsiUtils.CastSpell(user, stack, spellContext -> {});
+                    });
                     return MethodResult.of(true);
                 } catch (Exception e) {
                     return MethodResult.of(false, e.getMessage());

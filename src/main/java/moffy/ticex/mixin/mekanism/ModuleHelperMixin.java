@@ -49,7 +49,7 @@ public class ModuleHelperMixin {
                 case LEGGINGS -> MekanismItems.MEKASUIT_PANTS.get();
                 case BOOTS -> MekanismItems.MEKASUIT_BOOTS.get();
             };
-        } else if(stack.is(TinkerTags.Items.MELEE_WEAPON) && ModList.get().isLoaded("mekaweapons")){
+        } else if(!stack.is(TinkerTags.Items.HARVEST_PRIMARY) && ModList.get().isLoaded("mekaweapons")){
             return TicEXMekanismWeaponsUtils.getAlternativeWeapon(stack);
         }
         return MekanismItems.MEKA_TOOL.get();

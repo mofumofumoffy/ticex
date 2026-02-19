@@ -4,6 +4,12 @@
     "tag": "tconstruct:foundry_bricks"
   },
   "cast_consumed": true,
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:default_utility"
+    }
+  ],
   "cooling_time": 268,
   "fluid": {
     "amount": 2000,

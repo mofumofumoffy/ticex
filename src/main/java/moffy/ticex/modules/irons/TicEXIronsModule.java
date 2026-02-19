@@ -23,12 +23,11 @@ public class TicEXIronsModule implements AddonModule {
         );
 
         TicEXRegistry.REVIVAL_SPELLBOOK_IRONS = TicEXRegistry.ITEMS_EXTENDED.register("revival_spellbook_irons", () ->
-                new ModifiableIronsSpellbookItem(TicEXRegistry.SPELLBOOK_DEFINITION, 1)
+                new ModifiableIronsSpellbookItem(TicEXRegistry.SPELLBOOK_DEFINITION)
         );
 
         TicEXRegistry.OVERCASTING_MODIFIER = TicEXRegistry.MODIFIERS.register("overcasting", ModifierOvercasting::new);
 
-        MinecraftForge.EVENT_BUS.addListener(TicEXIronsEvent::onCastSpell);
         MinecraftForge.EVENT_BUS.addListener(TicEXIronsEvent::onLivingHurt);
     }
 }
