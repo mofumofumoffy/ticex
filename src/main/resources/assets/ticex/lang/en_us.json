@@ -6,6 +6,7 @@
   "item.ticex.flickering_reconstruction_core": "Flickering Reconstruction Core",
   "item.ticex.flickering_reconstruction_core.desc": "Signal of the stars",
   "item.ticex.etheric_ingot": "Etheric Ingot",
+  "item.ticex.od_ingot": "Od Ingot",
   "item.ticex.molten_reconstruction_core_bucket": "Stream of Reconstruction Bucket",
   "item.ticex.molten_infinity_bucket": "Flow of Infinity Bucket",
   "item.ticex.molten_neutron_bucket": "Hyperdense Neutron Fluid Bucket",
@@ -58,6 +59,7 @@
   "item.ticex.slashblade_saya_red_sand_cast": "Saya Red Sand Cast",
 
   "block.ticex.etheric_block": "Etheric Block",
+  "block.ticex.od_block": "Od Block",
   "block.ticex.seared_rf_furnace": "Seared RF Furnace",
   "block.ticex.scorched_rf_furnace": "Scorched RF Furnace",
   "block.ticex.creative_seared_rf_furnace": "Creative Seared RF Furnace",
