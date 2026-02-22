@@ -15,6 +15,7 @@
     "ModuleTweakerContainerMixin"
   ],
   "client": [
+    "GuiModuleTweakerMixin",
     "HUDHandlerMixin"
   ],
   "server": [],
