@@ -39,13 +39,13 @@ public class TicEXCuriosEvent {
             ResourceLocation entityLocation = ForgeRegistries.ENTITY_TYPES.getKey(livingEntity.getType());
             if(entityLocation != null){
                 if (blacklist.stream().anyMatch(id -> entityLocation.toString().equals(id))) {
-                    if(TicEXConfig.GLOVE_DROP_BLACKLIST_AS_WHITELIST.get() && randomSource.nextIntBetweenInclusive(0, 1000) <= 0){
+                    if(TicEXConfig.GLOVE_DROP_BLACKLIST_AS_WHITELIST.get() && randomSource.nextIntBetweenInclusive(0, 3000) <= 0){
                         level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXRegistry.EXHAUSTED_GLOVE.get())));
                     } else {
                     }
                 } else {
                     if(TicEXConfig.GLOVE_DROP_BLACKLIST_AS_WHITELIST.get()){
-                    } else if(randomSource.nextIntBetweenInclusive(0, 1000) <= 0){
+                    } else if(randomSource.nextIntBetweenInclusive(0, 3000) <= 0){
                         level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXRegistry.EXHAUSTED_GLOVE.get())));
                     }
                 }
