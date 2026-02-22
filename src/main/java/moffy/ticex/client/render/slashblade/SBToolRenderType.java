@@ -18,7 +18,7 @@ public class SBToolRenderType {
 
         private static final ResourceLocation BLADE_TEXTURE_LOC = ResourceLocation.fromNamespaceAndPath(
                 TicEX.MODID,
-                "textures/item/shader/slashblade_tool/"
+                "textures/obj_tool/slashblade_tool/"
         );
         private static final ResourceLocation DEFAULT_BLADE_TEXTURE_LOC = ResourceLocation.fromNamespaceAndPath(
                 TicEX.MODID,
@@ -61,6 +61,7 @@ public class SBToolRenderType {
             if (material.hasVariant()) {
                 suffix += "_" + material.getVariant();
             }
+
             if (textureExsists(BLADE_TEXTURE_LOC.withSuffix(this.name + suffix + ".png"))) {
                 return BLADE_TEXTURE_LOC.withSuffix(this.name + suffix + ".png");
             }
