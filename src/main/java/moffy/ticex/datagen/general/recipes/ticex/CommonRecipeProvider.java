@@ -60,6 +60,13 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .addInput(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
                 .save(materialConsumer, prefix(TicEXTags.Fluids.ETHERIC.location(), alloysFolder));
 
+        AlloyRecipeBuilder.alloy(FluidOutput.fromTag(TicEXTags.Fluids.OD, 270), 2500)
+                .addInput(TinkerFluids.blazingBlood.get(), FluidValues.SLIMEBALL)
+                .addInput(TinkerFluids.moltenSlimesteel.get(), FluidValues.INGOT)
+                .addInput(TinkerFluids.moltenAmethyst.get(), FluidValues.GEM)
+                .addInput(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
+                .save(materialConsumer, prefix(TicEXTags.Fluids.OD.location(), alloysFolder));
+
         metalIngotOptional(pWriter, TicEXTags.Fluids.ETHERIC, TicEXTags.Items.ETHERIC_BLOCK, 5000, TicEXRegistry.MOLTEN_ETHERIC.getId());
         metalIngotOptional(pWriter, TicEXTags.Fluids.OD, TicEXTags.Items.OD_BLOCK, 5000, TicEXRegistry.MOLTEN_OD.getId());
     }

@@ -1,0 +1,32 @@
+{
+  "type": "tconstruct:alloy",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:default_material"
+    }
+  ],
+  "inputs": [
+    {
+      "amount": 250,
+      "fluid": "tconstruct:blazing_blood"
+    },
+    {
+      "amount": 90,
+      "fluid": "tconstruct:molten_slimesteel"
+    },
+    {
+      "amount": 100,
+      "fluid": "tconstruct:molten_amethyst"
+    },
+    {
+      "amount": 250,
+      "fluid": "ticex:molten_reconstruction_core"
+    }
+  ],
+  "result": {
+    "amount": 270,
+    "tag": "forge:molten_od"
+  },
+  "temperature": 2500
+}
