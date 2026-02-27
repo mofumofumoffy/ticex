@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "mekaweapons:item/meka_bow/arrow_side"
+    "layer0": "ticex:item/arrow_side"
   }
 }
 
