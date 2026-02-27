@@ -37,7 +37,16 @@
     "blazing_fortune": "#c3cc41",
     "afloat": "#419ecc",
     "dungeon_master": "#21268a",
-    "unravel": "#3960ed"
+    "unravel": "#3960ed",
+    "nectar": "#42f5a4",
+    "ahrim": "#ff9cde",
+    "dharok": "#ff9cde",
+    "guthan": "#ff9cde",
+    "karil": "#ff9cde",
+    "torag": "#ff9cde",
+    "verac": "#ff9cde",
+    "reactive": "#b55007",
+    "alterative": "#941fb8"
   },
   "material.ticex": {
     "infinity": "#FF5555",
@@ -46,6 +55,7 @@
     "blazing": "#bf9626",
     "reconstruction": "#3483eb",
     "etheric": "#2deb59",
+    "od": "#353ab8",
     "draconium": "#0000aa",
     "wyvern": "#aa00aa",
     "draconic": "#ffff55",
