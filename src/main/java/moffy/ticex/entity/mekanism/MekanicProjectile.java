@@ -41,4 +41,9 @@ public class MekanicProjectile extends MekaArrowEntity {
         super.onHitEntity(pResult);
         TicEX.LOGGER.info("{}", weaponStack.getDisplayName().getString());
     }
+
+    @Override
+    protected @NotNull ItemStack getPickupItem() {
+        return ItemStack.EMPTY;
+    }
 }
