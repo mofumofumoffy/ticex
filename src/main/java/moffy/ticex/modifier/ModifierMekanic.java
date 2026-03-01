@@ -50,6 +50,7 @@ import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.modules.mekanism.interfaces.IGasTankItem;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modifier.propeties.MekanicProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.BlockPos;
@@ -84,6 +85,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.armor.ElytraFlightModifierHook;
@@ -113,7 +115,26 @@ import slimeknights.tconstruct.library.tools.nbt.ToolDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 
-public class ModifierMekanic extends NoLevelsModifier implements ProvidePropertyModifierHook, ToolActionModifierHook,UsingToolModifierHook, ToolDamageModifierHook, EntityInteractionModifierHook, BreakSpeedModifierHook, BlockHarvestModifierHook, MeleeDamageModifierHook, EnchantmentModifierHook, ElytraFlightModifierHook, InventoryTickModifierHook, BowAmmoModifierHook, ValidateModifierHook, RequirementsModifierHook, BlockInteractionModifierHook, EnergyModifierHook, EmbossmentModifierHook {
+public class ModifierMekanic extends NoLevelsModifier
+        implements ProvidePropertyModifierHook,
+        ToolActionModifierHook,
+        UsingToolModifierHook,
+        ToolDamageModifierHook,
+        EntityInteractionModifierHook,
+        BreakSpeedModifierHook,
+        BlockHarvestModifierHook,
+        MeleeDamageModifierHook,
+        EnchantmentModifierHook,
+        ElytraFlightModifierHook,
+        InventoryTickModifierHook,
+        BowAmmoModifierHook,
+        ValidateModifierHook,
+        RequirementsModifierHook,
+        BlockInteractionModifierHook,
+
+
+        EnergyModifierHook,
+        EmbossmentModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
@@ -413,6 +434,14 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
         return v1;
     }
 
+    @Override
+    public void onUsingTick(IToolStackView tool, ModifierEntry modifier, LivingEntity entity, int useDuration, int timeLeft, ModifierEntry activeModifier) {
+        if(ModList.get().isLoaded("mekaweapons")){
+            TicEXMekanismWeaponsUtils.handleAutoFire(entity, tool, useDuration, timeLeft);
+        }
+
+    }
+
     private boolean isValidDestinationBlock(Level world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos);
         return blockState.isAir() || MekanismUtils.isLiquidBlock(blockState.getBlock());
@@ -485,7 +514,7 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
             mekaArrowStack.getOrCreateTag().put("shooterItem", toolStack.createStack().save(new CompoundTag()));
             return mekaArrowStack;
         }
-        return new ItemStack(Items.ARROW);
+        return itemStack;
     }
 
     @Override
