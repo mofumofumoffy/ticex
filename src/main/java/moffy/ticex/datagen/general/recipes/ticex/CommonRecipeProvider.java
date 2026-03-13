@@ -106,6 +106,21 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .requires(TicEXRegistry.ETHERIC_BLOCK.get())
                 .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.ETHERIC_BLOCK.get()))
                 .save(pWriter, prefix(itemsFolder + "etheric_ingot_from_block"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.OD_BLOCK.get())
+                .showNotification(true)
+                .define('#', TicEXTags.Items.OD_INGOT)
+                .define('*', TicEXRegistry.OD_INGOT.get())
+                .pattern("###")
+                .pattern("#*#")
+                .pattern("###")
+                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.OD_INGOT.get()))
+                .save(pWriter, prefix(itemsFolder + "od_block_from_ingot"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TicEXRegistry.OD_INGOT.get(), FluidValues.METAL_BLOCK / FluidValues.INGOT)
+                .requires(TicEXRegistry.OD_BLOCK.get())
+                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.OD_BLOCK.get()))
+                .save(pWriter, prefix(itemsFolder + "od_ingot_from_block"));
     }
 
     public void buildMaterialRecipes(Consumer<FinishedRecipe> pWriter) {
@@ -117,6 +132,14 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
 
         MaterialMeltingRecipeBuilder.material(TicEXMaterials.ETHERIC, 2500, new FluidStack(TicEXRegistry.MOLTEN_ETHERIC.get().getSource(), FluidValues.INGOT))
                 .save(pWriter, prefix(TicEXMaterials.ETHERIC, materialMeltingFolder));
+
+        MaterialFluidRecipeBuilder.material(TicEXMaterials.OD)
+                .setTemperature(2500)
+                .setFluid(TicEXTags.Fluids.OD, FluidValues.INGOT)
+                .save(pWriter, prefix(TicEXMaterials.OD, materialCastingFolder));
+
+        MaterialMeltingRecipeBuilder.material(TicEXMaterials.OD, 2500, new FluidStack(TicEXRegistry.MOLTEN_OD.get().getSource(), FluidValues.INGOT))
+                .save(pWriter, prefix(TicEXMaterials.OD, materialMeltingFolder));
     }
 
     public void buildSmelteryRecipes(Consumer<FinishedRecipe> pWriter) {
