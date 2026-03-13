@@ -1,0 +1,19 @@
+{
+  "type": "ticex:embossment_casting",
+  "cast": {
+    "item": "mekaweapons:mekabow"
+  },
+  "cast_consumed": true,
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekaweapons"
+    },
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:mekanism_compat"
+    }
+  ],
+  "item_cost": 1,
+  "result": "ticex:catalyst_meka_bow"
+}

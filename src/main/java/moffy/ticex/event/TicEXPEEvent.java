@@ -34,6 +34,7 @@ public class TicEXPEEvent {
     public static void onPlayerTick(PlayerTickEvent event){
         Player player = event.player;
         if (player.getAbilities().flying) return;
+
         //water&lava walking
 		boolean waterWalkOnType = canWalkOnWater(player);
 		boolean lavaWalkOnType = canWalkOnLava(player);

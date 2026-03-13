@@ -2,11 +2,11 @@
   "loader": "tconstruct:tool",
   "parent": "builtin/entity",
   "textures": {
-    "blade": "ticex:item/tool/slashblade_tool/blade",
-    "handle": "ticex:item/tool/slashblade_tool/handle",
-    "saya": "ticex:item/tool/slashblade_tool/saya"
+    "blade": "ticex:obj_tool/slashblade_tool/blade",
+    "handle": "ticex:obj_tool/slashblade_tool/handle",
+    "saya": "ticex:obj_tool/slashblade_tool/saya"
   },
-  "modifier_roots": ["ticex:item/tool/slashblade_tool/modifiers/"],
+  "modifier_roots": ["ticex:obj_tool/slashblade_tool/modifiers/"],
   "parts": [
     { "name": "handle", "index": 1 },
     { "name": "blade", "index": 0 },

@@ -1,14 +1,21 @@
 package moffy.ticex.datagen.general.recipes.tacz;
 
+/*
+ * This file is part of the TicEXTaczModule.
+ *
+ * Licensed under the GNU General Public License v3.0.
+ * See the LICENSES/GPL-3.0.md file for details.
+ * 2025 Moffy
+ */
+
 import com.tacz.guns.init.ModItems;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.IEmbossmentToolRecipeHelper;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentBuildingRecipeBuilder;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentCastingRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentBuildingRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentCastingRecipeBuilder;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 
 import java.util.function.Consumer;
@@ -17,7 +24,7 @@ public class TaczRecipeProvider implements ITicEXRecipeHelper, IEmbossmentToolRe
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
-                modsAvailable(new ResourceLocation(TicEX.MODID, "tacz_compat"))
+                modsAvailable(TicEX.getResource("tacz_compat"))
         );
 
         if(TicEXRegistry.BLITZ_GUN != null) {

@@ -13,6 +13,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderType.CompositeState;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public final class TicEXDEShader extends BCShader<TicEXDEShader> {
@@ -24,6 +26,7 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
     };
     private final RenderStateShard.ShaderStateShard shaderState;
     private final Supplier<CompositeState.CompositeStateBuilder> shaderStateBaseFactory;
+    private final Map<ResourceLocation, RenderType> armorRenderTypeCache = new HashMap<>();
     private final RenderType modifierRenderType;
     private CCUniform scaleUniform;
     private CCUniform uv1OverrideUniform;
@@ -31,7 +34,7 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
     private CCUniform baseColorUniform;
 
     public TicEXDEShader() {
-        super(new ResourceLocation(TicEX.MODID, "draconicevolution/trace"), DefaultVertexFormat.NEW_ENTITY);
+        super(TicEX.getResource("draconicevolution/trace"), DefaultVertexFormat.NEW_ENTITY);
         shaderState = new RenderStateShard.ShaderStateShard(this::getShaderInstance);
 
         shaderStateBaseFactory = () ->
@@ -85,8 +88,9 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
         }
     }
 
-    public void setupUniforms(TechLevel techLevel) {
+    public void setupUniforms(TechLevel techLevel, float scale) {
         glUniformBaseColor(this, techLevel, 1.0F);
+        scaleUniform.set(scale);
     }
 
     public CCUniform getUv1OverrideUniform() {
@@ -137,7 +141,7 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
 
     public RenderType createMaterialsRenderType(TechLevel techLevel) {
         return RenderType.create(
-                TicEX.MODID + ":tool_evolved_materials_" + techLevel.name().toLowerCase(),
+                TicEX.MODID + ":tool_evolved_" + techLevel.name().toLowerCase(),
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
                 2097152,
@@ -147,5 +151,26 @@ public final class TicEXDEShader extends BCShader<TicEXDEShader> {
                         .setTransparencyState(RenderType.NO_TRANSPARENCY)
                         .createCompositeState(true)
         );
+    }
+
+    public RenderType createArmorRenderType(ResourceLocation atlasTexture) {
+        if (armorRenderTypeCache.containsKey(atlasTexture)) {
+            return armorRenderTypeCache.get(atlasTexture);
+        }
+
+        var renderType = RenderType.create(
+                TicEX.MODID + ":tool_evolved",
+                DefaultVertexFormat.NEW_ENTITY,
+                VertexFormat.Mode.QUADS,
+                2097152,
+                true,
+                false,
+                shaderStateBaseFactory.get()
+                        .setTextureState(new RenderStateShard.TextureStateShard(atlasTexture, false, false))
+                        .setLayeringState(RenderType.VIEW_OFFSET_Z_LAYERING)
+                        .createCompositeState(true)
+        );
+        armorRenderTypeCache.put(atlasTexture, renderType);
+        return renderType;
     }
 }

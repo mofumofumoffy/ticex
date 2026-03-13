@@ -6,19 +6,16 @@ import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.datagen.general.recipes.ticex.IEmbossmentToolRecipeHelper;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentBuildingRecipeBuilder;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.EmbossmentModifierRecipeBuilder;
-import moffy.ticex.datagen.general.recipes.ticex.embossment.SingleEmbossmentModifierRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentBuildingRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentModifierRecipeBuilder;
+import moffy.ticex.datagen.general.recipes.ticex.builder.SingleEmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.recipe.ingredient.SizedIngredient;
 import slimeknights.mantle.registration.object.ItemObject;
@@ -42,20 +39,20 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
                 pWriter,
-                modsAvailable(new ResourceLocation(TicEX.MODID, "slashblade_compat"))
+                modsAvailable(TicEX.getResource("slashblade_compat"))
         );
 
         // slotless
 
         if(TicEXRegistry.PROUD_MODIFIER != null) {
             SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.PROUD_MODIFIER.getId(), Ingredient.of(SlashBladeItemTags.PROUD_SOULS))
-                    .setTools(TicEXTags.Items.SLASHBLADE_TOOL)
+                    .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
                     .save(topConsumer, prefix(TicEXRegistry.PROUD_MODIFIER, slotlessFolder));
         }
 
         if(TicEXRegistry.KOSHIRAE_MODIFIER != null) {
             SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KOSHIRAE_MODIFIER.getId(), Ingredient.of(TicEXRegistry.CATALYST_SLASHBLADE))
-                    .setTools(TicEXTags.Items.SLASHBLADE_TOOL)
+                    .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
                     .save(topConsumer, prefix(TicEXRegistry.KOSHIRAE_MODIFIER, slotlessFolder));
         }
 
@@ -65,7 +62,7 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
             EmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KONPAKU_MODIFIER.getId())
                     .addInput(SizedIngredient.fromItems(TicEXRegistry.KONPAKU_CORE.get()))
                     .addEmbossItem(SizedIngredient.fromItems(Items.ENCHANTED_BOOK))
-                    .setTools(TicEXTags.Items.SLASHBLADE_TOOL)
+                    .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
                     .setSlots(SlotType.UPGRADE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.KONPAKU_MODIFIER, upgradeFolder));
         }
@@ -92,15 +89,15 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
         }
 
         if(TicEXRegistry.SLASHBLADE_BLADE != null) {
-            sbCasting(topConsumer, TicEXRegistry.SLASHBLADE_BLADE, TicEXRegistry.SLASHBLADE_BLADE_CAST, "slashblade_blade", 4, 2, 4);
+            sbCasting(topConsumer, TicEXRegistry.SLASHBLADE_BLADE, TicEXRegistry.SLASHBLADE_BLADE_CAST, "slashblade_blade", 4, 4, 4);
         }
 
         if(TicEXRegistry.SLASHBLADE_SAYA != null) {
-            sbCasting(topConsumer, TicEXRegistry.SLASHBLADE_SAYA, TicEXRegistry.SLASHBLADE_SAYA_CAST, "slashblade_saya", 6, 2, 6);
+            sbCasting(topConsumer, TicEXRegistry.SLASHBLADE_SAYA, TicEXRegistry.SLASHBLADE_SAYA_CAST, "slashblade_saya", 6, 6, 6);
         }
 
         if(TicEXRegistry.CATALYST_SLASHBLADE != null) {
-            embossmentCasting(topConsumer, TicEXRegistry.CATALYST_SLASHBLADE.get(), 1, SBItems.slashblade.asItem(), true,
+            embossmentCasting(topConsumer, TicEXRegistry.CATALYST_SLASHBLADE.get(), 1, TicEXTags.Items.SLASHBLADE, true,
                     prefix(TicEXRegistry.CATALYST_SLASHBLADE, partsCastingFolder));
         }
     }
@@ -108,7 +105,7 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
     public void sbCasting(Consumer<FinishedRecipe> topConsumer, ItemObject<ToolPartItem> itemObj, CastItemObject castItem, String pattern, int cost, int partCost, int compositeCost) {
         PartRecipeBuilder.partRecipe(itemObj.get())
                 .setCost(cost)
-                .setPattern(new ResourceLocation(TicEX.MODID, pattern))
+                .setPattern(TicEX.getResource(pattern))
                 .setPatternItem(Ingredient.fromValues(Stream.of(
                         new Ingredient.TagValue(TinkerTags.Items.DEFAULT_PATTERNS)
                 )))

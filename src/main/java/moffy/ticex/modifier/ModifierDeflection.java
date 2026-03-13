@@ -32,7 +32,7 @@ import java.util.function.BiFunction;
 
 public class ModifierDeflection extends Modifier implements MeleeDamageModifierHook, ProjectileHitModifierHook, ProvidePropertyModifierHook {
 
-    public static final ResourceLocation DEFLECTION_DISABLED = new ResourceLocation(TicEX.MODID, "deflection_disabled");
+    public static final ResourceLocation DEFLECTION_DISABLED = TicEX.getResource("deflection_disabled");
 
     public static AtomicBoolean firstHurt = new AtomicBoolean(false);
 

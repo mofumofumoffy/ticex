@@ -12,10 +12,13 @@ import com.brandon3055.draconicevolution.api.modules.ModuleHelper;
 import com.brandon3055.draconicevolution.api.modules.ModuleTypes;
 import com.brandon3055.draconicevolution.api.modules.data.AOEData;
 import com.brandon3055.draconicevolution.api.modules.data.DamageData;
+import com.brandon3055.draconicevolution.api.modules.data.SpeedData;
+import com.brandon3055.draconicevolution.api.modules.lib.StackModuleContext;
 import com.brandon3055.draconicevolution.client.keybinding.KeyBindings;
 import com.brandon3055.draconicevolution.init.EquipCfg;
 import com.mojang.datafixers.util.Pair;
 import moffy.ticex.TicEX;
+import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -32,6 +35,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -42,7 +46,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -52,7 +58,9 @@ import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeHitModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.RequirementsModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.mining.BlockBreakModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedModifierHook;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.context.ToolHarvestContext;
@@ -75,11 +83,15 @@ public class ModifierEvolved
         TooltipModifierHook,
         MeleeHitModifierHook,
         BlockBreakModifierHook,
+        BreakSpeedModifierHook,
         RequirementsModifierHook,
-        ValidateModifierHook {
+        ValidateModifierHook,
+        EnergyModifierHook,
+        InventoryTickModifierHook
+ {
 
-    public static final ResourceLocation MODULE_HOST_LOCATION = new ResourceLocation(TicEX.MODID, "module_host");
-    public static final ResourceLocation OP_STORAGE_LOCATION = new ResourceLocation(TicEX.MODID, "op_storage");
+    public static final ResourceLocation MODULE_HOST_LOCATION = TicEX.getResource("module_host");
+    public static final ResourceLocation OP_STORAGE_LOCATION = TicEX.getResource("op_storage");
 
     @Override
     public int getPriority() {
@@ -94,8 +106,11 @@ public class ModifierEvolved
             ModifierHooks.TOOLTIP,
             ModifierHooks.MELEE_HIT,
             ModifierHooks.BLOCK_BREAK,
+            ModifierHooks.BREAK_SPEED,
             ModifierHooks.REQUIREMENTS,
-            ModifierHooks.VALIDATE
+            ModifierHooks.VALIDATE,
+            ModifierHooks.INVENTORY_TICK,
+            TicEXRegistry.ENERGY_HOOK
         );
     }
 
@@ -250,7 +265,19 @@ public class ModifierEvolved
                 }
 
                 int extracted = opStorage.extractEnergy((int) (EquipCfg.energyAttack * damage), false);
-                ToolAttackUtil.extraEntityAttack(tool, player, context.getHand(), entity);
+
+                ToolAttackContext.Builder aoeContextBuilder = ToolAttackContext.attacker(context.getAttacker())
+                        .target(context.getTarget())
+                        .slot(context.getSlotType(), context.getHand())
+                        .cooldown(context.getCooldown())
+                        .projectile(context.getProjectile())
+                        .baseDamage(context.getBaseDamage())
+                        .baseKnockback(context.getBaseKnockback())
+                        .sound(context.getSound());
+                if(context.isExtraAttack()) aoeContextBuilder.extraAttack();
+
+                ToolAttackUtil.performAttack(tool, aoeContextBuilder.build().withAOETarget(entity));
+
                 if (hurt(player, entity, stack, Math.min(extracted, (int) damage))) {
                     float damageDealt = health - entity.getHealth();
                     entity.knockback(
@@ -424,7 +451,7 @@ public class ModifierEvolved
                         Component.translatable("item_prop.draconicevolution.aoe_safe.blocked")
                     );
                     else ((ServerPlayer) player).connection.send(
-                            new ClientboundBlockUpdatePacket(((ServerPlayer) player).level(), block)
+                            new ClientboundBlockUpdatePacket(player.level(), block)
                         );
                     return true;
                 }
@@ -592,7 +619,7 @@ public class ModifierEvolved
     }
 
     @Override
-    public List<ModifierEntry> displayModifiers(ModifierEntry entry) {
+    public @NotNull List<ModifierEntry> displayModifiers(ModifierEntry entry) {
         List<ModifierEntry> entries = new ArrayList<>();
         if (entry.getLevel() == 1) {
             entries.add(new ModifierEntry(ModifierIds.reinforced, 5));
@@ -611,4 +638,85 @@ public class ModifierEvolved
         }
         return null;
     }
-}
+
+    @Override
+    public int receiveEnergy(IToolStackView tool, ItemStack stack, int received, boolean simulate) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(iopStorage -> iopStorage.receiveEnergy(received, simulate)).orElse(0);
+    }
+
+    @Override
+    public int extractEnergy(IToolStackView tool, ItemStack stack, int extracted, boolean simulate) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(iopStorage -> iopStorage.extractEnergy(extracted, simulate)).orElse(0);
+    }
+
+    @Override
+    public int getEnergyStored(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::getEnergyStored).orElse(0);
+    }
+
+    @Override
+    public int getMaxEnergyStored(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::getMaxEnergyStored).orElse(0);
+    }
+
+    @Override
+    public boolean canExtract(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::canExtract).orElse(false);
+    }
+
+    @Override
+    public boolean canReceive(IToolStackView tool, ItemStack stack) {
+        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::canReceive).orElse(false);
+    }
+
+     @Override
+     public void onInventoryTick(IToolStackView iToolStackView, ModifierEntry modifierEntry, Level level, LivingEntity livingEntity, int i, boolean b, boolean b1, ItemStack toolStack) {
+         toolStack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).ifPresent(moduleHost -> {
+             for(EquipmentSlot slot : EquipmentSlot.values()){
+                 if(ItemStack.isSameItem(livingEntity.getItemBySlot(slot), toolStack)) {
+                     moduleHost.handleTick(new StackModuleContext(toolStack, livingEntity, slot).setInEquipModSlot(true));
+                 }
+             }
+         });
+     }
+
+     @Override
+     public void onBreakSpeed(IToolStackView iToolStackView, ModifierEntry modifierEntry, PlayerEvent.BreakSpeed breakSpeedEvent, Direction direction, boolean b, float f) {
+        ItemStack toolStack = TicEXUtils.getToolStack(iToolStackView);
+        if(!toolStack.isEmpty()){
+            breakSpeedEvent.setNewSpeed(getDestroySpeed(toolStack, breakSpeedEvent.getState(), breakSpeedEvent.getNewSpeed()));
+        }
+     }
+
+     private float getDestroySpeed(ItemStack stack, BlockState state, float baseSpeed) {
+         ModuleHost host = stack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).orElseThrow(IllegalStateException::new);
+         SpeedData data = host.getModuleData(ModuleTypes.SPEED);
+         float moduleValue = data == null ? 0 : (float) data.speedMultiplier();
+         float multiplier = MathHelper.map((moduleValue + 1F) * (moduleValue + 1F), 1F, 2F, 1F, 1.65F);
+         float propVal = 1F;
+         if (host instanceof PropertyProvider && ((PropertyProvider) host).hasDecimal("mining_speed")) {
+             propVal = (float) ((PropertyProvider) host).getDecimal("mining_speed").getValue();
+             propVal *= propVal;
+         }
+
+         float aoe = host.getModuleData(ModuleTypes.AOE, new AOEData(0)).aoe();
+         if (host instanceof PropertyProvider && ((PropertyProvider) host).hasInt("mining_aoe")) {
+             aoe = ((PropertyProvider) host).getInt("mining_aoe").getValue();
+         }
+
+         if (getEnergyStored(ToolStack.from(stack), stack) < EquipCfg.energyHarvest) {
+             multiplier = 0;
+         } else if (aoe > 0) {
+             float userTarget = multiplier * propVal;
+             multiplier = Math.min(userTarget, multiplier / (1 + (aoe * 10)));
+         } else {
+             multiplier *= propVal;
+         }
+
+         if (multiplier > 0 || propVal == 0) {
+             return baseSpeed * multiplier;
+         } else {
+             return baseSpeed;
+         }
+     }
+ }

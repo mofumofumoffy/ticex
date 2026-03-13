@@ -1,14 +1,15 @@
 package moffy.ticex.lib.recipe;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import javax.annotation.Nullable;
 import moffy.ticex.lib.hook.EmbossmentModifierHook.EmbossmentContext;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -116,6 +117,11 @@ public class EmbossmentModifierRecipe extends AbstractModifierRecipe {
             ModifierId modifier = result.getId();
 
             tool = tool.copy();
+
+            Component error = tool.tryValidate();
+            if (error != null) {
+                return RecipeResult.failure(error);
+            }
 
             if (tool.getModifierLevel(modifier) == 0) {
                 SlotCount slots = getSlots();

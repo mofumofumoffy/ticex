@@ -5,10 +5,8 @@ import mods.flammpfeil.slashblade.util.AttackManager;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -18,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
-import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
@@ -42,18 +39,12 @@ public class AttackManagerMixin {
             ItemStack mainHandStack = livingAttacker.getMainHandItem();
             if (mainHandStack.getItem() instanceof IModifiable) {
                 ToolStack tool = ToolStack.from(mainHandStack);
-                ToolAttackContext context = new ToolAttackContext(
-                    livingAttacker,
-                    livingAttacker instanceof Player player ? player : null,
-                    InteractionHand.MAIN_HAND,
-                    target,
-                    target instanceof LivingEntity livingTarget ? livingTarget : null,
-                    false,
-                    0,
-                    false
-                );
+                ToolAttackContext context = ToolAttackContext.attacker(livingAttacker)
+                        .hand(InteractionHand.MAIN_HAND)
+                        .target(target)
+                        .build();
 
-                ticex_1_20_1$dealToolDamage(tool, context, livingAttacker, src, amount, target, forceHit, resetHit);
+                ticex$dealToolDamage(tool, context, livingAttacker, src, amount, target, forceHit, resetHit);
 
                 cb.cancel();
             }
@@ -61,7 +52,7 @@ public class AttackManagerMixin {
     }
 
     @Unique
-    private static void ticex_1_20_1$dealToolDamage(
+    private static void ticex$dealToolDamage(
         IToolStackView tool,
         ToolAttackContext context,
         LivingEntity livingAttacker,
@@ -71,7 +62,7 @@ public class AttackManagerMixin {
         boolean forceHit,
         boolean resetHit
     ) {
-        float amplifier = ToolAttackUtil.getAttributeAttackDamage(tool, livingAttacker, EquipmentSlot.MAINHAND);
+        float amplifier = (float) livingAttacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
 
         float amplifierTmp = amplifier;
 

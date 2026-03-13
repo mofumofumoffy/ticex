@@ -8,20 +8,22 @@ import moffy.ticex.modifier.ModifierOvercasting;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
-public class TicEXIronsModule extends AddonModule {
+public class TicEXIronsModule implements AddonModule {
 
-    public TicEXIronsModule() {
+    @Override
+    public void init(FMLJavaModLoadingContext context) {
         TicEXRegistry.CATALYST_IRONS_SPELLBOOK = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_irons_spellbook", () ->
-            new ToolPartItem(
-                new Item.Properties(),
-                CatalystMaterialStatsType.getOrMakeType("catalyst_irons_spellbook").getId()
-            )
+                new ToolPartItem(
+                        new Item.Properties(),
+                        CatalystMaterialStatsType.getOrMakeType("catalyst_irons_spellbook").getId()
+                )
         );
 
         TicEXRegistry.REVIVAL_SPELLBOOK_IRONS = TicEXRegistry.ITEMS_EXTENDED.register("revival_spellbook_irons", () ->
-            new ModifiableIronsSpellbookItem(TicEXRegistry.SPELLBOOK_DEFINITION, 1)
+                new ModifiableIronsSpellbookItem(TicEXRegistry.SPELLBOOK_DEFINITION)
         );
 
         TicEXRegistry.OVERCASTING_MODIFIER = TicEXRegistry.MODIFIERS.register("overcasting", ModifierOvercasting::new);

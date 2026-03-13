@@ -26,6 +26,11 @@ public class ToolBladeStateCapability extends SlashBladeState {
     }
 
     @Override
+    public boolean isBroken() {
+        return ToolDamageUtil.isBroken(toolStack);
+    }
+
+    @Override
     public int getMaxDamage() {
         return ToolDamageUtil.getFakeMaxDamage(toolStack);
     }

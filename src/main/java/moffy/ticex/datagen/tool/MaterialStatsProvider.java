@@ -57,6 +57,17 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
             StatlessMaterialStats.BINDING
         );
         addMaterialStats(
+                TicEXMaterials.BLAZING,
+                new HeadMaterialStats(2800, 10.4f, Tiers.DIAMOND, 3.6f),
+                HandleMaterialStats.multipliers()
+                        .attackDamage(1.5f)
+                        .attackSpeed(1.5f)
+                        .durability(1.25f)
+                        .miningSpeed(1.5f)
+                        .build(),
+                StatlessMaterialStats.BINDING
+        );
+        addMaterialStats(
             TicEXMaterials.DRACONIUM,
             new HeadMaterialStats(512, 7.0f, Tiers.NETHERITE, 4.0f),
             HandleMaterialStats.multipliers()
@@ -111,6 +122,16 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
                 .build(),
             StatlessMaterialStats.BINDING
         );
+        addMaterialStats(
+                TicEXMaterials.OD,
+                new HeadMaterialStats(1992, 5.5f, Tiers.NETHERITE, 2.5f),
+                HandleMaterialStats.multipliers()
+                        .attackDamage(1.0f)
+                        .attackSpeed(1.6f)
+                        .miningSpeed(1f)
+                        .build(),
+                StatlessMaterialStats.BINDING
+        );
     }
 
     private void addRanged() {
@@ -122,12 +143,17 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
         addMaterialStats(
             TicEXMaterials.CRYSTAL_MATRIX,
             new LimbMaterialStats(3200, -0.4f, 0.45f, -0.1f),
-            new GripMaterialStats(9.99f, 1.0f, 4995.5f)
+            new GripMaterialStats(9.99f, 1.0f, 15.5f)
         );
         addMaterialStats(
             TicEXMaterials.ETHERIC,
             new LimbMaterialStats(2434, 0.25f, -0.05f, -0.1f),
-            new GripMaterialStats(9.99f, 1.0f, 1137.5f)
+            new GripMaterialStats(9.99f, 1.0f, 32.5f)
+        );
+        addMaterialStats(
+                TicEXMaterials.OD,
+                new LimbMaterialStats(1992, 0.4f, -0.1f, -0.15f),
+                new GripMaterialStats(9.99f, 1.0f, 16.5f)
         );
     }
 

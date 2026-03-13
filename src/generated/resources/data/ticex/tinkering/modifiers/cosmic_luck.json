@@ -28,6 +28,12 @@
         "type": "mantle:tag",
         "tag": "tconstruct:modifiable/harvest"
       }
+    },
+    {
+      "type": "tconstruct:stat_boost",
+      "each_level": 10.0,
+      "operation": "add",
+      "stat": "tconstruct:lure"
     }
   ],
   "tooltip_display": "always"

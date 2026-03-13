@@ -5,6 +5,10 @@
       "required": false
     },
     {
+      "id": "ticex:od_block",
+      "required": false
+    },
+    {
       "id": "ticex:seared_rf_furnace",
       "required": false
     },

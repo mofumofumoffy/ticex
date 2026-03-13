@@ -1,0 +1,9 @@
+{
+  "type": "tconstruct:material_melting",
+  "input": "ticex:od",
+  "result": {
+    "amount": 90,
+    "fluid": "ticex:molten_od"
+  },
+  "temperature": 2500
+}

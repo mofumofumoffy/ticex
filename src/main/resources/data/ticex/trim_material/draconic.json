@@ -1,0 +1,20 @@
+{
+  "asset_name": "ticex_draconic",
+  "description": {
+    "color": "#FFFF55",
+    "translate": "trim_material.tconstruct.format",
+    "with": [
+      {
+        "translate": "material.ticex.draconic"
+      }
+    ]
+  },
+  "forge:conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:draconicevolution_compat"
+    }
+  ],
+  "ingredient": "ticex:draconic_crystal",
+  "item_model_index": 0.3
+}

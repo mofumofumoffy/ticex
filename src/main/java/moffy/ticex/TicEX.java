@@ -14,24 +14,20 @@ import org.slf4j.Logger;
 public class TicEX {
 
     public static final String MODID = "ticex";
-    public static final Logger LOGGER = LogUtils.getLogger();
 
     private static final String PROTOCOL_VERSION = "1";
+    public static final Logger LOGGER = LogUtils.getLogger();
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-        new ResourceLocation(MODID, "main"),
+        TicEX.getResource("main"),
         () -> PROTOCOL_VERSION,
         PROTOCOL_VERSION::equals,
         PROTOCOL_VERSION::equals
     );
 
-    public TicEX() {
-        this(FMLJavaModLoadingContext.get());
-    }
-
     public TicEX(FMLJavaModLoadingContext context) {
-        TicEXConfig.registerConfig();
+        TicEXConfig.registerConfig(context);
 
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus bus = context.getModEventBus();
         //TicEXRegistry.ITEMS_EXTENDED.register(bus);
         TicEXRegistry.ITEMS.register(bus);
         TicEXRegistry.BLOCKS.register(bus);
@@ -44,5 +40,9 @@ public class TicEX {
         TicEXRegistry.RECIPE_SERIALIZERS.register(bus);
         TicEXRegistry.RECIPE_TYPES.register(bus);
         TicEXRegistry.MENUS.register(bus);
+    }
+
+    public static ResourceLocation getResource(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 }

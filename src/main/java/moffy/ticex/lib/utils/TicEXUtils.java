@@ -2,6 +2,7 @@ package moffy.ticex.lib.utils;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -21,35 +22,16 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.function.Predicate;
 
 public class TicEXUtils {
-
-    public static boolean isPureDamage(DamageSource source, float damage) {
-        boolean isInfinityDamage = false;
-
-        if (ModList.get().isLoaded("avaritia")) {
-            isInfinityDamage = TicEXAvaritiaUtils.isInfinityDamage(source);
+    public static ItemStack getToolStack(IToolStackView tool){
+        if(tool instanceof ToolStack toolStack){
+            return toolStack.createStack();
         }
-
-        return (
-            source.is(DamageTypes.FELL_OUT_OF_WORLD) ||
-            isInfinityDamage ||
-            (damage == Float.MAX_VALUE &&
-                source.is(DamageTypeTags.BYPASSES_ARMOR) &&
-                source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
-        );
-    }
-
-    public static boolean canPlayerFly(Player player) {
-        boolean canFly = player.getAbilities().mayfly;
-
-        if (ModList.get().isLoaded("avaritia")) {
-            canFly = canFly || TicEXAvaritiaUtils.hasCelestial(player);
-        }
-
-        return canFly;
+        return ItemStack.EMPTY;
     }
 
     public static ItemStack getToolStack(IToolStackView tool, LivingEntity entity, Modifier modifier) {

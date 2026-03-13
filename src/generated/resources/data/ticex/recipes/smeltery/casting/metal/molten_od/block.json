@@ -1,0 +1,17 @@
+{
+  "type": "tconstruct:casting_basin",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:storage_blocks/od"
+    }
+  ],
+  "cooling_time": 453,
+  "fluid": {
+    "amount": 810,
+    "tag": "forge:molten_od"
+  },
+  "result": {
+    "tag": "forge:storage_blocks/od"
+  }
+}

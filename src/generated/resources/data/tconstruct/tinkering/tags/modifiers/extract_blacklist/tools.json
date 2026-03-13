@@ -29,11 +29,15 @@
       "required": false
     },
     {
-      "id": "ticex:lamellar",
+      "id": "ticex:reactive",
       "required": false
     },
     {
-      "id": "ticex:flowerstorm",
+      "id": "ticex:apoth_supplier",
+      "required": false
+    },
+    {
+      "id": "ticex:enchantment_supplier",
       "required": false
     }
   ]

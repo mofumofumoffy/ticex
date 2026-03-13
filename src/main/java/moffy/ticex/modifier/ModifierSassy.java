@@ -1,6 +1,8 @@
 package moffy.ticex.modifier;
 
 import moffy.ticex.mixin.CriticalAccessor;
+import net.minecraftforge.common.ForgeHooks;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeDamageModifierHook;
@@ -23,13 +25,18 @@ public class ModifierSassy extends NoLevelsModifier implements MeleeDamageModifi
 
     @Override
     public float getMeleeDamage(
-        IToolStackView tool,
-        ModifierEntry modifierEntry,
-        ToolAttackContext context,
-        float baseDamage,
-        float damage
+            @NotNull IToolStackView tool,
+            @NotNull ModifierEntry modifierEntry,
+            ToolAttackContext context,
+            float baseDamage,
+            float damage
     ) {
-        ((CriticalAccessor) context).setCritical(true);
+        if(context.getCriticalModifier() < 1.5) {
+            ((CriticalAccessor) context).setCriticalModifier(1.5f); // set critical true
+        }
+        if(context.getPlayerAttacker() != null){
+            ForgeHooks.getCriticalHit(context.getPlayerAttacker(), context.getTarget(), false, 1.5f);
+        }
         return damage * 1.5f;
     }
 }

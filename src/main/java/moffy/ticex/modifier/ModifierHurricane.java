@@ -1,9 +1,7 @@
 package moffy.ticex.modifier;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.function.BiConsumer;
 import moffy.ticex.TicEX;
+import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -37,21 +35,25 @@ import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.function.BiConsumer;
+
 public class ModifierHurricane
-    extends NoLevelsModifier
-    implements InventoryTickModifierHook, TooltipModifierHook, AttributesModifierHook {
+        extends NoLevelsModifier
+        implements InventoryTickModifierHook, TooltipModifierHook, AttributesModifierHook {
 
     private static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("A4334312-DFF8-4582-9F4F-62AD0C070475");
 
     private static final UUID STEP_ASSIST_MODIFIER_UUID = UUID.fromString("4726C09D-FD86-46D0-92DD-49ED952A12D2");
+    public static final UUID ATTRIBUTE_MODIFIER_UUID = UUID.fromString("39377487-3632-4a51-9128-6c211265b7c5");
+    public static final ResourceLocation HURRICANE_DATA = TicEX.getResource("hurricane");
     private static final AttributeModifier STEP_ASSIST = new AttributeModifier(
-        STEP_ASSIST_MODIFIER_UUID,
-        "Step Assist",
-        0.4,
-        Operation.ADDITION
+            STEP_ASSIST_MODIFIER_UUID,
+            "Step Assist",
+            0.4,
+            Operation.ADDITION
     );
-
-    public static final ResourceLocation HURRICANE_DATA = new ResourceLocation(TicEX.MODID, "hurricane");
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
@@ -77,29 +79,29 @@ public class ModifierHurricane
 
     private static boolean isJumpPressed() {
         return DistExecutor.unsafeRunForDist(
-            () -> () -> Minecraft.getInstance().options.keyJump.isDown(),
-            () -> () -> false
+                () -> () -> Minecraft.getInstance().options.keyJump.isDown(),
+                () -> () -> false
         );
     }
 
     @Override
     public void onInventoryTick(
-        IToolStackView tool,
-        ModifierEntry entry,
-        Level level,
-        LivingEntity entity,
-        int itemSlot,
-        boolean isSelected,
-        boolean isCorrectSlot,
-        ItemStack stack
+            IToolStackView tool,
+            ModifierEntry entry,
+            Level level,
+            LivingEntity entity,
+            int itemSlot,
+            boolean isSelected,
+            boolean isCorrectSlot,
+            ItemStack stack
     ) {
         Item item = tool.getItem();
 
         if (
-            item instanceof ArmorItem armorItem &&
-            armorItem.getType() == ArmorItem.Type.BOOTS &&
-            entity instanceof Player player &&
-            itemSlot == 0
+                item instanceof ArmorItem armorItem &&
+                        armorItem.getType() == ArmorItem.Type.BOOTS &&
+                        entity instanceof Player player &&
+                        itemSlot == 0
         ) {
             if (!level.isClientSide) {
                 ServerPlayer playerMP = (ServerPlayer) player;
@@ -144,29 +146,30 @@ public class ModifierHurricane
 
     @Override
     public void addTooltip(
-        IToolStackView tool,
-        ModifierEntry entry,
-        Player player,
-        List<Component> tooltips,
-        TooltipKey tooltipKey,
-        TooltipFlag tooltipFlag
+            IToolStackView tool,
+            ModifierEntry entry,
+            Player player,
+            List<Component> tooltips,
+            TooltipKey tooltipKey,
+            TooltipFlag tooltipFlag
     ) {
         tooltips.add(PELang.GEM_LORE_FEET.translate());
     }
 
     @Override
     public void addAttributes(
-        IToolStackView tool,
-        ModifierEntry entry,
-        EquipmentSlot slot,
-        BiConsumer<Attribute, AttributeModifier> modifierGetter
+            IToolStackView tool,
+            ModifierEntry entry,
+            EquipmentSlot slot,
+            BiConsumer<Attribute, AttributeModifier> modifierGetter
     ) {
         if (tool.getPersistentData().getBoolean(HURRICANE_DATA) && slot == EquipmentSlot.FEET) {
             modifierGetter.accept(
-                Attributes.MOVEMENT_SPEED,
-                new AttributeModifier(MOVEMENT_SPEED_MODIFIER_UUID, "Armor modifier", 1.0, Operation.MULTIPLY_TOTAL)
+                    Attributes.MOVEMENT_SPEED,
+                    new AttributeModifier(MOVEMENT_SPEED_MODIFIER_UUID, "Armor modifier", 1.0, Operation.MULTIPLY_TOTAL)
             );
         }
+        modifierGetter.accept(TicEXRegistry.DAMAGE_TAKEN.get(), new AttributeModifier(ATTRIBUTE_MODIFIER_UUID, "gem_modifier", -0.2f, AttributeModifier.Operation.ADDITION));
     }
 
     @Override

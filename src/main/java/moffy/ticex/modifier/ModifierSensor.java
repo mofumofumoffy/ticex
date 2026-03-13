@@ -17,8 +17,8 @@ import vazkii.psi.common.item.ItemExosuitSensor;
 
 public class ModifierSensor extends NoLevelsModifier implements EmbossmentModifierHook {
 
-    public static final ResourceLocation EVENT_TYPE_LOC = new ResourceLocation(TicEX.MODID, "psieventtype");
-    public static final ResourceLocation TIMES_CAST_LOC = new ResourceLocation(TicEX.MODID, "timescast");
+    public static final ResourceLocation EVENT_TYPE_LOC = TicEX.getResource("psieventtype");
+    public static final ResourceLocation TIMES_CAST_LOC = TicEX.getResource("timescast");
 
     @Override
     protected void registerHooks(Builder hookBuilder) {

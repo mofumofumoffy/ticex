@@ -2,9 +2,9 @@ package moffy.ticex.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.shader.ShaderToolQuad;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.shader.ShaderToolQuad;
+import moffy.ticex.client.render.ticex.TicEXRenders;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.Material;
 import org.spongepowered.asm.mixin.Mixin;

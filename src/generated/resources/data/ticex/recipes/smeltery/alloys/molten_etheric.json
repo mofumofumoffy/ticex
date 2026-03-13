@@ -1,5 +1,11 @@
 {
   "type": "tconstruct:alloy",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:default_material"
+    }
+  ],
   "inputs": [
     {
       "amount": 90,

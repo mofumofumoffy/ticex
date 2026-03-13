@@ -10,7 +10,6 @@ import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.recipe.helper.FluidOutput;
@@ -29,12 +28,13 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
             pWriter,
-            modsAvailable(new ResourceLocation(TicEX.MODID, "avaritia_compat"))
+            modsAvailable(TicEX.getResource("avaritia_compat"))
         );
 
         metalMaterialRecipe(topConsumer, TicEXMaterials.INFINITY, materialFolder, "infinity", true);
         metalMaterialRecipe(topConsumer, TicEXMaterials.NEUTRON, materialFolder, "neutron", true);
         metalMaterialRecipe(topConsumer, TicEXMaterials.CRYSTAL_MATRIX, materialFolder, "crystal_matrix", true);
+        metalMaterialRecipe(topConsumer, TicEXMaterials.BLAZING, materialFolder, "blazing", true);
 
         // modifier
 
@@ -83,7 +83,6 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
                 .setTemperature(1050)
                 .setFluid(TicEXTags.Fluids.CRYSTAL_MATRIX, FluidValues.INGOT)
                 .save(topConsumer, prefix(TicEXMaterials.CRYSTAL_MATRIX, materialCastingFolder));
-
         MaterialFluidRecipeBuilder.material(TicEXMaterials.INFINITY)
                 .setTemperature(3180)
                 .setFluid(TicEXTags.Fluids.INFINITY, FluidValues.INGOT)
@@ -93,6 +92,10 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
                 .setTemperature(1400)
                 .setFluid(TicEXTags.Fluids.NEUTRON, FluidValues.INGOT)
                 .save(topConsumer, prefix(TicEXMaterials.NEUTRON, materialCastingFolder));
+        MaterialFluidRecipeBuilder.material(TicEXMaterials.BLAZING)
+                .setTemperature(1250)
+                .setFluid(TicEXTags.Fluids.BLAZING, FluidValues.INGOT)
+                .save(topConsumer, prefix(TicEXMaterials.BLAZING, materialCastingFolder));
 
         // smeltery
 
@@ -123,7 +126,14 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
             metalIngotOptional(topConsumer, TicEXTags.Fluids.NEUTRON, TicEXTags.Items.NEUTRON_BLOCK, 5000, TicEXRegistry.MOLTEN_NEUTRON.getId());
         }
 
+        if(TicEXRegistry.MOLTEN_BLAZING != null) {
+            MaterialMeltingRecipeBuilder.material(TicEXMaterials.BLAZING,
+                            2500,
+                            FluidOutput.fromFluid(TicEXRegistry.MOLTEN_BLAZING.get().getSource(), FluidValues.INGOT))
+                    .save(topConsumer, prefix(TicEXMaterials.BLAZING, materialMeltingFolder));
 
+            metalIngotOptional(topConsumer, TicEXTags.Fluids.BLAZING, TicEXTags.Items.BLAZING_BLOCK, 1800, TicEXRegistry.MOLTEN_BLAZING.getId());
+        }
     }
 
     @Override

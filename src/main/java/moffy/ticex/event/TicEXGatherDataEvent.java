@@ -1,8 +1,10 @@
 package moffy.ticex.event;
 
-import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
+import moffy.ticex.datagen.blockstate.TicEXBlockstateProvider;
+import moffy.ticex.datagen.blockstate.TicEXRenderFluidProvider;
 import moffy.ticex.datagen.fluid.FluidTextureProvider;
+import moffy.ticex.datagen.fluid.TicEXFluidToolTipProvider;
 import moffy.ticex.datagen.general.LootProvider;
 import moffy.ticex.datagen.general.TicEXDamageTypeProvider;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
@@ -11,21 +13,24 @@ import moffy.ticex.datagen.general.tag.BlockTagProvider;
 import moffy.ticex.datagen.general.tag.FluidTagProvider;
 import moffy.ticex.datagen.general.tag.ItemTagProvider;
 import moffy.ticex.datagen.layout.TicEXStationSlotLayoutProvider;
-import moffy.ticex.datagen.models.TicEXBlockstateProvider;
+import moffy.ticex.datagen.material.TicEXMaterialSpriteProvider;
+import moffy.ticex.datagen.material.trim.TicEXTrimMaterialProvider;
 import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
 import moffy.ticex.datagen.tool.*;
+import moffy.ticex.lib.TicEXMaterials;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.fluids.data.FluidBlockstateModelProvider;
+import slimeknights.tconstruct.library.client.data.material.MaterialPartTextureGenerator;
+import slimeknights.tconstruct.library.client.data.material.TrimMaterialPaletteGenerator;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -36,7 +41,6 @@ public class TicEXGatherDataEvent {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
-        CraftingHelper.register(new ModsAvailableCondition.Serializer());
 
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<Provider> lookupProvider = event.getLookupProvider();
@@ -46,10 +50,12 @@ public class TicEXGatherDataEvent {
         boolean server = event.includeServer();
         boolean client = event.includeClient();
 
+//        TicEXTrimMaterialProvider.register(registrySetBuilder);
         TicEXDamageTypeProvider.register(registrySetBuilder);
 
         DatapackBuiltinEntriesProvider registryProvider = new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, registrySetBuilder, Set.of(TicEX.MODID));
         generator.addProvider(server, registryProvider);
+
 
         //tags
         BlockTagProvider blockTags = new BlockTagProvider(packOutput, lookupProvider, existingFileHelper);
@@ -66,7 +72,10 @@ public class TicEXGatherDataEvent {
         generator.addProvider(server, new LootProvider(packOutput));
         generator.addProvider(client, new FluidBlockstateModelProvider(packOutput, TicEX.MODID));
         generator.addProvider(client, new TicEXBlockstateProvider(packOutput, existingFileHelper));
+        generator.addProvider(client, new TicEXRenderFluidProvider(packOutput));
         generator.addProvider(client, new TicEXSpriteSourceProvider(packOutput, existingFileHelper));
+        generator.addProvider(client, new TicEXFluidToolTipProvider(packOutput));
+
 
         //tinkers slot
         generator.addProvider(server, new TicEXStationSlotLayoutProvider(packOutput));
@@ -81,6 +90,15 @@ public class TicEXGatherDataEvent {
         generator.addProvider(server, new MaterialStatsProvider(packOutput, materialDefinitionProvider));
         generator.addProvider(server, new MaterialTraitsProvider(packOutput, materialDefinitionProvider));
         generator.addProvider(server, new MaterialTagProvider(packOutput, existingFileHelper));
+
+//        TinkerPartSpriteProvider tinkerPartSprites = new TinkerPartSpriteProvider();
+        TicEXMaterialSpriteProvider spriteProvider = new TicEXMaterialSpriteProvider();
+
+        MaterialPartTextureGenerator.runCallbacks(existingFileHelper, null);
+
+
+//        generator.addProvider(client, new MaterialPartTextureGenerator(packOutput, existingFileHelper, tinkerPartSprites, spriteProvider));
+        generator.addProvider(client, new TrimMaterialPaletteGenerator(packOutput, TicEX.MODID, existingFileHelper, spriteProvider, TicEXMaterials.TRIM_MATERIALS));
 
         //tools
         generator.addProvider(server, new ToolDefinitionProvider(packOutput));

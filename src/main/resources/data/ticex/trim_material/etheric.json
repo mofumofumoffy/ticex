@@ -1,0 +1,14 @@
+{
+  "asset_name": "ticex_etheric",
+  "description": {
+    "color": "#6AEF3C",
+    "translate": "trim_material.tconstruct.format",
+    "with": [
+      {
+        "translate": "material.ticex.etheric"
+      }
+    ]
+  },
+  "ingredient": "ticex:etheric_ingot",
+  "item_model_index": 0.7
+}

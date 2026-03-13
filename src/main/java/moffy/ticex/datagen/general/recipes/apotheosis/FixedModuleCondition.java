@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class FixedModuleCondition implements ICondition {
-    static ResourceLocation id = new ResourceLocation(TicEX.MODID, "module_fixed");
+    static ResourceLocation id = TicEX.getResource("module_fixed");
     static Map<String, Supplier<Boolean>> types = new HashMap<>();
     final String name;
 

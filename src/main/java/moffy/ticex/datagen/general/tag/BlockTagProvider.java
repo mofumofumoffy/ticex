@@ -1,6 +1,5 @@
 package moffy.ticex.datagen.general.tag;
 
-import java.util.concurrent.CompletableFuture;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -14,6 +13,8 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.common.TinkerTags;
+
+import java.util.concurrent.CompletableFuture;
 
 public class BlockTagProvider extends BlockTagsProvider {
 
@@ -32,19 +33,24 @@ public class BlockTagProvider extends BlockTagsProvider {
     }
 
     private void addCommon() {
-        addMetalTags(TicEXTags.Blocks.INFINITY, new ResourceLocation("avaritia", "infinity"), true);
-        addMetalTags(TicEXTags.Blocks.NEUTRON, new ResourceLocation("avaritia", "neutron"), true);
-        addMetalTags(TicEXTags.Blocks.CRYSTAL_MATRIX, new ResourceLocation("avaritia", "crystal_matrix"), true);
+        addMetalTags(TicEXTags.Blocks.INFINITY, ResourceLocation.fromNamespaceAndPath("avaritia", "infinity"), true);
+        addMetalTags(TicEXTags.Blocks.NEUTRON, ResourceLocation.fromNamespaceAndPath("avaritia", "neutron"), true);
+        addMetalTags(TicEXTags.Blocks.CRYSTAL_MATRIX, ResourceLocation.fromNamespaceAndPath("avaritia", "crystal_matrix"), true);
 
-        addMetalTags(TicEXTags.Blocks.ETHERIC, new ResourceLocation(TicEX.MODID, "etheric_block"), true);
+        addMetalTags(TicEXTags.Blocks.ETHERIC, TicEX.getResource("etheric_block"), true);
+        addMetalTags(TicEXTags.Blocks.OD, TicEX.getResource("od_block"), true);
 
-        addPickaxeBlock(BlockTags.NEEDS_IRON_TOOL, new ResourceLocation(TicEX.MODID, "etheric_block"));
+        tag(TicEXTags.Blocks.FLUID_TRANSMUTER_TANK)
+                .addOptionalTag(TinkerTags.Blocks.ALLOYER_TANKS);
+
+        addPickaxeBlock(BlockTags.NEEDS_IRON_TOOL, TicEX.getResource("etheric_block"));
+        addPickaxeBlock(BlockTags.NEEDS_IRON_TOOL, TicEX.getResource("od_block"));
 
         addPickaxeBlock(BlockTags.NEEDS_STONE_TOOL,
-            new ResourceLocation(TicEX.MODID, "seared_rf_furnace"),
-            new ResourceLocation(TicEX.MODID, "scorched_rf_furnace"),
-            new ResourceLocation(TicEX.MODID, "creative_seared_rf_furnace"),
-            new ResourceLocation(TicEX.MODID, "creative_scorched_rf_furnace")
+            TicEX.getResource("seared_rf_furnace"),
+            TicEX.getResource("scorched_rf_furnace"),
+            TicEX.getResource("creative_seared_rf_furnace"),
+            TicEX.getResource("creative_scorched_rf_furnace")
         );
     }
 

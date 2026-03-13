@@ -1,0 +1,16 @@
+{
+  "type": "ticex:single_embossment_modifier",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:ars_compat"
+    }
+  ],
+  "emboss_input": {
+    "item": "ticex:reactive_core"
+  },
+  "result": "ticex:reactive",
+  "tools": {
+    "tag": "tconstruct:modifiable/durability"
+  }
+}

@@ -5,7 +5,6 @@ import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
 import slimeknights.tconstruct.library.tools.SlotType;
@@ -17,7 +16,7 @@ public class CCRecipeProvider implements ITicEXRecipeHelper {
     public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Consumer<FinishedRecipe> topConsumer = withCondition(
             pWriter,
-            modsAvailable(new ResourceLocation(TicEX.MODID, "computercraft_compat"))
+            modsAvailable(TicEX.getResource("computercraft_compat"))
         );
 
         if (TicEXRegistry.MODEM_MODIFIER != null) {

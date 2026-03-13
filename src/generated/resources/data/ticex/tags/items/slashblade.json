@@ -1,0 +1,28 @@
+{
+  "values": [
+    {
+      "id": "slashblade:slashblade",
+      "required": false
+    },
+    {
+      "id": "slashblade_addon:slashblade_tofu_diamond",
+      "required": false
+    },
+    {
+      "id": "slashblade_addon:slashblade_tofu_metal",
+      "required": false
+    },
+    {
+      "id": "yakumoblade:slashblade",
+      "required": false
+    },
+    {
+      "id": "fantasy_ending:fantasy_ending_blade",
+      "required": false
+    },
+    {
+      "id": "energyblade:forge_energy_blade",
+      "required": false
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package moffy.ticex.event;
 
+import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.client.modules.ticex.models.MaterialOverrideModel;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -12,22 +13,21 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.smeltery.client.render.TankBlockEntityRenderer;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 
 public class TicEXEvent {
@@ -151,5 +151,18 @@ public class TicEXEvent {
 
     public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
         event.register("mat_override_obj", MaterialOverrideModel.LOADER);
+    }
+
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(TicEXRegistry.FLUID_TRANSMUTER_ENTITY.get(), TankBlockEntityRenderer::new);
+    }
+
+
+    public static void onDatapackSync(OnDatapackSyncEvent event) {
+        FluidTransmutationResolver.INSTANCE.load();
+    }
+
+    public static void onRecipesUpdated(RecipesUpdatedEvent event) {
+        FluidTransmutationResolver.INSTANCE.load();
     }
 }

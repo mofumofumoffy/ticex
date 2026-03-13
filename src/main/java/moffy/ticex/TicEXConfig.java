@@ -6,8 +6,8 @@ import moffy.ticex.lib.config.ToolSlotPreset;
 import moffy.ticex.modules.general.TicEXModuleProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig.Type;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +19,8 @@ public class TicEXConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_MORE_CONFIG;
+    public static ForgeConfigSpec.ConfigValue<List<String>> FLUID_TRANSMUTER_PATTERNS;
+    public static ForgeConfigSpec.ConfigValue<List<String>> FLUID_TRANSMUTER_EXCLUDE_PATTERNS;
 
     // More Config
     public static ForgeConfigSpec.ConfigValue<Boolean> PROVIDE_PROPERTIES;
@@ -37,19 +39,28 @@ public class TicEXConfig {
     // Apotheosis
     public static ForgeConfigSpec.ConfigValue<Integer> OVERRIDE_LIMIT;
 
+    // Ars Nouveau
+    public static ForgeConfigSpec.ConfigValue<Integer> REACTIVE_COOLDOWN;
+
     // Curios
     public static ForgeConfigSpec.ConfigValue<Integer> GAUNTLET_REMAIN_TICKS;
     public static ForgeConfigSpec.ConfigValue<List<String>> GLOVE_DROP_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<Boolean> GLOVE_DROP_BLACKLIST_AS_WHITELIST;
 
-    public static void registerConfig() {
+    public static void registerConfig(FMLJavaModLoadingContext context) {
         final ForgeConfigSpec.Builder COMMON = new ForgeConfigSpec.Builder();
         final ForgeConfigSpec.Builder CLIENT = new ForgeConfigSpec.Builder();
         final ForgeConfigSpec.Builder MORE_CONFIG = new ForgeConfigSpec.Builder();
 
         COMMON.comment("General").push("general");
-        USE_MORE_CONFIG = COMMON.comment("Using ticex-more-config.toml(If true, it will override your datapack!)").define("useMoreConfig", true);
+        USE_MORE_CONFIG = COMMON.comment("Using ticex-more-config.toml(If true, it will override your datapack!)").define("useMoreConfig", false);
         RF_FURNACE_RATE_CAPACITY = COMMON.comment("MAX Rate Capacity(RF/t)").define("rateCapacity", 100000);
+        FLUID_TRANSMUTER_PATTERNS = COMMON.comment(
+                "Fluid Transmuter valid tag prefix list"
+        ).define("fluid_transmuter_patterns", List.of("forge:"));
+        FLUID_TRANSMUTER_EXCLUDE_PATTERNS = COMMON.comment(
+                "Fluid Transmuter invalid tag prefix list"
+        ).define("fluid_transmuter_exclude_patterns", List.of("forge:water", "forge:lava"));
         COMMON.pop();
 
         COMMON.push("avaritia");
@@ -70,6 +81,10 @@ public class TicEXConfig {
             "overrideLevelLimit",
             255
         );
+        COMMON.pop();
+
+        COMMON.push("ars nouveau");
+        REACTIVE_COOLDOWN = COMMON.comment("Internal cooldown ticks of spellcasting").define("reactiveCooldown", 10);
         COMMON.pop();
 
         COMMON.push("curios");
@@ -162,10 +177,10 @@ public class TicEXConfig {
         USE_SHADER = CLIENT.comment("Rendering with shaders for some tools/armors").define("useShader", true);
 
 
-        AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(), COMMON);
+        AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(context), COMMON);
 
-        ModLoadingContext.get().registerConfig(Type.COMMON, COMMON.build());
-        ModLoadingContext.get().registerConfig(Type.COMMON, MORE_CONFIG.build(), "ticex-more-config.toml");
-        ModLoadingContext.get().registerConfig(Type.CLIENT, CLIENT.build());
+        context.registerConfig(Type.COMMON, COMMON.build());
+        context.registerConfig(Type.COMMON, MORE_CONFIG.build(), "ticex-more-config.toml");
+        context.registerConfig(Type.CLIENT, CLIENT.build());
     }
 }

@@ -1,0 +1,15 @@
+{
+  "level_display": "tconstruct:no_levels",
+  "modules": [
+    {
+      "type": "tconstruct:constant_enchantment",
+      "level": 10,
+      "name": "minecraft:fire_aspect",
+      "tool": {
+        "type": "mantle:tag",
+        "tag": "tconstruct:modifiable/melee"
+      }
+    }
+  ],
+  "tooltip_display": "always"
+}

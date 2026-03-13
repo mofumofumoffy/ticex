@@ -1,0 +1,20 @@
+{
+  "type": "tconstruct:casting_table",
+  "cast": {
+    "tag": "tconstruct:casts/multi_use/ingot"
+  },
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:ingots/od"
+    }
+  ],
+  "cooling_time": 151,
+  "fluid": {
+    "amount": 90,
+    "tag": "forge:molten_od"
+  },
+  "result": {
+    "tag": "forge:ingots/od"
+  }
+}

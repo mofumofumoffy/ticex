@@ -1,13 +1,20 @@
 package moffy.ticex.modules.general;
 
 import moffy.ticex.TicEX;
-import moffy.ticex.block.entity.RFFurnaceBlockEntity;
+import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
+import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
+import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
+import moffy.ticex.entity.avaritia.EndestShotProjectile;
+import moffy.ticex.entity.curios.ResonanceToolProjectile;
+import moffy.ticex.entity.mekanism.MekanicProjectile;
+import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.recipe.*;
+import moffy.ticex.lib.registry.JeiIntegrationsRegistry;
 import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -61,13 +68,13 @@ public class TicEXRegistry {
 
     static {
         IntFunction<BlockBehaviour.Properties> solidProps = factor ->
-            builder(MapColor.COLOR_GRAY, SoundType.METAL)
-                .instrument(NoteBlockInstrument.BASEDRUM)
-                .requiresCorrectToolForDrops()
-                .strength(3.0F * factor, 9.0F * factor)
-                .isValidSpawn(
-                    (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
-                );
+                builder(MapColor.COLOR_GRAY, SoundType.METAL)
+                        .instrument(NoteBlockInstrument.BASEDRUM)
+                        .requiresCorrectToolForDrops()
+                        .strength(3.0F * factor, 9.0F * factor)
+                        .isValidSpawn(
+                                (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
+                        );
         SEARED = solidProps.apply(1);
     }
 
@@ -75,83 +82,84 @@ public class TicEXRegistry {
 
     static {
         IntFunction<BlockBehaviour.Properties> solidProps = factor ->
-            builder(MapColor.TERRACOTTA_BROWN, SoundType.BASALT)
-                .instrument(NoteBlockInstrument.BASEDRUM)
-                .requiresCorrectToolForDrops()
-                .strength(2.5F * factor, 8.0F * factor)
-                .isValidSpawn(
-                    (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
-                );
+                builder(MapColor.TERRACOTTA_BROWN, SoundType.BASALT)
+                        .instrument(NoteBlockInstrument.BASEDRUM)
+                        .requiresCorrectToolForDrops()
+                        .strength(2.5F * factor, 8.0F * factor)
+                        .isValidSpawn(
+                                (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
+                        );
         SCORCHED = solidProps.apply(1);
     }
 
     public static final TagKey<Item> KEY_MODIFIER_UNSTABLE = TagKey.create(
-        Registries.ITEM,
-            new ResourceLocation(TicEX.MODID, "shader/unstable_modifier")
+            Registries.ITEM,
+            TicEX.getResource("shader/unstable_modifier")
     );
 
     public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(
-        new ResourceLocation(TicEX.MODID, "mekaplate"),
-        SoundEvents.ARMOR_EQUIP_NETHERITE
+            TicEX.getResource("mekaplate"),
+            SoundEvents.ARMOR_EQUIP_NETHERITE
     );
     public static final ModifiableArmorMaterial SINGULAR_GEM_DEFINITION = ModifiableArmorMaterial.create(
-        new ResourceLocation(TicEX.MODID, "singular_gem"),
-        SoundEvents.ARMOR_EQUIP_NETHERITE
+            TicEX.getResource("singular_gem"),
+            SoundEvents.ARMOR_EQUIP_NETHERITE
     );
     public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(
-        new ResourceLocation(TicEX.MODID, "reforged_slashblade")
+            TicEX.getResource("reforged_slashblade")
     );
     public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(
-        new ResourceLocation(TicEX.MODID, "blitz_gun")
+            TicEX.getResource("blitz_gun")
     );
     public static final ToolDefinition SPELLBOOK_DEFINITION = ToolDefinition.create(
-        new ResourceLocation(TicEX.MODID, "revival_spellbook")
+            TicEX.getResource("revival_spellbook")
     );
     public static final ToolDefinition MEKA_TOOL_DEFINITION = ToolDefinition.create(
-            new ResourceLocation(TicEX.MODID, "meka_edge")
+            TicEX.getResource("meka_edge")
     );
     public static final ToolDefinition GAUNTLET_DEFINITION = ToolDefinition.create(
-            new ResourceLocation(TicEX.MODID, "resonance_gauntlet")
+            TicEX.getResource("resonance_gauntlet")
     );
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
     public static final TicEXItemDeferredRegisterExtension ITEMS_EXTENDED = new TicEXItemDeferredRegisterExtension(
-        ITEMS,
-        TicEX.MODID
+            ITEMS,
+            TicEX.MODID
     );
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TicEX.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(
-        ForgeRegistries.BLOCK_ENTITY_TYPES,
-        TicEX.MODID
+            ForgeRegistries.BLOCK_ENTITY_TYPES,
+            TicEX.MODID
     );
     public static final FluidDeferredRegister FLUIDS = new FluidDeferredRegister(TicEX.MODID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(
-        ForgeRegistries.ENTITY_TYPES,
-        TicEX.MODID
+            ForgeRegistries.ENTITY_TYPES,
+            TicEX.MODID
     );
     public static final ModifierDeferredRegister MODIFIERS = ModifierDeferredRegister.create(TicEX.MODID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(
-        ForgeRegistries.ATTRIBUTES,
-        TicEX.MODID
+            ForgeRegistries.ATTRIBUTES,
+            TicEX.MODID
     );
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(
-        Registries.CREATIVE_MODE_TAB,
-        TicEX.MODID
+            Registries.CREATIVE_MODE_TAB,
+            TicEX.MODID
     );
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(
-        Registries.RECIPE_SERIALIZER,
-        TicEX.MODID
+            Registries.RECIPE_SERIALIZER,
+            TicEX.MODID
     );
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(
-        Registries.RECIPE_TYPE,
-        TicEX.MODID
+            Registries.RECIPE_TYPE,
+            TicEX.MODID
     );
     public static final MenuTypeDeferredRegister MENUS = new MenuTypeDeferredRegister(
             TicEX.MODID
     );
 
+    public static final JeiIntegrationsRegistry JEI_INTEGRATIONS = new JeiIntegrationsRegistry();
+
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
-    public static RegistryObject<CreativeModeTab> CREATIVE_TAB_TOOLS = null;
 
     public static RegistryObject<TypeAwareRecipeSerializer<EmbossmentCastingRecipe>> CASTING_EMBOSSMENT_RECIPE_SERIALIZER = null;
     public static RegistryObject<RecipeSerializer<EmbossmentBuildingRecipe>> BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = null;
@@ -161,13 +169,15 @@ public class TicEXRegistry {
 
 
     public static RegistryObject<MenuType<ToolContainerMenu>> UNSYNCED_TOOL_CONTAINER = null;
-
+    public static RegistryObject<MenuType<FluidTransmuterContainerMenu>> FLUID_TRANSMUTER_MENU = null;
 
     public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
     public static ModuleHook<ProvidePropertyModifierHook> PROPERTY_PROVIDER_HOOK = null;
+    public static ModuleHook<EnergyModifierHook> ENERGY_HOOK = null;
 
     public static RegistryObject<Item> EXHAUSTED_GLOVE = null;
     public static RegistryObject<Item> ETHERIC_INGOT = null;
+    public static RegistryObject<Item> OD_INGOT = null;
     public static RegistryObject<Item> DRACONIUM_CRYSTAL = null;
     public static RegistryObject<Item> WYVERN_CRYSTAL = null;
     public static RegistryObject<Item> DRACONIC_CRYSTAL = null;
@@ -182,17 +192,15 @@ public class TicEXRegistry {
     public static RegistryObject<Item> CHAOTIC_EVOLVED_CORE = null;
     public static RegistryObject<Item> INJECT_CORE = null;
     public static RegistryObject<Item> KONPAKU_CORE = null;
-    public static RegistryObject<Item> KOSHIRAE_CORE = null;
-    public static RegistryObject<Item> LAMELLAR_CORE = null;
     public static RegistryObject<Item> OVERLOAD_CORE = null;
     public static RegistryObject<Item> OVERRIDE_CORE = null;
-    public static RegistryObject<Item> INCOMPARABLE_CORE = null;
     public static RegistryObject<Item> CARDBOARD_CORE = null;
-    public static RegistryObject<Item> ENDESTSHOT_CORE = null;
-    public static RegistryObject<Item> MODEM_CORE = null;
     public static RegistryObject<Item> PSIONIZING_RADIATION_CORE = null;
-    public static RegistryObject<Item> SOCKET_CORE = null;
-    public static RegistryObject<Item> ENDESTSHOT_ARROW = null;
+    public static RegistryObject<Item> NECTAR_CORE = null;
+    public static RegistryObject<Item> REACTIVE_CORE = null;
+    public static RegistryObject<Item> ALTERATIVE_CORE = null;
+
+    public static RegistryObject<Item> MEKANIC_ARROW = null;
 
     public static ItemObject<ToolPartItem> SLASHBLADE_BLADE = null;
     public static ItemObject<ToolPartItem> SLASHBLADE_SAYA = null;
@@ -206,6 +214,8 @@ public class TicEXRegistry {
     public static ItemObject<ToolPartItem> CATALYST_KINETIC_GUN = null;
     public static ItemObject<ToolPartItem> CATALYST_IRONS_SPELLBOOK = null;
     public static ItemObject<ToolPartItem> CATALYST_MEKA_TOOL = null;
+    public static ItemObject<ToolPartItem> CATALYST_MEKA_TANA = null;
+    public static ItemObject<ToolPartItem> CATALYST_MEKA_BOW = null;
 
     public static ItemObject<? extends Item> REFORGED_SLASHBLADE = null;
     public static ItemObject<? extends Item> BLITZ_GUN = null;
@@ -217,24 +227,29 @@ public class TicEXRegistry {
     public static EnumObject<ArmorItem.Type, ? extends IModifiable> SINGULAR_GEM_ARMOR = null;
 
     public static RegistryObject<Block> ETHERIC_BLOCK = null;
+    public static RegistryObject<Block> OD_BLOCK = null;
     public static RegistryObject<Block> SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> CREATIVE_SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> SCORCHED_RF_FURNACE = null;
     public static RegistryObject<Block> CREATIVE_SCORCHED_RF_FURNACE = null;
+    public static RegistryObject<Block> FLUID_TRANSMUTER = null;
 
     public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> RF_FURNACE_ENTITY = null;
-    public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> CREATIVE_RF_FURNACE_ENTITY = null;
+    public static RegistryObject<BlockEntityType<FluidTransmuterBlockEntity>> FLUID_TRANSMUTER_ENTITY = null;
 
     public static FluidObject<UnplaceableFluid> MOLTEN_RECONSTRUCTION_CORE = null;
     public static List<FluidObject<UnplaceableFluid>> RF_FURNACE_FUELS = new ArrayList<>();
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_INFINITY = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_NEUTRON = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_CRYSTAL_MATRIX = null;
+    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_BLAZING = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
+    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_OD = null;
 
-    public static RegistryObject<EntityType<?>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
-    public static RegistryObject<EntityType<?>> ENDESTSHOT_PROJECTILE = null;
-    public static RegistryObject<EntityType<?>> RESONANCE_TOOL_PROJECTILE = null;
+    public static RegistryObject<EntityType<SBToolItemEntity>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
+    public static RegistryObject<EntityType<EndestShotProjectile>> ENDESTSHOT_PROJECTILE = null;
+    public static RegistryObject<EntityType<ResonanceToolProjectile>> RESONANCE_TOOL_PROJECTILE = null;
+    public static RegistryObject<EntityType<MekanicProjectile>> MEKANIC_PROJECTILE = null;
 
     public static RegistryObject<Attribute> HEALING_RECEIVED = null;
     public static RegistryObject<Attribute> DAMAGE_TAKEN = null;
@@ -253,6 +268,9 @@ public class TicEXRegistry {
     public static DynamicModifier DENSE_MODIFIER = null;
     public static StaticModifier<Modifier> AFTERSHOCK_MODIFIER = null;
     public static StaticModifier<Modifier> ENDESTSHOT_MODIFIER = null;
+    public static DynamicModifier SKULLFIRE_MODIFIER = null;
+    public static DynamicModifier BLAZING_FLAME_MODIFIER = null;
+    public static DynamicModifier BLAZING_FORTUNE_MODIFIER = null;
     public static StaticModifier<Modifier> MEKANIC_MODIFIER = null;
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
     public static StaticModifier<Modifier> SASSY_MODIFIER = null;
@@ -278,6 +296,18 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> PSIONIZING_RADIATION_MODIFIER = null;
     public static StaticModifier<Modifier> SOCKET_MODIFIER = null;
     public static StaticModifier<Modifier> SENSOR_MODIFIER = null;
+    public static DynamicModifier AHRIM_MODIFIER = null;
+    public static DynamicModifier DHAROK_MODIFIER = null;
+    public static DynamicModifier GUTHAN_MODIFIER = null;
+    public static DynamicModifier TORAG_MODIFIER = null;
+    public static DynamicModifier VERAC_MODIFIER = null;
+    public static DynamicModifier KARIL_MODIFIER = null;
+    public static DynamicModifier NECTAR_MODIFIER = null;
+    public static StaticModifier<Modifier> REACTIVE_MODIFIER = null;
+    public static StaticModifier<Modifier> ALTERATIVE_MODIFIER = null;
+    public static StaticModifier<Modifier> AFLOAT_MODIFIER = null;
+    public static StaticModifier<Modifier> DUNGEON_MASTER_MODIFIER = null;
+    public static StaticModifier<Modifier> UNRAVEL_MODIFIER = null;
 
     public static Tier INFINITY_TIER;
 
@@ -296,6 +326,9 @@ public class TicEXRegistry {
         acceptCatalystArmor(output, CATALYST_MEKASUIT);
         acceptCatalystArmor(output, CATALYST_GEM);
         acceptPart(output, CATALYST_SLASHBLADE);
+        acceptPart(output, CATALYST_MEKA_TOOL);
+        acceptPart(output, CATALYST_MEKA_TANA);
+        acceptPart(output, CATALYST_MEKA_BOW);
         //acceptPart(output, CATALYST_KINETIC_GUN);
         //acceptPart(output, CATALYST_IRONS_SPELLBOOK);
 
@@ -308,8 +341,8 @@ public class TicEXRegistry {
         //acceptTool(output, BLITZ_GUN);
         //acceptTool(output, REVIVAL_SPELLBOOK_IRONS);
 
-        acceptArmor(output, MEKAPLATE_ARMOR);
-        acceptArmor(output, SINGULAR_GEM_ARMOR);
+        //acceptArmor(output, MEKAPLATE_ARMOR);
+        //acceptArmor(output, SINGULAR_GEM_ARMOR);
 
         acceptCast(output, SLASHBLADE_BLADE_CAST);
         acceptCast(output, SLASHBLADE_SAYA_CAST);
@@ -331,8 +364,8 @@ public class TicEXRegistry {
     }
 
     private static void acceptCatalystArmor(
-        CreativeModeTab.Output output,
-        EnumObject<ArmorItem.Type, ToolPartItem> catalystObject
+            CreativeModeTab.Output output,
+            EnumObject<ArmorItem.Type, ToolPartItem> catalystObject
     ) {
         if (catalystObject != null) {
             catalystObject.forEach(c -> c.addVariants(output::accept, ""));

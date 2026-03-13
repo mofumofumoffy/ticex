@@ -1,3 +1,4 @@
+//file:noinspection VulnerableLibrariesLocal
 plugins {
     id 'eclipse'
     id 'idea'
@@ -120,7 +121,9 @@ mixin {
     config 'ticex.apotheosis.mixins.json'
     config 'ticex.create.mixins.json'
     config 'ticex.projecte.mixins.json'
+    config 'ticex.arsnouveau.mixins.json'
     config 'ticex.curios.mixins.json'
+    config 'ticex.irons.mixins.json'
 
     debug.verbose = true
     debug.export = true
@@ -159,21 +162,23 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
 
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
-    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.4.1")) {
-        jarJar.ranged(it, "[0.4.1,)")
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.0"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.5.0")) {
+        jarJar.ranged(it, "[0.5.0,)")
     }
 
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
-    implementation fg.deobf("curse.maven:moffs-addonapi-dynload-1242459:6420515")
+    implementation fg.deobf("maven.modrinth:1keAhoAI:2.0.0")
 
-    implementation fg.deobf("curse.maven:mantle-74924:6635380")
-    implementation fg.deobf("curse.maven:tinkers-construct-74072:6635554")
+    implementation fg.deobf("curse.maven:mantle-74924:7414488")
+    implementation fg.deobf("curse.maven:tinkers-construct-74072:7371800")
 
-    implementation fg.deobf("curse.maven:re-avaritia-623969:6958116")
+    implementation fg.deobf("curse.maven:re-avaritia-623969:7445855")
 
-    implementation fg.deobf("curse.maven:mekanism-268560:6258796")
+    implementation fg.deobf("curse.maven:mekanism-268560:6552911")
+    implementation fg.deobf("curse.maven:mekanism-generators-268566:6552914")
+    implementation fg.deobf("curse.maven:mekanism-weapons-929829:6949839")
 
     implementation fg.deobf("curse.maven:brandons-core-231382:5422013")
     implementation fg.deobf("curse.maven:codechicken-lib-1-8-242818:5753868")
@@ -183,7 +188,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:timeless-and-classics-zero-1028108:6518539")
 
-    implementation fg.deobf("curse.maven:create-328085:6323270")
+    implementation fg.deobf("curse.maven:create-328085:7178761")
     implementation fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
     compileOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-api-${minecraft_version}:${flywheel_version}")
     runtimeOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}") {
@@ -193,7 +198,7 @@ dependencies {
         }
     }
 
-    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:6371701")
+    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:7402504")
     implementation fg.deobf("curse.maven:caelus-308989:5281700")
     implementation fg.deobf("curse.maven:geckolib-388172:6333474")
     implementation fg.deobf("curse.maven:playeranimator-658587:4587214")
@@ -210,6 +215,10 @@ dependencies {
     implementation fg.deobf("curse.maven:psi-241665:6472034")
 
     implementation fg.deobf("curse.maven:curios-309927:6238756")
+
+    implementation fg.deobf("curse.maven:botania-225643:6870713")
+
+    implementation fg.deobf("curse.maven:ars-nouveau-401955:6688854")
 
     implementation fg.deobf("curse.maven:jei-238222:6075247")
     implementation fg.deobf("curse.maven:tconjei-974154:6442609")
@@ -229,7 +238,6 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:selene-499980:6321048")
 
     runtimeOnly fg.deobf("curse.maven:spark-361579:4738952")
-
 
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'

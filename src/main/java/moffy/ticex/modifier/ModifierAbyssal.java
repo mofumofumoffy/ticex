@@ -1,8 +1,7 @@
 package moffy.ticex.modifier;
 
-import java.util.ArrayList;
-import java.util.List;
 import moffy.ticex.TicEX;
+import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.handlers.InternalTimers;
 import moze_intel.projecte.utils.ClientKeyHelper;
@@ -18,27 +17,42 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
+import slimeknights.tconstruct.library.modifiers.hook.behavior.AttributesModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
-public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickModifierHook {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.function.BiConsumer;
 
-    public static final ResourceLocation ABYSSAL_DATA = new ResourceLocation(TicEX.MODID, "abyssal");
+public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickModifierHook, AttributesModifierHook, TooltipModifierHook {
+
+    public static final ResourceLocation ABYSSAL_DATA = TicEX.getResource("abyssal");
+    public static final UUID ATTRIBUTE_MODIFIER_UUID = UUID.fromString("39377487-3632-4a51-9128-6c211265b7c5");
 
     public static void toggleNightVision(IToolStackView tool, Player player) {
         boolean value;
@@ -60,11 +74,11 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK);
+        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.ATTRIBUTES, ModifierHooks.TOOLTIP);
     }
 
     @Override
-    public List<Component> getDescriptionList(IToolStackView tool, ModifierEntry entry) {
+    public @NotNull List<Component> getDescriptionList(IToolStackView tool, ModifierEntry entry) {
         List<Component> tooltips = new ArrayList<>();
         tooltips.add(PELang.GEM_LORE_HELM.translate());
         tooltips.add(PELang.NIGHT_VISION_PROMPT.translate(ClientKeyHelper.getKeyName(PEKeybind.HELMET_TOGGLE)));
@@ -78,14 +92,14 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
 
     @Override
     public void onInventoryTick(
-        IToolStackView tool,
-        ModifierEntry entry,
-        Level level,
-        LivingEntity entity,
-        int itemSlot,
-        boolean isSelected,
-        boolean isCorrectSlot,
-        ItemStack stack
+            IToolStackView tool,
+            @NotNull ModifierEntry entry,
+            @NotNull Level level,
+            @NotNull LivingEntity entity,
+            int itemSlot,
+            boolean isSelected,
+            boolean isCorrectSlot,
+            @NotNull ItemStack stack
     ) {
         Item item = tool.getItem();
         if (
@@ -132,5 +146,15 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
     @Override
     public boolean shouldDisplay(boolean advanced) {
         return advanced;
+    }
+
+    @Override
+    public void addAttributes(IToolStackView iToolStackView, ModifierEntry modifierEntry, EquipmentSlot equipmentSlot, BiConsumer<Attribute, AttributeModifier> biConsumer) {
+        biConsumer.accept(TicEXRegistry.DAMAGE_TAKEN.get(), new AttributeModifier(ATTRIBUTE_MODIFIER_UUID, "gem_modifier", -0.2f, AttributeModifier.Operation.ADDITION));
+    }
+
+    @Override
+    public void addTooltip(IToolStackView iToolStackView, ModifierEntry modifierEntry, @Nullable Player player, List<Component> tooltips, TooltipKey tooltipKey, TooltipFlag tooltipFlag) {
+        tooltips.add(PELang.GEM_LORE_HELM.translate());
     }
 }

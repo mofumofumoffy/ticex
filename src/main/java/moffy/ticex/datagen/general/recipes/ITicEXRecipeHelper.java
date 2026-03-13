@@ -8,6 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.recipe.data.IRecipeHelper;
 
 public interface ITicEXRecipeHelper extends IRecipeHelper, IConditionBuilder {
@@ -50,7 +51,7 @@ public interface ITicEXRecipeHelper extends IRecipeHelper, IConditionBuilder {
     String itemsFolder      = "items/";
 
     default ICondition modsAvailable(ResourceLocation rl) {
-        return new ModsAvailableCondition(new ResourceLocation(AddonAPI.MODID, "mods_available"), rl);
+        return new ModsAvailableCondition(rl);
     }
 
     default Item item(ResourceLocation resourceLocation) {
@@ -58,7 +59,7 @@ public interface ITicEXRecipeHelper extends IRecipeHelper, IConditionBuilder {
     }
 
     @Override
-    default String getModId() {
+    default @NotNull String getModId() {
         return TicEX.MODID;
     }
 }

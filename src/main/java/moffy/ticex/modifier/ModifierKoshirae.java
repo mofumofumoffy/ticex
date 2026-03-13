@@ -39,9 +39,10 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
                     } else {
                         bladeStateTag = compoundTag.getCompound("bladeState");
                     }
+
+                    resultState.deserializeNBT(bladeStateTag);
                     toolStack.getOrCreateTag().put("bladeState", bladeStateTag);
                 });
-
             return true;
         } else {
             context.setErrorMsg(Component.translatable("recipe.ticex.not_be_witched"));

@@ -1,16 +1,13 @@
 package moffy.ticex.lib.recipe;
 
-import java.util.List;
-import java.util.stream.IntStream;
-
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.data.loadable.Loadables;
 import slimeknights.mantle.data.loadable.common.IngredientLoadable;
 import slimeknights.mantle.data.loadable.field.ContextKey;
@@ -28,6 +25,9 @@ import slimeknights.tconstruct.library.tools.nbt.LazyToolStack;
 import slimeknights.tconstruct.library.tools.nbt.MaterialNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.part.IMaterialItem;
+
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class EmbossmentBuildingRecipe extends ToolBuildingRecipe {
 
@@ -49,16 +49,16 @@ public class EmbossmentBuildingRecipe extends ToolBuildingRecipe {
         ResourceLocation layoutSlot,
         List<Ingredient> ingredients
     ) {
-        super(id, group, output, outputCount, layoutSlot, ingredients);
+        super(id, group, output, outputCount, layoutSlot, ingredients, null, List.of());
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<?> getSerializer() {
         return TicEXRegistry.BUILDING_EMBOSSMENT_RECIPE_SERIALIZER.get();
     }
 
     @Override
-    public RecipeResult<LazyToolStack> getValidatedResult(ITinkerStationContainer inv, RegistryAccess access) {
+    public @NotNull RecipeResult<LazyToolStack> getValidatedResult(@NotNull ITinkerStationContainer inv, @NotNull RegistryAccess access) {
         List<MaterialVariant> materials = IntStream.range(0, ToolPartsHook.parts(output.getToolDefinition()).size())
             .mapToObj(i -> MaterialVariant.of(IMaterialItem.getMaterialFromStack(inv.getInput(i))))
             .toList();
@@ -67,20 +67,6 @@ public class EmbossmentBuildingRecipe extends ToolBuildingRecipe {
             output.getToolDefinition(),
             new MaterialNBT(materials)
         ).createStack(outputCount);
-        IntStream.range(0, ToolPartsHook.parts(output.getToolDefinition()).size()).forEach(i -> {
-            ItemStack inputStack = inv.getInput(i);
-            if (inputStack.hasTag()) {
-                CompoundTag inputNBT = inputStack.getTag();
-
-                if (inputNBT.contains("embossed")) {
-                    CompoundTag resultNBT = resultStack.getOrCreateTag();
-                    CompoundTag embossedTag = inputNBT.getCompound("embossed");
-                    for (String key : embossedTag.getAllKeys()) {
-                        resultNBT.put(key, embossedTag.get(key));
-                    }
-                }
-            }
-        });
         return LazyToolStack.success(TicEXUtils.applyCatalystEmbossment(resultStack, inv, true));
     }
 }

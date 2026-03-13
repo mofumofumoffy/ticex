@@ -1,10 +1,8 @@
 package moffy.ticex.mixin.projecte;
 
-import java.util.Optional;
 import moffy.ticex.modifier.ModifierAbyssal;
 import moffy.ticex.modifier.ModifierHurricane;
 import moffy.ticex.modules.general.TicEXRegistry;
-import moze_intel.projecte.handlers.InternalAbilities;
 import moze_intel.projecte.network.packets.to_server.KeyPressPKT;
 import moze_intel.projecte.utils.PEKeybind;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,8 +25,8 @@ public class KeyPressPKTMixin {
     @Final
     private PEKeybind key;
 
-    @Inject(at = @At("return"), method = "handle")
-    public void handle(NetworkEvent.Context context, CallbackInfo cb) {
+    @Inject(at = @At("HEAD"), method = "handle", cancellable = true)
+    public void handle(NetworkEvent.Context context, CallbackInfo ci) {
         ServerPlayer player = context.getSender();
         if (player == null || player.isSpectator()) {
             return;
@@ -40,8 +38,9 @@ public class KeyPressPKTMixin {
                 if (tool.getModifierLevel(TicEXRegistry.ABYSSAL_MODIFIER.get()) > 0) {
                     ModifierAbyssal.toggleNightVision(tool, player);
                 }
+                ci.cancel();
             }
-            return;
+
         } else if (key == PEKeybind.BOOTS_TOGGLE) {
             ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
             if (!boots.isEmpty() && boots.getItem() instanceof IModifiable) {
@@ -49,12 +48,8 @@ public class KeyPressPKTMixin {
                 if (tool.getModifierLevel(TicEXRegistry.HURRICANE_MODIFIER.get()) > 0) {
                     ModifierHurricane.toggleStepAssist(tool, player);
                 }
+                ci.cancel();
             }
-            return;
-        }
-        Optional<InternalAbilities> cap = player.getCapability(InternalAbilities.CAPABILITY).resolve();
-        if (cap.isEmpty()) {
-            return;
         }
     }
 }

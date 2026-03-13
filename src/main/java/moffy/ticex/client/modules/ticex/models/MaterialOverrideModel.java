@@ -5,9 +5,9 @@ import com.google.common.cache.CacheBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import moffy.ticex.client.rendering.shader.ShaderProvider;
-import moffy.ticex.client.rendering.shader.ShaderToolQuad;
-import moffy.ticex.client.rendering.ticex.TicEXRenders;
+import moffy.ticex.client.render.shader.ShaderProvider;
+import moffy.ticex.client.render.shader.ShaderToolQuad;
+import moffy.ticex.client.render.ticex.TicEXRenders;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -99,7 +99,6 @@ public class MaterialOverrideModel extends AbstractObjOverrideModel<MaterialOver
             LOGGER.error("Failed to bake model for item: {}", itemStack.getItem());
             return EmptyModel.BAKED;
         }
-        ;
 
         ToolStack tool = ToolStack.from(itemStack);
 

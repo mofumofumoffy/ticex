@@ -3,7 +3,6 @@ package moffy.ticex.datagen.fluid;
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import slimeknights.mantle.fluid.UnplaceableFluid;
 import slimeknights.mantle.fluid.texture.AbstractFluidTextureProvider;
 import slimeknights.mantle.fluid.texture.FluidTexture;
@@ -27,7 +26,9 @@ public class FluidTextureProvider extends AbstractFluidTextureProvider {
         molten(TicEXRegistry.MOLTEN_INFINITY);
         molten(TicEXRegistry.MOLTEN_NEUTRON);
         molten(TicEXRegistry.MOLTEN_CRYSTAL_MATRIX);
+        molten(TicEXRegistry.MOLTEN_BLAZING);
         molten(TicEXRegistry.MOLTEN_ETHERIC);
+        molten(TicEXRegistry.MOLTEN_OD);
         molten(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE);
 
         int i = 0;
@@ -38,14 +39,14 @@ public class FluidTextureProvider extends AbstractFluidTextureProvider {
 
     private FluidTexture.Builder fuels(FluidObject<?> fluid) {
         return this.texture(fluid.getType()).textures(
-                new ResourceLocation(TicEX.MODID, "fluid/rf_furnace_fuels/"),
+                TicEX.getResource("fluid/rf_furnace_fuels/"),
                 false,
                 false
             );
     }
 
     private FluidTexture.Builder named(FluidObject<?> fluid, String name) {
-        return texture(fluid).textures(new ResourceLocation(TicEX.MODID, "fluid/" + name + "/"), false, false);
+        return texture(fluid).textures(TicEX.getResource("fluid/" + name + "/"), false, false);
     }
 
     private FluidTexture.Builder molten(FluidObject<?> fluid) {

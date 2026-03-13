@@ -1,0 +1,20 @@
+{
+  "type": "ticex:single_embossment_modifier",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekaweapons"
+    },
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:mekanism_compat"
+    }
+  ],
+  "emboss_input": {
+    "item": "ticex:catalyst_meka_bow"
+  },
+  "result": "ticex:mekanic",
+  "tools": {
+    "tag": "tconstruct:modifiable/ranged"
+  }
+}
