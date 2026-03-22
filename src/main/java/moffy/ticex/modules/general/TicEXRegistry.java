@@ -12,7 +12,6 @@ import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.recipe.*;
-import moffy.ticex.lib.registry.JeiIntegrationsRegistry;
 import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
@@ -156,8 +155,6 @@ public class TicEXRegistry {
     public static final MenuTypeDeferredRegister MENUS = new MenuTypeDeferredRegister(
             TicEX.MODID
     );
-
-    public static final JeiIntegrationsRegistry JEI_INTEGRATIONS = new JeiIntegrationsRegistry();
 
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
 
