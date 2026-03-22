@@ -14,6 +14,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class JeiIntegrationsRegistry {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(JeiIntegrationsRegistry.class);
     private final Map<ResourceLocation, Lazy<? extends IJeiIntegration>> entries;
     private final Map<ResourceLocation, IJeiIntegration> bakedIntegrations;

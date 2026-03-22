@@ -2,11 +2,7 @@ package moffy.ticex.modules.general;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
-import moffy.ticex.block.furnace.RFFurnaceBlock;
-import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
-import moffy.ticex.block.transmuter.FluidTransmuterBlock;
 import moffy.ticex.block.transmuter.container.FluidTransmuterContainerMenu;
-import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
 import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.TiCEXToolCapabilityProvider;
 import moffy.ticex.client.modules.ticex.UnsyncedToolContainerMenu;
@@ -14,7 +10,6 @@ import moffy.ticex.client.modules.ticex.screen.FluidTransmuterScreen;
 import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.cores.ItemFlickeringCore;
 import moffy.ticex.item.cores.ItemReconstCore;
-import moffy.ticex.jei.ticex.TicEXJEIIntegration;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.InfinityTier;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
@@ -22,22 +17,16 @@ import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
-import moffy.ticex.modifier.ModifierDeflection;
-import moffy.ticex.modifier.ModifierEmbossment;
 import moffy.ticex.modifier.ModifierEnchantmentSupplier;
-import moffy.ticex.modifier.ModifierSassy;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tiers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -158,11 +147,6 @@ public class TicEXModule implements AddonModule {
         TicEXRegistry.FLUID_TRANSMUTER_MENU = TicEXRegistry.MENUS.register(
                 "fluid_transmuter",
                 FluidTransmuterContainerMenu::new
-        );
-
-        TicEXRegistry.JEI_INTEGRATIONS.register(
-                TicEX.getResource("ticex_compat"),
-                TicEXJEIIntegration.class
         );
 
         bus.addListener(TicEXEvent::onEntityAttributeModification);
