@@ -210,7 +210,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:projecte-226410:4901949")
 
-    implementation fg.deobf("maven.modrinth:gu7yAYhd:1.115.1")
+    implementation fg.deobf("maven.modrinth:cc-tweaked:1.117.1-forge")
 
     implementation fg.deobf("curse.maven:psi-241665:6472034")
 
