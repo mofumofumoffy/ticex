@@ -13,7 +13,6 @@
     "ObjModel$ModelObjectAccessor",
     "ObjModelAccessor",
     "RomanNumeralHelperMixin",
-    "computercraft.PocketComputerItemAccessor",
     "config.AbstractCastingRecipeAccessor",
     "config.AbstractCastingRecipeMixin",
     "config.AbstractModifierRecipeAccessor",

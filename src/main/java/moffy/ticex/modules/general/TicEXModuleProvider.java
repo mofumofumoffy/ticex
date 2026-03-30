@@ -6,7 +6,7 @@ import moffy.ticex.modules.apotheosis.TicEXApotheosisModule;
 import moffy.ticex.modules.arsnouveau.TicEXArsModule;
 import moffy.ticex.modules.avaritia.TicEXAvaritiaModule;
 import moffy.ticex.modules.botania.TicEXBotaniaModule;
-import moffy.ticex.modules.cc_tweaked.TicEXCCModule;
+import moffy.ticex.modules.cctweaked.TicEXCCModule;
 import moffy.ticex.modules.create.TicEXCreateModule;
 import moffy.ticex.modules.curios.TicEXCuriosModule;
 import moffy.ticex.modules.draconicevolution.TicEXDEModule;
@@ -15,11 +15,8 @@ import moffy.ticex.modules.jei.TicEXJeiModule;
 import moffy.ticex.modules.mekanism.TicEXMekanismModule;
 import moffy.ticex.modules.projecte.TicEXPEModule;
 import moffy.ticex.modules.psi.TicEXPsiModule;
-import moffy.ticex.modules.sakura.TicEXSakuraModule;
 import moffy.ticex.modules.slashblade.TicEXSlashBladeModule;
 import moffy.ticex.modules.tacz.TicEXTaczModule;
-import moffy.ticex.modules.things.TicEXThingsModule;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class TicEXModuleProvider extends AddonModuleProvider {

@@ -1,0 +1,15 @@
+{
+  "package": "moffy.ticex.mixin.computercraft",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ticex.refmap.json",
+  "plugin": "moffy.ticex.modules.cctweaked.TicEXCCPlugin",
+  "mixins": [
+    "PocketComputerItemAccessor"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.7"
+}

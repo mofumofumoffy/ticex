@@ -124,6 +124,7 @@ mixin {
     config 'ticex.arsnouveau.mixins.json'
     config 'ticex.curios.mixins.json'
     config 'ticex.irons.mixins.json'
+    config 'ticex.computercraft.mixins.json'
 
     debug.verbose = true
     debug.export = true
