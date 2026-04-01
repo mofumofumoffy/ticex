@@ -1,4 +1,4 @@
-package moffy.ticex.modules.cc_tweaked;
+package moffy.ticex.modules.cctweaked;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.event.TicEXCCEvent;

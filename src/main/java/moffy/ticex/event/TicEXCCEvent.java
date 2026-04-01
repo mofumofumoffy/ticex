@@ -3,6 +3,7 @@ package moffy.ticex.event;
 import dan200.computercraft.shared.pocket.core.PocketServerComputer;
 import dan200.computercraft.shared.pocket.items.PocketComputerItem;
 import moffy.ticex.lib.utils.TicEXCCUtils;
+import moffy.ticex.mixin.computercraft.PocketComputerItemAccessor;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -104,7 +105,7 @@ public class TicEXCCEvent {
             if (chest.getModifierLevel(TicEXRegistry.MODEM_MODIFIER.get()) > 0) {
                 for (ItemStack stack : player.getInventory().items) {
                     if (stack.getItem() instanceof PocketComputerItem) {
-                        return PocketComputerItem.getServerComputer(player.getServer(), stack);
+                        return PocketComputerItemAccessor.invokeGetServerComputer(player.getServer(), stack);
                     }
                 }
             }
