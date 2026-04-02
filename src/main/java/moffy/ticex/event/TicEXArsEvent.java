@@ -20,7 +20,7 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 public class TicEXArsEvent {
     public static void onResolveSpellPre(SpellResolveEvent.Pre event){
         ItemStack toolStack = ((OriginalStackAccessor)event.context).getOriginalStack();
-        if(!toolStack.isEmpty() && ToolStack.from(toolStack).getModifierLevel(TicEXRegistry.REACTIVE_MODIFIER.get()) > 0){
+        if(!toolStack.isEmpty() && toolStack.getItem() instanceof IModifiable && ToolStack.from(toolStack).getModifierLevel(TicEXRegistry.REACTIVE_MODIFIER.get()) > 0){
             CompoundTag nbt = toolStack.getOrCreateTag();
             if(nbt.contains("reactive_cooldown") && nbt.getInt("reactive_cooldown") > 0){
                 event.context.setCanceled(true);
@@ -32,7 +32,7 @@ public class TicEXArsEvent {
     public static void onResolveSpellPost(SpellResolveEvent.Post event){
         if(!event.context.isCanceled()){
             ItemStack toolStack = ((OriginalStackAccessor)event.context).getOriginalStack();
-            if(!toolStack.isEmpty() && ToolStack.from(toolStack).getModifierLevel(TicEXRegistry.REACTIVE_MODIFIER.get()) > 0){
+            if(!toolStack.isEmpty() && toolStack.getItem() instanceof IModifiable && ToolStack.from(toolStack).getModifierLevel(TicEXRegistry.REACTIVE_MODIFIER.get()) > 0){
                 CompoundTag nbt = toolStack.getOrCreateTag();
                 nbt.putInt("reactive_cooldown", TicEXConfig.REACTIVE_COOLDOWN.get());
             }
