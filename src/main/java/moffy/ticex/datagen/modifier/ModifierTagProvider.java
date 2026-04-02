@@ -30,6 +30,7 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
         this.tag(ABILITIES).addOptional(TicEX.getResource("embossment"));
 
         this.tag(EXTRACT_SLOTLESS_BLACKLIST).addOptional(
+                TicEX.getResource("rebirth"),
                 TicEX.getResource("embossment"),
                 TicEX.getResource("mekanic"),
                 TicEX.getResource("konpaku"),
@@ -43,6 +44,7 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
             );
 
         this.tag(EXTRACT_MODIFIER_BLACKLIST).addOptional(
+                TicEX.getResource("rebirth"),
                 TicEX.getResource("embossment"),
                 TicEX.getResource("mekanic"),
                 TicEX.getResource("konpaku"),
@@ -56,6 +58,7 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
             );
 
         this.tag(TicEXTags.Modifiers.REMOVAL_BLACKLIST).addOptional(
+                TicEX.getResource("rebirth"),
                 TicEX.getResource("embossment"),
                 TicEX.getResource("mekanic"),
                 TicEX.getResource("konpaku"),

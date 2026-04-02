@@ -1,6 +1,10 @@
 {
   "values": [
     {
+      "id": "ticex:rebirth",
+      "required": false
+    },
+    {
       "id": "ticex:embossment",
       "required": false
     },
