@@ -81,6 +81,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
@@ -142,6 +143,7 @@ public class ModifierMekanic extends NoLevelsModifier
                 this,
                 TicEXRegistry.PROPERTY_PROVIDER_HOOK,
                 ModifierHooks.TOOL_USING,
+                ModifierHooks.TOOL_DAMAGE,
                 ModifierHooks.TOOL_ACTION,
                 ModifierHooks.ENTITY_INTERACT,
                 ModifierHooks.BREAK_SPEED,
@@ -266,7 +268,7 @@ public class ModifierMekanic extends NoLevelsModifier
             ItemStack stack = toolStack.createStack();
             if (stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()) {
                 IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
-                if (ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(toolAction)) {
+                if (!(stack.getItem() instanceof ArmorItem) && ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(toolAction)) {
                     return hasEnergyForDigAction(stack, mekaGear);
                 }
                 return mekaGear.getModules(stack).stream().anyMatch(module -> module.isEnabled() && canPerformAction(module, toolAction));
