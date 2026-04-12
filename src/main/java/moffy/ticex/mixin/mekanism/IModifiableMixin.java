@@ -4,12 +4,14 @@ import mekanism.api.radial.RadialData;
 import mekanism.api.radial.mode.IRadialMode;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.Module;
+import mekanism.common.item.interfaces.IModeItem;
 import mekanism.common.lib.radial.IGenericRadialModeItem;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +25,13 @@ import java.util.List;
 public interface IModifiableMixin extends IModuleContainerItem, IGenericRadialModeItem {
     @Override
     default boolean supportsSlotType(ItemStack stack, @NotNull EquipmentSlot slotType) {
-        return IGenericRadialModeItem.super.supportsSlotType(stack, slotType) && getModules(stack).stream().anyMatch(mekanism.common.content.gear.Module::handlesAnyModeChange);
+        boolean slotTypeMatched = false;
+        if(stack.getItem() instanceof ArmorItem armorItem){
+            slotTypeMatched = armorItem.getType().getSlot() == slotType;
+        } else {
+            slotTypeMatched = IGenericRadialModeItem.super.supportsSlotType(stack, slotType);
+        }
+        return slotTypeMatched && getModules(stack).stream().anyMatch(mekanism.common.content.gear.Module::handlesAnyModeChange);
     }
 
     @Nullable
