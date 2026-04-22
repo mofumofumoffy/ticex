@@ -58,7 +58,7 @@ public class EmbossmentMaterialCapability {
         MaterialId materialId = embossedMaterials.get(stat.toString());
         ToolStack tool = ToolStack.from(toolStack);
 
-        embossedMaterials.remove(stat.toString());
+        embossedMaterials.clear();
 
         if (materialId == null) return;
 
