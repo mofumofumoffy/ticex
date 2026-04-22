@@ -11,6 +11,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
 import slimeknights.tconstruct.library.materials.MaterialRegistry;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
+import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -27,64 +28,58 @@ public class EmbossmentMaterialCapability {
     public static final Capability<EmbossmentMaterialCapability> EMBOSSMENT_MATERIAL_CAPABILITY = CapabilityManager.get(
         new CapabilityToken<EmbossmentMaterialCapability>() {}
     );
-    public static final ResourceLocation MATERIAL_MAP = TicEX.getResource("embossed_material_map");
+    public static final ResourceLocation EMBOSSED_MATERIAL = TicEX.getResource("embossed_material");
 
-    protected final Map<String, MaterialId> embossedMaterials;
+    protected MaterialId embossedMaterialId;
+    protected MaterialStatsId embossedMaterialStatType;
     protected final IToolStackView tool;
 
     public EmbossmentMaterialCapability(IToolStackView tool) {
-        this.embossedMaterials = new HashMap<>();
         this.tool = tool;
-        deserializeNBT(tool.getPersistentData().getCompound(MATERIAL_MAP));
+        deserializeNBT(tool.getPersistentData().getCompound(EMBOSSED_MATERIAL));
     }
 
     public void accept(ItemStack toolStack, ItemStack partStack, ToolPartItem part) {
-        MaterialVariantId materialVariantId = part.getMaterial(partStack);
+        MaterialId materialId = part.getMaterial(partStack).getId();
         ToolStack tool = ToolStack.from(toolStack);
 
-        remove(toolStack, partStack, part);
-        embossedMaterials.put(part.getStatType().toString(), part.getMaterial(partStack).getId());
+        remove(toolStack);
+        embossedMaterialId = materialId;
+        embossedMaterialStatType = part.getStatType();
 
         for (ModifierEntry modifierEntry : MaterialRegistry.getInstance()
-            .getTraits(materialVariantId.getId(), part.getStatType())) {
+            .getTraits(materialId.getId(), part.getStatType())) {
             tool.addModifier(modifierEntry.getId(), modifierEntry.getLevel());
         }
 
-        tool.getPersistentData().put(MATERIAL_MAP, serializeNBT());
+        tool.getPersistentData().put(EMBOSSED_MATERIAL, serializeNBT());
     }
 
-    public void remove(ItemStack toolStack, ItemStack partStack, ToolPartItem part) {
-        MaterialStatsId stat = part.getStatType();
-        MaterialId materialId = embossedMaterials.get(stat.toString());
+    public void remove(ItemStack toolStack) {
         ToolStack tool = ToolStack.from(toolStack);
 
-        embossedMaterials.clear();
+        if (embossedMaterialId == null) return;
 
-        if (materialId == null) return;
-
-        for (ModifierEntry modifierEntry : MaterialRegistry.getInstance().getTraits(materialId, part.getStatType())) {
+        for (ModifierEntry modifierEntry : MaterialRegistry.getInstance().getTraits(embossedMaterialId, embossedMaterialStatType)) {
             tool.removeModifier(modifierEntry.getId(), modifierEntry.getLevel());
         }
     }
 
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        ListTag embossedMaterialList = new ListTag();
-        for (Entry<String, MaterialId> entry : embossedMaterials.entrySet()) {
-            CompoundTag materialTag = new CompoundTag();
-            materialTag.putString("stat", entry.getKey());
-            materialTag.putString("id", entry.getValue().toString());
-            embossedMaterialList.add(materialTag);
+        CompoundTag materialTag = new CompoundTag();
+        if(embossedMaterialId != null){
+            materialTag.putString("stat", embossedMaterialStatType.toString());
+            materialTag.putString("id", embossedMaterialId.toString());
+            nbt.put("material", materialTag);
         }
-        nbt.put("materials", embossedMaterialList);
+
         return nbt;
     }
 
     public void deserializeNBT(CompoundTag nbt) {
-        ListTag embossedMaterialList = nbt.getList("materials", Tag.TAG_COMPOUND);
-        for (int i = 0; i < embossedMaterialList.size(); i++) {
-            CompoundTag materialTag = embossedMaterialList.getCompound(i);
-            embossedMaterials.put(materialTag.getString("stat"), new MaterialId(materialTag.getString("id")));
-        }
+        CompoundTag embossedMaterial = nbt.getCompound("material");
+        embossedMaterialId = MaterialId.tryParse(embossedMaterial.getString("id"));
+        embossedMaterialStatType = MaterialStatsId.tryParse(embossedMaterial.getString("stat"));
     }
 }
