@@ -281,7 +281,7 @@ public class ModifierMekanic extends NoLevelsModifier
         if(stack.getItem() instanceof ArmorItem){
             return false;
         } else if(ModList.get().isLoaded("mekaweapons")){
-            return !(stack.is(TinkerTags.Items.MELEE_WEAPON) && stack.is(TinkerTags.Items.RANGED));
+            return !(stack.is(TinkerTags.Items.MELEE_WEAPON) || stack.is(TinkerTags.Items.RANGED));
         }
         return true;
     }
