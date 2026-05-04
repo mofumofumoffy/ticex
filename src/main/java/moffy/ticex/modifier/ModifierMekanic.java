@@ -268,13 +268,22 @@ public class ModifierMekanic extends NoLevelsModifier
             ItemStack stack = toolStack.createStack();
             if (stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()) {
                 IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
-                if (!(stack.getItem() instanceof ArmorItem) && ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(toolAction)) {
+                if (isTool(stack) && ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(toolAction)) {
                     return hasEnergyForDigAction(stack, mekaGear);
                 }
                 return mekaGear.getModules(stack).stream().anyMatch(module -> module.isEnabled() && canPerformAction(module, toolAction));
             }
         }
         return false;
+    }
+
+    private boolean isTool(ItemStack stack){
+        if(stack.getItem() instanceof ArmorItem){
+            return false;
+        } else if(ModList.get().isLoaded("mekaweapons")){
+            return !(stack.is(TinkerTags.Items.MELEE_WEAPON) && stack.is(TinkerTags.Items.RANGED));
+        }
+        return true;
     }
 
     private <MODULE extends ICustomModule<MODULE>> boolean canPerformAction(IModule<MODULE> module, ToolAction action) {
