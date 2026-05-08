@@ -35,7 +35,7 @@ public class TicEXCuriosEvent {
         Level level = livingEntity.level();
         if (!level.isClientSide()) {
             RandomSource randomSource = level.getRandom();
-            List<String> blacklist = TicEXConfig.GLOVE_DROP_BLACKLIST.get();
+            List<? extends String> blacklist = TicEXConfig.GLOVE_DROP_BLACKLIST.get();
             ResourceLocation entityLocation = ForgeRegistries.ENTITY_TYPES.getKey(livingEntity.getType());
             if(entityLocation != null){
                 if (blacklist.stream().anyMatch(id -> entityLocation.toString().equals(id))) {

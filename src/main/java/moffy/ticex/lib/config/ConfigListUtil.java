@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ConfigListUtil {
 
-    public static Map<String, Object> toNestedMap(List<String> list) {
+    public static Map<String, Object> toNestedMap(List<? extends String> list) {
         Map<String, Object> root = new LinkedHashMap<>();
 
         for (String line : list) {
@@ -58,7 +58,7 @@ public class ConfigListUtil {
         return root;
     }
 
-    public static Optional<Integer> getConfiguredValue(List<String> list, Object ...keys){
+    public static Optional<Integer> getConfiguredValue(List<? extends String> list, Object ...keys){
         try{
             for(String line : list){
                 String[] parsedLine = line.split("\\|");
