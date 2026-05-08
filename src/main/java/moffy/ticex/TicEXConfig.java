@@ -1,33 +1,27 @@
 package moffy.ticex;
 
 import moffy.addonapi.AddonModuleRegistry;
-import moffy.ticex.lib.config.ModifierLevelPreset;
-import moffy.ticex.lib.config.ToolSlotPreset;
+import moffy.ticex.lib.config.ConfigObject;
 import moffy.ticex.modules.general.TicEXModuleProvider;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TicEXConfig {
     // TicEX
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
-    public static ForgeConfigSpec.ConfigValue<Boolean> USE_MORE_CONFIG;
     public static ForgeConfigSpec.ConfigValue<List<String>> FLUID_TRANSMUTER_PATTERNS;
     public static ForgeConfigSpec.ConfigValue<List<String>> FLUID_TRANSMUTER_EXCLUDE_PATTERNS;
 
     // More Config
-    public static ForgeConfigSpec.ConfigValue<Boolean> PROVIDE_PROPERTIES;
-    public static List<ForgeConfigSpec.ConfigValue<Integer>> RF_FURNACE_FUEL_TEMP = new ArrayList<>();
-    public static List<ForgeConfigSpec.ConfigValue<Integer>> RF_FURNACE_FUEL_RATE = new ArrayList<>();
-    public static Map<ResourceLocation, ToolSlotPreset.SlotConfigSpec> SLOTS_CONFIG = new HashMap<>();
-    public static Map<ResourceLocation, ForgeConfigSpec.ConfigValue<Integer>> MODIFIER_CONFIG = new HashMap<>();
+    public static ForgeConfigSpec.ConfigValue<Boolean> USE_MORE_CONFIG;
+    public static ForgeConfigSpec.ConfigValue<ConfigObject> RF_FURNACE_FUEL_TEMP;
+    public static ForgeConfigSpec.ConfigValue<ConfigObject> RF_FURNACE_FUEL_RATE;
+    public static ForgeConfigSpec.ConfigValue<ConfigObject> SLOTS_CONFIG;
+    public static ForgeConfigSpec.ConfigValue<ConfigObject> MODIFIER_CONFIG;
     public static ForgeConfigSpec.ConfigValue<Boolean> SHOULD_CONSUME_SLASHBLADE;
 
     // Avaritia
@@ -52,8 +46,7 @@ public class TicEXConfig {
         final ForgeConfigSpec.Builder CLIENT = new ForgeConfigSpec.Builder();
         final ForgeConfigSpec.Builder MORE_CONFIG = new ForgeConfigSpec.Builder();
 
-        COMMON.comment("General").push("general");
-        USE_MORE_CONFIG = COMMON.comment("Using ticex-more-config.toml(If true, it will override your datapack!)").define("useMoreConfig", false);
+        COMMON.push("general");
         RF_FURNACE_RATE_CAPACITY = COMMON.comment("MAX Rate Capacity(RF/t)").define("rateCapacity", 100000);
         FLUID_TRANSMUTER_PATTERNS = COMMON.comment(
                 "Fluid Transmuter valid tag prefix list"
@@ -96,77 +89,46 @@ public class TicEXConfig {
                 .define("gloveDropBlacklistAsWhitelist", false);
         COMMON.pop();
 
+
+        MORE_CONFIG.push("general");
+        USE_MORE_CONFIG = MORE_CONFIG.comment("Using More-Config(If true, it may override your datapack!)").define("useMoreConfig", false);
+        MORE_CONFIG.pop();
+
         MORE_CONFIG.push("RF Furnace Fuel Temperature Settings");
-        MORE_CONFIG.comment("These values are 32-bit signed integer. (Maximum value is about 2.147G)");
-        int[] temps = new int[]{20, 90, 225, 402, 625, 902, 1230, 1603, 2026, 2494, 3036, 3594, 4240, 5095,
-                5647, 6397, 7242, 8101, 9039, 10000};
-        for (int i = 0; i < 20; i++) {
-            RF_FURNACE_FUEL_TEMP.add(MORE_CONFIG.comment("Temperature of RF Furnace Fuel " + i)
-                    .define("rfFuel" + i + "Temp", temps[i]));
-        }
+        MORE_CONFIG.comment("The format for these is \"key|value\".");
+        MORE_CONFIG.comment("- key:RF Furnace Fuel index(1-19)");
+        MORE_CONFIG.comment("- value:32-bit signed integer (Maximum value is about 2.147G)");
+        MORE_CONFIG.comment("ex. \"1|200\"(Temperature of RF Furnace Fuel 1 will be set to 200)");
+        RF_FURNACE_FUEL_TEMP = MORE_CONFIG.define("RF Furnace Temps", new ConfigObject("19|2147483647"));
         MORE_CONFIG.pop();
+
         MORE_CONFIG.push("RF Furnace Fuel Speed Rate Settings");
+        MORE_CONFIG.comment("The format for these is \"key|value\".");
         MORE_CONFIG.comment(
-                "These values are 32-bit signed integer. (Maximum value is about 2.147G)",
+                "- key:RF Furnace Fuel index(1-19)",
+                "- value:32-bit signed integer (Maximum value is about 2.147G)",
                 "The actual speed multiplier is calculated by dividing this value by 10.",
-                "For example, setting it to 100 results in 10x speed, and 25 results in 2.5x speed."
+                "It means setting it to 100 results in 10x speed, and 25 results in 2.5x speed."
         );
-        for (int i = 0; i < 20; i++) {
-            RF_FURNACE_FUEL_RATE.add(MORE_CONFIG.comment("Speed Rate of RF Furnace Fuel " + i)
-                    .define("rfRate" + i + "Temp", i * 5 + 5));
-        }
+        MORE_CONFIG.comment("ex. \"1|250\"(Speed rate of RF Furnace Fuel 1 will be set to 25x)");
+        RF_FURNACE_FUEL_RATE = MORE_CONFIG.define("Speed Rate of RF Furnace Fuel", new ConfigObject("19|655350"));
         MORE_CONFIG.pop();
-        MORE_CONFIG.push("Tool/Armor Slots Settings");
-        MORE_CONFIG.comment("These values are 32-bit signed integer. (Maximum value is about 2.147G)");
-        ToolSlotPreset.PRESET.forEach(preset -> {
-            ToolSlotPreset.SlotConfigSpec spec = null;
-            if (preset.upgradeSlot() > 0) {
-                if (preset.abilitySlot() > 0) {
-                    if (preset.defenseSlot() > 0) {
-                        spec = new ToolSlotPreset.BothSlotConfigSpec(
-                                MORE_CONFIG.comment("Upgrade Slots of " + preset.name()).define(preset.configName() + "UpgradeSlots", preset.upgradeSlot()),
-                                MORE_CONFIG.comment("Ability Slots of " + preset.name()).define(preset.configName() + "AbilitySlots", preset.abilitySlot()),
-                                MORE_CONFIG.comment("Defense Slots of " + preset.name()).define(preset.configName() + "DefenseSlots", preset.defenseSlot())
-                        );
-                    } else {
-                        spec = new ToolSlotPreset.AbilitySlotConfigSpec(
-                                MORE_CONFIG.comment("Upgrade Slots of " + preset.name()).define(preset.configName() + "UpgradeSlots", preset.upgradeSlot()),
-                                MORE_CONFIG.comment("Ability Slots of " + preset.name()).define(preset.configName() + "AbilitySlots", preset.abilitySlot())
-                        );
-                    }
-                } else {
-                    if (preset.defenseSlot() > 0) {
-                        spec = new ToolSlotPreset.DefenseSlotConfigSpec(
-                                MORE_CONFIG.comment("Upgrade Slots of " + preset.name()).define(preset.configName() + "UpgradeSlots", preset.upgradeSlot()),
-                                MORE_CONFIG.comment("Defense Slots of " + preset.name()).define(preset.configName() + "AbilitySlots", preset.defenseSlot())
-                        );
-                    }
-                }
-            } else {
-                if (preset.defenseSlot() > 0) {
-                    if (preset.abilitySlot() > 0) {
-                        spec = new ToolSlotPreset.NoUpgradeSlotConfigSpec(
-                                MORE_CONFIG.comment("Ability Slots of " + preset.name()).define(preset.configName() + "AbilitySlots", preset.abilitySlot()),
-                                MORE_CONFIG.comment("Defense Slots of " + preset.name()).define(preset.configName() + "DefenseSlots", preset.defenseSlot())
-                        );
-                    } else {
-                        spec = new ToolSlotPreset.DefenseOnlySlotConfigSpec(
-                                MORE_CONFIG.comment("Defense Slots of " + preset.name()).define(preset.configName() + "DefenseSlots", preset.defenseSlot())
-                        );
-                    }
-                }
-            }
-            if (spec != null) {
-                SLOTS_CONFIG.put(preset.rl(), spec);
-            }
-        });
+
+        MORE_CONFIG.push("Tool/Armor Slots Override Settings");
+        MORE_CONFIG.comment("The format for these is \"key1|key2|value\".");
+        MORE_CONFIG.comment("- key1:ResourceLocation of tool");
+        MORE_CONFIG.comment("- key2:\"upgrades\"/\"abilities\"/\"defence\"");
+        MORE_CONFIG.comment("- value: 32-bit signed integer. (Maximum value is about 2.147G)");
+        MORE_CONFIG.comment("ex. \"tconstruct:cleaver|abilities|3\"(ability slot size of tconstruct:cleaver will be set to 3)");
+        SLOTS_CONFIG = MORE_CONFIG.define("Slots Override Settings", new ConfigObject("tconstruct:sword|upgrades|5"));
         MORE_CONFIG.pop();
-        MORE_CONFIG.push("Modifier Level Settings");
-        MORE_CONFIG.comment("These values are 32-bit signed integer. (Maximum value is about 2.147G)");
-        ModifierLevelPreset.PRESET.forEach(preset ->
-                MODIFIER_CONFIG.put(preset.rl(), MORE_CONFIG.comment("Max Level of " + preset.name())
-                        .define(preset.configName() + "MaxLevel", preset.max()))
-        );
+
+        MORE_CONFIG.push("Modifier Maximum Level Settings");
+        MORE_CONFIG.comment("The format for these is \"key|value\".");
+        MORE_CONFIG.comment("- key1:ResourceLocation of modifier");
+        MORE_CONFIG.comment("- value: 32-bit signed integer. (Maximum value is about 2.147G)");
+        MORE_CONFIG.comment("ex. \"tconstruct:tools/modifiers/upgrade/necrotic|10\"(maximum level of tconstruct:tools/modifiers/upgrade/necrotic will be set to 10)");
+        MODIFIER_CONFIG = MORE_CONFIG.define("Maximum Level of Modifiers", new ConfigObject("tconstruct:tools/modifiers/upgrade/reinforced|7"));
         MORE_CONFIG.pop();
         MORE_CONFIG.push("Catalyst Settings");
         SHOULD_CONSUME_SLASHBLADE = MORE_CONFIG.comment("If set to true, the catalyst will consume the Slashblade upon use.")
