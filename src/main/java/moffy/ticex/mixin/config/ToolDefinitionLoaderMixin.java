@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.lib.config.ConfigListUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -25,7 +24,7 @@ public class ToolDefinitionLoaderMixin {
     private void modify(@NotNull Map<ResourceLocation, JsonElement> splashList, ResourceManager resourceManagerIn, ProfilerFiller profilerIn, CallbackInfo ci) {
         try {
             if(TicEXConfig.USE_MORE_CONFIG != null && TicEXConfig.USE_MORE_CONFIG.get()){
-                var slotConfigMap = ConfigListUtil.toNestedMap(TicEXConfig.SLOTS_CONFIG.get());
+                var slotConfigMap = TicEXConfig.SLOTS_CONFIG.get().toNestedMap();
                 slotConfigMap.forEach((key, value) -> {
                     splashList.forEach((resourceLocation, jsonElement) -> {
                         if(key.equals(resourceLocation.toString())){

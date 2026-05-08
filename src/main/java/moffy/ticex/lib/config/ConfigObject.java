@@ -1,13 +1,18 @@
 package moffy.ticex.lib.config;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class ConfigListUtil {
+public class ConfigObject extends ArrayList<String> {
 
-    public static Map<String, Object> toNestedMap(List<String> list) {
+    public ConfigObject(String ...list){
+        super(List.of(list));
+    }
+
+    public Map<String, Object> toNestedMap() {
         Map<String, Object> root = new LinkedHashMap<>();
 
-        for (String line : list) {
+        for (String line : this) {
             if (line == null || line.isEmpty()) {
                 continue;
             }
@@ -58,9 +63,9 @@ public class ConfigListUtil {
         return root;
     }
 
-    public static Optional<Integer> getConfiguredValue(List<String> list, Object ...keys){
+    public Optional<Integer> getConfiguredValue(Object ...keys){
         try{
-            for(String line : list){
+            for(String line : this){
                 String[] parsedLine = line.split("\\|");
                 if(keys.length == parsedLine.length - 1){
                     boolean matched = true;

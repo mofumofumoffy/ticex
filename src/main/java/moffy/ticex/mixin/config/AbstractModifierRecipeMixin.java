@@ -2,7 +2,6 @@ package moffy.ticex.mixin.config;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.lib.config.ConfigListUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +19,7 @@ public class AbstractModifierRecipeMixin {
     private void modifyLevel(ResourceLocation id, Ingredient toolRequirement, int maxToolSize, ModifierId result, IntRange level, SlotType.SlotCount slots, boolean allowCrystal, boolean checkTraitLevel, CallbackInfo ci) {
         try {
             if(TicEXConfig.USE_MORE_CONFIG != null && TicEXConfig.USE_MORE_CONFIG.get()){
-                ConfigListUtil.getConfiguredValue(TicEXConfig.MODIFIER_CONFIG.get(), id).ifPresent(value -> ((AbstractModifierRecipeAccessor) this).setLevel(new IntRange(1, value)));
+                TicEXConfig.MODIFIER_CONFIG.get().getConfiguredValue(id).ifPresent(value -> ((AbstractModifierRecipeAccessor) this).setLevel(new IntRange(1, value)));
             }
         } catch (IllegalStateException ignored){}
     }

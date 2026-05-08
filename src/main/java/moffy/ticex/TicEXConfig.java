@@ -1,7 +1,7 @@
 package moffy.ticex;
 
 import moffy.addonapi.AddonModuleRegistry;
-import moffy.ticex.lib.config.ConfigListUtil;
+import moffy.ticex.lib.config.ConfigObject;
 import moffy.ticex.modules.general.TicEXModuleProvider;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig.Type;
@@ -18,10 +18,10 @@ public class TicEXConfig {
 
     // More Config
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_MORE_CONFIG;
-    public static ForgeConfigSpec.ConfigValue<List<String>> RF_FURNACE_FUEL_TEMP;
-    public static ForgeConfigSpec.ConfigValue<List<String>> RF_FURNACE_FUEL_RATE;
-    public static ForgeConfigSpec.ConfigValue<List<String>> SLOTS_CONFIG;
-    public static ForgeConfigSpec.ConfigValue<List<String>> MODIFIER_CONFIG;
+    public static ForgeConfigSpec.ConfigValue<ConfigObject> RF_FURNACE_FUEL_TEMP;
+    public static ForgeConfigSpec.ConfigValue<ConfigObject> RF_FURNACE_FUEL_RATE;
+    public static ForgeConfigSpec.ConfigValue<ConfigObject> SLOTS_CONFIG;
+    public static ForgeConfigSpec.ConfigValue<ConfigObject> MODIFIER_CONFIG;
     public static ForgeConfigSpec.ConfigValue<Boolean> SHOULD_CONSUME_SLASHBLADE;
 
     // Avaritia
@@ -99,7 +99,7 @@ public class TicEXConfig {
         MORE_CONFIG.comment("- key:RF Furnace Fuel index(1-19)");
         MORE_CONFIG.comment("- value:32-bit signed integer (Maximum value is about 2.147G)");
         MORE_CONFIG.comment("ex. \"1|200\"(Temperature of RF Furnace Fuel 1 will be set to 200)");
-        RF_FURNACE_FUEL_TEMP = MORE_CONFIG.define("RF Furnace Temps", List.of("19|2147483647"));
+        RF_FURNACE_FUEL_TEMP = MORE_CONFIG.define("RF Furnace Temps", new ConfigObject("19|2147483647"));
         MORE_CONFIG.pop();
 
         MORE_CONFIG.push("RF Furnace Fuel Speed Rate Settings");
@@ -111,7 +111,7 @@ public class TicEXConfig {
                 "It means setting it to 100 results in 10x speed, and 25 results in 2.5x speed."
         );
         MORE_CONFIG.comment("ex. \"1|250\"(Speed rate of RF Furnace Fuel 1 will be set to 25x)");
-        RF_FURNACE_FUEL_RATE = MORE_CONFIG.define("Speed Rate of RF Furnace Fuel", List.of("19|655350"));
+        RF_FURNACE_FUEL_RATE = MORE_CONFIG.define("Speed Rate of RF Furnace Fuel", new ConfigObject("19|655350"));
         MORE_CONFIG.pop();
 
         MORE_CONFIG.push("Tool/Armor Slots Override Settings");
@@ -120,7 +120,7 @@ public class TicEXConfig {
         MORE_CONFIG.comment("- key2:\"upgrades\"/\"abilities\"/\"defence\"");
         MORE_CONFIG.comment("- value: 32-bit signed integer. (Maximum value is about 2.147G)");
         MORE_CONFIG.comment("ex. \"tconstruct:cleaver|abilities|3\"(ability slot size of tconstruct:cleaver will be set to 3)");
-        SLOTS_CONFIG = MORE_CONFIG.define("Slots Override Settings", List.of("tconstruct:sword|upgrades|5"));
+        SLOTS_CONFIG = MORE_CONFIG.define("Slots Override Settings", new ConfigObject("tconstruct:sword|upgrades|5"));
         MORE_CONFIG.pop();
 
         MORE_CONFIG.push("Modifier Maximum Level Settings");
@@ -128,7 +128,7 @@ public class TicEXConfig {
         MORE_CONFIG.comment("- key1:ResourceLocation of modifier");
         MORE_CONFIG.comment("- value: 32-bit signed integer. (Maximum value is about 2.147G)");
         MORE_CONFIG.comment("ex. \"tconstruct:tools/modifiers/upgrade/necrotic|10\"(maximum level of tconstruct:tools/modifiers/upgrade/necrotic will be set to 10)");
-        MODIFIER_CONFIG = MORE_CONFIG.define("Maximum Level of Modifiers", List.of("tconstruct:tools/modifiers/upgrade/reinforced|7"));
+        MODIFIER_CONFIG = MORE_CONFIG.define("Maximum Level of Modifiers", new ConfigObject("tconstruct:tools/modifiers/upgrade/reinforced|7"));
         MORE_CONFIG.pop();
         MORE_CONFIG.push("Catalyst Settings");
         SHOULD_CONSUME_SLASHBLADE = MORE_CONFIG.comment("If set to true, the catalyst will consume the Slashblade upon use.")
