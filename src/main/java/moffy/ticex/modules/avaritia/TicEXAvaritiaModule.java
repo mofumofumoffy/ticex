@@ -49,6 +49,7 @@ public class TicEXAvaritiaModule implements AddonModule {
                 ModifierBedrockBreaker::new
         );
         TicEXRegistry.CELESTIAL_MODIFIER = TicEXRegistry.MODIFIERS.register("celestial", ModifierCelestial::new);
+        TicEXRegistry.ETERNITY_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("eternity");
         TicEXRegistry.CONDENSING_MODIFIER = TicEXRegistry.MODIFIERS.register("condensing", ModifierCondensing::new);
         TicEXRegistry.AFTERSHOCK_MODIFIER = TicEXRegistry.MODIFIERS.register("aftershock", ModifierAftershock::new);
         TicEXRegistry.TRANSCENDENTAL_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("transcendental");

@@ -60,6 +60,17 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
                 .save(topConsumer, prefix(TicEXRegistry.ENDESTSHOT_MODIFIER.getId(), abilityFolder));
         }
 
+        if(TicEXRegistry.ETERNITY_MODIFIER != null){
+            ModifierRecipeBuilder.modifier(TicEXRegistry.ETERNITY_MODIFIER)
+                    .setTools(TinkerTags.Items.DURABILITY)
+                    .addInput(ModItems.enhancement_core.get())
+                    .addInput(ModItems.upgrade_smithing_template.get())
+                    .setLevelRange(1,1)
+                    .allowCrystal()
+                    .checkTraitLevel()
+                    .save(topConsumer, prefix(TicEXRegistry.ETERNITY_MODIFIER, slotlessFolder));
+        }
+
         // core
 
         if (TicEXRegistry.CELESTIAL_CORE != null) {

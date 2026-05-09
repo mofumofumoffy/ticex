@@ -25,7 +25,9 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
 
         this.tag(DEFENSE).addOptional(TicEX.getResource("celestial"));
 
-        this.tag(BONUS_SLOTLESS).addOptional(TicEX.getResource("inject"));
+        this.tag(BONUS_SLOTLESS)
+                .addOptional(TicEX.getResource("eternity"))
+                .addOptional(TicEX.getResource("inject"));
 
         this.tag(ABILITIES).addOptional(TicEX.getResource("embossment"));
 

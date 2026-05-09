@@ -261,6 +261,7 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> BEDROCK_BREAKER_MODIFIER = null;
     public static DynamicModifier TRANSCENDENTAL_MODIFIER = null;
     public static StaticModifier<Modifier> CELESTIAL_MODIFIER = null;
+    public static DynamicModifier ETERNITY_MODIFIER = null;
     public static StaticModifier<Modifier> CONDENSING_MODIFIER = null;
     public static DynamicModifier DENSE_MODIFIER = null;
     public static StaticModifier<Modifier> AFTERSHOCK_MODIFIER = null;
