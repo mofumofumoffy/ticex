@@ -35,8 +35,10 @@ public class MekanicProperty {
             Map<String, Object> result = new HashMap<>();
 
             result.put("getMekanismEnergy", getMekanismEnergy(user, stack));
-            result.put("getModuleProps", getModuleProps(user, stack));
-            result.put("setConfigValue", setConfigValue(user, stack));
+            result.put("getModuleProps", getModuleData(user, stack));
+            result.put("setConfigValue", setModuleData(user, stack));
+            result.put("getModuleData", getModuleData(user, stack));
+            result.put("setModuleData", setModuleData(user, stack));
 
             return result;
         };
@@ -54,7 +56,7 @@ public class MekanicProperty {
     }
 
     @SuppressWarnings("unchecked")
-    public static ILuaFunction getModuleProps(Player user, ItemStack stack) {
+    public static ILuaFunction getModuleData(Player user, ItemStack stack) {
         return args -> {
             Map<String, Object> result = new HashMap<>();
             for (IModule<?> moduleInterface : IModuleHelper.INSTANCE.loadAll(stack)) {
@@ -74,7 +76,7 @@ public class MekanicProperty {
     }
 
     @SuppressWarnings("unchecked")
-    public static ILuaFunction setConfigValue(Player user, ItemStack stack) {
+    public static ILuaFunction setModuleData(Player user, ItemStack stack) {
         return args -> {
             String moduleName = args.getString(0);
             String configName = args.getString(1);
