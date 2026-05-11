@@ -4,11 +4,13 @@ import mekanism.api.MekanismAPI;
 import mekanism.api.gear.ModuleData;
 import mekanism.api.gear.config.*;
 import mekanism.api.math.MathUtils;
+import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.ModuleConfigItem;
 import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.network.to_server.PacketUpdateModuleSettings;
+import mekanism.common.registries.MekanismSounds;
 import moffy.ticex.network.TicEXPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
@@ -110,36 +112,8 @@ public class ConfigSyncToClientPacket extends TicEXPacket.ClientBoundPacket {
                 if (module != null) {
                     List<ModuleConfigItem<?>> configItems = module.getConfigItems();
                     if (configIndex < configItems.size()) {
-                        ModuleConfigItem<?> configItem = configItems.get(configIndex);
-                        setValue(configItem, dataType, value);
-                        if (stack.getItem() instanceof ArmorItem) {
-                            Mekanism.packetHandler()
-                                .sendToServer(
-                                    PacketUpdateModuleSettings.create(
-                                            36 + (3 - slot.getIndex()),
-                                        module.getData(),
-                                            configIndex,
-                                        configItem.getData()
-                                    )
-                                );
-                        } else {
-                            Optional<ItemStack> optionalStack = player
-                                .getInventory()
-                                .items.stream()
-                                .filter(item -> ItemStack.isSameItem(stack, item))
-                                .findFirst();
-                            if (optionalStack.isPresent()) {
-                                Mekanism.packetHandler()
-                                    .sendToServer(
-                                        PacketUpdateModuleSettings.create(
-                                            player.getInventory().findSlotMatchingItem(optionalStack.get()),
-                                            module.getData(),
-                                                configIndex,
-                                            configItem.getData()
-                                        )
-                                    );
-                            }
-                        }
+                        setValue(configItems.get(configIndex), dataType, value);
+                        SoundHandler.playSound(MekanismSounds.HYDRAULIC);
                     }
                 }
             }

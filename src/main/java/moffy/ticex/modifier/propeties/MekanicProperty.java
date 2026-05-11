@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
+
+import mekanism.api.energy.IStrictEnergyHandler;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleHelper;
 import mekanism.api.gear.ModuleData;
@@ -14,9 +16,12 @@ import mekanism.api.gear.config.ModuleColorData;
 import mekanism.api.gear.config.ModuleConfigData;
 import mekanism.api.gear.config.ModuleEnumData;
 import mekanism.client.sound.SoundHandler;
+import mekanism.common.capabilities.Capabilities;
 import mekanism.common.content.gear.ModuleConfigItem;
 import mekanism.common.registries.MekanismSounds;
 import moffy.ticex.TicEX;
+import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
+import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import moffy.ticex.network.mekanism.ConfigSyncToClientPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -29,10 +34,22 @@ public class MekanicProperty {
         return (user, stack) -> {
             Map<String, Object> result = new HashMap<>();
 
+            result.put("getMekanismEnergy", getMekanismEnergy(user, stack));
             result.put("getModuleProps", getModuleProps(user, stack));
             result.put("setConfigValue", setConfigValue(user, stack));
 
             return result;
+        };
+    }
+
+    public static ILuaFunction getMekanismEnergy(Player user, ItemStack stack){
+        return args -> {
+            var strictEnergyHandlerLazyOptional = stack.getCapability(Capabilities.STRICT_ENERGY);
+            if(strictEnergyHandlerLazyOptional.isPresent()){
+                IStrictEnergyHandler strictEnergyHandler = strictEnergyHandlerLazyOptional.orElseThrow(IllegalStateException::new);
+                return MethodResult.of(strictEnergyHandler.getEnergy(0), strictEnergyHandler.getMaxEnergy(0));
+            }
+            return MethodResult.of();
         };
     }
 
