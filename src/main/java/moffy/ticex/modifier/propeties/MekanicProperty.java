@@ -118,9 +118,6 @@ public class MekanicProperty {
                                     succeed = true;
                                     break;
                                 }
-                                if (succeed) {
-                                    break;
-                                }
                             }
                         }
                     }
