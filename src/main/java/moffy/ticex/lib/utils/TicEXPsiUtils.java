@@ -14,12 +14,20 @@ import vazkii.psi.common.item.ItemCAD;
 
 public class TicEXPsiUtils {
 
-    public static void CastSpell(Player player, ItemStack toolStack, Consumer<SpellContext> consumer) {
+    public static void CastSpellAutomatically(Player player, ItemStack toolStack, Consumer<SpellContext> consumer){
+        CastSpell(player, toolStack,  consumer, true);
+    }
+
+    public static void CastSpell(Player player, ItemStack toolStack, Consumer<SpellContext> consumer, boolean isAutoCast) {
         PlayerData data = PlayerDataHandler.get(player);
         ItemStack playerCad = PsiAPI.getPlayerCAD(player);
         ToolStack tool = ToolStack.from(toolStack);
 
-        if (!playerCad.isEmpty() && tool.getPersistentData().getBoolean(ModifierPsionizingRadiation.AUTO_CASTING_LOC)) {
+        if(isAutoCast && !tool.getPersistentData().getBoolean(ModifierPsionizingRadiation.AUTO_CASTING_LOC)){
+            return;
+        }
+
+        if (!playerCad.isEmpty()) {
             ItemStack bullet = ISocketable.socketable(toolStack).getSelectedBullet();
             final ItemStack finalTool = toolStack;
             ItemCAD.cast(

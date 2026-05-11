@@ -76,7 +76,7 @@ public class ModifierPsionizingRadiation
 
         Player player = context.getPlayerAttacker();
         ItemStack toolStack = TicEXUtils.getToolStack(tool, player, this);
-        TicEXPsiUtils.CastSpell(player, toolStack, spellContext -> {
+        TicEXPsiUtils.CastSpellAutomatically(player, toolStack, spellContext -> {
             spellContext.attackedEntity = context.getLivingTarget();
         });
     }
@@ -97,7 +97,7 @@ public class ModifierPsionizingRadiation
             context.getPos().getZ() + 0.5D - sideHit.getStepZ() * 0.5D
         );
 
-        TicEXPsiUtils.CastSpell(player, toolStack, spellContext -> {
+        TicEXPsiUtils.CastSpellAutomatically(player, toolStack, spellContext -> {
             spellContext.positionBroken = new BlockHitResult(hit, sideHit, context.getPos(), false);
         });
     }
