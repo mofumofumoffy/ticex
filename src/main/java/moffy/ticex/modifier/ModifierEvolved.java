@@ -19,8 +19,10 @@ import com.brandon3055.draconicevolution.init.EquipCfg;
 import com.mojang.datafixers.util.Pair;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.EnergyModifierHook;
+import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
+import moffy.ticex.modifier.propeties.EvolvedProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -74,7 +76,9 @@ import slimeknights.tconstruct.tools.data.ModifierIds;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiFunction;
 
 public class ModifierEvolved
     extends Modifier
@@ -87,7 +91,8 @@ public class ModifierEvolved
         RequirementsModifierHook,
         ValidateModifierHook,
         EnergyModifierHook,
-        InventoryTickModifierHook
+        InventoryTickModifierHook,
+        ProvidePropertyModifierHook
  {
 
     public static final ResourceLocation MODULE_HOST_LOCATION = TicEX.getResource("module_host");
@@ -110,7 +115,8 @@ public class ModifierEvolved
             ModifierHooks.REQUIREMENTS,
             ModifierHooks.VALIDATE,
             ModifierHooks.INVENTORY_TICK,
-            TicEXRegistry.ENERGY_HOOK
+            TicEXRegistry.ENERGY_HOOK,
+            TicEXRegistry.PROPERTY_PROVIDER_HOOK
         );
     }
 
@@ -718,5 +724,10 @@ public class ModifierEvolved
          } else {
              return baseSpeed;
          }
+     }
+
+     @Override
+     public BiFunction<Player, ItemStack, Map<String, Object>> getPropertyProvider() {
+         return EvolvedProperty.getProperties();
      }
  }
