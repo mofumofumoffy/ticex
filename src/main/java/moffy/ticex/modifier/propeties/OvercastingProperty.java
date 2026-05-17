@@ -8,10 +8,7 @@ import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.SpellData;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiFunction;
 import moffy.ticex.lib.utils.TicEXUtils;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,8 +40,16 @@ public class OvercastingProperty {
 
     public static ILuaFunction getAllSpells(Player user, ItemStack stack){
         return args -> {
-            ISpellContainer container = ISpellContainer.get(stack);
-            return MethodResult.of(Arrays.stream(container.getAllSpells()).map(spellSlot -> spellSlot.getSpell().getSpellName()).toList());
+            if(user instanceof ServerPlayer){
+                ISpellContainer container = ISpellContainer.get(stack);
+                return MethodResult.of(Arrays.stream(container.getAllSpells()).map(spellSlot -> {
+                    if(spellSlot != null){
+                        return spellSlot.getSpell().getSpellName();
+                    }
+                    return null;
+                }).filter(Objects::nonNull).toList());
+            }
+            return MethodResult.of(List.of());
         };
     }
 
