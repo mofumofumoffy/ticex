@@ -2,7 +2,6 @@ package moffy.ticex.client.modules.mekanism;
 
 import mekanism.client.model.BaseModelCache;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.modules.mekanism.MekaPlateMultilayerModel.ModuleOBJModelData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 
@@ -17,15 +16,15 @@ public class MekaPlateModelCache extends BaseModelCache {
             TicEX.getResource("models/entity/modifiable_mekasuit_exo.obj")
     );
     private final Set<Runnable> callbacks = new HashSet<>();
-    private final Set<ModuleOBJModelData> mekaSuitModules = new HashSet<>();
-    public final Set<ModuleOBJModelData> MEKASUIT_MODULES = Collections.unmodifiableSet(mekaSuitModules);
+    private final Set<MekaPlateModelProvider.ModuleOBJModelData> mekaSuitModules = new HashSet<>();
+    public final Set<MekaPlateModelProvider.ModuleOBJModelData> MEKASUIT_MODULES = Collections.unmodifiableSet(mekaSuitModules);
 
     protected MekaPlateModelCache() {
         super(TicEX.MODID);
     }
 
     public void registerMekaSuitModuleModel(ResourceLocation rl) {
-        ModuleOBJModelData data = register(rl, ModuleOBJModelData::new);
+        MekaPlateModelProvider.ModuleOBJModelData data = register(rl, MekaPlateModelProvider.ModuleOBJModelData::new);
         mekaSuitModules.add(data);
     }
 

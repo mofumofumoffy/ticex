@@ -5,11 +5,12 @@ import mekanism.common.registration.impl.TileEntityTypeDeferredRegister;
 import mekanism.common.registries.MekanismModules;
 import mekanism.generators.common.registries.GeneratorsModules;
 import moffy.addonapi.AddonModule;
+import moffy.overloaded_tinkering_lib.client.CustomTinkerRenders;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.mekanism.MekItemCapabilityProvider;
 import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
-import moffy.ticex.client.modules.mekanism.MekaPlateMultilayerModel;
+import moffy.ticex.client.modules.mekanism.MekaPlateModelProvider;
 import moffy.ticex.event.TicEXMekanismEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
@@ -114,30 +115,32 @@ public class TicEXMekanismModule implements AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
+        CustomTinkerRenders.EXTRA_ARMOR_MODELS.addModel(TicEXRegistry.MEKANIC_MODIFIER.getId(), MekaPlateModelProvider::new);
+
         MekaPlateModelCache.INSTANCE.registerMekaSuitModuleModel(
             TicEX.getResource("models/entity/modifiable_mekasuit_modules.obj")
         );
 
-        MekaPlateMultilayerModel.registerModule(
+        MekaPlateModelProvider.registerModule(
             "jetpack",
             MekanismModules.JETPACK_UNIT,
             EquipmentSlot.CHEST,
             entity -> true
         );
-        MekaPlateMultilayerModel.registerModule(
+        MekaPlateModelProvider.registerModule(
             "modulator",
             MekanismModules.GRAVITATIONAL_MODULATING_UNIT,
             EquipmentSlot.CHEST,
             entity -> true
         );
-        MekaPlateMultilayerModel.registerModule(
+        MekaPlateModelProvider.registerModule(
             "elytra",
             MekanismModules.ELYTRA_UNIT,
             EquipmentSlot.CHEST,
             LivingEntity::isFallFlying
         );
         if(ModList.get().isLoaded("mekanismgenerators")){
-            MekaPlateMultilayerModel.registerModule(
+            MekaPlateModelProvider.registerModule(
                     "solar_helmet",
                     GeneratorsModules.SOLAR_RECHARGING_UNIT,
                     EquipmentSlot.HEAD,

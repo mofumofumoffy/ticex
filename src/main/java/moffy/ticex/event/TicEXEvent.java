@@ -2,7 +2,6 @@ package moffy.ticex.event;
 
 import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.EmbossmentMaterialCapability;
-import moffy.ticex.client.modules.ticex.models.MaterialOverrideModel;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -147,10 +146,6 @@ public class TicEXEvent {
 
     public static void onRegisterCaps(RegisterCapabilitiesEvent event) {
         event.register(EmbossmentMaterialCapability.class);
-    }
-
-    public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
-        event.register("mat_override_obj", MaterialOverrideModel.LOADER);
     }
 
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {

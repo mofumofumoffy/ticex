@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
-  "loader": "ticex:mat_override_obj",
+  "loader": "overloaded_tinkering_lib:mat_override_obj",
   "model": "ticex:models/entity/modifiable_mekatool_right.obj",
   "flip_v": true,
   "material_overrides": [
