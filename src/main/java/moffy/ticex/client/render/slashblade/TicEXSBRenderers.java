@@ -4,15 +4,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
+import moffy.overloaded_tinkering_lib.Config;
+import moffy.overloaded_tinkering_lib.client.CustomTinkerRenders;
+import moffy.overloaded_tinkering_lib.client.provider.ShaderProvider;
+import moffy.overloaded_tinkering_lib.client.provider.context.ItemRenderContext;
+import moffy.overloaded_tinkering_lib.client.provider.context.RenderContext;
+import moffy.overloaded_tinkering_lib.client.provider.context.armor.RenderGenericContext;
+import moffy.overloaded_tinkering_lib.client.provider.renderer.IGenericRenderer;
 import moffy.ticex.TicEX;
-import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.render.custom.DecoratedRenderType;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
-import moffy.ticex.client.render.provider.context.RenderContext;
-import moffy.ticex.client.render.provider.context.tool.RenderGenericContext;
-import moffy.ticex.client.render.provider.renderer.IGenericRenderer;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.lib.context.ContextFrame;
 import moffy.ticex.lib.context.ContextFrameScope;
 import moffy.ticex.lib.context.TicEXContexts;
@@ -50,7 +50,7 @@ public class TicEXSBRenderers {
     public static void renderWrapped(IBladeRenderer renderer, ItemStack stack, WavefrontObject model, String target, ResourceLocation texture, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, Function<ResourceLocation, RenderType> renderTypeGetter, boolean enableEffect) {
         ItemRenderContext itemRenderContext = TicEXContexts.SB_RENDERING_CONTEXT.get();
 
-        if(itemRenderContext == null || !(stack.getItem() instanceof IModifiable)) {
+        if(!(stack.getItem() instanceof IModifiable)) {
             renderer.render(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn, renderTypeGetter, enableEffect);
             return;
         }
@@ -68,8 +68,8 @@ public class TicEXSBRenderers {
             SBToolRenderType.PartType partType = SBToolRenderType.PartType.byIndex(i);
             if (partType == null) continue;
 
-            ShaderProvider.Generic shaderProvider = TicEXRenders.GENERIC_SHADERS.getShaderProvider(material.getVariant());
-            boolean useShader = shaderProvider != null && TicEXConfig.USE_SHADER.get();
+            ShaderProvider.Generic shaderProvider = CustomTinkerRenders.GENERIC_SHADERS.getShaderProvider(material.getVariant());
+            boolean useShader = shaderProvider != null && Config.USE_SHADER.get();
 
             Mutable<Color> color = new MutableObject<>(null);
 

@@ -2,12 +2,17 @@ package moffy.ticex.mixin.slashblade;
 
 import mods.flammpfeil.slashblade.entity.EntityAbstractSummonedSword;
 import mods.flammpfeil.slashblade.util.AttackManager;
+import moffy.overloaded_tinkering_lib.common.hooks.CriticalModifierHook;
+import moffy.overloaded_tinkering_lib.common.hooks.DamageSourceModifierHook;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -77,6 +82,13 @@ public class AttackManagerMixin {
         }
 
         amount = (amount / (float) livingAttacker.getAttributeValue(Attributes.ATTACK_DAMAGE)) * amplifier;
+        if(livingAttacker instanceof Player player){
+            CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(livingAttacker, false, 1.0f);
+            CriticalHitEvent event = ForgeHooks.getCriticalHit(player, target, criticalContext.isCritical(), criticalContext.criticalModifier());
+            if(event != null){
+                amount += amount * (event.getDamageModifier() - 1.0f);
+            }
+        }
 
         if (forceHit) target.invulnerableTime = 0;
 
@@ -84,7 +96,7 @@ public class AttackManagerMixin {
             modifier.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifier, context, amount, 0, 0);
         }
 
-        boolean succeed = target.hurt(src, amount);
+        boolean succeed = target.hurt(DamageSourceModifierHook.modifyDamageSource(tool, src), amount);
 
         if (resetHit) target.invulnerableTime = 0;
 

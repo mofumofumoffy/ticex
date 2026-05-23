@@ -40,13 +40,13 @@ public class TicEXSpriteSourceProvider extends SpriteSourceProvider {
 
 
 
-        atlas(BLOCKS_ATLAS)
+        /*atlas(BLOCKS_ATLAS)
                 .addSource(new DirectoryLister("entity", "entity/"))
                 .addSource(new DirectoryLister("tinker_armor", "tinker_armor/"))
                 .addSource(new DirectoryLister("obj_tool", "obj_tool/"))
                 .addSource(new PalettedPermutations(
                         List.of(TrimModifierModel.TRIM_TEXTURES),
-                        trimPalette, materialMap));
+                        trimPalette, materialMap));*/
 
         atlas(ResourceLocation.parse("armor_trims"))
                 .addSource(new PalettedPermutations(

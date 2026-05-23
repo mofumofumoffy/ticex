@@ -9,9 +9,13 @@ package moffy.ticex.event;
  */
 
 import com.tacz.guns.api.event.common.EntityHurtByGunEvent;
+import com.tacz.guns.api.event.common.GunDamageSourcePart;
 import com.tacz.guns.api.event.common.GunMeleeEvent;
+import moffy.overloaded_tinkering_lib.common.hooks.CriticalModifierHook;
+import moffy.overloaded_tinkering_lib.common.hooks.DamageSourceModifierHook;
 import moffy.ticex.mixin.CriticalAccessor;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -45,14 +49,12 @@ public class TicEXTaczEvent {
                     .hand(InteractionHand.MAIN_HAND)
                     .target(target)
                     .build();
-            ((CriticalAccessor)context).setCriticalModifier(event.isHeadShot() ? event.getHeadshotMultiplier() : 0);
 
-            /* int lostStability = 10;
-            for(ModifierEntry modifier : shader.getModifierList()){
-                lostStability = modifier.getHook(ModifierHooks.TOOL_DAMAGE).onDamageTool(shader, modifier, lostStability, attacker);
-            }
+            CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(attacker, event.isHeadShot(), event.getHeadshotMultiplier());
+            ((CriticalAccessor)context).setCriticalModifier(criticalContext.isCritical() ? criticalContext.criticalModifier() : 0);
 
-            shader.setDamage(shader.getDamage() + lostStability); */
+            DamageSource originalDamageSource = event.getDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING);
+            event.setDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING, DamageSourceModifierHook.modifyDamageSource(tool, originalDamageSource));
 
             for(ModifierEntry modifier : tool.getModifierList()){
                 damage = modifier.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, modifier, context, initialDamage, damage);

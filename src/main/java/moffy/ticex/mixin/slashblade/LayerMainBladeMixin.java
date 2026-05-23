@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import jp.nyatla.nymmd.MmdMotionPlayerGL2;
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.client.renderer.layers.LayerMainBlade;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import moffy.overloaded_tinkering_lib.client.provider.context.ItemRenderContext;
 import moffy.ticex.lib.context.ContextFrame;
 import moffy.ticex.lib.context.TicEXContexts;
 import net.minecraft.client.renderer.MultiBufferSource;

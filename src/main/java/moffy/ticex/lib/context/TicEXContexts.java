@@ -1,7 +1,7 @@
 package moffy.ticex.lib.context;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import moffy.overloaded_tinkering_lib.client.provider.context.ItemRenderContext;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 
 import java.awt.*;

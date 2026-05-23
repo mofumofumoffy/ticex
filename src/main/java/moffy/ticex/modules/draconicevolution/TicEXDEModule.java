@@ -2,11 +2,11 @@ package moffy.ticex.modules.draconicevolution;
 
 import com.brandon3055.brandonscore.api.TechLevel;
 import moffy.addonapi.AddonModule;
+import moffy.overloaded_tinkering_lib.client.CustomTinkerRenders;
+import moffy.overloaded_tinkering_lib.client.lib.PartPredicate;
 import moffy.ticex.caps.draconicevolution.DEItemCapabilityProvider;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShader;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShaderProvider;
-import moffy.ticex.client.render.custom.PartPredicate;
-import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.modifier.ModifierEvolved;
@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class TicEXDEModule implements AddonModule {
-
     @Override
     public void init(FMLJavaModLoadingContext context) {
         ToolCapabilityProvider.register(DEItemCapabilityProvider::new);
@@ -76,18 +75,18 @@ public class TicEXDEModule implements AddonModule {
         );
 
         TicEXDEShader shader = Objects.requireNonNull(TicEXDEShaderProvider.getShader());
-        TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Modifier(ModifierIds.reinforced), new TicEXDEShaderProvider.Modifier());
+        CustomTinkerRenders.TOOL_SHADERS.addShader(new PartPredicate.Modifier(ModifierIds.reinforced), new TicEXDEShaderProvider.Modifier());
 
         for (int i = 0; i < materials.size(); i++) {
             MaterialId variantId = materials.get(i);
             TechLevel techLevel = TechLevel.VALUES[i];
 
-            TicEXRenders.TOOL_SHADERS.addShader(variantId, new TicEXDEShaderProvider.Material(
+           CustomTinkerRenders.TOOL_SHADERS.addShader(variantId, new TicEXDEShaderProvider.Material(
                     shader.createMaterialsRenderType(techLevel),
                     techLevel
             ));
-            TicEXRenders.ARMOR_SHADERS.addShader(variantId, new TicEXDEShaderProvider.Armor(techLevel));
-            TicEXRenders.GENERIC_SHADERS.addShader(new PartPredicate.Material(variantId), new TicEXDEShaderProvider.Generic(
+            CustomTinkerRenders.ARMOR_SHADERS.addShader(variantId, new TicEXDEShaderProvider.Armor(techLevel));
+            CustomTinkerRenders.GENERIC_SHADERS.addShader(new PartPredicate.Material(variantId), new TicEXDEShaderProvider.Generic(
                     shader.createMaterialsRenderType(techLevel),
                     techLevel
             ));

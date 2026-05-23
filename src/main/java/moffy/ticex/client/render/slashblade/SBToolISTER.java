@@ -2,7 +2,7 @@ package moffy.ticex.client.render.slashblade;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import mods.flammpfeil.slashblade.client.renderer.SlashBladeTEISR;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import moffy.overloaded_tinkering_lib.client.provider.context.ItemRenderContext;
 import moffy.ticex.lib.context.ContextFrame;
 import moffy.ticex.lib.context.TicEXContexts;
 import net.minecraft.client.model.geom.EntityModelSet;

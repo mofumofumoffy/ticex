@@ -2,16 +2,16 @@ package moffy.ticex.client.modules.draconicevolution;
 
 import com.brandon3055.brandonscore.api.TechLevel;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
-import moffy.ticex.client.render.provider.context.RenderContext;
-import moffy.ticex.client.render.provider.context.armor.RenderArmorPartContext;
-import moffy.ticex.client.render.provider.context.tool.RenderGenericContext;
-import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
-import moffy.ticex.client.render.provider.renderer.IArmorPartContextRenderer;
-import moffy.ticex.client.render.provider.renderer.IGenericRenderer;
-import moffy.ticex.client.render.provider.renderer.IQuadContextRenderer;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.ticex.TicEXToolRenders;
+import moffy.overloaded_tinkering_lib.client.provider.ShaderProvider;
+import moffy.overloaded_tinkering_lib.client.provider.context.ItemRenderContext;
+import moffy.overloaded_tinkering_lib.client.provider.context.RenderContext;
+import moffy.overloaded_tinkering_lib.client.provider.context.RenderQuadContext;
+import moffy.overloaded_tinkering_lib.client.provider.context.armor.RenderArmorPartContext;
+import moffy.overloaded_tinkering_lib.client.provider.context.armor.RenderGenericContext;
+import moffy.overloaded_tinkering_lib.client.provider.renderer.IArmorContextRenderer;
+import moffy.overloaded_tinkering_lib.client.provider.renderer.IGenericRenderer;
+import moffy.overloaded_tinkering_lib.client.provider.renderer.IQuadContextRenderer;
+import moffy.overloaded_tinkering_lib.client.render.ToolRenders;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -86,7 +86,7 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void startRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
+        public void startRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
             vertexConsumer = context.bufferSource().getBuffer(renderType);
 
             // setup uniform
@@ -94,7 +94,7 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void endRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
+        public void endRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
             vertexConsumer = null;
         }
 
@@ -159,7 +159,7 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void startRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
+        public void startRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
             if (techLevel == null) {
                 return;
             }
@@ -175,7 +175,7 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void endRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
+        public void endRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
             vertexConsumer = null;
         }
 
@@ -195,7 +195,7 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void renderOverlay(RenderArmorPartContext quadContext, IArmorPartContextRenderer renderer) {
+        public void renderOverlay(RenderArmorPartContext quadContext, IArmorContextRenderer renderer) {
             VertexConsumer buffer = quadContext.material().buffer(
                     quadContext.renderContext().bufferSource(),
                     shader::createArmorRenderType
@@ -210,7 +210,7 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void renderUnderlay(RenderArmorPartContext quadContext, IArmorPartContextRenderer renderer) {
+        public void renderUnderlay(RenderArmorPartContext quadContext, IArmorContextRenderer renderer) {
         }
 
         @Override

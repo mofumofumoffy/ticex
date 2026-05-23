@@ -7,10 +7,6 @@
     "CriticalAccessor",
     "MaterialCastingLookupMixin",
     "MeleeAttributeModuleMixin",
-    "ObjModel$ModelGroupAccessor",
-    "ObjModel$ModelMeshAccessor",
-    "ObjModel$ModelObjectAccessor",
-    "ObjModelAccessor",
     "RomanNumeralHelperMixin",
     "config.AbstractCastingRecipeAccessor",
     "config.AbstractCastingRecipeMixin",
@@ -21,12 +17,6 @@
     "config.ToolDefinitionLoaderMixin"
   ],
   "client": [
-    "HumanoidArmorLayerMixin",
-    "ItemRendererMixin",
-    "MaterialArmorTextureSupplierMixin",
-    "NormalModifierModelMixin",
-    "ToolModelMixin",
-    "TrimArmorTextureSupplierMixin"
   ],
   "server": [],
   "injectors": {
