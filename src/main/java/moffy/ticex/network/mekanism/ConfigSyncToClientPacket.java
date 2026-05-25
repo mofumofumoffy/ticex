@@ -106,14 +106,16 @@ public class ConfigSyncToClientPacket extends TicEXPacket.ClientBoundPacket {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             Player player = Minecraft.getInstance().player;
-            ItemStack stack = player.getItemBySlot(slot);
-            if (!stack.isEmpty() && stack.getItem() instanceof IModuleContainerItem) {
-                mekanism.common.content.gear.Module<?> module = ModuleHelper.get().load(stack, moduleType);
-                if (module != null) {
-                    List<ModuleConfigItem<?>> configItems = module.getConfigItems();
-                    if (configIndex < configItems.size()) {
-                        setValue(configItems.get(configIndex), dataType, value);
-                        SoundHandler.playSound(MekanismSounds.HYDRAULIC);
+            if(player != null){
+                ItemStack stack = player.getItemBySlot(slot);
+                if (!stack.isEmpty() && stack.getItem() instanceof IModuleContainerItem) {
+                    mekanism.common.content.gear.Module<?> module = ModuleHelper.get().load(stack, moduleType);
+                    if (module != null) {
+                        List<ModuleConfigItem<?>> configItems = module.getConfigItems();
+                        if (configIndex < configItems.size()) {
+                            setValue(configItems.get(configIndex), dataType, value);
+                            SoundHandler.playSound(MekanismSounds.HYDRAULIC);
+                        }
                     }
                 }
             }
