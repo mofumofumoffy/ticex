@@ -11,10 +11,7 @@ import mekanism.api.energy.IStrictEnergyHandler;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleHelper;
 import mekanism.api.gear.ModuleData;
-import mekanism.api.gear.config.ModuleBooleanData;
-import mekanism.api.gear.config.ModuleColorData;
-import mekanism.api.gear.config.ModuleConfigData;
-import mekanism.api.gear.config.ModuleEnumData;
+import mekanism.api.gear.config.*;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.capabilities.Capabilities;
 import mekanism.common.content.gear.ModuleConfigItem;
@@ -26,6 +23,8 @@ import moffy.ticex.network.mekanism.ConfigSyncToClientPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.LogicalSidedProvider;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.PacketDistributor;
 
 public class MekanicProperty {
@@ -75,7 +74,7 @@ public class MekanicProperty {
         };
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static ILuaFunction setModuleData(Player user, ItemStack stack) {
         return args -> {
             String moduleName = args.getString(0);
@@ -96,28 +95,52 @@ public class MekanicProperty {
                                 newValue instanceof Boolean booleanValue &&
                                 configItem.getData() instanceof ModuleBooleanData booleanData
                             ) {
-                                booleanData.set(booleanValue);
-                                sendUpdatePacket(user, stack, module.getData(), i, booleanData, booleanValue);
+                                int finalI = i;
+                                LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
+                                    booleanData.set(booleanValue);
+                                    module.save(null);
+                                    sendUpdatePacket(user, stack, module.getData(), finalI, booleanData, booleanValue);
+                                });
                                 succeed = true;
                                 break;
                             } else if (
                                 newValue instanceof Integer colorValue &&
                                 configItem.getData() instanceof ModuleColorData colorData
                             ) {
-                                colorData.set(colorValue);
-                                sendUpdatePacket(user, stack, module.getData(), i, colorData, colorValue);
+                                int finalI1 = i;
+                                LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
+                                    colorData.set(colorValue);
+                                    module.save(null);
+                                    sendUpdatePacket(user, stack, module.getData(), finalI1, colorData, colorValue);
+                                });
                                 succeed = true;
                                 break;
                             } else if (
-                                newValue instanceof Enum enumValue &&
-                                configItem.getData() instanceof ModuleEnumData enumData
+                                newValue instanceof Integer integerValue &&
+                                configItem.getData() instanceof ModuleIntegerData integerData
+                            ) {
+                                int finalI2 = i;
+                                LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
+                                    integerData.set(integerValue);
+                                    module.save(null);
+                                    sendUpdatePacket(user, stack, module.getData(), finalI2, integerData, integerValue);
+                                });
+                                succeed = true;
+                                break;
+                            }else if (
+                                    newValue instanceof Enum enumValue &&
+                                            configItem.getData() instanceof ModuleEnumData enumData
                             ) {
                                 if (enumValue.ordinal() < enumData.getEnums().size()) {
-                                    enumData.set(enumValue);
-                                    sendUpdatePacket(user, stack, module.getData(), i, enumData, enumValue);
+                                    int finalI3 = i;
+                                    LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
+                                        enumData.set(enumValue);
+                                        module.save(null);
+                                        sendUpdatePacket(user, stack, module.getData(), finalI3, enumData, enumValue);
+                                    });
                                     succeed = true;
-                                    break;
                                 }
+                                break;
                             }
                         }
                     }

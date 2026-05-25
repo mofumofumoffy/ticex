@@ -11,6 +11,8 @@ import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.LogicalSidedProvider;
+import net.minecraftforge.fml.LogicalSide;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,21 +82,27 @@ public class EvolvedProperty {
                 switch (Objects.requireNonNull(provider.getProperty(propertyName)).getType()){
                     case BOOLEAN:
                         boolean newBooleanValue = args.getBoolean(1);
-                        BooleanProperty booleanProperty = provider.getBool(propertyName);
-                        booleanProperty.setValue(newBooleanValue);
-                        booleanProperty.onValueChanged(stack);
+                        LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
+                            BooleanProperty booleanProperty = provider.getBool(propertyName);
+                            booleanProperty.setValue(newBooleanValue);
+                            booleanProperty.onValueChanged(stack);
+                        });
                         return MethodResult.of(true);
                     case INTEGER:
                         int newIntValue = args.getInt(1);
-                        IntegerProperty integerProperty = provider.getInt(propertyName);
-                        integerProperty.setValue(newIntValue);
-                        integerProperty.onValueChanged(stack);
+                        LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
+                            IntegerProperty integerProperty = provider.getInt(propertyName);
+                            integerProperty.setValue(newIntValue);
+                            integerProperty.onValueChanged(stack);
+                        });
                         return MethodResult.of(true);
                     case DECIMAL:
                         double newDoubleValue = args.getDouble(1);
-                        DecimalProperty decimalProperty = provider.getDecimal(propertyName);
-                        decimalProperty.setValue(newDoubleValue);
-                        decimalProperty.onValueChanged(stack);
+                        LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
+                            DecimalProperty decimalProperty = provider.getDecimal(propertyName);
+                            decimalProperty.setValue(newDoubleValue);
+                            decimalProperty.onValueChanged(stack);
+                        });
                         return MethodResult.of(true);
                     case ENUM:
                         break; //Unused in equipment
