@@ -170,7 +170,7 @@ dependencies {
 
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
-    implementation fg.deobf("maven.modrinth:1keAhoAI:2.0.0")
+    implementation fg.deobf("blank:addonapi:mc1.20.1-2.1.0")
     implementation fg.deobf("blank:overloaded_tinkering_lib:mc1.20.1-1.0-all")
 
     implementation fg.deobf("curse.maven:mantle-74924:7414488")
