@@ -13,7 +13,7 @@ public interface DamageSourceModifierHook {
     class DefaultClass implements DamageSourceModifierHook {
         @Override
         public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, DamageSource currentSource, DamageSource original) {
-            return original;
+            return currentSource;
         }
     }
 

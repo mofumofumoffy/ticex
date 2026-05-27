@@ -1,5 +1,6 @@
 package moffy.ticex.lib.hook;
 
+import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,10 +14,10 @@ import java.util.Collection;
 
 public interface CriticalModifierHook {
     default boolean isCritical(IToolStackView tool, ModifierEntry entry, boolean isCritical, boolean original){
-        return original;
+        return isCritical;
     }
     default float setCriticalRate(IToolStackView tool, ModifierEntry entry, float currentRate, float originalRate){
-        return originalRate;
+        return currentRate;
     }
 
     static CriticalContext modifyCritical(LivingEntity entity, boolean isCritical, float criticalModifier){

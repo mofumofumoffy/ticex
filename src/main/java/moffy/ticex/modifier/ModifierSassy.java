@@ -30,4 +30,9 @@ public class ModifierSassy extends NoLevelsModifier implements CriticalModifierH
     public boolean isCritical(IToolStackView tool, ModifierEntry entry, boolean isCritical, boolean original) {
         return true;
     }
+
+    @Override
+    public float setCriticalRate(IToolStackView tool, ModifierEntry entry, float currentRate, float originalRate) {
+        return 1.5f;
+    }
 }
