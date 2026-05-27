@@ -9,8 +9,12 @@ package moffy.ticex.event;
  */
 
 import com.tacz.guns.api.event.common.EntityHurtByGunEvent;
+import com.tacz.guns.api.event.common.GunDamageSourcePart;
 import com.tacz.guns.api.event.common.GunMeleeEvent;
+import moffy.ticex.lib.hook.CriticalModifierHook;
+import moffy.ticex.lib.hook.DamageSourceModifierHook;
 import moffy.ticex.mixin.CriticalAccessor;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -45,20 +49,17 @@ public class TicEXTaczEvent {
                     .hand(InteractionHand.MAIN_HAND)
                     .target(target)
                     .build();
-            ((CriticalAccessor)context).setCriticalModifier(event.isHeadShot() ? event.getHeadshotMultiplier() : 0);
 
-            /* int lostStability = 10;
-            for(ModifierEntry modifier : shader.getModifierList()){
-                lostStability = modifier.getHook(ModifierHooks.TOOL_DAMAGE).onDamageTool(shader, modifier, lostStability, attacker);
-            }
-
-            shader.setDamage(shader.getDamage() + lostStability); */
+            CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(attacker, event.isHeadShot(), event.getHeadshotMultiplier() + 1.0f);
+            ((CriticalAccessor)context).setCriticalModifier(criticalContext.isCritical() ? criticalContext.criticalModifier() - 1.0f : 0);
 
             for(ModifierEntry modifier : tool.getModifierList()){
                 damage = modifier.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, modifier, context, initialDamage, damage);
             }
 
             event.setBaseAmount(damage);
+
+            event.setDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING, DamageSourceModifierHook.modifyDamageSource(tool, event.getDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING)));
 
             for(ModifierEntry modifier : tool.getModifierList()){
                 modifier.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifier, context, event.getBaseAmount(), 0, 0);

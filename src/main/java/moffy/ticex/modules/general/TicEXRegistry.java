@@ -8,9 +8,7 @@ import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.entity.curios.ResonanceToolProjectile;
 import moffy.ticex.entity.mekanism.MekanicProjectile;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
-import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.lib.hook.EnergyModifierHook;
-import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.*;
 import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
 import net.minecraft.core.registries.Registries;
@@ -167,10 +165,6 @@ public class TicEXRegistry {
 
     public static RegistryObject<MenuType<ToolContainerMenu>> UNSYNCED_TOOL_CONTAINER = null;
     public static RegistryObject<MenuType<FluidTransmuterContainerMenu>> FLUID_TRANSMUTER_MENU = null;
-
-    public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
-    public static ModuleHook<ProvidePropertyModifierHook> PROPERTY_PROVIDER_HOOK = null;
-    public static ModuleHook<EnergyModifierHook> ENERGY_HOOK = null;
 
     public static RegistryObject<Item> EXHAUSTED_GLOVE = null;
     public static RegistryObject<Item> ETHERIC_INGOT = null;

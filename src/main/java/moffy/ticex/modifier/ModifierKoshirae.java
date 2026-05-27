@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,7 +17,7 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK);
+        hookBuilder.addHook(this, TicEXModifierHooks.EMBOSSMENT);
     }
 
     @Override

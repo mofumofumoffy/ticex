@@ -5,6 +5,7 @@ import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.ILuaFunction;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -67,7 +68,7 @@ public class TicEXCCUtils {
             if (stack.getItem() instanceof IModifiable) {
                 for (ModifierEntry entry : ToolStack.from(stack).getModifierList()) {
                     properties.putAll(
-                        entry.getHook(TicEXRegistry.PROPERTY_PROVIDER_HOOK).getPropertyProvider().apply(player, stack)
+                        entry.getHook(TicEXModifierHooks.PROPERTY_PROVIDER).getPropertyProvider().apply(player, stack)
                     );
                 }
             }
@@ -86,7 +87,7 @@ public class TicEXCCUtils {
                     for (ModifierEntry entry : ToolStack.from(curioStack).getModifierList()) {
                         properties.putAll(
                             entry
-                                .getHook(TicEXRegistry.PROPERTY_PROVIDER_HOOK)
+                                .getHook(TicEXModifierHooks.PROPERTY_PROVIDER)
                                 .getPropertyProvider()
                                 .apply(player, curioStack)
                         );

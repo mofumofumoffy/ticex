@@ -20,6 +20,7 @@ import com.mojang.datafixers.util.Pair;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modifier.propeties.EvolvedProperty;
@@ -115,8 +116,8 @@ public class ModifierEvolved
             ModifierHooks.REQUIREMENTS,
             ModifierHooks.VALIDATE,
             ModifierHooks.INVENTORY_TICK,
-            TicEXRegistry.ENERGY_HOOK,
-            TicEXRegistry.PROPERTY_PROVIDER_HOOK
+            TicEXModifierHooks.ENERGY,
+            TicEXModifierHooks.PROPERTY_PROVIDER
         );
     }
 

@@ -3,6 +3,7 @@ package moffy.ticex.modifier;
 import java.util.Map;
 import java.util.Map.Entry;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXSBUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.network.chat.Component;
@@ -19,7 +20,7 @@ public class ModifierKonpaku extends NoLevelsModifier implements EmbossmentModif
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK);
+        hookBuilder.addHook(this, TicEXModifierHooks.EMBOSSMENT);
     }
 
     @Override

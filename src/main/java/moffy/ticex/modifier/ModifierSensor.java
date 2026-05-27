@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -22,7 +23,7 @@ public class ModifierSensor extends NoLevelsModifier implements EmbossmentModifi
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK);
+        hookBuilder.addHook(this, TicEXModifierHooks.EMBOSSMENT);
     }
 
     @Override

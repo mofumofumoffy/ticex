@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.DeflectionProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.Registries;
@@ -44,7 +45,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
     @Override
     protected void registerHooks(Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE, ModifierHooks.PROJECTILE_HIT, TicEXRegistry.PROPERTY_PROVIDER_HOOK);
+        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE, ModifierHooks.PROJECTILE_HIT, TicEXModifierHooks.PROPERTY_PROVIDER);
     }
 
     @Override

@@ -12,6 +12,7 @@
     "ObjModel$ModelObjectAccessor",
     "ObjModelAccessor",
     "RomanNumeralHelperMixin",
+    "ToolAttackUtilMixin",
     "config.AbstractCastingRecipeAccessor",
     "config.AbstractCastingRecipeMixin",
     "config.AbstractModifierRecipeAccessor",

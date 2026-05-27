@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXPsiUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modifier.propeties.PsionizingRadiationProperty;
@@ -45,7 +46,7 @@ public class ModifierPsionizingRadiation
             ModifierHooks.MELEE_HIT,
             ModifierHooks.BLOCK_BREAK,
             ModifierHooks.VALIDATE,
-            TicEXRegistry.PROPERTY_PROVIDER_HOOK
+            TicEXModifierHooks.PROPERTY_PROVIDER
         );
     }
 

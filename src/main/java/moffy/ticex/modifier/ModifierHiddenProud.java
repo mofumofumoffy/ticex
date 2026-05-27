@@ -4,6 +4,7 @@ import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.init.SBItems;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXSBUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.Registries;
@@ -30,7 +31,7 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK);
+        hookBuilder.addHook(this, TicEXModifierHooks.EMBOSSMENT);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
                 }
 
                 if (s.getRefine() < refineLimit) {
-                    s.setRefine(s.getRefine() + input.getCount());
+                    s.setRefine(Math.min(refineLimit, s.getRefine() + input.getCount()));
                     if (s.getRefine() < 200) s.setMaxDamage(s.getMaxDamage() + 1);
                 }
 

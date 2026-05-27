@@ -44,6 +44,7 @@ import mekanism.common.util.StorageUtils;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.lib.hook.EnergyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
@@ -141,7 +142,7 @@ public class ModifierMekanic extends NoLevelsModifier
     protected void registerHooks(Builder hookBuilder) {
         hookBuilder.addHook(
                 this,
-                TicEXRegistry.PROPERTY_PROVIDER_HOOK,
+                TicEXModifierHooks.PROPERTY_PROVIDER,
                 ModifierHooks.TOOL_USING,
                 ModifierHooks.TOOL_DAMAGE,
                 ModifierHooks.TOOL_ACTION,
@@ -156,8 +157,8 @@ public class ModifierMekanic extends NoLevelsModifier
                 ModifierHooks.VALIDATE,
                 ModifierHooks.REQUIREMENTS,
                 ModifierHooks.BLOCK_INTERACT,
-                TicEXRegistry.ENERGY_HOOK,
-                TicEXRegistry.EMBOSSMENT_HOOK
+                TicEXModifierHooks.ENERGY,
+                TicEXModifierHooks.EMBOSSMENT
         );
     }
 
