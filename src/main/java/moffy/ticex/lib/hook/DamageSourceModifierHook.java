@@ -1,5 +1,6 @@
 package moffy.ticex.lib.hook;
 
+import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.damagesource.DamageSource;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -33,6 +34,7 @@ public interface DamageSourceModifierHook {
         for(ModifierEntry entry : tool.getModifierList()){
             currentDamageSource = entry.getHook(TicEXModifierHooks.DAMAGE_SOURCE).modifyDamageSource(tool, entry, currentDamageSource, original);
         }
+        TicEX.LOGGER.info(currentDamageSource.type().toString());
         return currentDamageSource;
     }
 }

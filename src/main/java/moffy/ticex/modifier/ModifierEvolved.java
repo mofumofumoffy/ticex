@@ -18,6 +18,7 @@ import com.brandon3055.draconicevolution.client.keybinding.KeyBindings;
 import com.brandon3055.draconicevolution.init.EquipCfg;
 import com.mojang.datafixers.util.Pair;
 import moffy.ticex.TicEX;
+import moffy.ticex.lib.hook.DamageSourceModifierHook;
 import moffy.ticex.lib.hook.EnergyModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.hook.TicEXModifierHooks;
@@ -28,6 +29,7 @@ import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -37,6 +39,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,12 +55,14 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.ToolDamageModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.build.VolatileDataModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeHitModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.RequirementsModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
@@ -69,7 +74,9 @@ import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.context.ToolHarvestContext;
 import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.helper.ToolHarvestLogic;
+import slimeknights.tconstruct.library.tools.nbt.IToolContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
+import slimeknights.tconstruct.library.tools.nbt.ToolDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.tools.TinkerModifiers;
@@ -92,6 +99,7 @@ public class ModifierEvolved
         RequirementsModifierHook,
         ValidateModifierHook,
         EnergyModifierHook,
+        DamageSourceModifierHook,
         InventoryTickModifierHook,
         ProvidePropertyModifierHook
  {
@@ -116,6 +124,7 @@ public class ModifierEvolved
             ModifierHooks.REQUIREMENTS,
             ModifierHooks.VALIDATE,
             ModifierHooks.INVENTORY_TICK,
+            TicEXModifierHooks.DAMAGE_SOURCE,
             TicEXModifierHooks.ENERGY,
             TicEXModifierHooks.PROPERTY_PROVIDER
         );
@@ -173,7 +182,7 @@ public class ModifierEvolved
         //components.add(Component.translatable("[Modular Item]").withStyle(ChatFormatting.BLUE));
     }
 
-    @Override
+     @Override
     public void afterMeleeHit(
         IToolStackView tool,
         ModifierEntry modifier,
@@ -347,6 +356,8 @@ public class ModifierEvolved
                     .registryAccess()
                     .registryOrThrow(Registries.DAMAGE_TYPE)
                     .getHolderOrThrow(TicEXDEUtils.getDamageTag(ToolStack.from(stack)))
+                ,
+                target, player, target.position()
             ),
             dealDamage
         );
@@ -725,6 +736,19 @@ public class ModifierEvolved
          } else {
              return baseSpeed;
          }
+     }
+
+     @Override
+     public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, DamageSource currentSource, DamageSource original) {
+        Entity entity = currentSource.getDirectEntity();
+        if(entity != null){
+            Level level = entity.level();
+            Registry<DamageType> damageTypeRegistry = level.registryAccess()
+                    .registryOrThrow(Registries.DAMAGE_TYPE);
+            return new DamageSource(damageTypeRegistry.getHolderOrThrow(TicEXDEUtils.getDamageTag(tool)), currentSource.getDirectEntity(), currentSource.getEntity(), currentSource.getSourcePosition());
+        }
+
+        return currentSource;
      }
 
      @Override
