@@ -180,8 +180,8 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void preRenderModifier(ToolStack toolStack, ModifierId materialId) {
-            techLevel = TicEXDEUtils.getTechLevel(toolStack);
+        public void preRenderModifier(ToolStack toolStack, ModifierId modifierId) {
+            techLevel = TicEXDEUtils.getTechLevel(toolStack, modifierId);
         }
 
     }

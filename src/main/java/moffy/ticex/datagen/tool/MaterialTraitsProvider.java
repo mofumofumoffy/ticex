@@ -37,8 +37,8 @@ public class MaterialTraitsProvider extends AbstractMaterialTraitDataProvider {
         addTraits(
                 TicEXMaterials.WYVERN,
                 MELEE_HARVEST,
-                TicEXRegistry.SOUL_RENDING_MODIFIER,
-                TinkerModifiers.lacerating
+                new ModifierEntry(TicEXRegistry.SOUL_RENDING_MODIFIER, 1),
+                new ModifierEntry(TinkerModifiers.lacerating, 1)
         );
         addTraits(
                 TicEXMaterials.DRACONIC,

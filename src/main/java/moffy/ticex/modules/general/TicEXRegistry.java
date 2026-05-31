@@ -266,6 +266,7 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> MEKANIC_MODIFIER = null;
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
     public static StaticModifier<Modifier> SASSY_MODIFIER = null;
+    public static StaticModifier<Modifier> DRAGON_FORCE_MODIFIER = null;
     public static StaticModifier<Modifier> EVOLVED_MODIFIER = null;
     public static DynamicModifier INJECT_MODIFIER = null;
     public static StaticModifier<Modifier> SOUL_RENDING_MODIFIER = null;

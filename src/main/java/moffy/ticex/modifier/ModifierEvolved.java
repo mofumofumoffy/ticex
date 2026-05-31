@@ -355,7 +355,7 @@ public class ModifierEvolved
                     .level()
                     .registryAccess()
                     .registryOrThrow(Registries.DAMAGE_TYPE)
-                    .getHolderOrThrow(TicEXDEUtils.getDamageTag(ToolStack.from(stack)))
+                    .getHolderOrThrow(TicEXDEUtils.getDamageTag(ToolStack.from(stack), getId()))
                 ,
                 target, player, target.position()
             ),
@@ -745,7 +745,7 @@ public class ModifierEvolved
             Level level = entity.level();
             Registry<DamageType> damageTypeRegistry = level.registryAccess()
                     .registryOrThrow(Registries.DAMAGE_TYPE);
-            return new DamageSource(damageTypeRegistry.getHolderOrThrow(TicEXDEUtils.getDamageTag(tool)), currentSource.getDirectEntity(), currentSource.getEntity(), currentSource.getSourcePosition());
+            return new DamageSource(damageTypeRegistry.getHolderOrThrow(TicEXDEUtils.getDamageTag(tool, getId())), currentSource.getDirectEntity(), currentSource.getEntity(), currentSource.getSourcePosition());
         }
 
         return currentSource;
