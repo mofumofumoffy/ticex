@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import codechicken.lib.inventory.InventoryUtils;
 import codechicken.lib.math.MathHelper;
+import com.brandon3055.brandonscore.api.TechLevel;
 import com.brandon3055.brandonscore.api.power.IOPStorage;
 import com.brandon3055.brandonscore.inventory.InventoryDynamic;
 import com.brandon3055.brandonscore.utils.EnergyUtils;
@@ -34,6 +35,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -82,10 +84,7 @@ import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.BiFunction;
 
 public class ModifierEvolved
@@ -740,13 +739,25 @@ public class ModifierEvolved
 
      @Override
      public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, DamageSource currentSource, DamageSource original) {
-        Entity entity = currentSource.getDirectEntity();
-        if(entity != null){
-            Level level = entity.level();
-            Registry<DamageType> damageTypeRegistry = level.registryAccess()
-                    .registryOrThrow(Registries.DAMAGE_TYPE);
-            return new DamageSource(damageTypeRegistry.getHolderOrThrow(TicEXDEUtils.getDamageTag(tool, getId())), currentSource.getDirectEntity(), currentSource.getEntity(), currentSource.getSourcePosition());
-        }
+         Entity entity = currentSource.getDirectEntity();
+
+         if(entity != null){
+             Level level = entity.level();
+             Registry<DamageType> damageTypeRegistry = level.registryAccess()
+                     .registryOrThrow(Registries.DAMAGE_TYPE);
+             Optional<ResourceKey<DamageType>> keyOptional = damageTypeRegistry.getResourceKey(currentSource.type());
+             if(keyOptional.isPresent()){
+                 TechLevel currentLevel = TicEXDEUtils.getTechLevel(keyOptional.get());
+                 TechLevel evolvedLevel = TicEXDEUtils.getTechLevel(tool, getId());
+                 if(evolvedLevel != null){
+                     if(currentLevel == null) {
+                         return new DamageSource(damageTypeRegistry.getHolderOrThrow(TicEXDEUtils.getDamageTag(evolvedLevel.index + 1)), currentSource.getDirectEntity(), currentSource.getEntity(), currentSource.getSourcePosition());
+                     }else if(currentLevel.index < evolvedLevel.index){
+                         return new DamageSource(damageTypeRegistry.getHolderOrThrow(TicEXDEUtils.getDamageTag(evolvedLevel.index + 1)), currentSource.getDirectEntity(), currentSource.getEntity(), currentSource.getSourcePosition());
+                     }
+                 }
+             }
+         }
 
         return currentSource;
      }

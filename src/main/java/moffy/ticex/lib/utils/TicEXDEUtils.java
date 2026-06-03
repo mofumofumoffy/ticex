@@ -63,6 +63,10 @@ public class TicEXDEUtils {
 
     public static ResourceKey<DamageType> getDamageTag(IToolStackView tool, ModifierId modifierId) {
         int level = tool.getModifierLevel(modifierId);
+        return getDamageTag(level);
+    }
+
+    public static ResourceKey<DamageType> getDamageTag(int level) {
         return switch (level) {
             case 2 -> TOOL_WYVERN;
             case 3 -> TOOL_DRACONIC;

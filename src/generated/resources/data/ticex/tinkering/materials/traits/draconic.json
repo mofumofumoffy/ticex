@@ -12,6 +12,10 @@
         "name": "ticex:soul_rending"
       },
       {
+        "level": 3,
+        "name": "ticex:dragon_force"
+      },
+      {
         "level": 2,
         "name": "tconstruct:lacerating"
       }
