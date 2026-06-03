@@ -94,9 +94,9 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
 
         if (TicEXRegistry.ETERNITY_MODIFIER != null) buildModifier(TicEXRegistry.ETERNITY_MODIFIER)
                 .addModules(
-                        ModifierSlotModule.slot(SlotType.ABILITY).eachLevel(2),
-                        ModifierSlotModule.slot(SlotType.UPGRADE).eachLevel(2),
-                        ModifierSlotModule.slot(SlotType.DEFENSE).eachLevel(2)
+                        ModifierSlotModule.slot(SlotType.ABILITY).eachLevel(1),
+                        ModifierSlotModule.slot(SlotType.UPGRADE).eachLevel(1),
+                        ModifierSlotModule.slot(SlotType.DEFENSE).eachLevel(1)
                 )
                 .levelDisplay(ModifierLevelDisplay.DEFAULT);
 

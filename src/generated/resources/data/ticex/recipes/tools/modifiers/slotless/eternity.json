@@ -16,7 +16,9 @@
       "item": "avaritia:upgrade_smithing_template"
     }
   ],
-  "level": 1,
+  "level": {
+    "max": 3
+  },
   "result": "ticex:eternity",
   "tools": {
     "tag": "tconstruct:modifiable/durability"
