@@ -4,10 +4,7 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.event.TicEXPEEvent;
 import moffy.ticex.item.modifiable.ModifiableGemArmor;
 import moffy.ticex.lib.CatalystMaterialStatsType;
-import moffy.ticex.modifier.ModifierAbyssal;
-import moffy.ticex.modifier.ModifierGravitiy;
-import moffy.ticex.modifier.ModifierHurricane;
-import moffy.ticex.modifier.ModifierInfernal;
+import moffy.ticex.modifier.*;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -41,6 +38,7 @@ public class TicEXPEModule implements AddonModule {
                         )
         );
 
+        TicEXRegistry.CLUSTER_MODIFIER = TicEXRegistry.MODIFIERS.register("cluster", ModifierCluster::new);
         TicEXRegistry.ABYSSAL_MODIFIER = TicEXRegistry.MODIFIERS.register("abyssal", ModifierAbyssal::new);
         TicEXRegistry.INFERNAL_MODIFIER = TicEXRegistry.MODIFIERS.register("infernal", ModifierInfernal::new);
         TicEXRegistry.GRAVITY_MODIFIER = TicEXRegistry.MODIFIERS.register("gravity", ModifierGravitiy::new);
