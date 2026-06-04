@@ -25,7 +25,6 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
         ItemStack input = context.getInputStack(inputIndex);
         ItemStack toolStack = context.getToolStack();
 
-        ToolStack tool = ToolStack.from(toolStack);
         EnumSet<SwordType> swordTypes = SwordType.from(toolStack);
         if (swordTypes.contains(SwordType.BEWITCHED)) {
             toolStack
@@ -42,6 +41,13 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
                     }
 
                     resultState.deserializeNBT(bladeStateTag);
+                    int currentProudSoul = resultState.getProudSoulCount();
+                    int currentKillCount = resultState.getKillCount();
+                    int currentRefineCount = resultState.getRefine();
+
+                    bladeStateTag.putInt("proudSoul", Math.max(bladeStateTag.getInt("proudSoul"), currentProudSoul));
+                    bladeStateTag.putInt("killCount", Math.max(bladeStateTag.getInt("killCount"), currentKillCount));
+                    bladeStateTag.putInt("RepairCounter", Math.max(bladeStateTag.getInt("RepairCounter"), currentRefineCount));
                     toolStack.getOrCreateTag().put("bladeState", bladeStateTag);
                 });
             return true;
