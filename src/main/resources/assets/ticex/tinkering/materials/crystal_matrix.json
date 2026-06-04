@@ -14,7 +14,8 @@
       "type": "tconstruct:grey_to_sprite",
       "palette": [
         {
-          "color": "FF000000",
+          "color": "FF7f7f7f",
+          "path": "ticex:material/crystal_matrix_outline_dark",
           "grey": 0
         },
         {
@@ -26,19 +27,19 @@
           "path": "ticex:material/crystal_matrix_outline"
         },
         {
-          "color": "FF2D96B9",
+          "color": "FF67bbb6",
           "grey": 140
         },
         {
-          "color": "FF35A6D6",
+          "color": "FF80d8d3",
           "grey": 178
         },
         {
-          "color": "FF47BDEF",
+          "color": "FF9af3ee",
           "grey": 216
         },
         {
-          "color": "FFAADCFF",
+          "color": "FFd3ffff",
           "grey": 255
         }
       ]

@@ -1,5 +1,5 @@
 {
-  "color": "ffffff55",
+  "color": "fff9a31b",
   "fallbacks": ["metal"],
   "generator": {
     "supported_stats": [
@@ -11,31 +11,31 @@
       "type": "tconstruct:grey_to_sprite",
       "palette": [
         {
-          "color": "FF000000",
+          "color": "FF3b1725",
           "grey": 0
         },
         {
-          "color": "ff3f3f16",
+          "color": "ff73172d",
           "grey": 63
         },
         {
-          "color": "ff686826",
+          "color": "ffb4202a",
           "grey": 102
         },
         {
-          "color": "ffa2a238",
+          "color": "ffdf3e23",
           "grey": 140
         },
         {
-          "color": "ffc5c541",
+          "color": "fffa6a0a",
           "grey": 178
         },
         {
-          "color": "ffefef4d",
+          "color": "fff9a31b",
           "grey": 216
         },
         {
-          "color": "ffffff55",
+          "color": "ffffd541",
           "grey": 255
         }
       ]

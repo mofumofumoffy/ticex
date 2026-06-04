@@ -3,6 +3,7 @@
   "fallbacks": ["metal"],
   "generator": {
     "supported_stats": [
+      "tconstruct:repair_kit",
       "tconstruct:armor_plating",
       "tconstruct:plating_helmet",
       "tconstruct:plating_chestplate",
@@ -14,8 +15,9 @@
       "type": "tconstruct:grey_to_sprite",
       "palette": [
         {
-          "grey": 0,
-          "color": "FF000000"
+          "color": "FF7f7f7f",
+          "path": "ticex:material/neutron_outline_dark",
+          "grey": 0
         },
         {
           "grey": 63,
@@ -27,19 +29,19 @@
         },
         {
           "grey": 140,
-          "color": "FF3D3D3D"
+          "color": "FF080808"
         },
         {
           "grey": 178,
-          "color": "FF303030"
+          "color": "FF161616"
         },
         {
           "grey": 216,
-          "color": "FF2B2B2B"
+          "color": "FF2e3030"
         },
         {
           "grey": 255,
-          "color": "FF141414"
+          "color": "FF393b3b"
         }
       ]
     }
