@@ -47,6 +47,14 @@
       "allow_animated": false,
       "path": "ticex:tinker_armor/singular_gem/maille_wings",
       "stat_type": "tconstruct:armor_maille"
+    },
+    {
+      "path": "ticex:item/tool/revival_spellbook/large_plate",
+      "stat_type": "tconstruct:head"
+    },
+    {
+      "path": "ticex:item/tool/revival_spellbook/tool_binding",
+      "stat_type": "tconstruct:handle"
     }
   ]
 }

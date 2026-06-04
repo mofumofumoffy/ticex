@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ticex:od_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "ticex:od_ingot"
+  }
+}

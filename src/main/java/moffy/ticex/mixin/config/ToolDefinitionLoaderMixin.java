@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.lib.config.SlotValues;
+import moffy.ticex.lib.config.ConfigListUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import slimeknights.tconstruct.library.tools.SlotType;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinitionLoader;
 
 import java.util.Map;
@@ -24,12 +25,16 @@ public class ToolDefinitionLoaderMixin {
     private void modify(@NotNull Map<ResourceLocation, JsonElement> splashList, ResourceManager resourceManagerIn, ProfilerFiller profilerIn, CallbackInfo ci) {
         try {
             if(TicEXConfig.USE_MORE_CONFIG != null && TicEXConfig.USE_MORE_CONFIG.get()){
-                splashList.forEach((resourceLocation, jsonElement) -> {
-                    TicEXConfig.SLOTS_CONFIG.forEach((rl, spec) -> {
-                        if (rl.equals(resourceLocation)) {
-                            SlotValues slots = SlotValues.fromSpec(spec);
-                            if (slots != null) {
-                                ticex$modifySlots(jsonElement, slots);
+                var slotConfigMap = ConfigListUtil.toNestedMap(TicEXConfig.SLOTS_CONFIG.get());
+                slotConfigMap.forEach((key, value) -> {
+                    splashList.forEach((resourceLocation, jsonElement) -> {
+                        if(key.equals(resourceLocation.toString())){
+                            if(value instanceof Map<?, ?> slotMap){
+                                slotMap.forEach((key1, value1) -> {
+                                    if(key1 instanceof String slotName && value1 instanceof Integer slotSize){
+                                        ticex$modifySlots(jsonElement, slotName, slotSize);
+                                    }
+                                });
                             }
                         }
                     });
@@ -39,17 +44,15 @@ public class ToolDefinitionLoaderMixin {
     }
 
     @Unique
-    private void ticex$modifySlots(JsonElement json, SlotValues slots) {
+    private void ticex$modifySlots(JsonElement json, String slotName, int value) {
         JsonArray modules = json.getAsJsonObject().getAsJsonArray("modules");
         if (modules != null) {
             modules.forEach(elem -> {
                 JsonObject module = elem.getAsJsonObject();
                 if (module.has("type") && "tconstruct:modifier_slots".equals(module.get("type").getAsString())) {
                     JsonObject slotObj = module.getAsJsonObject("slots");
-                    if (slotObj != null) {
-                        if (slots.abilities != null) slotObj.addProperty("abilities", slots.abilities);
-                        if (slots.defense != null) slotObj.addProperty("defense", slots.defense);
-                        if (slots.upgrades != null) slotObj.addProperty("upgrades", slots.upgrades);
+                    if (slotObj != null && SlotType.isValidName(slotName)) {
+                        slotObj.addProperty(slotName, value);
                     }
                 }
             });

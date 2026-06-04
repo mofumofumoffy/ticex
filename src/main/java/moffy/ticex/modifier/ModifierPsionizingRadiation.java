@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXPsiUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modifier.propeties.PsionizingRadiationProperty;
@@ -45,7 +46,7 @@ public class ModifierPsionizingRadiation
             ModifierHooks.MELEE_HIT,
             ModifierHooks.BLOCK_BREAK,
             ModifierHooks.VALIDATE,
-            TicEXRegistry.PROPERTY_PROVIDER_HOOK
+            TicEXModifierHooks.PROPERTY_PROVIDER
         );
     }
 
@@ -76,7 +77,7 @@ public class ModifierPsionizingRadiation
 
         Player player = context.getPlayerAttacker();
         ItemStack toolStack = TicEXUtils.getToolStack(tool, player, this);
-        TicEXPsiUtils.CastSpell(player, toolStack, spellContext -> {
+        TicEXPsiUtils.CastSpellAutomatically(player, toolStack, spellContext -> {
             spellContext.attackedEntity = context.getLivingTarget();
         });
     }
@@ -97,7 +98,7 @@ public class ModifierPsionizingRadiation
             context.getPos().getZ() + 0.5D - sideHit.getStepZ() * 0.5D
         );
 
-        TicEXPsiUtils.CastSpell(player, toolStack, spellContext -> {
+        TicEXPsiUtils.CastSpellAutomatically(player, toolStack, spellContext -> {
             spellContext.positionBroken = new BlockHitResult(hit, sideHit, context.getPos(), false);
         });
     }

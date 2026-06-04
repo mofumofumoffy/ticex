@@ -1,6 +1,9 @@
 package moffy.ticex.modifier;
 
+import moffy.ticex.lib.hook.CriticalModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.mixin.CriticalAccessor;
+import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraftforge.common.ForgeHooks;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -11,7 +14,7 @@ import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-public class ModifierSassy extends NoLevelsModifier implements MeleeDamageModifierHook {
+public class ModifierSassy extends NoLevelsModifier implements CriticalModifierHook {
 
     @Override
     public int getPriority() {
@@ -20,23 +23,16 @@ public class ModifierSassy extends NoLevelsModifier implements MeleeDamageModifi
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE);
+        hookBuilder.addHook(this, TicEXModifierHooks.CRITICAL);
     }
 
     @Override
-    public float getMeleeDamage(
-            @NotNull IToolStackView tool,
-            @NotNull ModifierEntry modifierEntry,
-            ToolAttackContext context,
-            float baseDamage,
-            float damage
-    ) {
-        if(context.getCriticalModifier() < 1.5) {
-            ((CriticalAccessor) context).setCriticalModifier(1.5f); // set critical true
-        }
-        if(context.getPlayerAttacker() != null){
-            ForgeHooks.getCriticalHit(context.getPlayerAttacker(), context.getTarget(), false, 1.5f);
-        }
-        return damage * 1.5f;
+    public boolean isCritical(IToolStackView tool, ModifierEntry entry, boolean isCritical, boolean original) {
+        return true;
+    }
+
+    @Override
+    public float setCriticalRate(IToolStackView tool, ModifierEntry entry, float currentRate, float originalRate) {
+        return 1.5f;
     }
 }

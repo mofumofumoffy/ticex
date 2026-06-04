@@ -3,6 +3,7 @@ package moffy.ticex.modifier;
 import java.util.Map;
 import java.util.function.BiFunction;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.OvercastingProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +15,7 @@ public class ModifierOvercasting extends NoLevelsModifier implements ProvideProp
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.PROPERTY_PROVIDER_HOOK);
+        hookBuilder.addHook(this, TicEXModifierHooks.PROPERTY_PROVIDER);
     }
 
     @Override

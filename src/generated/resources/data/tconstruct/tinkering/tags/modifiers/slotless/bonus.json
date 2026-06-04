@@ -1,6 +1,10 @@
 {
   "values": [
     {
+      "id": "ticex:eternity",
+      "required": false
+    },
+    {
       "id": "ticex:inject",
       "required": false
     }

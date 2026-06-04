@@ -6,9 +6,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-import moffy.ticex.TicEX;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,7 +36,7 @@ public class TicEXCuriosUtils {
         return result;
     }
 
-    public static ItemStack getToolStackInCurios(LivingEntity entity, Predicate<ItemStack> predicate) {
+    public static ItemStack getStackInCurios(LivingEntity entity, Predicate<ItemStack> predicate) {
         LazyOptional<ICuriosItemHandler> handlerOptional = CuriosApi.getCuriosInventory(entity);
         if (handlerOptional.isPresent()) {
             ICuriosItemHandler handler = handlerOptional.orElseThrow(IllegalStateException::new);

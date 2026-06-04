@@ -3,6 +3,8 @@ package moffy.ticex.event;
 import dan200.computercraft.shared.pocket.core.PocketServerComputer;
 import dan200.computercraft.shared.pocket.items.PocketComputerItem;
 import moffy.ticex.lib.utils.TicEXCCUtils;
+import moffy.ticex.lib.utils.TicEXCuriosUtils;
+import moffy.ticex.mixin.computercraft.PocketComputerItemAccessor;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,6 +16,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.fml.ModList;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
@@ -99,16 +102,19 @@ public class TicEXCCEvent {
     }
 
     public static PocketServerComputer getPocketComputer(Player player) {
-        if (player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IModifiable) {
-            ToolStack chest = ToolStack.from(player.getItemBySlot(EquipmentSlot.CHEST));
-            if (chest.getModifierLevel(TicEXRegistry.MODEM_MODIFIER.get()) > 0) {
-                for (ItemStack stack : player.getInventory().items) {
-                    if (stack.getItem() instanceof PocketComputerItem) {
-                        return PocketComputerItem.getServerComputer(player.getServer(), stack);
-                    }
-                }
+        //inventory
+        for (ItemStack stack : player.getInventory().items) {
+            if (stack.getItem() instanceof PocketComputerItem) {
+                return PocketComputerItemAccessor.invokeGetServerComputer(player.getServer(), stack);
             }
         }
+
+        //offhand
+        ItemStack offhandStack = player.getOffhandItem();
+        if (offhandStack.getItem() instanceof PocketComputerItem) {
+            return PocketComputerItemAccessor.invokeGetServerComputer(player.getServer(), offhandStack);
+        }
+
         return null;
     }
 }

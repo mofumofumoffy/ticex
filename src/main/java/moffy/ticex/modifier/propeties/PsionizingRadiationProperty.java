@@ -14,6 +14,7 @@ import net.minecraftforge.common.util.LogicalSidedProvider;
 import net.minecraftforge.fml.LogicalSide;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import vazkii.psi.common.core.handler.PlayerDataHandler;
 
 public class PsionizingRadiationProperty {
 
@@ -21,11 +22,19 @@ public class PsionizingRadiationProperty {
         return (user, stack) -> {
             Map<String, Object> result = new HashMap<>();
 
+            result.put("getPsiAmount", getPsiAmount(user, stack));
             result.put("getAutoSpelling", getAutoSpelling(user, stack));
             result.put("setAutoSpelling", setAutoSpelling(user, stack));
             result.put("castPsiSpell", castPsiSpell(user, stack));
 
             return result;
+        };
+    }
+
+    public static ILuaFunction getPsiAmount(Player user, ItemStack stack){
+        return args -> {
+            PlayerDataHandler.PlayerData data = PlayerDataHandler.get(user);
+            return MethodResult.of(data.getAvailablePsi());
         };
     }
 
@@ -52,7 +61,7 @@ public class PsionizingRadiationProperty {
             ) {
                 try {
                     LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {
-                        TicEXPsiUtils.CastSpell(user, stack, spellContext -> {});
+                        TicEXPsiUtils.CastSpell(user, stack, spellContext -> {}, false);
                     });
                     return MethodResult.of(true);
                 } catch (Exception e) {

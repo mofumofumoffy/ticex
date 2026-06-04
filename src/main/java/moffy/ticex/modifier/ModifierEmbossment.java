@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
@@ -12,7 +13,7 @@ public class ModifierEmbossment extends NoLevelsModifier implements EmbossmentMo
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK);
+        hookBuilder.addHook(this, TicEXModifierHooks.EMBOSSMENT);
     }
 
     @Override

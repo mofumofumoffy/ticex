@@ -44,12 +44,14 @@ import mekanism.common.util.StorageUtils;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.lib.hook.EnergyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.modules.mekanism.interfaces.IGasTankItem;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modifier.propeties.MekanicProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.BlockPos;
@@ -80,10 +82,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.armor.ElytraFlightModifierHook;
@@ -113,14 +117,34 @@ import slimeknights.tconstruct.library.tools.nbt.ToolDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 
-public class ModifierMekanic extends NoLevelsModifier implements ProvidePropertyModifierHook, ToolActionModifierHook,UsingToolModifierHook, ToolDamageModifierHook, EntityInteractionModifierHook, BreakSpeedModifierHook, BlockHarvestModifierHook, MeleeDamageModifierHook, EnchantmentModifierHook, ElytraFlightModifierHook, InventoryTickModifierHook, BowAmmoModifierHook, ValidateModifierHook, RequirementsModifierHook, BlockInteractionModifierHook, EnergyModifierHook, EmbossmentModifierHook {
+public class ModifierMekanic extends NoLevelsModifier
+        implements ProvidePropertyModifierHook,
+        ToolActionModifierHook,
+        UsingToolModifierHook,
+        ToolDamageModifierHook,
+        EntityInteractionModifierHook,
+        BreakSpeedModifierHook,
+        BlockHarvestModifierHook,
+        MeleeDamageModifierHook,
+        EnchantmentModifierHook,
+        ElytraFlightModifierHook,
+        InventoryTickModifierHook,
+        BowAmmoModifierHook,
+        ValidateModifierHook,
+        RequirementsModifierHook,
+        BlockInteractionModifierHook,
+
+
+        EnergyModifierHook,
+        EmbossmentModifierHook {
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
         hookBuilder.addHook(
                 this,
-                TicEXRegistry.PROPERTY_PROVIDER_HOOK,
+                TicEXModifierHooks.PROPERTY_PROVIDER,
                 ModifierHooks.TOOL_USING,
+                ModifierHooks.TOOL_DAMAGE,
                 ModifierHooks.TOOL_ACTION,
                 ModifierHooks.ENTITY_INTERACT,
                 ModifierHooks.BREAK_SPEED,
@@ -133,8 +157,8 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
                 ModifierHooks.VALIDATE,
                 ModifierHooks.REQUIREMENTS,
                 ModifierHooks.BLOCK_INTERACT,
-                TicEXRegistry.ENERGY_HOOK,
-                TicEXRegistry.EMBOSSMENT_HOOK
+                TicEXModifierHooks.ENERGY,
+                TicEXModifierHooks.EMBOSSMENT
         );
     }
 
@@ -245,13 +269,22 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
             ItemStack stack = toolStack.createStack();
             if (stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()) {
                 IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
-                if (ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(toolAction)) {
+                if (isTool(stack) && ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(toolAction)) {
                     return hasEnergyForDigAction(stack, mekaGear);
                 }
                 return mekaGear.getModules(stack).stream().anyMatch(module -> module.isEnabled() && canPerformAction(module, toolAction));
             }
         }
         return false;
+    }
+
+    private boolean isTool(ItemStack stack){
+        if(stack.getItem() instanceof ArmorItem){
+            return false;
+        } else if(ModList.get().isLoaded("mekaweapons")){
+            return !(stack.is(TinkerTags.Items.MELEE_WEAPON) || stack.is(TinkerTags.Items.RANGED));
+        }
+        return true;
     }
 
     private <MODULE extends ICustomModule<MODULE>> boolean canPerformAction(IModule<MODULE> module, ToolAction action) {
@@ -413,6 +446,14 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
         return v1;
     }
 
+    @Override
+    public void onUsingTick(IToolStackView tool, ModifierEntry modifier, LivingEntity entity, int useDuration, int timeLeft, ModifierEntry activeModifier) {
+        if(ModList.get().isLoaded("mekaweapons")){
+            TicEXMekanismWeaponsUtils.handleAutoFire(entity, tool, useDuration, timeLeft);
+        }
+
+    }
+
     private boolean isValidDestinationBlock(Level world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos);
         return blockState.isAir() || MekanismUtils.isLiquidBlock(blockState.getBlock());
@@ -485,7 +526,7 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
             mekaArrowStack.getOrCreateTag().put("shooterItem", toolStack.createStack().save(new CompoundTag()));
             return mekaArrowStack;
         }
-        return new ItemStack(Items.ARROW);
+        return itemStack;
     }
 
     @Override
@@ -496,21 +537,21 @@ public class ModifierMekanic extends NoLevelsModifier implements ProvideProperty
     @Override
     public @NotNull List<ModifierEntry> displayModifiers(ModifierEntry entry) {
         List<ModifierEntry> entries = new ArrayList<>();
-        if (entry.getLevel() == 1) {
+        /*if (entry.getLevel() == 1) {
             entries.add(new ModifierEntry(ModifierIds.reinforced, 5));
             entries.add(new ModifierEntry(ModifierIds.netherite, 1));
-        }
+        }*/
         return entries;
     }
 
     @Override
     public Component validate(@NotNull IToolStackView tool, ModifierEntry entry) {
-        if (
+        /*if (
                         tool.getModifierLevel(ModifierIds.reinforced) < 5 || tool.getModifierLevel(ModifierIds.netherite) < 1
 
         ) {
             return Component.translatable("recipe.ticex.modifier.mekanic_requirements");
-        }
+        }*/
         return null;
     }
 

@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.DifferenceIngredient;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.data.recipe.IToolRecipeHelper;
@@ -26,6 +27,32 @@ public class PERecipeProvider implements ITicEXRecipeHelper, IToolRecipeHelper {
                 pWriter,
                 modsAvailable(TicEX.getResource("projecte_compat"))
         );
+
+        /*if(TicEXRegistry.CLUSTER_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXRegistry.CLUSTER_MODIFIER)
+                    .setTools(TinkerTags.Items.HARVEST)
+                    .addInput(PEItems.DARK_MATTER.get())
+                    .addInput(PEItems.DARK_MATTER.get())
+                    .addInput(PEItems.DARK_MATTER.get())
+                    .addInput(Tags.Items.GEMS_DIAMOND)
+                    .addInput(Tags.Items.GEMS_DIAMOND)
+                    .exactLevel(1)
+                    .setSlots(SlotType.UPGRADE, 1)
+                    .checkTraitLevel()
+                    .allowCrystal()
+                    .save(topConsumer, prefix(TicEXRegistry.CLUSTER_MODIFIER.getId().withSuffix("_1"), upgradeFolder));
+            ModifierRecipeBuilder.modifier(TicEXRegistry.CLUSTER_MODIFIER)
+                    .setTools(TinkerTags.Items.HARVEST)
+                    .addInput(PEItems.RED_MATTER.get())
+                    .addInput(PEItems.RED_MATTER.get())
+                    .addInput(PEItems.RED_MATTER.get())
+                    .addInput(PEItems.DARK_MATTER.get())
+                    .exactLevel(2)
+                    .setSlots(SlotType.UPGRADE, 1)
+                    .checkTraitLevel()
+                    .allowCrystal()
+                    .save(topConsumer, prefix(TicEXRegistry.CLUSTER_MODIFIER.getId().withSuffix("_2"), upgradeFolder));
+        }*/
 
         if(TicEXRegistry.ABYSSAL_MODIFIER != null) {
             ModifierRecipeBuilder.modifier(TicEXRegistry.ABYSSAL_MODIFIER)

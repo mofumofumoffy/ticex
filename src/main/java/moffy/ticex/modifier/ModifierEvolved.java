@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import codechicken.lib.inventory.InventoryUtils;
 import codechicken.lib.math.MathHelper;
+import com.brandon3055.brandonscore.api.TechLevel;
 import com.brandon3055.brandonscore.api.power.IOPStorage;
 import com.brandon3055.brandonscore.inventory.InventoryDynamic;
 import com.brandon3055.brandonscore.utils.EnergyUtils;
@@ -18,22 +19,29 @@ import com.brandon3055.draconicevolution.client.keybinding.KeyBindings;
 import com.brandon3055.draconicevolution.init.EquipCfg;
 import com.mojang.datafixers.util.Pair;
 import moffy.ticex.TicEX;
+import moffy.ticex.lib.hook.DamageSourceModifierHook;
 import moffy.ticex.lib.hook.EnergyModifierHook;
+import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
+import moffy.ticex.modifier.propeties.EvolvedProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -49,12 +57,14 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.ToolDamageModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.build.VolatileDataModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeHitModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.RequirementsModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
@@ -66,15 +76,16 @@ import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.context.ToolHarvestContext;
 import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.helper.ToolHarvestLogic;
+import slimeknights.tconstruct.library.tools.nbt.IToolContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
+import slimeknights.tconstruct.library.tools.nbt.ToolDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.BiFunction;
 
 public class ModifierEvolved
     extends Modifier
@@ -87,7 +98,9 @@ public class ModifierEvolved
         RequirementsModifierHook,
         ValidateModifierHook,
         EnergyModifierHook,
-        InventoryTickModifierHook
+        DamageSourceModifierHook,
+        InventoryTickModifierHook,
+        ProvidePropertyModifierHook
  {
 
     public static final ResourceLocation MODULE_HOST_LOCATION = TicEX.getResource("module_host");
@@ -110,7 +123,9 @@ public class ModifierEvolved
             ModifierHooks.REQUIREMENTS,
             ModifierHooks.VALIDATE,
             ModifierHooks.INVENTORY_TICK,
-            TicEXRegistry.ENERGY_HOOK
+            TicEXModifierHooks.DAMAGE_SOURCE,
+            TicEXModifierHooks.ENERGY,
+            TicEXModifierHooks.PROPERTY_PROVIDER
         );
     }
 
@@ -166,7 +181,7 @@ public class ModifierEvolved
         //components.add(Component.translatable("[Modular Item]").withStyle(ChatFormatting.BLUE));
     }
 
-    @Override
+     @Override
     public void afterMeleeHit(
         IToolStackView tool,
         ModifierEntry modifier,
@@ -339,7 +354,9 @@ public class ModifierEvolved
                     .level()
                     .registryAccess()
                     .registryOrThrow(Registries.DAMAGE_TYPE)
-                    .getHolderOrThrow(TicEXDEUtils.getDamageTag(ToolStack.from(stack)))
+                    .getHolderOrThrow(TicEXDEUtils.getDamageTag(ToolStack.from(stack), getId()))
+                ,
+                target, player, target.position()
             ),
             dealDamage
         );
@@ -718,5 +735,35 @@ public class ModifierEvolved
          } else {
              return baseSpeed;
          }
+     }
+
+     @Override
+     public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, DamageSource currentSource, DamageSource original) {
+         Entity entity = currentSource.getDirectEntity();
+
+         if(entity != null){
+             Level level = entity.level();
+             Registry<DamageType> damageTypeRegistry = level.registryAccess()
+                     .registryOrThrow(Registries.DAMAGE_TYPE);
+             Optional<ResourceKey<DamageType>> keyOptional = damageTypeRegistry.getResourceKey(currentSource.type());
+             if(keyOptional.isPresent()){
+                 TechLevel currentLevel = TicEXDEUtils.getTechLevel(keyOptional.get());
+                 TechLevel evolvedLevel = TicEXDEUtils.getTechLevel(tool, getId());
+                 if(evolvedLevel != null){
+                     if(currentLevel == null) {
+                         return new DamageSource(damageTypeRegistry.getHolderOrThrow(TicEXDEUtils.getDamageTag(evolvedLevel.index + 1)), currentSource.getDirectEntity(), currentSource.getEntity(), currentSource.getSourcePosition());
+                     }else if(currentLevel.index < evolvedLevel.index){
+                         return new DamageSource(damageTypeRegistry.getHolderOrThrow(TicEXDEUtils.getDamageTag(evolvedLevel.index + 1)), currentSource.getDirectEntity(), currentSource.getEntity(), currentSource.getSourcePosition());
+                     }
+                 }
+             }
+         }
+
+        return currentSource;
+     }
+
+     @Override
+     public BiFunction<Player, ItemStack, Map<String, Object>> getPropertyProvider() {
+         return EvolvedProperty.getProperties();
      }
  }
