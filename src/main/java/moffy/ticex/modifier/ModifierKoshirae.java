@@ -3,6 +3,7 @@ package moffy.ticex.modifier;
 import java.util.EnumSet;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
+import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -40,7 +41,6 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
                         bladeStateTag = compoundTag.getCompound("bladeState");
                     }
 
-                    resultState.deserializeNBT(bladeStateTag);
                     int currentProudSoul = resultState.getProudSoulCount();
                     int currentKillCount = resultState.getKillCount();
                     int currentRefineCount = resultState.getRefine();
@@ -48,6 +48,8 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
                     bladeStateTag.putInt("proudSoul", Math.max(bladeStateTag.getInt("proudSoul"), currentProudSoul));
                     bladeStateTag.putInt("killCount", Math.max(bladeStateTag.getInt("killCount"), currentKillCount));
                     bladeStateTag.putInt("RepairCounter", Math.max(bladeStateTag.getInt("RepairCounter"), currentRefineCount));
+
+                    resultState.deserializeNBT(bladeStateTag);
                     toolStack.getOrCreateTag().put("bladeState", bladeStateTag);
                 });
             return true;
