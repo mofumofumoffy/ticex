@@ -10,29 +10,40 @@
       "tconstruct:limb",
       "tconstruct:grip"
     ],
-    "transformer": {
-      "type": "tconstruct:recolor_sprite",
-      "color_mapping": {
-        "type": "tconstruct:grey_to_color",
-        "palette": [
-          {
-            "color": "FF000000",
-            "grey": 0
-          },
-          {
-            "color": "ffdbcb1d",
-            "grey": 63
-          },
-          {
-            "color": "ffcfc33e",
-            "grey": 178
-          },
-          {
-            "color": "ffede26b",
-            "grey": 255
-          }
-        ]
-      }
+   "transformer": {
+            "type": "tconstruct:animated_sprite",
+            "meta": "ticex:material/blazing/blazing_0",
+            "frames": 2,
+            "palette": [
+                {
+                  "path": "ticex:material/blazing/blazing_0",
+                  "grey": 0
+                },
+                {
+                  "path": "ticex:material/blazing/blazing_1",
+                  "grey": 63
+                },
+                {
+                  "path": "ticex:material/blazing/blazing_2",
+                  "grey": 102
+                },
+                {
+                  "path": "ticex:material/blazing/blazing_3",
+                  "grey": 140
+                },
+                {
+                  "path": "ticex:material/blazing/blazing_4",
+                  "grey": 178
+                },
+                {
+                  "path": "ticex:material/blazing/blazing_5",
+                  "grey": 216
+                },
+                {
+                  "path": "ticex:material/blazing/blazing_6",
+                  "grey": 255
+                }
+            ]
     }
   }
 }
