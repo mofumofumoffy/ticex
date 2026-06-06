@@ -2,6 +2,7 @@ package moffy.ticex.caps;
 
 import java.util.function.Supplier;
 
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -25,7 +26,7 @@ public class TiCEXToolCapabilityProvider implements IToolCapabilityProvider {
     public <T> @NotNull LazyOptional<T> getCapability(@NotNull IToolStackView tool, @NotNull Capability<T> capability) {
         if (capability == EmbossmentMaterialCapability.EMBOSSMENT_MATERIAL_CAPABILITY) {
             return LazyOptional.of(() -> embossmentMaterialCapability).cast();
-        } else if(capability == ForgeCapabilities.ENERGY && !tool.getModifierList().stream().filter(entry -> entry.getHook(TicEXRegistry.ENERGY_HOOK).isEnabled()).toList().isEmpty()){
+        } else if(capability == ForgeCapabilities.ENERGY && !tool.getModifierList().stream().filter(entry -> entry.getHook(TicEXModifierHooks.ENERGY).isEnabled()).toList().isEmpty()){
             return LazyOptional.of(() -> universalEnergyCapability).cast();
         }
         return LazyOptional.empty();

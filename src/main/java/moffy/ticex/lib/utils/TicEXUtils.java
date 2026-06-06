@@ -2,18 +2,13 @@ package moffy.ticex.lib.utils;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
 import slimeknights.tconstruct.library.modifiers.Modifier;
@@ -22,7 +17,6 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -52,7 +46,7 @@ public class TicEXUtils {
         }
 
         if (ModList.get().isLoaded("curios")) {
-            ItemStack curioStack = TicEXCuriosUtils.getToolStackInCurios(entity, predicate);
+            ItemStack curioStack = TicEXCuriosUtils.getStackInCurios(entity, predicate);
             if (curioStack != null) {
                 return curioStack;
             }

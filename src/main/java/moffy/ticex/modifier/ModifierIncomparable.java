@@ -1,6 +1,7 @@
 package moffy.ticex.modifier;
 
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.IncomparableProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
@@ -30,7 +31,7 @@ public class ModifierIncomparable extends NoLevelsModifier implements ProvidePro
     @Override
     protected void registerHooks(ModuleHookMap.@NotNull Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this, TicEXRegistry.PROPERTY_PROVIDER_HOOK, ToolInventoryCapability.HOOK, ModifierHooks.SLOT_STACK);
+        hookBuilder.addHook(this, TicEXModifierHooks.PROPERTY_PROVIDER, ToolInventoryCapability.HOOK, ModifierHooks.SLOT_STACK);
     }
 
     @Override

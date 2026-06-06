@@ -1,0 +1,84 @@
+package moffy.ticex.lib.config;
+
+import java.util.*;
+
+public class ConfigListUtil {
+
+    public static Map<String, Object> toNestedMap(List<? extends String> list) {
+        Map<String, Object> root = new LinkedHashMap<>();
+
+        for (String line : list) {
+            if (line == null || line.isEmpty()) {
+                continue;
+            }
+
+            String[] parts = line.split("\\|");
+
+            if (parts.length < 2) {
+                throw new IllegalArgumentException(
+                        "Invalid format. Expected key|value format: " + line
+                );
+            }
+
+            Map<String, Object> current = root;
+
+            for (int i = 0; i < parts.length - 2; i++) {
+                String key = parts[i];
+
+                Object next = current.get(key);
+
+                if (next == null) {
+                    Map<String, Object> child = new LinkedHashMap<>();
+                    current.put(key, child);
+                    current = child;
+                } else if (next instanceof Map) {
+                    @SuppressWarnings("unchecked")
+                    Map<String, Object> child = (Map<String, Object>) next;
+                    current = child;
+                } else {
+                    throw new IllegalArgumentException(
+                            "Key conflict. Existing value is String, but Map is required: " + key
+                    );
+                }
+            }
+
+            String lastKey = parts[parts.length - 2];
+            String value = parts[parts.length - 1];
+
+            Object existing = current.get(lastKey);
+            if (existing instanceof Map) {
+                throw new IllegalArgumentException(
+                        "Key conflict. Existing value is Map, but String is required: " + lastKey
+                );
+            }
+
+            current.put(lastKey, Integer.valueOf(value));
+        }
+
+        return root;
+    }
+
+    public static Optional<Integer> getConfiguredValue(List<? extends String> list, Object ...keys){
+        try{
+            for(String line : list){
+                String[] parsedLine = line.split("\\|");
+                if(keys.length == parsedLine.length - 1){
+                    boolean matched = true;
+                    for(int i = 0; i < keys.length; i++){
+                        if(!keys[i].toString().equals(parsedLine[i])){
+                            matched = false;
+                            break;
+                        }
+                    }
+
+                    if(matched){
+                        return Optional.of(Integer.valueOf(parsedLine[parsedLine.length - 1]));
+                    }
+                }
+            }
+        }catch (Exception e){
+            return Optional.empty();
+        }
+        return Optional.empty();
+    }
+}

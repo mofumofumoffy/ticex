@@ -1,5 +1,6 @@
 package moffy.ticex.caps;
 
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -20,31 +21,31 @@ public class TinkerUniversalEnergyCapability implements IEnergyStorage {
 
     @Override
     public int receiveEnergy(int i, boolean b) {
-        return tool.getModifierList().stream().map(entry -> entry.getHook(TicEXRegistry.ENERGY_HOOK).receiveEnergy(tool, stack, i, b)).max(Comparator.naturalOrder()).orElse(0);
+        return tool.getModifierList().stream().map(entry -> entry.getHook(TicEXModifierHooks.ENERGY).receiveEnergy(tool, stack, i, b)).max(Comparator.naturalOrder()).orElse(0);
     }
 
     @Override
     public int extractEnergy(int i, boolean b) {
-        return tool.getModifierList().stream().map(entry -> entry.getHook(TicEXRegistry.ENERGY_HOOK).extractEnergy(tool, stack, i, b)).max(Comparator.naturalOrder()).orElse(0);
+        return tool.getModifierList().stream().map(entry -> entry.getHook(TicEXModifierHooks.ENERGY).extractEnergy(tool, stack, i, b)).max(Comparator.naturalOrder()).orElse(0);
     }
 
     @Override
     public int getEnergyStored() {
-        return tool.getModifierList().stream().map(entry -> entry.getHook(TicEXRegistry.ENERGY_HOOK).getEnergyStored(tool,stack)).min(Comparator.naturalOrder()).orElse(0);
+        return tool.getModifierList().stream().map(entry -> entry.getHook(TicEXModifierHooks.ENERGY).getEnergyStored(tool,stack)).min(Comparator.naturalOrder()).orElse(0);
     }
 
     @Override
     public int getMaxEnergyStored() {
-        return tool.getModifierList().stream().map(entry -> entry.getHook(TicEXRegistry.ENERGY_HOOK).getMaxEnergyStored(tool, stack)).max(Comparator.naturalOrder()).orElse(0);
+        return tool.getModifierList().stream().map(entry -> entry.getHook(TicEXModifierHooks.ENERGY).getMaxEnergyStored(tool, stack)).max(Comparator.naturalOrder()).orElse(0);
     }
 
     @Override
     public boolean canExtract() {
-        return !tool.getModifierList().stream().map(entry -> entry.getHook(TicEXRegistry.ENERGY_HOOK).canExtract(tool, stack)).filter(b -> b).toList().isEmpty();
+        return !tool.getModifierList().stream().map(entry -> entry.getHook(TicEXModifierHooks.ENERGY).canExtract(tool, stack)).filter(b -> b).toList().isEmpty();
     }
 
     @Override
     public boolean canReceive() {
-        return !tool.getModifierList().stream().map(entry -> entry.getHook(TicEXRegistry.ENERGY_HOOK).canReceive(tool, stack)).filter(b -> b).toList().isEmpty();
+        return !tool.getModifierList().stream().map(entry -> entry.getHook(TicEXModifierHooks.ENERGY).canReceive(tool, stack)).filter(b -> b).toList().isEmpty();
     }
 }

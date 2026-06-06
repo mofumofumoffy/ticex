@@ -12,9 +12,7 @@ import moffy.ticex.item.cores.ItemFlickeringCore;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.InfinityTier;
-import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.lib.hook.EnergyModifierHook;
-import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.*;
 import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.ModifierEnchantmentSupplier;
@@ -80,7 +78,7 @@ public class TicEXModule implements AddonModule {
                 () -> LoadableRecipeSerializer.of(ValidatableIncrementalModifierRecipe.LOADER)
         );
 
-        TicEXRegistry.EMBOSSMENT_HOOK = ModifierHooks.LOADER.register(
+        TicEXModifierHooks.EMBOSSMENT = ModifierHooks.LOADER.register(
                 new ModuleHook<>(
                         TicEX.getResource("embossment"),
                         EmbossmentModifierHook.class,
@@ -88,7 +86,7 @@ public class TicEXModule implements AddonModule {
                         new EmbossmentModifierHook.DefaultClass()
                 )
         );
-        TicEXRegistry.PROPERTY_PROVIDER_HOOK = ModifierHooks.LOADER.register(
+        TicEXModifierHooks.PROPERTY_PROVIDER = ModifierHooks.LOADER.register(
                 new ModuleHook<>(
                         TicEX.getResource("provide_property"),
                         ProvidePropertyModifierHook.class,
@@ -96,12 +94,28 @@ public class TicEXModule implements AddonModule {
                         new ProvidePropertyModifierHook.DefaultClass()
                 )
         );
-        TicEXRegistry.ENERGY_HOOK = ModifierHooks.LOADER.register(
+        TicEXModifierHooks.ENERGY = ModifierHooks.LOADER.register(
                 new ModuleHook<>(
                         TicEX.getResource("energy"),
                         EnergyModifierHook.class,
                         EnergyModifierHook.AllMerger::new,
                         new EnergyModifierHook.DefaultClass()
+                )
+        );
+        TicEXModifierHooks.DAMAGE_SOURCE = ModifierHooks.LOADER.register(
+                new ModuleHook<>(
+                        TicEX.getResource("modify_damage_source"),
+                        DamageSourceModifierHook.class,
+                        DamageSourceModifierHook.AllMerger::new,
+                        new DamageSourceModifierHook.DefaultClass()
+                )
+        );
+        TicEXModifierHooks.CRITICAL = ModifierHooks.LOADER.register(
+                new ModuleHook<>(
+                        TicEX.getResource("critical"),
+                        CriticalModifierHook.class,
+                        CriticalModifierHook.AllMerger::new,
+                        new CriticalModifierHook.DefaultClass()
                 )
         );
 

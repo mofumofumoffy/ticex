@@ -11,6 +11,7 @@ package moffy.ticex.modifier;
 import com.hollingsworth.arsnouveau.setup.registry.EnchantmentRegistry;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.ReactiveProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
@@ -36,7 +37,7 @@ public class ModifierReactive extends Modifier implements InventoryTickModifierH
 
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.ENCHANTMENTS, TicEXRegistry.EMBOSSMENT_HOOK, TicEXRegistry.PROPERTY_PROVIDER_HOOK);
+        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.ENCHANTMENTS, TicEXModifierHooks.EMBOSSMENT, TicEXModifierHooks.PROPERTY_PROVIDER);
     }
 
     @Override

@@ -4,6 +4,7 @@ import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.client.modules.ticex.models.MaterialOverrideModel;
 import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -20,6 +21,7 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -56,27 +58,6 @@ public class TicEXEvent {
         Entity source = event.getSource().getEntity();
         LivingEntity target = event.getEntity();
 
-        /*//damage bonus
-        if (source instanceof LivingEntity livingSource) {
-            ItemStack weapon = livingSource.getMainHandItem();
-            float bonus = EnchantmentHelper.getDamageBonus(weapon, target.getMobType());
-            newAmount += bonus;
-        }
-
-        //armor protection
-        List<ItemStack> modifiableArmors = new ArrayList<>();
-        Iterator<ItemStack> armors = target.getArmorSlots().iterator();
-        while (armors.hasNext()) {
-            ItemStack armor = armors.next();
-            if (armor.getItem() instanceof IModifiable) {
-                modifiableArmors.add(armor);
-            }
-        }
-        int protection = EnchantmentHelper.getDamageProtection(modifiableArmors, event.getSource());
-        if (protection > 0) {
-            newAmount *= (1 - Math.min(20, protection) / 25.0f);
-        }
-*/
         //attribute reduce
         AttributeInstance attributeInstance = target.getAttribute(TicEXRegistry.DAMAGE_TAKEN.get());
         if (attributeInstance != null) {

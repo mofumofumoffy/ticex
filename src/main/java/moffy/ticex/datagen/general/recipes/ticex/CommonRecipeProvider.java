@@ -11,6 +11,8 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
@@ -73,7 +75,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
 
     public void buildShapedRecipes(Consumer<FinishedRecipe> pWriter) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.RECONSTRUCTION_CORE.get())
-                .define('c', TinkerCommons.slimeball.get(SlimeType.SKY))
+                .define('c', ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge","ingots/cobalt")))
                 .define('a', Items.AMETHYST_SHARD)
                 .define('s', Items.SHULKER_SHELL)
                 .define('p', Items.BLAZE_POWDER)

@@ -1,5 +1,8 @@
 package moffy.ticex.mixin.apotheosis;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import net.minecraft.ChatFormatting;
@@ -29,49 +32,30 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 @Mixin(value = TooltipUtil.class, remap = false)
 public class ToolTipUtilMixin {
     @SuppressWarnings("deprecation")
-    @Inject(at=@At("HEAD"), method = "addModifierNames", cancellable = true)
-    private static void addModifierNameWithModify(ItemStack stack, IToolStackView tool, Player player, List<Component> tooltips, TooltipFlag flag, CallbackInfo ci){
-        if(!SocketHelper.getGems(stack).isEmpty()){
-            RegistryAccess access = player == null ? null : player.level().registryAccess();
-            for (ModifierEntry entry : tool.getModifierList()) {
-                if (entry.getModifier().shouldDisplay(false)) {
-                    Component name = entry.getModifier().getDisplayName(tool, entry, access);
-                    if (flag.isAdvanced() && Config.CLIENT.modifiersIDsInAdvancedTooltips.get()) {
-                        tooltips.add(Component.translatable(TooltipUtil.KEY_ID_FORMAT, name, Component.literal(entry.getModifier().getId().toString())).withStyle(ChatFormatting.DARK_GRAY));
-                    } else {
-                        tooltips.add(name);
-                    }
-                }
+    @WrapOperation(
+            method = "addModifierNames",
+            at = @At(value = "INVOKE", target = "Ljava/util/Optional;ifPresent(Ljava/util/function/Consumer;)V")
+    )
+    private static <T> void addCustomEnchantmentTooltip(Optional<Enchantment> instance, Consumer<? super Enchantment> action, Operation<Void> original, @Local(name = "enchantmentTag") CompoundTag enchantmentTag, @Local(name="stack") ItemStack stack, @Local(name = "tooltips") List<Component> tooltips){
+        Consumer<Enchantment> enchantmentConsumer = (enchantment) -> {
+            Map<Enchantment, Integer> realLevels = new HashMap<>(stack.getAllEnchantments());
+
+            int level = enchantmentTag.getInt("lvl");
+            int realLevel = realLevels.remove(enchantment);
+
+            if(level == realLevel){
+                action.accept(enchantment);
+            } else {
+                ticex$appendModifiedEnchTooltip(tooltips, enchantment, realLevel, level);
             }
-            if (!stack.isEmpty()) {
-                Map<Enchantment, Integer> realLevels = new HashMap<>(stack.getAllEnchantments());
-
-                CompoundTag tag = stack.getTag();
-                if (tag != null && tag.contains("Enchantments", Tag.TAG_LIST)) {
-                    ListTag enchantments = tag.getList("Enchantments", Tag.TAG_COMPOUND);
-                    for (int i = 0; i < enchantments.size(); ++i) {
-                        CompoundTag enchantmentTag = enchantments.getCompound(i);
-
-                        BuiltInRegistries.ENCHANTMENT.getOptional(ResourceLocation.tryParse(enchantmentTag.getString("id")))
-                                .ifPresent(enchantment -> {
-                                    int level = enchantmentTag.getInt("lvl");
-                                    int realLevel = realLevels.remove(enchantment);
-
-                                    if(level == realLevel){
-                                        tooltips.add(enchantment.getFullname(level));
-                                    } else {
-                                        ticex$appendModifiedEnchTooltip(tooltips, enchantment, realLevel, level);
-                                    }
-                                });
-                    }
-                }
-            }
-            ci.cancel();
-        }
+        };
+        original.call(instance, enchantmentConsumer);
     }
 
     @Unique

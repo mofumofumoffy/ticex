@@ -1,7 +1,9 @@
 package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
+import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.DeflectionProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.Registries;
@@ -44,7 +46,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
     @Override
     protected void registerHooks(Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE, ModifierHooks.PROJECTILE_HIT, TicEXRegistry.PROPERTY_PROVIDER_HOOK);
+        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE, ModifierHooks.PROJECTILE_HIT, TicEXModifierHooks.PROPERTY_PROVIDER);
     }
 
     @Override
@@ -74,7 +76,8 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
                     return 0;
                 }
 
-                float absoluteHealth = target.getHealth() - damage;
+                float modifier = CriticalModifierHook.modifyCritical(attacker, false, 1.0f).criticalModifier();
+                float absoluteHealth = target.getHealth() - damage * modifier;
 
                 if (target.level() instanceof ServerLevel serverLevel) {
                     target.setHealth(absoluteHealth);

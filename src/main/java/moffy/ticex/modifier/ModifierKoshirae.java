@@ -3,7 +3,9 @@ package moffy.ticex.modifier;
 import java.util.EnumSet;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
+import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,7 +18,7 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, TicEXRegistry.EMBOSSMENT_HOOK);
+        hookBuilder.addHook(this, TicEXModifierHooks.EMBOSSMENT);
     }
 
     @Override
@@ -24,7 +26,6 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
         ItemStack input = context.getInputStack(inputIndex);
         ItemStack toolStack = context.getToolStack();
 
-        ToolStack tool = ToolStack.from(toolStack);
         EnumSet<SwordType> swordTypes = SwordType.from(toolStack);
         if (swordTypes.contains(SwordType.BEWITCHED)) {
             toolStack
@@ -39,6 +40,14 @@ public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModi
                     } else {
                         bladeStateTag = compoundTag.getCompound("bladeState");
                     }
+
+                    int currentProudSoul = resultState.getProudSoulCount();
+                    int currentKillCount = resultState.getKillCount();
+                    int currentRefineCount = resultState.getRefine();
+
+                    bladeStateTag.putInt("proudSoul", Math.max(bladeStateTag.getInt("proudSoul"), currentProudSoul));
+                    bladeStateTag.putInt("killCount", Math.max(bladeStateTag.getInt("killCount"), currentKillCount));
+                    bladeStateTag.putInt("RepairCounter", Math.max(bladeStateTag.getInt("RepairCounter"), currentRefineCount));
 
                     resultState.deserializeNBT(bladeStateTag);
                     toolStack.getOrCreateTag().put("bladeState", bladeStateTag);

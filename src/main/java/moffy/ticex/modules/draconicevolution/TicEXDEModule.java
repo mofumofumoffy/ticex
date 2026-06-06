@@ -9,6 +9,7 @@ import moffy.ticex.client.render.custom.PartPredicate;
 import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.modifier.ModifierDragonForce;
 import moffy.ticex.modifier.ModifierEvolved;
 import moffy.ticex.modifier.ModifierSoulRending;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -58,6 +59,11 @@ public class TicEXDEModule implements AddonModule {
                 "soul_rending",
                 ModifierSoulRending::new
         );
+        TicEXRegistry.DRAGON_FORCE_MODIFIER = TicEXRegistry.MODIFIERS.register(
+                "dragon_force",
+                ModifierDragonForce::new
+        );
+
         TicEXRegistry.INJECT_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("inject");
         TicEXRegistry.EVOLVED_MODIFIER = TicEXRegistry.MODIFIERS.register("evolved", ModifierEvolved::new);
     }

@@ -8,6 +8,7 @@ import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.modules.slashblade.IInputCommandEvent;
 import moffy.ticex.network.slashblade.StateSyncPacket;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -94,7 +95,9 @@ public class TicEXSBEvent {
             mainHandStack
                 .getCapability(ItemSlashBlade.BLADESTATE)
                 .ifPresent(state -> {
-                    StateSyncPacket packet = new StateSyncPacket(state.serializeNBT());
+                    CompoundTag nbt = state.serializeNBT();
+                    mainHandStack.getOrCreateTag().put("bladeState", nbt.copy());
+                    StateSyncPacket packet = new StateSyncPacket(nbt);
                     TicEX.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
                 });
         }

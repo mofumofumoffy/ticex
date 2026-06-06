@@ -5,7 +5,6 @@
   "refmap": "ticex.refmap.json",
   "mixins": [
     "CriticalAccessor",
-    "DataItemAccessor",
     "MaterialCastingLookupMixin",
     "MeleeAttributeModuleMixin",
     "ObjModel$ModelGroupAccessor",
@@ -13,6 +12,8 @@
     "ObjModel$ModelObjectAccessor",
     "ObjModelAccessor",
     "RomanNumeralHelperMixin",
+    "ToolAttackContextMixin",
+    "ToolAttackUtilMixin",
     "config.AbstractCastingRecipeAccessor",
     "config.AbstractCastingRecipeMixin",
     "config.AbstractModifierRecipeAccessor",

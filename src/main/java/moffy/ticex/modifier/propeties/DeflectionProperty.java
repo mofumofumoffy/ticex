@@ -16,23 +16,23 @@ public class DeflectionProperty {
         return (user, stack) -> {
             Map<String, Object> result = new HashMap<>();
 
-            result.put("isDisabled", isDisabled(user, stack));
-            result.put("setDisabled", setDisabled(user, stack));
+            result.put("isEnabled", isEnabled(user, stack));
+            result.put("setEnabled", setEnabled(user, stack));
 
             return result;
         };
     }
 
-    public static ILuaFunction isDisabled(Player user, ItemStack stack){
+    public static ILuaFunction isEnabled(Player user, ItemStack stack){
         return (args) -> {
-            return MethodResult.of(ToolStack.from(stack).getPersistentData().getBoolean(ModifierDeflection.DEFLECTION_DISABLED));
+            return MethodResult.of(!ToolStack.from(stack).getPersistentData().getBoolean(ModifierDeflection.DEFLECTION_DISABLED));
         };
     }
 
-    public static ILuaFunction setDisabled(Player user, ItemStack stack){
+    public static ILuaFunction setEnabled(Player user, ItemStack stack){
         return (args) -> {
             boolean newValue = args.getBoolean(0);
-            ToolStack.from(stack).getPersistentData().putBoolean(ModifierDeflection.DEFLECTION_DISABLED, newValue);
+            ToolStack.from(stack).getPersistentData().putBoolean(ModifierDeflection.DEFLECTION_DISABLED, !newValue);
             return MethodResult.of();
         };
     }

@@ -44,6 +44,7 @@ import mekanism.common.util.StorageUtils;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.lib.hook.EnergyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
@@ -81,6 +82,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
@@ -140,8 +142,9 @@ public class ModifierMekanic extends NoLevelsModifier
     protected void registerHooks(Builder hookBuilder) {
         hookBuilder.addHook(
                 this,
-                TicEXRegistry.PROPERTY_PROVIDER_HOOK,
+                TicEXModifierHooks.PROPERTY_PROVIDER,
                 ModifierHooks.TOOL_USING,
+                ModifierHooks.TOOL_DAMAGE,
                 ModifierHooks.TOOL_ACTION,
                 ModifierHooks.ENTITY_INTERACT,
                 ModifierHooks.BREAK_SPEED,
@@ -154,8 +157,8 @@ public class ModifierMekanic extends NoLevelsModifier
                 ModifierHooks.VALIDATE,
                 ModifierHooks.REQUIREMENTS,
                 ModifierHooks.BLOCK_INTERACT,
-                TicEXRegistry.ENERGY_HOOK,
-                TicEXRegistry.EMBOSSMENT_HOOK
+                TicEXModifierHooks.ENERGY,
+                TicEXModifierHooks.EMBOSSMENT
         );
     }
 
@@ -266,13 +269,22 @@ public class ModifierMekanic extends NoLevelsModifier
             ItemStack stack = toolStack.createStack();
             if (stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()) {
                 IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
-                if (ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(toolAction)) {
+                if (isTool(stack) && ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(toolAction)) {
                     return hasEnergyForDigAction(stack, mekaGear);
                 }
                 return mekaGear.getModules(stack).stream().anyMatch(module -> module.isEnabled() && canPerformAction(module, toolAction));
             }
         }
         return false;
+    }
+
+    private boolean isTool(ItemStack stack){
+        if(stack.getItem() instanceof ArmorItem){
+            return false;
+        } else if(ModList.get().isLoaded("mekaweapons")){
+            return !(stack.is(TinkerTags.Items.MELEE_WEAPON) || stack.is(TinkerTags.Items.RANGED));
+        }
+        return true;
     }
 
     private <MODULE extends ICustomModule<MODULE>> boolean canPerformAction(IModule<MODULE> module, ToolAction action) {

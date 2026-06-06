@@ -92,6 +92,13 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
                 .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
                 .addModule(BLAZING_FIRE_ASPECT);
 
+        if (TicEXRegistry.ETERNITY_MODIFIER != null) buildModifier(TicEXRegistry.ETERNITY_MODIFIER)
+                .addModules(
+                        ModifierSlotModule.slot(SlotType.ABILITY).eachLevel(1),
+                        ModifierSlotModule.slot(SlotType.UPGRADE).eachLevel(1),
+                        ModifierSlotModule.slot(SlotType.DEFENSE).eachLevel(1)
+                )
+                .levelDisplay(ModifierLevelDisplay.DEFAULT);
 
         //mekanism
         if (TicEXRegistry.RADIATION_SHIELDING_MODIFIER != null) buildModifier(

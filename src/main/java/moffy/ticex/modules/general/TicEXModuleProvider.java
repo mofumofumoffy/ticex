@@ -104,7 +104,8 @@ public class TicEXModuleProvider extends AddonModuleProvider {
                 "computercraft_compat",
                 "CC:Tweaked Compat",
                 TicEXCCModule.class,
-                new String[]{"tconstruct", "computercraft"}
+                new String[]{"tconstruct", "computercraft"},
+                -5
         );
         addRawModule(
                 "psi_compat",
@@ -135,6 +136,7 @@ public class TicEXModuleProvider extends AddonModuleProvider {
                 "JEI Compat",
                 TicEXJeiModule.class,
                 new String[]{"tconstruct", "jei"},
+                -10,
                 true
         );
     }

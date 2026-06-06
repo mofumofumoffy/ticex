@@ -5,6 +5,7 @@ import committee.nova.mods.avaritia.util.ToolUtils;
 import java.util.Map;
 import java.util.function.BiFunction;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.OmnipotenceProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.Direction;
@@ -51,7 +52,7 @@ public class ModifierOmnipotence
             ModifierHooks.PROJECTILE_HIT,
             ModifierHooks.MELEE_HIT,
             ModifierHooks.BREAK_SPEED,
-            TicEXRegistry.PROPERTY_PROVIDER_HOOK
+            TicEXModifierHooks.PROPERTY_PROVIDER
         );
     }
 

@@ -8,6 +8,7 @@ import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageType;
+import slimeknights.tconstruct.library.modifiers.ModifierId;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 import javax.annotation.Nullable;
@@ -32,9 +33,18 @@ public class TicEXDEUtils {
     );
 
     @Nullable
-    public static TechLevel getTechLevel(IToolStackView tool) {
+    public static TechLevel getTechLevel(ResourceKey<DamageType> damageType){
+        if(damageType.equals(TOOL_DRACONIUM)) return TechLevel.DRACONIUM;
+        else if(damageType.equals(TOOL_WYVERN)) return TechLevel.WYVERN;
+        else if(damageType.equals(TOOL_DRACONIC)) return TechLevel.DRACONIC;
+        else if(damageType.equals(TOOL_CHAOTIC)) return TechLevel.CHAOTIC;
+        return null;
+    }
+
+    @Nullable
+    public static TechLevel getTechLevel(IToolStackView tool, ModifierId modifierId) {
         if (tool != null) {
-            return switch (tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get())) {
+            return switch (tool.getModifierLevel(modifierId)) {
                 case 1 -> TechLevel.DRACONIUM;
                 case 2 -> TechLevel.WYVERN;
                 case 3 -> TechLevel.DRACONIC;
@@ -51,8 +61,12 @@ public class TicEXDEUtils {
         else return DEContent.WYVERN_TIER;
     }
 
-    public static ResourceKey<DamageType> getDamageTag(IToolStackView tool) {
-        int level = tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get());
+    public static ResourceKey<DamageType> getDamageTag(IToolStackView tool, ModifierId modifierId) {
+        int level = tool.getModifierLevel(modifierId);
+        return getDamageTag(level);
+    }
+
+    public static ResourceKey<DamageType> getDamageTag(int level) {
         return switch (level) {
             case 2 -> TOOL_WYVERN;
             case 3 -> TOOL_DRACONIC;

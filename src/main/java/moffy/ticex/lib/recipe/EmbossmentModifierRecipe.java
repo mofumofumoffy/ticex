@@ -3,6 +3,7 @@ package moffy.ticex.lib.recipe;
 import java.util.*;
 import javax.annotation.Nullable;
 import moffy.ticex.lib.hook.EmbossmentModifierHook.EmbossmentContext;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.RegistryAccess;
@@ -144,7 +145,7 @@ public class EmbossmentModifierRecipe extends AbstractModifierRecipe {
                 if (embossItem.get(0).test(input)) {
                     result = tool
                             .getModifier(modifier)
-                            .getHook(TicEXRegistry.EMBOSSMENT_HOOK)
+                            .getHook(TicEXModifierHooks.EMBOSSMENT)
                             .applyItem(context, i, secondary);
                 }
                 secondary = true;

@@ -8,9 +8,7 @@ import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.entity.curios.ResonanceToolProjectile;
 import moffy.ticex.entity.mekanism.MekanicProjectile;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
-import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.lib.hook.EnergyModifierHook;
-import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.*;
 import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
 import net.minecraft.core.registries.Registries;
@@ -168,10 +166,6 @@ public class TicEXRegistry {
     public static RegistryObject<MenuType<ToolContainerMenu>> UNSYNCED_TOOL_CONTAINER = null;
     public static RegistryObject<MenuType<FluidTransmuterContainerMenu>> FLUID_TRANSMUTER_MENU = null;
 
-    public static ModuleHook<EmbossmentModifierHook> EMBOSSMENT_HOOK = null;
-    public static ModuleHook<ProvidePropertyModifierHook> PROPERTY_PROVIDER_HOOK = null;
-    public static ModuleHook<EnergyModifierHook> ENERGY_HOOK = null;
-
     public static RegistryObject<Item> EXHAUSTED_GLOVE = null;
     public static RegistryObject<Item> ETHERIC_INGOT = null;
     public static RegistryObject<Item> OD_INGOT = null;
@@ -261,6 +255,7 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> BEDROCK_BREAKER_MODIFIER = null;
     public static DynamicModifier TRANSCENDENTAL_MODIFIER = null;
     public static StaticModifier<Modifier> CELESTIAL_MODIFIER = null;
+    public static DynamicModifier ETERNITY_MODIFIER = null;
     public static StaticModifier<Modifier> CONDENSING_MODIFIER = null;
     public static DynamicModifier DENSE_MODIFIER = null;
     public static StaticModifier<Modifier> AFTERSHOCK_MODIFIER = null;
@@ -271,20 +266,20 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> MEKANIC_MODIFIER = null;
     public static DynamicModifier RADIATION_SHIELDING_MODIFIER = null;
     public static StaticModifier<Modifier> SASSY_MODIFIER = null;
+    public static StaticModifier<Modifier> DRAGON_FORCE_MODIFIER = null;
     public static StaticModifier<Modifier> EVOLVED_MODIFIER = null;
     public static DynamicModifier INJECT_MODIFIER = null;
     public static StaticModifier<Modifier> SOUL_RENDING_MODIFIER = null;
     public static StaticModifier<Modifier> KONPAKU_MODIFIER = null;
     public static StaticModifier<Modifier> KOSHIRAE_MODIFIER = null;
     public static StaticModifier<Modifier> PROUD_MODIFIER = null;
-    public static StaticModifier<Modifier> LAMELLAR_MODIFIER = null;
     public static StaticModifier<Modifier> APOTH_SUPPLIER_MODIFIER = null;
     public static StaticModifier<Modifier> OVERLOAD_MODIFIER = null;
     public static StaticModifier<Modifier> OVERRIDE_MODIFIER = null;
     public static StaticModifier<Modifier> INCOMPARABLE_MODIFIER = null;
     public static DynamicModifier CARDBOARD_MODIFIER = null;
-    public static StaticModifier<Modifier> FLOWERSTORM_MODIFIER = null;
     public static StaticModifier<Modifier> OVERCASTING_MODIFIER = null;
+    public static StaticModifier<Modifier> CLUSTER_MODIFIER = null;
     public static StaticModifier<Modifier> ABYSSAL_MODIFIER = null;
     public static StaticModifier<Modifier> INFERNAL_MODIFIER = null;
     public static StaticModifier<Modifier> GRAVITY_MODIFIER = null;
