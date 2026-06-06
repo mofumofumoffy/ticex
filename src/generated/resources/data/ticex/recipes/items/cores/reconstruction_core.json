@@ -6,7 +6,7 @@
       "item": "minecraft:amethyst_shard"
     },
     "c": {
-      "item": "tconstruct:sky_slime_ball"
+      "tag": "forge:ingots/cobalt"
     },
     "p": {
       "item": "minecraft:blaze_powder"
