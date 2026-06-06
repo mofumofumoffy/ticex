@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "ticex:reconstruction_core"
+    },
+    "title": {
+      "translate": "advancements.ticex.get_reconstruction_core.title"
+    },
+    "description": {
+      "translate": "advancements.ticex.get_reconstruction_core.description"
+    },
+    "background": "tconstruct:textures/gui/advancement_background.png",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_reconstruction_core": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "ticex:reconstruction_core"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_reconstruction_core"
+    ]
+  ]
+}

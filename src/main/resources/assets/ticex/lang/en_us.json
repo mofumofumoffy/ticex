@@ -309,5 +309,8 @@
   "ticex.modid": "TicEX",
   "key.ticex.shoot_gauntlet": "Shoot Gauntlet",
   "jei.ticex.fluid_transmuter.title": "Fluid Transmuting",
-  "gui.ticex.fluid_transmuter": "Fluid Transmuter"
+  "gui.ticex.fluid_transmuter": "Fluid Transmuter",
+
+  "advancements.ticex.get_reconstruction_core.title": "Rebirth-Mode:ON!",
+  "advancements.ticex.get_reconstruction_core.description": "Obtains a reconstruction core"
 }
