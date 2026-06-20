@@ -19,49 +19,50 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.client.ICurioRenderer;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class LayerResonanceTools<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
+public class LayerResonanceTools implements ICurioRenderer {
 
     public static final float RADIUS = 1.4f;
     protected ItemRenderer itemRenderer;
     protected EntityRenderDispatcher entityRenderDispatcher;
     private final Map<LivingEntity, ICuriosItemHandler> curiosInventoryCache = new HashMap<>();
 
-    public LayerResonanceTools(RenderLayerParent<T, M> pRenderer) {
-        super(pRenderer);
-        this.itemRenderer = Minecraft.getInstance().getItemRenderer();
-        this.entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-    }
-
     @Override
-    public void render(@NotNull PoseStack pPoseStack, @NotNull MultiBufferSource pBuffer, int pPackedLight, @NotNull T pLivingEntity,
-                       float pLimbSwing, float pLimbSwingAmount, float pPartialTick, float pAgeInTicks, float pNetHeadYaw,
-                       float pHeadPitch) {
-
-        if(!curiosInventoryCache.containsKey(pLivingEntity)) {
-            LazyOptional<ICuriosItemHandler> cap = CuriosApi.getCuriosInventory(pLivingEntity);
-            if(cap.isPresent()) {
-                curiosInventoryCache.put(pLivingEntity, cap.orElseThrow(IllegalStateException::new));
-            }
+    public <T extends LivingEntity, M extends EntityModel<T>> void render(
+            ItemStack stack,
+            SlotContext slotContext,
+            PoseStack matrixStack,
+            RenderLayerParent<T, M> renderLayerParent,
+            MultiBufferSource renderTypeBuffer,
+            int light, float limbSwing,
+            float limbSwingAmount,
+            float partialTicks,
+            float ageInTicks,
+            float netHeadYaw,
+            float headPitch
+    ) {
+        if(itemRenderer == null){
+            itemRenderer = Minecraft.getInstance().getItemRenderer();
         }
 
-        if(curiosInventoryCache.containsKey(pLivingEntity)) {
-            ICuriosItemHandler curios = curiosInventoryCache.get(pLivingEntity);
+        if(entityRenderDispatcher == null){
+            entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        }
 
-            curios.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).ifPresent(slotResult -> {
-                ItemStack stack = slotResult.stack();
-                stack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(itemHandler -> {
-                    renderTools(pPoseStack, pBuffer, pPackedLight, pLivingEntity, pPartialTick, itemHandler);
-                });
+        if(slotContext.visible()){
+            stack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(itemHandler -> {
+                renderTools(matrixStack, renderTypeBuffer, light, slotContext.entity(), partialTicks, itemHandler);
             });
         }
     }
 
-    private void renderTools(@NotNull PoseStack pPoseStack, @NotNull MultiBufferSource pBuffer, int pPackedLight, @NotNull T pLivingEntity, float pPartialTick, IItemHandler itemHandler) {
+    private void renderTools(@NotNull PoseStack pPoseStack, @NotNull MultiBufferSource pBuffer, int pPackedLight, @NotNull LivingEntity pLivingEntity, float pPartialTick, IItemHandler itemHandler) {
         int tools = 0;
         for(int i = 0; i < itemHandler.getSlots(); i++) {
             if(!itemHandler.getStackInSlot(i).isEmpty()){

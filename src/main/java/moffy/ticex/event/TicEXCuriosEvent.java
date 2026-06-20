@@ -54,7 +54,7 @@ public class TicEXCuriosEvent {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    /*@OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void addLayers(EntityRenderersEvent.AddLayers event) {
         addPlayerLayer(event, "default");
@@ -68,7 +68,7 @@ public class TicEXCuriosEvent {
         if (renderer instanceof LivingEntityRenderer livingRenderer) {
             livingRenderer.addLayer(new LayerResonanceTools<>(livingRenderer));
         }
-    }
+    }*/
 
     @OnlyIn(Dist.CLIENT)
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {

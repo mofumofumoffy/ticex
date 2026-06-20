@@ -5,6 +5,7 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.curios.CuriosCapProvider;
 import moffy.ticex.client.modules.ticex.TicEXKeyBindings;
+import moffy.ticex.client.render.curios.LayerResonanceTools;
 import moffy.ticex.entity.curios.ResonanceToolProjectile;
 import moffy.ticex.event.TicEXCuriosEvent;
 import moffy.ticex.item.GloveItem;
@@ -24,9 +25,11 @@ import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.lwjgl.glfw.GLFW;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 public class TicEXCuriosModule implements AddonModule {
 
@@ -74,7 +77,13 @@ public class TicEXCuriosModule implements AddonModule {
                 ));
 
         bus.addListener(TicEXCuriosEvent::onRegisterRenderers);
-        bus.addListener(TicEXCuriosEvent::addLayers);
+        //bus.addListener(TicEXCuriosEvent::addLayers);
         bus.addListener(TicEXCuriosEvent::registerBindings);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void clientSetup(FMLClientSetupEvent event) {
+        CuriosRendererRegistry.register(TicEXRegistry.RESONANCE_GAUNTLET.get(), LayerResonanceTools::new);
     }
 }
