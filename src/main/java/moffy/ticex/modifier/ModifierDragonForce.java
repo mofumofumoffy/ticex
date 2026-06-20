@@ -1,6 +1,7 @@
 package moffy.ticex.modifier;
 
 import com.brandon3055.brandonscore.api.TechLevel;
+import moffy.ticex.TicEXConfig;
 import moffy.ticex.lib.hook.DamageSourceModifierHook;
 import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXDEUtils;
@@ -76,6 +77,9 @@ public class ModifierDragonForce extends Modifier implements DamageSourceModifie
                 for(ModifierEntry trait : traits){
                     if(trait.getModifier().getId().equals(this.getId())){
                         effectiveLevel = Math.max(effectiveLevel, trait.getLevel() - 1);
+                        if(TicEXConfig.EASIER_DRAGONFORCE != null && !TicEXConfig.EASIER_DRAGONFORCE.get()){
+                            effectiveLevel = Math.max(effectiveLevel, 3);
+                        }
                     }
                 }
             }

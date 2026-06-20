@@ -24,6 +24,7 @@ public class TicEXConfig {
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> SLOTS_CONFIG;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> MODIFIER_CONFIG;
     public static ForgeConfigSpec.ConfigValue<Boolean> SHOULD_CONSUME_SLASHBLADE;
+    public static ForgeConfigSpec.ConfigValue<Boolean> EASIER_DRAGONFORCE;
 
     // Avaritia
     public static ForgeConfigSpec.ConfigValue<Float> CONDENSING_DROP_PROBABILITY;
@@ -133,8 +134,10 @@ public class TicEXConfig {
         MORE_CONFIG.pop();
         MORE_CONFIG.push("Catalyst Settings");
         SHOULD_CONSUME_SLASHBLADE = MORE_CONFIG.comment("If set to true, the catalyst will consume the Slashblade upon use.")
-                .define("shouldConsumeSlashblade", true);
+                .define("shouldConsumeSlashblade", false);
         MORE_CONFIG.pop();
+        MORE_CONFIG.push("Misc");
+        EASIER_DRAGONFORCE = MORE_CONFIG.comment("If set to true, it will increase the maximum level of the DragonForce trait to 4, allowing you to inflict chaotic damage before defeating the Chaos Guardian.").define("easierDragonForce", false);
 
         CLIENT.comment("Client Settings").push("client");
         USE_SHADER = CLIENT.comment("Rendering with shaders for some tools/armors").define("useShader", true);
