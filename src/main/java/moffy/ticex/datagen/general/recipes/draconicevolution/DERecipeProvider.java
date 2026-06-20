@@ -86,9 +86,6 @@ public class DERecipeProvider implements ITicEXSmelteryRecipeHelper, ISmelteryRe
                     .ingredient(DEContent.CORE_DRACONIUM)
                     .ingredient(Items.NETHER_STAR)
                     .ingredient(Items.NETHER_STAR)
-                    .ingredient(DEContent.SWORD_WYVERN)
-                    .ingredient(DEContent.SHOVEL_WYVERN)
-                    .ingredient(DEContent.PICKAXE_WYVERN)
                     .ingredient(DEContent.MODULE_CORE)
                     .build(topConsumer);
         }
@@ -105,9 +102,6 @@ public class DERecipeProvider implements ITicEXSmelteryRecipeHelper, ISmelteryRe
                     .ingredient(Tags.Items.STORAGE_BLOCKS_NETHERITE)
                     .ingredient(Tags.Items.STORAGE_BLOCKS_NETHERITE)
                     .ingredient(DEContent.CORE_WYVERN)
-                    .ingredient(DEContent.SWORD_DRACONIC)
-                    .ingredient(DEContent.SHOVEL_DRACONIC)
-                    .ingredient(DEContent.PICKAXE_DRACONIC)
                     .ingredient(DEContent.MODULE_CORE)
                     .build(topConsumer);
         }
@@ -124,9 +118,6 @@ public class DERecipeProvider implements ITicEXSmelteryRecipeHelper, ISmelteryRe
                     .ingredient(DEContent.CORE_CHAOTIC)
                     .ingredient(Items.DRAGON_EGG)
                     .ingredient(Items.DRAGON_EGG)
-                    .ingredient(DEContent.SWORD_CHAOTIC)
-                    .ingredient(DEContent.SHOVEL_CHAOTIC)
-                    .ingredient(DEContent.PICKAXE_CHAOTIC)
                     .ingredient(DEContent.MODULE_CORE)
                     .build(topConsumer);
         }

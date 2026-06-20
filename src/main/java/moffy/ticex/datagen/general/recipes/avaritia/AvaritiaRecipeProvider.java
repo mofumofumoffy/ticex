@@ -17,6 +17,7 @@ import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.data.recipe.IMaterialRecipeHelper;
 import slimeknights.tconstruct.library.recipe.FluidValues;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialFluidRecipeBuilder;
+import slimeknights.tconstruct.library.recipe.fuel.MeltingFuelBuilder;
 import slimeknights.tconstruct.library.recipe.melting.MaterialMeltingRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
 import slimeknights.tconstruct.library.tools.SlotType;
@@ -144,7 +145,12 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
                     .save(topConsumer, prefix(TicEXMaterials.BLAZING, materialMeltingFolder));
 
             metalIngotOptional(topConsumer, TicEXTags.Fluids.BLAZING, TicEXTags.Items.BLAZING_BLOCK, 1800, TicEXRegistry.MOLTEN_BLAZING.getId());
+            MeltingFuelBuilder.fuel(TicEXRegistry.MOLTEN_BLAZING.ingredient(50), 150, 3500)
+                    .rate(55)
+                    .save(pWriter, prefix(TicEXRegistry.MOLTEN_BLAZING, smelteryMeltingFolder + "fuel/"));
         }
+
+
     }
 
     @Override
