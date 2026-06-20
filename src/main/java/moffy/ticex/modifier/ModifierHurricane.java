@@ -1,6 +1,7 @@
 package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
+import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.ChatFormatting;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -24,14 +26,17 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fml.DistExecutor;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
+import slimeknights.tconstruct.library.modifiers.hook.armor.EquipmentChangeModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.AttributesModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
+import slimeknights.tconstruct.library.tools.context.EquipmentChangeContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
@@ -41,7 +46,7 @@ import java.util.function.BiConsumer;
 
 public class ModifierHurricane
         extends NoLevelsModifier
-        implements InventoryTickModifierHook, TooltipModifierHook, AttributesModifierHook {
+        implements InventoryTickModifierHook, TooltipModifierHook, AttributesModifierHook, EquipmentChangeModifierHook {
 
     private static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("A4334312-DFF8-4582-9F4F-62AD0C070475");
 
@@ -57,7 +62,7 @@ public class ModifierHurricane
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.TOOLTIP, ModifierHooks.ATTRIBUTES);
+        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.TOOLTIP, ModifierHooks.ATTRIBUTES, ModifierHooks.EQUIPMENT_CHANGE);
     }
 
     public static void toggleStepAssist(IToolStackView boots, Player player) {
@@ -175,5 +180,26 @@ public class ModifierHurricane
     @Override
     public boolean shouldDisplay(boolean advanced) {
         return advanced;
+    }
+
+    @Override
+    public void onEquip(@NotNull IToolStackView tool, @NotNull ModifierEntry modifier, @NotNull EquipmentChangeContext context) {
+        if (context.getEntity() instanceof Player player) {
+            Abilities abilities = player.getAbilities();
+            abilities.mayfly = true;
+            player.onUpdateAbilities();
+        }
+    }
+
+    @Override
+    public void onUnequip(@NotNull IToolStackView tool, @NotNull ModifierEntry modifier, @NotNull EquipmentChangeContext context) {
+        if (context.getEntity() instanceof Player player) {
+            if (!player.isCreative()) {
+                Abilities abilities = player.getAbilities();
+                abilities.mayfly = false;
+                abilities.flying = false;
+                player.onUpdateAbilities();
+            }
+        }
     }
 }
