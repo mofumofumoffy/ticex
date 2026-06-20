@@ -37,11 +37,13 @@ import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.modules.mekanism.interfaces.IAbsorbableItem;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
+import moffy.ticex.lib.utils.TicEXUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -67,6 +69,11 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
+import slimeknights.tconstruct.library.modifiers.ModifierEntry;
+import slimeknights.tconstruct.library.modifiers.ModifierHooks;
+import slimeknights.tconstruct.library.tools.context.EquipmentContext;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -119,6 +126,19 @@ public class TicEXMekanismEvent {
         }
     }
 
+    static void handleArmorModifierHook(Player player, DamageSource source, float damageAmount){
+        EquipmentContext context = new EquipmentContext(player);
+        for(EquipmentSlot slot : TicEXUtils.ARMOR_TYPES){
+            ItemStack stack = player.getItemBySlot(slot);
+            if(stack.getItem() instanceof IModifiable){
+                ToolStack tool = ToolStack.from(stack);
+                for(ModifierEntry entry : tool.getModifierList()){
+                    entry.getHook(ModifierHooks.ON_ATTACKED).onAttacked(tool, entry, context, slot, source, damageAmount, isDirectDamage(source));
+                }
+            }
+        }
+    }
+
     public static void onEntityAttack(LivingAttackEvent event) {
         LivingEntity entity = event.getEntity();
         if (event.getAmount() <= 0 || !entity.isAlive()) {
@@ -132,9 +152,14 @@ public class TicEXMekanismEvent {
         }
         if (entity instanceof Player player) {
             if (IAbsorbableItem.tryAbsorbAll(player, event.getSource(), event.getAmount())) {
+                handleArmorModifierHook(player, event.getSource(), 0);
                 event.setCanceled(true);
             }
         }
+    }
+
+    static boolean isDirectDamage(DamageSource source) {
+        return source.getEntity() != null && !source.isIndirect() && !source.is(DamageTypeTags.AVOIDS_GUARDIAN_THORNS);
     }
 
     public static void onLivingHurt(LivingHurtEvent event) {
@@ -157,6 +182,7 @@ public class TicEXMekanismEvent {
             if (ratioAbsorbed > 0) {
                 float damageRemaining = event.getAmount() * Math.max(0, 1 - ratioAbsorbed);
                 if (damageRemaining <= 0) {
+                    handleArmorModifierHook(player, event.getSource(), 0);
                     event.setCanceled(true);
                 } else {
                     event.setAmount(damageRemaining);

@@ -1,6 +1,7 @@
 package moffy.ticex.lib.utils;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
@@ -17,10 +18,13 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
 public class TicEXUtils {
+    public static final List<EquipmentSlot> ARMOR_TYPES = ImmutableList.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
+
     public static ItemStack getToolStack(IToolStackView tool){
         if(tool instanceof ToolStack toolStack){
             return toolStack.createStack();
