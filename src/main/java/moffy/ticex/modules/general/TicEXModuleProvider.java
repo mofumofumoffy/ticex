@@ -136,8 +136,7 @@ public class TicEXModuleProvider extends AddonModuleProvider {
                 "JEI Compat",
                 TicEXJeiModule.class,
                 new String[]{"tconstruct", "jei"},
-                -10,
-                true
+                -10
         );
     }
 
