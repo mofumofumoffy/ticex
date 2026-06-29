@@ -3,6 +3,7 @@ package moffy.ticex.event;
 import mods.flammpfeil.slashblade.event.BladeMotionEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import moffy.ticex.TicEX;
+import moffy.ticex.client.render.slashblade.KoshiraeIconDecorator;
 import moffy.ticex.client.render.slashblade.SBToolBladeItemRenderer;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -11,7 +12,10 @@ import moffy.ticex.network.slashblade.StateSyncPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterItemDecorationsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
@@ -62,6 +66,11 @@ public class TicEXSBEvent {
         if (event.getSource().getEntity() instanceof ServerPlayer player) {
                 syncState(player);
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void registerItemDecorators(RegisterItemDecorationsEvent event) {
+        event.register(TicEXRegistry.REFORGED_SLASHBLADE.get(), new KoshiraeIconDecorator());
     }
 
     @SuppressWarnings("unchecked")

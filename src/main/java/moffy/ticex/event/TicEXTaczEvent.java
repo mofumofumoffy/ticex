@@ -11,6 +11,8 @@ package moffy.ticex.event;
 import com.tacz.guns.api.event.common.EntityHurtByGunEvent;
 import com.tacz.guns.api.event.common.GunDamageSourcePart;
 import com.tacz.guns.api.event.common.GunMeleeEvent;
+import com.tacz.guns.init.ModItems;
+import moffy.ticex.client.render.tacz.BlitzGunIconDecorator;
 import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.lib.hook.DamageSourceModifierHook;
 import moffy.ticex.mixin.CriticalAccessor;
@@ -21,6 +23,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RegisterItemDecorationsEvent;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
@@ -111,6 +116,11 @@ public class TicEXTaczEvent {
                 }
             }
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void registerItemDecorators(RegisterItemDecorationsEvent event) {
+        event.register(TicEXRegistry.BLITZ_GUN.get(), new BlitzGunIconDecorator());
     }
 
     public static AABB getAABB(LivingEntity attacker) {

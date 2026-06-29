@@ -44,6 +44,12 @@ public class TicEXTaczModule implements AddonModule {
 
     @OnlyIn(Dist.CLIENT)
     @Override
+    public void initClient(FMLJavaModLoadingContext context) {
+        context.getModEventBus().addListener(TicEXTaczEvent::registerItemDecorators);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
     public void clientSetup(FMLClientSetupEvent event) {
         TicEXRenders.CUSTOM_MODELS.put(TicEXRegistry.BLITZ_GUN.get(), CustomModel::new);
     }

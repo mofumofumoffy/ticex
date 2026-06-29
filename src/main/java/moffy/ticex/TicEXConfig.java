@@ -14,6 +14,7 @@ public class TicEXConfig {
     // TicEX
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
+    public static ForgeConfigSpec.ConfigValue<Boolean> SHOW_TOOL_ICON;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> FLUID_TRANSMUTER_PATTERNS;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> FLUID_TRANSMUTER_EXCLUDE_PATTERNS;
 
@@ -141,6 +142,7 @@ public class TicEXConfig {
 
         CLIENT.comment("Client Settings").push("client");
         USE_SHADER = CLIENT.comment("Rendering with shaders for some tools/armors").define("useShader", true);
+        SHOW_TOOL_ICON = CLIENT.comment("If true, an icon will be displayed for the TiCEX-converted tool.").define("showToolIcon", true);
 
 
         AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(context), COMMON);
