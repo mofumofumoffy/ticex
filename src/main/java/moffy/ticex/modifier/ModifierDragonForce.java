@@ -78,7 +78,7 @@ public class ModifierDragonForce extends Modifier implements DamageSourceModifie
                     if(trait.getModifier().getId().equals(this.getId())){
                         effectiveLevel = Math.max(effectiveLevel, trait.getLevel() - 1);
                         if(TicEXConfig.EASIER_DRAGONFORCE != null && !TicEXConfig.EASIER_DRAGONFORCE.get()){
-                            effectiveLevel = Math.max(effectiveLevel, 3);
+                            effectiveLevel = Math.min(effectiveLevel, 3);
                         }
                     }
                 }
