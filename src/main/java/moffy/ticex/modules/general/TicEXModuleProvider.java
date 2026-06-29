@@ -131,13 +131,13 @@ public class TicEXModuleProvider extends AddonModuleProvider {
                 TicEXArsModule.class,
                 new String[]{"tconstruct", "ars_nouveau"}
         );
-        addRawModule(
+        /*addRawModule(
                 "jei_compat",
                 "JEI Compat",
                 TicEXJeiModule.class,
                 new String[]{"tconstruct", "jei"},
                 -10
-        );
+        );*/
     }
 
     @Override
