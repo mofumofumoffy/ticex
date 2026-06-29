@@ -1,7 +1,10 @@
 package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
+import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
+import moffy.ticex.modifier.propeties.HurricaneProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.ChatFormatting;
@@ -41,12 +44,14 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 public class ModifierHurricane
         extends NoLevelsModifier
-        implements InventoryTickModifierHook, TooltipModifierHook, AttributesModifierHook, EquipmentChangeModifierHook {
+        implements InventoryTickModifierHook, TooltipModifierHook, AttributesModifierHook, EquipmentChangeModifierHook, ProvidePropertyModifierHook {
 
     private static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("A4334312-DFF8-4582-9F4F-62AD0C070475");
 
@@ -62,7 +67,7 @@ public class ModifierHurricane
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.TOOLTIP, ModifierHooks.ATTRIBUTES, ModifierHooks.EQUIPMENT_CHANGE);
+        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.TOOLTIP, ModifierHooks.ATTRIBUTES, ModifierHooks.EQUIPMENT_CHANGE, TicEXModifierHooks.PROPERTY_PROVIDER);
     }
 
     public static void toggleStepAssist(IToolStackView boots, Player player) {
@@ -201,5 +206,10 @@ public class ModifierHurricane
                 player.onUpdateAbilities();
             }
         }
+    }
+
+    @Override
+    public BiFunction<Player, ItemStack, Map<String, Object>> getPropertyProvider() {
+        return HurricaneProperty.getProperties();
     }
 }

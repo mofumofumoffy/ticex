@@ -1,6 +1,9 @@
 package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
+import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.lib.hook.TicEXModifierHooks;
+import moffy.ticex.modifier.propeties.AbyssalProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.handlers.InternalTimers;
@@ -46,10 +49,12 @@ import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
-public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickModifierHook, AttributesModifierHook, TooltipModifierHook {
+public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickModifierHook, AttributesModifierHook, TooltipModifierHook, ProvidePropertyModifierHook {
 
     public static final ResourceLocation ABYSSAL_DATA = TicEX.getResource("abyssal");
     public static final UUID ATTRIBUTE_MODIFIER_UUID = UUID.fromString("39377487-3632-4a51-9128-6c211265b7c5");
@@ -74,7 +79,7 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
 
     @Override
     protected void registerHooks(Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.ATTRIBUTES, ModifierHooks.TOOLTIP);
+        hookBuilder.addHook(this, ModifierHooks.INVENTORY_TICK, ModifierHooks.ATTRIBUTES, ModifierHooks.TOOLTIP, TicEXModifierHooks.PROPERTY_PROVIDER);
     }
 
     @Override
@@ -156,5 +161,10 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
     @Override
     public void addTooltip(IToolStackView iToolStackView, ModifierEntry modifierEntry, @Nullable Player player, List<Component> tooltips, TooltipKey tooltipKey, TooltipFlag tooltipFlag) {
         tooltips.add(PELang.GEM_LORE_HELM.translate());
+    }
+
+    @Override
+    public BiFunction<Player, ItemStack, Map<String, Object>> getPropertyProvider() {
+        return AbyssalProperty.getProperties();
     }
 }
