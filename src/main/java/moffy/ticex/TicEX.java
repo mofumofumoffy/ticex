@@ -1,7 +1,6 @@
 package moffy.ticex;
 
 import com.mojang.logging.LogUtils;
-import moffy.ticex.lib.TicEXBootstrap;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -45,9 +44,5 @@ public class TicEX {
 
     public static ResourceLocation getResource(String path) {
         return ResourceLocation.fromNamespaceAndPath(MODID, path);
-    }
-
-    static {
-        TicEXBootstrap.setup();
     }
 }
