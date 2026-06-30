@@ -31,7 +31,7 @@ import java.util.Optional;
 @Mixin(HumanoidArmorLayer.class)
 public class HumanoidArmorLayerMixin {
     @Inject(method = "renderTrim(Lnet/minecraft/world/item/ArmorMaterial;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/armortrim/ArmorTrim;Lnet/minecraft/client/model/Model;Z)V",
-            at = @At("HEAD"), cancellable = true, remap = false)
+            at = @At("TAIL"), remap = false)
     public void renderTrim(ArmorMaterial armorMaterial, PoseStack poseStack, MultiBufferSource bufferSource, int pPackedLight, ArmorTrim armorTrim, Model model, boolean pInnerTexture, CallbackInfo ci) {
         Holder<TrimMaterial> material = armorTrim.material();
         Optional<ResourceKey<TrimMaterial>> trimMaterialKeyOpt = material.unwrapKey();
@@ -65,8 +65,6 @@ public class HumanoidArmorLayerMixin {
                         false
                 ), ArmorContextRenderer.RENDERER);
             }
-
-            ci.cancel();
         }
     }
 }
