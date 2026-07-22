@@ -25,8 +25,8 @@ public class EvolvedProperty {
             Map<String, Object> result = new HashMap<>();
 
             result.put("getOPAmount", getOPAmount(user, stack));
-            result.put("getModuleData", getModuleData(user, stack));
-            result.put("setModuleData", setModuleData(user, stack));
+            result.put("getDraconicModuleData", getModuleData(user, stack));
+            result.put("setDraconicModuleData", setModuleData(user, stack));
 
             return result;
         };
