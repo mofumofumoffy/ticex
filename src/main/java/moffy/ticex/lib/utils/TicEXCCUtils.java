@@ -25,17 +25,14 @@ public class TicEXCCUtils {
 
     public static Map<String, Object> createEntityMapWithProps(Player player) {
         Map<String, Object> entityMap = createEntityMap(player);
+
         entityMap.put(
             "getProperties",
-            (ILuaFunction) args -> {
-                return MethodResult.of(gatherProperties(player));
-            }
+            (ILuaFunction) args -> MethodResult.of(gatherProperties(player))
         );
         entityMap.put(
                 "getProps",
-                (ILuaFunction) args -> {
-                    return MethodResult.of(gatherProperties(player));
-                }
+                (ILuaFunction) args -> MethodResult.of(gatherProperties(player))
         );
         return entityMap;
     }
@@ -50,7 +47,12 @@ public class TicEXCCUtils {
             if(entity instanceof LivingEntity living){
                 entityMap.put("health", living.getHealth());
                 entityMap.put("maxHealth", living.getMaxHealth());
+                entityMap.put("isFallFlying", living.isFallFlying());
+                if(living instanceof Player player){
+                    entityMap.put("isFlying", player.getAbilities().flying);
+                }
             }
+
             entityMap.put("persistentData", entity.getPersistentData().hashCode());
             entityMap.put("getPersistentData", (ILuaFunction) iArguments -> MethodResult.of(entity.getPersistentData().toString()));
         }
