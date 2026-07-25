@@ -7,6 +7,10 @@
     {
       "id": "ticex:inject",
       "required": false
+    },
+    {
+      "id": "ticex:nectar",
+      "required": false
     }
   ]
 }

@@ -21,15 +21,57 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
 
     @Override
     protected void addTags() {
-        this.tag(GENERAL_UPGRADES).addOptional(TicEX.getResource("modem"));
+        this.tag(GENERAL_ABILITIES)
+                .addOptional(TicEX.getResource("psionizing_radiation"))
+                .addOptional(TicEX.getResource("embossed"));
 
-        this.tag(DEFENSE).addOptional(TicEX.getResource("celestial"));
+        this.tag(MELEE_ABILITIES).addOptional(TicEX.getResource("evolved"));
+
+        this.tag(CHESTPLATE_ABILITIES).addOptional(TicEX.getResource("modem"));
+
+        this.tag(RANGED_ABILITIES).addOptional(TicEX.getResource("endestshot"));
+
+        this.tag(GENERAL_UPGRADES).addOptional(TicEX.getResource("socket"));
+
+        this.tag(ARMOR_UPGRADES).addOptional(TicEX.getResource("cardboard"));
+
+        this.tag(MELEE_UPGRADES).addOptional(
+                TicEX.getResource("konpaku"),
+                TicEX.getResource("overcasting")
+        );
+
+        this.tag(DEFENSE)
+                .addOptional(TicEX.getResource("celestial"))
+                .addOptional(TicEX.getResource("radiation_shielding"))
+                .addOptional(
+                        TicEX.getResource("abyssal"),
+                        TicEX.getResource("infernal"),
+                        TicEX.getResource("gravity"),
+                        TicEX.getResource("hurricane")
+                ).addOptional(
+                        TicEX.getResource("ahrim"),
+                        TicEX.getResource("dharok"),
+                        TicEX.getResource("guthan"),
+                        TicEX.getResource("karil"),
+                        TicEX.getResource("torag"),
+                        TicEX.getResource("verac")
+                );
+
+        this.tag(GENERAL_SLOTLESS).addOptional(
+                TicEX.getResource("sensor"),
+                TicEX.getResource("reactive"),
+                TicEX.getResource("koshirae"),
+                TicEX.getResource("mekanic"),
+                TicEX.getResource("alterative"),
+                TicEX.getResource("hidden_proud"),
+                TicEX.getResource("overload"),
+                TicEX.getResource("override")
+        );
 
         this.tag(BONUS_SLOTLESS)
                 .addOptional(TicEX.getResource("eternity"))
-                .addOptional(TicEX.getResource("inject"));
-
-        this.tag(ABILITIES).addOptional(TicEX.getResource("embossment"));
+                .addOptional(TicEX.getResource("inject"))
+                .addOptional(TicEX.getResource("nectar"));
 
         this.tag(EXTRACT_SLOTLESS_BLACKLIST).addOptional(
                 TicEX.getResource("rebirth"),
