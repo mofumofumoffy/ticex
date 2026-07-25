@@ -25,6 +25,8 @@ public class OvercastingProperty {
 
             result.put("getAllSpells", getAllSpells(user, stack));
             result.put("getIronsMana", getIronsMana(user, stack));
+            result.put("getIronsSpellName", getIronsSpellName(user, stack));
+            result.put("getIronsSpellCooldown", getIronsSpellCooldown(user, stack));
             result.put("castIronsSpell", castIronsSpell(user, stack));
 
             return result;
@@ -42,14 +44,42 @@ public class OvercastingProperty {
         return args -> {
             if(user instanceof ServerPlayer){
                 ISpellContainer container = ISpellContainer.get(stack);
-                return MethodResult.of(Arrays.stream(container.getAllSpells()).map(spellSlot -> {
-                    if(spellSlot != null){
-                        return spellSlot.getSpell().getSpellName();
-                    }
-                    return null;
-                }).filter(Objects::nonNull).toList());
+                return MethodResult.of(Arrays.stream(container.getAllSpells()).map(spellSlot -> spellSlot.getSpell().getSpellName()
+                ).filter(Objects::nonNull).toList());
             }
             return MethodResult.of(List.of());
+        };
+    }
+
+    public static ILuaFunction getIronsSpellCooldown(Player user, ItemStack stack) {
+        return args -> {
+            ISpellContainer container = ISpellContainer.get(stack);
+            int page = args.getInt(0) - 1;
+            if (page >= 0 && page < container.getMaxSpellCount() && user instanceof ServerPlayer) {
+                ISpellContainer spellContainer = ISpellContainer.get(stack);
+                SpellData spellData = spellContainer.getSpellAtIndex(page);
+                AbstractSpell spell = spellData.getSpell();
+
+                MagicData playerMagicData = MagicData.getPlayerMagicData(user);
+
+                return MethodResult.of(playerMagicData.getPlayerCooldowns().getCooldownPercent(spell));
+            }
+            return MethodResult.of(0f);
+        };
+    }
+
+    public static ILuaFunction getIronsSpellName(Player user, ItemStack stack) {
+        return args -> {
+            ISpellContainer container = ISpellContainer.get(stack);
+            int page = args.getInt(0) - 1;
+            if (page >= 0 && page < container.getMaxSpellCount() && user instanceof ServerPlayer) {
+                ISpellContainer spellContainer = ISpellContainer.get(stack);
+                SpellData spellData = spellContainer.getSpellAtIndex(page);
+                AbstractSpell spell = spellData.getSpell();
+
+                return MethodResult.of(spell.getSpellName());
+            }
+            return MethodResult.of("");
         };
     }
 
