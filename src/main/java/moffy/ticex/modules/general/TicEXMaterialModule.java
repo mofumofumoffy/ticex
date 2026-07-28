@@ -56,6 +56,8 @@ public class TicEXMaterialModule implements AddonModule {
         TicEXRegistry.AFLOAT_MODIFIER = TicEXRegistry.MODIFIERS.register("afloat", ModifierAfloat::new);
         TicEXRegistry.DUNGEON_MASTER_MODIFIER = TicEXRegistry.MODIFIERS.register("dungeon_master", ModifierDungeonMaster::new);
         TicEXRegistry.UNRAVEL_MODIFIER = TicEXRegistry.MODIFIERS.register("unravel", ModifierUnravel::new);
+        TicEXRegistry.TELESCOPE_MODIFIER = TicEXRegistry.MODIFIERS.register("telescope", ModifierTelescope::new);
+        TicEXRegistry.PLANETARIUM_MODIFIER = TicEXRegistry.MODIFIERS.register("planetarium", ModifierPlanetarium::new);
         TicEXRegistry.EMBOSSMENT_MODIFIER = TicEXRegistry.MODIFIERS.register("embossment", ModifierEmbossment::new);
     }
 }

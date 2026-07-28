@@ -13,10 +13,10 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import java.util.Collection;
 
 public interface CriticalModifierHook {
-    default boolean isCritical(IToolStackView tool, ModifierEntry entry, boolean isCritical, boolean original){
+    default boolean isCritical(IToolStackView tool, ModifierEntry entry, LivingEntity livingEntity, boolean isCritical, boolean original){
         return isCritical;
     }
-    default float setCriticalRate(IToolStackView tool, ModifierEntry entry, float currentRate, float originalRate){
+    default float setCriticalRate(IToolStackView tool, ModifierEntry entry, LivingEntity livingEntity, boolean isCritical, float currentRate, float originalRate){
         return currentRate;
     }
 
@@ -31,8 +31,12 @@ public interface CriticalModifierHook {
 
                 for(ModifierEntry entry : tool.getModifierList()){
                     CriticalModifierHook hook = entry.getHook(TicEXModifierHooks.CRITICAL);
-                    currentCrit = hook.isCritical(tool, entry, currentCrit, isCritical);
-                    currentModifier = hook.setCriticalRate(tool, entry, currentModifier, criticalModifier);
+                    currentCrit = hook.isCritical(tool, entry, entity, currentCrit, isCritical);
+                }
+
+                for(ModifierEntry entry : tool.getModifierList()) {
+                    CriticalModifierHook hook = entry.getHook(TicEXModifierHooks.CRITICAL);
+                    currentModifier = hook.setCriticalRate(tool, entry, entity, currentCrit, currentModifier, criticalModifier);
                 }
             }
         }
@@ -46,19 +50,19 @@ public interface CriticalModifierHook {
 
     record AllMerger(Collection<CriticalModifierHook> hooks) implements CriticalModifierHook{
         @Override
-        public boolean isCritical(IToolStackView tool, ModifierEntry entry, boolean isCritical, boolean original) {
+        public boolean isCritical(IToolStackView tool, ModifierEntry entry, LivingEntity livingEntity, boolean isCritical, boolean original) {
             boolean currentValue = original;
             for(CriticalModifierHook hook : hooks){
-                currentValue = hook.isCritical(tool, entry, currentValue, original);
+                currentValue = hook.isCritical(tool, entry, livingEntity, currentValue, original);
             }
             return currentValue;
         }
 
         @Override
-        public float setCriticalRate(IToolStackView tool, ModifierEntry entry, float currentRate, float originalRate) {
+        public float setCriticalRate(IToolStackView tool, ModifierEntry entry, LivingEntity livingEntity, boolean isCritical, float currentRate, float originalRate) {
             float rate = originalRate;
             for(CriticalModifierHook hook : hooks){
-                rate = hook.setCriticalRate(tool, entry, rate, originalRate);
+                rate = hook.setCriticalRate(tool, entry, livingEntity, isCritical, rate, originalRate);
             }
             return rate;
         }

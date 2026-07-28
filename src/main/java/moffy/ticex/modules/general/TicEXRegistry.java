@@ -300,6 +300,8 @@ public class TicEXRegistry {
     public static StaticModifier<Modifier> AFLOAT_MODIFIER = null;
     public static StaticModifier<Modifier> DUNGEON_MASTER_MODIFIER = null;
     public static StaticModifier<Modifier> UNRAVEL_MODIFIER = null;
+    public static StaticModifier<Modifier> TELESCOPE_MODIFIER = null;
+    public static StaticModifier<Modifier> PLANETARIUM_MODIFIER = null;
 
     public static Tier INFINITY_TIER;
 
