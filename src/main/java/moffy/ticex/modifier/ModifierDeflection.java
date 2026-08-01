@@ -5,7 +5,6 @@ import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.DeflectionProperty;
-import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -76,7 +75,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
                     return 0;
                 }
 
-                float modifier = CriticalModifierHook.modifyCritical(attacker, false, 1.0f).criticalModifier();
+                float modifier = CriticalModifierHook.modifyCritical(attacker, target, false, 1.0f).criticalModifier();
                 float absoluteHealth = target.getHealth() - damage * modifier;
 
                 if (target.level() instanceof ServerLevel serverLevel) {
@@ -119,13 +118,14 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
         Projectile projectile,
         EntityHitResult hit,
         LivingEntity attacker,
-        LivingEntity target
+        LivingEntity target,
+        boolean notBlocked
     ) {
         for (ModifierEntry toolEntry : modifiers.getModifiers()) {
             if (!toolEntry.matches(this) && !persistentData.getBoolean(DEFLECTION_DISABLED)) {
                 toolEntry
                     .getHook(ModifierHooks.PROJECTILE_HIT)
-                    .onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit, attacker, target);
+                    .onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit, attacker, target, notBlocked);
             }
         }
         return false;

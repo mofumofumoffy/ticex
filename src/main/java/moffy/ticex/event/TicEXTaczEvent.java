@@ -21,6 +21,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
@@ -55,8 +56,10 @@ public class TicEXTaczEvent {
                     .target(target)
                     .build();
 
-            CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(attacker, event.isHeadShot(), event.getHeadshotMultiplier() + 1.0f);
-            ((CriticalAccessor)context).setCriticalModifier(criticalContext.isCritical() ? criticalContext.criticalModifier() - 1.0f : 0);
+            if(attacker instanceof Player playerAttacker && target instanceof LivingEntity livingTarget){
+                CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(playerAttacker, livingTarget, event.isHeadShot(), event.getHeadshotMultiplier() + 1.0f);
+                ((CriticalAccessor)context).setCriticalModifier(criticalContext.isCritical() ? criticalContext.criticalModifier() - 1.0f : 0);
+            }
 
             for(ModifierEntry modifier : tool.getModifierList()){
                 damage = modifier.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, modifier, context, initialDamage, damage);

@@ -4,7 +4,9 @@ import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.lib.hook.TicEXModifierHooks;
 import moffy.ticex.mixin.CriticalAccessor;
 import moffy.ticex.modules.general.TicEXRegistry;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ForgeHooks;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -28,12 +30,12 @@ public class ModifierSassy extends NoLevelsModifier implements CriticalModifierH
     }
 
     @Override
-    public boolean isCritical(IToolStackView tool, ModifierEntry entry, LivingEntity livingEntity, boolean isCritical, boolean original) {
+    public boolean isCritical(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, boolean original) {
         return true;
     }
 
     @Override
-    public float setCriticalRate(IToolStackView tool, ModifierEntry entry, LivingEntity livingEntity, boolean isCritical, float currentRate, float originalRate) {
+    public float setCriticalRate(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float currentRate, float originalRate) {
         return Math.max(currentRate, 1.5f);
     }
 }

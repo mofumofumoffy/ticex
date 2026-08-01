@@ -26,6 +26,7 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 @Mixin(value = AttackManager.class, remap = false)
+@Deprecated
 public class AttackManagerMixin {
 
     @Inject(at = @At("HEAD"), method = "doAttackWith", cancellable = true)
@@ -83,7 +84,7 @@ public class AttackManagerMixin {
 
         amount = (amount / (float) livingAttacker.getAttributeValue(Attributes.ATTACK_DAMAGE)) * amplifier;
         if(context.getPlayerAttacker() != null){
-            CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(livingAttacker, false, 1.0f);
+            CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(context.getPlayerAttacker(), target, false, 1.0f);
             CriticalHitEvent criticalHitEvent = ForgeHooks.getCriticalHit(context.getPlayerAttacker(), target, criticalContext.isCritical(), criticalContext.criticalModifier());
             if(criticalHitEvent != null){
                 amount = amount + amount * (criticalHitEvent.getDamageModifier() - 1.0f);

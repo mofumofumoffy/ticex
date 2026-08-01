@@ -5,10 +5,12 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import mods.flammpfeil.slashblade.util.AttackHelper;
+import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.mixin.CriticalAccessor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,16 +27,31 @@ public abstract class PlayerAttackHelperMixin {
 
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/util/AttackHelper;calculateTotalDamage(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;FZ)D"))
     private static void setContext(LivingEntity attacker, Entity target, float comboRatio, CallbackInfo ci,
-                                   @Local boolean isCritical,
                                    @Share(value = "context") LocalRef<ToolAttackContext> contextRef) {
         ToolAttackContext context = ToolAttackContext.attacker(attacker)
                 .hand(InteractionHand.MAIN_HAND)
                 .target(target)
                 .cooldown(1)
                 .build();
-        ((CriticalAccessor)context).setCriticalModifier(isCritical ? 1.5F : 1.0F);
         contextRef.set(context);
+    }
 
+    @ModifyExpressionValue(
+            method = "calculateTotalDamage",
+            at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/entity/player/CriticalHitEvent;getDamageModifier()F")
+    )
+    private static float modifyToolCritModifier(
+            float original,
+            @Local(name = "isCritical") boolean isCritical,
+            @Local(argsOnly = true) LivingEntity attacker,
+            @Local(argsOnly = true) Entity target
+    ){
+        ItemStack stack = attacker.getItemInHand(InteractionHand.MAIN_HAND);
+        if(stack.getItem() instanceof IModifiable && attacker instanceof Player playerAttacker) {
+            CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(playerAttacker, target, isCritical, original);
+            return criticalContext.criticalModifier();
+        }
+        return original;
     }
 
     @ModifyExpressionValue(method = "attack", at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/util/AttackHelper;calculateTotalDamage(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;FZ)D"))

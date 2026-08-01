@@ -2,7 +2,9 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.lib.hook.TicEXModifierHooks;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.module.ModuleHookMap;
@@ -16,10 +18,10 @@ public class ModifierPlanetarium extends Modifier implements CriticalModifierHoo
     }
 
     @Override
-    public boolean isCritical(IToolStackView tool, ModifierEntry entry, LivingEntity livingEntity, boolean isCritical, boolean original) {
+    public boolean isCritical(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, boolean original) {
         if(!isCritical){
-            int moonPhase = livingEntity.level().getMoonPhase();
-            int critRoll = livingEntity.getRandom().nextIntBetweenInclusive(0, Math.abs(4 - moonPhase));
+            int moonPhase = attacker.level().getMoonPhase();
+            int critRoll = attacker.getRandom().nextIntBetweenInclusive(0, Math.abs(4 - moonPhase));
             if(critRoll < entry.getLevel()){
                 return true;
             }
@@ -28,7 +30,7 @@ public class ModifierPlanetarium extends Modifier implements CriticalModifierHoo
     }
 
     @Override
-    public float setCriticalRate(IToolStackView tool, ModifierEntry entry, LivingEntity livingEntity, boolean isCritical, float currentRate, float originalRate) {
+    public float setCriticalRate(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float currentRate, float originalRate) {
         if(isCritical){
             return Math.max(currentRate, 1.5f);
         }
