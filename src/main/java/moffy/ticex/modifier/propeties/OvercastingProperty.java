@@ -44,7 +44,7 @@ public class OvercastingProperty {
         return args -> {
             if(user instanceof ServerPlayer){
                 ISpellContainer container = ISpellContainer.get(stack);
-                return MethodResult.of(Arrays.stream(container.getAllSpells()).map(spellSlot -> spellSlot.getSpell().getSpellName()
+                return MethodResult.of(Arrays.stream(container.getAllSpells()).filter(spellSlot -> spellSlot != null).map(spellSlot -> spellSlot.getSpell().getSpellName()
                 ).filter(Objects::nonNull).toList());
             }
             return MethodResult.of(List.of());
