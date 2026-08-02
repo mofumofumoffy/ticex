@@ -20,6 +20,10 @@ public class ContextStack<T> {
         this.defaultValue = defaultValue;
     }
 
+    public boolean isPresent(){
+        return !localDeque.isEmpty();
+    }
+
     public T get() {
         ContextFrame<T> local = localDeque.peek();
         if(local != null) {
