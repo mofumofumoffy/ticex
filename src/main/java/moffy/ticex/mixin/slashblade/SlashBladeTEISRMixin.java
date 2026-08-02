@@ -30,7 +30,8 @@ public abstract class SlashBladeTEISRMixin {
 
     @WrapOperation(
             method = "renderByItem",
-            at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/client/renderer/SlashBladeTEISR;renderBlade(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)Z")
+            at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/client/renderer/SlashBladeTEISR;renderBlade(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)Z"),
+            remap = true
     )
     public boolean renderToolBlade(
             SlashBladeTEISR instance,
