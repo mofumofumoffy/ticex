@@ -21,6 +21,7 @@ import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeDamageModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.ranged.ProjectileHitModifierHook;
+import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
@@ -31,7 +32,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 
-public class ModifierDeflection extends Modifier implements MeleeDamageModifierHook, ProjectileHitModifierHook, ProvidePropertyModifierHook {
+public class ModifierDeflection extends NoLevelsModifier implements MeleeDamageModifierHook, ProjectileHitModifierHook, ProvidePropertyModifierHook {
 
     public static final ResourceLocation DEFLECTION_DISABLED = TicEX.getResource("deflection_disabled");
 
