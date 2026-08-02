@@ -615,7 +615,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
         return false;
     }
 
-    @Override
+/*    @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(
             new IClientItemExtensions() {
@@ -630,7 +630,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
                 }
             }
         );
-    }
+    }*/
 
     @Override
     public ToolDefinition getToolDefinition() {

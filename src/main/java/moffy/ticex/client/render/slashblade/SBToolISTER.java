@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
+@Deprecated
 public class SBToolISTER extends SlashBladeTEISR {
 
     public SBToolISTER(BlockEntityRenderDispatcher dispatcher, EntityModelSet modelSet) {

@@ -14,6 +14,7 @@ import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,6 +27,41 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 public abstract class SlashBladeTEISRMixin {
     @Shadow
     public abstract ResourceLocation stackDefaultModel(ItemStack stack);
+
+    @WrapOperation(
+            method = "renderByItem",
+            at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/client/renderer/SlashBladeTEISR;renderBlade(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)Z")
+    )
+    public boolean renderToolBlade(
+            SlashBladeTEISR instance,
+            ItemStack handle,
+            ItemDisplayContext msacA,
+            PoseStack poseStack,
+            MultiBufferSource stack,
+            int transformType,
+            int matrixStack,
+            Operation<Boolean> original,
+            @Local(name = "combinedLightIn") int combinedLightIn,
+            @Local(name = "combinedOverlayIn") int combinedOverlayIn
+    ){
+        if(handle.getItem() instanceof IModifiable){
+            ItemRenderContext itemRenderContext = new ItemRenderContext(
+                    handle,
+                    msacA,
+                    msacA == ItemDisplayContext.FIRST_PERSON_LEFT_HAND ||
+                            msacA == ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
+                    poseStack,
+                    stack,
+                    combinedLightIn,
+                    combinedOverlayIn
+            );
+
+            try(ContextFrame<ItemRenderContext> local = TicEXContexts.SB_RENDERING_CONTEXT.open(itemRenderContext)) {
+                return original.call(instance, handle, msacA, poseStack, stack, transformType, matrixStack);
+            }
+        }
+        return original.call(instance, handle, msacA, poseStack, stack, transformType, matrixStack);
+    }
 
     @ModifyVariable(method = "renderModel", at = @At(value = "STORE"), ordinal = 0)
     public ResourceLocation modifyModel(ResourceLocation modelLocation,
