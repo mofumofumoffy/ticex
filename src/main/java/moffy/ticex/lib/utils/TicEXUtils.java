@@ -13,6 +13,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
 import slimeknights.tconstruct.library.modifiers.Modifier;
+import slimeknights.tconstruct.library.modifiers.ModifierManager;
+import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 import slimeknights.tconstruct.library.recipe.tinkerstation.ITinkerStationContainer;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
@@ -30,6 +32,13 @@ public class TicEXUtils {
             return toolStack.createStack();
         }
         return ItemStack.EMPTY;
+    }
+
+    public static int safeGetModifierLevel(IToolStackView tool, StaticModifier<Modifier> modifier){
+        if (ModifierManager.INSTANCE.isModifiersRegistered()) {
+            return tool.getModifierLevel(modifier.get());
+        }
+        return 0;
     }
 
     public static ItemStack getToolStack(IToolStackView tool, LivingEntity entity, Modifier modifier) {

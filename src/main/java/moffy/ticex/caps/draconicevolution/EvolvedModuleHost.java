@@ -14,6 +14,7 @@ import com.brandon3055.draconicevolution.api.modules.lib.ModuleContext;
 import com.brandon3055.draconicevolution.api.modules.lib.ModuleEntity;
 import com.brandon3055.draconicevolution.api.modules.lib.ModuleHostImpl;
 import com.brandon3055.draconicevolution.init.ModuleCfg;
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modifier.ModifierEvolved;
 import moffy.ticex.modules.general.TicEXRegistry;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
@@ -22,14 +23,14 @@ public class EvolvedModuleHost extends ModuleHostImpl {
 
     private IToolStackView toolSupplier;
 
-    public EvolvedModuleHost(IToolStackView toolSupplier) {
+    public EvolvedModuleHost(IToolStackView tool) {
         super(
-            TechLevel.byIndex(toolSupplier.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) - 1),
+            TechLevel.byIndex(TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.EVOLVED_MODIFIER) - 1),
             ModuleCfg.staffWidth(
-                TechLevel.byIndex(toolSupplier.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) - 1)
+                TechLevel.byIndex(TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.EVOLVED_MODIFIER) - 1)
             ),
             ModuleCfg.staffHeight(
-                TechLevel.byIndex(toolSupplier.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) - 1)
+                TechLevel.byIndex(TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.EVOLVED_MODIFIER) - 1)
             ),
             "TiC Tools",
             false,
@@ -53,7 +54,7 @@ public class EvolvedModuleHost extends ModuleHostImpl {
                 }
                 props.add(new DecimalProperty("mining_speed", 1).range(0, 1).setFormatter(DecimalFormatter.PERCENT_1));
             });
-        this.toolSupplier = toolSupplier;
+        this.toolSupplier = tool;
     }
 
     @Override

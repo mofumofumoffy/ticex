@@ -2,6 +2,8 @@ package moffy.ticex.caps.draconicevolution;
 
 import com.brandon3055.draconicevolution.api.capability.DECapabilities;
 import java.util.function.Supplier;
+
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -27,15 +29,15 @@ public class DEItemCapabilityProvider implements IToolCapabilityProvider {
         if (
             (capability == DECapabilities.MODULE_HOST_CAPABILITY ||
                 capability == DECapabilities.PROPERTY_PROVIDER_CAPABILITY) &&
-            tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) > 0
+            TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.EVOLVED_MODIFIER) > 0
         ) {
             return LazyOptional.of(() -> moduleHost).cast();
         } else if (
-            capability == DECapabilities.OP_STORAGE && tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) > 0
+            capability == DECapabilities.OP_STORAGE && TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.EVOLVED_MODIFIER) > 0
         ) {
             return LazyOptional.of(() -> opStorage).cast();
         } else if (
-            capability == ForgeCapabilities.ENERGY && tool.getModifierLevel(TicEXRegistry.EVOLVED_MODIFIER.get()) > 0
+            capability == ForgeCapabilities.ENERGY && TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.EVOLVED_MODIFIER) > 0
         ) {
             return LazyOptional.of(() -> energyStorage).cast();
         }

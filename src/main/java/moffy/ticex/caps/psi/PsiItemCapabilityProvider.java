@@ -1,6 +1,8 @@
 package moffy.ticex.caps.psi;
 
 import java.util.function.Supplier;
+
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -25,7 +27,7 @@ public class PsiItemCapabilityProvider implements IToolCapabilityProvider {
                 capability == PsiAPI.CAD_DATA_CAPABILITY ||
                 capability == PsiAPI.PSI_BAR_DISPLAY_CAPABILITY ||
                 capability == PsiAPI.SPELL_ACCEPTOR_CAPABILITY) &&
-            tool.getModifierLevel(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER.get()) > 0
+                    TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.PSIONIZING_RADIATION_MODIFIER) > 0
         ) {
             return LazyOptional.of(() -> toolCADData).cast();
         }
