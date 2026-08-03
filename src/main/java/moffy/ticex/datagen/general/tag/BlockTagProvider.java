@@ -3,6 +3,7 @@ package moffy.ticex.datagen.general.tag;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -63,12 +64,12 @@ public class BlockTagProvider extends BlockTagsProvider {
 
     private void addSmeltery() {
         this.tag(TinkerTags.Blocks.SEARED_TANKS).add(
-                TicEXRegistry.SEARED_RF_FURNACE.get(),
-                TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get()
+                TicEXBlocks.SEARED_RF_FURNACE.get(),
+                TicEXBlocks.CREATIVE_SEARED_RF_FURNACE.get()
             );
         this.tag(TinkerTags.Blocks.SCORCHED_TANKS).add(
-                TicEXRegistry.SCORCHED_RF_FURNACE.get(),
-                TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get()
+                TicEXBlocks.SCORCHED_RF_FURNACE.get(),
+                TicEXBlocks.CREATIVE_SCORCHED_RF_FURNACE.get()
             );
     }
 

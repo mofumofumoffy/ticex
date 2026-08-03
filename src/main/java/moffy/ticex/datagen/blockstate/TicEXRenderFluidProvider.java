@@ -2,6 +2,7 @@ package moffy.ticex.datagen.blockstate;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.data.PackOutput;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.client.render.FluidCuboid;
@@ -16,7 +17,7 @@ public class TicEXRenderFluidProvider extends BlockStateDataMapProvider<List<Flu
 
     @Override
     protected void addEntries() {
-        block(TicEXRegistry.FLUID_TRANSMUTER).variant(List.of(
+        block(TicEXBlocks.FLUID_TRANSMUTER).variant(List.of(
                 FluidCuboid.builder()
                         .from(0.08f, 6.08f, 0.08f)
                         .to(15.92f, 15.92f, 15.92f)

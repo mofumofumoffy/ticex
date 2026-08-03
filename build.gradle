@@ -222,7 +222,7 @@ dependencies {
     implementation fg.deobf("curse.maven:ars-nouveau-401955:6688854")
 
     implementation fg.deobf("curse.maven:jei-238222:6075247")
-    implementation fg.deobf("curse.maven:tconjei-974154:6442609")
+    runtimeOnly fg.deobf("curse.maven:tconjei-974154:8115259")
 
     /* runtimeOnly fg.deobf("curse.maven:mouse-tweaks-60089:5338457")
     runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")

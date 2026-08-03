@@ -7,6 +7,7 @@ import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentModifierRecip
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -95,7 +96,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXItems.RECONSTRUCTION_CORE.get()))
                 .save(pWriter, prefix(TicEXItems.FLICKERING_RECONSTRUCTION_CORE, coresFolder));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.ETHERIC_BLOCK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXBlocks.ETHERIC_BLOCK.get())
                 .showNotification(true)
                 .define('#', TicEXTags.Items.ETHERIC_INGOT)
                 .define('*', TicEXItems.ETHERIC_INGOT.get())
@@ -106,11 +107,11 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .save(pWriter, prefix(itemsFolder + "etheric_block_from_ingot"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TicEXItems.ETHERIC_INGOT.get(), FluidValues.METAL_BLOCK / FluidValues.INGOT)
-                .requires(TicEXRegistry.ETHERIC_BLOCK.get())
-                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.ETHERIC_BLOCK.get()))
+                .requires(TicEXBlocks.ETHERIC_BLOCK.get())
+                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXBlocks.ETHERIC_BLOCK.get()))
                 .save(pWriter, prefix(itemsFolder + "etheric_ingot_from_block"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.OD_BLOCK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXBlocks.OD_BLOCK.get())
                 .showNotification(true)
                 .define('#', TicEXTags.Items.OD_INGOT)
                 .define('*', TicEXItems.OD_INGOT.get())
@@ -121,8 +122,8 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .save(pWriter, prefix(itemsFolder + "od_block_from_ingot"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TicEXItems.OD_INGOT.get(), FluidValues.METAL_BLOCK / FluidValues.INGOT)
-                .requires(TicEXRegistry.OD_BLOCK.get())
-                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.OD_BLOCK.get()))
+                .requires(TicEXBlocks.OD_BLOCK.get())
+                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXBlocks.OD_BLOCK.get()))
                 .save(pWriter, prefix(itemsFolder + "od_ingot_from_block"));
     }
 
@@ -151,20 +152,20 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 modsAvailable(TicEX.getResource("default_utility"))
         );
 
-        ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXRegistry.SCORCHED_RF_FURNACE.get()))
+        ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXBlocks.SCORCHED_RF_FURNACE.get()))
                 .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerTags.Items.FOUNDRY_BRICKS, true)
-                .save(utilityConsumer, prefix(TicEXRegistry.SCORCHED_RF_FURNACE, smelteryCastingFolder + "scorched/"));
+                .save(utilityConsumer, prefix(TicEXBlocks.SCORCHED_RF_FURNACE, smelteryCastingFolder + "scorched/"));
 
-        ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXRegistry.FLUID_TRANSMUTER.get()))
+        ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXBlocks.FLUID_TRANSMUTER.get()))
                 .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerSmeltery.scorchedAlloyer.get(), true)
-                .save(utilityConsumer, prefix(TicEXRegistry.FLUID_TRANSMUTER, smelteryCastingFolder + "scorched_"));
+                .save(utilityConsumer, prefix(TicEXBlocks.FLUID_TRANSMUTER, smelteryCastingFolder + "scorched_"));
 
-        ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXRegistry.SEARED_RF_FURNACE.get()))
+        ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXBlocks.SEARED_RF_FURNACE.get()))
                 .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerTags.Items.SMELTERY_BRICKS, true)
-                .save(utilityConsumer, prefix(TicEXRegistry.SEARED_RF_FURNACE, smelteryCastingFolder + "seared/"));
+                .save(utilityConsumer, prefix(TicEXBlocks.SEARED_RF_FURNACE, smelteryCastingFolder + "seared/"));
 
         ItemCastingRecipeBuilder.tableRecipe(TicEXItems.FLICKERING_RECONSTRUCTION_CORE.get())
                 .setFluid(TicEXTags.Fluids.RECONSTRUCTION_CORE, 2000)

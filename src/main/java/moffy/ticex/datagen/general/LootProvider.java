@@ -2,6 +2,7 @@ package moffy.ticex.datagen.general;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -49,16 +50,16 @@ public class LootProvider extends LootTableProvider {
 
         private void addCommon() {
             //materials
-            dropSelf(TicEXRegistry.ETHERIC_BLOCK.get());
-            dropSelf(TicEXRegistry.OD_BLOCK.get());
+            dropSelf(TicEXBlocks.ETHERIC_BLOCK.get());
+            dropSelf(TicEXBlocks.OD_BLOCK.get());
         }
 
         private void addSmeltery() {
-            dropSelf(TicEXRegistry.SEARED_RF_FURNACE.get());
-            dropSelf(TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get());
-            dropSelf(TicEXRegistry.SCORCHED_RF_FURNACE.get());
-            dropSelf(TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get());
-            dropSelf(TicEXRegistry.FLUID_TRANSMUTER.get());
+            dropSelf(TicEXBlocks.SEARED_RF_FURNACE.get());
+            dropSelf(TicEXBlocks.CREATIVE_SEARED_RF_FURNACE.get());
+            dropSelf(TicEXBlocks.SCORCHED_RF_FURNACE.get());
+            dropSelf(TicEXBlocks.CREATIVE_SCORCHED_RF_FURNACE.get());
+            dropSelf(TicEXBlocks.FLUID_TRANSMUTER.get());
         }
     }
 }

@@ -2,6 +2,7 @@ package moffy.ticex.block.furnace;
 
 import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -35,7 +36,7 @@ public class RFFurnaceBlock extends SearedTankBlock {
 
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
-        return new RFFurnaceBlockEntity(TicEXRegistry.RF_FURNACE_ENTITY.get(), pPos, pState, isCreative);
+        return new RFFurnaceBlockEntity(TicEXBlocks.RF_FURNACE_ENTITY.get(), pPos, pState, isCreative);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class RFFurnaceBlock extends SearedTankBlock {
             @NotNull BlockState pState,
             @NotNull BlockEntityType<T> pBlockEntityType
     ) {
-        if (pBlockEntityType == TicEXRegistry.RF_FURNACE_ENTITY.get() && !pLevel.isClientSide()) {
+        if (pBlockEntityType == TicEXBlocks.RF_FURNACE_ENTITY.get() && !pLevel.isClientSide()) {
             return (Level level, BlockPos pos, BlockState state, T pBlockEntity) ->
                 RFFurnaceBlockEntity.serverTick(level, pos, state, (RFFurnaceBlockEntity) pBlockEntity);
         }

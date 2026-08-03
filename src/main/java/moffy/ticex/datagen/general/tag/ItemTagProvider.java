@@ -3,6 +3,7 @@ package moffy.ticex.datagen.general.tag;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
@@ -134,12 +135,12 @@ public class ItemTagProvider extends ItemTagsProvider {
     @SuppressWarnings("unchecked")
     private void addSmeltery() {
         this.tag(TinkerTags.Items.SEARED_TANKS).add(
-                TicEXRegistry.SEARED_RF_FURNACE.get().asItem(),
-                TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get().asItem()
+                TicEXBlocks.SEARED_RF_FURNACE.get().asItem(),
+                TicEXBlocks.CREATIVE_SEARED_RF_FURNACE.get().asItem()
         );
         this.tag(TinkerTags.Items.SCORCHED_TANKS).add(
-                TicEXRegistry.SCORCHED_RF_FURNACE.get().asItem(),
-                TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get().asItem()
+                TicEXBlocks.SCORCHED_RF_FURNACE.get().asItem(),
+                TicEXBlocks.CREATIVE_SCORCHED_RF_FURNACE.get().asItem()
         );
 
         this.tag(TinkerTags.Items.CASTS)

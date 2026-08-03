@@ -14,6 +14,7 @@ import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.transmuter.pattern.FluidTransmutationPair;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -47,7 +48,7 @@ public class FluidTransmuterCategory extends AbstractRecipeCategory<FluidTransmu
         super(
                 TicEXJEIIntegration.JeiConstants.FLUID_TRANSMUTATION_RECIPE,
                 TITLE,
-                helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(TicEXRegistry.FLUID_TRANSMUTER.get())),
+                helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(TicEXBlocks.FLUID_TRANSMUTER.get())),
                 172,
                 62);
 

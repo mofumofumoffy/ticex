@@ -4,6 +4,7 @@ import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.client.modules.ticex.models.MaterialOverrideModel;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -135,7 +136,7 @@ public class TicEXEvent {
     }
 
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(TicEXRegistry.FLUID_TRANSMUTER_ENTITY.get(), TankBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(TicEXBlocks.FLUID_TRANSMUTER_ENTITY.get(), TankBlockEntityRenderer::new);
     }
 
 

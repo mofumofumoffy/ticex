@@ -62,34 +62,6 @@ import java.util.function.Supplier;
 
 public class TicEXRegistry {
 
-    public static final BlockBehaviour.Properties SEARED;
-
-    static {
-        IntFunction<BlockBehaviour.Properties> solidProps = factor ->
-                builder(MapColor.COLOR_GRAY, SoundType.METAL)
-                        .instrument(NoteBlockInstrument.BASEDRUM)
-                        .requiresCorrectToolForDrops()
-                        .strength(3.0F * factor, 9.0F * factor)
-                        .isValidSpawn(
-                                (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
-                        );
-        SEARED = solidProps.apply(1);
-    }
-
-    public static final BlockBehaviour.Properties SCORCHED;
-
-    static {
-        IntFunction<BlockBehaviour.Properties> solidProps = factor ->
-                builder(MapColor.TERRACOTTA_BROWN, SoundType.BASALT)
-                        .instrument(NoteBlockInstrument.BASEDRUM)
-                        .requiresCorrectToolForDrops()
-                        .strength(2.5F * factor, 8.0F * factor)
-                        .isValidSpawn(
-                                (s, r, p, e) -> !s.hasProperty(SearedBlock.IN_STRUCTURE) || !s.getValue(SearedBlock.IN_STRUCTURE)
-                        );
-        SCORCHED = solidProps.apply(1);
-    }
-
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
     public static final TicEXItemDeferredRegisterExtension ITEMS_EXTENDED = new TicEXItemDeferredRegisterExtension(
             ITEMS,
@@ -138,18 +110,6 @@ public class TicEXRegistry {
     public static RegistryObject<MenuType<ToolContainerMenu>> UNSYNCED_TOOL_CONTAINER = null;
     public static RegistryObject<MenuType<FluidTransmuterContainerMenu>> FLUID_TRANSMUTER_MENU = null;
 
-
-
-    public static RegistryObject<Block> ETHERIC_BLOCK = null;
-    public static RegistryObject<Block> OD_BLOCK = null;
-    public static RegistryObject<Block> SEARED_RF_FURNACE = null;
-    public static RegistryObject<Block> CREATIVE_SEARED_RF_FURNACE = null;
-    public static RegistryObject<Block> SCORCHED_RF_FURNACE = null;
-    public static RegistryObject<Block> CREATIVE_SCORCHED_RF_FURNACE = null;
-    public static RegistryObject<Block> FLUID_TRANSMUTER = null;
-
-    public static RegistryObject<BlockEntityType<RFFurnaceBlockEntity>> RF_FURNACE_ENTITY = null;
-    public static RegistryObject<BlockEntityType<FluidTransmuterBlockEntity>> FLUID_TRANSMUTER_ENTITY = null;
 
     public static FluidObject<UnplaceableFluid> MOLTEN_RECONSTRUCTION_CORE = null;
     public static List<FluidObject<UnplaceableFluid>> RF_FURNACE_FUELS = new ArrayList<>();
@@ -301,9 +261,5 @@ public class TicEXRegistry {
             output.accept(castObject.getRedSand());
             output.accept(castObject.getSand());
         }
-    }
-
-    private static BlockBehaviour.Properties builder(MapColor color, SoundType soundType) {
-        return BlockBehaviour.Properties.of().sound(soundType).mapColor(color);
     }
 }

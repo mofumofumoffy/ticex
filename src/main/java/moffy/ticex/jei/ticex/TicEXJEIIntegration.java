@@ -12,6 +12,7 @@ import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.client.modules.ticex.screen.FluidTransmuterScreen;
 import moffy.ticex.jei.IJeiIntegration;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.plugin.jei.util.GuiContainerTankHandler;
 
@@ -42,7 +43,7 @@ public class TicEXJEIIntegration implements IJeiIntegration {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(
-                new ItemStack(TicEXRegistry.FLUID_TRANSMUTER.get()),
+                new ItemStack(TicEXBlocks.FLUID_TRANSMUTER.get()),
                 JeiConstants.FLUID_TRANSMUTATION_RECIPE
         );
     }

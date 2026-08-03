@@ -2,6 +2,7 @@ package moffy.ticex.datagen.blockstate;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -15,16 +16,16 @@ public class TicEXBlockstateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        activatableBlock(TicEXRegistry.CREATIVE_SEARED_RF_FURNACE.get(), "block/smeltery/seared_rf_furnace", 180);
-        activatableBlock(TicEXRegistry.CREATIVE_SCORCHED_RF_FURNACE.get(), "block/foundry/scorched_rf_furnace", 180);
+        activatableBlock(TicEXBlocks.CREATIVE_SEARED_RF_FURNACE.get(), "block/smeltery/seared_rf_furnace", 180);
+        activatableBlock(TicEXBlocks.CREATIVE_SCORCHED_RF_FURNACE.get(), "block/foundry/scorched_rf_furnace", 180);
 
-        activatableBlock(TicEXRegistry.SEARED_RF_FURNACE.get(), "block/smeltery/seared_rf_furnace", 180);
-        activatableBlock(TicEXRegistry.SCORCHED_RF_FURNACE.get(), "block/foundry/scorched_rf_furnace", 180);
+        activatableBlock(TicEXBlocks.SEARED_RF_FURNACE.get(), "block/smeltery/seared_rf_furnace", 180);
+        activatableBlock(TicEXBlocks.SCORCHED_RF_FURNACE.get(), "block/foundry/scorched_rf_furnace", 180);
 
-        activatableBlock(TicEXRegistry.FLUID_TRANSMUTER.get(), "block/foundry/fluid_transmuter", 180);
+        activatableBlock(TicEXBlocks.FLUID_TRANSMUTER.get(), "block/foundry/fluid_transmuter", 180);
 
-        simpleModelBlock(TicEXRegistry.ETHERIC_BLOCK.get(), "block/etheric_block");
-        simpleModelBlock(TicEXRegistry.OD_BLOCK.get(), "block/od_block");
+        simpleModelBlock(TicEXBlocks.ETHERIC_BLOCK.get(), "block/etheric_block");
+        simpleModelBlock(TicEXBlocks.OD_BLOCK.get(), "block/od_block");
     }
 
     public void simpleModelBlock(Block block, String name) {

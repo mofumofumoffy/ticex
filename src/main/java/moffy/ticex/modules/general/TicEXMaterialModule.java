@@ -3,6 +3,7 @@ package moffy.ticex.modules.general;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.*;
+import moffy.ticex.registry.TicEXBlocks;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -18,12 +19,12 @@ public class TicEXMaterialModule implements AddonModule {
                 new Item(new Item.Properties())
         );
 
-        TicEXRegistry.ETHERIC_BLOCK = TicEXRegistry.BLOCKS.register("etheric_block", () ->
+        TicEXBlocks.ETHERIC_BLOCK = TicEXRegistry.BLOCKS.register("etheric_block", () ->
                 new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).noOcclusion())
         );
 
         TicEXRegistry.ITEMS.register("etheric_block", () ->
-                new BlockItem(TicEXRegistry.ETHERIC_BLOCK.get(), new Item.Properties())
+                new BlockItem(TicEXBlocks.ETHERIC_BLOCK.get(), new Item.Properties())
         );
 
         TicEXRegistry.MOLTEN_ETHERIC = TicEXRegistry.FLUIDS.register("molten_etheric")
@@ -37,12 +38,12 @@ public class TicEXMaterialModule implements AddonModule {
                 new Item(new Item.Properties())
         );
 
-        TicEXRegistry.OD_BLOCK = TicEXRegistry.BLOCKS.register("od_block", () ->
+        TicEXBlocks.OD_BLOCK = TicEXRegistry.BLOCKS.register("od_block", () ->
                 new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).noOcclusion())
         );
 
         TicEXRegistry.ITEMS.register("od_block", () ->
-                new BlockItem(TicEXRegistry.OD_BLOCK.get(), new Item.Properties())
+                new BlockItem(TicEXBlocks.OD_BLOCK.get(), new Item.Properties())
         );
 
         TicEXRegistry.MOLTEN_OD = TicEXRegistry.FLUIDS.register("molten_od")

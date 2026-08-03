@@ -3,6 +3,7 @@ package moffy.ticex.block.transmuter;
 import com.google.common.collect.ImmutableMap;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -31,13 +32,13 @@ public class FluidTransmuterBlock extends TinyMultiblockControllerBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-        return new FluidTransmuterBlockEntity(TicEXRegistry.FLUID_TRANSMUTER_ENTITY.get(), blockPos, blockState);
+        return new FluidTransmuterBlockEntity(TicEXBlocks.FLUID_TRANSMUTER_ENTITY.get(), blockPos, blockState);
     }
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         return pLevel.isClientSide ? null :
-                BlockEntityHelper.castTicker(pBlockEntityType, TicEXRegistry.FLUID_TRANSMUTER_ENTITY.get(), FluidTransmuterBlockEntity.SERVER_TICKER);
+                BlockEntityHelper.castTicker(pBlockEntityType, TicEXBlocks.FLUID_TRANSMUTER_ENTITY.get(), FluidTransmuterBlockEntity.SERVER_TICKER);
     }
 
     @Override
