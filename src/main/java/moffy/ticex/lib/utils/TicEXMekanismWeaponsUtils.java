@@ -19,6 +19,7 @@ import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
@@ -41,10 +42,10 @@ public class TicEXMekanismWeaponsUtils {
     }
 
     public static void register(){
-        TicEXRegistry.CATALYST_MEKA_TANA = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_tana",
+        TicEXItems.CATALYST_MEKA_TANA = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_tana",
                 () -> new ToolPartItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_tana").getId())
         );
-        TicEXRegistry.CATALYST_MEKA_BOW = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_bow",
+        TicEXItems.CATALYST_MEKA_BOW = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_bow",
                 () -> new ToolPartItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_bow").getId())
         );
 
@@ -56,7 +57,7 @@ public class TicEXMekanismWeaponsUtils {
                         .setShouldReceiveVelocityUpdates(false)
                         .build(TicEX.MODID + ":mekanic_arrow")
         );
-        TicEXRegistry.MEKANIC_ARROW = TicEXRegistry.ITEMS.register("mekanic_arrow", ()->new MekanicShotItem(new Item.Properties()));
+        TicEXItems.MEKANIC_ARROW = TicEXRegistry.ITEMS.register("mekanic_arrow", ()->new MekanicShotItem(new Item.Properties()));
     }
 
     public static float getAmplifier(ItemStack stack){

@@ -7,6 +7,7 @@ import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentModifierRecip
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -74,7 +75,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
     }
 
     public void buildShapedRecipes(Consumer<FinishedRecipe> pWriter) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.RECONSTRUCTION_CORE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXItems.RECONSTRUCTION_CORE.get())
                 .define('c', ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge","ingots/cobalt")))
                 .define('a', Items.AMETHYST_SHARD)
                 .define('s', Items.SHULKER_SHELL)
@@ -83,28 +84,28 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .pattern("pcp")
                 .pattern("asa")
                 .unlockedBy("has_item", TicEXRecipeProvider.has(TinkerCommons.slimeball.get(SlimeType.SKY)))
-                .save(pWriter, prefix(TicEXRegistry.RECONSTRUCTION_CORE, coresFolder));
+                .save(pWriter, prefix(TicEXItems.RECONSTRUCTION_CORE, coresFolder));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE.get())
-                .define('c', TicEXRegistry.RECONSTRUCTION_CORE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXItems.FLICKERING_RECONSTRUCTION_CORE.get())
+                .define('c', TicEXItems.RECONSTRUCTION_CORE.get())
                 .define('s', Items.NETHER_STAR)
                 .pattern("ccc")
                 .pattern("csc")
                 .pattern("ccc")
-                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.RECONSTRUCTION_CORE.get()))
-                .save(pWriter, prefix(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE, coresFolder));
+                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXItems.RECONSTRUCTION_CORE.get()))
+                .save(pWriter, prefix(TicEXItems.FLICKERING_RECONSTRUCTION_CORE, coresFolder));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.ETHERIC_BLOCK.get())
                 .showNotification(true)
                 .define('#', TicEXTags.Items.ETHERIC_INGOT)
-                .define('*', TicEXRegistry.ETHERIC_INGOT.get())
+                .define('*', TicEXItems.ETHERIC_INGOT.get())
                 .pattern("###")
                 .pattern("#*#")
                 .pattern("###")
-                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.ETHERIC_INGOT.get()))
+                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXItems.ETHERIC_INGOT.get()))
                 .save(pWriter, prefix(itemsFolder + "etheric_block_from_ingot"));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TicEXRegistry.ETHERIC_INGOT.get(), FluidValues.METAL_BLOCK / FluidValues.INGOT)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TicEXItems.ETHERIC_INGOT.get(), FluidValues.METAL_BLOCK / FluidValues.INGOT)
                 .requires(TicEXRegistry.ETHERIC_BLOCK.get())
                 .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.ETHERIC_BLOCK.get()))
                 .save(pWriter, prefix(itemsFolder + "etheric_ingot_from_block"));
@@ -112,14 +113,14 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.OD_BLOCK.get())
                 .showNotification(true)
                 .define('#', TicEXTags.Items.OD_INGOT)
-                .define('*', TicEXRegistry.OD_INGOT.get())
+                .define('*', TicEXItems.OD_INGOT.get())
                 .pattern("###")
                 .pattern("#*#")
                 .pattern("###")
-                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.OD_INGOT.get()))
+                .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXItems.OD_INGOT.get()))
                 .save(pWriter, prefix(itemsFolder + "od_block_from_ingot"));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TicEXRegistry.OD_INGOT.get(), FluidValues.METAL_BLOCK / FluidValues.INGOT)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TicEXItems.OD_INGOT.get(), FluidValues.METAL_BLOCK / FluidValues.INGOT)
                 .requires(TicEXRegistry.OD_BLOCK.get())
                 .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.OD_BLOCK.get()))
                 .save(pWriter, prefix(itemsFolder + "od_ingot_from_block"));
@@ -165,10 +166,10 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .setCast(TinkerTags.Items.SMELTERY_BRICKS, true)
                 .save(utilityConsumer, prefix(TicEXRegistry.SEARED_RF_FURNACE, smelteryCastingFolder + "seared/"));
 
-        ItemCastingRecipeBuilder.tableRecipe(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE.get())
+        ItemCastingRecipeBuilder.tableRecipe(TicEXItems.FLICKERING_RECONSTRUCTION_CORE.get())
                 .setFluid(TicEXTags.Fluids.RECONSTRUCTION_CORE, 2000)
                 .setCoolingTime(60)
-                .save(pWriter, prefix(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE, smelteryCastingFolder + "slime/"));
+                .save(pWriter, prefix(TicEXItems.FLICKERING_RECONSTRUCTION_CORE, smelteryCastingFolder + "slime/"));
 
         MaterialFluidRecipeBuilder.material(TicEXMaterials.RECONSTRUCTION)
                 .setTemperature(1000)
@@ -184,9 +185,9 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .setTools(TinkerTags.Items.DURABILITY)
                 .save(pWriter, prefix(TicEXRegistry.EMBOSSMENT_MODIFIER, slotlessFolder));
 
-        MeltingRecipeBuilder.melting(Ingredient.of(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE.get()),
+        MeltingRecipeBuilder.melting(Ingredient.of(TicEXItems.FLICKERING_RECONSTRUCTION_CORE.get()),
                         FluidOutput.fromFluid(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE.get(), 2000), 1000, (int) 32)
-                .save(pWriter, prefix(TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE, smelteryMeltingFolder));
+                .save(pWriter, prefix(TicEXItems.FLICKERING_RECONSTRUCTION_CORE, smelteryMeltingFolder));
 
         for (int i = 0; i < TicEXRegistry.RF_FURNACE_FUELS.size(); i++) {
             FluidObject<UnplaceableFluid> fuel = TicEXRegistry.RF_FURNACE_FUELS.get(i);

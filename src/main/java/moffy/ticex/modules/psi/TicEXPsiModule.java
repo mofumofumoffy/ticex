@@ -8,6 +8,7 @@ import moffy.ticex.modifier.ModifierPsionizingRadiation;
 import moffy.ticex.modifier.ModifierSensor;
 import moffy.ticex.modifier.ModifierSocket;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -18,7 +19,7 @@ public class TicEXPsiModule implements AddonModule {
     public void init(FMLJavaModLoadingContext context) {
         ToolCapabilityProvider.register(PsiItemCapabilityProvider::new);
 
-        TicEXRegistry.PSIONIZING_RADIATION_CORE = TicEXRegistry.ITEMS.register("psionizing_radiation_core", () ->
+        TicEXItems.PSIONIZING_RADIATION_CORE = TicEXRegistry.ITEMS.register("psionizing_radiation_core", () ->
                 new ItemReconstCore(new Item.Properties(), "psionizing_radiation")
         );
 

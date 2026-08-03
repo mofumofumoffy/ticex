@@ -11,6 +11,7 @@ import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentModifierRecip
 import moffy.ticex.datagen.general.recipes.ticex.builder.SingleEmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -51,7 +52,7 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
         }
 
         if(TicEXRegistry.KOSHIRAE_MODIFIER != null) {
-            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KOSHIRAE_MODIFIER.getId(), Ingredient.of(TicEXRegistry.CATALYST_SLASHBLADE))
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KOSHIRAE_MODIFIER.getId(), Ingredient.of(TicEXItems.CATALYST_SLASHBLADE))
                     .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
                     .save(topConsumer, prefix(TicEXRegistry.KOSHIRAE_MODIFIER, slotlessFolder));
         }
@@ -60,7 +61,7 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
 
         if(TicEXRegistry.KONPAKU_MODIFIER != null) {
             EmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KONPAKU_MODIFIER.getId())
-                    .addInput(SizedIngredient.fromItems(TicEXRegistry.KONPAKU_CORE.get()))
+                    .addInput(SizedIngredient.fromItems(TicEXItems.KONPAKU_CORE.get()))
                     .addEmbossItem(SizedIngredient.fromItems(Items.ENCHANTED_BOOK))
                     .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
                     .setSlots(SlotType.UPGRADE, 1)
@@ -69,36 +70,36 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
 
         // shaped
 
-       if(TicEXRegistry.KONPAKU_CORE != null) {
-           ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.KONPAKU_CORE.get())
+       if(TicEXItems.KONPAKU_CORE != null) {
+           ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXItems.KONPAKU_CORE.get())
                    .define('A', SBItems.proudsoul_tiny)
-                   .define('C', TicEXRegistry.RECONSTRUCTION_CORE.get())
+                   .define('C', TicEXItems.RECONSTRUCTION_CORE.get())
                    .pattern(" A ")
                    .pattern("ACA")
                    .pattern(" A ")
-                   .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.RECONSTRUCTION_CORE.get()))
-                   .save(topConsumer, prefix(TicEXRegistry.KONPAKU_CORE, coresFolder));
+                   .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXItems.RECONSTRUCTION_CORE.get()))
+                   .save(topConsumer, prefix(TicEXItems.KONPAKU_CORE, coresFolder));
        }
 
        // other
 
-        if(TicEXRegistry.REFORGED_SLASHBLADE != null) {
-            EmbossmentBuildingRecipeBuilder.buildingRecipe((IModifiable) TicEXRegistry.REFORGED_SLASHBLADE.asItem())
+        if(TicEXItems.REFORGED_SLASHBLADE != null) {
+            EmbossmentBuildingRecipeBuilder.buildingRecipe((IModifiable) TicEXItems.REFORGED_SLASHBLADE.asItem())
                     .outputSize(1)
-                    .save(topConsumer, prefix(TicEXRegistry.REFORGED_SLASHBLADE, buildingFolder));
+                    .save(topConsumer, prefix(TicEXItems.REFORGED_SLASHBLADE, buildingFolder));
         }
 
-        if(TicEXRegistry.SLASHBLADE_BLADE != null) {
-            sbCasting(topConsumer, TicEXRegistry.SLASHBLADE_BLADE, TicEXRegistry.SLASHBLADE_BLADE_CAST, "slashblade_blade", 4, 4, 4);
+        if(TicEXItems.SLASHBLADE_BLADE != null) {
+            sbCasting(topConsumer, TicEXItems.SLASHBLADE_BLADE, TicEXItems.SLASHBLADE_BLADE_CAST, "slashblade_blade", 4, 4, 4);
         }
 
-        if(TicEXRegistry.SLASHBLADE_SAYA != null) {
-            sbCasting(topConsumer, TicEXRegistry.SLASHBLADE_SAYA, TicEXRegistry.SLASHBLADE_SAYA_CAST, "slashblade_saya", 6, 6, 6);
+        if(TicEXItems.SLASHBLADE_SAYA != null) {
+            sbCasting(topConsumer, TicEXItems.SLASHBLADE_SAYA, TicEXItems.SLASHBLADE_SAYA_CAST, "slashblade_saya", 6, 6, 6);
         }
 
-        if(TicEXRegistry.CATALYST_SLASHBLADE != null) {
-            embossmentCasting(topConsumer, TicEXRegistry.CATALYST_SLASHBLADE.get(), 1, TicEXTags.Items.SLASHBLADE, true,
-                    prefix(TicEXRegistry.CATALYST_SLASHBLADE, partsCastingFolder));
+        if(TicEXItems.CATALYST_SLASHBLADE != null) {
+            embossmentCasting(topConsumer, TicEXItems.CATALYST_SLASHBLADE.get(), 1, TicEXTags.Items.SLASHBLADE, true,
+                    prefix(TicEXItems.CATALYST_SLASHBLADE, partsCastingFolder));
         }
     }
 

@@ -2,8 +2,7 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
-import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
+import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.HurricaneProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.utils.text.PELang;

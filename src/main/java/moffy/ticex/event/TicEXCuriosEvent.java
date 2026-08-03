@@ -7,6 +7,7 @@ import moffy.ticex.client.render.curios.LayerResonanceTools;
 import moffy.ticex.client.render.curios.ResonanceToolProjectileRenderer;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -40,13 +41,13 @@ public class TicEXCuriosEvent {
             if(entityLocation != null){
                 if (blacklist.stream().anyMatch(id -> entityLocation.toString().equals(id))) {
                     if(TicEXConfig.GLOVE_DROP_BLACKLIST_AS_WHITELIST.get() && randomSource.nextIntBetweenInclusive(0, 3000) <= 0){
-                        level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXRegistry.EXHAUSTED_GLOVE.get())));
+                        level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXItems.EXHAUSTED_GLOVE.get())));
                     } else {
                     }
                 } else {
                     if(TicEXConfig.GLOVE_DROP_BLACKLIST_AS_WHITELIST.get()){
                     } else if(randomSource.nextIntBetweenInclusive(0, 3000) <= 0){
-                        level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXRegistry.EXHAUSTED_GLOVE.get())));
+                        level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXItems.EXHAUSTED_GLOVE.get())));
                     }
                 }
             }

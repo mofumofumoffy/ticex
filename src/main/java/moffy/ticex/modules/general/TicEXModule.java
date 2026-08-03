@@ -18,6 +18,7 @@ import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.ModifierEnchantmentSupplier;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
@@ -78,51 +79,10 @@ public class TicEXModule implements AddonModule {
                 () -> LoadableRecipeSerializer.of(ValidatableIncrementalModifierRecipe.LOADER)
         );
 
-        TicEXModifierHooks.EMBOSSMENT = ModifierHooks.LOADER.register(
-                new ModuleHook<>(
-                        TicEX.getResource("embossment"),
-                        EmbossmentModifierHook.class,
-                        EmbossmentModifierHook.AllMerger::new,
-                        new EmbossmentModifierHook.DefaultClass()
-                )
-        );
-        TicEXModifierHooks.PROPERTY_PROVIDER = ModifierHooks.LOADER.register(
-                new ModuleHook<>(
-                        TicEX.getResource("provide_property"),
-                        ProvidePropertyModifierHook.class,
-                        ProvidePropertyModifierHook.AllMerger::new,
-                        new ProvidePropertyModifierHook.DefaultClass()
-                )
-        );
-        TicEXModifierHooks.ENERGY = ModifierHooks.LOADER.register(
-                new ModuleHook<>(
-                        TicEX.getResource("energy"),
-                        EnergyModifierHook.class,
-                        EnergyModifierHook.AllMerger::new,
-                        new EnergyModifierHook.DefaultClass()
-                )
-        );
-        TicEXModifierHooks.DAMAGE_SOURCE = ModifierHooks.LOADER.register(
-                new ModuleHook<>(
-                        TicEX.getResource("modify_damage_source"),
-                        DamageSourceModifierHook.class,
-                        DamageSourceModifierHook.AllMerger::new,
-                        new DamageSourceModifierHook.DefaultClass()
-                )
-        );
-        TicEXModifierHooks.CRITICAL = ModifierHooks.LOADER.register(
-                new ModuleHook<>(
-                        TicEX.getResource("critical"),
-                        CriticalModifierHook.class,
-                        CriticalModifierHook.AllMerger::new,
-                        new CriticalModifierHook.DefaultClass()
-                )
-        );
-
-        TicEXRegistry.RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register("reconstruction_core", () ->
+        TicEXItems.RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register("reconstruction_core", () ->
                 new ItemReconstCore(new Item.Properties(), null)
         );
-        TicEXRegistry.FLICKERING_RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register(
+        TicEXItems.FLICKERING_RECONSTRUCTION_CORE = TicEXRegistry.ITEMS.register(
                 "flickering_reconstruction_core",
                 () -> new ItemFlickeringCore(new Item.Properties())
         );
@@ -145,14 +105,13 @@ public class TicEXModule implements AddonModule {
         TicEXRegistry.CREATIVE_TAB_ITEMS = TicEXRegistry.CREATIVE_TABS.register(TicEX.MODID, () ->
                 CreativeModeTab.builder()
                         .title(Component.translatable("itemGroup.tab." + TicEX.MODID))
-                        .icon(() -> new ItemStack(TicEXRegistry.RECONSTRUCTION_CORE.get()))
+                        .icon(() -> new ItemStack(TicEXItems.RECONSTRUCTION_CORE.get()))
                         .displayItems(TicEXRegistry::addTabItems)
                         .build()
         );
 
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
         TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER = TicEXRegistry.MODIFIERS.register("enchantment_supplier", ModifierEnchantmentSupplier::new);
-
 
         TicEXRegistry.UNSYNCED_TOOL_CONTAINER = TicEXRegistry.MENUS.register(
                 "unsynced_tool_container",

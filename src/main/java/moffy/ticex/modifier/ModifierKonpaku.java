@@ -3,7 +3,7 @@ package moffy.ticex.modifier;
 import java.util.Map;
 import java.util.Map.Entry;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
+import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXSBUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.network.chat.Component;
@@ -13,7 +13,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
-import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class ModifierKonpaku extends NoLevelsModifier implements EmbossmentModifierHook {

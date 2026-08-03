@@ -17,6 +17,7 @@ import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.lib.hook.DamageSourceModifierHook;
 import moffy.ticex.mixin.CriticalAccessor;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -123,7 +124,7 @@ public class TicEXTaczEvent {
 
     @OnlyIn(Dist.CLIENT)
     public static void registerItemDecorators(RegisterItemDecorationsEvent event) {
-        event.register(TicEXRegistry.BLITZ_GUN.get(), new BlitzGunIconDecorator());
+        event.register(TicEXItems.BLITZ_GUN.get(), new BlitzGunIconDecorator());
     }
 
     public static AABB getAABB(LivingEntity attacker) {

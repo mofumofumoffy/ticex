@@ -8,6 +8,7 @@ import moffy.ticex.modifier.ModifierApothSupplier;
 import moffy.ticex.modifier.ModifierOverload;
 import moffy.ticex.modifier.ModifierOverride;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -20,10 +21,10 @@ public class TicEXApotheosisModule implements AddonModule {
     public void init(FMLJavaModLoadingContext context) {
         Item.Properties defaultProperties = new Item.Properties();
 
-        TicEXRegistry.OVERLOAD_CORE = TicEXRegistry.ITEMS.register("overload_core", () ->
+        TicEXItems.OVERLOAD_CORE = TicEXRegistry.ITEMS.register("overload_core", () ->
                 new ItemReconstCore(defaultProperties, "overload")
         );
-        TicEXRegistry.OVERRIDE_CORE = TicEXRegistry.ITEMS.register("override_core", () ->
+        TicEXItems.OVERRIDE_CORE = TicEXRegistry.ITEMS.register("override_core", () ->
                 new ItemReconstCore(defaultProperties, "override")
         );
 

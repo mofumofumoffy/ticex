@@ -1,6 +1,7 @@
 package moffy.ticex.datagen.layout;
 
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
@@ -16,13 +17,13 @@ public class SlashBladeStationSlotLayoutProvider extends AbstractStationSlotLayo
 
     @Override
     protected void addLayouts() {
-        if (TicEXRegistry.REFORGED_SLASHBLADE != null) {
-            defineModifiable((IModifiableDisplay) TicEXRegistry.REFORGED_SLASHBLADE.get())
-                    .icon(new Pattern(TicEXRegistry.REFORGED_SLASHBLADE.getId()))
-                    .addInputSlot(new Pattern(TicEXRegistry.SLASHBLADE_BLADE.getId()), "item.ticex.slashblade_blade", 21, 56,
-                            Ingredient.of(TicEXRegistry.SLASHBLADE_BLADE))
-                    .addInputSlot(new Pattern(TicEXRegistry.SLASHBLADE_SAYA.getId()), "item.ticex.slashblade_saya", 39, 44,
-                            Ingredient.of(TicEXRegistry.SLASHBLADE_SAYA))
+        if (TicEXItems.REFORGED_SLASHBLADE != null) {
+            defineModifiable((IModifiableDisplay) TicEXItems.REFORGED_SLASHBLADE.get())
+                    .icon(new Pattern(TicEXItems.REFORGED_SLASHBLADE.getId()))
+                    .addInputSlot(new Pattern(TicEXItems.SLASHBLADE_BLADE.getId()), "item.ticex.slashblade_blade", 21, 56,
+                            Ingredient.of(TicEXItems.SLASHBLADE_BLADE))
+                    .addInputSlot(new Pattern(TicEXItems.SLASHBLADE_SAYA.getId()), "item.ticex.slashblade_saya", 39, 44,
+                            Ingredient.of(TicEXItems.SLASHBLADE_SAYA))
                     .addInputSlot(new Pattern(TinkerToolParts.toughHandle.getId()), "item.tconstruct.tough_handle", 21, 34,
                             Ingredient.of(TinkerToolParts.toughHandle))
                     .sortIndex(14)

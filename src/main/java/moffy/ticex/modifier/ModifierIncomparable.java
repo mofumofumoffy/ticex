@@ -1,9 +1,8 @@
 package moffy.ticex.modifier;
 
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
+import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.IncomparableProperty;
-import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;

@@ -3,6 +3,7 @@ package moffy.ticex.datagen.general.tag;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -92,11 +93,11 @@ public class ItemTagProvider extends ItemTagsProvider {
         //trim_materials
         tag(TRIM_MATERIALS)
                 .addOptional(ResourceLocation.fromNamespaceAndPath("avaritia", "infinity_ingot"))
-                .addOptional(TicEXRegistry.DRACONIUM_CRYSTAL.getId())
-                .addOptional(TicEXRegistry.WYVERN_CRYSTAL.getId())
-                .addOptional(TicEXRegistry.DRACONIC_CRYSTAL.getId())
-                .addOptional(TicEXRegistry.CHAOTIC_CRYSTAL.getId())
-                .addOptional(TicEXRegistry.ETHERIC_INGOT.getId());
+                .addOptional(TicEXItems.DRACONIUM_CRYSTAL.getId())
+                .addOptional(TicEXItems.WYVERN_CRYSTAL.getId())
+                .addOptional(TicEXItems.DRACONIC_CRYSTAL.getId())
+                .addOptional(TicEXItems.CHAOTIC_CRYSTAL.getId())
+                .addOptional(TicEXItems.ETHERIC_INGOT.getId());
 
         //catalyst_tools
         addCatalysts(
@@ -147,8 +148,8 @@ public class ItemTagProvider extends ItemTagsProvider {
         // other mods
 
         if (ModList.get().isLoaded("slashblade")) {
-            addCast(TicEXRegistry.SLASHBLADE_SAYA_CAST);
-            addCast(TicEXRegistry.SLASHBLADE_BLADE_CAST);
+            addCast(TicEXItems.SLASHBLADE_SAYA_CAST);
+            addCast(TicEXItems.SLASHBLADE_BLADE_CAST);
         }
     }
 

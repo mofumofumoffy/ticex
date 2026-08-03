@@ -7,11 +7,9 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ReachModifier;
 import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.render.slashblade.SBToolISTER;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
+import moffy.ticex.registry.TicEXToolDefinitions;
 import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -38,7 +36,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -87,12 +84,10 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
     public static final ResourceLocation BLADE_STATE_LOCATION = TicEX.getResource("bladestate");
     public static final ResourceLocation INPUT_STATE_LOCATION = TicEX.getResource("inputstate");
 
-    private final ToolDefinition toolDefinition;
     private ItemStack toolForRendering;
 
-    public ModifiableSlashBladeItem(Properties properties, ToolDefinition toolDefinition) {
+    public ModifiableSlashBladeItem(Properties properties) {
         super(Tiers.NETHERITE, 1, 1, properties);
-        this.toolDefinition = toolDefinition;
     }
 
     @Override
@@ -634,7 +629,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
 
     @Override
     public ToolDefinition getToolDefinition() {
-        return this.toolDefinition;
+        return TicEXToolDefinitions.SLASHBLADE_DEFINITION;
     }
 
     @Override

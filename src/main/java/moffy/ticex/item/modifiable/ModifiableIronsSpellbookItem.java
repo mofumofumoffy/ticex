@@ -2,6 +2,7 @@ package moffy.ticex.item.modifiable;
 
 import com.google.common.collect.Multimap;
 import io.redspace.ironsspellbooks.item.SpellBook;
+import moffy.ticex.registry.TicEXToolDefinitions;
 import moffy.ticex.mixin.irons.SpellBookAccessor;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -44,14 +45,11 @@ import java.util.Map;
 
 public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiableDisplay {
 
-    private final ToolDefinition toolDefinition;
-
     protected ItemStack toolForRendering;
 
-    public ModifiableIronsSpellbookItem(ToolDefinition toolDefinition) {
+    public ModifiableIronsSpellbookItem() {
         // Backward compat
         ((SpellBookAccessor) this).setMaxSpellSlots(12);
-        this.toolDefinition = toolDefinition;
     }
 
     @Override
@@ -66,7 +64,7 @@ public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiab
 
     @Override
     public ToolDefinition getToolDefinition() {
-        return this.toolDefinition;
+        return TicEXToolDefinitions.SPELLBOOK_DEFINITION;
     }
 
     @Override
@@ -190,6 +188,6 @@ public class ModifiableIronsSpellbookItem extends SpellBook implements IModifiab
 
     @Override
     public @NotNull Component getName(@NotNull ItemStack stack) {
-        return ToolNameHook.getName(toolDefinition, stack);
+        return ToolNameHook.getName(TicEXToolDefinitions.SPELLBOOK_DEFINITION, stack);
     }
 }

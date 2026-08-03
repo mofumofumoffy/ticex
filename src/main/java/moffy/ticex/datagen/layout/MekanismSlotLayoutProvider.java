@@ -2,6 +2,7 @@ package moffy.ticex.datagen.layout;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
@@ -16,15 +17,15 @@ public class MekanismSlotLayoutProvider extends AbstractStationSlotLayoutProvide
 
     @Override
     protected void addLayouts() {
-        if (TicEXRegistry.MEKA_EDGE != null) {
-            defineModifiable(TicEXRegistry.MEKA_EDGE.get())
-                    .icon(new Pattern(TicEXRegistry.MEKA_EDGE.getId()))
+        if (TicEXItems.MEKA_EDGE != null) {
+            defineModifiable(TicEXItems.MEKA_EDGE.get())
+                    .icon(new Pattern(TicEXItems.MEKA_EDGE.getId()))
                     .addInputSlot(new Pattern(TinkerToolParts.broadBlade.getId()), "item.tconstruct.broad_blade", 42, 34,
                             Ingredient.of(TinkerToolParts.broadBlade))
                     .addInputSlot(new Pattern(TinkerToolParts.toughHandle.getId()), "item.tconstruct.tough_handle", 24, 56,
                             Ingredient.of(TinkerToolParts.toughHandle))
                     .addInputSlot(new Pattern(TicEX.getResource("catalyst")), "item.ticex.catalyst_meka_tool", 24, 34,
-                            Ingredient.of(TicEXRegistry.CATALYST_MEKA_TOOL))
+                            Ingredient.of(TicEXItems.CATALYST_MEKA_TOOL))
                     .sortIndex(14)
                     .translationKey("gui.ticex.meka_tool")
                     .build();

@@ -16,6 +16,7 @@ import moffy.ticex.modifier.ModifierKoshirae;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.slashblade.StateSyncPacket;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
@@ -27,6 +28,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.tools.stats.HeadMaterialStats;
 
@@ -47,31 +49,31 @@ public class TicEXSlashBladeModule implements AddonModule {
 
         ToolCapabilityProvider.register(SBItemCapabilityProvider::new);
 
-        TicEXRegistry.KONPAKU_CORE = TicEXRegistry.ITEMS.register("konpaku_core", () ->
+        TicEXItems.KONPAKU_CORE = TicEXRegistry.ITEMS.register("konpaku_core", () ->
                 new ItemReconstCore(defaultProperties, "konpaku")
         );
 
-        TicEXRegistry.CATALYST_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_slashblade", () ->
+        TicEXItems.CATALYST_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_slashblade", () ->
                 new ToolPartItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_slashblade").getId())
         );
 
-        TicEXRegistry.REFORGED_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("reforged_slashblade", () ->
-                new ModifiableSlashBladeItem(new Item.Properties().stacksTo(1), TicEXRegistry.SLASHBLADE_DEFINITION)
+        TicEXItems.REFORGED_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("reforged_slashblade", () ->
+                new ModifiableSlashBladeItem(new Item.Properties().stacksTo(1))
         );
 
-        TicEXRegistry.SLASHBLADE_BLADE = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_blade", () ->
+        TicEXItems.SLASHBLADE_BLADE = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_blade", () ->
                 new ToolPartItem(defaultProperties, HeadMaterialStats.ID)
         );
-        TicEXRegistry.SLASHBLADE_SAYA = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_saya", () ->
+        TicEXItems.SLASHBLADE_SAYA = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_saya", () ->
                 new ToolPartItem(defaultProperties, HeadMaterialStats.ID)
         );
 
-        TicEXRegistry.SLASHBLADE_BLADE_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
-                TicEXRegistry.SLASHBLADE_BLADE,
+        TicEXItems.SLASHBLADE_BLADE_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
+                TicEXItems.SLASHBLADE_BLADE,
                 defaultProperties
         );
-        TicEXRegistry.SLASHBLADE_SAYA_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
-                TicEXRegistry.SLASHBLADE_SAYA,
+        TicEXItems.SLASHBLADE_SAYA_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
+                TicEXItems.SLASHBLADE_SAYA,
                 defaultProperties
         );
 
@@ -106,7 +108,7 @@ public class TicEXSlashBladeModule implements AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        TicEXRenders.CUSTOM_MODELS.put(TicEXRegistry.REFORGED_SLASHBLADE.get(), CustomModel::new);
+        TicEXRenders.CUSTOM_MODELS.put(TicEXItems.REFORGED_SLASHBLADE.get(), CustomModel::new);
     }
     /* public static boolean isPreviousVersion(){
         return ModList.get().getModFileById("slashblade").versionString().compareTo("1.2.0") < 0;

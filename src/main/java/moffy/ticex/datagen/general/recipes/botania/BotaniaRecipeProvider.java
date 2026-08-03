@@ -3,6 +3,7 @@ package moffy.ticex.datagen.general.recipes.botania;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import org.jetbrains.annotations.NotNull;
@@ -86,7 +87,7 @@ public class BotaniaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMater
         ModifierRecipeBuilder.modifier(TicEXRegistry.NECTAR_MODIFIER)
                 .allowCrystal()
                 .setTools(TinkerTags.Items.ARMOR)
-                .addInput(TicEXRegistry.NECTAR_CORE.get(),1)
+                .addInput(TicEXItems.NECTAR_CORE.get(),1)
                 .setMaxLevel(4)
                 .checkTraitLevel()
                 .save(topConsumer,prefix(TicEXRegistry.NECTAR_MODIFIER.getId(),slotlessFolder));

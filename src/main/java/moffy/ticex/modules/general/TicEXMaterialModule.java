@@ -3,6 +3,7 @@ package moffy.ticex.modules.general;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.*;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -13,7 +14,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class TicEXMaterialModule implements AddonModule {
     @Override
     public void init(FMLJavaModLoadingContext context) {
-        TicEXRegistry.ETHERIC_INGOT = TicEXRegistry.ITEMS.register("etheric_ingot", () ->
+        TicEXItems.ETHERIC_INGOT = TicEXRegistry.ITEMS.register("etheric_ingot", () ->
                 new Item(new Item.Properties())
         );
 
@@ -32,7 +33,7 @@ public class TicEXMaterialModule implements AddonModule {
                 .commonTag()
                 .flowing();
 
-        TicEXRegistry.OD_INGOT = TicEXRegistry.ITEMS.register("od_ingot", () ->
+        TicEXItems.OD_INGOT = TicEXRegistry.ITEMS.register("od_ingot", () ->
                 new Item(new Item.Properties())
         );
 

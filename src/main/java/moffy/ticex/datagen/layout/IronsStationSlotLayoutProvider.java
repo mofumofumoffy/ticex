@@ -2,6 +2,7 @@ package moffy.ticex.datagen.layout;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
@@ -17,15 +18,15 @@ public class IronsStationSlotLayoutProvider extends AbstractStationSlotLayoutPro
 
     @Override
     protected void addLayouts() {
-        if (TicEXRegistry.REVIVAL_SPELLBOOK_IRONS != null) {
-            defineModifiable((IModifiableDisplay) TicEXRegistry.REVIVAL_SPELLBOOK_IRONS.get())
+        if (TicEXItems.REVIVAL_SPELLBOOK_IRONS != null) {
+            defineModifiable((IModifiableDisplay) TicEXItems.REVIVAL_SPELLBOOK_IRONS.get())
                     .icon(new Pattern(TicEX.getResource("revival_spellbook")))
                     .addInputSlot(new Pattern(TinkerToolParts.largePlate.getId()), "item.tconstruct.large_plate", 13, 29,
                             Ingredient.of(TinkerToolParts.largePlate))
                     .addInputSlot(new Pattern(TinkerToolParts.toolBinding.getId()), "item.tconstruct.tool_binding", 13, 53,
                             Ingredient.of(TinkerToolParts.toolBinding))
                     .addInputSlot(new Pattern(TicEX.getResource("catalyst")), "item.ticex.catalyst_irons_spellbook", 33, 44,
-                            Ingredient.of(TicEXRegistry.CATALYST_IRONS_SPELLBOOK))
+                            Ingredient.of(TicEXItems.CATALYST_IRONS_SPELLBOOK))
                     .sortIndex(15)
                     .translationKey("gui.ticex.revival_spellbook_irons")
                     .build();

@@ -2,7 +2,7 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
+import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.AbyssalProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.config.ProjectEConfig;

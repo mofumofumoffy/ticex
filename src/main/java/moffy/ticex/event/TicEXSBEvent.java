@@ -9,6 +9,7 @@ import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.modules.slashblade.IInputCommandEvent;
 import moffy.ticex.network.slashblade.StateSyncPacket;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -70,7 +71,7 @@ public class TicEXSBEvent {
 
     @OnlyIn(Dist.CLIENT)
     public static void registerItemDecorators(RegisterItemDecorationsEvent event) {
-        event.register(TicEXRegistry.REFORGED_SLASHBLADE.get(), new KoshiraeIconDecorator());
+        event.register(TicEXItems.REFORGED_SLASHBLADE.get(), new KoshiraeIconDecorator());
     }
 
     @SuppressWarnings("unchecked")

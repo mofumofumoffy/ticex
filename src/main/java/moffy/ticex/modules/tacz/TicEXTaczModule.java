@@ -9,18 +9,21 @@ package moffy.ticex.modules.tacz;
  */
 
 import moffy.addonapi.AddonModule;
+import moffy.ticex.TicEX;
 import moffy.ticex.client.render.custom.CustomModel;
 import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.event.TicEXTaczEvent;
 import moffy.ticex.item.modifiable.ModifiableGunItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXTaczModule implements AddonModule {
@@ -29,12 +32,12 @@ public class TicEXTaczModule implements AddonModule {
     public void init(FMLJavaModLoadingContext context) {
         Item.Properties defaultProperties = new Item.Properties();
 
-        TicEXRegistry.CATALYST_KINETIC_GUN = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_kinetic_gun", () ->
+        TicEXItems.CATALYST_KINETIC_GUN = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_kinetic_gun", () ->
                 new ToolPartItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_kinetic_gun").getId())
         );
 
-        TicEXRegistry.BLITZ_GUN = TicEXRegistry.ITEMS_EXTENDED.register("blitz_gun", () ->
-                new ModifiableGunItem(TicEXRegistry.GUN_DEFINITION, 1)
+        TicEXItems.BLITZ_GUN = TicEXRegistry.ITEMS_EXTENDED.register("blitz_gun", () ->
+                new ModifiableGunItem(1)
         );
 
         MinecraftForge.EVENT_BUS.addListener(TicEXTaczEvent::onBeforeHit);
@@ -51,6 +54,6 @@ public class TicEXTaczModule implements AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        TicEXRenders.CUSTOM_MODELS.put(TicEXRegistry.BLITZ_GUN.get(), CustomModel::new);
+        TicEXRenders.CUSTOM_MODELS.put(TicEXItems.BLITZ_GUN.get(), CustomModel::new);
     }
 }

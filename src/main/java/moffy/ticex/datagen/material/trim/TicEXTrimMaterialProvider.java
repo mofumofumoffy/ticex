@@ -3,6 +3,7 @@ package moffy.ticex.datagen.material.trim;
 import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.Util;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -33,12 +34,12 @@ public class TicEXTrimMaterialProvider {
             material(context, TicEXMaterials.INFINITY, ModItems.infinity_ingot.get(), 0xFFFFFF, 0.8F);
         }
         if(ModList.get().isLoaded("draconicevolution")) {
-            material(context, TicEXMaterials.DRACONIUM, TicEXRegistry.DRACONIUM_CRYSTAL.get(), 0x0000AA, 0.2F);
-            material(context, TicEXMaterials.WYVERN, TicEXRegistry.WYVERN_CRYSTAL.get(), 0xAA00AA, 0.3F);
-            material(context, TicEXMaterials.DRACONIC, TicEXRegistry.DRACONIC_CRYSTAL.get(), 0xFFFF55, 0.3F);
-            material(context, TicEXMaterials.CHAOTIC, TicEXRegistry.CHAOTIC_CRYSTAL.get(), 0x555555, 0.4F);
+            material(context, TicEXMaterials.DRACONIUM, TicEXItems.DRACONIUM_CRYSTAL.get(), 0x0000AA, 0.2F);
+            material(context, TicEXMaterials.WYVERN, TicEXItems.WYVERN_CRYSTAL.get(), 0xAA00AA, 0.3F);
+            material(context, TicEXMaterials.DRACONIC, TicEXItems.DRACONIC_CRYSTAL.get(), 0xFFFF55, 0.3F);
+            material(context, TicEXMaterials.CHAOTIC, TicEXItems.CHAOTIC_CRYSTAL.get(), 0x555555, 0.4F);
         }
-        material(context, TicEXMaterials.ETHERIC, TicEXRegistry.ETHERIC_INGOT.get(), 0x6AEF3C, 0.7F);
+        material(context, TicEXMaterials.ETHERIC, TicEXItems.ETHERIC_INGOT.get(), 0x6AEF3C, 0.7F);
     }
 
     private static void material(BootstapContext<TrimMaterial> context, MaterialId material, MetalItemObject ingredient, int color, float modelIndex) {

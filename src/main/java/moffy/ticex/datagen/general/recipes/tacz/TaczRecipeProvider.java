@@ -15,6 +15,7 @@ import moffy.ticex.datagen.general.recipes.ticex.IEmbossmentToolRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentBuildingRecipeBuilder;
 import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentCastingRecipeBuilder;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 
@@ -27,17 +28,17 @@ public class TaczRecipeProvider implements ITicEXRecipeHelper, IEmbossmentToolRe
                 modsAvailable(TicEX.getResource("tacz_compat"))
         );
 
-        if(TicEXRegistry.BLITZ_GUN != null) {
-            EmbossmentBuildingRecipeBuilder.buildingRecipe((IModifiable) TicEXRegistry.BLITZ_GUN.asItem())
+        if(TicEXItems.BLITZ_GUN != null) {
+            EmbossmentBuildingRecipeBuilder.buildingRecipe((IModifiable) TicEXItems.BLITZ_GUN.asItem())
                     .outputSize(1)
-                    .save(topConsumer, prefix(TicEXRegistry.BLITZ_GUN, buildingFolder));
+                    .save(topConsumer, prefix(TicEXItems.BLITZ_GUN, buildingFolder));
         }
 
-        if(TicEXRegistry.CATALYST_KINETIC_GUN != null) {
-            EmbossmentCastingRecipeBuilder.castingRecipe(TicEXRegistry.CATALYST_KINETIC_GUN.get())
+        if(TicEXItems.CATALYST_KINETIC_GUN != null) {
+            EmbossmentCastingRecipeBuilder.castingRecipe(TicEXItems.CATALYST_KINETIC_GUN.get())
                     .setItemCost(1)
                     .setCast(ModItems.MODERN_KINETIC_GUN.get(), true)
-                    .save(topConsumer, prefix(TicEXRegistry.CATALYST_KINETIC_GUN, partsCastingFolder));
+                    .save(topConsumer, prefix(TicEXItems.CATALYST_KINETIC_GUN, partsCastingFolder));
         }
     }
 }

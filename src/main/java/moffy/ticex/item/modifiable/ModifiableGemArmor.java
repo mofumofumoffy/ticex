@@ -1,5 +1,6 @@
 package moffy.ticex.item.modifiable;
 
+import moffy.ticex.registry.TicEXToolDefinitions;
 import moze_intel.projecte.gameObjs.items.armor.GemArmorBase;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -26,7 +27,6 @@ import slimeknights.tconstruct.library.modifiers.hook.interaction.SlotStackModif
 import slimeknights.tconstruct.library.modifiers.modules.build.RarityModule;
 import slimeknights.tconstruct.library.tools.IndestructibleItemEntity;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
-import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.definition.module.display.ToolNameHook;
 import slimeknights.tconstruct.library.tools.helper.*;
@@ -37,31 +37,26 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class ModifiableGemArmor extends GemArmorBase implements IModifiableDisplay {
-
-    private final ModifiableArmorMaterial armorDefinition;
     private final int maxStackSize;
-    private final ResourceLocation name;
 
     protected ItemStack toolForRendering;
 
     public ModifiableGemArmor(
         ArmorItem.Type slot,
-        ModifiableArmorMaterial armorDefinition,
         int maxStackSize,
         Item.Properties properties
     ) {
         super(slot, properties.stacksTo(maxStackSize));
-        this.armorDefinition = armorDefinition;
         this.maxStackSize = maxStackSize;
-        this.name = armorDefinition.getId();
     }
 
     @Override
-    public ToolDefinition getToolDefinition() {
-        return this.armorDefinition.getArmorDefinition(type);
+    public @NotNull ToolDefinition getToolDefinition() {
+        return Objects.requireNonNull(TicEXToolDefinitions.SINGULAR_GEM_DEFINITION.getArmorDefinition(type));
     }
 
     @Override
@@ -185,7 +180,7 @@ public class ModifiableGemArmor extends GemArmorBase implements IModifiableDispl
 
     @Override
     public @NotNull Component getName(@NotNull ItemStack stack) {
-        return ToolNameHook.getName(armorDefinition.getArmorDefinition(type), stack);
+        return ToolNameHook.getName(Objects.requireNonNull(TicEXToolDefinitions.SINGULAR_GEM_DEFINITION.getArmorDefinition(type)), stack);
     }
 
     @Nullable
@@ -205,7 +200,7 @@ public class ModifiableGemArmor extends GemArmorBase implements IModifiableDispl
             new ArmorModelDispatcher() {
                 @Override
                 protected ResourceLocation getName() {
-                    return name;
+                    return TicEXToolDefinitions.SINGULAR_GEM_DEFINITION.getId();
                 }
             }
         );

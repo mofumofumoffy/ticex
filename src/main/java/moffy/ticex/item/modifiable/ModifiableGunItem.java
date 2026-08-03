@@ -10,6 +10,7 @@ package moffy.ticex.item.modifiable;
 
 import com.google.common.collect.Sets;
 import com.tacz.guns.item.ModernKineticGunItem;
+import moffy.ticex.registry.TicEXToolDefinitions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -27,6 +28,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.client.SafeClientAccess;
 import slimeknights.tconstruct.library.client.materials.MaterialTooltipCache;
 import slimeknights.tconstruct.library.materials.IMaterialRegistry;
@@ -58,20 +60,18 @@ import java.util.function.Consumer;
 
 public class ModifiableGunItem extends ModernKineticGunItem implements IModifiableDisplay {
 
-    private final ToolDefinition toolDefinition;
     private final int maxStackSize;
 
     protected ItemStack toolForRendering;
 
-    public ModifiableGunItem(ToolDefinition toolDefinition, int maxStackSize) {
+    public ModifiableGunItem(int maxStackSize) {
         super();
-        this.toolDefinition = toolDefinition;
         this.maxStackSize = maxStackSize;
     }
 
     @Override
-    public ToolDefinition getToolDefinition() {
-        return this.toolDefinition;
+    public @NotNull ToolDefinition getToolDefinition() {
+        return TicEXToolDefinitions.GUN_DEFINITION;
     }
 
     @Override
@@ -250,7 +250,7 @@ public class ModifiableGunItem extends ModernKineticGunItem implements IModifiab
         if (!name.isEmpty()) {
             return Component.literal(name);
         } else {
-            List<MaterialStatsId> components = ToolMaterialHook.stats(toolDefinition);
+            List<MaterialStatsId> components = ToolMaterialHook.stats(TicEXToolDefinitions.GUN_DEFINITION);
             Component baseName = super.getName(stack);
             if (components.isEmpty()) {
                 return baseName;

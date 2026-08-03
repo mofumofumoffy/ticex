@@ -13,6 +13,7 @@ import moffy.ticex.modifier.ModifierDragonForce;
 import moffy.ticex.modifier.ModifierEvolved;
 import moffy.ticex.modifier.ModifierSoulRending;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -33,25 +34,25 @@ public class TicEXDEModule implements AddonModule {
 
         Item.Properties defaultProps = new Item.Properties();
 
-        TicEXRegistry.DRACONIUM_CRYSTAL = TicEXRegistry.ITEMS.register("draconium_crystal", () -> new Item(defaultProps)
+        TicEXItems.DRACONIUM_CRYSTAL = TicEXRegistry.ITEMS.register("draconium_crystal", () -> new Item(defaultProps)
         );
-        TicEXRegistry.WYVERN_CRYSTAL = TicEXRegistry.ITEMS.register("wyvern_crystal", () -> new Item(defaultProps));
-        TicEXRegistry.DRACONIC_CRYSTAL = TicEXRegistry.ITEMS.register("draconic_crystal", () -> new Item(defaultProps));
-        TicEXRegistry.CHAOTIC_CRYSTAL = TicEXRegistry.ITEMS.register("chaotic_crystal", () -> new Item(defaultProps));
+        TicEXItems.WYVERN_CRYSTAL = TicEXRegistry.ITEMS.register("wyvern_crystal", () -> new Item(defaultProps));
+        TicEXItems.DRACONIC_CRYSTAL = TicEXRegistry.ITEMS.register("draconic_crystal", () -> new Item(defaultProps));
+        TicEXItems.CHAOTIC_CRYSTAL = TicEXRegistry.ITEMS.register("chaotic_crystal", () -> new Item(defaultProps));
 
-        TicEXRegistry.DRACONIUM_EVOLVED_CORE = TicEXRegistry.ITEMS.register("draconium_evolved_core", () ->
+        TicEXItems.DRACONIUM_EVOLVED_CORE = TicEXRegistry.ITEMS.register("draconium_evolved_core", () ->
                 new ItemReconstCore(defaultProps, "evolved", 1)
         );
-        TicEXRegistry.WYVERN_EVOLVED_CORE = TicEXRegistry.ITEMS.register("wyvern_evolved_core", () ->
+        TicEXItems.WYVERN_EVOLVED_CORE = TicEXRegistry.ITEMS.register("wyvern_evolved_core", () ->
                 new ItemReconstCore(defaultProps, "evolved", 2)
         );
-        TicEXRegistry.DRACONIC_EVOLVED_CORE = TicEXRegistry.ITEMS.register("draconic_evolved_core", () ->
+        TicEXItems.DRACONIC_EVOLVED_CORE = TicEXRegistry.ITEMS.register("draconic_evolved_core", () ->
                 new ItemReconstCore(defaultProps, "evolved", 3)
         );
-        TicEXRegistry.CHAOTIC_EVOLVED_CORE = TicEXRegistry.ITEMS.register("chaotic_evolved_core", () ->
+        TicEXItems.CHAOTIC_EVOLVED_CORE = TicEXRegistry.ITEMS.register("chaotic_evolved_core", () ->
                 new ItemReconstCore(defaultProps, "evolved", 4)
         );
-        TicEXRegistry.INJECT_CORE = TicEXRegistry.ITEMS.register("inject_core", () ->
+        TicEXItems.INJECT_CORE = TicEXRegistry.ITEMS.register("inject_core", () ->
                 new ItemReconstCore(defaultProps, "inject")
         );
 

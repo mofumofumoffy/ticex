@@ -3,6 +3,7 @@ package moffy.ticex.datagen.general.recipes.botania;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
@@ -24,9 +25,9 @@ public class TicEXManaInfusionProvider extends ManaInfusionProvider implements I
         );
 
         topConsumer.accept(new FinishedRecipe(
-                prefix(TicEXRegistry.NECTAR_CORE, coresFolder),
-                new ItemStack(TicEXRegistry.NECTAR_CORE.get()),
-                ingr(TicEXRegistry.RECONSTRUCTION_CORE.get()),
+                prefix(TicEXItems.NECTAR_CORE, coresFolder),
+                new ItemStack(TicEXItems.NECTAR_CORE.get()),
+                ingr(TicEXItems.RECONSTRUCTION_CORE.get()),
                 2000,
                 "",
                 new BlockStateIngredient(TinkerSmeltery.searedBricks.get()))

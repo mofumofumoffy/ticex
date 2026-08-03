@@ -4,6 +4,7 @@ import com.simibubi.create.api.data.recipe.MechanicalCraftingRecipeBuilder;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -22,22 +23,22 @@ public class CreateRecipeProvider implements ITicEXRecipeHelper {
         if (TicEXRegistry.CARDBOARD_MODIFIER != null) {
             ModifierRecipeBuilder.modifier(TicEXRegistry.CARDBOARD_MODIFIER)
                     .allowCrystal()
-                    .addInput(TicEXRegistry.CARDBOARD_CORE.get())
+                    .addInput(TicEXItems.CARDBOARD_CORE.get())
                     .setTools(TinkerTags.Items.WORN_ARMOR)
                     .setSlots(SlotType.UPGRADE, 1)
                     .save(topConsumer, prefix(TicEXRegistry.CARDBOARD_MODIFIER, upgradeFolder));
         }
 
-        if (TicEXRegistry.CARDBOARD_CORE != null) {
-            MechanicalCraftingRecipeBuilder.shapedRecipe(TicEXRegistry.CARDBOARD_CORE.get())
+        if (TicEXItems.CARDBOARD_CORE != null) {
+            MechanicalCraftingRecipeBuilder.shapedRecipe(TicEXItems.CARDBOARD_CORE.get())
                     .key('C', item(ResourceLocation.fromNamespaceAndPath("create", "cardboard")))
-                    .key('R', TicEXRegistry.RECONSTRUCTION_CORE.get())
+                    .key('R', TicEXItems.RECONSTRUCTION_CORE.get())
                     .patternLine("CCCCC")
                     .patternLine("CCCCC")
                     .patternLine("CCRCC")
                     .patternLine("CCCCC")
                     .patternLine("CCCCC")
-                    .build(topConsumer, prefix(TicEXRegistry.CARDBOARD_CORE, coresFolder));
+                    .build(topConsumer, prefix(TicEXItems.CARDBOARD_CORE, coresFolder));
         }
     }
 }

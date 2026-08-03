@@ -1,7 +1,6 @@
 package moffy.ticex.caps;
 
-import moffy.ticex.lib.hook.TicEXModifierHooks;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifierHooks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.energy.IEnergyStorage;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;

@@ -4,6 +4,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import moze_intel.projecte.gameObjs.registries.PEItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -86,15 +87,15 @@ public class PERecipeProvider implements ITicEXRecipeHelper, IToolRecipeHelper {
                     .save(topConsumer, prefix(TicEXRegistry.INFERNAL_MODIFIER.getId(), defenseFolder));
         }
 
-        if(TicEXRegistry.SINGULAR_GEM_ARMOR != null) {
+        if(TicEXItems.SINGULAR_GEM_ARMOR != null) {
             ResourceLocation seramGear = TicEX.getResource("seram_gear");
         }
 
-        if(TicEXRegistry.CATALYST_GEM != null) {
-            armorTableCasting(topConsumer, TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.HELMET), PEItems.GEM_HELMET.asItem());
-            armorTableCasting(topConsumer, TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.CHESTPLATE), PEItems.GEM_CHESTPLATE.asItem());
-            armorTableCasting(topConsumer, TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.LEGGINGS), PEItems.GEM_LEGGINGS.asItem());
-            armorTableCasting(topConsumer, TicEXRegistry.CATALYST_GEM.get(ArmorItem.Type.BOOTS), PEItems.GEM_BOOTS.asItem());
+        if(TicEXItems.CATALYST_GEM != null) {
+            armorTableCasting(topConsumer, TicEXItems.CATALYST_GEM.get(ArmorItem.Type.HELMET), PEItems.GEM_HELMET.asItem());
+            armorTableCasting(topConsumer, TicEXItems.CATALYST_GEM.get(ArmorItem.Type.CHESTPLATE), PEItems.GEM_CHESTPLATE.asItem());
+            armorTableCasting(topConsumer, TicEXItems.CATALYST_GEM.get(ArmorItem.Type.LEGGINGS), PEItems.GEM_LEGGINGS.asItem());
+            armorTableCasting(topConsumer, TicEXItems.CATALYST_GEM.get(ArmorItem.Type.BOOTS), PEItems.GEM_BOOTS.asItem());
         }
     }
 

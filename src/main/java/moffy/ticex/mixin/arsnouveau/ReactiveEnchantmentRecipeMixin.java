@@ -13,6 +13,7 @@ import com.hollingsworth.arsnouveau.common.block.tile.EnchantingApparatusTile;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,8 +24,8 @@ import java.util.List;
 public class ReactiveEnchantmentRecipeMixin {
     @WrapOperation(method = "getResult", at = @At(value = "INVOKE", target = "Lcom/hollingsworth/arsnouveau/api/enchanting_apparatus/EnchantmentRecipe;getResult(Ljava/util/List;Lnet/minecraft/world/item/ItemStack;Lcom/hollingsworth/arsnouveau/common/block/tile/EnchantingApparatusTile;)Lnet/minecraft/world/item/ItemStack;"))
     public ItemStack modifyCore(ReactiveEnchantmentRecipe instance, List<ItemStack> pedestalItems, ItemStack reagent, EnchantingApparatusTile tile, Operation<ItemStack> original){
-        if(reagent.getItem().equals(TicEXRegistry.RECONSTRUCTION_CORE.get())){
-            ItemStack reactiveCoreStack = new ItemStack(TicEXRegistry.REACTIVE_CORE.get(), reagent.getCount(), reagent.getOrCreateTag().copy());
+        if(reagent.getItem().equals(TicEXItems.RECONSTRUCTION_CORE.get())){
+            ItemStack reactiveCoreStack = new ItemStack(TicEXItems.REACTIVE_CORE.get(), reagent.getCount(), reagent.getOrCreateTag().copy());
             original.call(instance, pedestalItems, reagent, tile).getAllEnchantments().forEach(reactiveCoreStack::enchant);
             return reactiveCoreStack;
         }

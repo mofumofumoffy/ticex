@@ -4,7 +4,7 @@ import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import java.util.Map;
 import java.util.Map.Entry;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
+import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

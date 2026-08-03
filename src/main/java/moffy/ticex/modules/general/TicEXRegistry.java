@@ -11,6 +11,7 @@ import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.lib.hook.*;
 import moffy.ticex.lib.recipe.*;
 import moffy.ticex.lib.registry.TicEXItemDeferredRegisterExtension;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
@@ -89,35 +90,6 @@ public class TicEXRegistry {
         SCORCHED = solidProps.apply(1);
     }
 
-    public static final TagKey<Item> KEY_MODIFIER_UNSTABLE = TagKey.create(
-            Registries.ITEM,
-            TicEX.getResource("shader/unstable_modifier")
-    );
-
-    public static final ModifiableArmorMaterial MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(
-            TicEX.getResource("mekaplate"),
-            SoundEvents.ARMOR_EQUIP_NETHERITE
-    );
-    public static final ModifiableArmorMaterial SINGULAR_GEM_DEFINITION = ModifiableArmorMaterial.create(
-            TicEX.getResource("singular_gem"),
-            SoundEvents.ARMOR_EQUIP_NETHERITE
-    );
-    public static final ToolDefinition SLASHBLADE_DEFINITION = ToolDefinition.create(
-            TicEX.getResource("reforged_slashblade")
-    );
-    public static final ToolDefinition GUN_DEFINITION = ToolDefinition.create(
-            TicEX.getResource("blitz_gun")
-    );
-    public static final ToolDefinition SPELLBOOK_DEFINITION = ToolDefinition.create(
-            TicEX.getResource("revival_spellbook")
-    );
-    public static final ToolDefinition MEKA_TOOL_DEFINITION = ToolDefinition.create(
-            TicEX.getResource("meka_edge")
-    );
-    public static final ToolDefinition GAUNTLET_DEFINITION = ToolDefinition.create(
-            TicEX.getResource("resonance_gauntlet")
-    );
-
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TicEX.MODID);
     public static final TicEXItemDeferredRegisterExtension ITEMS_EXTENDED = new TicEXItemDeferredRegisterExtension(
             ITEMS,
@@ -166,56 +138,7 @@ public class TicEXRegistry {
     public static RegistryObject<MenuType<ToolContainerMenu>> UNSYNCED_TOOL_CONTAINER = null;
     public static RegistryObject<MenuType<FluidTransmuterContainerMenu>> FLUID_TRANSMUTER_MENU = null;
 
-    public static RegistryObject<Item> EXHAUSTED_GLOVE = null;
-    public static RegistryObject<Item> ETHERIC_INGOT = null;
-    public static RegistryObject<Item> OD_INGOT = null;
-    public static RegistryObject<Item> DRACONIUM_CRYSTAL = null;
-    public static RegistryObject<Item> WYVERN_CRYSTAL = null;
-    public static RegistryObject<Item> DRACONIC_CRYSTAL = null;
-    public static RegistryObject<Item> CHAOTIC_CRYSTAL = null;
-    public static RegistryObject<Item> RECONSTRUCTION_CORE = null;
-    public static RegistryObject<Item> FLICKERING_RECONSTRUCTION_CORE = null;
-    public static RegistryObject<Item> CELESTIAL_CORE = null;
-    public static RegistryObject<Item> RADIATION_SHELDING_CORE = null;
-    public static RegistryObject<Item> DRACONIUM_EVOLVED_CORE = null;
-    public static RegistryObject<Item> WYVERN_EVOLVED_CORE = null;
-    public static RegistryObject<Item> DRACONIC_EVOLVED_CORE = null;
-    public static RegistryObject<Item> CHAOTIC_EVOLVED_CORE = null;
-    public static RegistryObject<Item> INJECT_CORE = null;
-    public static RegistryObject<Item> KONPAKU_CORE = null;
-    public static RegistryObject<Item> OVERLOAD_CORE = null;
-    public static RegistryObject<Item> OVERRIDE_CORE = null;
-    public static RegistryObject<Item> CARDBOARD_CORE = null;
-    public static RegistryObject<Item> PSIONIZING_RADIATION_CORE = null;
-    public static RegistryObject<Item> NECTAR_CORE = null;
-    public static RegistryObject<Item> REACTIVE_CORE = null;
-    public static RegistryObject<Item> ALTERATIVE_CORE = null;
 
-    public static RegistryObject<Item> MEKANIC_ARROW = null;
-
-    public static ItemObject<ToolPartItem> SLASHBLADE_BLADE = null;
-    public static ItemObject<ToolPartItem> SLASHBLADE_SAYA = null;
-
-    public static CastItemObject SLASHBLADE_BLADE_CAST;
-    public static CastItemObject SLASHBLADE_SAYA_CAST;
-
-    public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_MEKASUIT = null;
-    public static EnumObject<ArmorItem.Type, ToolPartItem> CATALYST_GEM = null;
-    public static ItemObject<ToolPartItem> CATALYST_SLASHBLADE = null;
-    public static ItemObject<ToolPartItem> CATALYST_KINETIC_GUN = null;
-    public static ItemObject<ToolPartItem> CATALYST_IRONS_SPELLBOOK = null;
-    public static ItemObject<ToolPartItem> CATALYST_MEKA_TOOL = null;
-    public static ItemObject<ToolPartItem> CATALYST_MEKA_TANA = null;
-    public static ItemObject<ToolPartItem> CATALYST_MEKA_BOW = null;
-
-    public static ItemObject<? extends Item> REFORGED_SLASHBLADE = null;
-    public static ItemObject<? extends Item> BLITZ_GUN = null;
-    public static ItemObject<? extends Item> REVIVAL_SPELLBOOK_IRONS = null;
-    public static ItemObject<? extends ModifiableItem> MEKA_EDGE = null;
-    public static ItemObject<? extends Item> RESONANCE_GAUNTLET = null;
-
-    public static EnumObject<ArmorItem.Type, ? extends IModifiable> MEKAPLATE_ARMOR = null;
-    public static EnumObject<ArmorItem.Type, ? extends IModifiable> SINGULAR_GEM_ARMOR = null;
 
     public static RegistryObject<Block> ETHERIC_BLOCK = null;
     public static RegistryObject<Block> OD_BLOCK = null;
@@ -317,29 +240,29 @@ public class TicEXRegistry {
             output.accept(blockObject.get().asItem());
         }
 
-        acceptCatalystArmor(output, CATALYST_MEKASUIT);
-        acceptCatalystArmor(output, CATALYST_GEM);
-        acceptPart(output, CATALYST_SLASHBLADE);
-        acceptPart(output, CATALYST_MEKA_TOOL);
-        acceptPart(output, CATALYST_MEKA_TANA);
-        acceptPart(output, CATALYST_MEKA_BOW);
+        acceptCatalystArmor(output, TicEXItems.CATALYST_MEKASUIT);
+        acceptCatalystArmor(output, TicEXItems.CATALYST_GEM);
+        acceptPart(output, TicEXItems.CATALYST_SLASHBLADE);
+        acceptPart(output, TicEXItems.CATALYST_MEKA_TOOL);
+        acceptPart(output, TicEXItems.CATALYST_MEKA_TANA);
+        acceptPart(output, TicEXItems.CATALYST_MEKA_BOW);
         //acceptPart(output, CATALYST_KINETIC_GUN);
         //acceptPart(output, CATALYST_IRONS_SPELLBOOK);
 
-        acceptPart(output, SLASHBLADE_BLADE);
-        acceptPart(output, SLASHBLADE_SAYA);
+        acceptPart(output, TicEXItems.SLASHBLADE_BLADE);
+        acceptPart(output, TicEXItems.SLASHBLADE_SAYA);
 
-        acceptTool(output, MEKA_EDGE);
-        acceptTool(output, RESONANCE_GAUNTLET);
-        acceptTool(output, REFORGED_SLASHBLADE);
+        acceptTool(output, TicEXItems.MEKA_EDGE);
+        acceptTool(output, TicEXItems.RESONANCE_GAUNTLET);
+        acceptTool(output, TicEXItems.REFORGED_SLASHBLADE);
         //acceptTool(output, BLITZ_GUN);
         //acceptTool(output, REVIVAL_SPELLBOOK_IRONS);
 
         //acceptArmor(output, MEKAPLATE_ARMOR);
         //acceptArmor(output, SINGULAR_GEM_ARMOR);
 
-        acceptCast(output, SLASHBLADE_BLADE_CAST);
-        acceptCast(output, SLASHBLADE_SAYA_CAST);
+        acceptCast(output, TicEXItems.SLASHBLADE_BLADE_CAST);
+        acceptCast(output, TicEXItems.SLASHBLADE_SAYA_CAST);
     }
 
     private static void acceptTool(CreativeModeTab.Output output, Supplier<? extends Item> toolObject) {

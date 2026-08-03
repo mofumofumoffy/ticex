@@ -18,6 +18,7 @@ import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierAlterative;
 import moffy.ticex.modifier.ModifierReactive;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -37,8 +38,8 @@ import java.util.List;
 public class TicEXArsModule implements AddonModule {
     @Override
     public void init(FMLJavaModLoadingContext context) {
-        TicEXRegistry.REACTIVE_CORE = TicEXRegistry.ITEMS.register("reactive_core", ()->new ItemReconstCore(new Item.Properties(), "reactive"));
-        TicEXRegistry.ALTERATIVE_CORE = TicEXRegistry.ITEMS.register("alterative_core", ()->new ItemReconstCore(new Item.Properties(), "alterative"));
+        TicEXItems.REACTIVE_CORE = TicEXRegistry.ITEMS.register("reactive_core", ()->new ItemReconstCore(new Item.Properties(), "reactive"));
+        TicEXItems.ALTERATIVE_CORE = TicEXRegistry.ITEMS.register("alterative_core", ()->new ItemReconstCore(new Item.Properties(), "alterative"));
 
         TicEXRegistry.REACTIVE_MODIFIER = TicEXRegistry.MODIFIERS.register("reactive", ModifierReactive::new);
         TicEXRegistry.ALTERATIVE_MODIFIER = TicEXRegistry.MODIFIERS.register("alterative", ModifierAlterative::new);

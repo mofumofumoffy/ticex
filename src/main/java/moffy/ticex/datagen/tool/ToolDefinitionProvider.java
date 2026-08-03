@@ -2,6 +2,8 @@ package moffy.ticex.datagen.tool;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.CatalystMaterialStatsType;
+import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXToolDefinitions;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -43,11 +45,11 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
             .build();
         ToolModule plateSlots = ToolSlotsModule.builder().slots(SlotType.UPGRADE, 2).slots(SlotType.DEFENSE, 3).build();
 
-        define(TicEXRegistry.SLASHBLADE_DEFINITION)
+        define(TicEXToolDefinitions.SLASHBLADE_DEFINITION)
             .module(
                     PartStatsModule.parts()
-                            .part(TicEXRegistry.SLASHBLADE_BLADE, 0.75f)
-                            .part(TicEXRegistry.SLASHBLADE_SAYA, 0.5f)
+                            .part(TicEXItems.SLASHBLADE_BLADE, 0.75f)
+                            .part(TicEXItems.SLASHBLADE_SAYA, 0.5f)
                             .part(toughHandle, 0.5f)
                             .build()
             )
@@ -69,12 +71,12 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
             .smallToolStartingSlots()
             .module(ToolActionsModule.of(ToolActions.SWORD_DIG));
 
-        define(TicEXRegistry.GUN_DEFINITION)
+        define(TicEXToolDefinitions.GUN_DEFINITION)
             .module(
                     PartStatsModule.parts()
                             .part(largePlate)
                             .part(toughHandle, 0.5f)
-                            .part(TicEXRegistry.CATALYST_KINETIC_GUN)
+                            .part(TicEXItems.CATALYST_KINETIC_GUN)
                             .build()
             )
             .module(defaultTwoParts)
@@ -86,12 +88,12 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
             .module(new MultiplyStatsModule(MultiplierNBT.builder().set(ToolStats.DURABILITY, 1.1f).build()))
             .smallToolStartingSlots();
 
-        define(TicEXRegistry.SPELLBOOK_DEFINITION)
+        define(TicEXToolDefinitions.SPELLBOOK_DEFINITION)
             .module(
                     PartStatsModule.parts()
                             .part(largePlate)
                             .part(toolBinding, 0.5f)
-                            .part(TicEXRegistry.CATALYST_IRONS_SPELLBOOK)
+                            .part(TicEXItems.CATALYST_IRONS_SPELLBOOK)
                             .build()
             )
             .module(defaultTwoParts)
@@ -104,12 +106,12 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
             .module(ToolTraitsModule.builder().trait(TicEXRegistry.OVERCASTING_MODIFIER).build())
             .smallToolStartingSlots();
 
-        defineArmor(TicEXRegistry.MEKAPLATE_DEFINITION)
+        defineArmor(TicEXToolDefinitions.MEKAPLATE_DEFINITION)
             .modules(slots ->
                     PartStatsModule.armor(slots)
                             .part(TinkerToolParts.plating, 1)
                             .part(TinkerToolParts.maille, 1)
-                            .part(TicEXRegistry.CATALYST_MEKASUIT, 1)
+                            .part(TicEXItems.CATALYST_MEKASUIT, 1)
             )
             .module(plateMaterials)
             .module(
@@ -119,12 +121,12 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
             .module(plateSlots)
             .module(ToolTraitsModule.builder().trait(TicEXRegistry.MEKANIC_MODIFIER).build());
 
-        defineArmor(TicEXRegistry.SINGULAR_GEM_DEFINITION)
+        defineArmor(TicEXToolDefinitions.SINGULAR_GEM_DEFINITION)
             .modules(slots ->
                     PartStatsModule.armor(slots)
                             .part(TinkerToolParts.plating, 1)
                             .part(TinkerToolParts.maille, 1)
-                            .part(TicEXRegistry.CATALYST_GEM, 1)
+                            .part(TicEXItems.CATALYST_GEM, 1)
             )
             .module(plateMaterials)
             .module(
@@ -146,12 +148,12 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                     ToolTraitsModule.builder().trait(TicEXRegistry.HURRICANE_MODIFIER).build()
             );
 
-        define(TicEXRegistry.MEKA_TOOL_DEFINITION)
+        define(TicEXToolDefinitions.MEKA_TOOL_DEFINITION)
                 .module(
                         PartStatsModule.parts()
                                 .part(broadBlade, 1)
                                 .part(toughHandle, 1)
-                                .part(TicEXRegistry.CATALYST_MEKA_TOOL, 1)
+                                .part(TicEXItems.CATALYST_MEKA_TOOL, 1)
                                 .build()
                 )
                 .module(defaultTwoParts)
@@ -159,7 +161,7 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                 .module(ToolTraitsModule.builder().trait(TicEXRegistry.MEKANIC_MODIFIER).build())
                 .module(IsEffectiveModule.tag(BlockTags.MINEABLE_WITH_AXE));
 
-        define(TicEXRegistry.GAUNTLET_DEFINITION)
+        define(TicEXToolDefinitions.GAUNTLET_DEFINITION)
                 .module(MaterialStatsModule.stats()
                     .stat(CatalystMaterialStatsType.SERAM.getId())
                     .primaryPart(0).build())

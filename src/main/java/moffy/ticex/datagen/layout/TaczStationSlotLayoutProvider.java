@@ -2,6 +2,7 @@ package moffy.ticex.datagen.layout;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
@@ -17,15 +18,15 @@ public class TaczStationSlotLayoutProvider extends AbstractStationSlotLayoutProv
 
     @Override
     protected void addLayouts() {
-        if (TicEXRegistry.BLITZ_GUN != null) {
-            defineModifiable((IModifiableDisplay) TicEXRegistry.BLITZ_GUN.get())
-                    .icon(new Pattern(TicEXRegistry.BLITZ_GUN.getId()))
+        if (TicEXItems.BLITZ_GUN != null) {
+            defineModifiable((IModifiableDisplay) TicEXItems.BLITZ_GUN.get())
+                    .icon(new Pattern(TicEXItems.BLITZ_GUN.getId()))
                     .addInputSlot(new Pattern(TinkerToolParts.largePlate.getId()), "item.tconstruct.large_plate", 42, 34,
                             Ingredient.of(TinkerToolParts.largePlate))
                     .addInputSlot(new Pattern(TinkerToolParts.toughHandle.getId()), "item.tconstruct.tough_handle", 42, 56,
                             Ingredient.of(TinkerToolParts.toughHandle))
                     .addInputSlot(new Pattern(TicEX.getResource("catalyst")), "item.ticex.catalyst_kinetic_gun", 24, 34,
-                            Ingredient.of(TicEXRegistry.CATALYST_KINETIC_GUN))
+                            Ingredient.of(TicEXItems.CATALYST_KINETIC_GUN))
                     .sortIndex(14)
                     .translationKey("gui.ticex.blitz_gun")
                     .build();

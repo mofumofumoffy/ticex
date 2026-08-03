@@ -32,19 +32,22 @@ public class TicEXModuleProvider extends AddonModuleProvider {
                 "Default",
                 TicEXModule.class,
                 new String[]{"tconstruct"},
+                10,
                 true
         );
         addRawModule(
                 "default_material",
                 "TiCEX Original Materials and Modifiers",
                 TicEXMaterialModule.class,
-                new String[]{"tconstruct"}
+                new String[]{"tconstruct"},
+                9
         );
         addRawModule(
                 "default_utility",
                 "TiCEX Original Utilities",
                 TicEXUtilityModule.class,
-                new String[]{"tconstruct"}
+                new String[]{"tconstruct"},
+                9
         );
         addRawModule(
                 "avaritia_compat",

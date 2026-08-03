@@ -1,7 +1,7 @@
 package moffy.ticex.lib.hook;
 
 import moffy.ticex.TicEX;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifierHooks;
 import net.minecraft.world.damagesource.DamageSource;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;

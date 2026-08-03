@@ -4,6 +4,7 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.event.TicEXBotaniaEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -21,7 +22,7 @@ public class TicEXBotaniaModule implements AddonModule {
 
         TicEXRegistry.NECTAR_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("nectar");
 
-        TicEXRegistry.NECTAR_CORE = TicEXRegistry.ITEMS.register("nectar_core",() ->
+        TicEXItems.NECTAR_CORE = TicEXRegistry.ITEMS.register("nectar_core",() ->
                 new ItemReconstCore(new Item.Properties(), "nectar")
         );
 

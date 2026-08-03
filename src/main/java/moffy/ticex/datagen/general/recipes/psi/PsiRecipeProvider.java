@@ -5,6 +5,7 @@ import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.builder.SingleEmbossmentModifierRecipeBuilder;
 import moffy.ticex.datagen.general.recipes.ticex.builder.ValidatableIncrementalModifierRecipeBuilder;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -59,7 +60,7 @@ public class PsiRecipeProvider implements ITicEXRecipeHelper {
                             new Ingredient.TagValue(TinkerTags.Items.HARVEST),
                             new Ingredient.TagValue(TinkerTags.Items.ARMOR)
                     )))
-                    .addInput(TicEXRegistry.PSIONIZING_RADIATION_CORE.get())
+                    .addInput(TicEXItems.PSIONIZING_RADIATION_CORE.get())
                     .setSlots(SlotType.ABILITY, 1)
                     .setMaxLevel(1)
                     .checkTraitLevel()
@@ -67,12 +68,12 @@ public class PsiRecipeProvider implements ITicEXRecipeHelper {
                     .save(topConsumer, prefix(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER, abilityFolder));
         }
 
-        if(TicEXRegistry.PSIONIZING_RADIATION_CORE != null) {
-            TrickRecipeBuilder.of(TicEXRegistry.PSIONIZING_RADIATION_CORE.get())
+        if(TicEXItems.PSIONIZING_RADIATION_CORE != null) {
+            TrickRecipeBuilder.of(TicEXItems.PSIONIZING_RADIATION_CORE.get())
                     .cad(ModItems.cadAssemblyPsimetal)
-                    .input(TicEXRegistry.RECONSTRUCTION_CORE.get())
+                    .input(TicEXItems.RECONSTRUCTION_CORE.get())
                     .trick(Psi.location(LibPieceNames.TRICK_GREATER_INFUSION))
-                    .build(topConsumer, prefix(TicEXRegistry.PSIONIZING_RADIATION_CORE, coresFolder));
+                    .build(topConsumer, prefix(TicEXItems.PSIONIZING_RADIATION_CORE, coresFolder));
         }
     }
 }

@@ -1,6 +1,7 @@
 package moffy.ticex.caps.curios;
 
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.tools.capability.inventory.ToolInventoryCapability;
@@ -45,7 +46,7 @@ public class GauntletItemHandler extends ToolInventoryCapability implements ICur
         LivingEntity livingEntity = slotContext.entity();
         if(CuriosApi.getCuriosInventory(livingEntity).isPresent()){
             ICuriosItemHandler itemHandler = CuriosApi.getCuriosInventory(livingEntity).orElseThrow(IllegalStateException::new);
-            return itemHandler.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).isEmpty();
+            return itemHandler.findFirstCurio(TicEXItems.RESONANCE_GAUNTLET.get()).isEmpty();
         }
         return ICurio.super.canEquip(slotContext);
     }

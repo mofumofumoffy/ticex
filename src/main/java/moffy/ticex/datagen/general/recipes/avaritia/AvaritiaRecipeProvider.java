@@ -8,6 +8,7 @@ import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.world.item.Items;
@@ -42,7 +43,7 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
         if (TicEXRegistry.CELESTIAL_MODIFIER != null) {
             ModifierRecipeBuilder.modifier(TicEXRegistry.CELESTIAL_MODIFIER)
                 .setTools(TinkerTags.Items.BOOTS)
-                .addInput(TicEXRegistry.CELESTIAL_CORE.get())
+                .addInput(TicEXItems.CELESTIAL_CORE.get())
                 .setSlots(SlotType.DEFENSE, 2)
                 .setMaxLevel(1)
                 .checkTraitLevel()
@@ -74,10 +75,10 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
 
         // core
 
-        if (TicEXRegistry.CELESTIAL_CORE != null) {
-            ModShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXRegistry.CELESTIAL_CORE.get(),1)
+        if (TicEXItems.CELESTIAL_CORE != null) {
+            ModShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXItems.CELESTIAL_CORE.get(),1)
                     .showNotification(true)
-                    .define('c', TicEXRegistry.RECONSTRUCTION_CORE.get())
+                    .define('c', TicEXItems.RECONSTRUCTION_CORE.get())
                     .define('d', Items.DRAGON_HEAD)
                     .define('e', Items.ELYTRA)
                     .define('i', ModItems.infinity_catalyst.get())
@@ -85,8 +86,8 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
                     .pattern(" d ")
                     .pattern("ice")
                     .pattern(" p ")
-                    .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXRegistry.RECONSTRUCTION_CORE.get()))
-                    .save(topConsumer, prefix(TicEXRegistry.CELESTIAL_CORE.getId(), coresFolder));
+                    .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXItems.RECONSTRUCTION_CORE.get()))
+                    .save(topConsumer, prefix(TicEXItems.CELESTIAL_CORE.getId(), coresFolder));
         }
 
         // material fluid

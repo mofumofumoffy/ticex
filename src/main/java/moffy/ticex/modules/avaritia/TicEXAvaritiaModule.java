@@ -13,6 +13,7 @@ import moffy.ticex.item.projectile.EndestShotItem;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.*;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -37,7 +38,7 @@ public class TicEXAvaritiaModule implements AddonModule {
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
-        TicEXRegistry.CELESTIAL_CORE = TicEXRegistry.ITEMS.register("celestial_core", () ->
+        TicEXItems.CELESTIAL_CORE = TicEXRegistry.ITEMS.register("celestial_core", () ->
                 new ItemReconstCore(new Item.Properties(), "celestial")
         );
 

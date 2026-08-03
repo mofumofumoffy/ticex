@@ -2,8 +2,7 @@ package moffy.ticex.caps;
 
 import java.util.function.Supplier;
 
-import moffy.ticex.lib.hook.TicEXModifierHooks;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifierHooks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
