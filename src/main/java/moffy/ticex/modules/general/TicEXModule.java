@@ -19,6 +19,7 @@ import moffy.ticex.modifier.ModifierEnchantmentSupplier;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXRecipeSerializers;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
@@ -58,23 +59,23 @@ public class TicEXModule implements AddonModule {
                 .consumerMainThread(TicEXSyncEntityMovements::handle)
                 .add();
 
-        TicEXRegistry.MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
+        TicEXRecipeSerializers.MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
                 "embossment_modifier",
                 () -> LoadableRecipeSerializer.of(EmbossmentModifierRecipe.LOADER)
         );
-        TicEXRegistry.SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
+        TicEXRecipeSerializers.SINGLE_MODIFIER_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
                 "single_embossment_modifier",
                 () -> LoadableRecipeSerializer.of(SingleEmbossmentModifierRecipe.LOADER)
         );
-        TicEXRegistry.CASTING_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
+        TicEXRecipeSerializers.CASTING_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
                 "embossment_casting",
                 () -> LoadableRecipeSerializer.of(EmbossmentCastingRecipe.LOADER, TinkerRecipeTypes.CASTING_TABLE)
         );
-        TicEXRegistry.BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
+        TicEXRecipeSerializers.BUILDING_EMBOSSMENT_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
                 "embossment_building",
                 () -> LoadableRecipeSerializer.of(EmbossmentBuildingRecipe.LOADER)
         );
-        TicEXRegistry.VALIDATABLE_INCREMENTAL_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
+        TicEXRecipeSerializers.VALIDATABLE_INCREMENTAL_RECIPE_SERIALIZER = TicEXRegistry.RECIPE_SERIALIZERS.register(
                 "validatable_incremental_modifier",
                 () -> LoadableRecipeSerializer.of(ValidatableIncrementalModifierRecipe.LOADER)
         );

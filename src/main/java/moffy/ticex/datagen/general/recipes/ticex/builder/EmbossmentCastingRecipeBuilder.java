@@ -2,6 +2,7 @@ package moffy.ticex.datagen.general.recipes.ticex.builder;
 
 import moffy.ticex.lib.recipe.EmbossmentCastingRecipe;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRecipeSerializers;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -85,7 +86,7 @@ public class EmbossmentCastingRecipeBuilder extends AbstractRecipeBuilder<Emboss
     }
 
     public static EmbossmentCastingRecipeBuilder castingRecipe(@Nullable IMaterialItem result) {
-        return new EmbossmentCastingRecipeBuilder(result, TicEXRegistry.CASTING_EMBOSSMENT_RECIPE_SERIALIZER.get());
+        return new EmbossmentCastingRecipeBuilder(result, TicEXRecipeSerializers.CASTING_EMBOSSMENT_RECIPE_SERIALIZER.get());
     }
 
     public static EmbossmentCastingRecipeBuilder builder(@Nullable IMaterialItem result, TypeAwareRecipeSerializer<? extends AbstractMaterialCastingRecipe> recipeSerializer) {

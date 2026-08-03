@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRecipeSerializers;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -168,7 +169,7 @@ public class ValidatableIncrementalModifierRecipe extends AbstractModifierRecipe
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return TicEXRegistry.VALIDATABLE_INCREMENTAL_RECIPE_SERIALIZER.get();
+        return TicEXRecipeSerializers.VALIDATABLE_INCREMENTAL_RECIPE_SERIALIZER.get();
     }
 
     @Override

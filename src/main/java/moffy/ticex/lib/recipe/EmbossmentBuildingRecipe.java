@@ -2,6 +2,7 @@ package moffy.ticex.lib.recipe;
 
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRecipeSerializers;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -54,7 +55,7 @@ public class EmbossmentBuildingRecipe extends ToolBuildingRecipe {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return TicEXRegistry.BUILDING_EMBOSSMENT_RECIPE_SERIALIZER.get();
+        return TicEXRecipeSerializers.BUILDING_EMBOSSMENT_RECIPE_SERIALIZER.get();
     }
 
     @Override

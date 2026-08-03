@@ -1,6 +1,7 @@
 package moffy.ticex.lib.recipe;
 
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRecipeSerializers;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -55,7 +56,7 @@ public class EmbossmentCastingRecipe extends MaterialCastingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return TicEXRegistry.CASTING_EMBOSSMENT_RECIPE_SERIALIZER.get();
+        return TicEXRecipeSerializers.CASTING_EMBOSSMENT_RECIPE_SERIALIZER.get();
     }
 
     @Override
