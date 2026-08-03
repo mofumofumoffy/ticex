@@ -22,10 +22,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
+import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedContext;
+import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedModifierHook;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
+import slimeknights.tconstruct.library.module.ModuleHookMap;
 import slimeknights.tconstruct.library.tools.context.ToolHarvestContext;
 import slimeknights.tconstruct.library.tools.definition.module.ToolHooks;
 import slimeknights.tconstruct.library.tools.definition.module.aoe.AreaOfEffectIterator.AOEMatchType;
@@ -36,10 +40,15 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.utils.BlockSideHitListener;
 import slimeknights.tconstruct.library.utils.Util;
 
-public class ModifierBedrockBreaker extends NoLevelsModifier {
+public class ModifierBedrockBreaker extends NoLevelsModifier implements BreakSpeedModifierHook {
 
     public ModifierBedrockBreaker() {
         MinecraftForge.EVENT_BUS.addListener(this::onLeftClickBlock);
+    }
+
+    @Override
+    protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
+        hookBuilder.addHook(this, ModifierHooks.BREAK_SPEED);
     }
 
     private void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
@@ -69,6 +78,17 @@ public class ModifierBedrockBreaker extends NoLevelsModifier {
             } else if (state.is(ModBlocks.fake_end_portal.get())) {
                 level.setBlock(pos, Blocks.END_PORTAL.defaultBlockState(), 2);
             }
+        }
+    }
+
+    @Override
+    public void onBreakSpeed(IToolStackView iToolStackView, ModifierEntry modifierEntry, PlayerEvent.BreakSpeed breakSpeed, Direction direction, boolean b, float v) {
+        if (
+                breakSpeed.getState().is(ModBlocks.fake_bedrock.get())
+                        || breakSpeed.getState().is(ModBlocks.fake_end_portal.get())
+                        || breakSpeed.getState().is(ModBlocks.fake_end_portal_frame.get())
+        ){
+            breakSpeed.setNewSpeed(Math.max(breakSpeed.getNewSpeed(), 100f));
         }
     }
 }
