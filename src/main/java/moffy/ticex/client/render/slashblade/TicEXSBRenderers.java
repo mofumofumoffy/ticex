@@ -50,19 +50,17 @@ public class TicEXSBRenderers {
     @OnlyIn(Dist.CLIENT)
     public static void renderWrapped(IBladeRenderer renderer, ItemStack stack, WavefrontObject model, String target, ResourceLocation texture, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, Function<ResourceLocation, RenderType> renderTypeGetter, boolean enableEffect) {
 
-        ItemRenderContext itemRenderContext = new ItemRenderContext(
-                stack,
-                ItemDisplayContext.FIXED,
-                false,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn,
-                OverlayTexture.NO_OVERLAY
+        ItemRenderContext itemRenderContext = TicEXContexts.SB_RENDERING_CONTEXT.getOrElse(
+                new ItemRenderContext(
+                        stack,
+                        ItemDisplayContext.FIXED,
+                        false,
+                        matrixStackIn,
+                        bufferIn,
+                        packedLightIn,
+                        OverlayTexture.NO_OVERLAY
+                )
         );
-
-        if(TicEXContexts.SB_RENDERING_CONTEXT.isPresent()){
-            itemRenderContext = TicEXContexts.SB_RENDERING_CONTEXT.get();
-        }
 
         if(itemRenderContext == null || !(stack.getItem() instanceof IModifiable)) {
             renderer.render(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn, renderTypeGetter, enableEffect);

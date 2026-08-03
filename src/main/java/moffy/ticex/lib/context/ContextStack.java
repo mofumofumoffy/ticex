@@ -9,27 +9,21 @@ import java.util.Deque;
 public class ContextStack<T> {
 
     private final Deque<ContextFrame<T>> localDeque;
-    private final T defaultValue;
 
     public ContextStack() {
-        this(null);
-    }
-
-    public ContextStack(T defaultValue) {
         this.localDeque = new ArrayDeque<>();
-        this.defaultValue = defaultValue;
     }
 
-    public boolean isPresent(){
-        return !localDeque.isEmpty();
+    public T get(){
+        return getOrElse(null);
     }
 
-    public T get() {
+    public T getOrElse(T other) {
         ContextFrame<T> local = localDeque.peek();
         if(local != null) {
             return local.get();
         }
-        return defaultValue;
+        return other;
     }
 
     @ApiStatus.Internal
