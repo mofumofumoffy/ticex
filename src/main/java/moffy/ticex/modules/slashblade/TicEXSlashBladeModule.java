@@ -16,6 +16,7 @@ import moffy.ticex.modifier.ModifierKoshirae;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.slashblade.StateSyncPacket;
+import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -36,7 +37,7 @@ public class TicEXSlashBladeModule implements AddonModule {
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
-        TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY = TicEXRegistry.ENTITIES.register("reforged_slashblade", () ->
+        TicEXEntities.SLASHBLADE_TOOL_ITEM_ENTITY = TicEXRegistry.ENTITIES.register("reforged_slashblade", () ->
                 EntityType.Builder.of(SBToolItemEntity::new, MobCategory.MISC)
                         .sized(0.5F, 0.5F)
                         .setTrackingRange(10)

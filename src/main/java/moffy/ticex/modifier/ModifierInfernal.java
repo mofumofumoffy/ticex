@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXAttributes;
 import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.handlers.InternalTimers;
 import moze_intel.projecte.utils.WorldHelper;
@@ -98,6 +99,6 @@ public class ModifierInfernal extends NoLevelsModifier implements InventoryTickM
 
     @Override
     public void addAttributes(IToolStackView iToolStackView, ModifierEntry modifierEntry, EquipmentSlot equipmentSlot, BiConsumer<Attribute, AttributeModifier> biConsumer) {
-        biConsumer.accept(TicEXRegistry.DAMAGE_TAKEN.get(), new AttributeModifier(ATTRIBUTE_MODIFIER_UUID, "gem_modifier", -0.2f, AttributeModifier.Operation.ADDITION));
+        biConsumer.accept(TicEXAttributes.DAMAGE_TAKEN.get(), new AttributeModifier(ATTRIBUTE_MODIFIER_UUID, "gem_modifier", -0.2f, AttributeModifier.Operation.ADDITION));
     }
 }

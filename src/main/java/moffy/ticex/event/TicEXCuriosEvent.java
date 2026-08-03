@@ -7,6 +7,7 @@ import moffy.ticex.client.render.curios.LayerResonanceTools;
 import moffy.ticex.client.render.curios.ResonanceToolProjectileRenderer;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
+import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -73,7 +74,7 @@ public class TicEXCuriosEvent {
 
     @OnlyIn(Dist.CLIENT)
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(TicEXRegistry.RESONANCE_TOOL_PROJECTILE.get(), pContext ->
+        event.registerEntityRenderer(TicEXEntities.RESONANCE_TOOL_PROJECTILE.get(), pContext ->
             new ResonanceToolProjectileRenderer(pContext, 2f)
         );
     }

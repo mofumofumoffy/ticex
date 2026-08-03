@@ -100,28 +100,6 @@ public class TicEXRegistry {
 
     public static RegistryObject<CreativeModeTab> CREATIVE_TAB_ITEMS = null;
 
-
-    public static RegistryObject<MenuType<ToolContainerMenu>> UNSYNCED_TOOL_CONTAINER = null;
-    public static RegistryObject<MenuType<FluidTransmuterContainerMenu>> FLUID_TRANSMUTER_MENU = null;
-
-
-    public static FluidObject<UnplaceableFluid> MOLTEN_RECONSTRUCTION_CORE = null;
-    public static List<FluidObject<UnplaceableFluid>> RF_FURNACE_FUELS = new ArrayList<>();
-    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_INFINITY = null;
-    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_NEUTRON = null;
-    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_CRYSTAL_MATRIX = null;
-    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_BLAZING = null;
-    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
-    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_OD = null;
-
-    public static RegistryObject<EntityType<SBToolItemEntity>> SLASHBLADE_TOOL_ITEM_ENTITY = null;
-    public static RegistryObject<EntityType<EndestShotProjectile>> ENDESTSHOT_PROJECTILE = null;
-    public static RegistryObject<EntityType<ResonanceToolProjectile>> RESONANCE_TOOL_PROJECTILE = null;
-    public static RegistryObject<EntityType<MekanicProjectile>> MEKANIC_PROJECTILE = null;
-
-    public static RegistryObject<Attribute> HEALING_RECEIVED = null;
-    public static RegistryObject<Attribute> DAMAGE_TAKEN = null;
-
     public static DynamicModifier REBIRTH_MODIFIER = null;
     public static StaticModifier<Modifier> DEFLECTION_MODIFIER = null;
     public static StaticModifier<Modifier> EMBOSSMENT_MODIFIER = null;

@@ -1,18 +1,9 @@
 package moffy.ticex.entity.mekanism;
 
-import com.google.common.collect.Lists;
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import meranha.mekaweapons.MekaWeapons;
-import meranha.mekaweapons.MekaWeaponsUtils;
 import meranha.mekaweapons.items.MekaArrowEntity;
 import moffy.ticex.TicEX;
-import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
-import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

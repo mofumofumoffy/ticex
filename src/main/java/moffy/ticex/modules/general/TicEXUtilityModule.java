@@ -7,6 +7,7 @@ import moffy.ticex.block.transmuter.FluidTransmuterBlock;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.registry.TicEXBlocks;
+import moffy.ticex.registry.TicEXFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -71,7 +72,7 @@ public class TicEXUtilityModule implements AddonModule {
         );
 
         for (int i = 0; i < 20; i++) {
-            TicEXRegistry.RF_FURNACE_FUELS.add(
+            TicEXFluids.RF_FURNACE_FUELS.add(
                     TicEXRegistry.FLUIDS.register("rf_furnace_fuel_" + i)
                             .type(TicEXFluidUtils.hot("rf_furnace_fuel_" + i).temperature(1000).density(-1600))
                             .unplacable()

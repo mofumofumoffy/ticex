@@ -3,6 +3,7 @@ package moffy.ticex.event;
 import moffy.ticex.client.render.ticex.ItemArrowRenderer;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXEntities;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
@@ -103,7 +104,7 @@ public class TicEXAvaritiaEvent {
 
     @OnlyIn(Dist.CLIENT)
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), pContext ->
+        event.registerEntityRenderer(TicEXEntities.ENDESTSHOT_PROJECTILE.get(), pContext ->
             new ItemArrowRenderer(pContext, 1f)
         );
     }

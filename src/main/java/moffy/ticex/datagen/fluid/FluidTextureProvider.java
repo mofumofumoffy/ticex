@@ -2,6 +2,7 @@ package moffy.ticex.datagen.fluid;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXFluids;
 import net.minecraft.data.PackOutput;
 import slimeknights.mantle.fluid.UnplaceableFluid;
 import slimeknights.mantle.fluid.texture.AbstractFluidTextureProvider;
@@ -23,16 +24,16 @@ public class FluidTextureProvider extends AbstractFluidTextureProvider {
 
     @Override
     public void addTextures() {
-        molten(TicEXRegistry.MOLTEN_INFINITY);
-        molten(TicEXRegistry.MOLTEN_NEUTRON);
-        molten(TicEXRegistry.MOLTEN_CRYSTAL_MATRIX);
-        molten(TicEXRegistry.MOLTEN_BLAZING);
-        molten(TicEXRegistry.MOLTEN_ETHERIC);
-        molten(TicEXRegistry.MOLTEN_OD);
-        molten(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE);
+        molten(TicEXFluids.MOLTEN_INFINITY);
+        molten(TicEXFluids.MOLTEN_NEUTRON);
+        molten(TicEXFluids.MOLTEN_CRYSTAL_MATRIX);
+        molten(TicEXFluids.MOLTEN_BLAZING);
+        molten(TicEXFluids.MOLTEN_ETHERIC);
+        molten(TicEXFluids.MOLTEN_OD);
+        molten(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE);
 
         int i = 0;
-        for (FluidObject<UnplaceableFluid> fuel : TicEXRegistry.RF_FURNACE_FUELS) {
+        for (FluidObject<UnplaceableFluid> fuel : TicEXFluids.RF_FURNACE_FUELS) {
             fuels(fuel).color(i++ * 0x0C0C0C);
         }
     }

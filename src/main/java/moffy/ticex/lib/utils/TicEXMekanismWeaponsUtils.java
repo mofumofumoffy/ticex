@@ -19,6 +19,7 @@ import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -49,7 +50,7 @@ public class TicEXMekanismWeaponsUtils {
                 () -> new ToolPartItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_bow").getId())
         );
 
-        TicEXRegistry.MEKANIC_PROJECTILE = TicEXRegistry.ENTITIES.register("mekanic", () ->
+        TicEXEntities.MEKANIC_PROJECTILE = TicEXRegistry.ENTITIES.register("mekanic", () ->
                 EntityType.Builder.<MekanicProjectile>of(MekanicProjectile::new, MobCategory.MISC)
                         .sized(0.5f, 0.5f)
                         .setTrackingRange(10)

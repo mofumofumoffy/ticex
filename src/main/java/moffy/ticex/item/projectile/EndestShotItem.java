@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import slimeknights.tconstruct.tools.item.CrystalshotItem;
 
+@Deprecated
 public class EndestShotItem extends CrystalshotItem {
 
     public EndestShotItem(Item.Properties props) {

@@ -8,6 +8,7 @@ import mods.flammpfeil.slashblade.item.ReachModifier;
 import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.TicEX;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
+import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXToolDefinitions;
 import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.BlockPos;
@@ -599,7 +600,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
         if (!(entity instanceof SBToolItemEntity)) {
             Level world = entity.level();
             SBToolItemEntity e = new SBToolItemEntity(
-                    TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
+                    TicEXEntities.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
                 world
             );
             e.restoreFrom(entity);

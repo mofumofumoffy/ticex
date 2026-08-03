@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import mods.flammpfeil.slashblade.entity.BladeItemEntity;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXEntities;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.item.ItemStack;
@@ -33,7 +34,7 @@ public class SBItemEntityRenderUtils {
     }
 
     private static BladeItemEntity createBladeEntity(Level level, ItemStack itemStack) {
-        SBToolItemEntity entity = TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get().create(level);
+        SBToolItemEntity entity = TicEXEntities.SLASHBLADE_TOOL_ITEM_ENTITY.get().create(level);
         if(entity != null) {
             entity.setItem(itemStack);
         }

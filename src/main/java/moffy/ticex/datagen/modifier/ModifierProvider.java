@@ -6,6 +6,7 @@ import static slimeknights.tconstruct.common.TinkerTags.Items.MELEE;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import moffy.ticex.TicEX;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXAttributes;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.Item;
@@ -75,7 +76,7 @@ public class ModifierProvider extends AbstractModifierProvider implements ICondi
                 .addModule(ReduceToolDamageModule.builder().flat(1.0f));
         if (TicEXRegistry.TRANSCENDENTAL_MODIFIER != null) buildModifier(TicEXRegistry.TRANSCENDENTAL_MODIFIER)
                 .addModule(
-                        AttributeModule.builder(TicEXRegistry.DAMAGE_TAKEN.get(), Operation.ADDITION)
+                        AttributeModule.builder(TicEXAttributes.DAMAGE_TAKEN.get(), Operation.ADDITION)
                                 .unique("1dc2b568-1b38-47a0-97d6-ac83a390c67c")
                                 .eachLevel(-0.25f)
                 )

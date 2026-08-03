@@ -4,6 +4,7 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.*;
 import moffy.ticex.registry.TicEXBlocks;
+import moffy.ticex.registry.TicEXFluids;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -27,7 +28,7 @@ public class TicEXMaterialModule implements AddonModule {
                 new BlockItem(TicEXBlocks.ETHERIC_BLOCK.get(), new Item.Properties())
         );
 
-        TicEXRegistry.MOLTEN_ETHERIC = TicEXRegistry.FLUIDS.register("molten_etheric")
+        TicEXFluids.MOLTEN_ETHERIC = TicEXRegistry.FLUIDS.register("molten_etheric")
                 .type(TicEXFluidUtils.hot("molten_etheric").temperature(1000).density(1600))
                 .block(MapColor.COLOR_LIGHT_GREEN, 0)
                 .bucket()
@@ -46,7 +47,7 @@ public class TicEXMaterialModule implements AddonModule {
                 new BlockItem(TicEXBlocks.OD_BLOCK.get(), new Item.Properties())
         );
 
-        TicEXRegistry.MOLTEN_OD = TicEXRegistry.FLUIDS.register("molten_od")
+        TicEXFluids.MOLTEN_OD = TicEXRegistry.FLUIDS.register("molten_od")
                 .type(TicEXFluidUtils.hot("molten_od").temperature(1000).density(1600))
                 .block(MapColor.COLOR_LIGHT_GREEN, 0)
                 .bucket()

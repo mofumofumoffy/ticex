@@ -5,6 +5,7 @@ import moffy.ticex.TicEXConfig;
 import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
+import moffy.ticex.registry.TicEXEntities;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -42,7 +43,7 @@ public class ResonanceToolProjectile extends ItemArrow {
 
     @SuppressWarnings("unchecked")
     public ResonanceToolProjectile(@Nullable LivingEntity shooter, Level level) {
-        super((EntityType<? extends AbstractArrow>) TicEXRegistry.RESONANCE_TOOL_PROJECTILE.get(), shooter, level);
+        super((EntityType<? extends AbstractArrow>) TicEXEntities.RESONANCE_TOOL_PROJECTILE.get(), shooter, level);
         this.getEntityData().set(TARGET_TAG, shooter.getId());
     }
 

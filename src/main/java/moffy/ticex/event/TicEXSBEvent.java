@@ -9,6 +9,7 @@ import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.modules.slashblade.IInputCommandEvent;
 import moffy.ticex.network.slashblade.StateSyncPacket;
+import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -94,7 +95,7 @@ public class TicEXSBEvent {
     @SuppressWarnings("unchecked")
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(
-                TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
+                TicEXEntities.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
             SBToolBladeItemRenderer::new
         );
     }

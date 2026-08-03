@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.registry.TicEXAttributes;
 import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.AbyssalProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -155,7 +156,7 @@ public class ModifierAbyssal extends NoLevelsModifier implements InventoryTickMo
 
     @Override
     public void addAttributes(IToolStackView iToolStackView, ModifierEntry modifierEntry, EquipmentSlot equipmentSlot, BiConsumer<Attribute, AttributeModifier> biConsumer) {
-        biConsumer.accept(TicEXRegistry.DAMAGE_TAKEN.get(), new AttributeModifier(ATTRIBUTE_MODIFIER_UUID, "gem_modifier", -0.2f, AttributeModifier.Operation.ADDITION));
+        biConsumer.accept(TicEXAttributes.DAMAGE_TAKEN.get(), new AttributeModifier(ATTRIBUTE_MODIFIER_UUID, "gem_modifier", -0.2f, AttributeModifier.Operation.ADDITION));
     }
 
     @Override

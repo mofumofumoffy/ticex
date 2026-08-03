@@ -4,6 +4,7 @@ import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.client.modules.ticex.models.MaterialOverrideModel;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXAttributes;
 import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -39,11 +40,11 @@ public class TicEXEvent {
 
     @SuppressWarnings("unchecked")
     public static void onEntityAttributeModification(EntityAttributeModificationEvent event) {
-        if (TicEXRegistry.DAMAGE_TAKEN != null && TicEXRegistry.HEALING_RECEIVED != null) {
+        if (TicEXAttributes.DAMAGE_TAKEN != null && TicEXAttributes.HEALING_RECEIVED != null) {
             ForgeRegistries.ENTITY_TYPES.forEach(action -> {
                 if (action.getBaseClass().isAssignableFrom(LivingEntity.class)) {
-                    event.add((EntityType<? extends LivingEntity>) action, TicEXRegistry.DAMAGE_TAKEN.get());
-                    event.add((EntityType<? extends LivingEntity>) action, TicEXRegistry.HEALING_RECEIVED.get());
+                    event.add((EntityType<? extends LivingEntity>) action, TicEXAttributes.DAMAGE_TAKEN.get());
+                    event.add((EntityType<? extends LivingEntity>) action, TicEXAttributes.HEALING_RECEIVED.get());
                 }
             });
         }
@@ -60,7 +61,7 @@ public class TicEXEvent {
         LivingEntity target = event.getEntity();
 
         //attribute reduce
-        AttributeInstance attributeInstance = target.getAttribute(TicEXRegistry.DAMAGE_TAKEN.get());
+        AttributeInstance attributeInstance = target.getAttribute(TicEXAttributes.DAMAGE_TAKEN.get());
         if (attributeInstance != null) {
             double multiplier = attributeInstance.getValue();
             if (multiplier != 1D) {
@@ -83,7 +84,7 @@ public class TicEXEvent {
             return;
         }
         LivingEntity entity = event.getEntity();
-        AttributeInstance attributeInstance = entity.getAttribute(TicEXRegistry.HEALING_RECEIVED.get());
+        AttributeInstance attributeInstance = entity.getAttribute(TicEXAttributes.HEALING_RECEIVED.get());
         if (attributeInstance != null) {
             double multiplier = attributeInstance.getValue();
             if (multiplier != 1D) {

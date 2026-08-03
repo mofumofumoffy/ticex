@@ -4,6 +4,7 @@ import committee.nova.mods.avaritia.common.entity.GapingVoidEntity;
 import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.ticex.entity.ItemArrow;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +16,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
+@Deprecated
 public class EndestShotProjectile extends ItemArrow {
 
     @SuppressWarnings("unchecked")
@@ -24,7 +26,7 @@ public class EndestShotProjectile extends ItemArrow {
 
     @SuppressWarnings("unchecked")
     public EndestShotProjectile(LivingEntity shooter, Level level) {
-        super((EntityType<EndestShotProjectile>) TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), shooter, level);
+        super((EntityType<EndestShotProjectile>) TicEXEntities.ENDESTSHOT_PROJECTILE.get(), shooter, level);
     }
 
     @Override

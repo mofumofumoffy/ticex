@@ -8,6 +8,7 @@ import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXFluids;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -112,43 +113,43 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
 
         // smeltery
 
-        if(TicEXRegistry.MOLTEN_CRYSTAL_MATRIX != null) {
+        if(TicEXFluids.MOLTEN_CRYSTAL_MATRIX != null) {
                 MaterialMeltingRecipeBuilder.material(TicEXMaterials.CRYSTAL_MATRIX,
                         3180,
-                                FluidOutput.fromFluid(TicEXRegistry.MOLTEN_CRYSTAL_MATRIX.get().getSource(), FluidValues.INGOT))
+                                FluidOutput.fromFluid(TicEXFluids.MOLTEN_CRYSTAL_MATRIX.get().getSource(), FluidValues.INGOT))
                     .save(topConsumer, prefix(TicEXMaterials.CRYSTAL_MATRIX, materialMeltingFolder));
 
-            metalIngotOptional(topConsumer, TicEXTags.Fluids.CRYSTAL_MATRIX, TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, 2100, TicEXRegistry.MOLTEN_CRYSTAL_MATRIX.getId());
+            metalIngotOptional(topConsumer, TicEXTags.Fluids.CRYSTAL_MATRIX, TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, 2100, TicEXFluids.MOLTEN_CRYSTAL_MATRIX.getId());
         }
 
-        if(TicEXRegistry.MOLTEN_INFINITY != null) {
+        if(TicEXFluids.MOLTEN_INFINITY != null) {
                 MaterialMeltingRecipeBuilder.material(TicEXMaterials.INFINITY,
                             3180,
-                                FluidOutput.fromFluid(TicEXRegistry.MOLTEN_INFINITY.get().getSource(), FluidValues.INGOT))
+                                FluidOutput.fromFluid(TicEXFluids.MOLTEN_INFINITY.get().getSource(), FluidValues.INGOT))
                     .save(topConsumer, prefix(TicEXMaterials.INFINITY, materialMeltingFolder));
 
-            metalIngotOptional(topConsumer, TicEXTags.Fluids.INFINITY, TicEXTags.Items.INFINITY_BLOCK, 6360, TicEXRegistry.MOLTEN_INFINITY.getId());
+            metalIngotOptional(topConsumer, TicEXTags.Fluids.INFINITY, TicEXTags.Items.INFINITY_BLOCK, 6360, TicEXFluids.MOLTEN_INFINITY.getId());
         }
 
-        if(TicEXRegistry.MOLTEN_NEUTRON != null) {
+        if(TicEXFluids.MOLTEN_NEUTRON != null) {
                 MaterialMeltingRecipeBuilder.material(TicEXMaterials.NEUTRON,
                         1400,
-                                FluidOutput.fromFluid(TicEXRegistry.MOLTEN_NEUTRON.get().getSource(), FluidValues.INGOT))
+                                FluidOutput.fromFluid(TicEXFluids.MOLTEN_NEUTRON.get().getSource(), FluidValues.INGOT))
                     .save(topConsumer, prefix(TicEXMaterials.NEUTRON, materialMeltingFolder));
 
-            metalIngotOptional(topConsumer, TicEXTags.Fluids.NEUTRON, TicEXTags.Items.NEUTRON_BLOCK, 5000, TicEXRegistry.MOLTEN_NEUTRON.getId());
+            metalIngotOptional(topConsumer, TicEXTags.Fluids.NEUTRON, TicEXTags.Items.NEUTRON_BLOCK, 5000, TicEXFluids.MOLTEN_NEUTRON.getId());
         }
 
-        if(TicEXRegistry.MOLTEN_BLAZING != null) {
+        if(TicEXFluids.MOLTEN_BLAZING != null) {
             MaterialMeltingRecipeBuilder.material(TicEXMaterials.BLAZING,
                             2500,
-                            FluidOutput.fromFluid(TicEXRegistry.MOLTEN_BLAZING.get().getSource(), FluidValues.INGOT))
+                            FluidOutput.fromFluid(TicEXFluids.MOLTEN_BLAZING.get().getSource(), FluidValues.INGOT))
                     .save(topConsumer, prefix(TicEXMaterials.BLAZING, materialMeltingFolder));
 
-            metalIngotOptional(topConsumer, TicEXTags.Fluids.BLAZING, TicEXTags.Items.BLAZING_BLOCK, 1800, TicEXRegistry.MOLTEN_BLAZING.getId());
-            MeltingFuelBuilder.fuel(TicEXRegistry.MOLTEN_BLAZING.ingredient(50), 150, 3500)
+            metalIngotOptional(topConsumer, TicEXTags.Fluids.BLAZING, TicEXTags.Items.BLAZING_BLOCK, 1800, TicEXFluids.MOLTEN_BLAZING.getId());
+            MeltingFuelBuilder.fuel(TicEXFluids.MOLTEN_BLAZING.ingredient(50), 150, 3500)
                     .rate(55)
-                    .save(pWriter, prefix(TicEXRegistry.MOLTEN_BLAZING, smelteryMeltingFolder + "fuel/"));
+                    .save(pWriter, prefix(TicEXFluids.MOLTEN_BLAZING, smelteryMeltingFolder + "fuel/"));
         }
 
 

@@ -3,6 +3,7 @@ package moffy.ticex.block.transmuter.container;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
 import moffy.ticex.block.transmuter.tank.TransmuterFluidTank;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXMenuTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -30,7 +31,7 @@ public class FluidTransmuterContainerMenu extends TriggeringBaseContainerMenu<Fl
     private boolean hasFuelSlot;
 
     public FluidTransmuterContainerMenu(int id, @Nullable Inventory inv, @Nullable FluidTransmuterBlockEntity transmuter) {
-        super(TicEXRegistry.FLUID_TRANSMUTER_MENU.get(), id, inv, transmuter);
+        super(TicEXMenuTypes.FLUID_TRANSMUTER_MENU.get(), id, inv, transmuter);
 
         this.hasFuelSlot = false;
         if (transmuter != null) {

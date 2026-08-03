@@ -1,6 +1,7 @@
 package moffy.ticex.client.modules.ticex;
 
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -24,7 +25,7 @@ import slimeknights.tconstruct.tools.menu.ToolContainerMenu;
 
 public class UnsyncedToolContainerMenu extends ToolContainerMenu {
     public UnsyncedToolContainerMenu(int id, Inventory playerInventory, ItemStack stack, IItemHandler handler, int slotIndex) {
-        super(TicEXRegistry.UNSYNCED_TOOL_CONTAINER.get(), id, playerInventory, stack, handler, slotIndex);
+        super(TicEXMenuTypes.UNSYNCED_TOOL_CONTAINER.get(), id, playerInventory, stack, handler, slotIndex);
     }
 
     public static ToolContainerMenu forClient(int id, Inventory inventory, FriendlyByteBuf buffer) {

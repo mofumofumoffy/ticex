@@ -14,6 +14,7 @@ import moffy.ticex.modifier.ModifierIncomparable;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
+import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
@@ -39,7 +40,7 @@ public class TicEXCuriosModule implements AddonModule {
     public void init(FMLJavaModLoadingContext context) {
         ToolCapabilityProvider.register(CuriosCapProvider::new);
 
-        TicEXRegistry.RESONANCE_TOOL_PROJECTILE = TicEXRegistry.ENTITIES.register("resonance_tool", () ->
+        TicEXEntities.RESONANCE_TOOL_PROJECTILE = TicEXRegistry.ENTITIES.register("resonance_tool", () ->
                 EntityType.Builder.<ResonanceToolProjectile>of(ResonanceToolProjectile::new, MobCategory.MISC)
                         .sized(0.5f, 0.5f)
                         .setTrackingRange(10)

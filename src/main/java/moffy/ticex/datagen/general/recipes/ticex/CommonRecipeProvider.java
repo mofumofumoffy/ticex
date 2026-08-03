@@ -8,6 +8,7 @@ import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXBlocks;
+import moffy.ticex.registry.TicEXFluids;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -61,18 +62,18 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .addInput(TinkerFluids.moltenSlimesteel.get(), FluidValues.INGOT)
                 .addInput(TicEXTags.Fluids.HEPATIZON, FluidValues.INGOT)
                 .addInput(TicEXTags.Fluids.GOLD, FluidValues.INGOT)
-                .addInput(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
+                .addInput(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
                 .save(materialConsumer, prefix(TicEXTags.Fluids.ETHERIC.location(), alloysFolder));
 
         AlloyRecipeBuilder.alloy(FluidOutput.fromTag(TicEXTags.Fluids.OD, 270), 2500)
                 .addInput(TinkerFluids.blazingBlood.get(), FluidValues.SLIMEBALL)
                 .addInput(TinkerFluids.moltenSlimesteel.get(), FluidValues.INGOT)
                 .addInput(TinkerFluids.moltenAmethyst.get(), FluidValues.GEM)
-                .addInput(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
+                .addInput(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
                 .save(materialConsumer, prefix(TicEXTags.Fluids.OD.location(), alloysFolder));
 
-        metalIngotOptional(pWriter, TicEXTags.Fluids.ETHERIC, TicEXTags.Items.ETHERIC_BLOCK, 5000, TicEXRegistry.MOLTEN_ETHERIC.getId());
-        metalIngotOptional(pWriter, TicEXTags.Fluids.OD, TicEXTags.Items.OD_BLOCK, 5000, TicEXRegistry.MOLTEN_OD.getId());
+        metalIngotOptional(pWriter, TicEXTags.Fluids.ETHERIC, TicEXTags.Items.ETHERIC_BLOCK, 5000, TicEXFluids.MOLTEN_ETHERIC.getId());
+        metalIngotOptional(pWriter, TicEXTags.Fluids.OD, TicEXTags.Items.OD_BLOCK, 5000, TicEXFluids.MOLTEN_OD.getId());
     }
 
     public void buildShapedRecipes(Consumer<FinishedRecipe> pWriter) {
@@ -134,7 +135,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .setFluid(TicEXTags.Fluids.ETHERIC, FluidValues.INGOT)
                 .save(pWriter, prefix(TicEXMaterials.ETHERIC, materialCastingFolder));
 
-        MaterialMeltingRecipeBuilder.material(TicEXMaterials.ETHERIC, 2500, new FluidStack(TicEXRegistry.MOLTEN_ETHERIC.get().getSource(), FluidValues.INGOT))
+        MaterialMeltingRecipeBuilder.material(TicEXMaterials.ETHERIC, 2500, new FluidStack(TicEXFluids.MOLTEN_ETHERIC.get().getSource(), FluidValues.INGOT))
                 .save(pWriter, prefix(TicEXMaterials.ETHERIC, materialMeltingFolder));
 
         MaterialFluidRecipeBuilder.material(TicEXMaterials.OD)
@@ -142,7 +143,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .setFluid(TicEXTags.Fluids.OD, FluidValues.INGOT)
                 .save(pWriter, prefix(TicEXMaterials.OD, materialCastingFolder));
 
-        MaterialMeltingRecipeBuilder.material(TicEXMaterials.OD, 2500, new FluidStack(TicEXRegistry.MOLTEN_OD.get().getSource(), FluidValues.INGOT))
+        MaterialMeltingRecipeBuilder.material(TicEXMaterials.OD, 2500, new FluidStack(TicEXFluids.MOLTEN_OD.get().getSource(), FluidValues.INGOT))
                 .save(pWriter, prefix(TicEXMaterials.OD, materialMeltingFolder));
     }
 
@@ -153,17 +154,17 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
         );
 
         ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXBlocks.SCORCHED_RF_FURNACE.get()))
-                .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
+                .setFluidAndTime(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerTags.Items.FOUNDRY_BRICKS, true)
                 .save(utilityConsumer, prefix(TicEXBlocks.SCORCHED_RF_FURNACE, smelteryCastingFolder + "scorched/"));
 
         ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXBlocks.FLUID_TRANSMUTER.get()))
-                .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
+                .setFluidAndTime(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerSmeltery.scorchedAlloyer.get(), true)
                 .save(utilityConsumer, prefix(TicEXBlocks.FLUID_TRANSMUTER, smelteryCastingFolder + "scorched_"));
 
         ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(TicEXBlocks.SEARED_RF_FURNACE.get()))
-                .setFluidAndTime(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE, 2000)
+                .setFluidAndTime(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE, 2000)
                 .setCast(TinkerTags.Items.SMELTERY_BRICKS, true)
                 .save(utilityConsumer, prefix(TicEXBlocks.SEARED_RF_FURNACE, smelteryCastingFolder + "seared/"));
 
@@ -187,11 +188,11 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .save(pWriter, prefix(TicEXRegistry.EMBOSSMENT_MODIFIER, slotlessFolder));
 
         MeltingRecipeBuilder.melting(Ingredient.of(TicEXItems.FLICKERING_RECONSTRUCTION_CORE.get()),
-                        FluidOutput.fromFluid(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE.get(), 2000), 1000, (int) 32)
+                        FluidOutput.fromFluid(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE.get(), 2000), 1000, (int) 32)
                 .save(pWriter, prefix(TicEXItems.FLICKERING_RECONSTRUCTION_CORE, smelteryMeltingFolder));
 
-        for (int i = 0; i < TicEXRegistry.RF_FURNACE_FUELS.size(); i++) {
-            FluidObject<UnplaceableFluid> fuel = TicEXRegistry.RF_FURNACE_FUELS.get(i);
+        for (int i = 0; i < TicEXFluids.RF_FURNACE_FUELS.size(); i++) {
+            FluidObject<UnplaceableFluid> fuel = TicEXFluids.RF_FURNACE_FUELS.get(i);
             MeltingFuelBuilder.fuel(fuel.ingredient(50), 150, calculateRfFuelTemperature(i))
                     .rate(5 * i + 5)
                     .save(pWriter, prefix(fuel, smelteryMeltingFolder + "fuel/"));

@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
+import moffy.ticex.registry.TicEXAttributes;
 import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.HurricaneProperty;
 import moffy.ticex.modules.general.TicEXRegistry;
@@ -178,7 +179,7 @@ public class ModifierHurricane
                     new AttributeModifier(MOVEMENT_SPEED_MODIFIER_UUID, "Armor modifier", 1.0, Operation.MULTIPLY_TOTAL)
             );
         }
-        modifierGetter.accept(TicEXRegistry.DAMAGE_TAKEN.get(), new AttributeModifier(ATTRIBUTE_MODIFIER_UUID, "gem_modifier", -0.2f, AttributeModifier.Operation.ADDITION));
+        modifierGetter.accept(TicEXAttributes.DAMAGE_TAKEN.get(), new AttributeModifier(ATTRIBUTE_MODIFIER_UUID, "gem_modifier", -0.2f, AttributeModifier.Operation.ADDITION));
     }
 
     @Override

@@ -13,6 +13,8 @@ import moffy.ticex.item.projectile.EndestShotItem;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.*;
 import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXEntities;
+import moffy.ticex.registry.TicEXFluids;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
@@ -60,32 +62,32 @@ public class TicEXAvaritiaModule implements AddonModule {
         TicEXRegistry.BLAZING_FLAME_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("blazing_flame");
         TicEXRegistry.BLAZING_FORTUNE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("blazing_fortune");
 
-        TicEXRegistry.MOLTEN_INFINITY = TicEXRegistry.FLUIDS.register("molten_infinity")
+        TicEXFluids.MOLTEN_INFINITY = TicEXRegistry.FLUIDS.register("molten_infinity")
                 .type(TicEXFluidUtils.hot("molten_infinity").temperature(6360).lightLevel(15))
                 .block(BurningLiquidBlock.createBurning(MapColor.EMERALD, 15, 20, 20f))
                 .bucket()
                 .commonTag()
                 .flowing();
-        TicEXRegistry.MOLTEN_NEUTRON = TicEXRegistry.FLUIDS.register("molten_neutron")
+        TicEXFluids.MOLTEN_NEUTRON = TicEXRegistry.FLUIDS.register("molten_neutron")
                 .type(TicEXFluidUtils.cool().temperature(1000))
                 .block(MapColor.COLOR_BLACK, 0)
                 .bucket()
                 .commonTag()
                 .flowing();
-        TicEXRegistry.MOLTEN_CRYSTAL_MATRIX = TicEXRegistry.FLUIDS.register("molten_crystal_matrix")
+        TicEXFluids.MOLTEN_CRYSTAL_MATRIX = TicEXRegistry.FLUIDS.register("molten_crystal_matrix")
                 .type(TicEXFluidUtils.cool().temperature(1000))
                 .block(MapColor.COLOR_LIGHT_BLUE, 0)
                 .bucket()
                 .commonTag()
                 .flowing();
-        TicEXRegistry.MOLTEN_BLAZING = TicEXRegistry.FLUIDS.register("molten_blazing")
+        TicEXFluids.MOLTEN_BLAZING = TicEXRegistry.FLUIDS.register("molten_blazing")
                 .type(TicEXFluidUtils.hot("molten_blazing").temperature(4800).lightLevel(15))
                 .block(BurningLiquidBlock.createBurning(MapColor.COLOR_ORANGE, 15, 20, 10f))
                 .bucket()
                 .commonTag()
                 .flowing();
 
-        TicEXRegistry.ENDESTSHOT_PROJECTILE = TicEXRegistry.ENTITIES.register("endestshot", () ->
+        TicEXEntities.ENDESTSHOT_PROJECTILE = TicEXRegistry.ENTITIES.register("endestshot", () ->
                 EntityType.Builder.<EndestShotProjectile>of(EndestShotProjectile::new, MobCategory.MISC)
                         .sized(0.5f, 0.5f)
                         .setTrackingRange(10)
@@ -126,7 +128,7 @@ public class TicEXAvaritiaModule implements AddonModule {
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            EntityRenderers.register(TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), context -> new ItemArrowRenderer(context, 1));
+            EntityRenderers.register(TicEXEntities.ENDESTSHOT_PROJECTILE.get(), context -> new ItemArrowRenderer(context, 1));
         });
     }
 }

@@ -18,8 +18,7 @@ import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.ModifierEnchantmentSupplier;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
-import moffy.ticex.registry.TicEXItems;
-import moffy.ticex.registry.TicEXRecipeSerializers;
+import moffy.ticex.registry.*;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
@@ -88,16 +87,16 @@ public class TicEXModule implements AddonModule {
                 () -> new ItemFlickeringCore(new Item.Properties())
         );
 
-        TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE = TicEXRegistry.FLUIDS.register("molten_reconstruction_core")
+        TicEXFluids.MOLTEN_RECONSTRUCTION_CORE = TicEXRegistry.FLUIDS.register("molten_reconstruction_core")
                 .type(TicEXFluidUtils.slime("reconstruction_core").temperature(1000).density(-1600))
                 .bucket()
                 .unplacable();
 
 
-        TicEXRegistry.HEALING_RECEIVED = TicEXRegistry.ATTRIBUTES.register("healing_received", () ->
+        TicEXAttributes.HEALING_RECEIVED = TicEXRegistry.ATTRIBUTES.register("healing_received", () ->
                 new RangedAttribute("attribute." + TicEX.MODID + ".healing_received", 1f, 0f, 1f)
         );
-        TicEXRegistry.DAMAGE_TAKEN = TicEXRegistry.ATTRIBUTES.register("damage_taken", () ->
+        TicEXAttributes.DAMAGE_TAKEN = TicEXRegistry.ATTRIBUTES.register("damage_taken", () ->
                 new RangedAttribute("attribute." + TicEX.MODID + ".damage_taken", 1f, Float.MIN_NORMAL, 1f).setSyncable(
                         true
                 )
@@ -114,11 +113,11 @@ public class TicEXModule implements AddonModule {
         TicEXRegistry.REBIRTH_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("rebirth");
         TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER = TicEXRegistry.MODIFIERS.register("enchantment_supplier", ModifierEnchantmentSupplier::new);
 
-        TicEXRegistry.UNSYNCED_TOOL_CONTAINER = TicEXRegistry.MENUS.register(
+        TicEXMenuTypes.UNSYNCED_TOOL_CONTAINER = TicEXRegistry.MENUS.register(
                 "unsynced_tool_container",
                 UnsyncedToolContainerMenu::forClient
         );
-        TicEXRegistry.FLUID_TRANSMUTER_MENU = TicEXRegistry.MENUS.register(
+        TicEXMenuTypes.FLUID_TRANSMUTER_MENU = TicEXRegistry.MENUS.register(
                 "fluid_transmuter",
                 FluidTransmuterContainerMenu::new
         );
@@ -161,8 +160,8 @@ public class TicEXModule implements AddonModule {
     @OnlyIn(Dist.CLIENT)
     public void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            MenuScreens.register(TicEXRegistry.UNSYNCED_TOOL_CONTAINER.get(), ToolContainerScreen::new);
-            MenuScreens.register(TicEXRegistry.FLUID_TRANSMUTER_MENU.get(), FluidTransmuterScreen::new);
+            MenuScreens.register(TicEXMenuTypes.UNSYNCED_TOOL_CONTAINER.get(), ToolContainerScreen::new);
+            MenuScreens.register(TicEXMenuTypes.FLUID_TRANSMUTER_MENU.get(), FluidTransmuterScreen::new);
         });
     }
 
