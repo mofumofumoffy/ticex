@@ -7,7 +7,7 @@ import mekanism.common.capabilities.ItemCapabilityWrapper;
 import mekanism.common.capabilities.ItemCapabilityWrapper.ItemCapability;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.utils.TicEXUtils;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -42,7 +42,7 @@ public class MekItemCapabilityProvider implements IToolCapabilityProvider {
 
     @Override
     public <T> LazyOptional<T> getCapability(IToolStackView tool, Capability<T> capability) {
-        if (TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.MEKANIC_MODIFIER) > 0) {
+        if (TicEXUtils.safeGetModifierLevel(tool, TicEXModifiers.MEKANIC_MODIFIER) > 0) {
             if(capability == MekaGearCapability.MEKA_GEAR_CAPABILITY){
                 return LazyOptional.of(()->mekaGearCapability).cast();
             } else {

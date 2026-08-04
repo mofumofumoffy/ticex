@@ -6,7 +6,6 @@ import moffy.ticex.TicEX;
 import moffy.ticex.client.render.slashblade.KoshiraeIconDecorator;
 import moffy.ticex.client.render.slashblade.SBToolBladeItemRenderer;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.modules.slashblade.IInputCommandEvent;
 import moffy.ticex.network.slashblade.StateSyncPacket;
 import moffy.ticex.registry.TicEXEntities;

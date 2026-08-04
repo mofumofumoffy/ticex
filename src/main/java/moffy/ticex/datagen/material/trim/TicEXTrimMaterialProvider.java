@@ -2,7 +2,6 @@ package moffy.ticex.datagen.material.trim;
 
 import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.ticex.lib.TicEXMaterials;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.Util;
 import net.minecraft.core.RegistrySetBuilder;

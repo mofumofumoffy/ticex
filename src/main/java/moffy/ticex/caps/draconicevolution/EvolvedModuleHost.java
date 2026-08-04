@@ -16,7 +16,7 @@ import com.brandon3055.draconicevolution.api.modules.lib.ModuleHostImpl;
 import com.brandon3055.draconicevolution.init.ModuleCfg;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modifier.ModifierEvolved;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 public class EvolvedModuleHost extends ModuleHostImpl {
@@ -25,12 +25,12 @@ public class EvolvedModuleHost extends ModuleHostImpl {
 
     public EvolvedModuleHost(IToolStackView tool) {
         super(
-            TechLevel.byIndex(TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.EVOLVED_MODIFIER) - 1),
+            TechLevel.byIndex(TicEXUtils.safeGetModifierLevel(tool, TicEXModifiers.EVOLVED_MODIFIER) - 1),
             ModuleCfg.staffWidth(
-                TechLevel.byIndex(TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.EVOLVED_MODIFIER) - 1)
+                TechLevel.byIndex(TicEXUtils.safeGetModifierLevel(tool, TicEXModifiers.EVOLVED_MODIFIER) - 1)
             ),
             ModuleCfg.staffHeight(
-                TechLevel.byIndex(TicEXUtils.safeGetModifierLevel(tool, TicEXRegistry.EVOLVED_MODIFIER) - 1)
+                TechLevel.byIndex(TicEXUtils.safeGetModifierLevel(tool, TicEXModifiers.EVOLVED_MODIFIER) - 1)
             ),
             "TiC Tools",
             false,

@@ -16,7 +16,7 @@ import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.lib.context.ContextFrame;
 import moffy.ticex.lib.context.ContextFrameScope;
 import moffy.ticex.lib.context.TicEXContexts;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -69,7 +69,7 @@ public class TicEXSBRenderers {
 
         ToolStack tool = ToolStack.from(stack);
 
-        if(tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0) {
+        if(tool.getModifierLevel(TicEXModifiers.KOSHIRAE_MODIFIER.get()) > 0) {
             renderer.render(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn, renderTypeGetter, enableEffect);
             return;
         }

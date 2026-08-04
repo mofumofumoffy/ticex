@@ -1,7 +1,7 @@
 package moffy.ticex.mixin.create;
 
 import com.simibubi.create.content.equipment.armor.CardboardArmorHandler;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
@@ -24,11 +24,11 @@ public class CardboardArmorHandlerMixin {
         if (entity.getPose() != Pose.CROUCHING) return;
 
         if (entity instanceof Player player && player.getAbilities().flying) return;
-        if (TicEXRegistry.CARDBOARD_MODIFIER != null) {
+        if (TicEXModifiers.CARDBOARD_MODIFIER != null) {
             for (ItemStack armorStack : entityIn.getArmorSlots()) {
                 if (armorStack.getItem() instanceof IModifiable) {
                     ToolStack armor = ToolStack.from(armorStack);
-                    if (armor.getModifierLevel(TicEXRegistry.CARDBOARD_MODIFIER.get()) <= 0) {
+                    if (armor.getModifierLevel(TicEXModifiers.CARDBOARD_MODIFIER.get()) <= 0) {
                         return;
                     }
                 } else {

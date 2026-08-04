@@ -1,6 +1,5 @@
 package moffy.ticex.caps.curios;
 
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;

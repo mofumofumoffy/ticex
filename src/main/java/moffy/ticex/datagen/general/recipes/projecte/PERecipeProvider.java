@@ -3,15 +3,14 @@ package moffy.ticex.datagen.general.recipes.projecte;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.lib.TicEXTags;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import moze_intel.projecte.gameObjs.registries.PEItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.DifferenceIngredient;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.data.recipe.IToolRecipeHelper;
@@ -55,36 +54,36 @@ public class PERecipeProvider implements ITicEXRecipeHelper, IToolRecipeHelper {
                     .save(topConsumer, prefix(TicEXRegistry.CLUSTER_MODIFIER.getId().withSuffix("_2"), upgradeFolder));
         }*/
 
-        if(TicEXRegistry.ABYSSAL_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.ABYSSAL_MODIFIER)
+        if(TicEXModifiers.ABYSSAL_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.ABYSSAL_MODIFIER)
                     .setTools(DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.HELMETS), Ingredient.of(TicEXTags.Items.GEM_ARMOR)))
                     .addInput(item(TicEX.getResource("catalyst_gem_helmet")))
                     .setSlots(SlotType.DEFENSE, 1)
-                    .save(topConsumer, prefix(TicEXRegistry.ABYSSAL_MODIFIER.getId(), defenseFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.ABYSSAL_MODIFIER.getId(), defenseFolder));
         }
 
-        if(TicEXRegistry.GRAVITY_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.GRAVITY_MODIFIER)
+        if(TicEXModifiers.GRAVITY_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.GRAVITY_MODIFIER)
                     .setTools(DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.LEGGINGS), Ingredient.of(TicEXTags.Items.GEM_ARMOR)))
                     .addInput(item(TicEX.getResource("catalyst_gem_leggings")))
                     .setSlots(SlotType.DEFENSE, 1)
-                    .save(topConsumer, prefix(TicEXRegistry.GRAVITY_MODIFIER.getId(), defenseFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.GRAVITY_MODIFIER.getId(), defenseFolder));
         }
 
-        if(TicEXRegistry.HURRICANE_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.HURRICANE_MODIFIER)
+        if(TicEXModifiers.HURRICANE_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.HURRICANE_MODIFIER)
                     .setTools(DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.BOOTS), Ingredient.of(TicEXTags.Items.GEM_ARMOR)))
                     .addInput(item(TicEX.getResource("catalyst_gem_boots")))
                     .setSlots(SlotType.DEFENSE, 1)
-                    .save(topConsumer, prefix(TicEXRegistry.HURRICANE_MODIFIER.getId(), defenseFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.HURRICANE_MODIFIER.getId(), defenseFolder));
         }
 
-        if(TicEXRegistry.INFERNAL_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.INFERNAL_MODIFIER)
+        if(TicEXModifiers.INFERNAL_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.INFERNAL_MODIFIER)
                     .setTools(DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.CHESTPLATES), Ingredient.of(TicEXTags.Items.GEM_ARMOR)))
                     .addInput(item(TicEX.getResource("catalyst_gem_chestplate")))
                     .setSlots(SlotType.DEFENSE, 1)
-                    .save(topConsumer, prefix(TicEXRegistry.INFERNAL_MODIFIER.getId(), defenseFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.INFERNAL_MODIFIER.getId(), defenseFolder));
         }
 
         if(TicEXItems.SINGULAR_GEM_ARMOR != null) {

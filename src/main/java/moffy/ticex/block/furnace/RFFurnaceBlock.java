@@ -1,7 +1,6 @@
 package moffy.ticex.block.furnace;
 
 import moffy.ticex.block.furnace.entity.RFFurnaceBlockEntity;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;

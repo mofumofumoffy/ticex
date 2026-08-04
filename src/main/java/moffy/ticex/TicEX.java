@@ -1,7 +1,7 @@
 package moffy.ticex;
 
 import com.mojang.logging.LogUtils;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;

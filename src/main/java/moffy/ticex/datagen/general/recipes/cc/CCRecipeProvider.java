@@ -3,7 +3,7 @@ package moffy.ticex.datagen.general.recipes.cc;
 import dan200.computercraft.shared.ModRegistry;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.recipes.FinishedRecipe;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
@@ -19,15 +19,15 @@ public class CCRecipeProvider implements ITicEXRecipeHelper {
             modsAvailable(TicEX.getResource("computercraft_compat"))
         );
 
-        if (TicEXRegistry.MODEM_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.MODEM_MODIFIER)
+        if (TicEXModifiers.MODEM_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.MODEM_MODIFIER)
                 .setTools(TinkerTags.Items.CHESTPLATES)
                 .addInput(ModRegistry.Items.WIRELESS_MODEM_ADVANCED.get())
                 .setSlots(SlotType.UPGRADE, 1)
                 .setMaxLevel(1)
                 .checkTraitLevel()
-                .saveSalvage(topConsumer, prefix(TicEXRegistry.MODEM_MODIFIER.getId(), upgradeSalvage))
-                .save(topConsumer, prefix(TicEXRegistry.MODEM_MODIFIER.getId(), upgradeFolder));
+                .saveSalvage(topConsumer, prefix(TicEXModifiers.MODEM_MODIFIER.getId(), upgradeSalvage))
+                .save(topConsumer, prefix(TicEXModifiers.MODEM_MODIFIER.getId(), upgradeFolder));
         }
     }
 }

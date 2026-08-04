@@ -3,7 +3,7 @@ package moffy.ticex.lib.utils;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -133,8 +133,8 @@ public class TicEXUtils {
         }
 
         ToolStack toolStack = ToolStack.from(toolItemStack);
-        if(containsCatalyst && toolStack.getModifierLevel(TicEXRegistry.REBIRTH_MODIFIER.get()) < 1){
-            toolStack.addModifier(TicEXRegistry.REBIRTH_MODIFIER.getId(), 1);
+        if(containsCatalyst && toolStack.getModifierLevel(TicEXModifiers.REBIRTH_MODIFIER.get()) < 1){
+            toolStack.addModifier(TicEXModifiers.REBIRTH_MODIFIER.getId(), 1);
         }
 
         return toolStack.createStack();

@@ -5,7 +5,6 @@ import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.registry.TicEXAttributes;
 import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.HurricaneProperty;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

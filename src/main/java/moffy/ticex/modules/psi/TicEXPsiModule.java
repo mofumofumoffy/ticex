@@ -7,8 +7,9 @@ import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierPsionizingRadiation;
 import moffy.ticex.modifier.ModifierSensor;
 import moffy.ticex.modifier.ModifierSocket;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -23,12 +24,12 @@ public class TicEXPsiModule implements AddonModule {
                 new ItemReconstCore(new Item.Properties(), "psionizing_radiation")
         );
 
-        TicEXRegistry.PSIONIZING_RADIATION_MODIFIER = TicEXRegistry.MODIFIERS.register(
+        TicEXModifiers.PSIONIZING_RADIATION_MODIFIER = TicEXRegistry.MODIFIERS.register(
                 "psionizing_radiation",
                 ModifierPsionizingRadiation::new
         );
-        TicEXRegistry.SOCKET_MODIFIER = TicEXRegistry.MODIFIERS.register("socket", ModifierSocket::new);
-        TicEXRegistry.SENSOR_MODIFIER = TicEXRegistry.MODIFIERS.register("sensor", ModifierSensor::new);
+        TicEXModifiers.SOCKET_MODIFIER = TicEXRegistry.MODIFIERS.register("socket", ModifierSocket::new);
+        TicEXModifiers.SENSOR_MODIFIER = TicEXRegistry.MODIFIERS.register("sensor", ModifierSensor::new);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXPsiEvent::onPsiArmorEvent);
     }

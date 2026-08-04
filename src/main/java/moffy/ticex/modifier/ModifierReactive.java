@@ -13,7 +13,7 @@ import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.ReactiveProperty;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -80,10 +80,10 @@ public class ModifierReactive extends Modifier implements InventoryTickModifierH
                 }
 
                 ToolStack toolStack = ToolStack.from(toolItemStack);
-                if(toolStack.getModifierLevel(TicEXRegistry.REACTIVE_MODIFIER.get()) > 0){
-                    toolStack.removeModifier(TicEXRegistry.REACTIVE_MODIFIER.getId(), toolStack.getModifierLevel(TicEXRegistry.REACTIVE_MODIFIER.get()));
+                if(toolStack.getModifierLevel(TicEXModifiers.REACTIVE_MODIFIER.get()) > 0){
+                    toolStack.removeModifier(TicEXModifiers.REACTIVE_MODIFIER.getId(), toolStack.getModifierLevel(TicEXModifiers.REACTIVE_MODIFIER.get()));
                 }
-                toolStack.addModifier(TicEXRegistry.REACTIVE_MODIFIER.getId(), reactiveLv);
+                toolStack.addModifier(TicEXModifiers.REACTIVE_MODIFIER.getId(), reactiveLv);
                 return true;
             }
         }

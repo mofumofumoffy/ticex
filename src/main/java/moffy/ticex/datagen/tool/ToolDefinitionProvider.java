@@ -3,8 +3,8 @@ package moffy.ticex.datagen.tool;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import moffy.ticex.registry.TicEXToolDefinitions;
-import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ArmorItem;
@@ -103,7 +103,7 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                     )
             )
             .module(new MultiplyStatsModule(MultiplierNBT.builder().set(ToolStats.DURABILITY, 1.1f).build()))
-            .module(ToolTraitsModule.builder().trait(TicEXRegistry.OVERCASTING_MODIFIER).build())
+            .module(ToolTraitsModule.builder().trait(TicEXModifiers.OVERCASTING_MODIFIER).build())
             .smallToolStartingSlots();
 
         defineArmor(TicEXToolDefinitions.MEKAPLATE_DEFINITION)
@@ -119,7 +119,7 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                     new MultiplyStatsModule(MultiplierNBT.builder().set(ToolStats.ATTACK_DAMAGE, 0.4f).build())
             )
             .module(plateSlots)
-            .module(ToolTraitsModule.builder().trait(TicEXRegistry.MEKANIC_MODIFIER).build());
+            .module(ToolTraitsModule.builder().trait(TicEXModifiers.MEKANIC_MODIFIER).build());
 
         defineArmor(TicEXToolDefinitions.SINGULAR_GEM_DEFINITION)
             .modules(slots ->
@@ -134,18 +134,18 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                     new MultiplyStatsModule(MultiplierNBT.builder().set(ToolStats.ATTACK_DAMAGE, 0.4f).build())
             )
             .module(plateSlots)
-            .module(ArmorItem.Type.HELMET, ToolTraitsModule.builder().trait(TicEXRegistry.ABYSSAL_MODIFIER).build())
+            .module(ArmorItem.Type.HELMET, ToolTraitsModule.builder().trait(TicEXModifiers.ABYSSAL_MODIFIER).build())
             .module(
                     ArmorItem.Type.CHESTPLATE,
-                    ToolTraitsModule.builder().trait(TicEXRegistry.INFERNAL_MODIFIER).build()
+                    ToolTraitsModule.builder().trait(TicEXModifiers.INFERNAL_MODIFIER).build()
             )
             .module(
                     ArmorItem.Type.LEGGINGS,
-                    ToolTraitsModule.builder().trait(TicEXRegistry.GRAVITY_MODIFIER).build()
+                    ToolTraitsModule.builder().trait(TicEXModifiers.GRAVITY_MODIFIER).build()
             )
             .module(
                     ArmorItem.Type.BOOTS,
-                    ToolTraitsModule.builder().trait(TicEXRegistry.HURRICANE_MODIFIER).build()
+                    ToolTraitsModule.builder().trait(TicEXModifiers.HURRICANE_MODIFIER).build()
             );
 
         define(TicEXToolDefinitions.MEKA_TOOL_DEFINITION)
@@ -158,7 +158,7 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                 )
                 .module(defaultTwoParts)
                 .smallToolStartingSlots()
-                .module(ToolTraitsModule.builder().trait(TicEXRegistry.MEKANIC_MODIFIER).build())
+                .module(ToolTraitsModule.builder().trait(TicEXModifiers.MEKANIC_MODIFIER).build())
                 .module(IsEffectiveModule.tag(BlockTags.MINEABLE_WITH_AXE));
 
         define(TicEXToolDefinitions.GAUNTLET_DEFINITION)
@@ -167,7 +167,7 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                     .primaryPart(0).build())
                 .module(DefaultMaterialsModule.builder().material(randomCatalystMaterial).build())
                 .smallToolStartingSlots()
-                .module(ToolTraitsModule.builder().trait(TicEXRegistry.INCOMPARABLE_MODIFIER).build());
+                .module(ToolTraitsModule.builder().trait(TicEXModifiers.INCOMPARABLE_MODIFIER).build());
     }
 
     @Override

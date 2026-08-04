@@ -1,4 +1,4 @@
-package moffy.ticex.modules.general;
+package moffy.ticex.modules.ticex;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.block.furnace.RFFurnaceBlock;
@@ -8,6 +8,7 @@ import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.registry.TicEXBlocks;
 import moffy.ticex.registry.TicEXFluids;
+import moffy.ticex.registry.TicEXRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

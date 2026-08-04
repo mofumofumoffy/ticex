@@ -3,8 +3,8 @@ package moffy.ticex.datagen.general.recipes.arsnouveau;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.builder.SingleEmbossmentModifierRecipeBuilder;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -19,13 +19,13 @@ public class ArsRecipeProvider implements ITicEXRecipeHelper {
                 modsAvailable(TicEX.getResource("ars_compat"))
         );
 
-        SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.REACTIVE_MODIFIER.getId(), Ingredient.of(TicEXItems.REACTIVE_CORE.get()))
+        SingleEmbossmentModifierRecipeBuilder.modifier(TicEXModifiers.REACTIVE_MODIFIER.getId(), Ingredient.of(TicEXItems.REACTIVE_CORE.get()))
                 .setTools(TinkerTags.Items.DURABILITY)
-                .save(topConsumer, prefix(TicEXRegistry.REACTIVE_MODIFIER, slotlessFolder));
+                .save(topConsumer, prefix(TicEXModifiers.REACTIVE_MODIFIER, slotlessFolder));
 
-        ModifierRecipeBuilder.modifier(TicEXRegistry.ALTERATIVE_MODIFIER)
+        ModifierRecipeBuilder.modifier(TicEXModifiers.ALTERATIVE_MODIFIER)
                 .addInput(TicEXItems.ALTERATIVE_CORE.get())
                 .setTools(TinkerTags.Items.WORN_ARMOR)
-                .save(topConsumer, prefix(TicEXRegistry.ALTERATIVE_MODIFIER, defenseFolder));
+                .save(topConsumer, prefix(TicEXModifiers.ALTERATIVE_MODIFIER, defenseFolder));
     }
 }

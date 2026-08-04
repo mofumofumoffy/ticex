@@ -3,8 +3,8 @@ package moffy.ticex.datagen.general.recipes.create;
 import com.simibubi.create.api.data.recipe.MechanicalCraftingRecipeBuilder;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -20,13 +20,13 @@ public class CreateRecipeProvider implements ITicEXRecipeHelper {
                 modsAvailable(TicEX.getResource("create_compat"))
         );
 
-        if (TicEXRegistry.CARDBOARD_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.CARDBOARD_MODIFIER)
+        if (TicEXModifiers.CARDBOARD_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.CARDBOARD_MODIFIER)
                     .allowCrystal()
                     .addInput(TicEXItems.CARDBOARD_CORE.get())
                     .setTools(TinkerTags.Items.WORN_ARMOR)
                     .setSlots(SlotType.UPGRADE, 1)
-                    .save(topConsumer, prefix(TicEXRegistry.CARDBOARD_MODIFIER, upgradeFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.CARDBOARD_MODIFIER, upgradeFolder));
         }
 
         if (TicEXItems.CARDBOARD_CORE != null) {

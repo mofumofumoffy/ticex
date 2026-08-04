@@ -5,7 +5,6 @@ import com.google.common.cache.CacheBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mods.flammpfeil.slashblade.entity.BladeItemEntity;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXEntities;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;

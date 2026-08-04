@@ -12,7 +12,7 @@ import com.hollingsworth.arsnouveau.api.enchanting_apparatus.ReactiveEnchantment
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.SpellWriteRecipe;
 import com.hollingsworth.arsnouveau.api.util.CasterUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.EnchantingApparatusTile;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,7 +33,7 @@ public class SpellWriteRecipeMixin {
     )
     public void isMatch(List<ItemStack> pedestalItems, ItemStack reagent, EnchantingApparatusTile enchantingApparatusTile, Player player, CallbackInfoReturnable<Boolean> cir){
         if(reagent.getItem() instanceof IModifiable){
-            int level = ToolStack.from(reagent).getModifierLevel(TicEXRegistry.REACTIVE_MODIFIER.get());
+            int level = ToolStack.from(reagent).getModifierLevel(TicEXModifiers.REACTIVE_MODIFIER.get());
             ItemStack parchment = ReactiveEnchantmentRecipe.getParchment(pedestalItems);
             cir.setReturnValue(!parchment.isEmpty() && !CasterUtil.getCaster(parchment).getSpell().isEmpty() && level > 0);
         }

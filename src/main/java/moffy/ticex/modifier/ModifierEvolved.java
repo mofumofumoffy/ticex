@@ -26,7 +26,7 @@ import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modifier.propeties.EvolvedProperty;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -140,7 +140,7 @@ public class ModifierEvolved
         TooltipFlag tooltipFlag
     ) {
         if(player != null){
-            ItemStack toolStack = TicEXUtils.getToolStack(tool, player, TicEXRegistry.EVOLVED_MODIFIER.get());
+            ItemStack toolStack = TicEXUtils.getToolStack(tool, player, TicEXModifiers.EVOLVED_MODIFIER.get());
 
             if (!toolStack.isEmpty()) {
                 components.add(Component.translatable("[Modular Item]").withStyle(ChatFormatting.BLUE));
@@ -187,7 +187,7 @@ public class ModifierEvolved
         Player player = context.getPlayerAttacker();
         if (player != null) {
             Entity target = context.getTarget();
-            ItemStack stack = TicEXUtils.getToolStack(tool, player, TicEXRegistry.EVOLVED_MODIFIER.get());
+            ItemStack stack = TicEXUtils.getToolStack(tool, player, TicEXModifiers.EVOLVED_MODIFIER.get());
             if (stack != null && !stack.isEmpty()) {
                 ModuleHost host = stack
                     .getCapability(DECapabilities.MODULE_HOST_CAPABILITY)
@@ -398,7 +398,7 @@ public class ModifierEvolved
     public void afterBlockBreak(IToolStackView tool, ModifierEntry modifierEntry, ToolHarvestContext context) {
         Player player = context.getPlayer();
         if (player != null && !context.isAOE()) {
-            ItemStack stack = TicEXUtils.getToolStack(tool, player, TicEXRegistry.EVOLVED_MODIFIER.get());
+            ItemStack stack = TicEXUtils.getToolStack(tool, player, TicEXModifiers.EVOLVED_MODIFIER.get());
             if (!stack.isEmpty()) {
                 ModuleHost host = stack
                     .getCapability(DECapabilities.MODULE_HOST_CAPABILITY)
@@ -606,7 +606,7 @@ public class ModifierEvolved
         ToolHarvestContext newContext = context.forPosition(pos, state);
         if (
             ModList.get().isLoaded("avaritia") &&
-            tool.getModifierLevel(TicEXRegistry.BEDROCK_BREAKER_MODIFIER.get()) > 0
+            tool.getModifierLevel(TicEXModifiers.BEDROCK_BREAKER_MODIFIER.get()) > 0
         ) {
             state
                 .getBlock()
@@ -626,7 +626,7 @@ public class ModifierEvolved
     private boolean isCorrectToolForDrops(IToolStackView tool, ItemStack stack, BlockState state) {
         if (
             ModList.get().isLoaded("avaritia") &&
-            tool.getModifierLevel(TicEXRegistry.BEDROCK_BREAKER_MODIFIER.get()) > 0
+            tool.getModifierLevel(TicEXModifiers.BEDROCK_BREAKER_MODIFIER.get()) > 0
         ) return true;
         return stack.isCorrectToolForDrops(state);
     }

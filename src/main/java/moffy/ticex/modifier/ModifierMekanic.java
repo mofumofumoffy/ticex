@@ -47,7 +47,7 @@ import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
 import moffy.ticex.modifier.propeties.MekanicProperty;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -572,8 +572,8 @@ public class ModifierMekanic extends NoLevelsModifier
     @Override
     public boolean applyItem(EmbossmentContext context, int inputIndex, boolean secondary) {
         ToolStack toolStack = ToolStack.from(context.getToolStack());
-        if(toolStack.getModifierLevel(TicEXRegistry.REBIRTH_MODIFIER.get()) <= 0){
-            toolStack.addModifier(TicEXRegistry.REBIRTH_MODIFIER.getId(), 1);
+        if(toolStack.getModifierLevel(TicEXModifiers.REBIRTH_MODIFIER.get()) <= 0){
+            toolStack.addModifier(TicEXModifiers.REBIRTH_MODIFIER.getId(), 1);
         }
         return true;
     }

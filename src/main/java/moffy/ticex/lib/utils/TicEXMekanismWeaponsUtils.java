@@ -2,10 +2,7 @@ package moffy.ticex.lib.utils;
 
 import mekanism.api.energy.IEnergyContainer;
 import mekanism.api.gear.IModule;
-import mekanism.api.gear.IModuleHelper;
-import mekanism.api.gear.ModuleData;
 import mekanism.api.math.FloatingLong;
-import mekanism.api.providers.IModuleDataProvider;
 import mekanism.common.registries.MekanismItems;
 import mekanism.common.util.StorageUtils;
 import meranha.mekaweapons.MekaWeapons;
@@ -18,13 +15,13 @@ import moffy.ticex.item.projectile.MekanicShotItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
 import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -81,7 +78,7 @@ public class TicEXMekanismWeaponsUtils {
 
     public static void handleAutoFire(LivingEntity entity, IToolStackView tool, int useDuration, int timeLeft){
         if(tool.hasTag(TinkerTags.Items.RANGED)){
-            ItemStack toolStack = TicEXUtils.getToolStack(tool, entity, TicEXRegistry.MEKANIC_MODIFIER.get());
+            ItemStack toolStack = TicEXUtils.getToolStack(tool, entity, TicEXModifiers.MEKANIC_MODIFIER.get());
             toolStack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).ifPresent(mekaGear -> {
                 if (entity.isAlive() && mekaGear.isModuleEnabled(toolStack, WeaponsModules.AUTOFIRE_UNIT) && useDuration - timeLeft == getUseTick(toolStack, mekaGear)) {
                     entity.stopUsingItem();

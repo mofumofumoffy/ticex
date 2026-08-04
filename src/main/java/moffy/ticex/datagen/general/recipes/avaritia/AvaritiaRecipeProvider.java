@@ -7,9 +7,9 @@ import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXFluids;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.world.item.Items;
@@ -41,37 +41,37 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
 
         // modifier
 
-        if (TicEXRegistry.CELESTIAL_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.CELESTIAL_MODIFIER)
+        if (TicEXModifiers.CELESTIAL_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.CELESTIAL_MODIFIER)
                 .setTools(TinkerTags.Items.BOOTS)
                 .addInput(TicEXItems.CELESTIAL_CORE.get())
                 .setSlots(SlotType.DEFENSE, 2)
                 .setMaxLevel(1)
                 .checkTraitLevel()
-                .saveSalvage(topConsumer, prefix(TicEXRegistry.CELESTIAL_MODIFIER.getId(), defenseSalvage))
-                .save(topConsumer, prefix(TicEXRegistry.CELESTIAL_MODIFIER.getId(), defenseFolder));
+                .saveSalvage(topConsumer, prefix(TicEXModifiers.CELESTIAL_MODIFIER.getId(), defenseSalvage))
+                .save(topConsumer, prefix(TicEXModifiers.CELESTIAL_MODIFIER.getId(), defenseFolder));
         }
 
-        if (TicEXRegistry.ENDESTSHOT_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.ENDESTSHOT_MODIFIER)
+        if (TicEXModifiers.ENDESTSHOT_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.ENDESTSHOT_MODIFIER)
                 .setTools(TinkerTags.Items.RANGED)
                 .addInput(ModItems.endest_pearl.get())
                 .setSlots(SlotType.ABILITY, 2)
                 .setMaxLevel(1)
                 .checkTraitLevel()
-                .saveSalvage(topConsumer, prefix(TicEXRegistry.ENDESTSHOT_MODIFIER.getId(), abilitySalvage))
-                .save(topConsumer, prefix(TicEXRegistry.ENDESTSHOT_MODIFIER.getId(), abilityFolder));
+                .saveSalvage(topConsumer, prefix(TicEXModifiers.ENDESTSHOT_MODIFIER.getId(), abilitySalvage))
+                .save(topConsumer, prefix(TicEXModifiers.ENDESTSHOT_MODIFIER.getId(), abilityFolder));
         }
 
-        if(TicEXRegistry.ETERNITY_MODIFIER != null){
-            ModifierRecipeBuilder.modifier(TicEXRegistry.ETERNITY_MODIFIER)
+        if(TicEXModifiers.ETERNITY_MODIFIER != null){
+            ModifierRecipeBuilder.modifier(TicEXModifiers.ETERNITY_MODIFIER)
                     .setTools(TinkerTags.Items.DURABILITY)
                     .addInput(ModItems.enhancement_core.get())
                     .addInput(ModItems.upgrade_smithing_template.get())
                     .setLevelRange(1,3)
                     .allowCrystal()
                     .checkTraitLevel()
-                    .save(topConsumer, prefix(TicEXRegistry.ETERNITY_MODIFIER, slotlessFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.ETERNITY_MODIFIER, slotlessFolder));
         }
 
         // core

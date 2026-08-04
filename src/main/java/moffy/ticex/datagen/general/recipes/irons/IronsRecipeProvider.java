@@ -5,8 +5,8 @@ import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentBuildingRecipeBuilder;
 import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentCastingRecipeBuilder;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -30,8 +30,8 @@ public class IronsRecipeProvider implements ITicEXRecipeHelper {
                 modsAvailable(TicEX.getResource("irons_spellbooks_compat"))
         );
 
-        if(TicEXRegistry.OVERCASTING_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.OVERCASTING_MODIFIER.getId())
+        if(TicEXModifiers.OVERCASTING_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.OVERCASTING_MODIFIER.getId())
                     .allowCrystal()
                     .addInput(SizedIngredient.fromItems(TicEXItems.CATALYST_IRONS_SPELLBOOK.get()))
                     .setTools(DifferenceIngredient.of(
@@ -39,7 +39,7 @@ public class IronsRecipeProvider implements ITicEXRecipeHelper {
                             Ingredient.of(TicEXItems.CATALYST_IRONS_SPELLBOOK)
                     ))
                     .setSlots(SlotType.UPGRADE, 1)
-                    .save(topConsumer, prefix(TicEXRegistry.OVERCASTING_MODIFIER, upgradeFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.OVERCASTING_MODIFIER, upgradeFolder));
         }
 
         if(TicEXItems.REVIVAL_SPELLBOOK_IRONS != null) {

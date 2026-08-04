@@ -3,7 +3,7 @@ package moffy.ticex.event;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.event.ItemSocketingEvent;
 import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
@@ -14,8 +14,8 @@ public class TicEXApotheosisEvent {
         ItemStack stack = event.getOutput();
         if(stack.getItem() instanceof IModifiable){
             ToolStack tool = ToolStack.from(stack);
-            if(tool.getModifierLevel(TicEXRegistry.APOTH_SUPPLIER_MODIFIER.get()) < 1){
-                tool.addModifier(TicEXRegistry.APOTH_SUPPLIER_MODIFIER.getId(), 1);
+            if(tool.getModifierLevel(TicEXModifiers.APOTH_SUPPLIER_MODIFIER.get()) < 1){
+                tool.addModifier(TicEXModifiers.APOTH_SUPPLIER_MODIFIER.getId(), 1);
             }
         }
     }
@@ -24,8 +24,8 @@ public class TicEXApotheosisEvent {
         ItemStack stack = event.getTo();
         if(stack.getItem() instanceof IModifiable){
             ToolStack tool = ToolStack.from(stack);
-            if((AffixHelper.hasAffixes(stack) || !SocketHelper.getGems(stack).isEmpty()) && tool.getModifierLevel(TicEXRegistry.APOTH_SUPPLIER_MODIFIER.get()) < 1){
-                tool.addModifier(TicEXRegistry.APOTH_SUPPLIER_MODIFIER.getId(), 1);
+            if((AffixHelper.hasAffixes(stack) || !SocketHelper.getGems(stack).isEmpty()) && tool.getModifierLevel(TicEXModifiers.APOTH_SUPPLIER_MODIFIER.get()) < 1){
+                tool.addModifier(TicEXModifiers.APOTH_SUPPLIER_MODIFIER.getId(), 1);
             }
         }
     }

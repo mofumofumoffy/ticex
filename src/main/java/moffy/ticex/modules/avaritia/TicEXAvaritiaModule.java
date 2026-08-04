@@ -9,13 +9,13 @@ import moffy.ticex.client.render.ticex.TicEXRenders;
 import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.event.TicEXAvaritiaEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
-import moffy.ticex.item.projectile.EndestShotItem;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.*;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
 import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXFluids;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -44,23 +44,23 @@ public class TicEXAvaritiaModule implements AddonModule {
                 new ItemReconstCore(new Item.Properties(), "celestial")
         );
 
-        TicEXRegistry.OMNIPOTENCE_MODIFIER = TicEXRegistry.MODIFIERS.register("omnipotence", ModifierOmnipotence::new);
-        TicEXRegistry.COSMIC_UNBREAKABLE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_unbreakable");
-        TicEXRegistry.COSMIC_LUCK_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_luck");
-        TicEXRegistry.BEDROCK_BREAKER_MODIFIER = TicEXRegistry.MODIFIERS.register(
+        TicEXModifiers.OMNIPOTENCE_MODIFIER = TicEXRegistry.MODIFIERS.register("omnipotence", ModifierOmnipotence::new);
+        TicEXModifiers.COSMIC_UNBREAKABLE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_unbreakable");
+        TicEXModifiers.COSMIC_LUCK_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("cosmic_luck");
+        TicEXModifiers.BEDROCK_BREAKER_MODIFIER = TicEXRegistry.MODIFIERS.register(
                 "bedrock_breaker",
                 ModifierBedrockBreaker::new
         );
-        TicEXRegistry.CELESTIAL_MODIFIER = TicEXRegistry.MODIFIERS.register("celestial", ModifierCelestial::new);
-        TicEXRegistry.ETERNITY_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("eternity");
-        TicEXRegistry.CONDENSING_MODIFIER = TicEXRegistry.MODIFIERS.register("condensing", ModifierCondensing::new);
-        TicEXRegistry.AFTERSHOCK_MODIFIER = TicEXRegistry.MODIFIERS.register("aftershock", ModifierAftershock::new);
-        TicEXRegistry.TRANSCENDENTAL_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("transcendental");
-        TicEXRegistry.DENSE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("dense");
-        TicEXRegistry.ENDESTSHOT_MODIFIER = TicEXRegistry.MODIFIERS.register("endestshot", ModifierEndestShot::new);
-        TicEXRegistry.SKULLFIRE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("skullfire");
-        TicEXRegistry.BLAZING_FLAME_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("blazing_flame");
-        TicEXRegistry.BLAZING_FORTUNE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("blazing_fortune");
+        TicEXModifiers.CELESTIAL_MODIFIER = TicEXRegistry.MODIFIERS.register("celestial", ModifierCelestial::new);
+        TicEXModifiers.ETERNITY_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("eternity");
+        TicEXModifiers.CONDENSING_MODIFIER = TicEXRegistry.MODIFIERS.register("condensing", ModifierCondensing::new);
+        TicEXModifiers.AFTERSHOCK_MODIFIER = TicEXRegistry.MODIFIERS.register("aftershock", ModifierAftershock::new);
+        TicEXModifiers.TRANSCENDENTAL_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("transcendental");
+        TicEXModifiers.DENSE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("dense");
+        TicEXModifiers.ENDESTSHOT_MODIFIER = TicEXRegistry.MODIFIERS.register("endestshot", ModifierEndestShot::new);
+        TicEXModifiers.SKULLFIRE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("skullfire");
+        TicEXModifiers.BLAZING_FLAME_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("blazing_flame");
+        TicEXModifiers.BLAZING_FORTUNE_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("blazing_fortune");
 
         TicEXFluids.MOLTEN_INFINITY = TicEXRegistry.FLUIDS.register("molten_infinity")
                 .type(TicEXFluidUtils.hot("molten_infinity").temperature(6360).lightLevel(15))

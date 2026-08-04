@@ -7,8 +7,9 @@ import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierApothSupplier;
 import moffy.ticex.modifier.ModifierOverload;
 import moffy.ticex.modifier.ModifierOverride;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -28,9 +29,9 @@ public class TicEXApotheosisModule implements AddonModule {
                 new ItemReconstCore(defaultProperties, "override")
         );
 
-        TicEXRegistry.APOTH_SUPPLIER_MODIFIER = TicEXRegistry.MODIFIERS.register("apoth_supplier", ModifierApothSupplier::new);
-        TicEXRegistry.OVERLOAD_MODIFIER = TicEXRegistry.MODIFIERS.register("overload", ModifierOverload::new);
-        TicEXRegistry.OVERRIDE_MODIFIER = TicEXRegistry.MODIFIERS.register("override", ModifierOverride::new);
+        TicEXModifiers.APOTH_SUPPLIER_MODIFIER = TicEXRegistry.MODIFIERS.register("apoth_supplier", ModifierApothSupplier::new);
+        TicEXModifiers.OVERLOAD_MODIFIER = TicEXRegistry.MODIFIERS.register("overload", ModifierOverload::new);
+        TicEXModifiers.OVERRIDE_MODIFIER = TicEXRegistry.MODIFIERS.register("override", ModifierOverride::new);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXApotheosisEvent::onSocketGem);
         MinecraftForge.EVENT_BUS.addListener(TicEXApotheosisEvent::supplierBouncer);

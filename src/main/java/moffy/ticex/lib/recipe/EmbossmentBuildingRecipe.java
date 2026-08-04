@@ -1,7 +1,6 @@
 package moffy.ticex.lib.recipe;
 
 import moffy.ticex.lib.utils.TicEXUtils;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXRecipeSerializers;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;

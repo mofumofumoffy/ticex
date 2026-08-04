@@ -1,7 +1,6 @@
 package moffy.ticex.datagen.fluid;
 
 import moffy.ticex.TicEX;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXFluids;
 import net.minecraft.data.PackOutput;
 import slimeknights.mantle.fluid.UnplaceableFluid;

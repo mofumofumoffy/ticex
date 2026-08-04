@@ -3,7 +3,6 @@ package moffy.ticex.entity.avaritia;
 import committee.nova.mods.avaritia.common.entity.GapingVoidEntity;
 import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.ticex.entity.ItemArrow;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

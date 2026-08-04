@@ -3,7 +3,6 @@ package moffy.ticex.entity.curios;
 import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.entity.ItemArrow;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
 import moffy.ticex.registry.TicEXEntities;
 import net.minecraft.network.syncher.EntityDataAccessor;

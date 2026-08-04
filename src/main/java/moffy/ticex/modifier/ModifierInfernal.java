@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXAttributes;
 import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.handlers.InternalTimers;

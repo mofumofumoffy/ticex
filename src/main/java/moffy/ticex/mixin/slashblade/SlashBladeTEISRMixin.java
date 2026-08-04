@@ -10,7 +10,7 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import moffy.ticex.client.render.provider.context.ItemRenderContext;
 import moffy.ticex.lib.context.ContextFrame;
 import moffy.ticex.lib.context.TicEXContexts;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -70,7 +70,7 @@ public abstract class SlashBladeTEISRMixin {
         if(!(stack.getItem() instanceof IModifiable)) return modelLocation;
         ToolStack tool = ToolStack.from(stack);
 
-        if (tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0) {
+        if (tool.getModifierLevel(TicEXModifiers.KOSHIRAE_MODIFIER.get()) > 0) {
             CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
             if (persistentTag.contains("ModelName")) {
                 return ResourceLocation.tryParse(persistentTag.getString("ModelName"));
@@ -85,7 +85,7 @@ public abstract class SlashBladeTEISRMixin {
         if(!(stack.getItem() instanceof IModifiable)) return textureLocation;
         ToolStack tool = ToolStack.from(stack);
 
-        if (tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0) {
+        if (tool.getModifierLevel(TicEXModifiers.KOSHIRAE_MODIFIER.get()) > 0) {
             CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
             if (persistentTag.contains("ModelName")) {
                 return ResourceLocation.tryParse(persistentTag.getString("TextureName"));

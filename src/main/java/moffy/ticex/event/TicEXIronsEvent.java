@@ -2,7 +2,7 @@ package moffy.ticex.event;
 
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,7 +27,7 @@ public class TicEXIronsEvent {
             if (bookStack != null && bookStack.getItem() instanceof IModifiable) {
                 IToolStackView book = ToolStack.from(bookStack);
 
-                if (book.getModifierLevel(TicEXRegistry.OVERCASTING_MODIFIER.get()) > 0) {
+                if (book.getModifierLevel(TicEXModifiers.OVERCASTING_MODIFIER.get()) > 0) {
                     ToolAttackContext context = ToolAttackContext.attacker(player)
                             .hand(InteractionHand.MAIN_HAND)
                             .target(target)

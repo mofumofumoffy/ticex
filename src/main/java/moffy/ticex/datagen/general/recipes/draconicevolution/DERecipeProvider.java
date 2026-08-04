@@ -7,8 +7,8 @@ import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -32,8 +32,8 @@ public class DERecipeProvider implements ITicEXSmelteryRecipeHelper, ISmelteryRe
                 modsAvailable(TicEX.getResource("draconicevolution_compat"))
         );
 
-        if(TicEXRegistry.INJECT_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.INJECT_MODIFIER.getId())
+        if(TicEXModifiers.INJECT_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.INJECT_MODIFIER.getId())
                     .allowCrystal()
                     .checkTraitLevel()
                     .addInput(TicEXItems.INJECT_CORE.get())
@@ -42,10 +42,10 @@ public class DERecipeProvider implements ITicEXSmelteryRecipeHelper, ISmelteryRe
                             new Ingredient.TagValue(TinkerTags.Items.MELEE),
                             new Ingredient.TagValue(TinkerTags.Items.MODIFIABLE)
                     )))
-                    .save(topConsumer, prefix(TicEXRegistry.INJECT_MODIFIER, slotlessFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.INJECT_MODIFIER, slotlessFolder));
         }
 
-        if(TicEXRegistry.EVOLVED_MODIFIER != null) {
+        if(TicEXModifiers.EVOLVED_MODIFIER != null) {
             evolvedModifier(topConsumer, "draconium_", TicEXItems.DRACONIUM_EVOLVED_CORE.get(), 1);
             evolvedModifier(topConsumer, "wyvern_", TicEXItems.WYVERN_EVOLVED_CORE.get(), 2);
             evolvedModifier(topConsumer, "draconic_", TicEXItems.DRACONIC_EVOLVED_CORE.get(), 3);
@@ -189,8 +189,8 @@ public class DERecipeProvider implements ITicEXSmelteryRecipeHelper, ISmelteryRe
     }
 
     public void evolvedModifier(Consumer<FinishedRecipe> consumer, String prefix, Item core, int level) {
-        ResourceLocation rl = TicEXRegistry.EVOLVED_MODIFIER.getId().withPrefix(prefix);
-        ModifierRecipeBuilder.modifier(TicEXRegistry.EVOLVED_MODIFIER)
+        ResourceLocation rl = TicEXModifiers.EVOLVED_MODIFIER.getId().withPrefix(prefix);
+        ModifierRecipeBuilder.modifier(TicEXModifiers.EVOLVED_MODIFIER)
                 .setTools(Ingredient.fromValues(Stream.of(
                         new Ingredient.TagValue(TinkerTags.Items.MELEE_WEAPON),
                         new Ingredient.TagValue(TinkerTags.Items.HARVEST),

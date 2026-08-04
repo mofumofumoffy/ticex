@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
 import moffy.ticex.registry.TicEXModifierHooks;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -68,8 +68,8 @@ public class ModifierOverload extends NoLevelsModifier implements EmbossmentModi
                     toolStack.enchant(entry.getKey(), entry.getValue());
                 }
                 result = true;
-                if(tool.getModifierLevel(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.get()) < 1){
-                    tool.addModifier(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.getId(), 1);
+                if(tool.getModifierLevel(TicEXModifiers.ENCHANTMENT_SUPPLIER_MODIFIER.get()) < 1){
+                    tool.addModifier(TicEXModifiers.ENCHANTMENT_SUPPLIER_MODIFIER.getId(), 1);
                 }
             }
         }

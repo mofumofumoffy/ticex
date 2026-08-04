@@ -1,6 +1,5 @@
 package moffy.ticex.datagen.layout;
 
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.crafting.Ingredient;

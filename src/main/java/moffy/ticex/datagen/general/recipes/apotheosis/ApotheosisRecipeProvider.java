@@ -3,8 +3,8 @@ package moffy.ticex.datagen.general.recipes.apotheosis;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentModifierRecipeBuilder;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -22,20 +22,20 @@ public class ApotheosisRecipeProvider implements ITicEXRecipeHelper {
                 modsAvailable(TicEX.getResource("apotheosis_compat"))
         );
 
-        if(TicEXRegistry.OVERLOAD_MODIFIER != null) {
-            EmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.OVERLOAD_MODIFIER.getId())
+        if(TicEXModifiers.OVERLOAD_MODIFIER != null) {
+            EmbossmentModifierRecipeBuilder.modifier(TicEXModifiers.OVERLOAD_MODIFIER.getId())
                     .addInput(SizedIngredient.fromItems(TicEXItems.OVERLOAD_CORE.get()))
                     .addEmbossItem(SizedIngredient.fromItems(Items.ENCHANTED_BOOK))
                     .setTools(TinkerTags.Items.MODIFIABLE)
-                    .save(topConsumer, prefix(TicEXRegistry.OVERLOAD_MODIFIER, upgradeFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.OVERLOAD_MODIFIER, upgradeFolder));
         }
 
-        if(TicEXRegistry.OVERRIDE_MODIFIER != null) {
-            EmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.OVERRIDE_MODIFIER.getId())
+        if(TicEXModifiers.OVERRIDE_MODIFIER != null) {
+            EmbossmentModifierRecipeBuilder.modifier(TicEXModifiers.OVERRIDE_MODIFIER.getId())
                     .addInput(SizedIngredient.fromItems(TicEXItems.OVERRIDE_CORE.get()))
                     .addEmbossItem(SizedIngredient.fromItems(Items.ENCHANTED_BOOK))
                     .setTools(TinkerTags.Items.MODIFIABLE)
-                    .save(topConsumer, prefix(TicEXRegistry.OVERRIDE_MODIFIER, upgradeFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.OVERRIDE_MODIFIER, upgradeFolder));
         }
 
         Consumer<FinishedRecipe> enchantmentConsumer = withCondition(

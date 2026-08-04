@@ -1,7 +1,7 @@
 package moffy.ticex.mixin.mekanism;
 
 import moffy.ticex.client.modules.mekanism.MekaPlateMultilayerModel;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -29,7 +29,7 @@ public abstract class ArmorModelDispatcherMixin {
     public void getGenericArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original, CallbackInfoReturnable<Model> cir) {
         if(stack.getItem() instanceof IModifiable){
             ToolStack toolStack = ToolStack.from(stack);
-            if(toolStack.getModifierLevel(TicEXRegistry.MEKANIC_MODIFIER.get()) > 0){
+            if(toolStack.getModifierLevel(TicEXModifiers.MEKANIC_MODIFIER.get()) > 0){
                 cir.setReturnValue(switch (slot) {
                     case HEAD -> MekaPlateMultilayerModel.HEAD.setup(living, stack, slot, original, this.getModel(stack));
                     case CHEST ->

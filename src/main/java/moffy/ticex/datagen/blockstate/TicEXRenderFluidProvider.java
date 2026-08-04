@@ -1,7 +1,6 @@
 package moffy.ticex.datagen.blockstate;
 
 import moffy.ticex.TicEX;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.data.PackOutput;
 import org.jetbrains.annotations.NotNull;

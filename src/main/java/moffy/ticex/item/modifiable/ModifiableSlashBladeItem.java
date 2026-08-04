@@ -10,7 +10,6 @@ import moffy.ticex.TicEX;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXToolDefinitions;
-import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

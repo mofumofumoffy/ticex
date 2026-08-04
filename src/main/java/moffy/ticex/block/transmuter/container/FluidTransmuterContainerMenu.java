@@ -2,7 +2,6 @@ package moffy.ticex.block.transmuter.container;
 
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
 import moffy.ticex.block.transmuter.tank.TransmuterFluidTank;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXMenuTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

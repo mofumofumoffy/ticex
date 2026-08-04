@@ -1,11 +1,9 @@
-package moffy.ticex.modules.general;
+package moffy.ticex.modules.ticex;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.*;
-import moffy.ticex.registry.TicEXBlocks;
-import moffy.ticex.registry.TicEXFluids;
-import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -54,13 +52,13 @@ public class TicEXMaterialModule implements AddonModule {
                 .commonTag()
                 .flowing();
 
-        TicEXRegistry.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
-        TicEXRegistry.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
-        TicEXRegistry.AFLOAT_MODIFIER = TicEXRegistry.MODIFIERS.register("afloat", ModifierAfloat::new);
-        TicEXRegistry.DUNGEON_MASTER_MODIFIER = TicEXRegistry.MODIFIERS.register("dungeon_master", ModifierDungeonMaster::new);
-        TicEXRegistry.UNRAVEL_MODIFIER = TicEXRegistry.MODIFIERS.register("unravel", ModifierUnravel::new);
-        TicEXRegistry.TELESCOPE_MODIFIER = TicEXRegistry.MODIFIERS.register("telescope", ModifierTelescope::new);
-        TicEXRegistry.PLANETARIUM_MODIFIER = TicEXRegistry.MODIFIERS.register("planetarium", ModifierPlanetarium::new);
-        TicEXRegistry.EMBOSSMENT_MODIFIER = TicEXRegistry.MODIFIERS.register("embossment", ModifierEmbossment::new);
+        TicEXModifiers.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
+        TicEXModifiers.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
+        TicEXModifiers.AFLOAT_MODIFIER = TicEXRegistry.MODIFIERS.register("afloat", ModifierAfloat::new);
+        TicEXModifiers.DUNGEON_MASTER_MODIFIER = TicEXRegistry.MODIFIERS.register("dungeon_master", ModifierDungeonMaster::new);
+        TicEXModifiers.UNRAVEL_MODIFIER = TicEXRegistry.MODIFIERS.register("unravel", ModifierUnravel::new);
+        TicEXModifiers.TELESCOPE_MODIFIER = TicEXRegistry.MODIFIERS.register("telescope", ModifierTelescope::new);
+        TicEXModifiers.PLANETARIUM_MODIFIER = TicEXRegistry.MODIFIERS.register("planetarium", ModifierPlanetarium::new);
+        TicEXModifiers.EMBOSSMENT_MODIFIER = TicEXRegistry.MODIFIERS.register("embossment", ModifierEmbossment::new);
     }
 }

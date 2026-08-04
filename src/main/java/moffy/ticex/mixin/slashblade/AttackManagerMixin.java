@@ -4,7 +4,6 @@ import mods.flammpfeil.slashblade.entity.EntityAbstractSummonedSword;
 import mods.flammpfeil.slashblade.util.AttackManager;
 import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.lib.hook.DamageSourceModifierHook;
-import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;

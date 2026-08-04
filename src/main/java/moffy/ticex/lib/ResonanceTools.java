@@ -3,7 +3,6 @@ package moffy.ticex.lib;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.curios.GauntletItemHandler;
 import moffy.ticex.entity.curios.ResonanceToolProjectile;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.sounds.SoundEvents;

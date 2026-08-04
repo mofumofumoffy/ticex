@@ -2,7 +2,7 @@ package moffy.ticex.client.render.slashblade;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +19,7 @@ public class KoshiraeIconDecorator implements IItemDecorator {
     public boolean render(GuiGraphics guiGraphics, Font font, ItemStack itemStack, int xOffset, int yOffset) {
         if(TicEXConfig.SHOW_TOOL_ICON != null && TicEXConfig.SHOW_TOOL_ICON.get() && itemStack.getItem() instanceof IModifiable){
             ToolStack tool = ToolStack.from(itemStack);
-            if(tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0){
+            if(tool.getModifierLevel(TicEXModifiers.KOSHIRAE_MODIFIER.get()) > 0){
                 guiGraphics.pose().pushPose();
 
                 ScaledOffset scaledOffset = new ScaledOffset(xOffset, yOffset);

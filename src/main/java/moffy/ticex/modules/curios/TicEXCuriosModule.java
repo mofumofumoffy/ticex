@@ -11,11 +11,12 @@ import moffy.ticex.event.TicEXCuriosEvent;
 import moffy.ticex.item.GloveItem;
 import moffy.ticex.item.modifiable.ModifiableGauntlet;
 import moffy.ticex.modifier.ModifierIncomparable;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
 import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -31,7 +32,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.lwjgl.glfw.GLFW;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
-import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 public class TicEXCuriosModule implements AddonModule {
@@ -52,7 +52,7 @@ public class TicEXCuriosModule implements AddonModule {
         TicEXItems.EXHAUSTED_GLOVE = TicEXRegistry.ITEMS.register("exhausted_glove", () -> new GloveItem(new Item.Properties().stacksTo(1)));
         TicEXItems.RESONANCE_GAUNTLET = TicEXRegistry.ITEMS_EXTENDED.register("resonance_gauntlet", ()->new ModifiableGauntlet(new Item.Properties().stacksTo(1)));
 
-        TicEXRegistry.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.register("incomparable", ModifierIncomparable::new);
+        TicEXModifiers.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.register("incomparable", ModifierIncomparable::new);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onLivingDeath);
         MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onClientTick);

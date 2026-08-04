@@ -1,8 +1,7 @@
 package moffy.ticex.event;
 
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -33,19 +32,19 @@ public class TicEXBotaniaEvent {
             for (ItemStack armorStack : player.getArmorSlots()) {
                 if (armorStack.getItem() instanceof IModifiable) {
                     ToolStack armor = ToolStack.from(armorStack);
-                    if (TicEXRegistry.DHAROK_MODIFIER != null && armor.getModifierLevel(TicEXRegistry.DHAROK_MODIFIER.get()) > 0) {
+                    if (TicEXModifiers.DHAROK_MODIFIER != null && armor.getModifierLevel(TicEXModifiers.DHAROK_MODIFIER.get()) > 0) {
                         event.setDamageModifier(event.getDamageModifier() * (1F + (1F - player.getHealth() / player.getMaxHealth()) * 0.5F));
                     }
                     if (entity instanceof LivingEntity livingEntity) {
-                        if (TicEXRegistry.AHRIM_MODIFIER != null && armor.getModifierLevel(TicEXRegistry.AHRIM_MODIFIER.get()) > 0) {
+                        if (TicEXModifiers.AHRIM_MODIFIER != null && armor.getModifierLevel(TicEXModifiers.AHRIM_MODIFIER.get()) > 0) {
                             livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20, 1));
 
                         }
-                        if (TicEXRegistry.TORAG_MODIFIER != null && armor.getModifierLevel(TicEXRegistry.TORAG_MODIFIER.get()) > 0) {
+                        if (TicEXModifiers.TORAG_MODIFIER != null && armor.getModifierLevel(TicEXModifiers.TORAG_MODIFIER.get()) > 0) {
                             livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1));
 
                         }
-                        if (TicEXRegistry.KARIL_MODIFIER != null && armor.getModifierLevel(TicEXRegistry.KARIL_MODIFIER.get()) > 0) {
+                        if (TicEXModifiers.KARIL_MODIFIER != null && armor.getModifierLevel(TicEXModifiers.KARIL_MODIFIER.get()) > 0) {
                             livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 1));
 
                         }
@@ -64,10 +63,10 @@ public class TicEXBotaniaEvent {
                     for (ItemStack armorStack : player.getArmorSlots()) {
                         ToolStack armor = ToolStack.from(armorStack);
                         if (armorStack.getItem() instanceof IModifiable) {
-                            if (TicEXRegistry.GUTHAN_MODIFIER != null && armor.getModifierLevel(TicEXRegistry.GUTHAN_MODIFIER.get()) > 0) {
+                            if (TicEXModifiers.GUTHAN_MODIFIER != null && armor.getModifierLevel(TicEXModifiers.GUTHAN_MODIFIER.get()) > 0) {
                                 player.heal(event.getAmount()*0.25f);
                             }
-                            if (TicEXRegistry.VERAC_MODIFIER != null && armor.getModifierLevel(TicEXRegistry.VERAC_MODIFIER.get()) > 0) {
+                            if (TicEXModifiers.VERAC_MODIFIER != null && armor.getModifierLevel(TicEXModifiers.VERAC_MODIFIER.get()) > 0) {
                                 event.setCanceled(true);
                                 DamageSource damageSource = new DamageSource(level.registryAccess()
                                         .registryOrThrow(Registries.DAMAGE_TYPE)

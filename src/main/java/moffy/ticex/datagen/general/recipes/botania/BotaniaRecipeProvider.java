@@ -2,8 +2,8 @@ package moffy.ticex.datagen.general.recipes.botania;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXSmelteryRecipeHelper;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import org.jetbrains.annotations.NotNull;
@@ -30,67 +30,67 @@ public class BotaniaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMater
 
         manaInfusionProvider.buildRecipes(pWriter);
 
-        ModifierRecipeBuilder.modifier(TicEXRegistry.AHRIM_MODIFIER)
+        ModifierRecipeBuilder.modifier(TicEXModifiers.AHRIM_MODIFIER)
                 .allowCrystal()
                 .setTools(TinkerTags.Items.HELMETS)
                 .addInput(BotaniaItems.ancientWillAhrim,1)
                 .setSlots(SlotType.DEFENSE,1)
                 .setMaxLevel(1)
                 .checkTraitLevel()
-                .saveSalvage(topConsumer,prefix(TicEXRegistry.AHRIM_MODIFIER.getId(),defenseSalvage))
-                .save(topConsumer,prefix(TicEXRegistry.AHRIM_MODIFIER.getId(),defenseFolder));
-        ModifierRecipeBuilder.modifier(TicEXRegistry.DHAROK_MODIFIER)
+                .saveSalvage(topConsumer,prefix(TicEXModifiers.AHRIM_MODIFIER.getId(),defenseSalvage))
+                .save(topConsumer,prefix(TicEXModifiers.AHRIM_MODIFIER.getId(),defenseFolder));
+        ModifierRecipeBuilder.modifier(TicEXModifiers.DHAROK_MODIFIER)
                 .allowCrystal()
                 .setTools(TinkerTags.Items.HELMETS)
                 .addInput(BotaniaItems.ancientWillDharok,1)
                 .setSlots(SlotType.DEFENSE,1)
                 .setMaxLevel(1)
                 .checkTraitLevel()
-                .saveSalvage(topConsumer,prefix(TicEXRegistry.DHAROK_MODIFIER.getId(),defenseSalvage))
-                .save(topConsumer,prefix(TicEXRegistry.DHAROK_MODIFIER.getId(),defenseFolder));
-        ModifierRecipeBuilder.modifier(TicEXRegistry.GUTHAN_MODIFIER)
+                .saveSalvage(topConsumer,prefix(TicEXModifiers.DHAROK_MODIFIER.getId(),defenseSalvage))
+                .save(topConsumer,prefix(TicEXModifiers.DHAROK_MODIFIER.getId(),defenseFolder));
+        ModifierRecipeBuilder.modifier(TicEXModifiers.GUTHAN_MODIFIER)
                 .allowCrystal()
                 .setTools(TinkerTags.Items.HELMETS)
                 .addInput(BotaniaItems.ancientWillGuthan,1)
                 .setSlots(SlotType.DEFENSE,1)
                 .setMaxLevel(1)
                 .checkTraitLevel()
-                .saveSalvage(topConsumer,prefix(TicEXRegistry.GUTHAN_MODIFIER.getId(),defenseSalvage))
-                .save(topConsumer,prefix(TicEXRegistry.GUTHAN_MODIFIER.getId(),defenseFolder));
-        ModifierRecipeBuilder.modifier(TicEXRegistry.TORAG_MODIFIER)
+                .saveSalvage(topConsumer,prefix(TicEXModifiers.GUTHAN_MODIFIER.getId(),defenseSalvage))
+                .save(topConsumer,prefix(TicEXModifiers.GUTHAN_MODIFIER.getId(),defenseFolder));
+        ModifierRecipeBuilder.modifier(TicEXModifiers.TORAG_MODIFIER)
                 .allowCrystal()
                 .setTools(TinkerTags.Items.HELMETS)
                 .addInput(BotaniaItems.ancientWillTorag,1)
                 .setSlots(SlotType.DEFENSE,1)
                 .setMaxLevel(1)
                 .checkTraitLevel()
-                .saveSalvage(topConsumer,prefix(TicEXRegistry.TORAG_MODIFIER.getId(),defenseSalvage))
-                .save(topConsumer,prefix(TicEXRegistry.TORAG_MODIFIER.getId(),defenseFolder));
-        ModifierRecipeBuilder.modifier(TicEXRegistry.VERAC_MODIFIER)
+                .saveSalvage(topConsumer,prefix(TicEXModifiers.TORAG_MODIFIER.getId(),defenseSalvage))
+                .save(topConsumer,prefix(TicEXModifiers.TORAG_MODIFIER.getId(),defenseFolder));
+        ModifierRecipeBuilder.modifier(TicEXModifiers.VERAC_MODIFIER)
                 .allowCrystal()
                 .setTools(TinkerTags.Items.HELMETS)
                 .addInput(BotaniaItems.ancientWillVerac,1)
                 .setSlots(SlotType.DEFENSE,1)
                 .setMaxLevel(1)
                 .checkTraitLevel()
-                .saveSalvage(topConsumer,prefix(TicEXRegistry.VERAC_MODIFIER.getId(),defenseSalvage))
-                .save(topConsumer,prefix(TicEXRegistry.VERAC_MODIFIER.getId(),defenseFolder));
-        ModifierRecipeBuilder.modifier(TicEXRegistry.KARIL_MODIFIER)
+                .saveSalvage(topConsumer,prefix(TicEXModifiers.VERAC_MODIFIER.getId(),defenseSalvage))
+                .save(topConsumer,prefix(TicEXModifiers.VERAC_MODIFIER.getId(),defenseFolder));
+        ModifierRecipeBuilder.modifier(TicEXModifiers.KARIL_MODIFIER)
                 .allowCrystal()
                 .setTools(TinkerTags.Items.HELMETS)
                 .addInput(BotaniaItems.ancientWillKaril,1)
                 .setSlots(SlotType.DEFENSE,1)
                 .setMaxLevel(1)
                 .checkTraitLevel()
-                .saveSalvage(topConsumer,prefix(TicEXRegistry.KARIL_MODIFIER.getId(),defenseSalvage))
-                .save(topConsumer,prefix(TicEXRegistry.KARIL_MODIFIER.getId(),defenseFolder));
-        ModifierRecipeBuilder.modifier(TicEXRegistry.NECTAR_MODIFIER)
+                .saveSalvage(topConsumer,prefix(TicEXModifiers.KARIL_MODIFIER.getId(),defenseSalvage))
+                .save(topConsumer,prefix(TicEXModifiers.KARIL_MODIFIER.getId(),defenseFolder));
+        ModifierRecipeBuilder.modifier(TicEXModifiers.NECTAR_MODIFIER)
                 .allowCrystal()
                 .setTools(TinkerTags.Items.ARMOR)
                 .addInput(TicEXItems.NECTAR_CORE.get(),1)
                 .setMaxLevel(4)
                 .checkTraitLevel()
-                .save(topConsumer,prefix(TicEXRegistry.NECTAR_MODIFIER.getId(),slotlessFolder));
+                .save(topConsumer,prefix(TicEXModifiers.NECTAR_MODIFIER.getId(),slotlessFolder));
 
     }
 }

@@ -13,7 +13,6 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import moffy.ticex.TicEX;
 import moffy.ticex.block.transmuter.pattern.FluidTransmutationPair;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;

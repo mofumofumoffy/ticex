@@ -10,8 +10,8 @@ import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentBuildingRecip
 import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentModifierRecipeBuilder;
 import moffy.ticex.datagen.general.recipes.ticex.builder.SingleEmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXTags;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -45,27 +45,27 @@ public class SlashbladeRecipeProvider implements ITicEXRecipeHelper, ICastCreati
 
         // slotless
 
-        if(TicEXRegistry.PROUD_MODIFIER != null) {
-            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.PROUD_MODIFIER.getId(), Ingredient.of(SlashBladeItemTags.PROUD_SOULS))
+        if(TicEXModifiers.PROUD_MODIFIER != null) {
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXModifiers.PROUD_MODIFIER.getId(), Ingredient.of(SlashBladeItemTags.PROUD_SOULS))
                     .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
-                    .save(topConsumer, prefix(TicEXRegistry.PROUD_MODIFIER, slotlessFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.PROUD_MODIFIER, slotlessFolder));
         }
 
-        if(TicEXRegistry.KOSHIRAE_MODIFIER != null) {
-            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KOSHIRAE_MODIFIER.getId(), Ingredient.of(TicEXItems.CATALYST_SLASHBLADE))
+        if(TicEXModifiers.KOSHIRAE_MODIFIER != null) {
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXModifiers.KOSHIRAE_MODIFIER.getId(), Ingredient.of(TicEXItems.CATALYST_SLASHBLADE))
                     .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
-                    .save(topConsumer, prefix(TicEXRegistry.KOSHIRAE_MODIFIER, slotlessFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.KOSHIRAE_MODIFIER, slotlessFolder));
         }
 
         // upgrades
 
-        if(TicEXRegistry.KONPAKU_MODIFIER != null) {
-            EmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.KONPAKU_MODIFIER.getId())
+        if(TicEXModifiers.KONPAKU_MODIFIER != null) {
+            EmbossmentModifierRecipeBuilder.modifier(TicEXModifiers.KONPAKU_MODIFIER.getId())
                     .addInput(SizedIngredient.fromItems(TicEXItems.KONPAKU_CORE.get()))
                     .addEmbossItem(SizedIngredient.fromItems(Items.ENCHANTED_BOOK))
                     .setTools(TicEXTags.Items.REFORGED_SLASHBLADE_TOOL)
                     .setSlots(SlotType.UPGRADE, 1)
-                    .save(topConsumer, prefix(TicEXRegistry.KONPAKU_MODIFIER, upgradeFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.KONPAKU_MODIFIER, upgradeFolder));
         }
 
         // shaped

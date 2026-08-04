@@ -3,10 +3,9 @@ package moffy.ticex.event;
 import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.EmbossmentMaterialCapability;
 import moffy.ticex.client.modules.ticex.models.MaterialOverrideModel;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXAttributes;
 import moffy.ticex.registry.TicEXBlocks;
-import net.minecraft.world.damagesource.DamageSource;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,7 +22,6 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -122,8 +120,8 @@ public class TicEXEvent {
         ItemStack stack = event.getTo();
         if(stack.getItem() instanceof IModifiable){
             ToolStack tool = ToolStack.from(stack);
-            if(stack.isEnchanted() && tool.getModifierLevel(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.get()) < 1){
-                tool.addModifier(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.getId(), 1);
+            if(stack.isEnchanted() && tool.getModifierLevel(TicEXModifiers.ENCHANTMENT_SUPPLIER_MODIFIER.get()) < 1){
+                tool.addModifier(TicEXModifiers.ENCHANTMENT_SUPPLIER_MODIFIER.getId(), 1);
             }
         }
     }

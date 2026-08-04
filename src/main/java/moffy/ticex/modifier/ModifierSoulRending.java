@@ -2,7 +2,7 @@ package moffy.ticex.modifier;
 
 import com.brandon3055.draconicevolution.DEConfig;
 import com.brandon3055.draconicevolution.init.DEContent;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -36,7 +36,7 @@ public class ModifierSoulRending extends Modifier implements LootingModifierHook
             return looting;
         }
 
-        int dropChanceModifier = tool.getModifierLevel(TicEXRegistry.SOUL_RENDING_MODIFIER.get());
+        int dropChanceModifier = tool.getModifierLevel(TicEXModifiers.SOUL_RENDING_MODIFIER.get());
         if (dropChanceModifier == 0) {
             return looting;
         }

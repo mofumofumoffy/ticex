@@ -1,6 +1,5 @@
 package moffy.ticex.client.modules.ticex;
 
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

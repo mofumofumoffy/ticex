@@ -5,7 +5,6 @@ import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.registry.TicEXAttributes;
 import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.AbyssalProperty;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.handlers.InternalTimers;
 import moze_intel.projecte.utils.ClientKeyHelper;

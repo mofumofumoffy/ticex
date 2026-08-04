@@ -6,10 +6,10 @@ import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
 import moffy.ticex.datagen.general.recipes.ticex.builder.EmbossmentModifierRecipeBuilder;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXBlocks;
 import moffy.ticex.registry.TicEXFluids;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -178,14 +178,14 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .setFluid(TicEXTags.Fluids.RECONSTRUCTION_CORE, 2000)
                 .save(pWriter, prefix(TicEXMaterials.RECONSTRUCTION, materialCastingFolder));
 
-        EmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.EMBOSSMENT_MODIFIER.getId())
+        EmbossmentModifierRecipeBuilder.modifier(TicEXModifiers.EMBOSSMENT_MODIFIER.getId())
                 .addInput(SizedIngredient.fromItems(TinkerWorld.earthGeode.get()))
                 .addInput(SizedIngredient.fromItems(TinkerWorld.skyGeode.get()))
                 .addInput(SizedIngredient.fromItems(TinkerWorld.ichorGeode.get()))
                 .addInput(SizedIngredient.fromItems(TinkerWorld.enderGeode.get()))
                 .addEmbossItem(SizedIngredient.fromTag(TinkerTags.Items.TOOL_PARTS))
                 .setTools(TinkerTags.Items.DURABILITY)
-                .save(pWriter, prefix(TicEXRegistry.EMBOSSMENT_MODIFIER, slotlessFolder));
+                .save(pWriter, prefix(TicEXModifiers.EMBOSSMENT_MODIFIER, slotlessFolder));
 
         MeltingRecipeBuilder.melting(Ingredient.of(TicEXItems.FLICKERING_RECONSTRUCTION_CORE.get()),
                         FluidOutput.fromFluid(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE.get(), 2000), 1000, (int) 32)

@@ -1,19 +1,17 @@
 package moffy.ticex.modules.projecte;
 
 import moffy.addonapi.AddonModule;
-import moffy.ticex.TicEX;
 import moffy.ticex.event.TicEXPEEvent;
 import moffy.ticex.item.modifiable.ModifiableGemArmor;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.*;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
-import net.minecraft.sounds.SoundEvents;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXPEModule implements AddonModule {
@@ -41,11 +39,11 @@ public class TicEXPEModule implements AddonModule {
                         )
         );
 
-        TicEXRegistry.CLUSTER_MODIFIER = TicEXRegistry.MODIFIERS.register("cluster", ModifierCluster::new);
-        TicEXRegistry.ABYSSAL_MODIFIER = TicEXRegistry.MODIFIERS.register("abyssal", ModifierAbyssal::new);
-        TicEXRegistry.INFERNAL_MODIFIER = TicEXRegistry.MODIFIERS.register("infernal", ModifierInfernal::new);
-        TicEXRegistry.GRAVITY_MODIFIER = TicEXRegistry.MODIFIERS.register("gravity", ModifierGravitiy::new);
-        TicEXRegistry.HURRICANE_MODIFIER = TicEXRegistry.MODIFIERS.register("hurricane", ModifierHurricane::new);
+        TicEXModifiers.CLUSTER_MODIFIER = TicEXRegistry.MODIFIERS.register("cluster", ModifierCluster::new);
+        TicEXModifiers.ABYSSAL_MODIFIER = TicEXRegistry.MODIFIERS.register("abyssal", ModifierAbyssal::new);
+        TicEXModifiers.INFERNAL_MODIFIER = TicEXRegistry.MODIFIERS.register("infernal", ModifierInfernal::new);
+        TicEXModifiers.GRAVITY_MODIFIER = TicEXRegistry.MODIFIERS.register("gravity", ModifierGravitiy::new);
+        TicEXModifiers.HURRICANE_MODIFIER = TicEXRegistry.MODIFIERS.register("hurricane", ModifierHurricane::new);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXPEEvent::onJump);
         MinecraftForge.EVENT_BUS.addListener(TicEXPEEvent::onPlayerTick);

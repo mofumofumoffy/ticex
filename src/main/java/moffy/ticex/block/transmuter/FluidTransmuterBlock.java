@@ -2,7 +2,6 @@ package moffy.ticex.block.transmuter;
 
 import com.google.common.collect.ImmutableMap;
 import moffy.ticex.block.transmuter.entity.FluidTransmuterBlockEntity;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

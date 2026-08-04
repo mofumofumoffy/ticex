@@ -11,7 +11,6 @@ import moffy.ticex.block.transmuter.pattern.FluidTransmutationPair;
 import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.client.modules.ticex.screen.FluidTransmuterScreen;
 import moffy.ticex.jei.IJeiIntegration;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.plugin.jei.util.GuiContainerTankHandler;

@@ -1,7 +1,6 @@
 package moffy.ticex.datagen.general;
 
 import moffy.ticex.TicEX;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXBlocks;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;

@@ -12,7 +12,6 @@ import com.hollingsworth.arsnouveau.api.enchanting_apparatus.ReactiveEnchantment
 import com.hollingsworth.arsnouveau.common.block.tile.EnchantingApparatusTile;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;

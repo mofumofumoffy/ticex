@@ -4,8 +4,8 @@ import moffy.ticex.TicEX;
 import moffy.ticex.datagen.general.recipes.ITicEXRecipeHelper;
 import moffy.ticex.datagen.general.recipes.ticex.builder.SingleEmbossmentModifierRecipeBuilder;
 import moffy.ticex.datagen.general.recipes.ticex.builder.ValidatableIncrementalModifierRecipeBuilder;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -26,8 +26,8 @@ public class PsiRecipeProvider implements ITicEXRecipeHelper {
             modsAvailable(TicEX.getResource("psi_compat"))
         );
 
-        if(TicEXRegistry.SENSOR_MODIFIER != null) {
-            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXRegistry.SENSOR_MODIFIER.getId(), Ingredient.of(
+        if(TicEXModifiers.SENSOR_MODIFIER != null) {
+            SingleEmbossmentModifierRecipeBuilder.modifier(TicEXModifiers.SENSOR_MODIFIER.getId(), Ingredient.of(
                     ModItems.exosuitSensorLight,
                     ModItems.exosuitSensorHeat,
                     ModItems.exosuitSensorStress,
@@ -35,12 +35,12 @@ public class PsiRecipeProvider implements ITicEXRecipeHelper {
                     ModItems.exosuitSensorTrigger
             ))
                     .setTools(TinkerTags.Items.HELMETS)
-                    .save(topConsumer, prefix(TicEXRegistry.SENSOR_MODIFIER, slotlessFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.SENSOR_MODIFIER, slotlessFolder));
         }
 
 
-        if(TicEXRegistry.SOCKET_MODIFIER != null) {
-            ValidatableIncrementalModifierRecipeBuilder.modifier(TicEXRegistry.SOCKET_MODIFIER)
+        if(TicEXModifiers.SOCKET_MODIFIER != null) {
+            ValidatableIncrementalModifierRecipeBuilder.modifier(TicEXModifiers.SOCKET_MODIFIER)
                     .allowCrystal()
                     .input(ModItems.cadSocketBasic, 1, 1)
                     .setMaxLevel(5)
@@ -50,11 +50,11 @@ public class PsiRecipeProvider implements ITicEXRecipeHelper {
                             new Ingredient.TagValue(TinkerTags.Items.HARVEST),
                             new Ingredient.TagValue(TinkerTags.Items.ARMOR)
                     )))
-                    .save(topConsumer, prefix(TicEXRegistry.SOCKET_MODIFIER, upgradeFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.SOCKET_MODIFIER, upgradeFolder));
         }
 
-        if(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER != null) {
-            ModifierRecipeBuilder.modifier(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER)
+        if(TicEXModifiers.PSIONIZING_RADIATION_MODIFIER != null) {
+            ModifierRecipeBuilder.modifier(TicEXModifiers.PSIONIZING_RADIATION_MODIFIER)
                     .setTools(Ingredient.fromValues(Stream.of(
                             new Ingredient.TagValue(TinkerTags.Items.MELEE_WEAPON),
                             new Ingredient.TagValue(TinkerTags.Items.HARVEST),
@@ -65,7 +65,7 @@ public class PsiRecipeProvider implements ITicEXRecipeHelper {
                     .setMaxLevel(1)
                     .checkTraitLevel()
                     .allowCrystal()
-                    .save(topConsumer, prefix(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER, abilityFolder));
+                    .save(topConsumer, prefix(TicEXModifiers.PSIONIZING_RADIATION_MODIFIER, abilityFolder));
         }
 
         if(TicEXItems.PSIONIZING_RADIATION_CORE != null) {

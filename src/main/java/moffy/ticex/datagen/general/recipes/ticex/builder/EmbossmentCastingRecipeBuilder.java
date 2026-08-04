@@ -1,7 +1,6 @@
 package moffy.ticex.datagen.general.recipes.ticex.builder;
 
 import moffy.ticex.lib.recipe.EmbossmentCastingRecipe;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXRecipeSerializers;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;

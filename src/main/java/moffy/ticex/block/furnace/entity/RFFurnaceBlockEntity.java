@@ -2,7 +2,6 @@ package moffy.ticex.block.furnace.entity;
 
 import javax.annotation.Nonnull;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,7 +19,6 @@ import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import slimeknights.tconstruct.common.config.Config;
 import slimeknights.tconstruct.library.client.SafeClient;
 import slimeknights.tconstruct.library.client.model.ModelProperties;
 import slimeknights.tconstruct.library.fluid.FluidTankAnimated;

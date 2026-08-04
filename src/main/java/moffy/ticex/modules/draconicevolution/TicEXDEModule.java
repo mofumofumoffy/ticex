@@ -12,8 +12,9 @@ import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.modifier.ModifierDragonForce;
 import moffy.ticex.modifier.ModifierEvolved;
 import moffy.ticex.modifier.ModifierSoulRending;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -56,17 +57,17 @@ public class TicEXDEModule implements AddonModule {
                 new ItemReconstCore(defaultProps, "inject")
         );
 
-        TicEXRegistry.SOUL_RENDING_MODIFIER = TicEXRegistry.MODIFIERS.register(
+        TicEXModifiers.SOUL_RENDING_MODIFIER = TicEXRegistry.MODIFIERS.register(
                 "soul_rending",
                 ModifierSoulRending::new
         );
-        TicEXRegistry.DRAGON_FORCE_MODIFIER = TicEXRegistry.MODIFIERS.register(
+        TicEXModifiers.DRAGON_FORCE_MODIFIER = TicEXRegistry.MODIFIERS.register(
                 "dragon_force",
                 ModifierDragonForce::new
         );
 
-        TicEXRegistry.INJECT_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("inject");
-        TicEXRegistry.EVOLVED_MODIFIER = TicEXRegistry.MODIFIERS.register("evolved", ModifierEvolved::new);
+        TicEXModifiers.INJECT_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("inject");
+        TicEXModifiers.EVOLVED_MODIFIER = TicEXRegistry.MODIFIERS.register("evolved", ModifierEvolved::new);
     }
 
     @OnlyIn(Dist.CLIENT)

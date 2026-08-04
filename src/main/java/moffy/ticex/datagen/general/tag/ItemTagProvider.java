@@ -2,7 +2,6 @@ package moffy.ticex.datagen.general.tag;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.TicEXTags;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.registry.TicEXBlocks;
 import moffy.ticex.registry.TicEXItems;
 import net.minecraft.core.HolderLookup.Provider;
