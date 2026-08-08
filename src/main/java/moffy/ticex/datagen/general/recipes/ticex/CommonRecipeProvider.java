@@ -72,8 +72,8 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .addInput(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
                 .save(materialConsumer, prefix(TicEXTags.Fluids.OD.location(), alloysFolder));
 
-        metalIngotOptional(pWriter, TicEXTags.Fluids.ETHERIC, TicEXTags.Items.ETHERIC_BLOCK, 5000, TicEXFluids.MOLTEN_ETHERIC.getId());
-        metalIngotOptional(pWriter, TicEXTags.Fluids.OD, TicEXTags.Items.OD_BLOCK, 5000, TicEXFluids.MOLTEN_OD.getId());
+        metalBlockOptional(pWriter, TicEXTags.Fluids.ETHERIC, TicEXTags.Items.ETHERIC.block(), 5000, TicEXFluids.MOLTEN_ETHERIC.getId());
+        metalBlockOptional(pWriter, TicEXTags.Fluids.OD, TicEXTags.Items.OD.block(), 5000, TicEXFluids.MOLTEN_OD.getId());
     }
 
     public void buildShapedRecipes(Consumer<FinishedRecipe> pWriter) {
@@ -99,7 +99,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXBlocks.ETHERIC_BLOCK.get())
                 .showNotification(true)
-                .define('#', TicEXTags.Items.ETHERIC_INGOT)
+                .define('#', TicEXTags.Items.ETHERIC.ingot())
                 .define('*', TicEXItems.ETHERIC_INGOT.get())
                 .pattern("###")
                 .pattern("#*#")
@@ -114,7 +114,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TicEXBlocks.OD_BLOCK.get())
                 .showNotification(true)
-                .define('#', TicEXTags.Items.OD_INGOT)
+                .define('#', TicEXTags.Items.OD.ingot())
                 .define('*', TicEXItems.OD_INGOT.get())
                 .pattern("###")
                 .pattern("#*#")

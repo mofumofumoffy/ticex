@@ -38,20 +38,12 @@ public class TicEXTags {
         public static final TagKey<Item> CORES = local("cores");
         public static final TagKey<Item> CATALYSTS = local("catalysts");
 
-        public static final TagKey<Item> INFINITY_INGOT = common("ingots/infinity");
-        public static final TagKey<Item> NEUTRON_INGOT = common("ingots/neutron");
-        public static final TagKey<Item> CRYSTAL_MATRIX_INGOT = common("ingots/crystal_matrix");
-        public static final TagKey<Item> BLAZING_INGOT = common("ingots/blazing");
-        public static final TagKey<Item> ETHERIC_INGOT = common("ingots/etheric");
-        public static final TagKey<Item> OD_INGOT = common("ingots/od");
-
-        public static final TagKey<Item> INFINITY_BLOCK = common("storage_blocks/infinity");
-        public static final TagKey<Item> NEUTRON_BLOCK = common("storage_blocks/neutron");
-        public static final TagKey<Item> CRYSTAL_MATRIX_BLOCK = common("storage_blocks/crystal_matrix");
-        public static final TagKey<Item> BLAZING_BLOCK = common("storage_blocks/blazing");
-        public static final TagKey<Item> ETHERIC_BLOCK = common("storage_blocks/etheric");
-        public static final TagKey<Item> OD_BLOCK = common("storage_blocks/od");
-
+        public static final MetalItemTagSet INFINITY = new MetalItemTagSet("infinity");
+        public static final MetalItemTagSet NEUTRON = new MetalItemTagSet("neutron");
+        public static final MetalItemTagSet CRYSTAL_MATRIX = new MetalItemTagSet("crystal_matrix");
+        public static final MetalItemTagSet BLAZING = new MetalItemTagSet("blazing");
+        public static final MetalItemTagSet ETHERIC = new MetalItemTagSet("etheric");
+        public static final MetalItemTagSet OD = new MetalItemTagSet("od");
 
         public static final TagKey<Item> SERAM = local("seram");
         public static final TagKey<Item> PLATE = local("plate");
@@ -69,6 +61,30 @@ public class TicEXTags {
 
         private static TagKey<Item> common(String name) {
             return TagKey.create(Registries.ITEM, commonResource(name));
+        }
+
+        public static class MetalItemTagSet{
+            private final TagKey<Item> ingot;
+            private final TagKey<Item> block;
+            private final TagKey<Item> nugget;
+
+            public MetalItemTagSet(String name){
+                this.ingot = common("ingots/"+name);
+                this.block = common("storage_blocks/"+name);
+                this.nugget = common("nuggets/"+name);
+            }
+
+            public TagKey<Item> ingot(){
+                return ingot;
+            }
+
+            public TagKey<Item> block(){
+                return block;
+            }
+
+            public TagKey<Item> nugget(){
+                return nugget;
+            }
         }
     }
 

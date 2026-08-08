@@ -20,7 +20,7 @@ public interface ITicEXSmelteryRecipeHelper extends ITicEXRecipeHelper {
         return SmelteryRecipeBuilder.fluid(consumer, name, fluid).castingFolder("smeltery/casting/metal").meltingFolder("smeltery/melting/metal");
     }
 
-    default void metalIngotOptional(Consumer<FinishedRecipe> consumer, TagKey<Fluid> fluidTag, TagKey<Item> storageTag, int temperature, ResourceLocation name) {
+    default void metalBlockOptional(Consumer<FinishedRecipe> consumer, TagKey<Fluid> fluidTag, TagKey<Item> storageTag, int temperature, ResourceLocation name) {
         SmelteryRecipeBuilder metal = metal(consumer, fluidTag, ResourceLocation.fromNamespaceAndPath(name.getNamespace(), name.getPath().replace("molten_", "")));
         metal
                 .optional()
@@ -36,5 +36,23 @@ public interface ITicEXSmelteryRecipeHelper extends ITicEXRecipeHelper {
                 .setFluid(fluidTag, FluidValues.METAL_BLOCK)
                 .setCoolingTime(temperature, FluidValues.METAL_BLOCK)
                 .save(wrapped, this.location(smelteryCastingFolder + "metal/" + name.getPath() + "/block"));
+    }
+
+    default void metalNuggetOptional(Consumer<FinishedRecipe> consumer, TagKey<Fluid> fluidTag, TagKey<Item> storageTag, int temperature, ResourceLocation name) {
+        SmelteryRecipeBuilder metal = metal(consumer, fluidTag, ResourceLocation.fromNamespaceAndPath(name.getNamespace(), name.getPath().replace("molten_", "")));
+        metal
+                .optional()
+                .oreRate(IMeltingContainer.OreRateType.METAL)
+                .temperature(temperature)
+                .baseUnit(FluidValues.INGOT)
+                .damageUnit(FluidValues.NUGGET)
+                .melting((float) 1/9, "nugget", "nuggets", 3.0F, false, false)
+                .meltingCasting(1.0F, TinkerSmeltery.ingotCast, 1.0F, false);
+
+        Consumer<FinishedRecipe> wrapped = this.withCondition(consumer, new TagFilledCondition<>(storageTag));
+        ItemCastingRecipeBuilder.basinRecipe(ItemOutput.fromTag(storageTag))
+                .setFluid(fluidTag, FluidValues.NUGGET)
+                .setCoolingTime(temperature, FluidValues.NUGGET)
+                .save(wrapped, this.location(smelteryCastingFolder + "metal/" + name.getPath() + "/nugget"));
     }
 }

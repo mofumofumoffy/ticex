@@ -73,22 +73,26 @@ public class ItemTagProvider extends ItemTagsProvider {
         );
 
         //ingots
-        addOptional(TicEXTags.Items.INFINITY_INGOT, ResourceLocation.fromNamespaceAndPath("avaritia", "infinity_ingot"));
-        addOptional(TicEXTags.Items.NEUTRON_INGOT, ResourceLocation.fromNamespaceAndPath("avaritia", "neutron_ingot"));
-        addOptional(TicEXTags.Items.CRYSTAL_MATRIX_INGOT, ResourceLocation.fromNamespaceAndPath("avaritia", "crystal_matrix_ingot"));
-        addOptional(TicEXTags.Items.BLAZING_INGOT, ResourceLocation.fromNamespaceAndPath("avaritia", "blaze_cube"));
+        addOptional(TicEXTags.Items.INFINITY.ingot(), ResourceLocation.fromNamespaceAndPath("avaritia", "infinity_ingot"));
+        addOptional(TicEXTags.Items.NEUTRON.ingot(), ResourceLocation.fromNamespaceAndPath("avaritia", "neutron_ingot"));
+        addOptional(TicEXTags.Items.CRYSTAL_MATRIX.ingot(), ResourceLocation.fromNamespaceAndPath("avaritia", "crystal_matrix_ingot"));
+        addOptional(TicEXTags.Items.BLAZING.ingot(), ResourceLocation.fromNamespaceAndPath("avaritia", "blaze_cube"));
 
-        addOptional(TicEXTags.Items.ETHERIC_INGOT, TicEX.getResource("etheric_ingot"));
-        addOptional(TicEXTags.Items.OD_INGOT, TicEX.getResource("od_ingot"));
+        addOptional(TicEXTags.Items.ETHERIC.ingot(), TicEX.getResource("etheric_ingot"));
+        addOptional(TicEXTags.Items.OD.ingot(), TicEX.getResource("od_ingot"));
 
         //blocks
-        addOptional(TicEXTags.Items.INFINITY_BLOCK, ResourceLocation.fromNamespaceAndPath("avaritia", "infinity"));
-        addOptional(TicEXTags.Items.NEUTRON_BLOCK, ResourceLocation.fromNamespaceAndPath("avaritia", "neutron"));
-        addOptional(TicEXTags.Items.CRYSTAL_MATRIX_BLOCK, ResourceLocation.fromNamespaceAndPath("avaritia", "crystal_matrix"));
-        addOptional(TicEXTags.Items.BLAZING_BLOCK, ResourceLocation.fromNamespaceAndPath("avaritia", "blaze_cube_block"));
+        addOptional(TicEXTags.Items.INFINITY.block(), ResourceLocation.fromNamespaceAndPath("avaritia", "infinity"));
+        addOptional(TicEXTags.Items.NEUTRON.block(), ResourceLocation.fromNamespaceAndPath("avaritia", "neutron"));
+        addOptional(TicEXTags.Items.CRYSTAL_MATRIX.block(), ResourceLocation.fromNamespaceAndPath("avaritia", "crystal_matrix"));
+        addOptional(TicEXTags.Items.BLAZING.block(), ResourceLocation.fromNamespaceAndPath("avaritia", "blaze_cube_block"));
 
-        addOptional(TicEXTags.Items.ETHERIC_BLOCK, TicEX.getResource("etheric_block"));
-        addOptional(TicEXTags.Items.OD_BLOCK, TicEX.getResource("od_block"));
+        addOptional(TicEXTags.Items.ETHERIC.block(), TicEX.getResource("etheric_block"));
+        addOptional(TicEXTags.Items.OD.block(), TicEX.getResource("od_block"));
+
+        //nuggets
+        addOptional(TicEXTags.Items.INFINITY.nugget(), ResourceLocation.fromNamespaceAndPath("avaritia", "infinity_nugget"));
+        addOptional(TicEXTags.Items.NEUTRON.nugget(), ResourceLocation.fromNamespaceAndPath("avaritia", "neutron_nugget"));
 
         //trim_materials
         tag(TRIM_MATERIALS)
