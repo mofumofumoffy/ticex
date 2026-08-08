@@ -1,9 +1,8 @@
 {
   "type": "tconstruct:casting_table",
   "cast": {
-    "item": "tconstruct:nugget_sand_cast"
+    "tag": "tconstruct:casts/multi_use/nugget"
   },
-  "cast_consumed": true,
   "conditions": [
     {
       "type": "mantle:tag_filled",

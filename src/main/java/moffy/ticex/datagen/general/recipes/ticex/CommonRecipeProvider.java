@@ -72,8 +72,8 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .addInput(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
                 .save(materialConsumer, prefix(TicEXTags.Fluids.OD.location(), alloysFolder));
 
-        metalBlockOptional(pWriter, TicEXTags.Fluids.ETHERIC, TicEXTags.Items.ETHERIC.block(), 5000, TicEXFluids.MOLTEN_ETHERIC.getId());
-        metalBlockOptional(pWriter, TicEXTags.Fluids.OD, TicEXTags.Items.OD.block(), 5000, TicEXFluids.MOLTEN_OD.getId());
+        metalItemOptional(pWriter, TicEXTags.Fluids.ETHERIC, 5000, TicEXFluids.MOLTEN_ETHERIC.getId());
+        metalItemOptional(pWriter, TicEXTags.Fluids.OD, 5000, TicEXFluids.MOLTEN_OD.getId());
     }
 
     public void buildShapedRecipes(Consumer<FinishedRecipe> pWriter) {
