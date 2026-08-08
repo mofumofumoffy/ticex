@@ -1,5 +1,8 @@
 {
-  "type": "tconstruct:casting_basin",
+  "type": "tconstruct:casting_table",
+  "cast": {
+    "item": "tconstruct:nugget_cast"
+  },
   "conditions": [
     {
       "type": "mantle:tag_filled",

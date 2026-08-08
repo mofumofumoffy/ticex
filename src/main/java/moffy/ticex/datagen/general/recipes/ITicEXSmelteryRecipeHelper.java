@@ -48,7 +48,25 @@ public interface ITicEXSmelteryRecipeHelper extends ITicEXRecipeHelper {
                 .temperature(temperature)
                 .baseUnit(FluidValues.INGOT)
                 .damageUnit(FluidValues.NUGGET)
-                .melting((float) 1/9, "nugget", "nuggets", 3.0F, false, false)
-                .meltingCasting((float) 1/9, TinkerSmeltery.nuggetCast, 1.0f, false);
+                .melting((float) 1/9, "nugget", "nuggets", 3.0F, false, false);
+
+        Consumer<FinishedRecipe> wrapped = this.withCondition(consumer, new TagFilledCondition<>(storageTag));
+        ItemCastingRecipeBuilder.tableRecipe(ItemOutput.fromTag(storageTag))
+                .setFluid(fluidTag, FluidValues.NUGGET)
+                .setCoolingTime(temperature, FluidValues.NUGGET)
+                .setCast(TinkerSmeltery.nuggetCast, false)
+                .save(wrapped, this.location(smelteryCastingFolder + "metal/" + name.getPath() + "/nugget"));
+
+        ItemCastingRecipeBuilder.tableRecipe(ItemOutput.fromTag(storageTag))
+                .setFluid(fluidTag, FluidValues.NUGGET)
+                .setCoolingTime(temperature, FluidValues.NUGGET)
+                .setCast(TinkerSmeltery.nuggetCast.getSand(), true)
+                .save(wrapped, this.location(smelteryCastingFolder + "metal/" + name.getPath() + "/nugget_sand"));
+
+        ItemCastingRecipeBuilder.tableRecipe(ItemOutput.fromTag(storageTag))
+                .setFluid(fluidTag, FluidValues.NUGGET)
+                .setCoolingTime(temperature, FluidValues.NUGGET)
+                .setCast(TinkerSmeltery.nuggetCast.getRedSand(), true)
+                .save(wrapped, this.location(smelteryCastingFolder + "metal/" + name.getPath() + "/nugget_red_sand"));
     }
 }

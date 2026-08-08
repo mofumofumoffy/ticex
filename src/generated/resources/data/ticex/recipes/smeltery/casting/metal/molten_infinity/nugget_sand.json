@@ -1,24 +1,25 @@
 {
   "type": "tconstruct:casting_table",
   "cast": {
-    "item": "tconstruct:nugget_cast"
+    "item": "tconstruct:nugget_sand_cast"
   },
+  "cast_consumed": true,
   "conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:nuggets/neutron"
+      "tag": "forge:nuggets/infinity"
     },
     {
       "type": "addonapi:mods_available",
       "required_raw_module": "ticex:avaritia_compat"
     }
   ],
-  "cooling_time": 32,
+  "cooling_time": 39,
   "fluid": {
     "amount": 10,
-    "tag": "forge:molten_neutron"
+    "tag": "forge:molten_infinity"
   },
   "result": {
-    "tag": "forge:nuggets/neutron"
+    "tag": "forge:nuggets/infinity"
   }
 }
