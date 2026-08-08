@@ -1,22 +1,21 @@
 {
-  "type": "tconstruct:melting",
+  "type": "tconstruct:casting_basin",
   "conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:storage_blocks/neutron"
+      "tag": "forge:nuggets/neutron"
     },
     {
       "type": "addonapi:mods_available",
       "required_raw_module": "ticex:avaritia_compat"
     }
   ],
-  "ingredient": {
-    "tag": "forge:storage_blocks/neutron"
-  },
-  "result": {
-    "amount": 810,
+  "cooling_time": 32,
+  "fluid": {
+    "amount": 10,
     "tag": "forge:molten_neutron"
   },
-  "temperature": 2100,
-  "time": 285
+  "result": {
+    "tag": "forge:nuggets/neutron"
+  }
 }

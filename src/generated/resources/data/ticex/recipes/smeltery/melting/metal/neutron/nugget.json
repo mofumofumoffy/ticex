@@ -3,7 +3,7 @@
   "conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:storage_blocks/neutron"
+      "tag": "forge:nuggets/neutron"
     },
     {
       "type": "addonapi:mods_available",
@@ -11,10 +11,10 @@
     }
   ],
   "ingredient": {
-    "tag": "forge:storage_blocks/neutron"
+    "tag": "forge:nuggets/neutron"
   },
   "result": {
-    "amount": 810,
+    "amount": 10,
     "tag": "forge:molten_neutron"
   },
   "temperature": 2100,

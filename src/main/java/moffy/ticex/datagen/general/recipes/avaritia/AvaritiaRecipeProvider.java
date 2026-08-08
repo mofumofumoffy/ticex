@@ -94,7 +94,7 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
         // material fluid
 
         MaterialFluidRecipeBuilder.material(TicEXMaterials.CRYSTAL_MATRIX)
-                .setTemperature(1050)
+                .setTemperature(1880)
                 .setFluid(TicEXTags.Fluids.CRYSTAL_MATRIX, FluidValues.INGOT)
                 .save(topConsumer, prefix(TicEXMaterials.CRYSTAL_MATRIX, materialCastingFolder));
         MaterialFluidRecipeBuilder.material(TicEXMaterials.INFINITY)
@@ -103,11 +103,11 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
                 .save(topConsumer, prefix(TicEXMaterials.INFINITY, materialCastingFolder));
 
         MaterialFluidRecipeBuilder.material(TicEXMaterials.NEUTRON)
-                .setTemperature(1400)
+                .setTemperature(2100)
                 .setFluid(TicEXTags.Fluids.NEUTRON, FluidValues.INGOT)
                 .save(topConsumer, prefix(TicEXMaterials.NEUTRON, materialCastingFolder));
         MaterialFluidRecipeBuilder.material(TicEXMaterials.BLAZING)
-                .setTemperature(1250)
+                .setTemperature(1500)
                 .setFluid(TicEXTags.Fluids.BLAZING, FluidValues.INGOT)
                 .save(topConsumer, prefix(TicEXMaterials.BLAZING, materialCastingFolder));
 

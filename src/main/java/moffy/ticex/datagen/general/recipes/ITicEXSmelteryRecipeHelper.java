@@ -12,6 +12,8 @@ import slimeknights.tconstruct.library.recipe.FluidValues;
 import slimeknights.tconstruct.library.recipe.casting.ItemCastingRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.melting.IMeltingContainer;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
+import slimeknights.tconstruct.tools.TinkerToolParts;
+import slimeknights.tconstruct.tools.TinkerTools;
 
 import java.util.function.Consumer;
 
@@ -47,12 +49,6 @@ public interface ITicEXSmelteryRecipeHelper extends ITicEXRecipeHelper {
                 .baseUnit(FluidValues.INGOT)
                 .damageUnit(FluidValues.NUGGET)
                 .melting((float) 1/9, "nugget", "nuggets", 3.0F, false, false)
-                .meltingCasting(1.0F, TinkerSmeltery.ingotCast, 1.0F, false);
-
-        Consumer<FinishedRecipe> wrapped = this.withCondition(consumer, new TagFilledCondition<>(storageTag));
-        ItemCastingRecipeBuilder.basinRecipe(ItemOutput.fromTag(storageTag))
-                .setFluid(fluidTag, FluidValues.NUGGET)
-                .setCoolingTime(temperature, FluidValues.NUGGET)
-                .save(wrapped, this.location(smelteryCastingFolder + "metal/" + name.getPath() + "/nugget"));
+                .meltingCasting((float) 1/9, TinkerSmeltery.nuggetCast, 1.0f, false);
     }
 }
