@@ -6,7 +6,7 @@
       "tag": "forge:storage_blocks/od"
     }
   ],
-  "cooling_time": 453,
+  "cooling_time": 312,
   "fluid": {
     "amount": 810,
     "tag": "forge:molten_od"

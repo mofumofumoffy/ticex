@@ -34,13 +34,16 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
             modsAvailable(TicEX.getResource("avaritia_compat"))
         );
 
-        metalMaterialRecipe(topConsumer, TicEXMaterials.INFINITY, materialFolder, "infinity", true);
-        metalMaterialRecipe(topConsumer, TicEXMaterials.NEUTRON, materialFolder, "neutron", true);
-        metalMaterialRecipe(topConsumer, TicEXMaterials.CRYSTAL_MATRIX, materialFolder, "crystal_matrix", true);
-        metalMaterialRecipe(topConsumer, TicEXMaterials.BLAZING, materialFolder, "blazing", true);
+        metalMaterialItemOptional(topConsumer, TicEXTags.Fluids.INFINITY, TicEXMaterials.INFINITY, 3180, true);
+        metalMaterialItemOptional(topConsumer, TicEXTags.Fluids.NEUTRON, TicEXMaterials.NEUTRON, 2100, true);
+        metalMaterialItemOptional(topConsumer, TicEXTags.Fluids.CRYSTAL_MATRIX, TicEXMaterials.CRYSTAL_MATRIX, 1880);
+        metalMaterialItemOptional(topConsumer, TicEXTags.Fluids.BLAZING, TicEXMaterials.BLAZING, 1500);
+
+        MeltingFuelBuilder.fuel(TicEXFluids.MOLTEN_BLAZING.ingredient(50), 150, 3500)
+                .rate(55)
+                .save(pWriter, prefix(TicEXFluids.MOLTEN_BLAZING, smelteryMeltingFolder + "fuel/"));
 
         // modifier
-
         if (TicEXModifiers.CELESTIAL_MODIFIER != null) {
             ModifierRecipeBuilder.modifier(TicEXModifiers.CELESTIAL_MODIFIER)
                 .setTools(TinkerTags.Items.BOOTS)
@@ -90,68 +93,6 @@ public class AvaritiaRecipeProvider implements ITicEXSmelteryRecipeHelper, IMate
                     .unlockedBy("has_item", TicEXRecipeProvider.has(TicEXItems.RECONSTRUCTION_CORE.get()))
                     .save(topConsumer, prefix(TicEXItems.CELESTIAL_CORE.getId(), coresFolder));
         }
-
-        // material fluid
-
-        MaterialFluidRecipeBuilder.material(TicEXMaterials.CRYSTAL_MATRIX)
-                .setTemperature(1880)
-                .setFluid(TicEXTags.Fluids.CRYSTAL_MATRIX, FluidValues.INGOT)
-                .save(topConsumer, prefix(TicEXMaterials.CRYSTAL_MATRIX, materialCastingFolder));
-        MaterialFluidRecipeBuilder.material(TicEXMaterials.INFINITY)
-                .setTemperature(3180)
-                .setFluid(TicEXTags.Fluids.INFINITY, FluidValues.INGOT)
-                .save(topConsumer, prefix(TicEXMaterials.INFINITY, materialCastingFolder));
-        MaterialFluidRecipeBuilder.material(TicEXMaterials.NEUTRON)
-                .setTemperature(2100)
-                .setFluid(TicEXTags.Fluids.NEUTRON, FluidValues.INGOT)
-                .save(topConsumer, prefix(TicEXMaterials.NEUTRON, materialCastingFolder));
-        MaterialFluidRecipeBuilder.material(TicEXMaterials.BLAZING)
-                .setTemperature(1500)
-                .setFluid(TicEXTags.Fluids.BLAZING, FluidValues.INGOT)
-                .save(topConsumer, prefix(TicEXMaterials.BLAZING, materialCastingFolder));
-
-        // smeltery
-
-        if(TicEXFluids.MOLTEN_CRYSTAL_MATRIX != null) {
-                MaterialMeltingRecipeBuilder.material(TicEXMaterials.CRYSTAL_MATRIX,
-                        1880,
-                                FluidOutput.fromFluid(TicEXFluids.MOLTEN_CRYSTAL_MATRIX.get().getSource(), FluidValues.INGOT))
-                    .save(topConsumer, prefix(TicEXMaterials.CRYSTAL_MATRIX, materialMeltingFolder));
-
-            metalItemOptional(topConsumer, TicEXTags.Fluids.CRYSTAL_MATRIX, 1880, TicEXFluids.MOLTEN_CRYSTAL_MATRIX.getId());
-        }
-
-        if(TicEXFluids.MOLTEN_INFINITY != null) {
-                MaterialMeltingRecipeBuilder.material(TicEXMaterials.INFINITY,
-                            3180,
-                                FluidOutput.fromFluid(TicEXFluids.MOLTEN_INFINITY.get().getSource(), FluidValues.INGOT))
-                    .save(topConsumer, prefix(TicEXMaterials.INFINITY, materialMeltingFolder));
-
-            metalItemOptional(topConsumer, TicEXTags.Fluids.INFINITY, 3180, TicEXFluids.MOLTEN_INFINITY.getId(), true);
-        }
-
-        if(TicEXFluids.MOLTEN_NEUTRON != null) {
-                MaterialMeltingRecipeBuilder.material(TicEXMaterials.NEUTRON,
-                        2100,
-                                FluidOutput.fromFluid(TicEXFluids.MOLTEN_NEUTRON.get().getSource(), FluidValues.INGOT))
-                    .save(topConsumer, prefix(TicEXMaterials.NEUTRON, materialMeltingFolder));
-
-            metalItemOptional(topConsumer, TicEXTags.Fluids.NEUTRON, 2100, TicEXFluids.MOLTEN_NEUTRON.getId(), true);
-        }
-
-        if(TicEXFluids.MOLTEN_BLAZING != null) {
-            MaterialMeltingRecipeBuilder.material(TicEXMaterials.BLAZING,
-                            1500,
-                            FluidOutput.fromFluid(TicEXFluids.MOLTEN_BLAZING.get().getSource(), FluidValues.INGOT))
-                    .save(topConsumer, prefix(TicEXMaterials.BLAZING, materialMeltingFolder));
-
-            metalItemOptional(topConsumer, TicEXTags.Fluids.BLAZING, 1500, TicEXFluids.MOLTEN_BLAZING.getId());
-            MeltingFuelBuilder.fuel(TicEXFluids.MOLTEN_BLAZING.ingredient(50), 150, 3500)
-                    .rate(55)
-                    .save(pWriter, prefix(TicEXFluids.MOLTEN_BLAZING, smelteryMeltingFolder + "fuel/"));
-        }
-
-
     }
 
     @Override

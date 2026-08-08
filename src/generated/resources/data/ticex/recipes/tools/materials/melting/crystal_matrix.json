@@ -9,7 +9,7 @@
   "input": "ticex:crystal_matrix",
   "result": {
     "amount": 90,
-    "fluid": "ticex:molten_crystal_matrix"
+    "tag": "forge:molten_crystal_matrix"
   },
   "temperature": 1880
 }

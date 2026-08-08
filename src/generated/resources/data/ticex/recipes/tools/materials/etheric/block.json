@@ -1,5 +1,11 @@
 {
   "type": "tconstruct:material",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:storage_blocks/etheric"
+    }
+  ],
   "ingredient": {
     "tag": "forge:storage_blocks/etheric"
   },

@@ -9,7 +9,7 @@
   "input": "ticex:neutron",
   "result": {
     "amount": 90,
-    "fluid": "ticex:molten_neutron"
+    "tag": "forge:molten_neutron"
   },
   "temperature": 2100
 }

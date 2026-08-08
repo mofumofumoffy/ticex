@@ -6,7 +6,7 @@
       "tag": "forge:storage_blocks/etheric"
     }
   ],
-  "cooling_time": 453,
+  "cooling_time": 312,
   "fluid": {
     "amount": 810,
     "tag": "forge:molten_etheric"

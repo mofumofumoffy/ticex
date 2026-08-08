@@ -9,7 +9,7 @@
   "input": "ticex:blazing",
   "result": {
     "amount": 90,
-    "fluid": "ticex:molten_blazing"
+    "tag": "forge:molten_blazing"
   },
   "temperature": 1500
 }
