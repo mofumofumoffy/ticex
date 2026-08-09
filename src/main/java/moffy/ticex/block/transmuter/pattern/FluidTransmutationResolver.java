@@ -42,7 +42,6 @@ public class FluidTransmutationResolver {
             if (lastFluid != null) {
                 if (!pairs.containsKey(fluid)) {
                     pairs.put(lastFluid, new FluidTransmutationPair(lastFluid, fluid));
-                    LOGGER.info("Conversion resolved {} -> {}", ForgeRegistries.FLUIDS.getKey(lastFluid), ForgeRegistries.FLUIDS.getKey(fluid));
                 }
             }
 
