@@ -129,7 +129,6 @@ public class TicEXModule implements AddonModule {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, TicEXEvent::onEntityHurt);
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::supplierBouncer);
         MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onDatapackSync);
-        MinecraftForge.EVENT_BUS.addListener(TicEXEvent::onRecipesUpdated);
 
         if (TierSortingRegistry.isTierSorted(InfinityTier.instance)) {
             TicEXRegistry.INFINITY_TIER = TierSortingRegistry.registerTier(

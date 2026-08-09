@@ -140,10 +140,8 @@ public class TicEXEvent {
 
 
     public static void onDatapackSync(OnDatapackSyncEvent event) {
-        FluidTransmutationResolver.INSTANCE.load();
-    }
-
-    public static void onRecipesUpdated(RecipesUpdatedEvent event) {
-        FluidTransmutationResolver.INSTANCE.load();
+        if(event.getPlayer() == null){
+            FluidTransmutationResolver.INSTANCE.load();
+        }
     }
 }
