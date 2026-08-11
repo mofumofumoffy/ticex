@@ -10,7 +10,7 @@ package moffy.ticex.modules.tacz;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.client.render.custom.CustomModel;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.event.TicEXTaczEvent;
 import moffy.ticex.item.modifiable.ModifiableGunItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
@@ -52,6 +52,6 @@ public class TicEXTaczModule implements AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        TicEXRenders.CUSTOM_MODELS.put(TicEXItems.BLITZ_GUN.get(), CustomModel::new);
+        CustomTinkerRenders.CUSTOM_MODELS.put(TicEXItems.BLITZ_GUN.get(), CustomModel::new);
     }
 }

@@ -1,7 +1,7 @@
-package moffy.ticex.client.render.provider.context.tool;
+package moffy.ticex.client.providers.context.tool;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.render.provider.context.RenderContext;
+import moffy.ticex.client.providers.context.RenderContext;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 

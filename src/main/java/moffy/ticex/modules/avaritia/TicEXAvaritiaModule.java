@@ -3,9 +3,9 @@ package moffy.ticex.modules.avaritia;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.client.render.avaritia.TicEXCosmicShaderProvider;
-import moffy.ticex.client.render.custom.PartPredicate;
+import moffy.ticex.client.lib.PartPredicate;
 import moffy.ticex.client.render.ticex.ItemArrowRenderer;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.entity.avaritia.EndestShotProjectile;
 import moffy.ticex.event.TicEXAvaritiaEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -117,9 +117,9 @@ public class TicEXAvaritiaModule implements AddonModule {
         IEventBus bus = context.getModEventBus();
 
         TicEXCosmicShaderProvider.init(bus);
-        TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Material());
-        TicEXRenders.ARMOR_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Armor());
-        TicEXRenders.GENERIC_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Generic());
+        CustomTinkerRenders.TOOL_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Material());
+        CustomTinkerRenders.ARMOR_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Armor());
+        CustomTinkerRenders.GENERIC_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Generic());
 
         bus.addListener(TicEXAvaritiaEvent::onRegisterRenderers);
     }

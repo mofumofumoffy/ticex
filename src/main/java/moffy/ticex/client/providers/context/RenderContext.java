@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.provider.context;
+package moffy.ticex.client.providers.context;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

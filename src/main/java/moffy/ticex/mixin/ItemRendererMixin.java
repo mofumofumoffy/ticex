@@ -1,10 +1,10 @@
 package moffy.ticex.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.ticex.TicEXRenders;
-import moffy.ticex.client.render.ticex.TicEXToolRenders;
+import moffy.ticex.client.providers.context.ItemRenderContext;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.CustomTinkerRenders;
+import moffy.ticex.client.render.ToolRenders;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
@@ -36,13 +36,13 @@ public abstract class ItemRendererMixin {
         BakedModel pModel,
         CallbackInfo ci
     ) {
-        if (!TicEXRenders.shouldRenderWithShader(pItemStack)) {
+        if (!CustomTinkerRenders.shouldRenderWithShader(pItemStack)) {
             return;
         }
 
 
-        Map<MaterialVariantId, ShaderProvider.Tool> materialShaderProviderMap = TicEXRenders.collectShadersForMaterials(pItemStack);
-        Map<ModifierId, ShaderProvider.Tool> modifierShaderProviderMap = TicEXRenders.collectShadersForModifiers(pItemStack);
+        Map<MaterialVariantId, ShaderProvider.Tool> materialShaderProviderMap = CustomTinkerRenders.collectShadersForMaterials(pItemStack);
+        Map<ModifierId, ShaderProvider.Tool> modifierShaderProviderMap = CustomTinkerRenders.collectShadersForModifiers(pItemStack);
 
         if (materialShaderProviderMap.isEmpty() && modifierShaderProviderMap.isEmpty()) {
             return;
@@ -78,8 +78,8 @@ public abstract class ItemRendererMixin {
 
         List<ShaderProvider.Tool> seenList = new ArrayList<>();
 
-        TicEXRenders.renderQuadsTasks(pItemStack, pPoseStack, pModel, pDisplayContext, pLeftHand, (renderType, quads) ->
-                TicEXToolRenders.prepareRenderTasks(
+        CustomTinkerRenders.renderQuadsTasks(pItemStack, pPoseStack, pModel, pDisplayContext, pLeftHand, (renderType, quads) ->
+                ToolRenders.prepareRenderTasks(
                         renderType,
                         quads,
                         itemRenderContext,

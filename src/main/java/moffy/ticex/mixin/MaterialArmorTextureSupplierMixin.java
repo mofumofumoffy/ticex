@@ -1,12 +1,11 @@
 package moffy.ticex.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.shader.TintedShaderArmorTexture;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.shaders.TintedShaderArmorTexture;
+import moffy.ticex.client.CustomTinkerRenders;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -44,7 +43,7 @@ public abstract class MaterialArmorTextureSupplierMixin {
                                                         @Local(argsOnly = true) ResourceLocation name,
                                                         @Local MaterialVariantId materialVariantId,
                                                         @Local(ordinal = 0) int color) {
-        ShaderProvider.Armor shaderProvider = TicEXRenders.ARMOR_SHADERS.getShaderProvider(materialVariantId);
+        ShaderProvider.Armor shaderProvider = CustomTinkerRenders.ARMOR_SHADERS.getShaderProvider(materialVariantId);
         if(shaderProvider == null) return original;
 
         Material textureMaterial = new Material(InventoryMenu.BLOCK_ATLAS, ticex$getAtlasLocation(name));
@@ -56,7 +55,7 @@ public abstract class MaterialArmorTextureSupplierMixin {
                                                   @Local MaterialVariantId materialId) {
         Optional<MaterialRenderInfo> infoOptional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(materialId);
         if(infoOptional.isEmpty()) {
-            ShaderProvider.Armor shaderProvider = TicEXRenders.ARMOR_SHADERS.getShaderProvider(materialId);
+            ShaderProvider.Armor shaderProvider = CustomTinkerRenders.ARMOR_SHADERS.getShaderProvider(materialId);
             if(shaderProvider == null) return;
 
             Material textureMaterial = new Material(InventoryMenu.BLOCK_ATLAS, ticex$getAtlasLocation(name));

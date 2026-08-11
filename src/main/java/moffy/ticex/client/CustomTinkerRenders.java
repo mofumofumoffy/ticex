@@ -1,10 +1,11 @@
-package moffy.ticex.client.render.ticex;
+package moffy.ticex.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.shader.TicEXRenderTasks.RenderTask;
-import moffy.ticex.client.render.shader.ToolShaderMap;
+import moffy.ticex.client.models.TinkerModelMap;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.shaders.TicEXRenderTasks.RenderTask;
+import moffy.ticex.client.shaders.TinkerShaderMap;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
@@ -25,16 +26,18 @@ import slimeknights.tconstruct.library.tools.part.IToolPart;
 import java.util.*;
 import java.util.function.Function;
 
-public class TicEXRenders {
+public class CustomTinkerRenders {
     public static final Map<Item, Function<BakedModel, BakedModel>> CUSTOM_MODELS = new HashMap<>();
 
-    public static final ToolShaderMap.Tool TOOL_SHADERS = new ToolShaderMap.Tool();
-    public static final ToolShaderMap.Armor ARMOR_SHADERS = new ToolShaderMap.Armor();
-    public static final ToolShaderMap.Generic GENERIC_SHADERS = new ToolShaderMap.Generic();
+    public static final TinkerShaderMap.Tool TOOL_SHADERS = new TinkerShaderMap.Tool();
+    public static final TinkerShaderMap.Armor ARMOR_SHADERS = new TinkerShaderMap.Armor();
+    public static final TinkerShaderMap.Generic GENERIC_SHADERS = new TinkerShaderMap.Generic();
+    public static final TinkerModelMap EXTRA_ARMOR_MODELS = new TinkerModelMap();
+
 
     public static boolean shouldRenderWithShader(ItemStack stack) {
         return !stack.isEmpty() && TicEXConfig.USE_SHADER.get() &&
-                !TicEXRenders.CUSTOM_MODELS.containsKey(stack.getItem());
+                !CustomTinkerRenders.CUSTOM_MODELS.containsKey(stack.getItem());
     }
 
     public static Map<MaterialVariantId, ShaderProvider.Tool> collectShadersForMaterials(ItemStack itemStack) {
@@ -43,17 +46,17 @@ public class TicEXRenders {
         Item item = itemStack.getItem();
         if (item instanceof IModifiable) {
             ToolStack tool = ToolStack.from(itemStack);
-            if (!TicEXRenders.TOOL_SHADERS.isToolTarget(tool)) {
+            if (!CustomTinkerRenders.TOOL_SHADERS.isToolTarget(tool)) {
                 return Collections.emptyMap();
             }
 
             for (MaterialVariant material : tool.getMaterials()) {
-                ShaderProvider.Tool provider = TicEXRenders.TOOL_SHADERS.getShaderProvider(material.getId());
+                ShaderProvider.Tool provider = CustomTinkerRenders.TOOL_SHADERS.getShaderProvider(material.getId());
                 if (provider != null) shaderProviders.put(material.getId(), provider);
             }
         } else if (item instanceof IToolPart toolPart) {
             MaterialVariantId material = toolPart.getMaterial(itemStack);
-            ShaderProvider.Tool provider = TicEXRenders.TOOL_SHADERS.getShaderProvider(material);
+            ShaderProvider.Tool provider = CustomTinkerRenders.TOOL_SHADERS.getShaderProvider(material);
             if (provider == null) {
                 return Collections.emptyMap();
             }
@@ -74,7 +77,7 @@ public class TicEXRenders {
 
             for (ModifierEntry modifierEntry : tool.getModifierList()) {
                 ModifierId modifierId = modifierEntry.getId();
-                ShaderProvider.Tool shaderProvider = TicEXRenders.TOOL_SHADERS.getShaderProvider(modifierId);
+                ShaderProvider.Tool shaderProvider = CustomTinkerRenders.TOOL_SHADERS.getShaderProvider(modifierId);
                 if (shaderProvider != null) shaderProviders.put(modifierId, shaderProvider);
             }
         }

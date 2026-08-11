@@ -1,13 +1,13 @@
-package moffy.ticex.client.modules.ticex.models;
+package moffy.ticex.client.models;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.shader.ShaderToolQuad;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.shaders.ShaderToolQuad;
+import moffy.ticex.client.CustomTinkerRenders;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -122,7 +122,7 @@ public class MaterialOverrideModel extends AbstractObjOverrideModel<MaterialOver
     }
 
     public BakedQuad wrapMaterialQuad(BakedQuad bakedQuad, MaterialVariantId materialId) {
-        ShaderProvider.Tool shaderProvider = TicEXRenders.TOOL_SHADERS.getShaderProvider(materialId);
+        ShaderProvider.Tool shaderProvider = CustomTinkerRenders.TOOL_SHADERS.getShaderProvider(materialId);
         if (shaderProvider != null) {
             return new ShaderToolQuad.Material(bakedQuad, shaderProvider, materialId);
         }

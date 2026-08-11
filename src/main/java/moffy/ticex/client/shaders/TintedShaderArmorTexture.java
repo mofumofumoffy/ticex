@@ -1,9 +1,10 @@
-package moffy.ticex.client.render.shader;
+package moffy.ticex.client.shaders;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import moffy.ticex.client.render.provider.ArmorContextRenderer;
-import moffy.ticex.client.render.provider.context.RenderContext;
-import moffy.ticex.client.render.provider.context.armor.RenderArmorPartContext;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.providers.renderer.ArmorContextRenderer;
+import moffy.ticex.client.providers.context.RenderContext;
+import moffy.ticex.client.providers.context.armor.RenderArmorPartContext;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resources.model.Material;

@@ -1,15 +1,15 @@
 package moffy.ticex.client.render.avaritia;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
-import moffy.ticex.client.render.provider.context.armor.RenderArmorPartContext;
-import moffy.ticex.client.render.provider.context.tool.RenderGenericContext;
-import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
-import moffy.ticex.client.render.provider.renderer.IArmorPartContextRenderer;
-import moffy.ticex.client.render.provider.renderer.IGenericRenderer;
-import moffy.ticex.client.render.provider.renderer.IQuadContextRenderer;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.ticex.TicEXToolRenders;
+import moffy.ticex.client.providers.context.ItemRenderContext;
+import moffy.ticex.client.providers.context.armor.RenderArmorPartContext;
+import moffy.ticex.client.providers.context.tool.RenderGenericContext;
+import moffy.ticex.client.providers.context.tool.RenderQuadContext;
+import moffy.ticex.client.providers.renderer.IArmorPartContextRenderer;
+import moffy.ticex.client.providers.renderer.IGenericRenderer;
+import moffy.ticex.client.providers.renderer.IQuadContextRenderer;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.render.ToolRenders;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -46,7 +46,7 @@ public class TicEXCosmicShaderProvider {
         }
 
         @Override
-        public void startRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
+        public void startRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
             RenderType renderType = shader.getCosmicRenderType();
             buffer = context.bufferSource().getBuffer(renderType);
 
@@ -56,7 +56,7 @@ public class TicEXCosmicShaderProvider {
         }
 
         @Override
-        public void endRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
+        public void endRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
         }
 
         @Override

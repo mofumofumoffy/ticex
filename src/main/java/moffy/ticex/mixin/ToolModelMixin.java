@@ -3,9 +3,9 @@ package moffy.ticex.mixin;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.shader.ShaderToolQuad;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.shaders.ShaderToolQuad;
+import moffy.ticex.client.CustomTinkerRenders;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
@@ -27,9 +27,9 @@ public class ToolModelMixin {
     @ModifyReturnValue(method = "bakeInternal", at = @At("RETURN"))
     private static BakedModel wrapModel(BakedModel model, @Local(argsOnly = true) @Nullable IToolStackView tool) {
         if (tool != null) {
-            for (Item predicate : TicEXRenders.CUSTOM_MODELS.keySet()) {
+            for (Item predicate : CustomTinkerRenders.CUSTOM_MODELS.keySet()) {
                 if (ForgeRegistries.ITEMS.getKey(tool.getItem()) == ForgeRegistries.ITEMS.getKey(predicate)) {
-                    return TicEXRenders.CUSTOM_MODELS.get(predicate).apply(model);
+                    return CustomTinkerRenders.CUSTOM_MODELS.get(predicate).apply(model);
                 }
             }
         }
@@ -40,7 +40,7 @@ public class ToolModelMixin {
             value = "INVOKE", target = "Lslimeknights/mantle/client/model/util/MantleItemLayerModel;getQuadsForSprite(IILnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lcom/mojang/math/Transformation;ILslimeknights/mantle/util/ItemLayerPixels;)Ljava/util/List;",
             ordinal = 0))
     private static List<BakedQuad> wrapMaterialSmallQuads(List<BakedQuad> smallQuads, @Local(argsOnly = true) @Nullable IToolStackView tool, @Local MaterialVariantId material) {
-        ShaderProvider.Tool shaderProvider = TicEXRenders.TOOL_SHADERS.getShaderProvider(material);
+        ShaderProvider.Tool shaderProvider = CustomTinkerRenders.TOOL_SHADERS.getShaderProvider(material);
         return smallQuads.stream()
                 .map(bakedQuad -> (BakedQuad) new ShaderToolQuad.Material(bakedQuad, shaderProvider, material))
                 .toList();
@@ -48,7 +48,7 @@ public class ToolModelMixin {
 
     @ModifyExpressionValue(method = "bakeInternal", at = @At(value = "INVOKE", target = "Lslimeknights/tconstruct/library/client/model/tools/MaterialModel;getQuadsForMaterial(Ljava/util/function/Function;Lnet/minecraft/client/resources/model/Material;Lslimeknights/tconstruct/library/materials/definition/MaterialVariantId;ILcom/mojang/math/Transformation;Lslimeknights/mantle/util/ItemLayerPixels;)Ljava/util/List;"))
     private static List<BakedQuad> wrapMaterialLargeQuads(List<BakedQuad> largeQuads, @Local(argsOnly = true) @Nullable IToolStackView tool, @Local MaterialVariantId material) {
-        ShaderProvider.Tool shaderProvider = TicEXRenders.TOOL_SHADERS.getShaderProvider(material);
+        ShaderProvider.Tool shaderProvider = CustomTinkerRenders.TOOL_SHADERS.getShaderProvider(material);
         return largeQuads.stream()
                 .map(bakedQuad -> (BakedQuad) new ShaderToolQuad.Material(bakedQuad, shaderProvider, material))
                 .toList();
@@ -58,12 +58,12 @@ public class ToolModelMixin {
     private static BakedModel wrapBakedModel(BakedModel original,
                                              @Local(argsOnly = true) @Nullable IToolStackView tool) {
         if (tool != null) {
-            for (Item item : TicEXRenders.CUSTOM_MODELS.keySet()) {
+            for (Item item : CustomTinkerRenders.CUSTOM_MODELS.keySet()) {
                 ResourceLocation toolItemKey = ForgeRegistries.ITEMS.getKey(tool.getItem());
                 ResourceLocation customItem = ForgeRegistries.ITEMS.getKey(item);
 
                 if (customItem != null && customItem.equals(toolItemKey)) {
-                    return TicEXRenders.CUSTOM_MODELS.get(item).apply(original);
+                    return CustomTinkerRenders.CUSTOM_MODELS.get(item).apply(original);
                 }
             }
         }

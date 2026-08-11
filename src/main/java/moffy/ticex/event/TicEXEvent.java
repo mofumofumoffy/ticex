@@ -2,7 +2,7 @@ package moffy.ticex.event;
 
 import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.EmbossmentMaterialCapability;
-import moffy.ticex.client.modules.ticex.models.MaterialOverrideModel;
+import moffy.ticex.client.models.MaterialOverrideModel;
 import moffy.ticex.registry.TicEXAttributes;
 import moffy.ticex.registry.TicEXBlocks;
 import moffy.ticex.registry.TicEXModifiers;
@@ -17,7 +17,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;

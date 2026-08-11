@@ -1,7 +1,7 @@
-package moffy.ticex.client.render.provider.context.armor;
+package moffy.ticex.client.providers.context.armor;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.render.provider.context.RenderContext;
+import moffy.ticex.client.providers.context.RenderContext;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

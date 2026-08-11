@@ -1,8 +1,8 @@
-package moffy.ticex.client.render.provider.renderer;
+package moffy.ticex.client.providers.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.render.provider.context.RenderContext;
+import moffy.ticex.client.providers.context.RenderContext;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 
 public interface IQuadContextRenderer {

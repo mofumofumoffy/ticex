@@ -7,12 +7,12 @@ import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
 import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.render.custom.DecoratedRenderType;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
-import moffy.ticex.client.render.provider.context.RenderContext;
-import moffy.ticex.client.render.provider.context.tool.RenderGenericContext;
-import moffy.ticex.client.render.provider.renderer.IGenericRenderer;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.providers.context.ItemRenderContext;
+import moffy.ticex.client.providers.context.RenderContext;
+import moffy.ticex.client.providers.context.tool.RenderGenericContext;
+import moffy.ticex.client.providers.renderer.IGenericRenderer;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.lib.context.ContextFrame;
 import moffy.ticex.lib.context.ContextFrameScope;
 import moffy.ticex.lib.context.TicEXContexts;
@@ -80,7 +80,7 @@ public class TicEXSBRenderers {
             SBToolRenderType.PartType partType = SBToolRenderType.PartType.byIndex(i);
             if (partType == null) continue;
 
-            ShaderProvider.Generic shaderProvider = TicEXRenders.GENERIC_SHADERS.getShaderProvider(material.getVariant());
+            ShaderProvider.Generic shaderProvider = CustomTinkerRenders.GENERIC_SHADERS.getShaderProvider(material.getVariant());
             boolean useShader = shaderProvider != null && TicEXConfig.USE_SHADER.get();
 
             Mutable<Color> color = new MutableObject<>(null);

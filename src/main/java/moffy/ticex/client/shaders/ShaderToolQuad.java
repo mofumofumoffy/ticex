@@ -1,5 +1,6 @@
-package moffy.ticex.client.render.shader;
+package moffy.ticex.client.shaders;
 
+import moffy.ticex.client.providers.ShaderProvider;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import slimeknights.tconstruct.library.modifiers.ModifierId;

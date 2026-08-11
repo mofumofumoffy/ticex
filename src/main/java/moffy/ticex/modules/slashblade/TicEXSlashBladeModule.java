@@ -4,7 +4,7 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.slashblade.SBItemCapabilityProvider;
 import moffy.ticex.client.render.custom.CustomModel;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.event.TicEXSBEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -109,7 +109,7 @@ public class TicEXSlashBladeModule implements AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        TicEXRenders.CUSTOM_MODELS.put(TicEXItems.REFORGED_SLASHBLADE.get(), CustomModel::new);
+        CustomTinkerRenders.CUSTOM_MODELS.put(TicEXItems.REFORGED_SLASHBLADE.get(), CustomModel::new);
     }
     /* public static boolean isPreviousVersion(){
         return ModList.get().getModFileById("slashblade").versionString().compareTo("1.2.0") < 0;

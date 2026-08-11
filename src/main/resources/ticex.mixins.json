@@ -26,6 +26,7 @@
     "HumanoidArmorLayerMixin",
     "ItemRendererMixin",
     "MaterialArmorTextureSupplierMixin",
+    "MultilayerArmorModelMixin",
     "NormalModifierModelMixin",
     "ToolModelMixin",
     "TrimArmorTextureSupplierMixin"

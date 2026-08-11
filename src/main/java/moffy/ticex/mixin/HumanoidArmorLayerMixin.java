@@ -2,11 +2,11 @@ package moffy.ticex.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.client.render.provider.ArmorContextRenderer;
-import moffy.ticex.client.render.provider.context.RenderContext;
-import moffy.ticex.client.render.provider.context.armor.RenderArmorPartContext;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.providers.renderer.ArmorContextRenderer;
+import moffy.ticex.client.providers.context.RenderContext;
+import moffy.ticex.client.providers.context.armor.RenderArmorPartContext;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.CustomTinkerRenders;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
@@ -45,7 +45,7 @@ public class HumanoidArmorLayerMixin {
         if(materialVariantId != null && TicEXConfig.USE_SHADER.get()) {
             MaterialId id = materialVariantId.getId();
 
-            ShaderProvider.Armor shaderProvider = TicEXRenders.ARMOR_SHADERS.getShaderProvider(id);
+            ShaderProvider.Armor shaderProvider = CustomTinkerRenders.ARMOR_SHADERS.getShaderProvider(id);
 
             if (shaderProvider != null) {
                 Material textureMaterial = new Material(

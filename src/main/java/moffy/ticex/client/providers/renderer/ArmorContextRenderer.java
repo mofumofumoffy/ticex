@@ -1,8 +1,7 @@
-package moffy.ticex.client.render.provider;
+package moffy.ticex.client.providers.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.render.provider.renderer.IArmorPartContextRenderer;
 import net.minecraft.client.model.Model;
 import slimeknights.tconstruct.library.client.armor.AbstractArmorModel;
 

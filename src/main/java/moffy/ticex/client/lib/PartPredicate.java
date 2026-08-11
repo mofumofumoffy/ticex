@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.custom;
+package moffy.ticex.client.lib;
 
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import slimeknights.tconstruct.library.modifiers.ModifierId;

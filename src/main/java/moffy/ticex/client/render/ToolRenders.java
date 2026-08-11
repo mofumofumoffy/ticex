@@ -1,16 +1,16 @@
-package moffy.ticex.client.render.ticex;
+package moffy.ticex.client.render;
 
-import moffy.ticex.client.render.provider.QuadContextRenderer;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
-import moffy.ticex.client.render.provider.context.RenderContext;
-import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.shader.ShaderToolQuad;
-import moffy.ticex.client.render.shader.TicEXRenderTasks;
-import moffy.ticex.client.render.shader.TicEXRenderTasks.InstantRenderTask;
-import moffy.ticex.client.render.shader.TicEXRenderTasks.NakedRenderTask;
-import moffy.ticex.client.render.shader.TicEXRenderTasks.RenderBatchTask;
-import moffy.ticex.client.render.shader.TicEXRenderTasks.RenderTask;
+import moffy.ticex.client.providers.renderer.QuadContextRenderer;
+import moffy.ticex.client.providers.context.ItemRenderContext;
+import moffy.ticex.client.providers.context.RenderContext;
+import moffy.ticex.client.providers.context.tool.RenderQuadContext;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.shaders.ShaderToolQuad;
+import moffy.ticex.client.shaders.TicEXRenderTasks;
+import moffy.ticex.client.shaders.TicEXRenderTasks.InstantRenderTask;
+import moffy.ticex.client.shaders.TicEXRenderTasks.NakedRenderTask;
+import moffy.ticex.client.shaders.TicEXRenderTasks.RenderBatchTask;
+import moffy.ticex.client.shaders.TicEXRenderTasks.RenderTask;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.renderer.RenderType;
@@ -25,7 +25,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 
-public class TicEXToolRenders {
+public class ToolRenders {
     public static List<RenderTask> prepareRenderTasks(
             RenderType renderType,
             List<BakedQuad> pQuads,

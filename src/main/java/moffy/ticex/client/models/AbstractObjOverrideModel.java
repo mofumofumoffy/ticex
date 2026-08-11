@@ -1,4 +1,4 @@
-package moffy.ticex.client.modules.ticex.models;
+package moffy.ticex.client.models;
 
 import com.mojang.math.Transformation;
 import moffy.ticex.mixin.ObjModel$ModelGroupAccessor;

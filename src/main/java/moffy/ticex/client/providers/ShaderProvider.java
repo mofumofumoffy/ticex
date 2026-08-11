@@ -1,13 +1,13 @@
-package moffy.ticex.client.render.shader;
+package moffy.ticex.client.providers;
 
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
-import moffy.ticex.client.render.provider.context.armor.RenderArmorPartContext;
-import moffy.ticex.client.render.provider.context.tool.RenderGenericContext;
-import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
-import moffy.ticex.client.render.provider.renderer.IArmorPartContextRenderer;
-import moffy.ticex.client.render.provider.renderer.IGenericRenderer;
-import moffy.ticex.client.render.provider.renderer.IQuadContextRenderer;
-import moffy.ticex.client.render.ticex.TicEXToolRenders;
+import moffy.ticex.client.providers.context.ItemRenderContext;
+import moffy.ticex.client.providers.context.armor.RenderArmorPartContext;
+import moffy.ticex.client.providers.context.tool.RenderGenericContext;
+import moffy.ticex.client.providers.context.tool.RenderQuadContext;
+import moffy.ticex.client.providers.renderer.IArmorPartContextRenderer;
+import moffy.ticex.client.providers.renderer.IGenericRenderer;
+import moffy.ticex.client.providers.renderer.IQuadContextRenderer;
+import moffy.ticex.client.render.ToolRenders;
 import net.minecraft.client.renderer.ShaderInstance;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import slimeknights.tconstruct.library.modifiers.ModifierId;
@@ -30,9 +30,9 @@ public abstract class ShaderProvider<RENDER_CONTEXT, RENDERER> {
         public void preRenderMaterial(ItemRenderContext context, MaterialVariantId materialId) {
         }
 
-        public abstract void startRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase);
+        public abstract void startRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase);
 
-        public abstract void endRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase);
+        public abstract void endRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase);
 
         public void prepareRenderModifier(ToolStack toolStack, ModifierId materialId) {
         }

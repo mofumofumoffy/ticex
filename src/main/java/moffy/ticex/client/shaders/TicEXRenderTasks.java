@@ -1,10 +1,11 @@
-package moffy.ticex.client.render.shader;
+package moffy.ticex.client.shaders;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
-import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
-import moffy.ticex.client.render.provider.renderer.IQuadContextRenderer;
-import moffy.ticex.client.render.ticex.TicEXToolRenders;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.providers.context.ItemRenderContext;
+import moffy.ticex.client.providers.context.tool.RenderQuadContext;
+import moffy.ticex.client.providers.renderer.IQuadContextRenderer;
+import moffy.ticex.client.render.ToolRenders;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 
@@ -12,15 +13,15 @@ import java.util.List;
 
 public class TicEXRenderTasks {
     public static abstract class RenderTask {
-        protected final TicEXToolRenders.RenderPhase phase;
+        protected final ToolRenders.RenderPhase phase;
 
-        protected RenderTask(TicEXToolRenders.RenderPhase phase) {
+        protected RenderTask(ToolRenders.RenderPhase phase) {
             this.phase = phase;
         }
 
         public abstract void applyRenderTask();
 
-        public TicEXToolRenders.RenderPhase getPhase() {
+        public ToolRenders.RenderPhase getPhase() {
             return phase;
         }
     }
@@ -28,7 +29,7 @@ public class TicEXRenderTasks {
     public static class InstantRenderTask extends RenderTask {
         private final Runnable renderingFunc;
 
-        public InstantRenderTask(TicEXToolRenders.RenderPhase phase, Runnable renderingFunc) {
+        public InstantRenderTask(ToolRenders.RenderPhase phase, Runnable renderingFunc) {
             super(phase);
             this.renderingFunc = renderingFunc;
         }
@@ -43,7 +44,7 @@ public class TicEXRenderTasks {
         private final RenderQuadContext context;
         private final IQuadContextRenderer renderer;
 
-        public NakedRenderTask(TicEXToolRenders.RenderPhase phase, RenderQuadContext context, IQuadContextRenderer renderer) {
+        public NakedRenderTask(ToolRenders.RenderPhase phase, RenderQuadContext context, IQuadContextRenderer renderer) {
             super(phase);
             this.context = context;
             this.renderer = renderer;
@@ -71,7 +72,7 @@ public class TicEXRenderTasks {
         private final ItemRenderContext itemRenderContext;
         private final RenderType renderType;
 
-        public NakedBatchTask(TicEXToolRenders.ToolRenderBatch renderBatch, ItemRenderContext itemRenderContext, RenderType renderType) {
+        public NakedBatchTask(ToolRenders.ToolRenderBatch renderBatch, ItemRenderContext itemRenderContext, RenderType renderType) {
             super(renderBatch, itemRenderContext);
             this.itemRenderContext = itemRenderContext;
             this.renderType = renderType;
@@ -91,10 +92,10 @@ public class TicEXRenderTasks {
     }
 
     public static class RenderBatchTask extends RenderTask {
-        protected final TicEXToolRenders.ToolRenderBatch renderBatch;
+        protected final ToolRenders.ToolRenderBatch renderBatch;
         private final ItemRenderContext itemRenderContext;
 
-        public RenderBatchTask(TicEXToolRenders.ToolRenderBatch renderBatch, ItemRenderContext itemRenderContext) {
+        public RenderBatchTask(ToolRenders.ToolRenderBatch renderBatch, ItemRenderContext itemRenderContext) {
             super(renderBatch.renderPhase());
             this.renderBatch = renderBatch;
             this.itemRenderContext = itemRenderContext;

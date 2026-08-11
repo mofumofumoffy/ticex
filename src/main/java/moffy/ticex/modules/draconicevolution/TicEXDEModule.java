@@ -5,8 +5,8 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.caps.draconicevolution.DEItemCapabilityProvider;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShader;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShaderProvider;
-import moffy.ticex.client.render.custom.PartPredicate;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.lib.PartPredicate;
+import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.modifier.ModifierDragonForce;
@@ -84,18 +84,18 @@ public class TicEXDEModule implements AddonModule {
         );
 
         TicEXDEShader shader = Objects.requireNonNull(TicEXDEShaderProvider.getShader());
-        TicEXRenders.TOOL_SHADERS.addShader(new PartPredicate.Modifier(ModifierIds.reinforced), new TicEXDEShaderProvider.Modifier());
+        CustomTinkerRenders.TOOL_SHADERS.addShader(new PartPredicate.Modifier(ModifierIds.reinforced), new TicEXDEShaderProvider.Modifier());
 
         for (int i = 0; i < materials.size(); i++) {
             MaterialId variantId = materials.get(i);
             TechLevel techLevel = TechLevel.VALUES[i];
 
-            TicEXRenders.TOOL_SHADERS.addShader(variantId, new TicEXDEShaderProvider.Material(
+            CustomTinkerRenders.TOOL_SHADERS.addShader(variantId, new TicEXDEShaderProvider.Material(
                     shader.createMaterialsRenderType(techLevel),
                     techLevel
             ));
-            TicEXRenders.ARMOR_SHADERS.addShader(variantId, new TicEXDEShaderProvider.Armor(techLevel));
-            TicEXRenders.GENERIC_SHADERS.addShader(new PartPredicate.Material(variantId), new TicEXDEShaderProvider.Generic(
+            CustomTinkerRenders.ARMOR_SHADERS.addShader(variantId, new TicEXDEShaderProvider.Armor(techLevel));
+            CustomTinkerRenders.GENERIC_SHADERS.addShader(new PartPredicate.Material(variantId), new TicEXDEShaderProvider.Generic(
                     shader.createMaterialsRenderType(techLevel),
                     techLevel
             ));

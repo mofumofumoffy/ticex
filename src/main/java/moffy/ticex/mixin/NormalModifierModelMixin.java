@@ -2,9 +2,9 @@ package moffy.ticex.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.shader.ShaderToolQuad;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.shaders.ShaderToolQuad;
+import moffy.ticex.client.CustomTinkerRenders;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.Material;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,9 +23,9 @@ public class NormalModifierModelMixin {
                                              @Local(argsOnly = true) IToolStackView tool,
                                              @Local Material spriteName,
                                              @Local(argsOnly = true) ModifierEntry entry) {
-        if (TicEXRenders.TOOL_SHADERS.isToolTarget(tool)) {
+        if (CustomTinkerRenders.TOOL_SHADERS.isToolTarget(tool)) {
             ModifierId modifierId = entry.getId();
-            ShaderProvider.Tool shaderProvider = TicEXRenders.TOOL_SHADERS.getShaderProvider(modifierId);
+            ShaderProvider.Tool shaderProvider = CustomTinkerRenders.TOOL_SHADERS.getShaderProvider(modifierId);
 
             return original
                     .stream()
