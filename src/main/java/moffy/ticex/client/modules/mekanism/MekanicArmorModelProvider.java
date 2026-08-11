@@ -32,6 +32,7 @@ import mekanism.common.lib.effect.BoltEffect;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.EnumUtils;
 import mekanism.common.util.MekanismUtils;
+import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.providers.ExtraArmorModelProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -119,7 +120,7 @@ public class MekanicArmorModelProvider extends ExtraArmorModelProvider {
 
     @Override
     public void renderExtraModel(@NotNull PoseStack matrices, @NotNull VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-        if (this.base != null) {
+        if (this.base != null && TicEXConfig.USE_ARMOR_MODEL != null && TicEXConfig.USE_ARMOR_MODEL.get()) {
             renderMekaSuit(
                     this.base,
                     matrices,

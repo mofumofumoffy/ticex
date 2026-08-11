@@ -6,6 +6,7 @@ import committee.nova.mods.avaritia.Res;
 import committee.nova.mods.avaritia.client.model.entity.InfinityArmorModel;
 import committee.nova.mods.avaritia.client.shader.AvaritiaRenderTypes;
 import moffy.ticex.TicEX;
+import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.providers.ExtraArmorModelProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -51,6 +52,9 @@ public class TranscendentalArmorModelProvider extends ExtraArmorModelProvider {
 
     @Override
     public void renderExtraModel(@NotNull PoseStack matrices, @NotNull VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+        if(TicEXConfig.USE_ARMOR_MODEL == null || !TicEXConfig.USE_ARMOR_MODEL.get()){
+            return;
+        }
         if(this.player != null && this.slot == EquipmentSlot.CHEST && (this.player.getAbilities().flying || this.player.isFallFlying())){
             long time = 0;
             if (mc.level != null) {
