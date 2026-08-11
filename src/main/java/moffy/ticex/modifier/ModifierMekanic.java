@@ -118,9 +118,6 @@ public class ModifierMekanic extends NoLevelsModifier
         ValidateModifierHook,
         RequirementsModifierHook,
         BlockInteractionModifierHook,
-
-
-        EnergyModifierHook,
         EmbossmentModifierHook {
 
     @Override
@@ -142,7 +139,6 @@ public class ModifierMekanic extends NoLevelsModifier
                 ModifierHooks.VALIDATE,
                 ModifierHooks.REQUIREMENTS,
                 ModifierHooks.BLOCK_INTERACT,
-                TicEXModifierHooks.ENERGY,
                 TicEXModifierHooks.EMBOSSMENT
         );
     }
@@ -530,36 +526,6 @@ public class ModifierMekanic extends NoLevelsModifier
             return Component.translatable("recipe.ticex.modifier.mekanic_requirements");
         }*/
         return null;
-    }
-
-    @Override
-    public int receiveEnergy(IToolStackView tool, ItemStack stack, int received, boolean simulate) {
-        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.insertEnergy(FloatingLong.create(received), simulate ? Action.SIMULATE : Action.EXECUTE).getValue()).orElse(0);
-    }
-
-    @Override
-    public int extractEnergy(IToolStackView tool, ItemStack stack, int extracted, boolean simulate) {
-        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.extractEnergy(FloatingLong.create(extracted), simulate ? Action.SIMULATE : Action.EXECUTE).getValue()).orElse(0);
-    }
-
-    @Override
-    public int getEnergyStored(IToolStackView tool, ItemStack stack) {
-        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.getEnergy(0).getValue()).orElse(0);
-    }
-
-    @Override
-    public int getMaxEnergyStored(IToolStackView tool, ItemStack stack) {
-        return stack.getCapability(Capabilities.STRICT_ENERGY).map(iStrictEnergyHandler -> (int)iStrictEnergyHandler.getMaxEnergy(0).getValue()).orElse(0);
-    }
-
-    @Override
-    public boolean canExtract(IToolStackView tool, ItemStack stack) {
-        return true;
-    }
-
-    @Override
-    public boolean canReceive(IToolStackView tool, ItemStack stack) {
-        return true;
     }
 
     @Override

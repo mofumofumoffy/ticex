@@ -14,19 +14,15 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 public class TiCEXToolCapabilityProvider implements IToolCapabilityProvider {
 
     private final EmbossmentMaterialCapability embossmentMaterialCapability;
-    private final TinkerUniversalEnergyCapability universalEnergyCapability;
 
     public TiCEXToolCapabilityProvider(ItemStack stack, Supplier<? extends IToolStackView> toolSupplier) {
         embossmentMaterialCapability = new EmbossmentMaterialCapability(toolSupplier.get());
-        universalEnergyCapability = new TinkerUniversalEnergyCapability(stack, toolSupplier);
     }
 
     @Override
     public <T> @NotNull LazyOptional<T> getCapability(@NotNull IToolStackView tool, @NotNull Capability<T> capability) {
         if (capability == EmbossmentMaterialCapability.EMBOSSMENT_MATERIAL_CAPABILITY) {
             return LazyOptional.of(() -> embossmentMaterialCapability).cast();
-        } else if(capability == ForgeCapabilities.ENERGY && !tool.getModifierList().stream().filter(entry -> entry.getHook(TicEXModifierHooks.ENERGY).isEnabled()).toList().isEmpty()){
-            return LazyOptional.of(() -> universalEnergyCapability).cast();
         }
         return LazyOptional.empty();
     }
