@@ -3,6 +3,7 @@ package moffy.ticex.client.render.curios;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import moffy.ticex.client.render.ticex.TicEXRenderUtils;
+import moffy.ticex.lib.utils.TicEXUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -52,9 +53,7 @@ public class LayerResonanceTools implements ICurioRenderer {
         }
 
         if(slotContext.visible()){
-            stack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(itemHandler -> {
-                renderTools(matrixStack, renderTypeBuffer, light, slotContext.entity(), partialTicks, itemHandler);
-            });
+            TicEXUtils.capabilityIfPresent(stack, ForgeCapabilities.ITEM_HANDLER, itemHandler -> renderTools(matrixStack, renderTypeBuffer, light, slotContext.entity(), partialTicks, itemHandler));
         }
     }
 

@@ -93,7 +93,6 @@ public class ModifierEvolved
         BreakSpeedModifierHook,
         RequirementsModifierHook,
         ValidateModifierHook,
-        EnergyModifierHook,
         DamageSourceModifierHook,
         InventoryTickModifierHook,
         ProvidePropertyModifierHook
@@ -120,7 +119,6 @@ public class ModifierEvolved
             ModifierHooks.VALIDATE,
             ModifierHooks.INVENTORY_TICK,
             TicEXModifierHooks.DAMAGE_SOURCE,
-            TicEXModifierHooks.ENERGY,
             TicEXModifierHooks.PROPERTY_PROVIDER
         );
     }
@@ -144,18 +142,16 @@ public class ModifierEvolved
 
             if (!toolStack.isEmpty()) {
                 components.add(Component.translatable("[Modular Item]").withStyle(ChatFormatting.BLUE));
-                toolStack
-                    .getCapability(DECapabilities.MODULE_HOST_CAPABILITY)
-                    .ifPresent(host -> {
-                        host
+                TicEXUtils.capabilityIfPresent(toolStack, DECapabilities.MODULE_HOST_CAPABILITY, host -> {
+                    host
                             .getModuleEntities()
                             .forEach(e -> e.addHostHoverText(toolStack, player.level(), components, tooltipFlag));
-                        host
+                    host
                             .getInstalledTypes()
                             .map(host::getModuleData)
                             .filter(Objects::nonNull)
                             .forEach(data -> data.addHostHoverText(toolStack, player.level(), components, tooltipFlag));
-                    });
+                });
                 EnergyUtils.addEnergyInfo(toolStack, components);
                 if (EnergyUtils.isEnergyItem(toolStack) && EnergyUtils.getMaxEnergyStored(toolStack) == 0) {
                     components.add(
@@ -189,30 +185,29 @@ public class ModifierEvolved
             Entity target = context.getTarget();
             ItemStack stack = TicEXUtils.getToolStack(tool, player, TicEXModifiers.EVOLVED_MODIFIER.get());
             if (stack != null && !stack.isEmpty()) {
-                ModuleHost host = stack
-                    .getCapability(DECapabilities.MODULE_HOST_CAPABILITY)
-                    .orElseThrow(IllegalStateException::new);
-                IOPStorage opStorage = stack
-                    .getCapability(DECapabilities.OP_STORAGE)
-                    .orElseThrow(IllegalStateException::new);
-                int attackDamage = getDamageBonus(host, opStorage);
-                int extracted = opStorage.extractEnergy(
-                    tool.getStats().getInt(ToolStats.ATTACK_DAMAGE) + attackDamage,
-                    false
-                );
-                hurt(player, target, stack, Math.min(extracted, attackDamage));
-                double aoe = getAttackAoe(host);
-                if (!context.isExtraAttack() && aoe > 0 && target instanceof LivingEntity) {
-                    dealAOEDamage(
-                        tool,
-                        context,
-                        player,
-                        (LivingEntity) target,
-                        stack,
-                        Math.min(extracted, attackDamage) * 0.8F,
-                        aoe
-                    );
-                }
+                TicEXUtils.capabilityIfPresent(stack, DECapabilities.MODULE_HOST_CAPABILITY, host -> {
+                    TicEXUtils.capabilityIfPresent(stack, DECapabilities.OP_STORAGE, opStorage -> {
+                        int attackDamage = getDamageBonus(host, opStorage);
+                        int extracted = opStorage.extractEnergy(
+                                tool.getStats().getInt(ToolStats.ATTACK_DAMAGE) + attackDamage,
+                                false
+                        );
+                        hurt(player, target, opStorage, stack, Math.min(extracted, attackDamage));
+                        double aoe = getAttackAoe(host);
+                        if (!context.isExtraAttack() && aoe > 0 && target instanceof LivingEntity) {
+                            dealAOEDamage(
+                                    tool,
+                                    context,
+                                    player,
+                                    (LivingEntity) target,
+                                    stack,
+                                    Math.min(extracted, attackDamage) * 0.8F,
+                                    aoe,
+                                    opStorage
+                            );
+                        }
+                    });
+                });
             }
         }
     }
@@ -245,10 +240,9 @@ public class ModifierEvolved
         LivingEntity target,
         ItemStack stack,
         float damage,
-        double aoe
+        double aoe,
+        IOPStorage opStorage
     ) {
-        IOPStorage opStorage = stack.getCapability(DECapabilities.OP_STORAGE).orElseThrow(IllegalStateException::new);
-
         List<LivingEntity> entities = player
             .level()
                 .getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(aoe, 0.25D, aoe), LivingEntity::isAlive);
@@ -289,7 +283,7 @@ public class ModifierEvolved
 
                 ToolAttackUtil.performAttack(tool, aoeContextBuilder.build().withAOETarget(entity));
 
-                if (hurt(player, entity, stack, Math.min(extracted, (int) damage))) {
+                if (hurt(player, entity, opStorage, stack, Math.min(extracted, (int) damage))) {
                     float damageDealt = health - entity.getHealth();
                     entity.knockback(
                         0.4F,
@@ -338,9 +332,8 @@ public class ModifierEvolved
         }
     }
 
-    private boolean hurt(Player player, Entity target, ItemStack stack, int damage) {
+    private boolean hurt(Player player, Entity target, IOPStorage opStorage, ItemStack stack, int damage) {
         boolean result;
-        IOPStorage opStorage = stack.getCapability(DECapabilities.OP_STORAGE).orElseThrow(IllegalStateException::new);
 
         int dealDamage =
             Math.min((EquipCfg.energyAttack * damage), opStorage.getEnergyStored()) / EquipCfg.energyAttack;
@@ -400,37 +393,34 @@ public class ModifierEvolved
         if (player != null && !context.isAOE()) {
             ItemStack stack = TicEXUtils.getToolStack(tool, player, TicEXModifiers.EVOLVED_MODIFIER.get());
             if (!stack.isEmpty()) {
-                ModuleHost host = stack
-                    .getCapability(DECapabilities.MODULE_HOST_CAPABILITY)
-                    .orElseThrow(IllegalStateException::new);
-                IOPStorage storage = stack
-                    .getCapability(DECapabilities.OP_STORAGE)
-                    .orElseThrow(IllegalStateException::new);
+                TicEXUtils.capabilityIfPresent(stack, DECapabilities.MODULE_HOST_CAPABILITY, host -> {
+                    TicEXUtils.capabilityIfPresent(stack, DECapabilities.OP_STORAGE, opStorage -> {
+                        int aoe = host.getModuleData(ModuleTypes.AOE, new AOEData(0)).aoe();
+                        boolean aoeSafe = true;
+                        if (host instanceof PropertyProvider propertyProvider) {
+                            if (propertyProvider.hasInt("mining_aoe")) {
+                                aoe = propertyProvider.getInt("mining_aoe").getValue();
+                            }
+                            if (propertyProvider.hasBool("aoe_safe")) {
+                                aoeSafe = propertyProvider.getBool("aoe_safe").getValue();
+                            }
+                        }
 
-                int aoe = host.getModuleData(ModuleTypes.AOE, new AOEData(0)).aoe();
-                boolean aoeSafe = true;
-                if (host instanceof PropertyProvider propertyProvider) {
-                    if (propertyProvider.hasInt("mining_aoe")) {
-                        aoe = propertyProvider.getInt("mining_aoe").getValue();
-                    }
-                    if (propertyProvider.hasBool("aoe_safe")) {
-                        aoeSafe = propertyProvider.getBool("aoe_safe").getValue();
-                    }
-                }
-
-                breakAOEBlocks(
-                    tool,
-                    host,
-                    storage,
-                    stack,
-                    context.getPos(),
-                    context.getSideHit(),
-                    aoe + tool.getModifierLevel(TinkerModifiers.expanded.get()),
-                    0,
-                    player,
-                    aoeSafe,
-                    context
-                );
+                        breakAOEBlocks(
+                                tool,
+                                host,
+                                opStorage,
+                                stack,
+                                context.getPos(),
+                                context.getSideHit(),
+                                aoe + tool.getModifierLevel(TinkerModifiers.expanded.get()),
+                                0,
+                                player,
+                                aoeSafe,
+                                context
+                        );
+                    });
+                });
             }
         }
     }
@@ -438,7 +428,7 @@ public class ModifierEvolved
     private boolean breakAOEBlocks(
         IToolStackView tool,
         ModuleHost host,
-        IOPStorage storage,
+        IOPStorage opStorage,
         ItemStack stack,
         BlockPos pos,
         Direction sideHit,
@@ -482,7 +472,7 @@ public class ModifierEvolved
                 inventoryDynamic,
                 player.level().getRandom().nextInt(Math.max(5, (breakRadius * breakDepth) / 5)) == 0,
                 context,
-                storage
+                opStorage
             )
         );
         List<ItemEntity> items = player
@@ -495,7 +485,7 @@ public class ModifierEvolved
             }
         }
 
-        ModuleHelper.handleItemCollection(player, host, storage, inventoryDynamic);
+        ModuleHelper.handleItemCollection(player, host, opStorage, inventoryDynamic);
         return true;
     }
 
@@ -652,42 +642,12 @@ public class ModifierEvolved
         return null;
     }
 
-    @Override
-    public int receiveEnergy(IToolStackView tool, ItemStack stack, int received, boolean simulate) {
-        return stack.getCapability(DECapabilities.OP_STORAGE).map(iopStorage -> iopStorage.receiveEnergy(received, simulate)).orElse(0);
-    }
-
-    @Override
-    public int extractEnergy(IToolStackView tool, ItemStack stack, int extracted, boolean simulate) {
-        return stack.getCapability(DECapabilities.OP_STORAGE).map(iopStorage -> iopStorage.extractEnergy(extracted, simulate)).orElse(0);
-    }
-
-    @Override
-    public int getEnergyStored(IToolStackView tool, ItemStack stack) {
-        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::getEnergyStored).orElse(0);
-    }
-
-    @Override
-    public int getMaxEnergyStored(IToolStackView tool, ItemStack stack) {
-        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::getMaxEnergyStored).orElse(0);
-    }
-
-    @Override
-    public boolean canExtract(IToolStackView tool, ItemStack stack) {
-        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::canExtract).orElse(false);
-    }
-
-    @Override
-    public boolean canReceive(IToolStackView tool, ItemStack stack) {
-        return stack.getCapability(DECapabilities.OP_STORAGE).map(IOPStorage::canReceive).orElse(false);
-    }
-
      @Override
      public void onInventoryTick(IToolStackView iToolStackView, ModifierEntry modifierEntry, Level level, LivingEntity livingEntity, int i, boolean b, boolean b1, ItemStack toolStack) {
-         toolStack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).ifPresent(moduleHost -> {
+         TicEXUtils.capabilityIfPresent(toolStack, DECapabilities.MODULE_HOST_CAPABILITY, host -> {
              for(EquipmentSlot slot : EquipmentSlot.values()){
                  if(ItemStack.isSameItem(livingEntity.getItemBySlot(slot), toolStack)) {
-                     moduleHost.handleTick(new StackModuleContext(toolStack, livingEntity, slot).setInEquipModSlot(true));
+                     host.handleTick(new StackModuleContext(toolStack, livingEntity, slot).setInEquipModSlot(true));
                  }
              }
          });
@@ -702,35 +662,37 @@ public class ModifierEvolved
      }
 
      private float getDestroySpeed(ItemStack stack, BlockState state, float baseSpeed) {
-         ModuleHost host = stack.getCapability(DECapabilities.MODULE_HOST_CAPABILITY).orElseThrow(IllegalStateException::new);
-         SpeedData data = host.getModuleData(ModuleTypes.SPEED);
-         float moduleValue = data == null ? 0 : (float) data.speedMultiplier();
-         float multiplier = MathHelper.map((moduleValue + 1F) * (moduleValue + 1F), 1F, 2F, 1F, 1.65F);
-         float propVal = 1F;
-         if (host instanceof PropertyProvider && ((PropertyProvider) host).hasDecimal("mining_speed")) {
-             propVal = (float) ((PropertyProvider) host).getDecimal("mining_speed").getValue();
-             propVal *= propVal;
-         }
+         return TicEXUtils.capabilityIfPresent(stack, DECapabilities.MODULE_HOST_CAPABILITY, host -> TicEXUtils.capabilityIfPresent(stack, DECapabilities.OP_STORAGE, opStorage -> {
+             SpeedData data = host.getModuleData(ModuleTypes.SPEED);
+             float moduleValue = data == null ? 0 : (float) data.speedMultiplier();
+             float multiplier = MathHelper.map((moduleValue + 1F) * (moduleValue + 1F), 1F, 2F, 1F, 1.65F);
+             float propVal = 1F;
+             if (host instanceof PropertyProvider && ((PropertyProvider) host).hasDecimal("mining_speed")) {
+                 propVal = (float) ((PropertyProvider) host).getDecimal("mining_speed").getValue();
+                 propVal *= propVal;
+             }
 
-         float aoe = host.getModuleData(ModuleTypes.AOE, new AOEData(0)).aoe();
-         if (host instanceof PropertyProvider && ((PropertyProvider) host).hasInt("mining_aoe")) {
-             aoe = ((PropertyProvider) host).getInt("mining_aoe").getValue();
-         }
+             float aoe = host.getModuleData(ModuleTypes.AOE, new AOEData(0)).aoe();
+             if (host instanceof PropertyProvider && ((PropertyProvider) host).hasInt("mining_aoe")) {
+                 aoe = ((PropertyProvider) host).getInt("mining_aoe").getValue();
+             }
 
-         if (getEnergyStored(ToolStack.from(stack), stack) < EquipCfg.energyHarvest) {
-             multiplier = 0;
-         } else if (aoe > 0) {
-             float userTarget = multiplier * propVal;
-             multiplier = Math.min(userTarget, multiplier / (1 + (aoe * 10)));
-         } else {
-             multiplier *= propVal;
-         }
+             if (opStorage.getEnergyStored() < EquipCfg.energyHarvest) {
+                 multiplier = 0;
+             } else if (aoe > 0) {
+                 float userTarget = multiplier * propVal;
+                 multiplier = Math.min(userTarget, multiplier / (1 + (aoe * 10)));
+             } else {
+                 multiplier *= propVal;
+             }
 
-         if (multiplier > 0 || propVal == 0) {
-             return baseSpeed * multiplier;
-         } else {
-             return baseSpeed;
-         }
+             if (multiplier > 0 || propVal == 0) {
+                 return baseSpeed * multiplier;
+             } else {
+                 return baseSpeed;
+             }
+         }, baseSpeed), baseSpeed);
+
      }
 
      @Override

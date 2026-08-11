@@ -8,6 +8,7 @@ import mods.flammpfeil.slashblade.item.ReachModifier;
 import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.TicEX;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXToolDefinitions;
 import net.minecraft.core.BlockPos;
@@ -96,43 +97,41 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
             getAttributeModifiers(ToolStack.from(stack), slot)
         );
         if (slot == EquipmentSlot.MAINHAND) {
-            stack
-                .getCapability(ItemSlashBlade.BLADESTATE)
-                .ifPresent(bladeState -> {
-                    StatsNBT stats = ToolStack.from(stack).getStats();
-                    EnumSet<SwordType> swordType = SwordType.from(stack);
+            TicEXUtils.capabilityIfPresent(stack, ItemSlashBlade.BLADESTATE, bladeState->{
+                StatsNBT stats = ToolStack.from(stack).getStats();
+                EnumSet<SwordType> swordType = SwordType.from(stack);
 
-                    float baseAttackModifier = stats.get(ToolStats.ATTACK_DAMAGE);
+                float baseAttackModifier = stats.get(ToolStats.ATTACK_DAMAGE);
 
-                    float attackAmplifier = bladeState.getAttackAmplifier();
-                    int refine = bladeState.getRefine();
-                    if (bladeState.isBroken()) {
-                        attackAmplifier = -0.5F - baseAttackModifier;
-                    } else {
-                        float refineFactor = swordType.contains(SwordType.FIERCEREDGE) ? 0.1F : 0.05F;
-                        attackAmplifier = (1.0F - (1.0F / (1.0F + (refineFactor * refine)))) * baseAttackModifier;
-                    }
+                float attackAmplifier;
+                int refine = bladeState.getRefine();
+                if (bladeState.isBroken()) {
+                    attackAmplifier = -0.5F - baseAttackModifier;
+                } else {
+                    float refineFactor = swordType.contains(SwordType.FIERCEREDGE) ? 0.1F : 0.05F;
+                    attackAmplifier = (1.0F - (1.0F / (1.0F + (refineFactor * refine)))) * baseAttackModifier;
+                }
 
-                    AttributeModifier attack = new AttributeModifier(
+                AttributeModifier attack = new AttributeModifier(
                         BASE_ATTACK_DAMAGE_UUID,
                         "Weapon modifier",
                         (double) baseAttackModifier + attackAmplifier - 1F,
                         AttributeModifier.Operation.ADDITION
-                    );
+                );
 
-                    toolMultimap.remove(Attributes.ATTACK_DAMAGE, attack);
+                toolMultimap.remove(Attributes.ATTACK_DAMAGE, attack);
 
-                    toolMultimap.put(Attributes.ATTACK_DAMAGE, attack);
-                    toolMultimap.put(
+                toolMultimap.put(Attributes.ATTACK_DAMAGE, attack);
+                toolMultimap.put(
                         ForgeMod.ENTITY_REACH.get(),
                         new AttributeModifier(
-                            PLAYER_REACH_AMPLIFIER,
-                            "Reach amplifer",
-                            bladeState.isBroken() ? ReachModifier.BrokendReach() : ReachModifier.BladeReach(),
-                            AttributeModifier.Operation.ADDITION
+                                PLAYER_REACH_AMPLIFIER,
+                                "Reach amplifer",
+                                bladeState.isBroken() ? ReachModifier.BrokendReach() : ReachModifier.BladeReach(),
+                                AttributeModifier.Operation.ADDITION
                         )
-                    );
-                });
+                );
+            });
         }
         return ImmutableMultimap.copyOf(toolMultimap);
     }

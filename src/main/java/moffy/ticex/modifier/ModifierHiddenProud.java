@@ -4,6 +4,7 @@ import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.init.SBItems;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXSBUtils;
 import net.minecraft.core.registries.Registries;
@@ -60,28 +61,26 @@ public class ModifierHiddenProud extends NoLevelsModifier implements EmbossmentM
             }
         }
 
-        toolStack
-            .getCapability(ItemSlashBlade.BLADESTATE)
-            .ifPresent(s -> {
-                s.deserializeNBT(toolStack.getOrCreateTag().getCompound("bladeState"));
-                s.setProudSoulCount(s.getProudSoulCount() + input.getCount() * Math.min(5000, enchantmentLevel * 10));
+        TicEXUtils.capabilityIfPresent(toolStack, ItemSlashBlade.BLADESTATE, s -> {
+            s.deserializeNBT(toolStack.getOrCreateTag().getCompound("bladeState"));
+            s.setProudSoulCount(s.getProudSoulCount() + input.getCount() * Math.min(5000, enchantmentLevel * 10));
 
-                if (input.hasTag()) {
-                    CompoundTag nbt = input.getTag();
-                    if (nbt.contains("SpecialAttackType")) {
-                        s.setSlashArtsKey(ResourceLocation.tryParse(nbt.getString("SpecialAttackType")));
-                    } else if (nbt.contains("SpecialEffectType")) {
-                        s.addSpecialEffect(ResourceLocation.tryParse(nbt.getString("SpecialEffectType")));
-                    }
+            if (input.hasTag()) {
+                CompoundTag nbt = input.getTag();
+                if (nbt.contains("SpecialAttackType")) {
+                    s.setSlashArtsKey(ResourceLocation.tryParse(nbt.getString("SpecialAttackType")));
+                } else if (nbt.contains("SpecialEffectType")) {
+                    s.addSpecialEffect(ResourceLocation.tryParse(nbt.getString("SpecialEffectType")));
                 }
+            }
 
-                if (s.getRefine() < refineLimit) {
-                    s.setRefine(Math.min(refineLimit, s.getRefine() + input.getCount()));
-                    if (s.getRefine() < 200) s.setMaxDamage(s.getMaxDamage() + 1);
-                }
+            if (s.getRefine() < refineLimit) {
+                s.setRefine(Math.min(refineLimit, s.getRefine() + input.getCount()));
+                if (s.getRefine() < 200) s.setMaxDamage(s.getMaxDamage() + 1);
+            }
 
-                toolStack.getOrCreateTag().put("bladeState", s.serializeNBT());
-            });
+            toolStack.getOrCreateTag().put("bladeState", s.serializeNBT());
+        });
 
         return true;
     }

@@ -1,6 +1,7 @@
 package moffy.ticex.item.modifiable;
 
 import moffy.ticex.client.modules.ticex.UnsyncedToolContainerMenu;
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.registry.TicEXToolDefinitions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -44,7 +45,7 @@ public class ModifiableGauntlet extends ModifiableItem {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
-        stack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(itemHandler -> {
+        TicEXUtils.capabilityIfPresent(stack, ForgeCapabilities.ITEM_HANDLER, itemHandler -> {
             for (int i = 0; i < itemHandler.getSlots(); i++) {
                 ItemStack stackInSlot = itemHandler.getStackInSlot(i);
                 tooltip.add(

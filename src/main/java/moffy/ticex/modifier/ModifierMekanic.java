@@ -39,6 +39,7 @@ import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.EnergyModifierHook;
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.registry.TicEXItems;
 import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
@@ -149,8 +150,8 @@ public class ModifierMekanic extends NoLevelsModifier
     @Override
     public @NotNull InteractionResult afterEntityUse(IToolStackView tool, ModifierEntry modifier, Player player, LivingEntity target, InteractionHand hand, InteractionSource source) {
         ItemStack stack = player.getItemInHand(hand);
-        if(stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
-            IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+        InteractionResult defaultResult = InteractionResult.PASS;
+        return TicEXUtils.capabilityIfPresent(stack, MekaGearCapability.MEKA_GEAR_CAPABILITY, mekaGear -> {
             for (Module<?> module : mekaGear.getModules(stack)) {
                 if (module.isEnabled()) {
                     InteractionResult result = onModuleInteract(module, player, target, hand);
@@ -159,16 +160,15 @@ public class ModifierMekanic extends NoLevelsModifier
                     }
                 }
             }
-        }
-        teleport(tool, player);
-        return InteractionResult.PASS;
+            return defaultResult;
+        }, defaultResult);
     }
 
     @Override
-    public InteractionResult beforeBlockUse(IToolStackView tool, ModifierEntry modifier, UseOnContext context, InteractionSource source) {
+    public @NotNull InteractionResult beforeBlockUse(IToolStackView tool, ModifierEntry modifier, UseOnContext context, InteractionSource source) {
         ItemStack toolStack = context.getItemInHand();
-        if(toolStack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
-            IMekaGear mekaGear = toolStack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+        InteractionResult defaultResult = BlockInteractionModifierHook.super.beforeBlockUse(tool, modifier, context, source);
+        return TicEXUtils.capabilityIfPresent(toolStack, MekaGearCapability.MEKA_GEAR_CAPABILITY, mekaGear -> {
             for (Module<?> module : mekaGear.getModules(toolStack)) {
                 if (module.isEnabled()) {
                     InteractionResult result = onModuleUse(module, context);
@@ -177,8 +177,8 @@ public class ModifierMekanic extends NoLevelsModifier
                     }
                 }
             }
-        }
-        return BlockInteractionModifierHook.super.beforeBlockUse(tool, modifier, context, source);
+            return defaultResult;
+        }, defaultResult);
     }
 
     private <MODULE extends ICustomModule<MODULE>> InteractionResult onModuleUse(IModule<MODULE> module, UseOnContext context) {
@@ -192,10 +192,9 @@ public class ModifierMekanic extends NoLevelsModifier
     }
 
     private void teleport(IToolStackView tool, Entity entity){
-        if(tool instanceof ToolStack toolStack) {
+        if(tool instanceof ToolStack toolStack && entity instanceof Player player) {
             ItemStack stack = toolStack.createStack();
-            if (stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent() && entity instanceof Player player) {
-                IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+            TicEXUtils.capabilityIfPresent(stack, MekaGearCapability.MEKA_GEAR_CAPABILITY, mekaGear -> {
                 if (!player.level().isClientSide()) {
                     IModule<ModuleTeleportationUnit> module = mekaGear.getModule(stack, MekanismModules.TELEPORTATION_UNIT);
                     if (module != null && module.isEnabled()) {
@@ -232,7 +231,7 @@ public class ModifierMekanic extends NoLevelsModifier
                         }
                     }
                 }
-            }
+            });
         }
     }
 
@@ -251,13 +250,12 @@ public class ModifierMekanic extends NoLevelsModifier
     public boolean canPerformAction(IToolStackView iToolStackView, ModifierEntry modifierEntry, ToolAction toolAction) {
         if(iToolStackView instanceof ToolStack toolStack) {
             ItemStack stack = toolStack.createStack();
-            if (stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()) {
-                IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+            return TicEXUtils.capabilityIfPresent(stack, MekaGearCapability.MEKA_GEAR_CAPABILITY, mekaGear -> {
                 if (isTool(stack) && ItemAtomicDisassembler.ALWAYS_SUPPORTED_ACTIONS.contains(toolAction)) {
                     return hasEnergyForDigAction(stack, mekaGear);
                 }
                 return mekaGear.getModules(stack).stream().anyMatch(module -> module.isEnabled() && canPerformAction(module, toolAction));
-            }
+            }, false);
         }
         return false;
     }
@@ -294,8 +292,7 @@ public class ModifierMekanic extends NoLevelsModifier
     public void onBreakSpeed(IToolStackView iToolStackView, ModifierEntry modifierEntry, PlayerEvent.BreakSpeed breakSpeed, Direction direction, boolean b, float v) {
         if(iToolStackView instanceof ToolStack toolStack){
             ItemStack stack = toolStack.createStack();
-            if(stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
-                IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+            TicEXUtils.capabilityIfPresent(stack, MekaGearCapability.MEKA_GEAR_CAPABILITY, mekaGear -> {
                 IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
                 if (energyContainer == null) {
                     breakSpeed.setNewSpeed(0f);
@@ -308,7 +305,7 @@ public class ModifierMekanic extends NoLevelsModifier
                 }
                 IModule<ModuleExcavationEscalationUnit> module = mekaGear.getModule(stack, MekanismModules.EXCAVATION_ESCALATION_UNIT);
                 breakSpeed.setNewSpeed(module == null || !module.isEnabled() ? MekanismConfig.gear.mekaToolBaseEfficiency.get() : module.getCustomInstance().getEfficiency());
-            }
+            });
         }
     }
 
@@ -325,15 +322,12 @@ public class ModifierMekanic extends NoLevelsModifier
     }
 
     private FloatingLong getDestroyEnergy(ItemStack itemStack, boolean silk) {
-        if(itemStack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
-            IMekaGear mekaGear = itemStack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+        return TicEXUtils.capabilityIfPresent(itemStack, MekaGearCapability.MEKA_GEAR_CAPABILITY, mekaGear -> {
             FloatingLong destroyEnergy = getDestroyEnergy(silk);
             IModule<ModuleExcavationEscalationUnit> module = mekaGear.getModule(itemStack, MekanismModules.EXCAVATION_ESCALATION_UNIT);
             float efficiency = module == null || !module.isEnabled() ? MekanismConfig.gear.mekaToolBaseEfficiency.get() : module.getCustomInstance().getEfficiency();
             return destroyEnergy.multiply(efficiency);
-
-        }
-        return FloatingLong.create(0);
+        }, FloatingLong.create(0));
     }
 
     @Override
@@ -341,8 +335,7 @@ public class ModifierMekanic extends NoLevelsModifier
         BlockHarvestModifierHook.super.startHarvest(tool, modifier, toolHarvestContext);
         if(tool instanceof ToolStack toolStack){
             ItemStack stack = toolStack.createStack();
-            if(stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
-                IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+            TicEXUtils.capabilityIfPresent(stack, MekaGearCapability.MEKA_GEAR_CAPABILITY, mekaGear -> {
                 IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
                 if (energyContainer != null) {
                     FloatingLong energyRequired = getDestroyEnergy(stack, toolHarvestContext.getState().getDestroySpeed(toolHarvestContext.getWorld(), toolHarvestContext.getPos()), mekaGear.isModuleEnabled(stack, MekanismModules.SILK_TOUCH_UNIT));
@@ -380,7 +373,7 @@ public class ModifierMekanic extends NoLevelsModifier
                         }
                     }
                 }
-            }
+            });
         }
     }
 
@@ -402,8 +395,7 @@ public class ModifierMekanic extends NoLevelsModifier
     public float getMeleeDamage(IToolStackView iToolStackView, ModifierEntry modifierEntry, ToolAttackContext toolAttackContext, float v, float v1) {
         if(iToolStackView instanceof ToolStack toolStack){
             ItemStack stack = toolStack.createStack();
-            if(stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).isPresent()){
-                IMekaGear mekaGear = stack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).orElseThrow(IllegalStateException::new);
+            return TicEXUtils.capabilityIfPresent(stack, MekaGearCapability.MEKA_GEAR_CAPABILITY, mekaGear -> {
                 IModule<ModuleAttackAmplificationUnit> attackAmplificationUnit = mekaGear.getModule(stack, MekanismModules.ATTACK_AMPLIFICATION_UNIT);
                 if (attackAmplificationUnit != null && attackAmplificationUnit.isEnabled()) {
                     int unitDamage = attackAmplificationUnit.getCustomInstance().getDamage();
@@ -425,7 +417,8 @@ public class ModifierMekanic extends NoLevelsModifier
                 if(ModList.get().isLoaded("mekaweapons")){
                     return v1 * (TicEXMekanismWeaponsUtils.getAmplifier(stack) + 1);
                 }
-            }
+                return v1;
+            }, v1);
         }
         return v1;
     }
