@@ -35,6 +35,7 @@ public class TicEXApotheosisModule implements AddonModule {
 
         MinecraftForge.EVENT_BUS.addListener(TicEXApotheosisEvent::onSocketGem);
         MinecraftForge.EVENT_BUS.addListener(TicEXApotheosisEvent::supplierBouncer);
+        MinecraftForge.EVENT_BUS.addListener(TicEXApotheosisEvent::onModifyAttribute);
     }
 
     @Override
