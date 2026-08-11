@@ -2,6 +2,7 @@ package moffy.ticex.modules.avaritia;
 
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
+import moffy.ticex.client.modules.avaritia.TranscendentalArmorModelProvider;
 import moffy.ticex.client.render.avaritia.TicEXCosmicShaderProvider;
 import moffy.ticex.client.lib.PartPredicate;
 import moffy.ticex.client.render.ticex.ItemArrowRenderer;
@@ -112,6 +113,7 @@ public class TicEXAvaritiaModule implements AddonModule {
 
         if (ModList.get().isLoaded("sakuratinker")) {
             infinityMaterials.add(new MaterialId(ResourceLocation.fromNamespaceAndPath("sakuratinker", "infinity")));
+            //CustomTinkerRenders.EXTRA_ARMOR_MODELS.addModel(new MaterialId(ResourceLocation.fromNamespaceAndPath("sakuratinker", "omnipotence")), TranscendentalArmorModelProvider::new);
         }
 
         IEventBus bus = context.getModEventBus();
@@ -120,6 +122,7 @@ public class TicEXAvaritiaModule implements AddonModule {
         CustomTinkerRenders.TOOL_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Material());
         CustomTinkerRenders.ARMOR_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Armor());
         CustomTinkerRenders.GENERIC_SHADERS.addShader(new PartPredicate.Material(infinityMaterials::contains), new TicEXCosmicShaderProvider.Generic());
+        CustomTinkerRenders.EXTRA_ARMOR_MODELS.addModel(TicEXModifiers.TRANSCENDENTAL_MODIFIER.getId(), TranscendentalArmorModelProvider::new);
 
         bus.addListener(TicEXAvaritiaEvent::onRegisterRenderers);
     }
