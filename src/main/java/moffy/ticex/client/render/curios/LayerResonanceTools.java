@@ -65,6 +65,7 @@ public class LayerResonanceTools implements ICurioRenderer {
             }
         }
 
+        int notEmpty0SlotIndex = 0;
         for(int i = 0; i < itemHandler.getSlots(); i++){
             ItemStack toolStack = itemHandler.getStackInSlot(i);
             if (toolStack.isEmpty()) {
@@ -74,7 +75,7 @@ public class LayerResonanceTools implements ICurioRenderer {
             pPoseStack.pushPose();
 
             float time = pLivingEntity.tickCount + pPartialTick;
-            double baseAngle = 2 * Math.PI / tools * i;
+            double baseAngle = 2 * Math.PI / tools * notEmpty0SlotIndex;
             double rotationAngle = baseAngle + (time * 0.07);
             //double rotationAngle = 0f;
 
@@ -90,6 +91,7 @@ public class LayerResonanceTools implements ICurioRenderer {
 
             TicEXRenderUtils.renderTool(entityRenderDispatcher, itemRenderer, toolStack, pPoseStack, pBuffer, pLivingEntity, pPackedLight);
 
+            notEmpty0SlotIndex++;
             pPoseStack.popPose();
         }
     }
