@@ -94,27 +94,6 @@ public class TicEXEvent {
         }
     }
 
-    public static void modifyAttribute(ItemAttributeModifierEvent event) {
-        ItemStack stack = event.getItemStack();
-        EquipmentSlot slot = event.getSlotType();
-        if (stack.getItem() instanceof IModifiable) {
-            if (slot == EquipmentSlot.MAINHAND) {
-                AttributeModifier modifier = new AttributeModifier(
-                    EXTRA_DAMAGE_UUID,
-                    "Enchantment Bonus for Modifiable Item",
-                    0,
-                    Operation.ADDITION
-                );
-
-                if (!event.getModifiers().containsValue(modifier)) {
-                    event.addModifier(Attributes.ATTACK_DAMAGE, modifier);
-                } else {
-                    event.removeModifier(Attributes.ATTACK_DAMAGE, modifier);
-                }
-            }
-        }
-    }
-
     public static void supplierBouncer(LivingEquipmentChangeEvent event){
         ItemStack stack = event.getTo();
         if(stack.getItem() instanceof IModifiable){
