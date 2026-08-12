@@ -27,14 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-@Mixin(value = MultilayerArmorModel.class, remap = false)
+@Mixin(value = MultilayerArmorModel.class)
 public class MultilayerArmorModelMixin {
     @Unique
     private final List<ExtraArmorModelProvider> ticex$providerCache = new ArrayList<>();
 
     @Inject(
             method = "setup",
-            at = @At("TAIL")
+            at = @At("TAIL"),
+            remap = false
     )
     private void setupProvider(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> base, ArmorModelManager.ArmorModel model, CallbackInfoReturnable<Model> cir){
         if(stack.getItem() instanceof IModifiable){
