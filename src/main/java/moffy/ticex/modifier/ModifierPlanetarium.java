@@ -29,10 +29,10 @@ public class ModifierPlanetarium extends Modifier implements CriticalModifierHoo
     }
 
     @Override
-    public float setCriticalRate(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float currentRate, float originalRate) {
+    public float setCriticalModifier(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float originalModifier, float currentModifier) {
         if(isCritical){
-            return Math.max(currentRate, 1.5f);
+            return Math.max(currentModifier, 1.5f);
         }
-        return currentRate;
+        return currentModifier;
     }
 }
