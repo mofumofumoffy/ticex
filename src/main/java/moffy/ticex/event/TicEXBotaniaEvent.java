@@ -2,10 +2,12 @@ package moffy.ticex.event;
 
 import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -71,6 +73,7 @@ public class TicEXBotaniaEvent {
                                         .registryOrThrow(Registries.DAMAGE_TYPE)
                                         .getHolderOrThrow(BotaniaDamageTypes.PLAYER_ATTACK_ARMOR_PIERCING), event.getSource().getDirectEntity(), event.getSource().getEntity());
                                 event.getEntity().hurt(damageSource, event.getAmount());
+                                player.getMainHandItem().hurtAndBreak(1, player, p->p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
                             }
                         }
                     }
