@@ -5,16 +5,15 @@ import moffy.ticex.datagen.blockstate.TicEXBlockstateProvider;
 import moffy.ticex.datagen.blockstate.TicEXRenderFluidProvider;
 import moffy.ticex.datagen.fluid.FluidTextureProvider;
 import moffy.ticex.datagen.fluid.TicEXFluidToolTipProvider;
-import moffy.ticex.datagen.general.LootProvider;
-import moffy.ticex.datagen.general.TicEXDamageTypeProvider;
-import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
-import moffy.ticex.datagen.general.sprite.TicEXSpriteSourceProvider;
-import moffy.ticex.datagen.general.tag.BlockTagProvider;
-import moffy.ticex.datagen.general.tag.FluidTagProvider;
-import moffy.ticex.datagen.general.tag.ItemTagProvider;
+import moffy.ticex.datagen.LootProvider;
+import moffy.ticex.datagen.DamageTypeProvider;
+import moffy.ticex.datagen.recipes.TicEXRecipeProvider;
+import moffy.ticex.datagen.sprite.TicEXSpriteSourceProvider;
+import moffy.ticex.datagen.tag.BlockTagProvider;
+import moffy.ticex.datagen.tag.FluidTagProvider;
+import moffy.ticex.datagen.tag.ItemTagProvider;
 import moffy.ticex.datagen.layout.TicEXStationSlotLayoutProvider;
 import moffy.ticex.datagen.material.TicEXMaterialSpriteProvider;
-import moffy.ticex.datagen.material.trim.TicEXTrimMaterialProvider;
 import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
 import moffy.ticex.datagen.tool.*;
@@ -51,7 +50,7 @@ public class TicEXGatherDataEvent {
         boolean client = event.includeClient();
 
 //        TicEXTrimMaterialProvider.register(registrySetBuilder);
-        TicEXDamageTypeProvider.register(registrySetBuilder);
+        DamageTypeProvider.register(registrySetBuilder);
 
         DatapackBuiltinEntriesProvider registryProvider = new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, registrySetBuilder, Set.of(TicEX.MODID));
         generator.addProvider(server, registryProvider);

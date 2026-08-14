@@ -1,7 +1,7 @@
 package moffy.ticex.modules.apotheosis;
 
 import moffy.addonapi.AddonModule;
-import moffy.ticex.datagen.general.recipes.apotheosis.FixedModuleCondition;
+import moffy.ticex.datagen.recipes.apotheosis.FixedModuleCondition;
 import moffy.ticex.event.TicEXApotheosisEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierApothSupplier;
