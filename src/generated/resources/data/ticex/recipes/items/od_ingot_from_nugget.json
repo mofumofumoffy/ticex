@@ -9,10 +9,10 @@
   ],
   "key": {
     "#": {
-      "tag": "forge:ingots/etheric"
+      "tag": "forge:nuggets/od"
     },
     "*": {
-      "item": "ticex:etheric_ingot"
+      "item": "ticex:od_nugget"
     }
   },
   "pattern": [
@@ -21,7 +21,7 @@
     "###"
   ],
   "result": {
-    "item": "ticex:etheric_block"
+    "item": "ticex:od_ingot"
   },
   "show_notification": true
 }

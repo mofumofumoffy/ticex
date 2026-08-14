@@ -78,21 +78,19 @@ public class ItemTagProvider extends ItemTagsProvider {
         addOptional(TicEXTags.Items.CRYSTAL_MATRIX.ingot(), ResourceLocation.fromNamespaceAndPath("avaritia", "crystal_matrix_ingot"));
         addOptional(TicEXTags.Items.BLAZING.ingot(), ResourceLocation.fromNamespaceAndPath("avaritia", "blaze_cube"));
 
-        addOptional(TicEXTags.Items.ETHERIC.ingot(), TicEX.getResource("etheric_ingot"));
-        addOptional(TicEXTags.Items.OD.ingot(), TicEX.getResource("od_ingot"));
-
         //blocks
         addOptional(TicEXTags.Items.INFINITY.block(), ResourceLocation.fromNamespaceAndPath("avaritia", "infinity"));
         addOptional(TicEXTags.Items.NEUTRON.block(), ResourceLocation.fromNamespaceAndPath("avaritia", "neutron"));
         addOptional(TicEXTags.Items.CRYSTAL_MATRIX.block(), ResourceLocation.fromNamespaceAndPath("avaritia", "crystal_matrix"));
         addOptional(TicEXTags.Items.BLAZING.block(), ResourceLocation.fromNamespaceAndPath("avaritia", "blaze_cube_block"));
 
-        addOptional(TicEXTags.Items.ETHERIC.block(), TicEX.getResource("etheric_block"));
-        addOptional(TicEXTags.Items.OD.block(), TicEX.getResource("od_block"));
-
         //nuggets
         addOptional(TicEXTags.Items.INFINITY.nugget(), ResourceLocation.fromNamespaceAndPath("avaritia", "infinity_nugget"));
         addOptional(TicEXTags.Items.NEUTRON.nugget(), ResourceLocation.fromNamespaceAndPath("avaritia", "neutron_nugget"));
+
+        //original metals
+        metalOptional(TicEXTags.Items.ETHERIC);
+        metalOptional(TicEXTags.Items.OD);
 
         //trim_materials
         tag(TRIM_MATERIALS)
@@ -314,6 +312,12 @@ public class ItemTagProvider extends ItemTagsProvider {
 
     protected CostTagAppender moltenTools(FluidObject<?> fluid) {
         return CostTagAppender.moltenToolMelting(fluid, tag -> tag(ItemTags.create(tag)));
+    }
+
+    private void metalOptional(TicEXTags.Items.MetalItemTagSet tagSet){
+        addOptional(tagSet.block(), TicEX.getResource(tagSet.getName()+"_block"));
+        addOptional(tagSet.ingot(), TicEX.getResource(tagSet.getName()+"_ingot"));
+        addOptional(tagSet.nugget(), TicEX.getResource(tagSet.getName()+"_nugget"));
     }
 
     private void addOptional(TagKey<Item> tagkey, ResourceLocation id) {

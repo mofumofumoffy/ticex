@@ -7,6 +7,8 @@
   "item.ticex.flickering_reconstruction_core.desc": "Signal of the stars",
   "item.ticex.etheric_ingot": "Etheric Ingot",
   "item.ticex.od_ingot": "Od Ingot",
+  "item.ticex.etheric_nugget": "Etheric Nugget",
+  "item.ticex.od_nugget": "Od Nugget",
   "item.ticex.molten_reconstruction_core_bucket": "Stream of Reconstruction Bucket",
   "item.ticex.molten_infinity_bucket": "Flow of Infinity Bucket",
   "item.ticex.molten_neutron_bucket": "Hyperdense Neutron Fluid Bucket",

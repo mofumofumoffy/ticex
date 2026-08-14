@@ -1,5 +1,11 @@
 {
   "type": "ticex:embossment_modifier",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:default_material"
+    }
+  ],
   "emboss_inputs": [
     {
       "tag": "tconstruct:parts"

@@ -64,14 +64,20 @@ public class TicEXTags {
         }
 
         public static class MetalItemTagSet{
+            private final String name;
             private final TagKey<Item> ingot;
             private final TagKey<Item> block;
             private final TagKey<Item> nugget;
 
             public MetalItemTagSet(String name){
+                this.name = name;
                 this.ingot = common("ingots/"+name);
                 this.block = common("storage_blocks/"+name);
                 this.nugget = common("nuggets/"+name);
+            }
+
+            public String getName() {
+                return name;
             }
 
             public TagKey<Item> ingot(){

@@ -9,11 +9,11 @@
   ],
   "ingredients": [
     {
-      "tag": "forge:storage_blocks/etheric"
+      "tag": "forge:ingots/od"
     }
   ],
   "result": {
     "count": 9,
-    "item": "ticex:etheric_ingot"
+    "item": "ticex:od_nugget"
   }
 }

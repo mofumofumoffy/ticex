@@ -11,9 +11,12 @@ import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXItems {
-    public static RegistryObject<Item> EXHAUSTED_GLOVE = null;
     public static RegistryObject<Item> ETHERIC_INGOT = null;
     public static RegistryObject<Item> OD_INGOT = null;
+    public static RegistryObject<Item> ETHERIC_NUGGET = null;
+    public static RegistryObject<Item> OD_NUGGET = null;
+
+    public static RegistryObject<Item> EXHAUSTED_GLOVE = null;
     public static RegistryObject<Item> DRACONIUM_CRYSTAL = null;
     public static RegistryObject<Item> WYVERN_CRYSTAL = null;
     public static RegistryObject<Item> DRACONIC_CRYSTAL = null;

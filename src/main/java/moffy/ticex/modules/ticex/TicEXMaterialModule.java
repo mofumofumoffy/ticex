@@ -26,6 +26,8 @@ public class TicEXMaterialModule implements AddonModule {
                 new BlockItem(TicEXBlocks.ETHERIC_BLOCK.get(), new Item.Properties())
         );
 
+        TicEXItems.ETHERIC_NUGGET = TicEXRegistry.ITEMS.register("etheric_nugget", () -> new Item(new Item.Properties()));
+
         TicEXFluids.MOLTEN_ETHERIC = TicEXRegistry.FLUIDS.register("molten_etheric")
                 .type(TicEXFluidUtils.hot("molten_etheric").temperature(1000).density(1600))
                 .block(MapColor.COLOR_LIGHT_GREEN, 0)
@@ -44,6 +46,8 @@ public class TicEXMaterialModule implements AddonModule {
         TicEXRegistry.ITEMS.register("od_block", () ->
                 new BlockItem(TicEXBlocks.OD_BLOCK.get(), new Item.Properties())
         );
+
+        TicEXItems.OD_NUGGET = TicEXRegistry.ITEMS.register("od_nugget", () -> new Item(new Item.Properties()));
 
         TicEXFluids.MOLTEN_OD = TicEXRegistry.FLUIDS.register("molten_od")
                 .type(TicEXFluidUtils.hot("molten_od").temperature(1000).density(1600))
