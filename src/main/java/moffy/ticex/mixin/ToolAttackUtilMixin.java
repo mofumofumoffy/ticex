@@ -24,6 +24,6 @@ public class ToolAttackUtilMixin {
             Player player, Entity target, boolean vanillaCritical, float damageModifier, Operation<CriticalHitEvent> original, @Local(name = "livingTarget") @Nullable LivingEntity livingTarget, @Local(name = "isCritical") boolean isCritical, @Local(name = "criticalModifier") float criticalModifier
     ){
         CriticalModifierHook.CriticalContext context = CriticalModifierHook.modifyCritical(player, target, isCritical, criticalModifier);
-        return original.call(player, target, context.isCritical(), context.criticalModifier());
+        return original.call(player, target, context.isCritical(), context.isCritical() ? 1.0f : context.criticalModifier());
     }
 }
