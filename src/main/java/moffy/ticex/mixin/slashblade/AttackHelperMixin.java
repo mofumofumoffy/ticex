@@ -101,12 +101,13 @@ public abstract class AttackHelperMixin {
                                                         DamageSource pSource,
                                                         float pAmount,
                                                         Operation<Boolean> original,
+                                                        @Local(argsOnly = true) LivingEntity attacker,
                                                         @Share(value = "contextHolder") LocalRef<AttackContextHolder> contextHolderRef){
         AttackContextHolder contextHolder = contextHolderRef.get();
         ToolAttackContext context = contextHolder.context();
         ToolStack tool = contextHolder.getTool();
         if(tool != null) {
-            return original.call(instance, DamageSourceModifierHook.modifyDamageSource(tool, context, pSource), pAmount);
+            return original.call(instance, DamageSourceModifierHook.modifyDamageSource(attacker, context, pSource), pAmount);
         }
         return original.call(instance, pSource, pAmount);
     }

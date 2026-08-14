@@ -66,7 +66,7 @@ public class TicEXTaczEvent {
 
             event.setBaseAmount(damage);
 
-            event.setDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING, DamageSourceModifierHook.modifyDamageSource(tool, context, event.getDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING)));
+            event.setDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING, DamageSourceModifierHook.modifyDamageSource(attacker, context, event.getDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING)));
 
             for(ModifierEntry modifier : tool.getModifierList()){
                 modifier.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifier, context, event.getBaseAmount(), 0, 0);

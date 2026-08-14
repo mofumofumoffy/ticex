@@ -46,7 +46,6 @@ public class TicEXBotaniaEvent {
                         }
                         if (TicEXModifiers.KARIL_MODIFIER != null && armor.getModifierLevel(TicEXModifiers.KARIL_MODIFIER.get()) > 0) {
                             livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 1));
-
                         }
                     }
                 }

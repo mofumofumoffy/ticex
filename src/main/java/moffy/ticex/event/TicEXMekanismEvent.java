@@ -10,7 +10,6 @@ import mekanism.api.gear.IModuleHelper;
 import mekanism.api.math.FloatingLong;
 import mekanism.api.math.FloatingLongSupplier;
 import mekanism.api.text.EnumColor;
-import mekanism.client.ClientTickHandler;
 import mekanism.client.MekanismClient;
 import mekanism.client.key.MekKeyHandler;
 import mekanism.client.key.MekanismKeyHandler;
@@ -20,7 +19,6 @@ import mekanism.common.MekanismLang;
 import mekanism.common.base.KeySync;
 import mekanism.common.config.MekanismConfig;
 import mekanism.common.content.gear.IBlastingItem;
-import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.mekasuit.ModuleHydraulicPropulsionUnit;
 import mekanism.common.content.gear.mekasuit.ModuleLocomotiveBoostingUnit;
 import mekanism.common.content.gear.mekatool.ModuleAttackAmplificationUnit;
@@ -30,7 +28,6 @@ import mekanism.common.lib.radiation.RadiationManager;
 import mekanism.common.registries.MekanismGameEvents;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.StorageUtils;
-import moffy.ticex.TicEX;
 import moffy.ticex.caps.mekanism.MekaArmorGearCapability;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
@@ -128,7 +125,7 @@ public class TicEXMekanismEvent {
 
     static void handleArmorModifierHook(Player player, DamageSource source, float damageAmount){
         EquipmentContext context = new EquipmentContext(player);
-        for(EquipmentSlot slot : TicEXUtils.ARMOR_TYPES){
+        for(EquipmentSlot slot : TicEXUtils.EquipmentSlotLists.ARMORS){
             ItemStack stack = player.getItemBySlot(slot);
             if(stack.getItem() instanceof IModifiable){
                 ToolStack tool = ToolStack.from(stack);

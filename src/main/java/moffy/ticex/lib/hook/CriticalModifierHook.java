@@ -1,5 +1,6 @@
 package moffy.ticex.lib.hook;
 
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.registry.TicEXModifierHooks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,7 +27,7 @@ public interface CriticalModifierHook {
         boolean currentCrit = isCritical;
         float currentModifier = criticalModifier;
 
-        for(EquipmentSlot slot : EquipmentSlot.values()){
+        for(EquipmentSlot slot : TicEXUtils.EquipmentSlotLists.WITHOUT_OFFHAND){
             ItemStack stack = player.getItemBySlot(slot);
             if(stack.getItem() instanceof IModifiable){
                 ToolStack tool = ToolStack.from(stack);

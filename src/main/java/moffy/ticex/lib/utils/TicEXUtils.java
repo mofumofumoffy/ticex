@@ -14,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.ModList;
-import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierManager;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
@@ -30,8 +29,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class TicEXUtils {
-    public static final List<EquipmentSlot> ARMOR_TYPES = ImmutableList.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
-
     public static ItemStack getToolStack(IToolStackView tool){
         if(tool instanceof ToolStack toolStack){
             return toolStack.createStack();
@@ -155,5 +152,11 @@ public class TicEXUtils {
         }
 
         return toolStack.createStack();
+    }
+
+
+    public static class EquipmentSlotLists{
+        public static final List<EquipmentSlot> ARMORS = ImmutableList.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
+        public static final List<EquipmentSlot> WITHOUT_OFFHAND = ImmutableList.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET, EquipmentSlot.MAINHAND);
     }
 }

@@ -43,7 +43,7 @@ public class ModifierDragonForce extends Modifier implements DamageSourceModifie
     }
 
     @Override
-    public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, ToolAttackContext context, DamageSource currentSource, DamageSource original) {
+    public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, ToolAttackContext context, DamageSource original, DamageSource currentSource) {
         Entity entity = currentSource.getDirectEntity();
 
         if(entity != null){
