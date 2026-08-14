@@ -33,7 +33,7 @@ public class ToolAttackContextMixin {
     public void modifyDamageSource(CallbackInfoReturnable<DamageSource> cir){
         ItemStack stack = attacker.getItemBySlot(slotType);
         if(stack.getItem() instanceof IModifiable){
-            cir.setReturnValue(DamageSourceModifierHook.modifyDamageSource(ToolStack.from(stack), cir.getReturnValue()));
+            cir.setReturnValue(DamageSourceModifierHook.modifyDamageSource(ToolStack.from(stack), (ToolAttackContext) ((Object)this), cir.getReturnValue()));
         }
     }
 

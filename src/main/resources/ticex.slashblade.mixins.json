@@ -7,7 +7,7 @@
     "InputCommandEventMixin$Later",
     "InputCommandEventMixin$Older",
     "ItemSlashBladeMixin",
-    "PlayerAttackHelperMixin",
+    "AttackHelperMixin",
     "SummonedSwordMixin"
   ],
   "client": [

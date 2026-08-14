@@ -21,6 +21,7 @@ import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.module.ModuleHookMap;
+import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.definition.module.material.ToolMaterialHook;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.MaterialNBT;
@@ -42,7 +43,7 @@ public class ModifierDragonForce extends Modifier implements DamageSourceModifie
     }
 
     @Override
-    public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, DamageSource currentSource, DamageSource original) {
+    public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, ToolAttackContext context, DamageSource currentSource, DamageSource original) {
         Entity entity = currentSource.getDirectEntity();
 
         if(entity != null){

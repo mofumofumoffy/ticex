@@ -696,7 +696,7 @@ public class ModifierEvolved
      }
 
      @Override
-     public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, DamageSource currentSource, DamageSource original) {
+     public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, ToolAttackContext context, DamageSource currentSource, DamageSource original) {
          Entity entity = currentSource.getDirectEntity();
 
          if(entity != null){

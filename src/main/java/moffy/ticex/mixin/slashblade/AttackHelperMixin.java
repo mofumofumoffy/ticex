@@ -1,12 +1,17 @@
 package moffy.ticex.mixin.slashblade;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import mods.flammpfeil.slashblade.util.AttackHelper;
+import moffy.ticex.lib.AttackContextHolder;
 import moffy.ticex.lib.hook.CriticalModifierHook;
+import moffy.ticex.lib.hook.DamageSourceModifierHook;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -23,17 +28,18 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 @Mixin(value = AttackHelper.class, remap = false)
-public abstract class PlayerAttackHelperMixin {
+public abstract class AttackHelperMixin {
 
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/util/AttackHelper;calculateTotalDamage(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;FZ)D"))
     private static void setContext(LivingEntity attacker, Entity target, float comboRatio, CallbackInfo ci,
-                                   @Share(value = "context") LocalRef<ToolAttackContext> contextRef) {
+                                   @Share(value = "contextHolder") LocalRef<AttackContextHolder> contextHolderRef) {
         ToolAttackContext context = ToolAttackContext.attacker(attacker)
                 .hand(InteractionHand.MAIN_HAND)
                 .target(target)
                 .cooldown(1)
                 .build();
-        contextRef.set(context);
+        ItemStack blade = ticex_1_20_1$resolveItemInHand(attacker, context.getHand());
+        contextHolderRef.set(new AttackContextHolder(blade, context));
     }
 
     @ModifyExpressionValue(
@@ -44,10 +50,10 @@ public abstract class PlayerAttackHelperMixin {
             float original,
             @Local(name = "isCritical") boolean isCritical,
             @Local(argsOnly = true) LivingEntity attacker,
-            @Local(argsOnly = true) Entity target
+            @Local(argsOnly = true) Entity target,
+            @Share(value = "contextHolder") LocalRef<AttackContextHolder> contextHolderRef
     ){
-        ItemStack stack = ticex_1_20_1$resolveItemInHand(attacker, InteractionHand.MAIN_HAND);
-        if(stack.getItem() instanceof IModifiable && attacker instanceof Player playerAttacker) {
+        if(contextHolderRef.get().isTool() && attacker instanceof Player playerAttacker) {
             CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(playerAttacker, target, isCritical, original);
             return criticalContext.criticalModifier();
         }
@@ -57,12 +63,11 @@ public abstract class PlayerAttackHelperMixin {
     @ModifyExpressionValue(method = "attack", at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/util/AttackHelper;calculateTotalDamage(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;FZ)D"))
     private static double applyAttackDamage(double damageAmount,
                                             @Local(argsOnly = true) LivingEntity attacker,
-                                            @Share(value = "context") LocalRef<ToolAttackContext> contextRef) {
-        ToolAttackContext context = contextRef.get();
-        ItemStack stack = ticex_1_20_1$resolveItemInHand(attacker, context.getHand());
-        if(stack.getItem() instanceof IModifiable) {
-            ToolStack tool = ToolStack.from(stack);
-
+                                            @Share(value = "contextHolder") LocalRef<AttackContextHolder> contextHolderRef) {
+        AttackContextHolder contextHolder = contextHolderRef.get();
+        ToolAttackContext context = contextHolder.context();
+        ToolStack tool = contextHolder.getTool();
+        if(tool != null) {
             double originalDamage = damageAmount;
 
             for(ModifierEntry entry : tool.getModifiers()){
@@ -77,12 +82,11 @@ public abstract class PlayerAttackHelperMixin {
     private static float applyKnockback(float knockback,
                                         @Local double baseDamage,
                                         @Local(argsOnly = true) LivingEntity attacker,
-                                        @Share(value = "context") LocalRef<ToolAttackContext> contextRef) {
-        ToolAttackContext context = contextRef.get();
-        ItemStack stack = ticex_1_20_1$resolveItemInHand(attacker, context.getHand());
-        if(stack.getItem() instanceof IModifiable) {
-            ToolStack tool = ToolStack.from(stack);
-
+                                        @Share(value = "contextHolder") LocalRef<AttackContextHolder> contextHolderRef) {
+        AttackContextHolder contextHolder = contextHolderRef.get();
+        ToolAttackContext context = contextHolder.context();
+        ToolStack tool = contextHolder.getTool();
+        if(tool != null) {
             float originalKnockback = knockback;
             for(ModifierEntry entry : tool.getModifiers()){
                 knockback = entry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, entry, context, (float) baseDamage, originalKnockback, knockback);
@@ -92,15 +96,30 @@ public abstract class PlayerAttackHelperMixin {
         return knockback;
     }
 
+    @WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
+    private static boolean hurtWithModifiedDamageSource(Entity instance,
+                                                        DamageSource pSource,
+                                                        float pAmount,
+                                                        Operation<Boolean> original,
+                                                        @Share(value = "contextHolder") LocalRef<AttackContextHolder> contextHolderRef){
+        AttackContextHolder contextHolder = contextHolderRef.get();
+        ToolAttackContext context = contextHolder.context();
+        ToolStack tool = contextHolder.getTool();
+        if(tool != null) {
+            return original.call(instance, DamageSourceModifierHook.modifyDamageSource(tool, context, pSource), pAmount);
+        }
+        return original.call(instance, pSource, pAmount);
+    }
+
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/util/AttackHelper;handlePostAttackEffects(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;Lmods/flammpfeil/slashblade/util/AttackHelper$FireAspectResult;)V", shift = At.Shift.AFTER))
     private static void applyAttackSuccess(LivingEntity attacker, Entity target, float comboRatio, CallbackInfo ci,
                                           @Local double baseDamage,
-                                          @Share(value = "context") LocalRef<ToolAttackContext> contextRef) {
-        ToolAttackContext context = contextRef.get();
-        ItemStack stack = ticex_1_20_1$resolveItemInHand(attacker, context.getHand());
-        if(stack.getItem() instanceof IModifiable){
-            ToolStack tool = ToolStack.from(stack);
-
+                                           @Share(value = "contextHolder") LocalRef<AttackContextHolder> contextHolderRef
+                                          ) {
+        AttackContextHolder contextHolder = contextHolderRef.get();
+        ToolAttackContext context = contextHolder.context();
+        ToolStack tool = contextHolder.getTool();
+        if(tool != null){
             for(ModifierEntry entry : tool.getModifiers()){
                 entry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, entry, context, (float) baseDamage);
             }
@@ -110,13 +129,12 @@ public abstract class PlayerAttackHelperMixin {
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/util/AttackHelper;handleFailedAttack(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;Lmods/flammpfeil/slashblade/util/AttackHelper$FireAspectResult;)V", shift = At.Shift.AFTER))
     private static void applyAttackFailed(LivingEntity attacker, Entity target, float comboRatio, CallbackInfo ci,
                                           @Local double baseDamage,
-                                          @Share(value = "context") LocalRef<ToolAttackContext> contextRef) {
-        ToolAttackContext context = contextRef.get();
-        ItemStack stack = ticex_1_20_1$resolveItemInHand(attacker, context.getHand());
+                                          @Share(value = "contextHolder") LocalRef<AttackContextHolder> contextHolderRef) {
+        AttackContextHolder contextHolder = contextHolderRef.get();
+        ToolAttackContext context = contextHolder.context();
+        ToolStack tool = contextHolder.getTool();
 
-        if(stack.getItem() instanceof IModifiable){
-            ToolStack tool = ToolStack.from(stack);
-
+        if(tool != null){
             for(ModifierEntry entry : tool.getModifiers()){
                 entry.getHook(ModifierHooks.MELEE_HIT).failedMeleeHit(tool, entry, context, (float) baseDamage);
             }
