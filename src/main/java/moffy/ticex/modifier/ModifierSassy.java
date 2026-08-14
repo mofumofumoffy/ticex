@@ -27,7 +27,7 @@ public class ModifierSassy extends NoLevelsModifier implements CriticalModifierH
     }
 
     @Override
-    public float setCriticalRate(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float currentRate, float originalRate) {
-        return Math.max(currentRate, 1.5f);
+    public float setCriticalModifier(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float originalModifier, float currentModifier) {
+        return Math.max(currentModifier, 1.5f);
     }
 }

@@ -18,8 +18,8 @@ public interface CriticalModifierHook {
     default boolean isCritical(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, boolean original){
         return isCritical;
     }
-    default float setCriticalRate(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float currentRate, float originalRate){
-        return currentRate;
+    default float setCriticalModifier(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float originalModifier, float currentModifier){
+        return currentModifier;
     }
 
     static CriticalContext modifyCritical(Player player, Entity target, boolean isCritical, float criticalModifier){
@@ -38,7 +38,7 @@ public interface CriticalModifierHook {
 
                 for(ModifierEntry entry : tool.getModifierList()) {
                     CriticalModifierHook hook = entry.getHook(TicEXModifierHooks.CRITICAL);
-                    currentModifier = hook.setCriticalRate(tool, entry, player, target, currentCrit, currentModifier, criticalModifier);
+                    currentModifier = hook.setCriticalModifier(tool, entry, player, target, currentCrit, criticalModifier, currentModifier);
                 }
             }
         }
@@ -68,12 +68,12 @@ public interface CriticalModifierHook {
         }
 
         @Override
-        public float setCriticalRate(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float currentRate, float originalRate) {
-            float rate = originalRate;
+        public float setCriticalModifier(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float originalModifier, float currentModifier1) {
+            float modifier = originalModifier;
             for(CriticalModifierHook hook : hooks){
-                rate = hook.setCriticalRate(tool, entry, attacker, target, isCritical, rate, originalRate);
+                modifier = hook.setCriticalModifier(tool, entry, attacker, target, isCritical, originalModifier, modifier);
             }
-            return rate;
+            return modifier;
         }
     }
 
