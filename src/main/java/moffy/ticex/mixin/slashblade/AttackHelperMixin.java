@@ -95,7 +95,7 @@ public abstract class AttackHelperMixin {
         return knockback;
     }
 
-    @WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
+    @WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", remap = true))
     private static boolean hurtWithModifiedDamageSource(Entity instance,
                                                         DamageSource pSource,
                                                         float pAmount,
