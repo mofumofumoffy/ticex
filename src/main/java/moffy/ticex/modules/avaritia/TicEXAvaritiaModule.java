@@ -33,6 +33,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.fluids.block.BurningLiquidBlock;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
+import slimeknights.tconstruct.library.modifiers.ModifierId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class TicEXAvaritiaModule implements AddonModule {
 
         if (ModList.get().isLoaded("sakuratinker")) {
             infinityMaterials.add(new MaterialId(ResourceLocation.fromNamespaceAndPath("sakuratinker", "infinity")));
-            //CustomTinkerRenders.EXTRA_ARMOR_MODELS.addModel(new MaterialId(ResourceLocation.fromNamespaceAndPath("sakuratinker", "omnipotence")), TranscendentalArmorModelProvider::new);
+            CustomTinkerRenders.EXTRA_ARMOR_MODELS.addModel(new ModifierId(ResourceLocation.fromNamespaceAndPath("sakuratinker", "eternity")), TranscendentalArmorModelProvider::new);
         }
 
         IEventBus bus = context.getModEventBus();
