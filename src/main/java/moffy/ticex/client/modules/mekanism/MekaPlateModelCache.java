@@ -16,15 +16,15 @@ public class MekaPlateModelCache extends BaseModelCache {
             TicEX.getResource("models/entity/modifiable_mekasuit_exo.obj")
     );
     private final Set<Runnable> callbacks = new HashSet<>();
-    private final Set<MekanicArmorModelProvider.ModuleOBJModelData> mekaSuitModules = new HashSet<>();
-    public final Set<MekanicArmorModelProvider.ModuleOBJModelData> MEKASUIT_MODULES = Collections.unmodifiableSet(mekaSuitModules);
+    private final Set<MekanicArmorQuadCache.ModuleOBJModelData> mekaSuitModules = new HashSet<>();
+    public final Set<MekanicArmorQuadCache.ModuleOBJModelData> MEKASUIT_MODULES = Collections.unmodifiableSet(mekaSuitModules);
 
     protected MekaPlateModelCache() {
         super(TicEX.MODID);
     }
 
     public void registerMekaSuitModuleModel(ResourceLocation rl) {
-        MekanicArmorModelProvider.ModuleOBJModelData data = register(rl, MekanicArmorModelProvider.ModuleOBJModelData::new);
+        MekanicArmorQuadCache.ModuleOBJModelData data = register(rl, MekanicArmorQuadCache.ModuleOBJModelData::new);
         mekaSuitModules.add(data);
     }
 

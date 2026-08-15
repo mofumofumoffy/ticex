@@ -11,6 +11,7 @@ import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
 import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
 import moffy.ticex.client.modules.mekanism.MekanicArmorModelProvider;
+import moffy.ticex.client.modules.mekanism.MekanicArmorQuadCache;
 import moffy.ticex.event.TicEXMekanismEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
@@ -124,26 +125,26 @@ public class TicEXMekanismModule implements AddonModule {
             TicEX.getResource("models/entity/modifiable_mekasuit_modules.obj")
         );
 
-        MekanicArmorModelProvider.registerModule(
+        MekanicArmorQuadCache.registerModule(
             "jetpack",
             MekanismModules.JETPACK_UNIT,
             EquipmentSlot.CHEST,
             entity -> true
         );
-        MekanicArmorModelProvider.registerModule(
+        MekanicArmorQuadCache.registerModule(
             "modulator",
             MekanismModules.GRAVITATIONAL_MODULATING_UNIT,
             EquipmentSlot.CHEST,
             entity -> true
         );
-        MekanicArmorModelProvider.registerModule(
+        MekanicArmorQuadCache.registerModule(
             "elytra",
             MekanismModules.ELYTRA_UNIT,
             EquipmentSlot.CHEST,
             LivingEntity::isFallFlying
         );
         if(ModList.get().isLoaded("mekanismgenerators")){
-            MekanicArmorModelProvider.registerModule(
+            MekanicArmorQuadCache.registerModule(
                     "solar_helmet",
                     GeneratorsModules.SOLAR_RECHARGING_UNIT,
                     EquipmentSlot.HEAD,
