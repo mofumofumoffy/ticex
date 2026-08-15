@@ -50,10 +50,9 @@ public abstract class AttackHelperMixin {
             float original,
             @Local(name = "isCritical") boolean isCritical,
             @Local(argsOnly = true) LivingEntity attacker,
-            @Local(argsOnly = true) Entity target,
-            @Share(value = "contextHolder") LocalRef<AttackContextHolder> contextHolderRef
+            @Local(argsOnly = true) Entity target
     ){
-        if(contextHolderRef.get().isTool() && attacker instanceof Player playerAttacker) {
+        if(attacker instanceof Player playerAttacker) {
             CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(playerAttacker, target, isCritical, original);
             return criticalContext.criticalModifier();
         }
