@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:nuggets/astral"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/astral"
+  },
+  "result": {
+    "amount": 10,
+    "tag": "forge:molten_astral"
+  },
+  "temperature": 1500,
+  "time": 27
+}

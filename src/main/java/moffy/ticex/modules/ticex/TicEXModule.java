@@ -87,6 +87,7 @@ public class TicEXModule implements AddonModule {
         TicEXFluids.MOLTEN_RECONSTRUCTION_CORE = TicEXRegistry.FLUIDS.register("molten_reconstruction_core")
                 .type(TicEXFluidUtils.slime("reconstruction_core").temperature(1000).density(-1600))
                 .bucket()
+                .commonTag()
                 .unplacable();
 
 

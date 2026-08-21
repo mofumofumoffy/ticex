@@ -44,6 +44,7 @@ public class TicEXBlocks {
 
     public static RegistryObject<Block> ETHERIC_BLOCK = null;
     public static RegistryObject<Block> OD_BLOCK = null;
+    public static RegistryObject<Block> ASTRAL_BLOCK = null;
     public static RegistryObject<Block> SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> CREATIVE_SEARED_RF_FURNACE = null;
     public static RegistryObject<Block> SCORCHED_RF_FURNACE = null;

@@ -17,4 +17,5 @@ public class TicEXFluids {
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_BLAZING = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ETHERIC = null;
     public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_OD = null;
+    public static FlowingFluidObject<ForgeFlowingFluid> MOLTEN_ASTRAL = null;
 }

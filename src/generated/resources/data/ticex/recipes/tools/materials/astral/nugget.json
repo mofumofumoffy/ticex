@@ -1,0 +1,15 @@
+{
+  "type": "tconstruct:material",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:nuggets/astral"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/astral"
+  },
+  "material": "ticex:astral",
+  "needed": 9,
+  "value": 1
+}

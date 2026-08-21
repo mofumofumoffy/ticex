@@ -33,6 +33,7 @@ public class FluidTagProvider extends FluidTagsProvider {
 
         fluidTag(TicEXTags.Fluids.ETHERIC, TicEX.getResource("molten_etheric"));
         fluidTag(TicEXTags.Fluids.OD, TicEX.getResource("molten_od"));
+        fluidTag(TicEXTags.Fluids.ASTRAL, TicEX.getResource("molten_astral"));
 
         fluidTag(TicEXTags.Fluids.RECONSTRUCTION_CORE, TicEX.getResource("molten_reconstruction_core"));
 

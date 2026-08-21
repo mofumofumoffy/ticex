@@ -1,0 +1,20 @@
+{
+  "default": [
+    {
+      "level": 1,
+      "name": "ticex:telescope"
+    }
+  ],
+  "perStat": {
+    "tconstruct:melee_harvest": [
+      {
+        "level": 1,
+        "name": "ticex:telescope"
+      },
+      {
+        "level": 1,
+        "name": "ticex:planetarium"
+      }
+    ]
+  }
+}

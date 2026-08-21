@@ -51,6 +51,7 @@ public class LootProvider extends LootTableProvider {
             //materials
             dropSelf(TicEXBlocks.ETHERIC_BLOCK.get());
             dropSelf(TicEXBlocks.OD_BLOCK.get());
+            dropSelf(TicEXBlocks.ASTRAL_BLOCK.get());
         }
 
         private void addSmeltery() {

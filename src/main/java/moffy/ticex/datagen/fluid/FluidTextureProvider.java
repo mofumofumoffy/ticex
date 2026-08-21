@@ -29,6 +29,7 @@ public class FluidTextureProvider extends AbstractFluidTextureProvider {
         molten(TicEXFluids.MOLTEN_BLAZING);
         molten(TicEXFluids.MOLTEN_ETHERIC);
         molten(TicEXFluids.MOLTEN_OD);
+        molten(TicEXFluids.MOLTEN_ASTRAL);
         molten(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE);
 
         int i = 0;

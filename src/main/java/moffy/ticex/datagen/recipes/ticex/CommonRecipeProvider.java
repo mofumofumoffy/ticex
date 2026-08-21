@@ -38,6 +38,7 @@ import slimeknights.tconstruct.shared.block.SlimeType;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.world.TinkerWorld;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMaterialRecipeHelper {
@@ -50,24 +51,32 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
 
         metalMaterialItemOptional(pWriter, TicEXTags.Fluids.ETHERIC, TicEXMaterials.ETHERIC, 2500, true);
         metalMaterialItemOptional(pWriter, TicEXTags.Fluids.OD, TicEXMaterials.OD, 2500, true);
+        metalMaterialItemOptional(pWriter, TicEXTags.Fluids.ASTRAL, TicEXMaterials.ASTRAL, 1500, true);
 
         buildShapedRecipes(pWriter, materialConsumer);
         buildSmelteryRecipes(pWriter, materialConsumer);
 
         // other recipes
         AlloyRecipeBuilder.alloy(FluidOutput.fromTag(TicEXTags.Fluids.ETHERIC, 270), 2500)
-                .addInput(TinkerFluids.moltenSlimesteel.get(), FluidValues.INGOT)
-                .addInput(TicEXTags.Fluids.HEPATIZON, FluidValues.INGOT)
-                .addInput(TicEXTags.Fluids.GOLD, FluidValues.INGOT)
+                .addInput(TinkerFluids.moltenSlimesteel.getTag(), FluidValues.INGOT)
+                .addInput(TinkerFluids.moltenHepatizon.getTag(), FluidValues.INGOT)
+                .addInput(TinkerFluids.moltenGold.getTag(), FluidValues.INGOT)
                 .addInput(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
                 .save(materialConsumer, prefix(TicEXTags.Fluids.ETHERIC.location(), alloysFolder));
 
         AlloyRecipeBuilder.alloy(FluidOutput.fromTag(TicEXTags.Fluids.OD, 270), 2500)
-                .addInput(TinkerFluids.blazingBlood.get(), FluidValues.SLIMEBALL)
-                .addInput(TinkerFluids.moltenSlimesteel.get(), FluidValues.INGOT)
-                .addInput(TinkerFluids.moltenAmethyst.get(), FluidValues.GEM)
+                .addInput(TinkerFluids.blazingBlood.getTag(), FluidValues.SLIMEBALL)
+                .addInput(TinkerFluids.moltenSlimesteel.getTag(), FluidValues.INGOT)
+                .addInput(TinkerFluids.moltenAmethyst.getTag(), FluidValues.GEM)
                 .addInput(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
                 .save(materialConsumer, prefix(TicEXTags.Fluids.OD.location(), alloysFolder));
+
+        AlloyRecipeBuilder.alloy(FluidOutput.fromTag(TicEXTags.Fluids.ASTRAL, 270), 1500)
+                .addInput(TinkerFluids.magma.getTag(), FluidValues.SLIMEBALL)
+                .addInput(TinkerFluids.moltenIron.getTag(), FluidValues.INGOT)
+                .addInput(TinkerFluids.moltenCobalt.getTag(), FluidValues.INGOT)
+                .addInput(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
+                .save(materialConsumer, prefix(TicEXTags.Fluids.ASTRAL.location(), alloysFolder));
     }
 
     public void buildShapedRecipes(Consumer<FinishedRecipe> pWriter, Consumer<FinishedRecipe> materialConsumer) {
@@ -93,6 +102,7 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
 
         metalRecipes(TicEXTags.Items.ETHERIC, TicEXBlocks.ETHERIC_BLOCK.get(), TicEXItems.ETHERIC_INGOT.get(), TicEXItems.ETHERIC_NUGGET.get(), materialConsumer);
         metalRecipes(TicEXTags.Items.OD, TicEXBlocks.OD_BLOCK.get(), TicEXItems.OD_INGOT.get(), TicEXItems.OD_NUGGET.get(), materialConsumer);
+        metalRecipes(TicEXTags.Items.ASTRAL, TicEXBlocks.ASTRAL_BLOCK.get(), TicEXItems.ASTRAL_INGOT.get(), TicEXItems.ASTRAL_NUGGET.get(), materialConsumer);
     }
 
     public void buildSmelteryRecipes(Consumer<FinishedRecipe> pWriter, Consumer<FinishedRecipe> materialConsumer) {

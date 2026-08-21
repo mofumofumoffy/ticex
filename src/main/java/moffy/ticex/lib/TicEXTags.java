@@ -21,6 +21,7 @@ public class TicEXTags {
         public static final TagKey<Block> CRYSTAL_MATRIX = common("storage_blocks/crystal_matrix");
         public static final TagKey<Block> ETHERIC = common("storage_blocks/etheric");
         public static final TagKey<Block> OD = common("storage_blocks/od");
+        public static final TagKey<Block> ASTRAL = common("storage_blocks/astral");
 
         public static final TagKey<Block> FLUID_TRANSMUTER_TANK = local("transmuter_tank");
 
@@ -44,6 +45,7 @@ public class TicEXTags {
         public static final MetalItemTagSet BLAZING = new MetalItemTagSet("blazing");
         public static final MetalItemTagSet ETHERIC = new MetalItemTagSet("etheric");
         public static final MetalItemTagSet OD = new MetalItemTagSet("od");
+        public static final MetalItemTagSet ASTRAL = new MetalItemTagSet("astral");
 
         public static final TagKey<Item> SERAM = local("seram");
         public static final TagKey<Item> PLATE = local("plate");
@@ -104,6 +106,7 @@ public class TicEXTags {
         public static final TagKey<Fluid> GOLD = common("molten_gold");
         public static final TagKey<Fluid> ETHERIC = common("molten_etheric");
         public static final TagKey<Fluid> OD = common("molten_od");
+        public static final TagKey<Fluid> ASTRAL = common("molten_astral");
 
         public static final TagKey<Fluid> RECONSTRUCTION_CORE = common("molten_reconstruction_core");
 

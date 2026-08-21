@@ -85,8 +85,9 @@ public class MaterialDefinitionProvider extends AbstractMaterialDataProvider {
             false,
             availableCondition("draconicevolution_compat")
         );
-        addMaterial(TicEXMaterials.ETHERIC, 6, ORDER_COMPAT + ORDER_WEAPON, false);
-        addMaterial(TicEXMaterials.OD, 6, ORDER_COMPAT + ORDER_WEAPON, false);
+        addMaterial(TicEXMaterials.ETHERIC, 5, ORDER_COMPAT + ORDER_WEAPON, false);
+        addMaterial(TicEXMaterials.OD, 5, ORDER_COMPAT + ORDER_WEAPON, false);
+        addMaterial(TicEXMaterials.ASTRAL, 4, ORDER_COMPAT + ORDER_WEAPON, false);
         addMaterial(TicEXMaterials.RECONSTRUCTION, 3, ORDER_COMPAT, false);
     }
 

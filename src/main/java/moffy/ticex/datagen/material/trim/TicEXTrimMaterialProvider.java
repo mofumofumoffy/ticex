@@ -39,6 +39,7 @@ public class TicEXTrimMaterialProvider {
             material(context, TicEXMaterials.CHAOTIC, TicEXItems.CHAOTIC_CRYSTAL.get(), 0x555555, 0.4F);
         }
         material(context, TicEXMaterials.ETHERIC, TicEXItems.ETHERIC_INGOT.get(), 0x6AEF3C, 0.7F);
+        material(context, TicEXMaterials.OD, TicEXItems.OD_INGOT.get(), 0x2946af, 0.7F);
     }
 
     private static void material(BootstapContext<TrimMaterial> context, MaterialId material, MetalItemObject ingredient, int color, float modelIndex) {

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:default_material"
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/astral"
+    },
+    "*": {
+      "item": "ticex:astral_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "#*#",
+    "###"
+  ],
+  "result": {
+    "item": "ticex:astral_ingot"
+  },
+  "show_notification": true
+}

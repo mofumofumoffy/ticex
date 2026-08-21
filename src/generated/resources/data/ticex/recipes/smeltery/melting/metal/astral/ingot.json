@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:ingots/astral"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/astral"
+  },
+  "result": {
+    "amount": 90,
+    "tag": "forge:molten_astral"
+  },
+  "temperature": 1500,
+  "time": 80
+}

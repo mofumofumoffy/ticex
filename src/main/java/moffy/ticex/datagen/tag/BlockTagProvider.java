@@ -39,6 +39,7 @@ public class BlockTagProvider extends BlockTagsProvider {
 
         addMetalTags(TicEXTags.Blocks.ETHERIC, TicEX.getResource("etheric_block"), true);
         addMetalTags(TicEXTags.Blocks.OD, TicEX.getResource("od_block"), true);
+        addMetalTags(TicEXTags.Blocks.ASTRAL, TicEXTags.getResource("astral_block"), true);
 
         tag(TicEXTags.Blocks.FLUID_TRANSMUTER_TANK)
                 .addOptionalTag(TinkerTags.Blocks.ALLOYER_TANKS);

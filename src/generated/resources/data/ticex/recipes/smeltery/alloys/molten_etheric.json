@@ -9,7 +9,7 @@
   "inputs": [
     {
       "amount": 90,
-      "fluid": "tconstruct:molten_slimesteel"
+      "tag": "tconstruct:molten_slimesteel"
     },
     {
       "amount": 90,

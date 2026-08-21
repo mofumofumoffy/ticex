@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:storage_blocks/astral"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/astral"
+  },
+  "result": {
+    "amount": 810,
+    "tag": "forge:molten_astral"
+  },
+  "temperature": 1500,
+  "time": 241
+}

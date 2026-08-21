@@ -11,6 +11,10 @@
     {
       "id": "ticex:od",
       "required": false
+    },
+    {
+      "id": "ticex:astral",
+      "required": false
     }
   ]
 }

@@ -56,6 +56,25 @@ public class TicEXMaterialModule implements AddonModule {
                 .commonTag()
                 .flowing();
 
+        TicEXItems.ASTRAL_INGOT = TicEXRegistry.ITEMS.register("astral_ingot", () -> new Item(new Item.Properties()));
+
+        TicEXBlocks.ASTRAL_BLOCK = TicEXRegistry.BLOCKS.register("astral_block", () ->
+            new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).noOcclusion())
+        );
+
+        TicEXRegistry.ITEMS.register("astral_block", () ->
+                new BlockItem(TicEXBlocks.ASTRAL_BLOCK.get(), new Item.Properties())
+        );
+
+        TicEXItems.ASTRAL_NUGGET = TicEXRegistry.ITEMS.register("astral_nugget", () -> new Item(new Item.Properties()));
+
+        TicEXFluids.MOLTEN_ASTRAL = TicEXRegistry.FLUIDS.register("molten_astral")
+                .type(TicEXFluidUtils.hot("molten_astral").temperature(1000).density(1600))
+                .block(MapColor.COLOR_LIGHT_GREEN, 0)
+                .bucket()
+                .commonTag()
+                .flowing();
+
         TicEXModifiers.DEFLECTION_MODIFIER = TicEXRegistry.MODIFIERS.register("deflection", ModifierDeflection::new);
         TicEXModifiers.SASSY_MODIFIER = TicEXRegistry.MODIFIERS.register("sassy", ModifierSassy::new);
         TicEXModifiers.AFLOAT_MODIFIER = TicEXRegistry.MODIFIERS.register("afloat", ModifierAfloat::new);

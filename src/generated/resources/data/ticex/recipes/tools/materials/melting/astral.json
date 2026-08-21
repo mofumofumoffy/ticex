@@ -1,0 +1,9 @@
+{
+  "type": "tconstruct:material_melting",
+  "input": "ticex:astral",
+  "result": {
+    "amount": 90,
+    "tag": "forge:molten_astral"
+  },
+  "temperature": 1500
+}

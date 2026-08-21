@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:default_material"
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/astral"
+    },
+    "*": {
+      "item": "ticex:astral_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "#*#",
+    "###"
+  ],
+  "result": {
+    "item": "ticex:astral_block"
+  },
+  "show_notification": true
+}

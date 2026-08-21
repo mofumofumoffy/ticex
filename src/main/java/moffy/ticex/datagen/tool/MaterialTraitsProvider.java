@@ -64,7 +64,6 @@ public class MaterialTraitsProvider extends AbstractMaterialTraitDataProvider {
                 TicEXModifiers.COSMIC_UNBREAKABLE_MODIFIER,
                 TicEXModifiers.BEDROCK_BREAKER_MODIFIER
         );
-        addDefaultTraits(TicEXMaterials.CRYSTAL_MATRIX, TicEXModifiers.AFTERSHOCK_MODIFIER, TinkerModifiers.insatiable, TicEXModifiers.BEDROCK_BREAKER_MODIFIER);
         addTraits(
                 TicEXMaterials.INFINITY,
                 ARMOR,
@@ -72,11 +71,15 @@ public class MaterialTraitsProvider extends AbstractMaterialTraitDataProvider {
                 TicEXModifiers.COSMIC_UNBREAKABLE_MODIFIER
         );
         addTraits(TicEXMaterials.NEUTRON, ARMOR, TicEXModifiers.CONDENSING_MODIFIER, TicEXModifiers.DENSE_MODIFIER);
+        addDefaultTraits(TicEXMaterials.CRYSTAL_MATRIX, TicEXModifiers.AFTERSHOCK_MODIFIER, TinkerModifiers.insatiable, TicEXModifiers.BEDROCK_BREAKER_MODIFIER);
         addDefaultTraits(TicEXMaterials.BLAZING, TicEXModifiers.SKULLFIRE_MODIFIER, TicEXModifiers.BLAZING_FLAME_MODIFIER, TicEXModifiers.BLAZING_FORTUNE_MODIFIER);
 
 
         addDefaultTraits(TicEXMaterials.ETHERIC, TicEXModifiers.SASSY_MODIFIER, TicEXModifiers.DEFLECTION_MODIFIER);
         addDefaultTraits(TicEXMaterials.OD, TicEXModifiers.AFLOAT_MODIFIER, TicEXModifiers.DUNGEON_MASTER_MODIFIER, TicEXModifiers.UNRAVEL_MODIFIER);
+        addDefaultTraits(TicEXMaterials.ASTRAL, TicEXModifiers.TELESCOPE_MODIFIER);
+        addTraits(TicEXMaterials.ASTRAL, MELEE_HARVEST, TicEXModifiers.TELESCOPE_MODIFIER, TicEXModifiers.PLANETARIUM_MODIFIER);
+
         addDefaultTraits(TicEXMaterials.RECONSTRUCTION, TicEXModifiers.REBIRTH_MODIFIER);
         addTraits(TicEXMaterials.RECONSTRUCTION, ARMOR, TicEXModifiers.REBIRTH_MODIFIER);
     }

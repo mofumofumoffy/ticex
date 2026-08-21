@@ -25,6 +25,7 @@ public class TicEXBlockstateProvider extends BlockStateProvider {
 
         simpleModelBlock(TicEXBlocks.ETHERIC_BLOCK.get(), "block/etheric_block");
         simpleModelBlock(TicEXBlocks.OD_BLOCK.get(), "block/od_block");
+        simpleModelBlock(TicEXBlocks.ASTRAL_BLOCK.get(), "block/astral_block");
     }
 
     public void simpleModelBlock(Block block, String name) {

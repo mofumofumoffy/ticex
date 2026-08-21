@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:casting_table",
+  "cast": {
+    "tag": "tconstruct:casts/single_use/nugget"
+  },
+  "cast_consumed": true,
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:nuggets/astral"
+    }
+  ],
+  "cooling_time": 27,
+  "fluid": {
+    "amount": 10,
+    "tag": "forge:molten_astral"
+  },
+  "result": {
+    "tag": "forge:nuggets/astral"
+  }
+}

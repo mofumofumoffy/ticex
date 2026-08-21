@@ -91,6 +91,7 @@ public class ItemTagProvider extends ItemTagsProvider {
         //original metals
         metalOptional(TicEXTags.Items.ETHERIC);
         metalOptional(TicEXTags.Items.OD);
+        metalOptional(TicEXTags.Items.ASTRAL);
 
         //trim_materials
         tag(TRIM_MATERIALS)
