@@ -26,6 +26,7 @@ public class ArsRecipeProvider implements ITicEXRecipeHelper {
         ModifierRecipeBuilder.modifier(TicEXModifiers.ALTERATIVE_MODIFIER)
                 .addInput(TicEXItems.ALTERATIVE_CORE.get())
                 .setTools(TinkerTags.Items.WORN_ARMOR)
+                .setMaxLevel(3)
                 .save(topConsumer, prefix(TicEXModifiers.ALTERATIVE_MODIFIER, defenseFolder));
     }
 }

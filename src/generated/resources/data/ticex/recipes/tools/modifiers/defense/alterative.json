@@ -12,6 +12,9 @@
       "item": "ticex:alterative_core"
     }
   ],
+  "level": {
+    "max": 3
+  },
   "result": "ticex:alterative",
   "tools": {
     "tag": "tconstruct:modifiable/armor/worn"
