@@ -77,6 +77,10 @@ public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMateri
                 .addInput(TinkerFluids.moltenCobalt.getTag(), FluidValues.INGOT)
                 .addInput(TicEXFluids.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
                 .save(materialConsumer, prefix(TicEXTags.Fluids.ASTRAL.location(), alloysFolder));
+
+        MeltingFuelBuilder.fuel(TicEXFluids.MOLTEN_ASTRAL.ingredient(50), 150, 2500)
+                .rate(55)
+                .save(pWriter, prefix(TicEXFluids.MOLTEN_ASTRAL, smelteryMeltingFolder + "fuel/"));
     }
 
     public void buildShapedRecipes(Consumer<FinishedRecipe> pWriter, Consumer<FinishedRecipe> materialConsumer) {
