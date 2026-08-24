@@ -108,5 +108,17 @@ public class TicEXMaterialSpriteProvider extends AbstractMaterialSpriteProvider 
                                 .addARGB(255, 0xFF141414)
                                 .build()
         );
+        buildMaterial(TicEXMaterials.ASTRAL).armor()
+                .fallbacks("metal").transformer(
+                        GreyToSpriteTransformer.builder()
+                                .addARGB(0, 0xFF7c041a)
+                                .addARGB(63, 0xFF572f72)
+                                .addARGB(102, 0xFF70123d)
+                                .addARGB(140, 0xFFba1433)
+                                .addARGB(178, 0xFF9d1a46)
+                                .addARGB(216, 0xFFd52f6a)
+                                .addARGB(255, 0xFFff5474)
+                                .build()
+                );
     }
 }

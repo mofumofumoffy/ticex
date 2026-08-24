@@ -1,23 +1,7 @@
 {
-  "loader": "forge:composite",
-  "parent": "block/block",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "particle": "ticex:block/astral_block_face"
-  },
-  "children": {
-    "metal": {
-      "render_type": "minecraft:solid",
-      "parent": "tconstruct:block/template/cube_all_14",
-      "textures": {
-        "all": "ticex:block/block_core"
-      }
-    },
-    "slime": {
-      "render_type": "minecraft:translucent",
-      "parent": "block/cube_all",
-      "textures": {
-        "all": "ticex:block/astral_block_face"
-      }
-    }
+    "all": "ticex:block/astral_block_face"
   }
 }
+
