@@ -75,7 +75,7 @@ public class TicEXCuriosModule implements AddonModule {
                         KeyConflictContext.IN_GAME,
                         KeyModifier.NONE,
                         InputConstants.Type.KEYSYM,
-                        GLFW.GLFW_KEY_G,
+                        GLFW.GLFW_MOUSE_BUTTON_MIDDLE,
                         "ticex.modid"
                 ));
 
