@@ -44,7 +44,9 @@ public class FluidTagProvider extends FluidTagsProvider {
             TicEX.getResource("molten_crystal_matrix"),
             TicEX.getResource("molten_blazing"),
             TicEX.getResource("molten_etheric"),
-            TicEX.getResource("molten_od")
+            TicEX.getResource("molten_od"),
+            TicEX.getResource("molten_astral")
+
         );
     }
 
