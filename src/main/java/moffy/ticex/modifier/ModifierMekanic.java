@@ -38,7 +38,9 @@ import mekanism.common.util.ItemDataUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
 import moffy.ticex.TicEX;
+import moffy.ticex.caps.mekanism.MekanicArrowCapability;
 import moffy.ticex.lib.hook.EnergyModifierHook;
+import moffy.ticex.lib.modules.mekanism.interfaces.IMekanicArrow;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.registry.TicEXItems;
 import moffy.ticex.registry.TicEXModifierHooks;
@@ -497,11 +499,25 @@ public class ModifierMekanic extends NoLevelsModifier
     @Override
     public @NotNull ItemStack findAmmo(IToolStackView iToolStackView, ModifierEntry modifierEntry, LivingEntity livingEntity, ItemStack itemStack, Predicate<ItemStack> predicate) {
         if(ModList.get().isLoaded("mekaweapons") && iToolStackView instanceof ToolStack toolStack){
+            if(!TicEXMekanismWeaponsUtils.hasEnergyArrow(toolStack) && itemStack.isEmpty()){
+                return itemStack;
+            }
             ItemStack mekaArrowStack = new ItemStack(TicEXItems.MEKANIC_ARROW.get());
-            mekaArrowStack.getOrCreateTag().put("shooterItem", toolStack.createStack().save(new CompoundTag()));
+            TicEXUtils.capabilityIfPresent(mekaArrowStack, MekanicArrowCapability.MEKANIC_ARROW_CAPABILITY, iMekanicArrow -> {
+                iMekanicArrow.setBowItem(toolStack.createStack());
+                iMekanicArrow.setOriginalAmmo(itemStack);
+            });
             return mekaArrowStack;
         }
         return itemStack;
+    }
+
+    @Override
+    public void shrinkAmmo(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, ItemStack ammo, int needed) {
+        if(ModList.get().isLoaded("mekaweapons")){
+            TicEXUtils.capabilityIfPresent(ammo, MekanicArrowCapability.MEKANIC_ARROW_CAPABILITY, iMekanicArrow -> iMekanicArrow.shrinkAmmo(needed));
+        }
+        BowAmmoModifierHook.super.shrinkAmmo(tool, modifier, shooter, ammo, needed);
     }
 
     @Override

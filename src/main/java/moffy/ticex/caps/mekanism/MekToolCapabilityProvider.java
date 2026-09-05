@@ -16,13 +16,13 @@ import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider.IToolCapabilityProvider;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
-public class MekItemCapabilityProvider implements IToolCapabilityProvider {
+public class MekToolCapabilityProvider implements IToolCapabilityProvider {
 
     private IToolStackView tool;
     private final MekaGearCapability mekaGearCapability;
     private final ItemCapabilityWrapper mekCapabilityWrapper;
 
-    public MekItemCapabilityProvider(ItemStack stack, Supplier<? extends IToolStackView> toolSupplier) {
+    public MekToolCapabilityProvider(ItemStack stack, Supplier<? extends IToolStackView> toolSupplier) {
         this.tool = toolSupplier.get();
 
         if(stack.getItem() instanceof ArmorItem armorItem){

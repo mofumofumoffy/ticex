@@ -179,7 +179,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:mekanism-268560:6552911")
     implementation fg.deobf("curse.maven:mekanism-generators-268566:6552914")
-    implementation fg.deobf("curse.maven:mekanism-weapons-929829:6949839")
+    implementation fg.deobf("curse.maven:mekanism-weapons-929829:8421962")
 
     implementation fg.deobf("curse.maven:brandons-core-231382:5422013")
     implementation fg.deobf("curse.maven:codechicken-lib-1-8-242818:5753868")

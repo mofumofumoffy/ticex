@@ -2,6 +2,7 @@ package moffy.ticex.lib.utils;
 
 import mekanism.api.energy.IEnergyContainer;
 import mekanism.api.gear.IModule;
+import mekanism.api.gear.IModuleHelper;
 import mekanism.api.math.FloatingLong;
 import mekanism.common.registries.MekanismItems;
 import mekanism.common.util.StorageUtils;
@@ -10,6 +11,7 @@ import meranha.mekaweapons.items.modules.DrawSpeedUnit;
 import meranha.mekaweapons.items.modules.WeaponAttackAmplificationUnit;
 import meranha.mekaweapons.items.modules.WeaponsModules;
 import moffy.ticex.TicEX;
+import moffy.ticex.client.modules.mekanism.weapons.MekanicArrowRenderer;
 import moffy.ticex.entity.mekanism.MekanicProjectile;
 import moffy.ticex.item.projectile.MekanicShotItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
@@ -19,14 +21,21 @@ import moffy.ticex.registry.TicEXRegistry;
 import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXItems;
 import moffy.ticex.registry.TicEXModifiers;
+import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.common.TinkerTags;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.GeneralInteractionModifierHook;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXMekanismWeaponsUtils {
@@ -77,13 +86,13 @@ public class TicEXMekanismWeaponsUtils {
     }
 
     public static void handleAutoFire(LivingEntity entity, IToolStackView tool, int useDuration, int timeLeft){
-        if(tool.hasTag(TinkerTags.Items.RANGED)){
+        if(tool.hasTag(TinkerTags.Items.RANGED) && entity instanceof Player player){
             ItemStack toolStack = TicEXUtils.getToolStack(tool, entity, TicEXModifiers.MEKANIC_MODIFIER.get());
             toolStack.getCapability(MekaGearCapability.MEKA_GEAR_CAPABILITY).ifPresent(mekaGear -> {
                 if (entity.isAlive() && mekaGear.isModuleEnabled(toolStack, WeaponsModules.AUTOFIRE_UNIT) && useDuration - timeLeft == getUseTick(toolStack, mekaGear)) {
                     entity.stopUsingItem();
                     toolStack.releaseUsing(entity.level(), entity, 0);
-                    entity.startUsingItem(entity.getUsedItemHand());
+                    toolStack.use(player.level(), player, player.getUsedItemHand());
                 }
             });
         }
@@ -96,5 +105,15 @@ public class TicEXMekanismWeaponsUtils {
             useTick -= 5.0f * drawSpeedUnit.getCustomInstance().getDrawSpeed();
         }
         return useTick;
+    }
+
+    public static boolean hasEnergyArrow(ToolStack tool){
+        ItemStack stack = TicEXUtils.getToolStack(tool);
+        return IModuleHelper.INSTANCE.isEnabled(stack, WeaponsModules.ARROWENERGY_UNIT);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void registerArrowRenderer(EntityRenderersEvent.RegisterRenderers event){
+        event.registerEntityRenderer(TicEXEntities.MEKANIC_PROJECTILE.get(), MekanicArrowRenderer::new);
     }
 }

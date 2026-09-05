@@ -11,6 +11,7 @@
     "ObjModel$ModelMeshAccessor",
     "ObjModel$ModelObjectAccessor",
     "ObjModelAccessor",
+    "ProjectileAccessor",
     "RomanNumeralHelperMixin",
     "ToolAttackContextMixin",
     "ToolAttackUtilMixin",

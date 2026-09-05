@@ -33,6 +33,7 @@ import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.modules.mekanism.interfaces.IAbsorbableItem;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
+import moffy.ticex.lib.modules.mekanism.interfaces.IMekanicArrow;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import net.minecraft.client.Minecraft;
@@ -52,6 +53,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.common.ForgeMod;
@@ -412,7 +414,9 @@ public class TicEXMekanismEvent {
     ) {}
 
     public static void onRegisterCaps(RegisterCapabilitiesEvent event) {
+
         event.register(IMekaGear.class);
+        event.register(IMekanicArrow.class);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -515,5 +519,12 @@ public class TicEXMekanismEvent {
         }
 
         return false;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event){
+        if(ModList.get().isLoaded("mekaweapons")){
+            TicEXMekanismWeaponsUtils.registerArrowRenderer(event);
+        }
     }
 }

@@ -6,7 +6,7 @@ import mekanism.common.registries.MekanismModules;
 import mekanism.generators.common.registries.GeneratorsModules;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
-import moffy.ticex.caps.mekanism.MekItemCapabilityProvider;
+import moffy.ticex.caps.mekanism.MekToolCapabilityProvider;
 import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
 import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
@@ -49,7 +49,7 @@ public class TicEXMekanismModule implements AddonModule {
         IEventBus bus = context.getModEventBus();
         Item.Properties PROPS = new Item.Properties();
 
-        ToolCapabilityProvider.register(MekItemCapabilityProvider::new);
+        ToolCapabilityProvider.register(MekToolCapabilityProvider::new);
         ToolCapabilityProvider.register(RadiationShieldingCapabilityProvider::new);
 
         TicEXItems.RADIATION_SHELDING_CORE = TicEXRegistry.ITEMS.register("radiation_shielding_core", () ->
@@ -116,6 +116,7 @@ public class TicEXMekanismModule implements AddonModule {
         MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::onClientTick);
         bus.addListener(TicEXMekanismEvent::onLoadAdditionalModel);
         bus.addListener(TicEXMekanismEvent::onModelBake);
+        bus.addListener(TicEXMekanismEvent::registerRenderers);
     }
 
     @OnlyIn(Dist.CLIENT)
