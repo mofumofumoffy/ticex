@@ -118,6 +118,7 @@ public class ModifierMekanic extends NoLevelsModifier
         ValidateModifierHook,
         RequirementsModifierHook,
         BlockInteractionModifierHook,
+        GeneralInteractionModifierHook,
         EmbossmentModifierHook {
 
     @Override
@@ -139,6 +140,7 @@ public class ModifierMekanic extends NoLevelsModifier
                 ModifierHooks.VALIDATE,
                 ModifierHooks.REQUIREMENTS,
                 ModifierHooks.BLOCK_INTERACT,
+                ModifierHooks.GENERAL_INTERACT,
                 TicEXModifierHooks.EMBOSSMENT
         );
     }
@@ -183,52 +185,52 @@ public class ModifierMekanic extends NoLevelsModifier
 
     @Override
     public InteractionResult afterBlockUse(IToolStackView tool, ModifierEntry modifier, UseOnContext context, InteractionSource source) {
-        teleport(tool, context.getPlayer());
         return BlockInteractionModifierHook.super.afterBlockUse(tool, modifier, context, source);
     }
 
-    private void teleport(IToolStackView tool, Entity entity){
-        if(tool instanceof ToolStack toolStack && entity instanceof Player player) {
-            ItemStack stack = toolStack.createStack();
-            TicEXUtils.capabilityIfPresent(stack, MekaGearCapability.MEKA_GEAR_CAPABILITY, mekaGear -> {
-                if (!player.level().isClientSide()) {
-                    IModule<ModuleTeleportationUnit> module = mekaGear.getModule(stack, MekanismModules.TELEPORTATION_UNIT);
-                    if (module != null && module.isEnabled()) {
-                        BlockHitResult result = MekanismUtils.rayTrace(player, MekanismConfig.gear.mekaToolMaxTeleportReach.get());
-                        if (!module.getCustomInstance().requiresBlockTarget() || result.getType() != HitResult.Type.MISS) {
-                            BlockPos pos = result.getBlockPos();
-                            if (isValidDestinationBlock(player.level(), pos.above()) && isValidDestinationBlock(player.level(), pos.above(2))) {
-                                double distance = player.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
-                                if (distance < 5) {
-                                    return;
-                                }
-                                IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
-                                FloatingLong energyNeeded = MekanismConfig.gear.mekaToolEnergyUsageTeleport.get().multiply(distance / 10D);
-                                if (energyContainer == null || energyContainer.getEnergy().smallerThan(energyNeeded)) {
-                                    return;
-                                }
-                                double targetX = pos.getX() + 0.5;
-                                double targetY = pos.getY() + 1.5;
-                                double targetZ = pos.getZ() + 0.5;
-                                MekanismTeleportEvent.MekaTool event = new MekanismTeleportEvent.MekaTool(player, targetX, targetY, targetZ, stack, result);
-                                if (MinecraftForge.EVENT_BUS.post(event)) {
-                                    return;
-                                }
-                                Objects.requireNonNull(energyContainer).extract(energyNeeded, Action.EXECUTE, AutomationType.MANUAL);
-                                if (player.isPassenger()) {
-                                    player.dismountTo(targetX, targetY, targetZ);
-                                } else {
-                                    player.teleportTo(targetX, targetY, targetZ);
-                                }
-                                player.resetFallDistance();
-                                Mekanism.packetHandler().sendToAllTracking(new PacketPortalFX(pos.above()), player.level(), pos);
-                                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+    private InteractionResult teleport(Player player, InteractionHand hand){
+        ItemStack stack = player.getItemInHand(hand);
+        return TicEXUtils.capabilityIfPresent(stack, MekaGearCapability.MEKA_GEAR_CAPABILITY, mekaGear -> {
+            if (!player.level().isClientSide()) {
+                IModule<ModuleTeleportationUnit> module = mekaGear.getModule(stack, MekanismModules.TELEPORTATION_UNIT);
+                if (module != null && module.isEnabled()) {
+                    BlockHitResult result = MekanismUtils.rayTrace(player, MekanismConfig.gear.mekaToolMaxTeleportReach.get());
+                    if (!module.getCustomInstance().requiresBlockTarget() || result.getType() != HitResult.Type.MISS) {
+                        BlockPos pos = result.getBlockPos();
+                        if (isValidDestinationBlock(player.level(), pos.above()) && isValidDestinationBlock(player.level(), pos.above(2))) {
+                            double distance = player.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
+                            if (distance < 5) {
+                                return InteractionResult.PASS;
                             }
+                            IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
+                            FloatingLong energyNeeded = MekanismConfig.gear.mekaToolEnergyUsageTeleport.get().multiply(distance / 10D);
+                            if (energyContainer == null || energyContainer.getEnergy().smallerThan(energyNeeded)) {
+                                return InteractionResult.PASS;
+                            }
+                            double targetX = pos.getX() + 0.5;
+                            double targetY = pos.getY() + 1.5;
+                            double targetZ = pos.getZ() + 0.5;
+                            MekanismTeleportEvent.MekaTool event = new MekanismTeleportEvent.MekaTool(player, targetX, targetY, targetZ, stack, result);
+                            if (MinecraftForge.EVENT_BUS.post(event)) {
+                                return InteractionResult.PASS;
+                            }
+                            Objects.requireNonNull(energyContainer).extract(energyNeeded, Action.EXECUTE, AutomationType.MANUAL);
+                            if (player.isPassenger()) {
+                                player.dismountTo(targetX, targetY, targetZ);
+                            } else {
+                                player.teleportTo(targetX, targetY, targetZ);
+                            }
+                            player.resetFallDistance();
+                            Mekanism.packetHandler().sendToAllTracking(new PacketPortalFX(pos.above()), player.level(), pos);
+                            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                            return InteractionResult.SUCCESS;
                         }
                     }
                 }
-            });
-        }
+            }
+
+            return InteractionResult.PASS;
+        }, InteractionResult.PASS);
     }
 
     private <MODULE extends ICustomModule<MODULE>> InteractionResult onModuleInteract(IModule<MODULE> module, @NotNull Player player, @NotNull LivingEntity entity,
@@ -526,6 +528,11 @@ public class ModifierMekanic extends NoLevelsModifier
             return Component.translatable("recipe.ticex.modifier.mekanic_requirements");
         }*/
         return null;
+    }
+
+    @Override
+    public InteractionResult onToolUse(IToolStackView iToolStackView, ModifierEntry modifierEntry, Player player, InteractionHand interactionHand, InteractionSource interactionSource) {
+        return teleport(player, interactionHand);
     }
 
     @Override
