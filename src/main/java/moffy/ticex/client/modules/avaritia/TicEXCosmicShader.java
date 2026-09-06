@@ -7,17 +7,17 @@ import committee.nova.mods.avaritia.Const;
 import committee.nova.mods.avaritia.client.AvaritiaForgeClient;
 import committee.nova.mods.avaritia.client.shader.AvaritiaShaders;
 import moffy.ticex.TicEX;
+import moffy.ticex.modifier.ModifierOmnipotence;
 import net.minecraft.Util;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.client.event.RegisterShadersEvent;
+import org.jetbrains.annotations.Nullable;
+import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,20 +26,18 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public final class TicEXCosmicShader {
-    private final RenderStateShard.ShaderStateShard stateShard;
+    private final RenderStateShard.ShaderStateShard cosmicStateShard;
     private final RenderType cosmicRenderType;
+    private ShaderInstance cosmicShaderInstance;
+    private final RenderStateShard.ShaderStateShard hellStateShard;
+    private final RenderType hellRenderType;
+    private ShaderInstance hellShaderInstance;
+
     private final Map<ResourceLocation, RenderType> cosmicArmorRenderTypeCache = new HashMap<>();
+    private final Map<ResourceLocation, RenderType> hellArmorRenderTypeCache = new HashMap<>();
 
-    public int internalRenderTime;
-    public float internalRenderFrame;
-
-    public ShaderInstance shaderInstance;
-    public Uniform cosmicTime;
-    public Uniform cosmicYaw;
-    public Uniform cosmicPitch;
-    public Uniform cosmicExternalScale;
-    public Uniform cosmicOpacity;
-    public Uniform cosmicUVs;
+    public CosmicShaderContext cosmicContext;
+    public CosmicShaderContext hellContext;
 
     public final Function<ResourceLocation, float[]> cosmicUVGetter = Util.memoize(resourceLocation -> {
         float[] cosmicUV = new float[AvaritiaShaders.COSMIC_UVS.length];
@@ -56,7 +54,7 @@ public final class TicEXCosmicShader {
     });
 
     public TicEXCosmicShader() {
-        stateShard = new RenderStateShard.ShaderStateShard(() -> shaderInstance);
+        cosmicStateShard = new RenderStateShard.ShaderStateShard(() -> cosmicShaderInstance);
         cosmicRenderType = RenderType.create(
                 "ticex:cosmic",
                 DefaultVertexFormat.BLOCK,
@@ -65,29 +63,50 @@ public final class TicEXCosmicShader {
                 true,
                 false,
                 RenderType.CompositeState.builder()
-                        .setShaderState(stateShard)
+                        .setShaderState(cosmicStateShard)
+                        .setLightmapState(RenderStateShard.LIGHTMAP)
+                        .setTransparencyState(RenderStateShard.NO_TRANSPARENCY)
+                        .setTextureState(RenderStateShard.BLOCK_SHEET_MIPPED)
+                        .createCompositeState(true)
+        );
+
+        hellStateShard = new RenderStateShard.ShaderStateShard(() -> hellShaderInstance);
+        hellRenderType = RenderType.create(
+                "ticex:cosmic_hell",
+                DefaultVertexFormat.BLOCK,
+                VertexFormat.Mode.QUADS,
+                2097152,
+                true,
+                false,
+                RenderType.CompositeState.builder()
+                        .setShaderState(hellStateShard)
                         .setLightmapState(RenderStateShard.LIGHTMAP)
                         .setTransparencyState(RenderStateShard.NO_TRANSPARENCY)
                         .setTextureState(RenderStateShard.BLOCK_SHEET_MIPPED)
                         .createCompositeState(true)
         );
     }
-
     public void initialize() {
 
     }
 
-    public ShaderInstance getShaderInstance() {
-        return shaderInstance;
-    }
-
-    public RenderType getCosmicRenderType() {
+    public RenderType getCosmicRenderType(ModDataNBT persistentData) {
+        if(persistentData.getBoolean(ModifierOmnipotence.SLAUGHTER_LOC)){
+            return hellRenderType;
+        }
         return cosmicRenderType;
     }
 
-    public RenderType getCosmicRenderTypeArmor(ResourceLocation texture) {
-        if (cosmicArmorRenderTypeCache.containsKey(texture)) {
-            return cosmicArmorRenderTypeCache.get(texture);
+    public RenderType getCosmicRenderTypeArmor(ResourceLocation texture, ModDataNBT persistentData) {
+        if(persistentData.getBoolean(ModifierOmnipotence.SLAUGHTER_LOC)){
+            return getCosmicRenderTypeArmor(texture, hellArmorRenderTypeCache);
+        }
+        return getCosmicRenderTypeArmor(texture, cosmicArmorRenderTypeCache);
+    }
+
+    public RenderType getCosmicRenderTypeArmor(ResourceLocation texture, Map<ResourceLocation, RenderType> renderTypeCache){
+        if (renderTypeCache.containsKey(texture)) {
+            return renderTypeCache.get(texture);
         }
 
         var renderType = RenderType.create(
@@ -98,7 +117,7 @@ public final class TicEXCosmicShader {
                 true,
                 false,
                 RenderType.CompositeState.builder()
-                        .setShaderState(stateShard)
+                        .setShaderState(cosmicStateShard)
                         .setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
                         .setTransparencyState(RenderType.NO_TRANSPARENCY)
                         .setLightmapState(RenderType.LIGHTMAP)
@@ -108,7 +127,7 @@ public final class TicEXCosmicShader {
                         .createCompositeState(true)
         );
 
-        cosmicArmorRenderTypeCache.put(texture, renderType);
+        renderTypeCache.put(texture, renderType);
         return renderType;
     }
 
@@ -117,46 +136,50 @@ public final class TicEXCosmicShader {
             event.registerShader(
                     new ShaderInstance(
                             event.getResourceProvider(),
-                            TicEX.getResource("avaritia/materials/infinity"),
+                            TicEX.getResource("avaritia/infinity"),
                             DefaultVertexFormat.BLOCK
                     ),
             e -> {
-                shaderInstance = e;
-                cosmicTime = Objects.requireNonNull(shaderInstance.getUniform("time"));
-                cosmicYaw = Objects.requireNonNull(shaderInstance.getUniform("yaw"));
-                cosmicPitch = Objects.requireNonNull(shaderInstance.getUniform("pitch"));
-                cosmicExternalScale = Objects.requireNonNull(shaderInstance.getUniform("externalScale"));
-                cosmicOpacity = Objects.requireNonNull(shaderInstance.getUniform("opacity"));
-                cosmicUVs = Objects.requireNonNull(shaderInstance.getUniform("cosmicuvs"));
-                //cosmicTime.set((float) internalRenderTime + internalRenderFrame);
-                shaderInstance.apply();
-                initialize();
-            }
-            );
-        }catch (IOException ignore){}
+                this.cosmicShaderInstance = e;
+                this.cosmicContext = new CosmicShaderContext(
+                        Objects.requireNonNull(this.cosmicShaderInstance.getUniform("time")),
+                        Objects.requireNonNull(this.cosmicShaderInstance.getUniform("yaw")),
+                        Objects.requireNonNull(this.cosmicShaderInstance.getUniform("pitch")),
+                        Objects.requireNonNull(this.cosmicShaderInstance.getUniform("externalScale")),
+                        Objects.requireNonNull(this.cosmicShaderInstance.getUniform("opacity")),
+                        Objects.requireNonNull(this.cosmicShaderInstance.getUniform("cosmicuvs"))
+                );
+                this.cosmicShaderInstance.apply();
+            });
+
+            event.registerShader(
+                    new ShaderInstance(
+                            event.getResourceProvider(),
+                            TicEX.getResource("avaritia/infinity_hell"),
+                            DefaultVertexFormat.BLOCK
+                    ),
+                    e -> {
+                        this.hellShaderInstance = e;
+                        this.hellContext = new CosmicShaderContext(
+                                Objects.requireNonNull(this.hellShaderInstance.getUniform("time")),
+                                Objects.requireNonNull(this.hellShaderInstance.getUniform("yaw")),
+                                Objects.requireNonNull(this.hellShaderInstance.getUniform("pitch")),
+                                Objects.requireNonNull(this.hellShaderInstance.getUniform("externalScale")),
+                                Objects.requireNonNull(this.hellShaderInstance.getUniform("opacity")),
+                                Objects.requireNonNull(this.hellShaderInstance.getUniform("cosmicuvs"))
+                        );
+                        this.hellShaderInstance.apply();
+                    });
+        }catch (IOException e){
+            TicEX.LOGGER.error("Shader Loading Err:",e);
+        }
     }
 
     public void setupUniform(ResourceLocation atlas, boolean onGui) {
-        /*cosmicTime.set(
-                (System.currentTimeMillis() - internalRenderTime) / 2000.0F
-        );
+        this.setupUniform(atlas, onGui, null);
+    }
 
-        float externalScale = onGui ? 100.0f : 1.0f;
-        float yaw = 0f;
-        float pitch = 0f;
-
-        if(!onGui) {
-            GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
-            Camera mainCamera = gameRenderer.getMainCamera();
-
-            yaw = (float) ((mainCamera.getYRot() * 2.0f * Math.PI) / 360.0);
-            pitch = -(float) ((mainCamera.getXRot() * 2.0f * Math.PI) / 360.0);
-        }
-
-        cosmicUVs.set(this.cosmicUVGetter.apply(atlas));
-        cosmicYaw.set(yaw);
-        cosmicPitch.set(pitch);
-        cosmicExternalScale.set(externalScale);*/
+    public void setupUniform(ResourceLocation atlas, boolean onGui, @Nullable ModDataNBT persistentData) {
         final Minecraft mc = Minecraft.getInstance();
         float yaw = 0.0f;
         float pitch = 0.0f;
@@ -167,15 +190,33 @@ public final class TicEXCosmicShader {
             yaw = (float) (mc.player.getYRot() * 2.0f * Math.PI / 360.0);
             pitch = -(float) (mc.player.getXRot() * 2.0f * Math.PI / 360.0);
         }
-        cosmicTime.set(mc.level.getGameTime() % Integer.MAX_VALUE);
-        cosmicYaw.set(yaw);
-        cosmicPitch.set(pitch);
-        cosmicExternalScale.set(scale);
 
-        cosmicOpacity.set(1.0F);
+        CosmicShaderContext context =cosmicContext;
 
-        if (cosmicUVs != null) {
-            cosmicUVs.set(this.cosmicUVGetter.apply(atlas));
+        if(persistentData != null && persistentData.getBoolean(ModifierOmnipotence.SLAUGHTER_LOC)){
+            context = hellContext;
         }
+
+        context.cosmicTime.set(mc.level.getGameTime() % Integer.MAX_VALUE);
+        context.cosmicYaw.set(yaw);
+        context.cosmicPitch.set(pitch);
+        context.cosmicExternalScale.set(scale);
+
+        context.cosmicOpacity.set(1.0F);
+
+        if (context.cosmicUVs != null) {
+            context.cosmicUVs.set(this.cosmicUVGetter.apply(atlas));
+        }
+    }
+
+    public record CosmicShaderContext(
+            Uniform cosmicTime,
+            Uniform cosmicYaw,
+            Uniform cosmicPitch,
+            Uniform cosmicExternalScale,
+            Uniform cosmicOpacity,
+            Uniform cosmicUVs
+    ){
+
     }
 }

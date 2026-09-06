@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.eventbus.api.IEventBus;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 import java.util.Objects;
 
@@ -47,7 +48,7 @@ public class TicEXCosmicShaderProvider {
 
         @Override
         public void startRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
-            RenderType renderType = shader.getCosmicRenderType();
+            RenderType renderType = shader.getCosmicRenderType(ToolStack.from(context.itemStack()).getPersistentData());
             buffer = context.bufferSource().getBuffer(renderType);
 
             // setup uniform
@@ -58,11 +59,6 @@ public class TicEXCosmicShaderProvider {
         @Override
         public void endRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
         }
-
-        @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
-        }
     }
 
     public static class Armor extends ShaderProvider.Armor {
@@ -70,10 +66,8 @@ public class TicEXCosmicShaderProvider {
         public void renderOverlay(RenderArmorPartContext quadContext, IArmorPartContextRenderer renderer) {
             VertexConsumer buffer = quadContext.material().buffer(
                     quadContext.renderContext().bufferSource(),
-                    shader::getCosmicRenderTypeArmor
+                    (texture) -> shader.getCosmicRenderTypeArmor(texture, quadContext.persistentData())
             );
-
-
 
             shader.setupUniform(quadContext.material().atlasLocation(), false);
 
@@ -87,11 +81,6 @@ public class TicEXCosmicShaderProvider {
         @Override
         public void renderUnderlay(RenderArmorPartContext quadContext, IArmorPartContextRenderer bakedConsumer) {
         }
-
-        @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
-        }
     }
 
     public static TicEXCosmicShader getShader() {
@@ -102,9 +91,9 @@ public class TicEXCosmicShaderProvider {
 
         @Override
         public void renderOverlay(RenderGenericContext context, IGenericRenderer renderer) {
-            VertexConsumer vertexConsumer = context.bufferGetter().get(shader.getCosmicRenderType());
+            VertexConsumer vertexConsumer = context.bufferGetter().get(shader.getCosmicRenderType(context.persistentData()));
 
-            shader.setupUniform(context.atlasLocation(), context.onGui());
+            shader.setupUniform(context.atlasLocation(), context.onGui(), context.persistentData());
 
             renderer.render(
                     vertexConsumer, context.renderContext(),
@@ -114,11 +103,6 @@ public class TicEXCosmicShaderProvider {
 
         @Override
         public void renderUnderlay(RenderGenericContext quadContext, IGenericRenderer renderer) {
-        }
-
-        @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
         }
     }
 }

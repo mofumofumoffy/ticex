@@ -2,13 +2,17 @@ package moffy.ticex.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.providers.ShaderProvider;
 import moffy.ticex.client.shaders.TintedShaderArmorTexture;
 import moffy.ticex.client.CustomTinkerRenders;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,6 +26,7 @@ import slimeknights.tconstruct.library.client.armor.texture.TintedArmorTexture;
 import slimeknights.tconstruct.library.client.materials.MaterialRenderInfo;
 import slimeknights.tconstruct.library.client.materials.MaterialRenderInfoLoader;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 import java.util.Optional;
 
@@ -29,20 +34,32 @@ import java.util.Optional;
 @Debug(export = true)
 public abstract class MaterialArmorTextureSupplierMixin {
 
-
-    /*@ModifyExpressionValue(method = "materialGetter", at = @At(value = "INVOKE", target = "Lslimeknights/mantle/data/listener/ResourceValidator;test(Lnet/minecraft/resources/ResourceLocation;)Z"))
-    private static boolean ignoreValidator(boolean original) {
-        return true;
-    }*/
+    @Inject(
+            method = "getArmorTexture",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void setStackContext(
+            ItemStack stack,
+            ArmorTextureSupplier.TextureType textureType,
+            RegistryAccess access,
+            CallbackInfoReturnable<ArmorTexture> cir
+            ){
+            if(cir.getReturnValue() instanceof TintedShaderArmorTexture tintedShaderArmorTexture){
+                tintedShaderArmorTexture.setPersistentData(ToolStack.from(stack).getPersistentData());
+                cir.setReturnValue(tintedShaderArmorTexture);
+            }
+    }
 
     @ModifyReturnValue(method = "lambda$materialGetter$2", at = {
             @At(value = "RETURN", ordinal = 0),
             @At(value = "RETURN", ordinal = 1)
     })
-    private static ArmorTexture materialGetterExtension(ArmorTexture original,
+    private static ArmorTexture materialGetterExtension$2(ArmorTexture original,
                                                         @Local(argsOnly = true) ResourceLocation name,
                                                         @Local MaterialVariantId materialVariantId,
-                                                        @Local(ordinal = 0) int color) {
+                                                        @Local(ordinal = 0) int color
+    ) {
         ShaderProvider.Armor shaderProvider = CustomTinkerRenders.ARMOR_SHADERS.getShaderProvider(materialVariantId);
         if(shaderProvider == null) return original;
 
@@ -52,7 +69,8 @@ public abstract class MaterialArmorTextureSupplierMixin {
 
     @Inject(method = "lambda$materialGetter$2", at = @At(value = "INVOKE", target = "Ljava/util/Optional;isPresent()Z"), cancellable = true)
     private static void materialGetterExtension$3(ResourceLocation name, String materialStr, CallbackInfoReturnable<ArmorTexture> cir,
-                                                  @Local MaterialVariantId materialId) {
+                                                  @Local MaterialVariantId materialId
+    ) {
         Optional<MaterialRenderInfo> infoOptional = MaterialRenderInfoLoader.INSTANCE.getRenderInfo(materialId);
         if(infoOptional.isEmpty()) {
             ShaderProvider.Armor shaderProvider = CustomTinkerRenders.ARMOR_SHADERS.getShaderProvider(materialId);

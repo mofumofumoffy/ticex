@@ -7,11 +7,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.Material;
+import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
 public record RenderArmorPartContext(
         RenderContext renderContext,
         Model model,
         Material material,
+        ModDataNBT persistentData,
         boolean hasGlint
 ) {
     public static VertexConsumer getNakedBuffer(MultiBufferSource bufferSource, Material material, boolean hasGlint) {

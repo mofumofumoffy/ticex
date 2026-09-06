@@ -77,11 +77,6 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
-        }
-
-        @Override
         public void prepareRenderItem(ItemRenderContext itemRenderContext) {
         }
 
@@ -149,11 +144,6 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
-        }
-
-        @Override
         public void prepareRenderItem(ItemRenderContext context) {
             techLevel = null;
         }
@@ -212,11 +202,6 @@ public class TicEXDEShaderProvider {
         @Override
         public void renderUnderlay(RenderArmorPartContext quadContext, IArmorPartContextRenderer renderer) {
         }
-
-        @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
-        }
     }
 
     public static class Generic extends ShaderProvider.Generic {
@@ -243,11 +228,6 @@ public class TicEXDEShaderProvider {
         @Override
         public void renderUnderlay(RenderGenericContext context, IGenericRenderer renderer) {
 
-        }
-
-        @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
         }
     }
 }

@@ -21,8 +21,6 @@ public abstract class ShaderProvider<RENDER_CONTEXT, RENDERER> {
     public void prepareRenderMaterial(MaterialVariantId materialId) {
     }
 
-    public abstract ShaderInstance getShaderInstance();
-
     public static abstract class Tool extends ShaderProvider<RenderQuadContext, IQuadContextRenderer> {
 
         public abstract void prepareRenderItem(ItemRenderContext context);

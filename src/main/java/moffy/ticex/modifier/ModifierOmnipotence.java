@@ -4,11 +4,14 @@ import committee.nova.mods.avaritia.init.registry.ModDamageTypes;
 import committee.nova.mods.avaritia.util.ToolUtils;
 import java.util.Map;
 import java.util.function.BiFunction;
+
+import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.OmnipotenceProperty;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -38,6 +41,8 @@ import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 public class ModifierOmnipotence
     extends NoLevelsModifier
     implements ProjectileHitModifierHook, MeleeHitModifierHook, BreakSpeedModifierHook, ProvidePropertyModifierHook {
+
+    public static final ResourceLocation SLAUGHTER_LOC = TicEX.getResource("omnipotent_slaughter");
 
     @Override
     public int getPriority() {

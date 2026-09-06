@@ -132,6 +132,7 @@ public class TicEXSBRenderers {
         RenderGenericContext genericContext = new RenderGenericContext(
                 renderContext, atlasMaterial.atlasLocation(), renderType,
                 rt -> bufferSource.getBuffer(getDecoratedRenderType(rt)),
+                ToolStack.from(stack).getPersistentData(),
                 itemRenderContext.displayContext() == ItemDisplayContext.GUI
         );
 

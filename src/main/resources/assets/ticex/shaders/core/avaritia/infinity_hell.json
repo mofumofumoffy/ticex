@@ -5,7 +5,7 @@
     "dstrgb": "1-srcalpha"
   },
   "vertex": "avaritia:cosmic",
-  "fragment": "ticex:avaritia/materials/infinity",
+  "fragment": "ticex:avaritia/infinity_hell",
   "attributes": [
     "Position",
     "Color",

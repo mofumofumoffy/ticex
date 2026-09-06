@@ -11,12 +11,14 @@ import net.minecraft.client.resources.model.Material;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.client.armor.texture.TintedArmorTexture;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
+import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
 public class TintedShaderArmorTexture extends TintedArmorTexture {
 
     private final ShaderProvider.Armor provider;
     private final Material textureMaterial;
     private final MaterialVariantId material;
+    private ModDataNBT persistentData;
     private int color;
 
     public TintedShaderArmorTexture(
@@ -43,6 +45,10 @@ public class TintedShaderArmorTexture extends TintedArmorTexture {
         return this;
     }
 
+    public void setPersistentData(ModDataNBT persistentData){
+        this.persistentData = persistentData;
+    }
+
     @Override
     public void renderTexture(
             @NotNull Model model,
@@ -67,6 +73,7 @@ public class TintedShaderArmorTexture extends TintedArmorTexture {
                     renderContext,
                     model,
                     textureMaterial,
+                    persistentData,
                     hasGlint
             );
             this.provider.prepareRenderMaterial(material);

@@ -20,15 +20,15 @@ import net.minecraftforge.fml.LogicalSide;
 import slimeknights.tconstruct.library.tools.nbt.ToolDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
-public class OmnipotenceProperty {
+import static moffy.ticex.modifier.ModifierOmnipotence.SLAUGHTER_LOC;
 
-    public static final ResourceLocation ANNIHILATE_ALL_LOC = TicEX.getResource("annihilate_all");
+public class OmnipotenceProperty {
 
     public static BiFunction<Player, ItemStack, Map<String, Object>> getProperties() {
         return (user, stack) -> {
             Map<String, Object> result = new HashMap<>();
 
-            result.put("setAnnihilateAll", setAnnihilateAll(user, stack));
+            result.put("setSlaughterAll", setAnnihilateAll(user, stack));
             result.put("annihilate", annihilate(user, stack));
 
             return result;
@@ -41,7 +41,7 @@ public class OmnipotenceProperty {
             if (!level.isClientSide){
                 ToolDataNBT persistentData = ToolStack.from(stack).getPersistentData();
                 boolean newValue = args.getBoolean(0);
-                persistentData.putBoolean(ANNIHILATE_ALL_LOC, newValue);
+                persistentData.putBoolean(SLAUGHTER_LOC, newValue);
                 return MethodResult.of(true);
             }
             return MethodResult.of(false);
@@ -58,7 +58,7 @@ public class OmnipotenceProperty {
                             user,
                             ModConfig.swordAttackRange.get(),
                             ModConfig.swordRangeDamage.get(),
-                            persistentData.getBoolean(ANNIHILATE_ALL_LOC),
+                            persistentData.getBoolean(SLAUGHTER_LOC),
                             ModConfig.isSwordAttackLightning.get()
                     );
                     user.getCooldowns().addCooldown(stack.getItem(), 20);

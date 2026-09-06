@@ -20,6 +20,7 @@ import slimeknights.tconstruct.library.client.armor.texture.ArmorTextureSupplier
 import slimeknights.tconstruct.library.client.armor.texture.TrimArmorTextureSupplier;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 
 @Mixin(value = TrimArmorTextureSupplier.class, remap = false)
@@ -31,8 +32,7 @@ public abstract class TrimArmorTextureSupplierMixin {
             at = @At(value = "INVOKE", target = "Lslimeknights/tconstruct/library/client/armor/texture/TrimArmorTextureSupplier$TrimArmorTexture;create(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/world/item/armortrim/TrimMaterial;)Lslimeknights/tconstruct/library/client/armor/texture/ArmorTextureSupplier$ArmorTexture;")
     )
     private ArmorTextureSupplier.ArmorTexture insertTexture(ResourceLocation root, TrimMaterial material, Operation<ArmorTextureSupplier.ArmorTexture> original,
-                                                            @Local(argsOnly = true) ItemStack stack,
-                                                            @Local(index = 5) String materialId) {
+                                                            @Local(name = "materialId") String materialId, @Local(argsOnly = true) ItemStack stack) {
         Material textureMaterial = new Material(
                 Sheets.ARMOR_TRIMS_SHEET,
                 root.withSuffix('_' + material.assetName())
@@ -45,12 +45,14 @@ public abstract class TrimArmorTextureSupplierMixin {
             ShaderProvider.Armor shaderProvider = CustomTinkerRenders.ARMOR_SHADERS.getShaderProvider(id);
 
             if (shaderProvider != null) {
-                return new TintedShaderArmorTexture(
+                TintedShaderArmorTexture tintedShaderArmorTexture = new TintedShaderArmorTexture(
                         textureMaterial,
                         -1,
                         shaderProvider,
                         materialVariantId
                 );
+                tintedShaderArmorTexture.setPersistentData(ToolStack.from(stack).getPersistentData());
+                return tintedShaderArmorTexture;
             }
         }
 
