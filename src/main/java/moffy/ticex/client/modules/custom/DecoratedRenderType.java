@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.custom;
+package moffy.ticex.client.modules.custom;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.VertexFormat;

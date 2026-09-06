@@ -11,7 +11,7 @@ package moffy.ticex.event;
 import com.tacz.guns.api.event.common.EntityHurtByGunEvent;
 import com.tacz.guns.api.event.common.GunDamageSourcePart;
 import com.tacz.guns.api.event.common.GunMeleeEvent;
-import moffy.ticex.client.render.tacz.BlitzGunIconDecorator;
+import moffy.ticex.client.modules.tacz.BlitzGunIconDecorator;
 import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.lib.hook.DamageSourceModifierHook;
 import moffy.ticex.mixin.CriticalAccessor;

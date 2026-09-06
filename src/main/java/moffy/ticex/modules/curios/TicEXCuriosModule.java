@@ -5,7 +5,7 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.curios.CuriosCapProvider;
 import moffy.ticex.client.modules.ticex.TicEXKeyBindings;
-import moffy.ticex.client.render.curios.LayerResonanceTools;
+import moffy.ticex.client.modules.curios.LayerResonanceTools;
 import moffy.ticex.entity.curios.ResonanceToolProjectile;
 import moffy.ticex.event.TicEXCuriosEvent;
 import moffy.ticex.item.GloveItem;

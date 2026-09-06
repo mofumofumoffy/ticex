@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.slashblade;
+package moffy.ticex.client.modules.slashblade;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import mods.flammpfeil.slashblade.client.renderer.entity.BladeItemEntityRenderer;

@@ -9,7 +9,7 @@ package moffy.ticex.modules.tacz;
  */
 
 import moffy.addonapi.AddonModule;
-import moffy.ticex.client.render.custom.CustomModel;
+import moffy.ticex.client.modules.custom.CustomModel;
 import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.event.TicEXTaczEvent;
 import moffy.ticex.item.modifiable.ModifiableGunItem;

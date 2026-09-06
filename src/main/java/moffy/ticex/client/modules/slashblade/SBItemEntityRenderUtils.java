@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.slashblade;
+package moffy.ticex.client.modules.slashblade;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

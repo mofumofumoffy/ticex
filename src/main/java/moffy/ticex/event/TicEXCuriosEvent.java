@@ -3,7 +3,7 @@ package moffy.ticex.event;
 import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.modules.ticex.TicEXKeyBindings;
-import moffy.ticex.client.render.curios.ResonanceToolProjectileRenderer;
+import moffy.ticex.client.modules.curios.ResonanceToolProjectileRenderer;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
 import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXItems;

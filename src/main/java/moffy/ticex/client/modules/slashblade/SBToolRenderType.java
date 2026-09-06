@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.slashblade;
+package moffy.ticex.client.modules.slashblade;
 
 import moffy.ticex.TicEX;
 import net.minecraft.client.Minecraft;

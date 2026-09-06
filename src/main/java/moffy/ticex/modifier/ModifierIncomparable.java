@@ -1,5 +1,6 @@
 package moffy.ticex.modifier;
 
+import moffy.ticex.client.modules.ticex.UnsyncedToolContainerMenu;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
 import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.IncomparableProperty;
@@ -7,11 +8,17 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.GeneralInteractionModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.interaction.InteractionSource;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.SlotStackModifierHook;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap;
@@ -21,16 +28,17 @@ import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IModDataView;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
+import slimeknights.tconstruct.library.utils.Util;
 
 import java.util.Map;
 import java.util.function.BiFunction;
 
-public class ModifierIncomparable extends NoLevelsModifier implements ProvidePropertyModifierHook, ToolInventoryCapability.InventoryModifierHook, SlotStackModifierHook {
+public class ModifierIncomparable extends Modifier implements ProvidePropertyModifierHook, GeneralInteractionModifierHook, ToolInventoryCapability.InventoryModifierHook, SlotStackModifierHook {
 
     @Override
     protected void registerHooks(ModuleHookMap.@NotNull Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this, TicEXModifierHooks.PROPERTY_PROVIDER, ToolInventoryCapability.HOOK, ModifierHooks.SLOT_STACK);
+        hookBuilder.addHook(this, TicEXModifierHooks.PROPERTY_PROVIDER, ToolInventoryCapability.HOOK, ModifierHooks.GENERAL_INTERACT, ModifierHooks.SLOT_STACK);
     }
 
     @Override
@@ -40,7 +48,7 @@ public class ModifierIncomparable extends NoLevelsModifier implements ProvidePro
 
     @Override
     public int getSlots(IToolStackView iToolStackView, ModifierEntry modifierEntry) {
-        return 6;
+        return modifierEntry.getLevel();
     }
 
     @Override
@@ -99,5 +107,17 @@ public class ModifierIncomparable extends NoLevelsModifier implements ProvidePro
     @Override
     public boolean isItemValid(IToolStackView tool, ModifierEntry modifier, int slot, ItemStack stack) {
         return slot < getSlots(tool, modifier) && stack.getItem() instanceof IModifiable;
+    }
+
+    @Override
+    public InteractionResult onToolUse(IToolStackView iToolStackView, ModifierEntry modifierEntry, Player player, InteractionHand interactionHand, InteractionSource interactionSource) {
+        if (player.isShiftKeyDown()) {
+            ItemStack stack = player.getItemInHand(interactionHand);
+            InteractionResult result = UnsyncedToolContainerMenu.tryOpenContainer(stack, iToolStackView, iToolStackView.getDefinition(), player, Util.getSlotType(interactionHand));
+            if (result.consumesAction()) {
+                return result;
+            }
+        }
+        return InteractionResult.PASS;
     }
 }

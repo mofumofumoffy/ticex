@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.avaritia;
+package moffy.ticex.client.modules.avaritia;
 
 import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;

@@ -22,24 +22,9 @@ import slimeknights.tconstruct.library.utils.Util;
 import java.util.List;
 
 public class ModifiableGauntlet extends ModifiableItem {
-    private int[] cooldowns;
 
     public ModifiableGauntlet(Properties properties) {
         super(properties, TicEXToolDefinitions.GAUNTLET_DEFINITION);
-        this.cooldowns = new int[6]; // max slots;
-    }
-
-    @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level levelIn, Player playerIn, @NotNull InteractionHand handIn) {
-        if (playerIn.isShiftKeyDown()) {
-            ItemStack stack = playerIn.getItemInHand(handIn);
-            InteractionResult result = UnsyncedToolContainerMenu.tryOpenContainer(stack, null, getToolDefinition(), playerIn, Util.getSlotType(handIn));
-            if (result.consumesAction()) {
-                return new InteractionResultHolder<>(result, stack);
-            }
-        }
-
-        return super.use(levelIn, playerIn, handIn);
     }
 
     @Override

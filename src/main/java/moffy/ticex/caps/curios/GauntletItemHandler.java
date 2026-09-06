@@ -1,6 +1,7 @@
 package moffy.ticex.caps.curios;
 
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.tools.capability.inventory.ToolInventoryCapability;
@@ -27,7 +28,7 @@ public class GauntletItemHandler extends ToolInventoryCapability implements ICur
 
     @Override
     public int getSlots() {
-        return 6;
+        return tool.getModifierLevel(TicEXModifiers.INCOMPARABLE_MODIFIER.get());
     }
 
     @Override

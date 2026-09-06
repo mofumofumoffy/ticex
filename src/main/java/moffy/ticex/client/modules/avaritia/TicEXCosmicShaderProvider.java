@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.avaritia;
+package moffy.ticex.client.modules.avaritia;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import moffy.ticex.client.providers.context.ItemRenderContext;

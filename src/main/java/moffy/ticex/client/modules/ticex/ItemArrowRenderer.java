@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.ticex;
+package moffy.ticex.client.modules.ticex;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

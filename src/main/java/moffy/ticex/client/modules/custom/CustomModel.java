@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.custom;
+package moffy.ticex.client.modules.custom;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;

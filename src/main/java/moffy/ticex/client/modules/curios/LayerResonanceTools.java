@@ -1,8 +1,8 @@
-package moffy.ticex.client.render.curios;
+package moffy.ticex.client.modules.curios;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import moffy.ticex.client.render.ticex.TicEXRenderUtils;
+import moffy.ticex.client.modules.ticex.TicEXRenderUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;

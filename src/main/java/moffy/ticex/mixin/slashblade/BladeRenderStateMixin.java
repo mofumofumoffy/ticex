@@ -7,7 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
 import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
-import moffy.ticex.client.render.slashblade.TicEXSBRenderers;
+import moffy.ticex.client.modules.slashblade.TicEXSBRenderers;
 import moffy.ticex.lib.context.TicEXContexts;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

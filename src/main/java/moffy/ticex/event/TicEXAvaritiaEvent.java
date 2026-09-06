@@ -1,6 +1,6 @@
 package moffy.ticex.event;
 
-import moffy.ticex.client.render.ticex.ItemArrowRenderer;
+import moffy.ticex.client.modules.ticex.ItemArrowRenderer;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
 import moffy.ticex.registry.TicEXEntities;
 import moffy.ticex.registry.TicEXModifiers;

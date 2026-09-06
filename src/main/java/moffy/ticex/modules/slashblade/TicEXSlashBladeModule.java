@@ -3,7 +3,7 @@ package moffy.ticex.modules.slashblade;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.slashblade.SBItemCapabilityProvider;
-import moffy.ticex.client.render.custom.CustomModel;
+import moffy.ticex.client.modules.custom.CustomModel;
 import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.event.TicEXSBEvent;

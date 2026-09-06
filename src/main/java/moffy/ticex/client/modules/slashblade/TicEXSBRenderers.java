@@ -1,4 +1,4 @@
-package moffy.ticex.client.render.slashblade;
+package moffy.ticex.client.modules.slashblade;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
 import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.client.render.custom.DecoratedRenderType;
+import moffy.ticex.client.modules.custom.DecoratedRenderType;
 import moffy.ticex.client.providers.context.ItemRenderContext;
 import moffy.ticex.client.providers.context.RenderContext;
 import moffy.ticex.client.providers.context.tool.RenderGenericContext;
