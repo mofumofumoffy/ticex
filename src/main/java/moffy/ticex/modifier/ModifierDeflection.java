@@ -60,6 +60,10 @@ public class ModifierDeflection extends NoLevelsModifier implements MeleeDamageM
             LivingEntity target = context.getLivingTarget();
             Player attacker = context.getPlayerAttacker();
 
+            if(target instanceof Player && target.getServer() != null && !target.getServer().isPvpAllowed()){
+                return 0;
+            }
+
             if (target != null && attacker != null) {
                 for (ModifierEntry toolEntry : tool.getModifierList()) {
                     var hook = toolEntry.getHook(ModifierHooks.MELEE_HIT);

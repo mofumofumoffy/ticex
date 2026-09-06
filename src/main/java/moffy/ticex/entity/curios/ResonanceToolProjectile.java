@@ -100,6 +100,10 @@ public class ResonanceToolProjectile extends ItemArrow {
             return false;
         }
 
+        if(target instanceof Player && target.getServer() != null && !target.getServer().isPvpAllowed()){
+            return false;
+        }
+
         Vec3 start = shooter.getEyePosition();
         Vec3 end = target.getEyePosition();
 
