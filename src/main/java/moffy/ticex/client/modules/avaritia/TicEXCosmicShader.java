@@ -99,25 +99,25 @@ public final class TicEXCosmicShader {
 
     public RenderType getCosmicRenderTypeArmor(ResourceLocation texture, ModDataNBT persistentData) {
         if(persistentData.getBoolean(ModifierOmnipotence.SLAUGHTER_LOC)){
-            return getCosmicRenderTypeArmor(texture, hellArmorRenderTypeCache);
+            return getCosmicRenderTypeArmor(texture, hellArmorRenderTypeCache, true);
         }
-        return getCosmicRenderTypeArmor(texture, cosmicArmorRenderTypeCache);
+        return getCosmicRenderTypeArmor(texture, cosmicArmorRenderTypeCache, false);
     }
 
-    public RenderType getCosmicRenderTypeArmor(ResourceLocation texture, Map<ResourceLocation, RenderType> renderTypeCache){
+    public RenderType getCosmicRenderTypeArmor(ResourceLocation texture, Map<ResourceLocation, RenderType> renderTypeCache, boolean isHell){
         if (renderTypeCache.containsKey(texture)) {
             return renderTypeCache.get(texture);
         }
 
         var renderType = RenderType.create(
-                "ticex:cosmic_armor",
+                isHell ? "ticex:cosmic_armor" : "ticex:cosmic_hell_armor",
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
                 256,
                 true,
                 false,
                 RenderType.CompositeState.builder()
-                        .setShaderState(cosmicStateShard)
+                        .setShaderState(isHell ? hellStateShard : cosmicStateShard)
                         .setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
                         .setTransparencyState(RenderType.NO_TRANSPARENCY)
                         .setLightmapState(RenderType.LIGHTMAP)

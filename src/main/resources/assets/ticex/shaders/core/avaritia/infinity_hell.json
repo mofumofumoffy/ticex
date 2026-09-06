@@ -4,7 +4,7 @@
     "srcrgb": "srcalpha",
     "dstrgb": "1-srcalpha"
   },
-  "vertex": "avaritia:cosmic",
+  "vertex": "avaritia:hell",
   "fragment": "ticex:avaritia/infinity_hell",
   "attributes": [
     "Position",

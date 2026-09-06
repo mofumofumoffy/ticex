@@ -57,12 +57,12 @@ float oneOverExternalScale = 1.0/externalScale;
 int uvtiles = 16;
 
 // background colour
-vec4 col = vec4(0.1,0.0,0.0,1.0);
+vec4 col = vec4(0.2, 0.0, 0.0, 1.0);
 
 float pulse = mod(time,400)/400.0;
 
-col.g = sin(pulse*M_PI*2) * 0.075 + 0.225;
-col.b = cos(pulse*M_PI*2) * 0.05 + 0.3;
+col.g = sin(pulse*M_PI*2) * 0.025 + 0.075;
+col.b = cos(pulse*M_PI*2) * 0.02 + 0.05;
 
 // get ray from camera to fragment
 vec4 dir = normalize(vec4(-fPos, 0));
