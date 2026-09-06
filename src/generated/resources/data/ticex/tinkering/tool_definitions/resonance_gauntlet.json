@@ -30,7 +30,7 @@
       "type": "tconstruct:traits",
       "traits": [
         {
-          "level": 1,
+          "level": 6,
           "name": "ticex:incomparable"
         }
       ]

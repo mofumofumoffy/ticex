@@ -167,7 +167,7 @@ public class ToolDefinitionProvider extends AbstractToolDefinitionDataProvider {
                     .primaryPart(0).build())
                 .module(DefaultMaterialsModule.builder().material(randomCatalystMaterial).build())
                 .smallToolStartingSlots()
-                .module(ToolTraitsModule.builder().trait(TicEXModifiers.INCOMPARABLE_MODIFIER).build());
+                .module(ToolTraitsModule.builder().trait(TicEXModifiers.INCOMPARABLE_MODIFIER, 6).build());
     }
 
     @Override

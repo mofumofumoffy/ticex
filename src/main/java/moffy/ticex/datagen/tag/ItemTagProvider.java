@@ -107,7 +107,9 @@ public class ItemTagProvider extends ItemTagsProvider {
                 TicEX.getResource("catalyst_slashblade"),
                 TicEX.getResource("catalyst_kinetic_gun"),
                 TicEX.getResource("catalyst_irons_spellbook"),
-                TicEX.getResource("catalyst_meka_tool")
+                TicEX.getResource("catalyst_meka_tool"),
+                TicEX.getResource("catalyst_meka_tana"),
+                TicEX.getResource("catalyst_meka_bow")
         );
 
         //catalyst_armors
@@ -219,6 +221,12 @@ public class ItemTagProvider extends ItemTagsProvider {
                 HARVEST,
                 BONUS_SLOTS,
                 DURABILITY
+        );
+
+        addToolTags(
+                TicEX.getResource("resonance_gauntlet"),
+                MODIFIABLE,
+                TicEXTags.Items.MODIFIABLE_GAUNTLET
         );
 
         //armors

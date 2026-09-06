@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResonanceTools {
+    public static final float BASE_RADIUS = 1.2f;
+
     public static void shoot(Player player) {
         CuriosApi.getCuriosInventory(player).ifPresent(curioItemHandler -> {
             curioItemHandler.findFirstCurio(TicEXItems.RESONANCE_GAUNTLET.get()).ifPresent(slotResult -> {
@@ -56,7 +58,7 @@ public class ResonanceTools {
             float time = player.tickCount;
             double baseAngle = 2 * Math.PI / availableSlots.size() * shootSlot - time * 0.07 + Math.toRadians(player.getYRot());
             ;
-            double radius = 1.4f;
+            double radius = getRadius(itemHandler.getSlots());
 
             Vec3 offset = new Vec3(
                     Math.cos(baseAngle),
@@ -94,5 +96,9 @@ public class ResonanceTools {
             TicEXSyncEntityMovements packet = new TicEXSyncEntityMovements(arrow);
             TicEX.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> arrow), packet);
         }
+    }
+
+    public static double getRadius(int slot){
+        return BASE_RADIUS + (Math.ceil(slot / 6d) * 0.2);
     }
 }
