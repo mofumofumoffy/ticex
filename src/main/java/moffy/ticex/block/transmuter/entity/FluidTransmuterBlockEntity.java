@@ -26,6 +26,7 @@ import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.fluid.FluidTankAnimated;
 import slimeknights.tconstruct.library.utils.NBTTags;
+import slimeknights.tconstruct.library.utils.Util;
 import slimeknights.tconstruct.smeltery.block.component.SearedTankBlock;
 import slimeknights.tconstruct.smeltery.block.controller.ControllerBlock;
 import slimeknights.tconstruct.smeltery.block.controller.MelterBlock;
@@ -38,7 +39,7 @@ public class FluidTransmuterBlockEntity extends NameableBlockEntity implements I
     public static final BlockEntityTicker<FluidTransmuterBlockEntity> SERVER_TICKER =
             (level, blockPos, blockState, blockEntity) -> blockEntity.serverTick(level, blockPos, blockState);
 
-    private static final Component NAME = TConstruct.makeTranslation("gui", TicEX.MODID);
+    private static final Component NAME = Component.translatable(Util.makeTranslationKey("gui", TicEX.getResource("fluid_transmuter")));
     private static final int TANK_CAPACITY = SearedTankBlock.TankType.INGOT_TANK.getCapacity();
 
     private final FluidTankAnimated tank;
