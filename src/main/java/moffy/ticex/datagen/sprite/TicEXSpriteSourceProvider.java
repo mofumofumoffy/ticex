@@ -1,9 +1,11 @@
 package moffy.ticex.datagen.sprite;
 
 import moffy.ticex.TicEX;
+import moffy.ticex.client.sprites.BaseSpriteSource;
 import moffy.ticex.lib.TicEXMaterials;
 import net.minecraft.client.renderer.texture.atlas.sources.DirectoryLister;
 import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
+import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -13,6 +15,7 @@ import slimeknights.tconstruct.library.client.modifiers.TrimModifierModel;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,9 +44,9 @@ public class TicEXSpriteSourceProvider extends SpriteSourceProvider {
 
 
         atlas(BLOCKS_ATLAS)
-                .addSource(new DirectoryLister("entity", "entity/"))
-                .addSource(new DirectoryLister("tinker_armor", "tinker_armor/"))
-                .addSource(new DirectoryLister("obj_tool", "obj_tool/"))
+                .addSource(new SingleFile(TicEX.getResource("entity/white_blank"), Optional.empty()))
+                .addSource(new BaseSpriteSource("tinker_armor", "tinker_armor/"))
+                .addSource(new BaseSpriteSource("obj_tool", "obj_tool/"))
                 .addSource(new PalettedPermutations(
                         List.of(TrimModifierModel.TRIM_TEXTURES),
                         trimPalette, materialMap));

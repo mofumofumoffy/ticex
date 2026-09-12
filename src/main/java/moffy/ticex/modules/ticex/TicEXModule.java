@@ -7,6 +7,7 @@ import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.TiCEXToolCapabilityProvider;
 import moffy.ticex.client.modules.ticex.UnsyncedToolContainerMenu;
 import moffy.ticex.client.modules.ticex.screen.FluidTransmuterScreen;
+import moffy.ticex.client.sprites.TicEXSpriteSources;
 import moffy.ticex.event.TicEXEvent;
 import moffy.ticex.item.cores.ItemFlickeringCore;
 import moffy.ticex.item.cores.ItemReconstCore;
@@ -149,7 +150,7 @@ public class TicEXModule implements AddonModule {
 
     @Override
     public void initClient(FMLJavaModLoadingContext context) {
-
+        TicEXSpriteSources.register();
     }
 
     @Override
