@@ -23,6 +23,7 @@
       "draw_speed": 0.2,
       "durability": 990,
       "velocity": 0.1
-    }
+    },
+    "tconstruct:maille": {}
   }
 }

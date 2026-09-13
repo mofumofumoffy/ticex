@@ -192,6 +192,10 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
                 .knockbackResistance(100f),
             StatlessMaterialStats.MAILLE
         );
+        addMaterialStats(
+                TicEXMaterials.ASTRAL,
+                StatlessMaterialStats.MAILLE
+        );
     }
 
     private void addMisc() {

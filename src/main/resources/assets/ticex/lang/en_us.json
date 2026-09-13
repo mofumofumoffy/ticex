@@ -279,6 +279,12 @@
   "modifier.ticex.unravel": "Unravel",
   "modifier.ticex.unravel.flavor": "Let's be friends and just walk away",
   "modifier.ticex.unravel.description": "Critical hits have a 30% chance of removing armor",
+  "modifier.ticex.planetarium": "Planetarium",
+  "modifier.ticex.planetarium.flavor": "You may see the stars called Deneb, Altair, and Vega...",
+  "modifier.ticex.planetarium.description": "As stars become more visible, the probability of a critical hit increases.",
+  "modifier.ticex.telescope": "Telescope",
+  "modifier.ticex.telescope.flavor": "It's time for astronomical observation.",
+  "modifier.ticex.telescope.description": "During the time when stars are visible, attack power, defense power, and mining speed increase.",
 
   "stat.tconstruct.harvest_tier.ticex.infinity": "Infinity",
   "stat.ticex.catalyst_mekasuit_helmet": "Catalyst(MekaSuit Helmet)",

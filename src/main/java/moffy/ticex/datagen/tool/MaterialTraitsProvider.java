@@ -1,8 +1,5 @@
 package moffy.ticex.datagen.tool;
 
-import static slimeknights.tconstruct.library.materials.MaterialRegistry.ARMOR;
-import static slimeknights.tconstruct.library.materials.MaterialRegistry.MELEE_HARVEST;
-
 import moffy.ticex.lib.TicEXMaterials;
 import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.PackOutput;
@@ -10,6 +7,8 @@ import slimeknights.tconstruct.library.data.material.AbstractMaterialDataProvide
 import slimeknights.tconstruct.library.data.material.AbstractMaterialTraitDataProvider;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.tools.TinkerModifiers;
+
+import static slimeknights.tconstruct.library.materials.MaterialRegistry.*;
 
 public class MaterialTraitsProvider extends AbstractMaterialTraitDataProvider {
 
@@ -79,6 +78,7 @@ public class MaterialTraitsProvider extends AbstractMaterialTraitDataProvider {
         addDefaultTraits(TicEXMaterials.OD, TicEXModifiers.AFLOAT_MODIFIER, TicEXModifiers.DUNGEON_MASTER_MODIFIER, TicEXModifiers.UNRAVEL_MODIFIER);
         addDefaultTraits(TicEXMaterials.ASTRAL, TicEXModifiers.TELESCOPE_MODIFIER);
         addTraits(TicEXMaterials.ASTRAL, MELEE_HARVEST, TicEXModifiers.TELESCOPE_MODIFIER, TicEXModifiers.PLANETARIUM_MODIFIER);
+        addTraits(TicEXMaterials.ASTRAL, RANGED, TicEXModifiers.TELESCOPE_MODIFIER, TicEXModifiers.PLANETARIUM_MODIFIER);
 
         addDefaultTraits(TicEXMaterials.RECONSTRUCTION, TicEXModifiers.REBIRTH_MODIFIER);
         addTraits(TicEXMaterials.RECONSTRUCTION, ARMOR, TicEXModifiers.REBIRTH_MODIFIER);
