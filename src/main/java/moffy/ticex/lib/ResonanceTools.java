@@ -5,6 +5,7 @@ import moffy.ticex.caps.curios.GauntletItemHandler;
 import moffy.ticex.entity.curios.ResonanceToolProjectile;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
 import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.PacketDistributor;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.ArrayList;
@@ -23,7 +26,7 @@ public class ResonanceTools {
 
     public static void shoot(Player player) {
         CuriosApi.getCuriosInventory(player).ifPresent(curioItemHandler -> {
-            curioItemHandler.findFirstCurio(TicEXItems.RESONANCE_GAUNTLET.get()).ifPresent(slotResult -> {
+            curioItemHandler.findFirstCurio(stack -> stack.getItem() instanceof IModifiable && ToolStack.from(stack).getModifierLevel(TicEXModifiers.INCOMPARABLE_MODIFIER.get()) > 0).ifPresent(slotResult -> {
                 shootGauntletStack(player, slotResult.stack());
             });
         });
