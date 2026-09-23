@@ -1,5 +1,6 @@
 package moffy.ticex.caps.curios;
 
+import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.registry.TicEXItems;
 import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,7 +29,7 @@ public class GauntletItemHandler extends ToolInventoryCapability implements ICur
 
     @Override
     public int getSlots() {
-        return tool.getModifierLevel(TicEXModifiers.INCOMPARABLE_MODIFIER.get());
+        return TicEXUtils.safeGetModifierLevel(tool, TicEXModifiers.INCOMPARABLE_MODIFIER);
     }
 
     @Override
