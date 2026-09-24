@@ -26,7 +26,7 @@ public abstract class SummonedSwordMixin extends Projectile {
         super(entityType, level);
     }
 
-    @Inject(at = @At("HEAD"), method = "onHitEntity", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "onHitEntity", cancellable = true, remap = true)
     protected void onHitEntity(EntityHitResult entityHitResult, CallbackInfo ci) {
         Entity shooter = getOwner();
         Entity target = entityHitResult.getEntity();
