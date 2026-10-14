@@ -5,7 +5,7 @@ import com.brandon3055.draconicevolution.datagen.FusionRecipeBuilder;
 import com.brandon3055.draconicevolution.init.DEContent;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.recipes.ITicEXSmelteryRecipeHelper;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.registry.TicEXItems;
 import moffy.ticex.registry.TicEXModifiers;

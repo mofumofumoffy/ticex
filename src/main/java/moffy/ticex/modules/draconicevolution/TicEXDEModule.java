@@ -2,13 +2,14 @@ package moffy.ticex.modules.draconicevolution;
 
 import com.brandon3055.brandonscore.api.TechLevel;
 import moffy.addonapi.AddonModule;
+import moffy.ticex.TicEX;
 import moffy.ticex.caps.draconicevolution.DEItemCapabilityProvider;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShader;
 import moffy.ticex.client.modules.draconicevolution.TicEXDEShaderProvider;
 import moffy.ticex.client.lib.PartPredicate;
 import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.item.cores.ItemReconstCore;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import moffy.ticex.modifier.ModifierDragonForce;
 import moffy.ticex.modifier.ModifierEvolved;
 import moffy.ticex.modifier.ModifierSoulRending;
@@ -32,6 +33,20 @@ public class TicEXDEModule implements AddonModule {
     @Override
     public void init(FMLJavaModLoadingContext context) {
         ToolCapabilityProvider.register(DEItemCapabilityProvider::new);
+
+        TicEXMaterials.DRACONIUM = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "draconium"));
+        TicEXMaterials.WYVERN = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "wyvern"));
+        TicEXMaterials.DRACONIC = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "draconic"));
+        TicEXMaterials.CHAOTIC = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "chaotic"));
+
+        TicEXMaterials.TRIM_MATERIALS.addAll(
+                List.of(
+                        TicEXMaterials.DRACONIUM,
+                        TicEXMaterials.WYVERN,
+                        TicEXMaterials.DRACONIC,
+                        TicEXMaterials.CHAOTIC
+                )
+        );
 
         Item.Properties defaultProps = new Item.Properties();
 

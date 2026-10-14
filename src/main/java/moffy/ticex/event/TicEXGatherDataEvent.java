@@ -17,7 +17,7 @@ import moffy.ticex.datagen.material.TicEXMaterialSpriteProvider;
 import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
 import moffy.ticex.datagen.tool.*;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataGenerator;
@@ -30,6 +30,7 @@ import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.fluids.data.FluidBlockstateModelProvider;
 import slimeknights.tconstruct.library.client.data.material.MaterialPartTextureGenerator;
 import slimeknights.tconstruct.library.client.data.material.TrimMaterialPaletteGenerator;
+import slimeknights.tconstruct.library.materials.definition.MaterialId;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -97,7 +98,7 @@ public class TicEXGatherDataEvent {
 
 
 //        generator.addProvider(client, new MaterialPartTextureGenerator(packOutput, existingFileHelper, tinkerPartSprites, spriteProvider));
-        generator.addProvider(client, new TrimMaterialPaletteGenerator(packOutput, TicEX.MODID, existingFileHelper, spriteProvider, TicEXMaterials.TRIM_MATERIALS));
+        generator.addProvider(client, new TrimMaterialPaletteGenerator(packOutput, TicEX.MODID, existingFileHelper, spriteProvider, TicEXMaterials.TRIM_MATERIALS.toArray(MaterialId[]::new)));
 
         //tools
         generator.addProvider(server, new ToolDefinitionProvider(packOutput));

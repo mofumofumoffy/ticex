@@ -2,7 +2,7 @@ package moffy.ticex.datagen.sprite;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.client.sprites.BaseSpriteSource;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import net.minecraft.client.renderer.texture.atlas.sources.DirectoryLister;
 import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
 import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
@@ -35,7 +35,7 @@ public class TicEXSpriteSourceProvider extends SpriteSourceProvider {
         String paletteFolder = "trims/color_palettes/";
         String trimFolder = "trims/models/armor/";
         ResourceLocation trimPalette = ResourceLocation.parse(paletteFolder + "trim_palette");
-        Map<String,ResourceLocation> materialMap = Arrays.stream(TicEXMaterials.TRIM_MATERIALS)
+        Map<String,ResourceLocation> materialMap = TicEXMaterials.TRIM_MATERIALS.stream()
                 .collect(Collectors.toMap(
                         id -> id.getNamespace() + "_" + id.getPath(),
                         id -> id.withPrefix(paletteFolder))

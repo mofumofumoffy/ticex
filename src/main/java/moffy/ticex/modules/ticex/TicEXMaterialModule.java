@@ -1,6 +1,7 @@
 package moffy.ticex.modules.ticex;
 
 import moffy.addonapi.AddonModule;
+import moffy.ticex.TicEX;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.*;
 import moffy.ticex.registry.*;
@@ -10,10 +11,20 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import slimeknights.tconstruct.library.materials.definition.MaterialId;
+
+import java.util.Objects;
 
 public class TicEXMaterialModule implements AddonModule {
     @Override
     public void init(FMLJavaModLoadingContext context) {
+        TicEXMaterials.ETHERIC = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "etheric"));
+        TicEXMaterials.OD = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "od"));
+        TicEXMaterials.ASTRAL = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "astral"));
+        TicEXMaterials.RECONSTRUCTION = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "reconstruction"));
+
+        TicEXMaterials.TRIM_MATERIALS.add(TicEXMaterials.ETHERIC);
+
         TicEXItems.ETHERIC_INGOT = TicEXRegistry.ITEMS.register("etheric_ingot", () ->
                 new Item(new Item.Properties())
         );

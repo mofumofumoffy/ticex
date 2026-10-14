@@ -1,7 +1,7 @@
 package moffy.ticex.datagen.material;
 
 import moffy.ticex.TicEX;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.client.data.material.AbstractMaterialSpriteProvider;
 import slimeknights.tconstruct.library.client.data.spritetransformer.AnimatedGreyToSpriteTransformer;

@@ -5,7 +5,7 @@ import committee.nova.mods.avaritia.init.registry.ModItems;
 import moffy.ticex.TicEX;
 import moffy.ticex.datagen.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.datagen.recipes.TicEXRecipeProvider;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.registry.TicEXFluids;
 import moffy.ticex.registry.TicEXItems;

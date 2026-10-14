@@ -1,6 +1,6 @@
 package moffy.ticex.datagen.tool;
 
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.PackOutput;
 import slimeknights.tconstruct.library.data.material.AbstractMaterialDataProvider;

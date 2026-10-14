@@ -1,11 +1,9 @@
 package moffy.ticex.datagen.tool;
 
-import moffy.addonapi.AddonAPI;
 import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import slimeknights.tconstruct.library.data.material.AbstractMaterialDataProvider;
 
 public class MaterialDefinitionProvider extends AbstractMaterialDataProvider {

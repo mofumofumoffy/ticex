@@ -12,11 +12,7 @@ import moffy.ticex.event.TicEXAvaritiaEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.lib.utils.TicEXFluidUtils;
 import moffy.ticex.modifier.*;
-import moffy.ticex.registry.TicEXRegistry;
-import moffy.ticex.registry.TicEXEntities;
-import moffy.ticex.registry.TicEXFluids;
-import moffy.ticex.registry.TicEXItems;
-import moffy.ticex.registry.TicEXModifiers;
+import moffy.ticex.registry.*;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -37,11 +33,19 @@ import slimeknights.tconstruct.library.modifiers.ModifierId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TicEXAvaritiaModule implements AddonModule {
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
+        TicEXMaterials.INFINITY = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "infinity"));
+        TicEXMaterials.NEUTRON = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "neutron"));
+        TicEXMaterials.CRYSTAL_MATRIX = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "crystal_matrix"));
+        TicEXMaterials.BLAZING = Objects.requireNonNull(MaterialId.tryBuild(TicEX.MODID, "blazing"));
+
+        TicEXMaterials.TRIM_MATERIALS.add(TicEXMaterials.INFINITY);
+
         TicEXItems.CELESTIAL_CORE = TicEXRegistry.ITEMS.register("celestial_core", () ->
                 new ItemReconstCore(new Item.Properties(), "celestial")
         );

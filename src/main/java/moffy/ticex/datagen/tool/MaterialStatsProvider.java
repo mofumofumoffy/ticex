@@ -1,7 +1,7 @@
 package moffy.ticex.datagen.tool;
 
 import moffy.ticex.lib.CatalystMaterialStatsType;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import moffy.ticex.registry.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Tiers;

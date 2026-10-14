@@ -4,7 +4,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.datagen.recipes.ITicEXSmelteryRecipeHelper;
 import moffy.ticex.datagen.recipes.TicEXRecipeProvider;
 import moffy.ticex.datagen.recipes.ticex.builder.EmbossmentModifierRecipeBuilder;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import moffy.ticex.lib.TicEXTags;
 import moffy.ticex.registry.TicEXBlocks;
 import moffy.ticex.registry.TicEXFluids;
@@ -13,7 +13,6 @@ import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
@@ -38,7 +37,6 @@ import slimeknights.tconstruct.shared.block.SlimeType;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.world.TinkerWorld;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 
 public class CommonRecipeProvider implements ITicEXSmelteryRecipeHelper, IMaterialRecipeHelper {
