@@ -24,6 +24,8 @@ import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.mekanism.ConfigSyncToClientPacket;
 import moffy.ticex.registry.TicEXItems;
 import moffy.ticex.registry.TicEXModifiers;
+import moffy.ticex.registry.TicEXToolDefinitions;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -36,6 +38,8 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
+import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXMekanismModule implements AddonModule {
@@ -51,6 +55,15 @@ public class TicEXMekanismModule implements AddonModule {
 
         ToolCapabilityProvider.register(MekToolCapabilityProvider::new);
         ToolCapabilityProvider.register(RadiationShieldingCapabilityProvider::new);
+
+        TicEXToolDefinitions.MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(
+                TicEX.getResource("mekaplate"),
+                SoundEvents.ARMOR_EQUIP_NETHERITE
+        );
+
+        TicEXToolDefinitions.MEKA_TOOL_DEFINITION = ToolDefinition.create(
+                TicEX.getResource("meka_edge")
+        );
 
         TicEXItems.RADIATION_SHELDING_CORE = TicEXRegistry.ITEMS.register("radiation_shielding_core", () ->
                 new ItemReconstCore(PROPS, "radiation_shielding")

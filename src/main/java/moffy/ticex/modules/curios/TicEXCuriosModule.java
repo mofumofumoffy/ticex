@@ -11,12 +11,9 @@ import moffy.ticex.event.TicEXCuriosEvent;
 import moffy.ticex.item.GloveItem;
 import moffy.ticex.item.modifiable.ModifiableGauntlet;
 import moffy.ticex.modifier.ModifierIncomparable;
-import moffy.ticex.registry.TicEXRegistry;
+import moffy.ticex.registry.*;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
-import moffy.ticex.registry.TicEXEntities;
-import moffy.ticex.registry.TicEXItems;
-import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -32,6 +29,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.lwjgl.glfw.GLFW;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 public class TicEXCuriosModule implements AddonModule {
@@ -39,6 +37,10 @@ public class TicEXCuriosModule implements AddonModule {
     @Override
     public void init(FMLJavaModLoadingContext context) {
         ToolCapabilityProvider.register(CuriosCapProvider::new);
+
+        TicEXToolDefinitions.GAUNTLET_DEFINITION = ToolDefinition.create(
+                TicEX.getResource("resonance_gauntlet")
+        );
 
         TicEXEntities.RESONANCE_TOOL_PROJECTILE = TicEXRegistry.ENTITIES.register("resonance_tool", () ->
                 EntityType.Builder.<ResonanceToolProjectile>of(ResonanceToolProjectile::new, MobCategory.MISC)

@@ -1,6 +1,7 @@
 package moffy.ticex.modules.projecte;
 
 import moffy.addonapi.AddonModule;
+import moffy.ticex.TicEX;
 import moffy.ticex.event.TicEXPEEvent;
 import moffy.ticex.item.modifiable.ModifiableGemArmor;
 import moffy.ticex.lib.CatalystMaterialStatsType;
@@ -8,16 +9,24 @@ import moffy.ticex.modifier.*;
 import moffy.ticex.registry.TicEXRegistry;
 import moffy.ticex.registry.TicEXItems;
 import moffy.ticex.registry.TicEXModifiers;
+import moffy.ticex.registry.TicEXToolDefinitions;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXPEModule implements AddonModule {
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
+        TicEXToolDefinitions.SINGULAR_GEM_DEFINITION = ModifiableArmorMaterial.create(
+                TicEX.getResource("singular_gem"),
+                SoundEvents.ARMOR_EQUIP_NETHERITE
+        );
+
         TicEXItems.SINGULAR_GEM_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum(
                 "singular_gem",
                 ArmorItem.Type.values(),
