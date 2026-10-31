@@ -35,6 +35,7 @@ import slimeknights.tconstruct.library.tools.definition.module.ToolHooks;
 import slimeknights.tconstruct.library.tools.definition.module.aoe.AreaOfEffectIterator.AOEMatchType;
 import slimeknights.tconstruct.library.tools.helper.ToolDamageUtil;
 import slimeknights.tconstruct.library.tools.helper.ToolHarvestLogic;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.utils.BlockSideHitListener;
@@ -53,6 +54,11 @@ public class ModifierBedrockBreaker extends NoLevelsModifier implements BreakSpe
 
     private void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         Level level = event.getLevel();
+
+        if(!(event.getItemStack().getItem() instanceof IModifiable)){
+            return;
+        }
+
         if(!level.isClientSide() && !event.getEntity().isCreative()){
             BlockState state = event.getEntity().level().getBlockState(event.getPos());
             BlockPos pos = event.getPos();
