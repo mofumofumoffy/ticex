@@ -2,6 +2,7 @@ package moffy.ticex.modifier;
 
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -47,9 +48,10 @@ public class ModifierEnchantmentSupplier extends NoLevelsModifier implements Mel
     @Override
     public void afterMeleeHit(IToolStackView iToolStackView, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
         int fireAspect = EnchantmentHelper.getFireAspect(context.getAttacker());
-        context.getTarget().setRemainingFireTicks(80 * fireAspect);
-        EnchantmentHelper.doPostDamageEffects(context.getAttacker(), context.getTarget());
-        if(context.getTarget() instanceof LivingEntity livingTarget){
+        Entity target = context.getTarget();
+        context.getTarget().setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), 80 * fireAspect));
+        EnchantmentHelper.doPostDamageEffects(context.getAttacker(), target);
+        if(target instanceof LivingEntity livingTarget){
             EnchantmentHelper.doPostHurtEffects(livingTarget, context.getAttacker());
         }
     }
