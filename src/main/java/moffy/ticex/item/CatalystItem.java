@@ -1,5 +1,6 @@
 package moffy.ticex.item;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +15,6 @@ public class CatalystItem extends ToolPartItem {
 
     @Override
     public @NotNull Component getName(@NotNull ItemStack stack) {
-        return Component.translatable(this.getDescriptionId(stack));
+        return Component.translatable(this.getDescriptionId(stack)).withStyle(ChatFormatting.AQUA);
     }
 }
