@@ -4,7 +4,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,8 +21,8 @@ public class AffixHelperMixin {
     private static void setApothSupplier(ItemStack stack, Map<DynamicHolder<? extends Affix>, AffixInstance> affixes, CallbackInfo ci){
         if(stack.getItem() instanceof IModifiable){
             ToolStack tool = ToolStack.from(stack);
-            if(tool.getModifierLevel(TicEXRegistry.APOTH_SUPPLIER_MODIFIER.get()) < 1){
-                tool.addModifier(TicEXRegistry.APOTH_SUPPLIER_MODIFIER.getId(), 1);
+            if(tool.getModifierLevel(TicEXModifiers.APOTH_SUPPLIER_MODIFIER.get()) < 1){
+                tool.addModifier(TicEXModifiers.APOTH_SUPPLIER_MODIFIER.getId(), 1);
             }
         }
     }

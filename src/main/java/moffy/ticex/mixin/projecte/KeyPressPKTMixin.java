@@ -2,7 +2,7 @@ package moffy.ticex.mixin.projecte;
 
 import moffy.ticex.modifier.ModifierAbyssal;
 import moffy.ticex.modifier.ModifierHurricane;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import moze_intel.projecte.network.packets.to_server.KeyPressPKT;
 import moze_intel.projecte.utils.PEKeybind;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,7 +35,7 @@ public class KeyPressPKTMixin {
             ItemStack helm = player.getItemBySlot(EquipmentSlot.HEAD);
             if (!helm.isEmpty() && helm.getItem() instanceof IModifiable) {
                 ToolStack tool = ToolStack.from(helm);
-                if (tool.getModifierLevel(TicEXRegistry.ABYSSAL_MODIFIER.get()) > 0) {
+                if (tool.getModifierLevel(TicEXModifiers.ABYSSAL_MODIFIER.get()) > 0) {
                     ModifierAbyssal.toggleNightVision(tool, player);
                 }
                 ci.cancel();
@@ -45,7 +45,7 @@ public class KeyPressPKTMixin {
             ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
             if (!boots.isEmpty() && boots.getItem() instanceof IModifiable) {
                 ToolStack tool = ToolStack.from(boots);
-                if (tool.getModifierLevel(TicEXRegistry.HURRICANE_MODIFIER.get()) > 0) {
+                if (tool.getModifierLevel(TicEXModifiers.HURRICANE_MODIFIER.get()) > 0) {
                     ModifierHurricane.toggleStepAssist(tool, player);
                 }
                 ci.cancel();

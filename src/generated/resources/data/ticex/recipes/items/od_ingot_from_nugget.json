@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:default_material"
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/od"
+    },
+    "*": {
+      "item": "ticex:od_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "#*#",
+    "###"
+  ],
+  "result": {
+    "item": "ticex:od_ingot"
+  },
+  "show_notification": true
+}

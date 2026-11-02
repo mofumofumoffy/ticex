@@ -9,18 +9,23 @@ package moffy.ticex.modules.tacz;
  */
 
 import moffy.addonapi.AddonModule;
-import moffy.ticex.client.render.custom.CustomModel;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.TicEX;
+import moffy.ticex.client.modules.custom.CustomModel;
+import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.event.TicEXTaczEvent;
+import moffy.ticex.item.CatalystItem;
 import moffy.ticex.item.modifiable.ModifiableGunItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXToolDefinitions;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXTaczModule implements AddonModule {
@@ -29,12 +34,16 @@ public class TicEXTaczModule implements AddonModule {
     public void init(FMLJavaModLoadingContext context) {
         Item.Properties defaultProperties = new Item.Properties();
 
-        TicEXRegistry.CATALYST_KINETIC_GUN = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_kinetic_gun", () ->
-                new ToolPartItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_kinetic_gun").getId())
+        TicEXToolDefinitions.GUN_DEFINITION = ToolDefinition.create(
+                TicEX.getResource("blitz_gun")
         );
 
-        TicEXRegistry.BLITZ_GUN = TicEXRegistry.ITEMS_EXTENDED.register("blitz_gun", () ->
-                new ModifiableGunItem(TicEXRegistry.GUN_DEFINITION, 1)
+        TicEXItems.CATALYST_KINETIC_GUN = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_kinetic_gun", () ->
+                new CatalystItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_kinetic_gun").getId())
+        );
+
+        TicEXItems.BLITZ_GUN = TicEXRegistry.ITEMS_EXTENDED.register("blitz_gun", () ->
+                new ModifiableGunItem(1)
         );
 
         MinecraftForge.EVENT_BUS.addListener(TicEXTaczEvent::onBeforeHit);
@@ -44,7 +53,13 @@ public class TicEXTaczModule implements AddonModule {
 
     @OnlyIn(Dist.CLIENT)
     @Override
+    public void initClient(FMLJavaModLoadingContext context) {
+        context.getModEventBus().addListener(TicEXTaczEvent::registerItemDecorators);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        TicEXRenders.CUSTOM_MODELS.put(TicEXRegistry.BLITZ_GUN.get(), CustomModel::new);
+        CustomTinkerRenders.CUSTOM_MODELS.put(TicEXItems.BLITZ_GUN.get(), CustomModel::new);
     }
 }

@@ -3,9 +3,9 @@ package moffy.ticex.modifier;
 import java.util.Map;
 import java.util.Map.Entry;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
+import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXSBUtils;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -13,7 +13,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
-import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class ModifierKonpaku extends NoLevelsModifier implements EmbossmentModifierHook {
@@ -40,8 +39,8 @@ public class ModifierKonpaku extends NoLevelsModifier implements EmbossmentModif
                 }
                 if (TicEXSBUtils.applyEnchantment(toolStack, entry.getKey(), entry.getValue())) {
                     result = true;
-                    if(tool.getModifierLevel(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.get()) < 1){
-                        tool.addModifier(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.getId(), 1);
+                    if(tool.getModifierLevel(TicEXModifiers.ENCHANTMENT_SUPPLIER_MODIFIER.get()) < 1){
+                        tool.addModifier(TicEXModifiers.ENCHANTMENT_SUPPLIER_MODIFIER.getId(), 1);
                     }
                 }
             }

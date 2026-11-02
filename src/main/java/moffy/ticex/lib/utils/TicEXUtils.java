@@ -1,8 +1,9 @@
 package moffy.ticex.lib.utils;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -10,14 +11,21 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.ModList;
 import slimeknights.tconstruct.library.modifiers.Modifier;
+import slimeknights.tconstruct.library.modifiers.ModifierManager;
+import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 import slimeknights.tconstruct.library.recipe.tinkerstation.ITinkerStationContainer;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class TicEXUtils {
@@ -26,6 +34,25 @@ public class TicEXUtils {
             return toolStack.createStack();
         }
         return ItemStack.EMPTY;
+    }
+
+    public static int safeGetModifierLevel(IToolStackView tool, StaticModifier<Modifier> modifier){
+        if (ModifierManager.INSTANCE.isModifiersRegistered()) {
+            return tool.getModifierLevel(modifier.get());
+        }
+        return 0;
+    }
+
+    public static <T> void capabilityIfPresent(ItemStack stack, Capability<T> capability, Consumer<T> consumer){
+        stack.getCapability(capability).ifPresent(consumer::accept);
+    }
+
+    public static <T, R> R capabilityIfPresent(ItemStack stack, Capability<T> capability, Function<T, R> function, R defaultValue){
+        LazyOptional<T> capLazyOptional = stack.getCapability(capability);
+        if(capLazyOptional.isPresent()){
+            return function.apply(capLazyOptional.orElseThrow(IllegalStateException::new));
+        }
+        return defaultValue;
     }
 
     public static ItemStack getToolStack(IToolStackView tool, LivingEntity entity, Modifier modifier) {
@@ -120,10 +147,16 @@ public class TicEXUtils {
         }
 
         ToolStack toolStack = ToolStack.from(toolItemStack);
-        if(containsCatalyst && toolStack.getModifierLevel(TicEXRegistry.REBIRTH_MODIFIER.get()) < 1){
-            toolStack.addModifier(TicEXRegistry.REBIRTH_MODIFIER.getId(), 1);
+        if(containsCatalyst && toolStack.getModifierLevel(TicEXModifiers.REBIRTH_MODIFIER.get()) < 1){
+            toolStack.addModifier(TicEXModifiers.REBIRTH_MODIFIER.getId(), 1);
         }
 
         return toolStack.createStack();
+    }
+
+
+    public static class EquipmentSlotLists{
+        public static final List<EquipmentSlot> ARMORS = ImmutableList.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
+        public static final List<EquipmentSlot> WITHOUT_OFFHAND = ImmutableList.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET, EquipmentSlot.MAINHAND);
     }
 }

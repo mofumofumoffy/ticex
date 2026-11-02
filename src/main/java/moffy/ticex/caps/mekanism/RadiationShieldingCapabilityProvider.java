@@ -5,7 +5,7 @@ import mekanism.common.capabilities.Capabilities;
 import mekanism.common.capabilities.ItemCapabilityWrapper;
 import mekanism.common.capabilities.radiation.item.RadiationShieldingHandler;
 import mekanism.common.item.gear.ItemHazmatSuitArmor;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -30,7 +30,7 @@ public class RadiationShieldingCapabilityProvider implements IToolCapabilityProv
     public <T> LazyOptional<T> getCapability(IToolStackView tool, Capability<T> capability) {
         if (
             capability == Capabilities.RADIATION_SHIELDING &&
-            tool.getModifierLevel(TicEXRegistry.RADIATION_SHIELDING_MODIFIER.get()) > 0
+            tool.getModifierLevel(TicEXModifiers.RADIATION_SHIELDING_MODIFIER.get()) > 0
         ) {
             return mekCapabilityWrapper.getCapability(capability);
         }

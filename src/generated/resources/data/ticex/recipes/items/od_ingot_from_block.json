@@ -1,9 +1,15 @@
 {
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:default_material"
+    }
+  ],
   "ingredients": [
     {
-      "item": "ticex:od_block"
+      "tag": "forge:storage_blocks/od"
     }
   ],
   "result": {

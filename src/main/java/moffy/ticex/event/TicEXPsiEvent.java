@@ -3,7 +3,7 @@ package moffy.ticex.event;
 import moffy.ticex.lib.utils.TicEXPsiUtils;
 import moffy.ticex.modifier.ModifierPsionizingRadiation;
 import moffy.ticex.modifier.ModifierSensor;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -39,7 +39,7 @@ public class TicEXPsiEvent {
     public static String getEvent(ItemStack armorStack) {
         if (armorStack.getItem() instanceof IModifiable && armorStack.getItem() instanceof ArmorItem armorItem) {
             ToolStack armor = ToolStack.from(armorStack);
-            if (armor.getModifierLevel(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER.get()) > 0) {
+            if (armor.getModifierLevel(TicEXModifiers.PSIONIZING_RADIATION_MODIFIER.get()) > 0) {
                 switch (armorItem.getType()) {
                     case HELMET:
                         ModDataNBT persistentData = armor.getPersistentData();

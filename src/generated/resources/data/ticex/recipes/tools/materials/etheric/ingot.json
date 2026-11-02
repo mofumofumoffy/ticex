@@ -1,5 +1,11 @@
 {
   "type": "tconstruct:material",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:ingots/etheric"
+    }
+  ],
   "ingredient": {
     "tag": "forge:ingots/etheric"
   },

@@ -2,11 +2,10 @@ package moffy.ticex.modifier;
 
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
+import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXPsiUtils;
 import moffy.ticex.lib.utils.TicEXUtils;
 import moffy.ticex.modifier.propeties.PsionizingRadiationProperty;
-import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;

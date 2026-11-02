@@ -10,7 +10,6 @@ import mekanism.api.gear.IModuleHelper;
 import mekanism.api.math.FloatingLong;
 import mekanism.api.math.FloatingLongSupplier;
 import mekanism.api.text.EnumColor;
-import mekanism.client.ClientTickHandler;
 import mekanism.client.MekanismClient;
 import mekanism.client.key.MekKeyHandler;
 import mekanism.client.key.MekanismKeyHandler;
@@ -20,7 +19,6 @@ import mekanism.common.MekanismLang;
 import mekanism.common.base.KeySync;
 import mekanism.common.config.MekanismConfig;
 import mekanism.common.content.gear.IBlastingItem;
-import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.mekasuit.ModuleHydraulicPropulsionUnit;
 import mekanism.common.content.gear.mekasuit.ModuleLocomotiveBoostingUnit;
 import mekanism.common.content.gear.mekatool.ModuleAttackAmplificationUnit;
@@ -30,18 +28,20 @@ import mekanism.common.lib.radiation.RadiationManager;
 import mekanism.common.registries.MekanismGameEvents;
 import mekanism.common.registries.MekanismModules;
 import mekanism.common.util.StorageUtils;
-import moffy.ticex.TicEX;
 import moffy.ticex.caps.mekanism.MekaArmorGearCapability;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
 import moffy.ticex.lib.modules.mekanism.interfaces.IAbsorbableItem;
 import moffy.ticex.lib.modules.mekanism.interfaces.IMekaGear;
+import moffy.ticex.lib.modules.mekanism.interfaces.IMekanicArrow;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
+import moffy.ticex.lib.utils.TicEXUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -53,6 +53,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.common.ForgeMod;
@@ -67,6 +68,11 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
+import slimeknights.tconstruct.library.modifiers.ModifierEntry;
+import slimeknights.tconstruct.library.modifiers.ModifierHooks;
+import slimeknights.tconstruct.library.tools.context.EquipmentContext;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -119,6 +125,19 @@ public class TicEXMekanismEvent {
         }
     }
 
+    static void handleArmorModifierHook(Player player, DamageSource source, float damageAmount){
+        EquipmentContext context = new EquipmentContext(player);
+        for(EquipmentSlot slot : TicEXUtils.EquipmentSlotLists.ARMORS){
+            ItemStack stack = player.getItemBySlot(slot);
+            if(stack.getItem() instanceof IModifiable){
+                ToolStack tool = ToolStack.from(stack);
+                for(ModifierEntry entry : tool.getModifierList()){
+                    entry.getHook(ModifierHooks.ON_ATTACKED).onAttacked(tool, entry, context, slot, source, damageAmount, isDirectDamage(source));
+                }
+            }
+        }
+    }
+
     public static void onEntityAttack(LivingAttackEvent event) {
         LivingEntity entity = event.getEntity();
         if (event.getAmount() <= 0 || !entity.isAlive()) {
@@ -132,9 +151,14 @@ public class TicEXMekanismEvent {
         }
         if (entity instanceof Player player) {
             if (IAbsorbableItem.tryAbsorbAll(player, event.getSource(), event.getAmount())) {
+                handleArmorModifierHook(player, event.getSource(), 0);
                 event.setCanceled(true);
             }
         }
+    }
+
+    static boolean isDirectDamage(DamageSource source) {
+        return source.getEntity() != null && !source.isIndirect() && !source.is(DamageTypeTags.AVOIDS_GUARDIAN_THORNS);
     }
 
     public static void onLivingHurt(LivingHurtEvent event) {
@@ -157,6 +181,7 @@ public class TicEXMekanismEvent {
             if (ratioAbsorbed > 0) {
                 float damageRemaining = event.getAmount() * Math.max(0, 1 - ratioAbsorbed);
                 if (damageRemaining <= 0) {
+                    handleArmorModifierHook(player, event.getSource(), 0);
                     event.setCanceled(true);
                 } else {
                     event.setAmount(damageRemaining);
@@ -389,7 +414,9 @@ public class TicEXMekanismEvent {
     ) {}
 
     public static void onRegisterCaps(RegisterCapabilitiesEvent event) {
+
         event.register(IMekaGear.class);
+        event.register(IMekanicArrow.class);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -492,5 +519,12 @@ public class TicEXMekanismEvent {
         }
 
         return false;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event){
+        if(ModList.get().isLoaded("mekaweapons")){
+            TicEXMekanismWeaponsUtils.registerArrowRenderer(event);
+        }
     }
 }

@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:nuggets/od"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/od"
+  },
+  "result": {
+    "amount": 10,
+    "tag": "forge:molten_od"
+  },
+  "temperature": 2500,
+  "time": 35
+}

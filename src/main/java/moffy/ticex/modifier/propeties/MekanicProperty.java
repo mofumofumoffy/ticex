@@ -36,8 +36,8 @@ public class MekanicProperty {
             result.put("getMekanismEnergy", getMekanismEnergy(user, stack));
             result.put("getModuleProps", getModuleData(user, stack));
             result.put("setConfigValue", setModuleData(user, stack));
-            result.put("getModuleData", getModuleData(user, stack));
-            result.put("setModuleData", setModuleData(user, stack));
+            result.put("getMekanicModuleData", getModuleData(user, stack));
+            result.put("setMekanicModuleData", setModuleData(user, stack));
 
             return result;
         };

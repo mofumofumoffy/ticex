@@ -1,0 +1,22 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:nuggets/infinity"
+    },
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/infinity"
+  },
+  "result": {
+    "amount": 10,
+    "tag": "forge:molten_infinity"
+  },
+  "temperature": 3180,
+  "time": 39
+}

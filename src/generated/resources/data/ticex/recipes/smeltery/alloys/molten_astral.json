@@ -1,0 +1,32 @@
+{
+  "type": "tconstruct:alloy",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:default_material"
+    }
+  ],
+  "inputs": [
+    {
+      "amount": 250,
+      "tag": "forge:magma"
+    },
+    {
+      "amount": 90,
+      "tag": "forge:molten_iron"
+    },
+    {
+      "amount": 90,
+      "tag": "forge:molten_cobalt"
+    },
+    {
+      "amount": 250,
+      "fluid": "ticex:molten_reconstruction_core"
+    }
+  ],
+  "result": {
+    "amount": 270,
+    "tag": "forge:molten_astral"
+  },
+  "temperature": 1500
+}

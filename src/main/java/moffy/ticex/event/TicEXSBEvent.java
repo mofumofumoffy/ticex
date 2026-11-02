@@ -3,15 +3,20 @@ package moffy.ticex.event;
 import mods.flammpfeil.slashblade.event.BladeMotionEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.render.slashblade.SBToolBladeItemRenderer;
+import moffy.ticex.client.modules.slashblade.KoshiraeIconDecorator;
+import moffy.ticex.client.modules.slashblade.SBToolBladeItemRenderer;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.modules.slashblade.IInputCommandEvent;
 import moffy.ticex.network.slashblade.StateSyncPacket;
+import moffy.ticex.registry.TicEXEntities;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterItemDecorationsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
@@ -64,6 +69,11 @@ public class TicEXSBEvent {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public static void registerItemDecorators(RegisterItemDecorationsEvent event) {
+        event.register(TicEXItems.REFORGED_SLASHBLADE.get(), new KoshiraeIconDecorator());
+    }
+
     @SuppressWarnings("unchecked")
     public static void registerEventsByVersion() {
         Class<Event> eventType = null;
@@ -84,7 +94,7 @@ public class TicEXSBEvent {
     @SuppressWarnings("unchecked")
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(
-                TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
+                TicEXEntities.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
             SBToolBladeItemRenderer::new
         );
     }

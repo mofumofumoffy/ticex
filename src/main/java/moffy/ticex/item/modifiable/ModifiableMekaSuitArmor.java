@@ -1,63 +1,19 @@
 package moffy.ticex.item.modifiable;
 
 import com.google.common.collect.ImmutableMultimap.Builder;
-import mekanism.api.Action;
-import mekanism.api.AutomationType;
 import mekanism.api.NBTConstants;
-import mekanism.api.chemical.gas.Gas;
-import mekanism.api.chemical.gas.GasStack;
-import mekanism.api.chemical.gas.IGasHandler;
-import mekanism.api.energy.IEnergyContainer;
-import mekanism.api.gear.ICustomModule;
-import mekanism.api.gear.ICustomModule.ModuleDamageAbsorbInfo;
-import mekanism.api.gear.IModule;
-import mekanism.api.gear.ModuleData.ExclusiveFlag;
-import mekanism.api.math.FloatingLong;
-import mekanism.api.math.FloatingLongSupplier;
-import mekanism.api.text.EnumColor;
-import mekanism.client.key.MekKeyHandler;
-import mekanism.client.key.MekanismKeyHandler;
-import mekanism.common.MekanismLang;
-import mekanism.common.capabilities.Capabilities;
-import mekanism.common.capabilities.ItemCapabilityWrapper.ItemCapability;
-import mekanism.common.capabilities.chemical.item.ChemicalTankSpec;
-import mekanism.common.capabilities.chemical.item.RateLimitMultiTankGasHandler;
-import mekanism.common.capabilities.energy.BasicEnergyContainer;
-import mekanism.common.capabilities.energy.item.RateLimitEnergyHandler;
-import mekanism.common.capabilities.fluid.item.RateLimitMultiTankFluidHandler;
-import mekanism.common.capabilities.fluid.item.RateLimitMultiTankFluidHandler.FluidTankSpec;
-import mekanism.common.capabilities.laser.item.LaserDissipationHandler;
-import mekanism.common.capabilities.radiation.item.RadiationShieldingHandler;
 import mekanism.common.config.MekanismConfig;
-import mekanism.common.content.gear.IModuleContainerItem;
-import mekanism.common.content.gear.mekasuit.ModuleElytraUnit;
-import mekanism.common.content.gear.mekasuit.ModuleJetpackUnit;
-import mekanism.common.content.gear.shared.ModuleEnergyUnit;
-import mekanism.common.integration.gender.GenderCapabilityHelper;
-import mekanism.common.item.gear.ItemHazmatSuitArmor;
-import mekanism.common.item.interfaces.IJetpackItem;
-import mekanism.common.item.interfaces.IModeItem;
 import mekanism.common.lib.attribute.IAttributeRefresher;
-import mekanism.common.registries.MekanismFluids;
-import mekanism.common.registries.MekanismGases;
-import mekanism.common.registries.MekanismModules;
-import mekanism.common.tags.MekanismTags;
-import mekanism.common.util.ChemicalUtil;
 import mekanism.common.util.ItemDataUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
-import moffy.ticex.client.modules.mekanism.MekaPlateDispatcher;
+import moffy.ticex.registry.TicEXToolDefinitions;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -66,32 +22,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.client.armor.ArmorModelManager;
-import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.item.armor.MultilayerArmorItem;
 
-import javax.annotation.Nullable;
-import java.util.*;
 import java.util.function.Consumer;
 
 public class ModifiableMekaSuitArmor
     extends MultilayerArmorItem implements IAttributeRefresher {
 
-    private final ResourceLocation name;
-
-    public ModifiableMekaSuitArmor(ModifiableArmorMaterial material, ArmorItem.Type slot, Item.Properties properties) {
-        super(material, slot, properties);
-        this.name = material.getId();
+    public ModifiableMekaSuitArmor(ArmorItem.Type slot, Item.Properties properties) {
+        super(TicEXToolDefinitions.MEKAPLATE_DEFINITION, slot, properties);
     }
 
     @Override
@@ -100,7 +43,7 @@ public class ModifiableMekaSuitArmor
                 new ArmorModelManager.ArmorModelDispatcher() {
                     @Override
                     protected ResourceLocation getName() {
-                        return name;
+                        return TicEXToolDefinitions.MEKAPLATE_DEFINITION.getId();
                     }
                 });
     }

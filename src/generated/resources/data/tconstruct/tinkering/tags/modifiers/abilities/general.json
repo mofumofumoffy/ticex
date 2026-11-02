@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "ticex:psionizing_radiation",
+      "required": false
+    },
+    {
+      "id": "ticex:embossed",
+      "required": false
+    }
+  ]
+}

@@ -1,17 +1,12 @@
 package moffy.ticex.modifier;
 
 import moffy.ticex.lib.hook.CriticalModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
-import moffy.ticex.mixin.CriticalAccessor;
-import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraftforge.common.ForgeHooks;
-import org.jetbrains.annotations.NotNull;
+import moffy.ticex.registry.TicEXModifierHooks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
-import slimeknights.tconstruct.library.modifiers.ModifierHooks;
-import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeDamageModifierHook;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
-import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 public class ModifierSassy extends NoLevelsModifier implements CriticalModifierHook {
@@ -27,12 +22,12 @@ public class ModifierSassy extends NoLevelsModifier implements CriticalModifierH
     }
 
     @Override
-    public boolean isCritical(IToolStackView tool, ModifierEntry entry, boolean isCritical, boolean original) {
+    public boolean isCritical(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, boolean original) {
         return true;
     }
 
     @Override
-    public float setCriticalRate(IToolStackView tool, ModifierEntry entry, float currentRate, float originalRate) {
-        return 1.5f;
+    public float setCriticalModifier(IToolStackView tool, ModifierEntry entry, Player attacker, Entity target, boolean isCritical, float originalModifier, float currentModifier) {
+        return Math.max(currentModifier, 1.5f);
     }
 }

@@ -1,8 +1,8 @@
 package moffy.ticex.datagen.tool;
 
 import moffy.ticex.lib.CatalystMaterialStatsType;
-import moffy.ticex.lib.TicEXMaterials;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXMaterials;
+import moffy.ticex.registry.TicEXRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Tiers;
 import slimeknights.tconstruct.library.data.material.AbstractMaterialDataProvider;
@@ -132,6 +132,17 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
                         .build(),
                 StatlessMaterialStats.BINDING
         );
+        addMaterialStats(
+                TicEXMaterials.ASTRAL,
+                new HeadMaterialStats(990, 7.0f, Tiers.DIAMOND, 3.0f),
+                HandleMaterialStats.multipliers()
+                        .attackDamage(1f)
+                        .attackSpeed(1.2f)
+                        .durability(0.1f)
+                        .miningSpeed(1f)
+                        .build(),
+                StatlessMaterialStats.BINDING
+        );
     }
 
     private void addRanged() {
@@ -143,17 +154,22 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
         addMaterialStats(
             TicEXMaterials.CRYSTAL_MATRIX,
             new LimbMaterialStats(3200, -0.4f, 0.45f, -0.1f),
-            new GripMaterialStats(9.99f, 1.0f, 15.5f)
+            new GripMaterialStats(1.25f, 1.0f, 5.5f)
         );
         addMaterialStats(
             TicEXMaterials.ETHERIC,
             new LimbMaterialStats(2434, 0.25f, -0.05f, -0.1f),
-            new GripMaterialStats(9.99f, 1.0f, 32.5f)
+            new GripMaterialStats(0.15f, 1.0f, 12.5f)
         );
         addMaterialStats(
                 TicEXMaterials.OD,
                 new LimbMaterialStats(1992, 0.4f, -0.1f, -0.15f),
-                new GripMaterialStats(9.99f, 1.0f, 16.5f)
+                new GripMaterialStats(1f, 1.0f, 8.5f)
+        );
+        addMaterialStats(
+                TicEXMaterials.ASTRAL,
+                new LimbMaterialStats(990, 0.2f, 0.1f, 0.15f),
+                new GripMaterialStats(0.1f, 1.0f, 8.5f)
         );
     }
 
@@ -175,6 +191,10 @@ public class MaterialStatsProvider extends AbstractMaterialStatsDataProvider {
                 .toughness(15f)
                 .knockbackResistance(100f),
             StatlessMaterialStats.MAILLE
+        );
+        addMaterialStats(
+                TicEXMaterials.ASTRAL,
+                StatlessMaterialStats.MAILLE
         );
     }
 

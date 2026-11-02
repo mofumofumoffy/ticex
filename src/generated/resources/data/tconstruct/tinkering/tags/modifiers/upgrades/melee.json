@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "ticex:konpaku",
+      "required": false
+    },
+    {
+      "id": "ticex:overcasting",
+      "required": false
+    }
+  ]
+}

@@ -2,7 +2,8 @@ package moffy.ticex.caps.curios;
 
 import java.util.function.Supplier;
 
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.lib.utils.TicEXUtils;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -21,7 +22,7 @@ public class CuriosCapProvider implements IToolCapabilityProvider {
 
     @Override
     public <T> LazyOptional<T> getCapability(IToolStackView tool, Capability<T> capability) {
-        if(tool.getModifierLevel(TicEXRegistry.INCOMPARABLE_MODIFIER.get()) > 0 && (capability == ForgeCapabilities.ITEM_HANDLER || capability == CuriosCapability.ITEM)){
+        if(TicEXUtils.safeGetModifierLevel(tool, TicEXModifiers.INCOMPARABLE_MODIFIER) > 0 && (capability == ForgeCapabilities.ITEM_HANDLER || capability == CuriosCapability.ITEM)){
             return LazyOptional.of(()->gauntletItemHandler).cast();
         }
         return LazyOptional.empty();

@@ -3,17 +3,18 @@ package moffy.ticex.modules.slashblade;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.slashblade.SBItemCapabilityProvider;
-import moffy.ticex.client.render.custom.CustomModel;
-import moffy.ticex.client.render.ticex.TicEXRenders;
+import moffy.ticex.client.modules.custom.CustomModel;
+import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.event.TicEXSBEvent;
+import moffy.ticex.item.CatalystItem;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.ModifierHiddenProud;
 import moffy.ticex.modifier.ModifierKonpaku;
 import moffy.ticex.modifier.ModifierKoshirae;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.*;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.slashblade.StateSyncPacket;
 import net.minecraft.world.entity.EntityType;
@@ -27,6 +28,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.tools.stats.HeadMaterialStats;
 
@@ -34,7 +36,11 @@ public class TicEXSlashBladeModule implements AddonModule {
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
-        TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY = TicEXRegistry.ENTITIES.register("reforged_slashblade", () ->
+        TicEXToolDefinitions.SLASHBLADE_DEFINITION = ToolDefinition.create(
+                TicEX.getResource("reforged_slashblade")
+        );
+
+        TicEXEntities.SLASHBLADE_TOOL_ITEM_ENTITY = TicEXRegistry.ENTITIES.register("reforged_slashblade", () ->
                 EntityType.Builder.of(SBToolItemEntity::new, MobCategory.MISC)
                         .sized(0.5F, 0.5F)
                         .setTrackingRange(10)
@@ -47,40 +53,37 @@ public class TicEXSlashBladeModule implements AddonModule {
 
         ToolCapabilityProvider.register(SBItemCapabilityProvider::new);
 
-        TicEXRegistry.KONPAKU_CORE = TicEXRegistry.ITEMS.register("konpaku_core", () ->
+        TicEXItems.KONPAKU_CORE = TicEXRegistry.ITEMS.register("konpaku_core", () ->
                 new ItemReconstCore(defaultProperties, "konpaku")
         );
-        /*TicEXRegistry.KOSHIRAE_CORE = TicEXRegistry.ITEMS.register("koshirae_core", () ->
-                new ItemReconstCore(defaultProperties, "koshirae")
-        );*/
 
-        TicEXRegistry.CATALYST_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_slashblade", () ->
-                new ToolPartItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_slashblade").getId())
+        TicEXItems.CATALYST_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_slashblade", () ->
+                new CatalystItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_slashblade").getId())
         );
 
-        TicEXRegistry.REFORGED_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("reforged_slashblade", () ->
-                new ModifiableSlashBladeItem(new Item.Properties().stacksTo(1), TicEXRegistry.SLASHBLADE_DEFINITION)
+        TicEXItems.REFORGED_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("reforged_slashblade", () ->
+                new ModifiableSlashBladeItem(new Item.Properties().stacksTo(1))
         );
 
-        TicEXRegistry.SLASHBLADE_BLADE = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_blade", () ->
+        TicEXItems.SLASHBLADE_BLADE = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_blade", () ->
                 new ToolPartItem(defaultProperties, HeadMaterialStats.ID)
         );
-        TicEXRegistry.SLASHBLADE_SAYA = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_saya", () ->
+        TicEXItems.SLASHBLADE_SAYA = TicEXRegistry.ITEMS_EXTENDED.register("slashblade_saya", () ->
                 new ToolPartItem(defaultProperties, HeadMaterialStats.ID)
         );
 
-        TicEXRegistry.SLASHBLADE_BLADE_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
-                TicEXRegistry.SLASHBLADE_BLADE,
+        TicEXItems.SLASHBLADE_BLADE_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
+                TicEXItems.SLASHBLADE_BLADE,
                 defaultProperties
         );
-        TicEXRegistry.SLASHBLADE_SAYA_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
-                TicEXRegistry.SLASHBLADE_SAYA,
+        TicEXItems.SLASHBLADE_SAYA_CAST = TicEXRegistry.ITEMS_EXTENDED.registerCast(
+                TicEXItems.SLASHBLADE_SAYA,
                 defaultProperties
         );
 
-        TicEXRegistry.KONPAKU_MODIFIER = TicEXRegistry.MODIFIERS.register("konpaku", ModifierKonpaku::new);
-        TicEXRegistry.KOSHIRAE_MODIFIER = TicEXRegistry.MODIFIERS.register("koshirae", ModifierKoshirae::new);
-        TicEXRegistry.PROUD_MODIFIER = TicEXRegistry.MODIFIERS.register("hidden_proud", ModifierHiddenProud::new);
+        TicEXModifiers.KONPAKU_MODIFIER = TicEXRegistry.MODIFIERS.register("konpaku", ModifierKonpaku::new);
+        TicEXModifiers.KOSHIRAE_MODIFIER = TicEXRegistry.MODIFIERS.register("koshirae", ModifierKoshirae::new);
+        TicEXModifiers.PROUD_MODIFIER = TicEXRegistry.MODIFIERS.register("hidden_proud", ModifierHiddenProud::new);
 
         TicEX.CHANNEL.messageBuilder(StateSyncPacket.class, TicEXPacketID.SB_STATE_SYNC)
                 .encoder(StateSyncPacket::encode)
@@ -102,13 +105,14 @@ public class TicEXSlashBladeModule implements AddonModule {
     @Override
     public void initClient(FMLJavaModLoadingContext context) {
         IEventBus bus = context.getModEventBus();
+        bus.addListener(TicEXSBEvent::registerItemDecorators);
         bus.addListener(TicEXSBEvent::onRegisterRenderers);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        TicEXRenders.CUSTOM_MODELS.put(TicEXRegistry.REFORGED_SLASHBLADE.get(), CustomModel::new);
+        CustomTinkerRenders.CUSTOM_MODELS.put(TicEXItems.REFORGED_SLASHBLADE.get(), CustomModel::new);
     }
     /* public static boolean isPreviousVersion(){
         return ModList.get().getModFileById("slashblade").versionString().compareTo("1.2.0") < 0;

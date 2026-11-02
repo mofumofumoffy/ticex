@@ -7,13 +7,14 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import mods.flammpfeil.slashblade.client.renderer.SlashBladeTEISR;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
+import moffy.ticex.client.providers.context.ItemRenderContext;
 import moffy.ticex.lib.context.ContextFrame;
 import moffy.ticex.lib.context.TicEXContexts;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,13 +28,49 @@ public abstract class SlashBladeTEISRMixin {
     @Shadow
     public abstract ResourceLocation stackDefaultModel(ItemStack stack);
 
+    @WrapOperation(
+            method = "renderByItem",
+            at = @At(value = "INVOKE", target = "Lmods/flammpfeil/slashblade/client/renderer/SlashBladeTEISR;renderBlade(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)Z", remap = false),
+            remap = true
+    )
+    public boolean renderToolBlade(
+            SlashBladeTEISR instance,
+            ItemStack handle,
+            ItemDisplayContext msacA,
+            PoseStack poseStack,
+            MultiBufferSource stack,
+            int transformType,
+            int matrixStack,
+            Operation<Boolean> original,
+            @Local(name = "combinedLightIn") int combinedLightIn,
+            @Local(name = "combinedOverlayIn") int combinedOverlayIn
+    ){
+        if(handle.getItem() instanceof IModifiable){
+            ItemRenderContext itemRenderContext = new ItemRenderContext(
+                    handle,
+                    msacA,
+                    msacA == ItemDisplayContext.FIRST_PERSON_LEFT_HAND ||
+                            msacA == ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
+                    poseStack,
+                    stack,
+                    combinedLightIn,
+                    combinedOverlayIn
+            );
+
+            try(ContextFrame<ItemRenderContext> local = TicEXContexts.SB_RENDERING_CONTEXT.open(itemRenderContext)) {
+                return original.call(instance, handle, msacA, poseStack, stack, transformType, matrixStack);
+            }
+        }
+        return original.call(instance, handle, msacA, poseStack, stack, transformType, matrixStack);
+    }
+
     @ModifyVariable(method = "renderModel", at = @At(value = "STORE"), ordinal = 0)
     public ResourceLocation modifyModel(ResourceLocation modelLocation,
                                                 @Local(argsOnly = true) ItemStack stack) {
         if(!(stack.getItem() instanceof IModifiable)) return modelLocation;
         ToolStack tool = ToolStack.from(stack);
 
-        if (tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0) {
+        if (tool.getModifierLevel(TicEXModifiers.KOSHIRAE_MODIFIER.get()) > 0) {
             CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
             if (persistentTag.contains("ModelName")) {
                 return ResourceLocation.tryParse(persistentTag.getString("ModelName"));
@@ -48,7 +85,7 @@ public abstract class SlashBladeTEISRMixin {
         if(!(stack.getItem() instanceof IModifiable)) return textureLocation;
         ToolStack tool = ToolStack.from(stack);
 
-        if (tool.getModifierLevel(TicEXRegistry.KOSHIRAE_MODIFIER.get()) > 0) {
+        if (tool.getModifierLevel(TicEXModifiers.KOSHIRAE_MODIFIER.get()) > 0) {
             CompoundTag persistentTag = stack.getOrCreateTag().getCompound("bladeState");
             if (persistentTag.contains("ModelName")) {
                 return ResourceLocation.tryParse(persistentTag.getString("TextureName"));

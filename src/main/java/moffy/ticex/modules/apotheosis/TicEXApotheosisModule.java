@@ -1,13 +1,15 @@
 package moffy.ticex.modules.apotheosis;
 
 import moffy.addonapi.AddonModule;
-import moffy.ticex.datagen.general.recipes.apotheosis.FixedModuleCondition;
+import moffy.ticex.datagen.recipes.apotheosis.FixedModuleCondition;
 import moffy.ticex.event.TicEXApotheosisEvent;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.modifier.ModifierApothSupplier;
 import moffy.ticex.modifier.ModifierOverload;
 import moffy.ticex.modifier.ModifierOverride;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -20,16 +22,16 @@ public class TicEXApotheosisModule implements AddonModule {
     public void init(FMLJavaModLoadingContext context) {
         Item.Properties defaultProperties = new Item.Properties();
 
-        TicEXRegistry.OVERLOAD_CORE = TicEXRegistry.ITEMS.register("overload_core", () ->
+        TicEXItems.OVERLOAD_CORE = TicEXRegistry.ITEMS.register("overload_core", () ->
                 new ItemReconstCore(defaultProperties, "overload")
         );
-        TicEXRegistry.OVERRIDE_CORE = TicEXRegistry.ITEMS.register("override_core", () ->
+        TicEXItems.OVERRIDE_CORE = TicEXRegistry.ITEMS.register("override_core", () ->
                 new ItemReconstCore(defaultProperties, "override")
         );
 
-        TicEXRegistry.APOTH_SUPPLIER_MODIFIER = TicEXRegistry.MODIFIERS.register("apoth_supplier", ModifierApothSupplier::new);
-        TicEXRegistry.OVERLOAD_MODIFIER = TicEXRegistry.MODIFIERS.register("overload", ModifierOverload::new);
-        TicEXRegistry.OVERRIDE_MODIFIER = TicEXRegistry.MODIFIERS.register("override", ModifierOverride::new);
+        TicEXModifiers.APOTH_SUPPLIER_MODIFIER = TicEXRegistry.MODIFIERS.register("apoth_supplier", ModifierApothSupplier::new);
+        TicEXModifiers.OVERLOAD_MODIFIER = TicEXRegistry.MODIFIERS.register("overload", ModifierOverload::new);
+        TicEXModifiers.OVERRIDE_MODIFIER = TicEXRegistry.MODIFIERS.register("override", ModifierOverride::new);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXApotheosisEvent::onSocketGem);
         MinecraftForge.EVENT_BUS.addListener(TicEXApotheosisEvent::supplierBouncer);

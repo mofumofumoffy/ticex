@@ -1,8 +1,7 @@
 package moffy.ticex;
 
 import moffy.addonapi.AddonModuleRegistry;
-import moffy.ticex.lib.config.ConfigListUtil;
-import moffy.ticex.modules.general.TicEXModuleProvider;
+import moffy.ticex.modules.ticex.TicEXModuleProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig.Type;
@@ -14,6 +13,8 @@ public class TicEXConfig {
     // TicEX
     public static ForgeConfigSpec.ConfigValue<Integer> RF_FURNACE_RATE_CAPACITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> USE_SHADER;
+    public static ForgeConfigSpec.ConfigValue<Boolean> USE_ARMOR_MODEL;
+    public static ForgeConfigSpec.ConfigValue<Boolean> SHOW_TOOL_ICON;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> FLUID_TRANSMUTER_PATTERNS;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> FLUID_TRANSMUTER_EXCLUDE_PATTERNS;
 
@@ -24,6 +25,7 @@ public class TicEXConfig {
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> SLOTS_CONFIG;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> MODIFIER_CONFIG;
     public static ForgeConfigSpec.ConfigValue<Boolean> SHOULD_CONSUME_SLASHBLADE;
+    public static ForgeConfigSpec.ConfigValue<Boolean> EASIER_DRAGONFORCE;
 
     // Avaritia
     public static ForgeConfigSpec.ConfigValue<Float> CONDENSING_DROP_PROBABILITY;
@@ -133,11 +135,15 @@ public class TicEXConfig {
         MORE_CONFIG.pop();
         MORE_CONFIG.push("Catalyst Settings");
         SHOULD_CONSUME_SLASHBLADE = MORE_CONFIG.comment("If set to true, the catalyst will consume the Slashblade upon use.")
-                .define("shouldConsumeSlashblade", true);
+                .define("shouldConsumeSlashblade", false);
         MORE_CONFIG.pop();
+        MORE_CONFIG.push("Misc");
+        EASIER_DRAGONFORCE = MORE_CONFIG.comment("If set to true, it will increase the maximum level of the DragonForce trait to 4, allowing you to inflict chaotic damage before defeating the Chaos Guardian.").define("easierDragonForce", false);
 
         CLIENT.comment("Client Settings").push("client");
-        USE_SHADER = CLIENT.comment("Rendering with shaders for some tools/armors").define("useShader", true);
+        USE_SHADER = CLIENT.comment("Rendering with shaders for some tools/armors.").define("useShader", true);
+        USE_ARMOR_MODEL = CLIENT.comment("Rendering with extra model for armors.").define("useArmorModel", true);
+        SHOW_TOOL_ICON = CLIENT.comment("If true, an icon will be displayed for the TiCEX-converted tool.").define("showToolIcon", true);
 
 
         AddonModuleRegistry.INSTANCE.LoadModule(new TicEXModuleProvider(context), COMMON);

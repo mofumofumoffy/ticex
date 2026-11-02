@@ -2,16 +2,16 @@ package moffy.ticex.client.modules.draconicevolution;
 
 import com.brandon3055.brandonscore.api.TechLevel;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moffy.ticex.client.render.provider.context.ItemRenderContext;
-import moffy.ticex.client.render.provider.context.RenderContext;
-import moffy.ticex.client.render.provider.context.armor.RenderArmorPartContext;
-import moffy.ticex.client.render.provider.context.tool.RenderGenericContext;
-import moffy.ticex.client.render.provider.context.tool.RenderQuadContext;
-import moffy.ticex.client.render.provider.renderer.IArmorPartContextRenderer;
-import moffy.ticex.client.render.provider.renderer.IGenericRenderer;
-import moffy.ticex.client.render.provider.renderer.IQuadContextRenderer;
-import moffy.ticex.client.render.shader.ShaderProvider;
-import moffy.ticex.client.render.ticex.TicEXToolRenders;
+import moffy.ticex.client.providers.context.ItemRenderContext;
+import moffy.ticex.client.providers.context.RenderContext;
+import moffy.ticex.client.providers.context.armor.RenderArmorPartContext;
+import moffy.ticex.client.providers.context.tool.RenderGenericContext;
+import moffy.ticex.client.providers.context.tool.RenderQuadContext;
+import moffy.ticex.client.providers.renderer.IArmorPartContextRenderer;
+import moffy.ticex.client.providers.renderer.IGenericRenderer;
+import moffy.ticex.client.providers.renderer.IQuadContextRenderer;
+import moffy.ticex.client.providers.ShaderProvider;
+import moffy.ticex.client.render.ToolRenders;
 import moffy.ticex.lib.utils.TicEXDEUtils;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -77,16 +77,11 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
-        }
-
-        @Override
         public void prepareRenderItem(ItemRenderContext itemRenderContext) {
         }
 
         @Override
-        public void startRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
+        public void startRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
             vertexConsumer = context.bufferSource().getBuffer(renderType);
 
             // setup uniform
@@ -94,7 +89,7 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void endRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
+        public void endRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
             vertexConsumer = null;
         }
 
@@ -149,17 +144,12 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
-        }
-
-        @Override
         public void prepareRenderItem(ItemRenderContext context) {
             techLevel = null;
         }
 
         @Override
-        public void startRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
+        public void startRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
             if (techLevel == null) {
                 return;
             }
@@ -175,7 +165,7 @@ public class TicEXDEShaderProvider {
         }
 
         @Override
-        public void endRenderBatch(ItemRenderContext context, TicEXToolRenders.RenderPhase phase) {
+        public void endRenderBatch(ItemRenderContext context, ToolRenders.RenderPhase phase) {
             vertexConsumer = null;
         }
 
@@ -212,11 +202,6 @@ public class TicEXDEShaderProvider {
         @Override
         public void renderUnderlay(RenderArmorPartContext quadContext, IArmorPartContextRenderer renderer) {
         }
-
-        @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
-        }
     }
 
     public static class Generic extends ShaderProvider.Generic {
@@ -243,11 +228,6 @@ public class TicEXDEShaderProvider {
         @Override
         public void renderUnderlay(RenderGenericContext context, IGenericRenderer renderer) {
 
-        }
-
-        @Override
-        public ShaderInstance getShaderInstance() {
-            return shader.getShaderInstance();
         }
     }
 }

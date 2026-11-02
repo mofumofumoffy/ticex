@@ -17,6 +17,14 @@
       "required": false
     },
     {
+      "id": "ticex:catalyst_meka_tana",
+      "required": false
+    },
+    {
+      "id": "ticex:catalyst_meka_bow",
+      "required": false
+    },
+    {
       "id": "ticex:catalyst_mekasuit_helmet",
       "required": false
     },

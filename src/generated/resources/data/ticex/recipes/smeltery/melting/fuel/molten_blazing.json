@@ -1,0 +1,10 @@
+{
+  "type": "tconstruct:melting_fuel",
+  "duration": 150,
+  "fluid": {
+    "amount": 50,
+    "tag": "forge:molten_blazing"
+  },
+  "rate": 55,
+  "temperature": 3500
+}

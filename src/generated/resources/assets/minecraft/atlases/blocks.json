@@ -1,17 +1,16 @@
 {
   "sources": [
     {
-      "type": "minecraft:directory",
-      "prefix": "entity/",
-      "source": "entity"
+      "type": "minecraft:single",
+      "resource": "ticex:entity/white_blank"
     },
     {
-      "type": "minecraft:directory",
+      "type": "ticex:base_texture",
       "prefix": "tinker_armor/",
       "source": "tinker_armor"
     },
     {
-      "type": "minecraft:directory",
+      "type": "ticex:base_texture",
       "prefix": "obj_tool/",
       "source": "obj_tool"
     },

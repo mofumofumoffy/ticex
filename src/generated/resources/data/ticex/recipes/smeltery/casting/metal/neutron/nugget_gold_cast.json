@@ -1,0 +1,24 @@
+{
+  "type": "tconstruct:casting_table",
+  "cast": {
+    "tag": "tconstruct:casts/multi_use/nugget"
+  },
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:nuggets/neutron"
+    },
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
+    }
+  ],
+  "cooling_time": 32,
+  "fluid": {
+    "amount": 10,
+    "tag": "forge:molten_neutron"
+  },
+  "result": {
+    "tag": "forge:nuggets/neutron"
+  }
+}

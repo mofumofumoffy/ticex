@@ -6,20 +6,27 @@ import mekanism.common.registries.MekanismModules;
 import mekanism.generators.common.registries.GeneratorsModules;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
-import moffy.ticex.caps.mekanism.MekItemCapabilityProvider;
+import moffy.ticex.caps.mekanism.MekToolCapabilityProvider;
 import moffy.ticex.caps.mekanism.RadiationShieldingCapabilityProvider;
+import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
-import moffy.ticex.client.modules.mekanism.MekaPlateMultilayerModel;
+import moffy.ticex.client.modules.mekanism.MekanicArmorModelProvider;
+import moffy.ticex.client.modules.mekanism.MekanicArmorQuadCache;
 import moffy.ticex.event.TicEXMekanismEvent;
+import moffy.ticex.item.CatalystItem;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import moffy.ticex.item.modifiable.ModifiableMekaTool;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.utils.TicEXMekanismWeaponsUtils;
 import moffy.ticex.modifier.ModifierMekanic;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXRegistry;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.mekanism.ConfigSyncToClientPacket;
+import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
+import moffy.ticex.registry.TicEXToolDefinitions;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -32,6 +39,8 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
+import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 
 public class TicEXMekanismModule implements AddonModule {
@@ -41,39 +50,49 @@ public class TicEXMekanismModule implements AddonModule {
 
     @Override
     public void init(FMLJavaModLoadingContext context) {
+
         IEventBus bus = context.getModEventBus();
         Item.Properties PROPS = new Item.Properties();
 
-        ToolCapabilityProvider.register(MekItemCapabilityProvider::new);
+        ToolCapabilityProvider.register(MekToolCapabilityProvider::new);
         ToolCapabilityProvider.register(RadiationShieldingCapabilityProvider::new);
 
-        TicEXRegistry.RADIATION_SHELDING_CORE = TicEXRegistry.ITEMS.register("radiation_shielding_core", () ->
+        TicEXToolDefinitions.MEKAPLATE_DEFINITION = ModifiableArmorMaterial.create(
+                TicEX.getResource("mekaplate"),
+                SoundEvents.ARMOR_EQUIP_NETHERITE
+        );
+
+        TicEXToolDefinitions.MEKA_TOOL_DEFINITION = ToolDefinition.create(
+                TicEX.getResource("meka_edge")
+        );
+
+        TicEXItems.RADIATION_SHELDING_CORE = TicEXRegistry.ITEMS.register("radiation_shielding_core", () ->
                 new ItemReconstCore(PROPS, "radiation_shielding")
         );
 
-        TicEXRegistry.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum(
+        TicEXItems.MEKAPLATE_ARMOR = TicEXRegistry.ITEMS_EXTENDED.registerEnum(
                 "mekaplate",
                 ArmorItem.Type.values(),
                 type ->
-                        new ModifiableMekaSuitArmor(TicEXRegistry.MEKAPLATE_DEFINITION, type, new Item.Properties().stacksTo(1))
+                        new ModifiableMekaSuitArmor(type, new Item.Properties().stacksTo(1))
         );
 
-        TicEXRegistry.CATALYST_MEKASUIT = TicEXRegistry.ITEMS_EXTENDED.registerEnum(
+        TicEXItems.CATALYST_MEKASUIT = TicEXRegistry.ITEMS_EXTENDED.registerEnum(
                 "catalyst_mekasuit",
                 ArmorItem.Type.values(),
-                type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId())
+                type -> new CatalystItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId())
         );
 
-        TicEXRegistry.MEKA_EDGE = TicEXRegistry.ITEMS_EXTENDED.register("meka_tool",
+        TicEXItems.MEKA_EDGE = TicEXRegistry.ITEMS_EXTENDED.register("meka_tool",
                 () -> new ModifiableMekaTool(new Item.Properties().stacksTo(1))
         );
 
-        TicEXRegistry.CATALYST_MEKA_TOOL = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_tool",
-                () -> new ToolPartItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_tool").getId())
+        TicEXItems.CATALYST_MEKA_TOOL = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_tool",
+                () -> new CatalystItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_tool").getId())
         );
 
-        TicEXRegistry.MEKANIC_MODIFIER = TicEXRegistry.MODIFIERS.register("mekanic", ModifierMekanic::new);
-        TicEXRegistry.RADIATION_SHIELDING_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("radiation_shielding");
+        TicEXModifiers.MEKANIC_MODIFIER = TicEXRegistry.MODIFIERS.register("mekanic", ModifierMekanic::new);
+        TicEXModifiers.RADIATION_SHIELDING_MODIFIER = TicEXRegistry.MODIFIERS.registerDynamic("radiation_shielding");
 
         BLOCKS = new BlockDeferredRegister(TicEX.MODID);
         TILE_ENTITY_TYPES = new TileEntityTypeDeferredRegister(TicEX.MODID);
@@ -104,11 +123,14 @@ public class TicEXMekanismModule implements AddonModule {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void initClient(FMLJavaModLoadingContext context) {
+        CustomTinkerRenders.EXTRA_ARMOR_MODELS.addModel(TicEXModifiers.MEKANIC_MODIFIER.getId(), MekanicArmorModelProvider::new);
+
         IEventBus bus = context.getModEventBus();
         MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::handleItemToolTip);
         MinecraftForge.EVENT_BUS.addListener(TicEXMekanismEvent::onClientTick);
         bus.addListener(TicEXMekanismEvent::onLoadAdditionalModel);
         bus.addListener(TicEXMekanismEvent::onModelBake);
+        bus.addListener(TicEXMekanismEvent::registerRenderers);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -118,26 +140,26 @@ public class TicEXMekanismModule implements AddonModule {
             TicEX.getResource("models/entity/modifiable_mekasuit_modules.obj")
         );
 
-        MekaPlateMultilayerModel.registerModule(
+        MekanicArmorQuadCache.registerModule(
             "jetpack",
             MekanismModules.JETPACK_UNIT,
             EquipmentSlot.CHEST,
             entity -> true
         );
-        MekaPlateMultilayerModel.registerModule(
+        MekanicArmorQuadCache.registerModule(
             "modulator",
             MekanismModules.GRAVITATIONAL_MODULATING_UNIT,
             EquipmentSlot.CHEST,
             entity -> true
         );
-        MekaPlateMultilayerModel.registerModule(
+        MekanicArmorQuadCache.registerModule(
             "elytra",
             MekanismModules.ELYTRA_UNIT,
             EquipmentSlot.CHEST,
             LivingEntity::isFallFlying
         );
         if(ModList.get().isLoaded("mekanismgenerators")){
-            MekaPlateMultilayerModel.registerModule(
+            MekanicArmorQuadCache.registerModule(
                     "solar_helmet",
                     GeneratorsModules.SOLAR_RECHARGING_UNIT,
                     EquipmentSlot.HEAD,

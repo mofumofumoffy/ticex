@@ -1,0 +1,22 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:nuggets/neutron"
+    },
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:avaritia_compat"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/neutron"
+  },
+  "result": {
+    "amount": 10,
+    "tag": "forge:molten_neutron"
+  },
+  "temperature": 2100,
+  "time": 32
+}

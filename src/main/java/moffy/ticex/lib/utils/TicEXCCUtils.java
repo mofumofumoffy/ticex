@@ -1,12 +1,8 @@
 package moffy.ticex.lib.utils;
 
-import com.ibm.icu.impl.locale.XCldrStub;
-import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.ILuaFunction;
-import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifierHooks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,17 +21,14 @@ public class TicEXCCUtils {
 
     public static Map<String, Object> createEntityMapWithProps(Player player) {
         Map<String, Object> entityMap = createEntityMap(player);
+
         entityMap.put(
             "getProperties",
-            (ILuaFunction) args -> {
-                return MethodResult.of(gatherProperties(player));
-            }
+            (ILuaFunction) args -> MethodResult.of(gatherProperties(player))
         );
         entityMap.put(
                 "getProps",
-                (ILuaFunction) args -> {
-                    return MethodResult.of(gatherProperties(player));
-                }
+                (ILuaFunction) args -> MethodResult.of(gatherProperties(player))
         );
         return entityMap;
     }
@@ -50,7 +43,12 @@ public class TicEXCCUtils {
             if(entity instanceof LivingEntity living){
                 entityMap.put("health", living.getHealth());
                 entityMap.put("maxHealth", living.getMaxHealth());
+                entityMap.put("isFallFlying", living.isFallFlying());
+                if(living instanceof Player player){
+                    entityMap.put("isFlying", player.getAbilities().flying);
+                }
             }
+
             entityMap.put("persistentData", entity.getPersistentData().hashCode());
             entityMap.put("getPersistentData", (ILuaFunction) iArguments -> MethodResult.of(entity.getPersistentData().toString()));
         }

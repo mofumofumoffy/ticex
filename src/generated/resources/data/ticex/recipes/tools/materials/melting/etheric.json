@@ -3,7 +3,7 @@
   "input": "ticex:etheric",
   "result": {
     "amount": 90,
-    "fluid": "ticex:molten_etheric"
+    "tag": "forge:molten_etheric"
   },
   "temperature": 2500
 }

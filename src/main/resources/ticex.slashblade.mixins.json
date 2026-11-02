@@ -4,11 +4,10 @@
   "refmap": "ticex.refmap.json",
   "plugin": "moffy.ticex.modules.slashblade.TicEXSlashBladeMixinPlugin",
   "mixins": [
-    "AttackManagerMixin",
     "InputCommandEventMixin$Later",
     "InputCommandEventMixin$Older",
     "ItemSlashBladeMixin",
-    "PlayerAttackHelperMixin",
+    "AttackHelperMixin",
     "SummonedSwordMixin"
   ],
   "client": [

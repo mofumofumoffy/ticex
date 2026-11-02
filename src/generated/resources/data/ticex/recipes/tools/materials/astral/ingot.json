@@ -1,0 +1,15 @@
+{
+  "type": "tconstruct:material",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:ingots/astral"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/astral"
+  },
+  "material": "ticex:astral",
+  "needed": 1,
+  "value": 1
+}

@@ -3,8 +3,9 @@ package moffy.ticex.lib;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.curios.GauntletItemHandler;
 import moffy.ticex.entity.curios.ResonanceToolProjectile;
-import moffy.ticex.modules.general.TicEXRegistry;
 import moffy.ticex.network.curios.TicEXSyncEntityMovements;
+import moffy.ticex.registry.TicEXItems;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -13,15 +14,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.PacketDistributor;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResonanceTools {
+    public static final float BASE_RADIUS = 1.2f;
+
     public static void shoot(Player player) {
         CuriosApi.getCuriosInventory(player).ifPresent(curioItemHandler -> {
-            curioItemHandler.findFirstCurio(TicEXRegistry.RESONANCE_GAUNTLET.get()).ifPresent(slotResult -> {
+            curioItemHandler.findFirstCurio(stack -> stack.getItem() instanceof IModifiable && ToolStack.from(stack).getModifierLevel(TicEXModifiers.INCOMPARABLE_MODIFIER.get()) > 0).ifPresent(slotResult -> {
                 shootGauntletStack(player, slotResult.stack());
             });
         });
@@ -56,7 +61,7 @@ public class ResonanceTools {
             float time = player.tickCount;
             double baseAngle = 2 * Math.PI / availableSlots.size() * shootSlot - time * 0.07 + Math.toRadians(player.getYRot());
             ;
-            double radius = 1.4f;
+            double radius = getRadius(itemHandler.getSlots());
 
             Vec3 offset = new Vec3(
                     Math.cos(baseAngle),
@@ -94,5 +99,9 @@ public class ResonanceTools {
             TicEXSyncEntityMovements packet = new TicEXSyncEntityMovements(arrow);
             TicEX.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> arrow), packet);
         }
+    }
+
+    public static double getRadius(int slot){
+        return BASE_RADIUS + (Math.ceil(slot / 6d) * 0.2);
     }
 }

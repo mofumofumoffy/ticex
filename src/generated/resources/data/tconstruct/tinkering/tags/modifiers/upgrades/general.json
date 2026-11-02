@@ -1,7 +1,7 @@
 {
   "values": [
     {
-      "id": "ticex:modem",
+      "id": "ticex:socket",
       "required": false
     }
   ]

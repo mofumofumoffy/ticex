@@ -5,12 +5,13 @@ import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.caps.curios.CuriosCapProvider;
 import moffy.ticex.client.modules.ticex.TicEXKeyBindings;
+import moffy.ticex.client.modules.curios.LayerResonanceTools;
 import moffy.ticex.entity.curios.ResonanceToolProjectile;
 import moffy.ticex.event.TicEXCuriosEvent;
 import moffy.ticex.item.GloveItem;
 import moffy.ticex.item.modifiable.ModifiableGauntlet;
 import moffy.ticex.modifier.ModifierIncomparable;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.*;
 import moffy.ticex.network.TicEXPacketID;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
 import net.minecraft.client.KeyMapping;
@@ -24,9 +25,12 @@ import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.lwjgl.glfw.GLFW;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
+import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 public class TicEXCuriosModule implements AddonModule {
 
@@ -34,7 +38,11 @@ public class TicEXCuriosModule implements AddonModule {
     public void init(FMLJavaModLoadingContext context) {
         ToolCapabilityProvider.register(CuriosCapProvider::new);
 
-        TicEXRegistry.RESONANCE_TOOL_PROJECTILE = TicEXRegistry.ENTITIES.register("resonance_tool", () ->
+        TicEXToolDefinitions.GAUNTLET_DEFINITION = ToolDefinition.create(
+                TicEX.getResource("resonance_gauntlet")
+        );
+
+        TicEXEntities.RESONANCE_TOOL_PROJECTILE = TicEXRegistry.ENTITIES.register("resonance_tool", () ->
                 EntityType.Builder.<ResonanceToolProjectile>of(ResonanceToolProjectile::new, MobCategory.MISC)
                         .sized(0.5f, 0.5f)
                         .setTrackingRange(10)
@@ -43,10 +51,10 @@ public class TicEXCuriosModule implements AddonModule {
                         .build(TicEX.MODID + ":resonance_tool")
         );
 
-        TicEXRegistry.EXHAUSTED_GLOVE = TicEXRegistry.ITEMS.register("exhausted_glove", () -> new GloveItem(new Item.Properties().stacksTo(1)));
-        TicEXRegistry.RESONANCE_GAUNTLET = TicEXRegistry.ITEMS_EXTENDED.register("resonance_gauntlet", ()->new ModifiableGauntlet(new Item.Properties().stacksTo(1), TicEXRegistry.GAUNTLET_DEFINITION));
+        TicEXItems.EXHAUSTED_GLOVE = TicEXRegistry.ITEMS.register("exhausted_glove", () -> new GloveItem(new Item.Properties().stacksTo(1)));
+        TicEXItems.RESONANCE_GAUNTLET = TicEXRegistry.ITEMS_EXTENDED.register("resonance_gauntlet", ()->new ModifiableGauntlet(new Item.Properties().stacksTo(1)));
 
-        TicEXRegistry.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.register("incomparable", ModifierIncomparable::new);
+        TicEXModifiers.INCOMPARABLE_MODIFIER = TicEXRegistry.MODIFIERS.register("incomparable", ModifierIncomparable::new);
 
         MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onLivingDeath);
         MinecraftForge.EVENT_BUS.addListener(TicEXCuriosEvent::onClientTick);
@@ -69,12 +77,18 @@ public class TicEXCuriosModule implements AddonModule {
                         KeyConflictContext.IN_GAME,
                         KeyModifier.NONE,
                         InputConstants.Type.KEYSYM,
-                        GLFW.GLFW_KEY_G,
+                        GLFW.GLFW_MOUSE_BUTTON_MIDDLE,
                         "ticex.modid"
                 ));
 
         bus.addListener(TicEXCuriosEvent::onRegisterRenderers);
-        bus.addListener(TicEXCuriosEvent::addLayers);
+        //bus.addListener(TicEXCuriosEvent::addLayers);
         bus.addListener(TicEXCuriosEvent::registerBindings);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void clientSetup(FMLClientSetupEvent event) {
+        CuriosRendererRegistry.register(TicEXItems.RESONANCE_GAUNTLET.get(), LayerResonanceTools::new);
     }
 }

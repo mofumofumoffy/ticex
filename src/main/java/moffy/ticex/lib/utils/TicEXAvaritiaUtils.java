@@ -2,7 +2,7 @@ package moffy.ticex.lib.utils;
 
 import com.google.common.collect.Iterables;
 import committee.nova.mods.avaritia.init.registry.ModDamageTypes;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +24,7 @@ public class TicEXAvaritiaUtils {
         for (ItemStack armorStack : slots) {
             if (armorStack.getItem() instanceof IModifiable) {
                 ToolStack armor = ToolStack.from(armorStack);
-                if (armor.getModifierLevel(TicEXRegistry.CELESTIAL_MODIFIER.get()) > 0) {
+                if (armor.getModifierLevel(TicEXModifiers.CELESTIAL_MODIFIER.get()) > 0) {
                     return true;
                 }
             }

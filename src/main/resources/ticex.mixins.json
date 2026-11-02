@@ -11,6 +11,7 @@
     "ObjModel$ModelMeshAccessor",
     "ObjModel$ModelObjectAccessor",
     "ObjModelAccessor",
+    "ProjectileAccessor",
     "RomanNumeralHelperMixin",
     "ToolAttackContextMixin",
     "ToolAttackUtilMixin",
@@ -26,6 +27,7 @@
     "HumanoidArmorLayerMixin",
     "ItemRendererMixin",
     "MaterialArmorTextureSupplierMixin",
+    "MultilayerArmorModelMixin",
     "NormalModifierModelMixin",
     "ToolModelMixin",
     "TrimArmorTextureSupplierMixin"

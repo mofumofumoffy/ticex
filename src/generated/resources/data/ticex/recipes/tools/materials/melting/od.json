@@ -3,7 +3,7 @@
   "input": "ticex:od",
   "result": {
     "amount": 90,
-    "fluid": "ticex:molten_od"
+    "tag": "forge:molten_od"
   },
   "temperature": 2500
 }

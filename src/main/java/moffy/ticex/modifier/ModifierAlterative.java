@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.AttributesModifierHook;
@@ -22,7 +23,7 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
-public class ModifierAlterative extends NoLevelsModifier implements InventoryTickModifierHook, AttributesModifierHook {
+public class ModifierAlterative extends Modifier implements InventoryTickModifierHook, AttributesModifierHook {
     public static final UUID MAX_MANA_UUID = UUID.fromString("c6fd022c-8b76-449a-8fb5-a6431f6bb799");
     public static final UUID MANA_REGEN_UUID = UUID.fromString("d6ceeb73-f1c4-424a-a782-48732503e036");
 

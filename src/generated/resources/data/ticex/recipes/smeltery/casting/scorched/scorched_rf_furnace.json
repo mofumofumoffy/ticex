@@ -13,7 +13,7 @@
   "cooling_time": 268,
   "fluid": {
     "amount": 2000,
-    "fluid": "ticex:molten_reconstruction_core"
+    "tag": "forge:molten_reconstruction_core"
   },
   "result": "ticex:scorched_rf_furnace"
 }

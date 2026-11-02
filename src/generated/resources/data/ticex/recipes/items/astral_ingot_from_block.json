@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "addonapi:mods_available",
+      "required_raw_module": "ticex:default_material"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/astral"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "ticex:astral_ingot"
+  }
+}

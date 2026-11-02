@@ -1,5 +1,11 @@
 {
   "type": "tconstruct:material",
+  "conditions": [
+    {
+      "type": "mantle:tag_filled",
+      "tag": "forge:nuggets/od"
+    }
+  ],
   "ingredient": {
     "tag": "forge:nuggets/od"
   },

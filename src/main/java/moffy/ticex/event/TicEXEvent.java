@@ -2,9 +2,10 @@ package moffy.ticex.event;
 
 import moffy.ticex.block.transmuter.pattern.FluidTransmutationResolver;
 import moffy.ticex.caps.EmbossmentMaterialCapability;
-import moffy.ticex.client.modules.ticex.models.MaterialOverrideModel;
-import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraft.world.damagesource.DamageSource;
+import moffy.ticex.client.models.MaterialOverrideModel;
+import moffy.ticex.registry.TicEXAttributes;
+import moffy.ticex.registry.TicEXBlocks;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -16,12 +17,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -38,11 +37,11 @@ public class TicEXEvent {
 
     @SuppressWarnings("unchecked")
     public static void onEntityAttributeModification(EntityAttributeModificationEvent event) {
-        if (TicEXRegistry.DAMAGE_TAKEN != null && TicEXRegistry.HEALING_RECEIVED != null) {
+        if (TicEXAttributes.DAMAGE_TAKEN != null && TicEXAttributes.HEALING_RECEIVED != null) {
             ForgeRegistries.ENTITY_TYPES.forEach(action -> {
                 if (action.getBaseClass().isAssignableFrom(LivingEntity.class)) {
-                    event.add((EntityType<? extends LivingEntity>) action, TicEXRegistry.DAMAGE_TAKEN.get());
-                    event.add((EntityType<? extends LivingEntity>) action, TicEXRegistry.HEALING_RECEIVED.get());
+                    event.add((EntityType<? extends LivingEntity>) action, TicEXAttributes.DAMAGE_TAKEN.get());
+                    event.add((EntityType<? extends LivingEntity>) action, TicEXAttributes.HEALING_RECEIVED.get());
                 }
             });
         }
@@ -59,7 +58,7 @@ public class TicEXEvent {
         LivingEntity target = event.getEntity();
 
         //attribute reduce
-        AttributeInstance attributeInstance = target.getAttribute(TicEXRegistry.DAMAGE_TAKEN.get());
+        AttributeInstance attributeInstance = target.getAttribute(TicEXAttributes.DAMAGE_TAKEN.get());
         if (attributeInstance != null) {
             double multiplier = attributeInstance.getValue();
             if (multiplier != 1D) {
@@ -82,7 +81,7 @@ public class TicEXEvent {
             return;
         }
         LivingEntity entity = event.getEntity();
-        AttributeInstance attributeInstance = entity.getAttribute(TicEXRegistry.HEALING_RECEIVED.get());
+        AttributeInstance attributeInstance = entity.getAttribute(TicEXAttributes.HEALING_RECEIVED.get());
         if (attributeInstance != null) {
             double multiplier = attributeInstance.getValue();
             if (multiplier != 1D) {
@@ -95,33 +94,12 @@ public class TicEXEvent {
         }
     }
 
-    public static void modifyAttribute(ItemAttributeModifierEvent event) {
-        ItemStack stack = event.getItemStack();
-        EquipmentSlot slot = event.getSlotType();
-        if (stack.getItem() instanceof IModifiable) {
-            if (slot == EquipmentSlot.MAINHAND) {
-                AttributeModifier modifier = new AttributeModifier(
-                    EXTRA_DAMAGE_UUID,
-                    "Enchantment Bonus for Modifiable Item",
-                    0,
-                    Operation.ADDITION
-                );
-
-                if (!event.getModifiers().containsValue(modifier)) {
-                    event.addModifier(Attributes.ATTACK_DAMAGE, modifier);
-                } else {
-                    event.removeModifier(Attributes.ATTACK_DAMAGE, modifier);
-                }
-            }
-        }
-    }
-
     public static void supplierBouncer(LivingEquipmentChangeEvent event){
         ItemStack stack = event.getTo();
         if(stack.getItem() instanceof IModifiable){
             ToolStack tool = ToolStack.from(stack);
-            if(stack.isEnchanted() && tool.getModifierLevel(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.get()) < 1){
-                tool.addModifier(TicEXRegistry.ENCHANTMENT_SUPPLIER_MODIFIER.getId(), 1);
+            if(stack.isEnchanted() && tool.getModifierLevel(TicEXModifiers.ENCHANTMENT_SUPPLIER_MODIFIER.get()) < 1){
+                tool.addModifier(TicEXModifiers.ENCHANTMENT_SUPPLIER_MODIFIER.getId(), 1);
             }
         }
     }
@@ -135,15 +113,13 @@ public class TicEXEvent {
     }
 
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(TicEXRegistry.FLUID_TRANSMUTER_ENTITY.get(), TankBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(TicEXBlocks.FLUID_TRANSMUTER_ENTITY.get(), TankBlockEntityRenderer::new);
     }
 
 
     public static void onDatapackSync(OnDatapackSyncEvent event) {
-        FluidTransmutationResolver.INSTANCE.load();
-    }
-
-    public static void onRecipesUpdated(RecipesUpdatedEvent event) {
-        FluidTransmutationResolver.INSTANCE.load();
+        if(event.getPlayer() == null){
+            FluidTransmutationResolver.INSTANCE.load();
+        }
     }
 }

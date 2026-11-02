@@ -1,7 +1,7 @@
 package moffy.ticex.event;
 
 import moffy.ticex.modifier.ModifierGravitiy;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -64,7 +64,7 @@ public class TicEXPEEvent {
 		ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
         if(!helmet.isEmpty() && helmet.getItem() instanceof IModifiable){
             ToolStack tool = ToolStack.from(helmet);
-            return tool.getModifierLevel(TicEXRegistry.ABYSSAL_MODIFIER.get()) > 0;
+            return tool.getModifierLevel(TicEXModifiers.ABYSSAL_MODIFIER.get()) > 0;
         }
 		return false;
 	}
@@ -73,7 +73,7 @@ public class TicEXPEEvent {
 		ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
         if(!chestplate.isEmpty() && chestplate.getItem() instanceof IModifiable){
             ToolStack tool = ToolStack.from(chestplate);
-            return tool.getModifierLevel(TicEXRegistry.INFERNAL_MODIFIER.get()) > 0;
+            return tool.getModifierLevel(TicEXModifiers.INFERNAL_MODIFIER.get()) > 0;
         }
 		return false;
 	}

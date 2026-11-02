@@ -3,19 +3,16 @@ package moffy.ticex.event;
 import moffy.ticex.TicEX;
 import moffy.ticex.TicEXConfig;
 import moffy.ticex.client.modules.ticex.TicEXKeyBindings;
-import moffy.ticex.client.render.curios.LayerResonanceTools;
-import moffy.ticex.client.render.curios.ResonanceToolProjectileRenderer;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.client.modules.curios.ResonanceToolProjectileRenderer;
 import moffy.ticex.network.curios.TicEXShootGauntletPacket;
+import moffy.ticex.registry.TicEXEntities;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -24,7 +21,6 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -40,13 +36,13 @@ public class TicEXCuriosEvent {
             if(entityLocation != null){
                 if (blacklist.stream().anyMatch(id -> entityLocation.toString().equals(id))) {
                     if(TicEXConfig.GLOVE_DROP_BLACKLIST_AS_WHITELIST.get() && randomSource.nextIntBetweenInclusive(0, 3000) <= 0){
-                        level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXRegistry.EXHAUSTED_GLOVE.get())));
+                        level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXItems.EXHAUSTED_GLOVE.get())));
                     } else {
                     }
                 } else {
                     if(TicEXConfig.GLOVE_DROP_BLACKLIST_AS_WHITELIST.get()){
                     } else if(randomSource.nextIntBetweenInclusive(0, 3000) <= 0){
-                        level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXRegistry.EXHAUSTED_GLOVE.get())));
+                        level.addFreshEntity(new ItemEntity(level, livingEntity.getX(), livingEntity.getY() - 1, livingEntity.getZ(), new ItemStack(TicEXItems.EXHAUSTED_GLOVE.get())));
                     }
                 }
             }
@@ -54,7 +50,7 @@ public class TicEXCuriosEvent {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    /*@OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void addLayers(EntityRenderersEvent.AddLayers event) {
         addPlayerLayer(event, "default");
@@ -68,11 +64,11 @@ public class TicEXCuriosEvent {
         if (renderer instanceof LivingEntityRenderer livingRenderer) {
             livingRenderer.addLayer(new LayerResonanceTools<>(livingRenderer));
         }
-    }
+    }*/
 
     @OnlyIn(Dist.CLIENT)
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(TicEXRegistry.RESONANCE_TOOL_PROJECTILE.get(), pContext ->
+        event.registerEntityRenderer(TicEXEntities.RESONANCE_TOOL_PROJECTILE.get(), pContext ->
             new ResonanceToolProjectileRenderer(pContext, 2f)
         );
     }

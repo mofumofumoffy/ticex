@@ -7,11 +7,10 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ReachModifier;
 import mods.flammpfeil.slashblade.item.SwordType;
 import moffy.ticex.TicEX;
-import moffy.ticex.client.render.slashblade.SBToolISTER;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
-import moffy.ticex.modules.general.TicEXRegistry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import moffy.ticex.lib.utils.TicEXUtils;
+import moffy.ticex.registry.TicEXEntities;
+import moffy.ticex.registry.TicEXToolDefinitions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -38,7 +37,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -87,12 +85,10 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
     public static final ResourceLocation BLADE_STATE_LOCATION = TicEX.getResource("bladestate");
     public static final ResourceLocation INPUT_STATE_LOCATION = TicEX.getResource("inputstate");
 
-    private final ToolDefinition toolDefinition;
     private ItemStack toolForRendering;
 
-    public ModifiableSlashBladeItem(Properties properties, ToolDefinition toolDefinition) {
+    public ModifiableSlashBladeItem(Properties properties) {
         super(Tiers.NETHERITE, 1, 1, properties);
-        this.toolDefinition = toolDefinition;
     }
 
     @Override
@@ -101,43 +97,41 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
             getAttributeModifiers(ToolStack.from(stack), slot)
         );
         if (slot == EquipmentSlot.MAINHAND) {
-            stack
-                .getCapability(ItemSlashBlade.BLADESTATE)
-                .ifPresent(bladeState -> {
-                    StatsNBT stats = ToolStack.from(stack).getStats();
-                    EnumSet<SwordType> swordType = SwordType.from(stack);
+            TicEXUtils.capabilityIfPresent(stack, ItemSlashBlade.BLADESTATE, bladeState->{
+                StatsNBT stats = ToolStack.from(stack).getStats();
+                EnumSet<SwordType> swordType = SwordType.from(stack);
 
-                    float baseAttackModifier = stats.get(ToolStats.ATTACK_DAMAGE);
+                float baseAttackModifier = stats.get(ToolStats.ATTACK_DAMAGE);
 
-                    float attackAmplifier = bladeState.getAttackAmplifier();
-                    int refine = bladeState.getRefine();
-                    if (bladeState.isBroken()) {
-                        attackAmplifier = -0.5F - baseAttackModifier;
-                    } else {
-                        float refineFactor = swordType.contains(SwordType.FIERCEREDGE) ? 0.1F : 0.05F;
-                        attackAmplifier = (1.0F - (1.0F / (1.0F + (refineFactor * refine)))) * baseAttackModifier;
-                    }
+                float attackAmplifier;
+                int refine = bladeState.getRefine();
+                if (bladeState.isBroken()) {
+                    attackAmplifier = -0.5F - baseAttackModifier;
+                } else {
+                    float refineFactor = swordType.contains(SwordType.FIERCEREDGE) ? 0.1F : 0.05F;
+                    attackAmplifier = (1.0F - (1.0F / (1.0F + (refineFactor * refine)))) * baseAttackModifier;
+                }
 
-                    AttributeModifier attack = new AttributeModifier(
+                AttributeModifier attack = new AttributeModifier(
                         BASE_ATTACK_DAMAGE_UUID,
                         "Weapon modifier",
                         (double) baseAttackModifier + attackAmplifier - 1F,
                         AttributeModifier.Operation.ADDITION
-                    );
+                );
 
-                    toolMultimap.remove(Attributes.ATTACK_DAMAGE, attack);
+                toolMultimap.remove(Attributes.ATTACK_DAMAGE, attack);
 
-                    toolMultimap.put(Attributes.ATTACK_DAMAGE, attack);
-                    toolMultimap.put(
+                toolMultimap.put(Attributes.ATTACK_DAMAGE, attack);
+                toolMultimap.put(
                         ForgeMod.ENTITY_REACH.get(),
                         new AttributeModifier(
-                            PLAYER_REACH_AMPLIFIER,
-                            "Reach amplifer",
-                            bladeState.isBroken() ? ReachModifier.BrokendReach() : ReachModifier.BladeReach(),
-                            AttributeModifier.Operation.ADDITION
+                                PLAYER_REACH_AMPLIFIER,
+                                "Reach amplifer",
+                                bladeState.isBroken() ? ReachModifier.BrokendReach() : ReachModifier.BladeReach(),
+                                AttributeModifier.Operation.ADDITION
                         )
-                    );
-                });
+                );
+            });
         }
         return ImmutableMultimap.copyOf(toolMultimap);
     }
@@ -604,7 +598,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
         if (!(entity instanceof SBToolItemEntity)) {
             Level world = entity.level();
             SBToolItemEntity e = new SBToolItemEntity(
-                    TicEXRegistry.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
+                    TicEXEntities.SLASHBLADE_TOOL_ITEM_ENTITY.get(),
                 world
             );
             e.restoreFrom(entity);
@@ -615,7 +609,7 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
         return false;
     }
 
-    @Override
+/*    @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(
             new IClientItemExtensions() {
@@ -630,11 +624,11 @@ public class ModifiableSlashBladeItem extends ItemSlashBlade implements IModifia
                 }
             }
         );
-    }
+    }*/
 
     @Override
     public ToolDefinition getToolDefinition() {
-        return this.toolDefinition;
+        return TicEXToolDefinitions.SLASHBLADE_DEFINITION;
     }
 
     @Override

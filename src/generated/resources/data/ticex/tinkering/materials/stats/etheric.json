@@ -3,8 +3,8 @@
     "tconstruct:binding": {},
     "tconstruct:grip": {
       "accuracy": 1.0,
-      "durability": 9.99,
-      "melee_damage": 32.5
+      "durability": 0.15,
+      "melee_damage": 12.5
     },
     "tconstruct:handle": {
       "durability": -0.85,

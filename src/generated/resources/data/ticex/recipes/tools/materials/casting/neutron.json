@@ -11,5 +11,5 @@
     "tag": "forge:molten_neutron"
   },
   "output": "ticex:neutron",
-  "temperature": 1400
+  "temperature": 2100
 }

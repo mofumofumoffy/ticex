@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import moffy.ticex.lib.utils.TicEXPsiUtils;
 import moffy.ticex.modifier.ModifierPsionizingRadiation;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LogicalSidedProvider;
@@ -57,7 +57,7 @@ public class PsionizingRadiationProperty {
         return args -> {
             if (
                 stack.getItem() instanceof IModifiable &&
-                ToolStack.from(stack).getModifierLevel(TicEXRegistry.PSIONIZING_RADIATION_MODIFIER.get()) > 0
+                ToolStack.from(stack).getModifierLevel(TicEXModifiers.PSIONIZING_RADIATION_MODIFIER.get()) > 0
             ) {
                 try {
                     LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER).execute(() -> {

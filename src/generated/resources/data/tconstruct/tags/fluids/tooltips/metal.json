@@ -23,6 +23,10 @@
     {
       "id": "ticex:molten_od",
       "required": false
+    },
+    {
+      "id": "ticex:molten_astral",
+      "required": false
     }
   ]
 }

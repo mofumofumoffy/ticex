@@ -40,12 +40,12 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import java.util.function.BiConsumer;
 import java.util.stream.DoubleStream;
 
-public class ModifierApothSupplier extends NoLevelsModifier implements MeleeHitModifierHook, MeleeDamageModifierHook, ProtectionModifierHook, BlockBreakModifierHook, AttributesModifierHook, ProjectileLaunchModifierHook, ToolDamageModifierHook {
+public class ModifierApothSupplier extends NoLevelsModifier implements MeleeHitModifierHook, MeleeDamageModifierHook, ProtectionModifierHook, BlockBreakModifierHook, ProjectileLaunchModifierHook, ToolDamageModifierHook {
     private boolean preventStackOverflowFlg = false;
 
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
-        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE, ModifierHooks.MELEE_HIT, ModifierHooks.PROTECTION, ModifierHooks.BLOCK_BREAK, ModifierHooks.ATTRIBUTES, ModifierHooks.PROJECTILE_LAUNCH, ModifierHooks.TOOL_DAMAGE);
+        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE, ModifierHooks.MELEE_HIT, ModifierHooks.PROTECTION, ModifierHooks.BLOCK_BREAK, ModifierHooks.PROJECTILE_LAUNCH, ModifierHooks.TOOL_DAMAGE);
     }
 
     @Override
@@ -94,22 +94,6 @@ public class ModifierApothSupplier extends NoLevelsModifier implements MeleeHitM
             }
         }
         return newProtection;
-    }
-
-    @Override
-    public void addAttributes(IToolStackView iToolStackView, ModifierEntry modifierEntry, EquipmentSlot equipmentSlot, BiConsumer<Attribute, AttributeModifier> biConsumer) {
-        if(iToolStackView instanceof ToolStack tool && !preventStackOverflowFlg){
-            preventStackOverflowFlg = true;
-            ItemStack toolStack = tool.createStack();
-            SocketHelper.getGems(toolStack).addModifiers(LootCategory.forItem(toolStack), equipmentSlot, biConsumer);
-
-            var affixes = AffixHelper.getAffixes(toolStack);
-            for (AffixInstance inst : affixes.values()) {
-                inst.addModifiers(equipmentSlot, biConsumer);
-            }
-            preventStackOverflowFlg = false;
-        }
-
     }
 
     @Override

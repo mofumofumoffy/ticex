@@ -4,7 +4,6 @@
   "refmap": "ticex.refmap.json",
   "plugin": "moffy.ticex.modules.mekanism.TicEXMekanismMixinPlugin",
   "mixins": [
-    "ArmorModelDispatcherMixin",
     "IModifiableMixin",
     "MekanismHUDMixin",
     "MekaSuitEnergyLevelMixin",

@@ -42,7 +42,7 @@ public class ModuleNutritionalInjectionUnitMixin {
             }
         }
 
-        return FluidStack.EMPTY;
+        return fluidHandlerItem;
     }
 
     @WrapOperation(method = "addHUDElements", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;", remap = true))
@@ -67,6 +67,6 @@ public class ModuleNutritionalInjectionUnitMixin {
                 );
             }
         }
-        return FluidStack.EMPTY;
+        return fluidHandlerItem;
     }
 }

@@ -5,20 +5,19 @@ import moffy.ticex.datagen.blockstate.TicEXBlockstateProvider;
 import moffy.ticex.datagen.blockstate.TicEXRenderFluidProvider;
 import moffy.ticex.datagen.fluid.FluidTextureProvider;
 import moffy.ticex.datagen.fluid.TicEXFluidToolTipProvider;
-import moffy.ticex.datagen.general.LootProvider;
-import moffy.ticex.datagen.general.TicEXDamageTypeProvider;
-import moffy.ticex.datagen.general.recipes.TicEXRecipeProvider;
-import moffy.ticex.datagen.general.sprite.TicEXSpriteSourceProvider;
-import moffy.ticex.datagen.general.tag.BlockTagProvider;
-import moffy.ticex.datagen.general.tag.FluidTagProvider;
-import moffy.ticex.datagen.general.tag.ItemTagProvider;
+import moffy.ticex.datagen.LootProvider;
+import moffy.ticex.datagen.DamageTypeProvider;
+import moffy.ticex.datagen.recipes.TicEXRecipeProvider;
+import moffy.ticex.datagen.sprite.TicEXSpriteSourceProvider;
+import moffy.ticex.datagen.tag.BlockTagProvider;
+import moffy.ticex.datagen.tag.FluidTagProvider;
+import moffy.ticex.datagen.tag.ItemTagProvider;
 import moffy.ticex.datagen.layout.TicEXStationSlotLayoutProvider;
 import moffy.ticex.datagen.material.TicEXMaterialSpriteProvider;
-import moffy.ticex.datagen.material.trim.TicEXTrimMaterialProvider;
 import moffy.ticex.datagen.modifier.ModifierProvider;
 import moffy.ticex.datagen.modifier.ModifierTagProvider;
 import moffy.ticex.datagen.tool.*;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataGenerator;
@@ -31,6 +30,7 @@ import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.fluids.data.FluidBlockstateModelProvider;
 import slimeknights.tconstruct.library.client.data.material.MaterialPartTextureGenerator;
 import slimeknights.tconstruct.library.client.data.material.TrimMaterialPaletteGenerator;
+import slimeknights.tconstruct.library.materials.definition.MaterialId;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -51,7 +51,7 @@ public class TicEXGatherDataEvent {
         boolean client = event.includeClient();
 
 //        TicEXTrimMaterialProvider.register(registrySetBuilder);
-        TicEXDamageTypeProvider.register(registrySetBuilder);
+        DamageTypeProvider.register(registrySetBuilder);
 
         DatapackBuiltinEntriesProvider registryProvider = new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, registrySetBuilder, Set.of(TicEX.MODID));
         generator.addProvider(server, registryProvider);
@@ -98,7 +98,7 @@ public class TicEXGatherDataEvent {
 
 
 //        generator.addProvider(client, new MaterialPartTextureGenerator(packOutput, existingFileHelper, tinkerPartSprites, spriteProvider));
-        generator.addProvider(client, new TrimMaterialPaletteGenerator(packOutput, TicEX.MODID, existingFileHelper, spriteProvider, TicEXMaterials.TRIM_MATERIALS));
+        generator.addProvider(client, new TrimMaterialPaletteGenerator(packOutput, TicEX.MODID, existingFileHelper, spriteProvider, TicEXMaterials.TRIM_MATERIALS.toArray(MaterialId[]::new)));
 
         //tools
         generator.addProvider(server, new ToolDefinitionProvider(packOutput));

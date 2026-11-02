@@ -3,6 +3,50 @@
     {
       "id": "ticex:celestial",
       "required": false
+    },
+    {
+      "id": "ticex:radiation_shielding",
+      "required": false
+    },
+    {
+      "id": "ticex:abyssal",
+      "required": false
+    },
+    {
+      "id": "ticex:infernal",
+      "required": false
+    },
+    {
+      "id": "ticex:gravity",
+      "required": false
+    },
+    {
+      "id": "ticex:hurricane",
+      "required": false
+    },
+    {
+      "id": "ticex:ahrim",
+      "required": false
+    },
+    {
+      "id": "ticex:dharok",
+      "required": false
+    },
+    {
+      "id": "ticex:guthan",
+      "required": false
+    },
+    {
+      "id": "ticex:karil",
+      "required": false
+    },
+    {
+      "id": "ticex:torag",
+      "required": false
+    },
+    {
+      "id": "ticex:verac",
+      "required": false
     }
   ]
 }

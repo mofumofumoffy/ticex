@@ -3,16 +3,13 @@ package moffy.ticex.modifier;
 import java.util.EnumSet;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
-import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.EmbossmentModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXModifierHooks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
-import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 public class ModifierKoshirae extends NoLevelsModifier implements EmbossmentModifierHook {
 

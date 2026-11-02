@@ -1,10 +1,10 @@
 package moffy.ticex.modifier;
 
 import com.brandon3055.brandonscore.api.TechLevel;
+import moffy.ticex.TicEXConfig;
 import moffy.ticex.lib.hook.DamageSourceModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
+import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.lib.utils.TicEXDEUtils;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -14,7 +14,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.materials.MaterialRegistry;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
@@ -22,6 +21,7 @@ import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.module.ModuleHookMap;
+import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.definition.module.material.ToolMaterialHook;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.MaterialNBT;
@@ -43,7 +43,7 @@ public class ModifierDragonForce extends Modifier implements DamageSourceModifie
     }
 
     @Override
-    public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, DamageSource currentSource, DamageSource original) {
+    public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry modifierEntry, ToolAttackContext context, DamageSource original, DamageSource currentSource) {
         Entity entity = currentSource.getDirectEntity();
 
         if(entity != null){
@@ -79,6 +79,9 @@ public class ModifierDragonForce extends Modifier implements DamageSourceModifie
                     }
                 }
             }
+        }
+        if(TicEXConfig.EASIER_DRAGONFORCE != null && !TicEXConfig.EASIER_DRAGONFORCE.get()){
+            effectiveLevel = Math.min(effectiveLevel, 2);
         }
         return TechLevel.byIndex(effectiveLevel);
     }

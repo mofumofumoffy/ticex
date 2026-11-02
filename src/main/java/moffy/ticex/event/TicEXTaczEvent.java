@@ -11,16 +11,21 @@ package moffy.ticex.event;
 import com.tacz.guns.api.event.common.EntityHurtByGunEvent;
 import com.tacz.guns.api.event.common.GunDamageSourcePart;
 import com.tacz.guns.api.event.common.GunMeleeEvent;
+import moffy.ticex.client.modules.tacz.BlitzGunIconDecorator;
 import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.lib.hook.DamageSourceModifierHook;
 import moffy.ticex.mixin.CriticalAccessor;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXItems;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RegisterItemDecorationsEvent;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
@@ -50,8 +55,10 @@ public class TicEXTaczEvent {
                     .target(target)
                     .build();
 
-            CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(attacker, event.isHeadShot(), event.getHeadshotMultiplier() + 1.0f);
-            ((CriticalAccessor)context).setCriticalModifier(criticalContext.isCritical() ? criticalContext.criticalModifier() - 1.0f : 0);
+            if(attacker instanceof Player playerAttacker && target instanceof LivingEntity livingTarget){
+                CriticalModifierHook.CriticalContext criticalContext = CriticalModifierHook.modifyCritical(playerAttacker, livingTarget, event.isHeadShot(), event.getHeadshotMultiplier() + 1.0f);
+                ((CriticalAccessor)context).setCriticalModifier(criticalContext.isCritical() ? criticalContext.criticalModifier() - 1.0f : 0);
+            }
 
             for(ModifierEntry modifier : tool.getModifierList()){
                 damage = modifier.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, modifier, context, initialDamage, damage);
@@ -59,7 +66,7 @@ public class TicEXTaczEvent {
 
             event.setBaseAmount(damage);
 
-            event.setDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING, DamageSourceModifierHook.modifyDamageSource(tool, event.getDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING)));
+            event.setDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING, DamageSourceModifierHook.modifyDamageSource(attacker, context, event.getDamageSource(GunDamageSourcePart.NON_ARMOR_PIERCING)));
 
             for(ModifierEntry modifier : tool.getModifierList()){
                 modifier.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, modifier, context, event.getBaseAmount(), 0, 0);
@@ -111,6 +118,11 @@ public class TicEXTaczEvent {
                 }
             }
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void registerItemDecorators(RegisterItemDecorationsEvent event) {
+        event.register(TicEXItems.BLITZ_GUN.get(), new BlitzGunIconDecorator());
     }
 
     public static AABB getAABB(LivingEntity attacker) {

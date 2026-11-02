@@ -1,8 +1,9 @@
 package moffy.ticex.event;
 
-import moffy.ticex.client.render.ticex.ItemArrowRenderer;
+import moffy.ticex.client.modules.ticex.ItemArrowRenderer;
 import moffy.ticex.lib.utils.TicEXAvaritiaUtils;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXEntities;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
@@ -37,8 +38,8 @@ public class TicEXAvaritiaEvent {
                 ToolStack tool = ToolStack.from(player.getMainHandItem());
                 if (
                     !player.getMainHandItem().isEmpty() &&
-                    TicEXRegistry.OMNIPOTENCE_MODIFIER != null &&
-                    tool.getModifierLevel(TicEXRegistry.OMNIPOTENCE_MODIFIER.get()) > 0 &&
+                            TicEXModifiers.OMNIPOTENCE_MODIFIER != null &&
+                    tool.getModifierLevel(TicEXModifiers.OMNIPOTENCE_MODIFIER.get()) > 0 &&
                     player.getMainHandItem().useOnRelease()
                 ) {
                     event.setCanceled(true);
@@ -53,8 +54,8 @@ public class TicEXAvaritiaEvent {
                 if (armorStack.getItem() instanceof IModifiable) {
                     ToolStack armor = ToolStack.from(armorStack);
                     if (
-                        TicEXRegistry.TRANSCENDENTAL_MODIFIER != null &&
-                        armor.getModifierLevel(TicEXRegistry.TRANSCENDENTAL_MODIFIER.get()) > 0
+                            TicEXModifiers.TRANSCENDENTAL_MODIFIER != null &&
+                        armor.getModifierLevel(TicEXModifiers.TRANSCENDENTAL_MODIFIER.get()) > 0
                     ) {
                         event.setCanceled(true);
                         player.setHealth(player.getMaxHealth());
@@ -81,7 +82,7 @@ public class TicEXAvaritiaEvent {
         ) {
             if (player.getMainHandItem().getItem() instanceof IModifiable) {
                 ToolStack tool = ToolStack.from(player.getMainHandItem());
-                if(TicEXRegistry.SKULLFIRE_MODIFIER != null && tool.getModifierLevel(TicEXRegistry.SKULLFIRE_MODIFIER.get()) > 0){
+                if(TicEXModifiers.SKULLFIRE_MODIFIER != null && tool.getModifierLevel(TicEXModifiers.SKULLFIRE_MODIFIER.get()) > 0){
                     if (event.getDrops().isEmpty()) {
                         addDrop(event, new ItemStack(Items.WITHER_SKELETON_SKULL, 1));
                     } else {
@@ -103,7 +104,7 @@ public class TicEXAvaritiaEvent {
 
     @OnlyIn(Dist.CLIENT)
     public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(TicEXRegistry.ENDESTSHOT_PROJECTILE.get(), pContext ->
+        event.registerEntityRenderer(TicEXEntities.ENDESTSHOT_PROJECTILE.get(), pContext ->
             new ItemArrowRenderer(pContext, 1f)
         );
     }

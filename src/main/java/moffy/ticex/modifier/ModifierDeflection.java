@@ -3,9 +3,8 @@ package moffy.ticex.modifier;
 import moffy.ticex.TicEX;
 import moffy.ticex.lib.hook.CriticalModifierHook;
 import moffy.ticex.lib.hook.ProvidePropertyModifierHook;
-import moffy.ticex.lib.hook.TicEXModifierHooks;
+import moffy.ticex.registry.TicEXModifierHooks;
 import moffy.ticex.modifier.propeties.DeflectionProperty;
-import moffy.ticex.modules.general.TicEXRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -17,11 +16,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
-import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.combat.MeleeDamageModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.ranged.ProjectileHitModifierHook;
+import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
@@ -32,7 +31,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 
-public class ModifierDeflection extends Modifier implements MeleeDamageModifierHook, ProjectileHitModifierHook, ProvidePropertyModifierHook {
+public class ModifierDeflection extends NoLevelsModifier implements MeleeDamageModifierHook, ProjectileHitModifierHook, ProvidePropertyModifierHook {
 
     public static final ResourceLocation DEFLECTION_DISABLED = TicEX.getResource("deflection_disabled");
 
@@ -61,6 +60,10 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
             LivingEntity target = context.getLivingTarget();
             Player attacker = context.getPlayerAttacker();
 
+            if(target instanceof Player && target.getServer() != null && !target.getServer().isPvpAllowed()){
+                return 0;
+            }
+
             if (target != null && attacker != null) {
                 for (ModifierEntry toolEntry : tool.getModifierList()) {
                     var hook = toolEntry.getHook(ModifierHooks.MELEE_HIT);
@@ -76,7 +79,7 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
                     return 0;
                 }
 
-                float modifier = CriticalModifierHook.modifyCritical(attacker, false, 1.0f).criticalModifier();
+                float modifier = CriticalModifierHook.modifyCritical(attacker, target, false, 1.0f).criticalModifier();
                 float absoluteHealth = target.getHealth() - damage * modifier;
 
                 if (target.level() instanceof ServerLevel serverLevel) {
@@ -119,13 +122,14 @@ public class ModifierDeflection extends Modifier implements MeleeDamageModifierH
         Projectile projectile,
         EntityHitResult hit,
         LivingEntity attacker,
-        LivingEntity target
+        LivingEntity target,
+        boolean notBlocked
     ) {
         for (ModifierEntry toolEntry : modifiers.getModifiers()) {
             if (!toolEntry.matches(this) && !persistentData.getBoolean(DEFLECTION_DISABLED)) {
                 toolEntry
                     .getHook(ModifierHooks.PROJECTILE_HIT)
-                    .onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit, attacker, target);
+                    .onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit, attacker, target, notBlocked);
             }
         }
         return false;

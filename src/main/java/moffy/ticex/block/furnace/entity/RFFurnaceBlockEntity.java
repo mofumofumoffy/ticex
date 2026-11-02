@@ -2,7 +2,7 @@ package moffy.ticex.block.furnace.entity;
 
 import javax.annotation.Nonnull;
 import moffy.ticex.TicEXConfig;
-import moffy.ticex.modules.general.TicEXRegistry;
+import moffy.ticex.registry.TicEXFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,7 +19,6 @@ import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import slimeknights.tconstruct.common.config.Config;
 import slimeknights.tconstruct.library.client.SafeClient;
 import slimeknights.tconstruct.library.client.model.ModelProperties;
 import slimeknights.tconstruct.library.fluid.FluidTankAnimated;
@@ -97,14 +96,14 @@ public class RFFurnaceBlockEntity extends SmelteryComponentBlockEntity implement
 
         if (pBlockEntity.isCreative()) {
             pBlockEntity.updateFluidTo(
-                new FluidStack(TicEXRegistry.RF_FURNACE_FUELS.get(19).get(), FluidType.BUCKET_VOLUME)
+                new FluidStack(TicEXFluids.RF_FURNACE_FUELS.get(19).get(), FluidType.BUCKET_VOLUME)
             );
         } else if (extracted >= 1) {
             if (fuelIndex == 0) {
                 pBlockEntity.updateFluidTo(FluidStack.EMPTY);
             } else {
                 pBlockEntity.updateFluidTo(
-                    new FluidStack(TicEXRegistry.RF_FURNACE_FUELS.get(fuelIndex - 1).get(), FluidType.BUCKET_VOLUME)
+                    new FluidStack(TicEXFluids.RF_FURNACE_FUELS.get(fuelIndex - 1).get(), FluidType.BUCKET_VOLUME)
                 );
             }
         } else {

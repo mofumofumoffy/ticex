@@ -1,11 +1,9 @@
 package moffy.ticex.datagen.tool;
 
-import moffy.addonapi.AddonAPI;
 import moffy.addonapi.ModsAvailableCondition;
 import moffy.ticex.TicEX;
-import moffy.ticex.lib.TicEXMaterials;
+import moffy.ticex.registry.TicEXMaterials;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import slimeknights.tconstruct.library.data.material.AbstractMaterialDataProvider;
 
 public class MaterialDefinitionProvider extends AbstractMaterialDataProvider {
@@ -85,8 +83,9 @@ public class MaterialDefinitionProvider extends AbstractMaterialDataProvider {
             false,
             availableCondition("draconicevolution_compat")
         );
-        addMaterial(TicEXMaterials.ETHERIC, 6, ORDER_COMPAT + ORDER_WEAPON, false);
-        addMaterial(TicEXMaterials.OD, 6, ORDER_COMPAT + ORDER_WEAPON, false);
+        addMaterial(TicEXMaterials.ETHERIC, 5, ORDER_COMPAT + ORDER_WEAPON, false);
+        addMaterial(TicEXMaterials.OD, 5, ORDER_COMPAT + ORDER_WEAPON, false);
+        addMaterial(TicEXMaterials.ASTRAL, 4, ORDER_COMPAT + ORDER_WEAPON, false);
         addMaterial(TicEXMaterials.RECONSTRUCTION, 3, ORDER_COMPAT, false);
     }
 
