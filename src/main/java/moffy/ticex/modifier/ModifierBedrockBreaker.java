@@ -3,6 +3,7 @@ package moffy.ticex.modifier;
 import java.util.Objects;
 
 import committee.nova.mods.avaritia.init.registry.ModBlocks;
+import moffy.ticex.registry.TicEXModifiers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -55,36 +56,40 @@ public class ModifierBedrockBreaker extends NoLevelsModifier implements BreakSpe
     private void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         Level level = event.getLevel();
 
-        if(!(event.getItemStack().getItem() instanceof IModifiable)){
-            return;
+        ItemStack toolItemStack = event.getItemStack();
+        if(toolItemStack.getItem() instanceof IModifiable){
+            ToolStack tool = ToolStack.from(toolItemStack);
+            if(tool.getModifierLevel(TicEXModifiers.BEDROCK_BREAKER_MODIFIER.get()) > 0){
+                if(!level.isClientSide() && !event.getEntity().isCreative()){
+                    BlockState state = event.getEntity().level().getBlockState(event.getPos());
+                    BlockPos pos = event.getPos();
+
+                    if (state.is(Blocks.BEDROCK)) {
+                        level.setBlock(pos, ModBlocks.fake_bedrock.get().defaultBlockState(), 2);
+                    } else if (state.is(Blocks.END_PORTAL_FRAME)) {
+                        BlockState fakeEndPortalFrameState = ModBlocks.fake_end_portal_frame.get().defaultBlockState()
+                                .setValue(EndPortalFrameBlock.FACING, state.getValue(EndPortalFrameBlock.FACING))
+                                .setValue(EndPortalFrameBlock.HAS_EYE, state.getValue(EndPortalFrameBlock.HAS_EYE));
+                        level.setBlock(pos, fakeEndPortalFrameState, 2);
+                    } else if (state.is(Blocks.END_PORTAL)) {
+                        level.setBlock(pos, ModBlocks.fake_end_portal.get().defaultBlockState(), 2);
+                    }
+
+                    if (state.is(ModBlocks.fake_bedrock.get())) {
+                        level.setBlock(pos, Blocks.BEDROCK.defaultBlockState(), 2);
+                    } else if (state.is(ModBlocks.fake_end_portal_frame.get())) {
+                        BlockState endPortalFrameState = Blocks.END_PORTAL_FRAME.defaultBlockState()
+                                .setValue(EndPortalFrameBlock.FACING, state.getValue(EndPortalFrameBlock.FACING))
+                                .setValue(EndPortalFrameBlock.HAS_EYE, state.getValue(EndPortalFrameBlock.HAS_EYE));
+                        level.setBlock(pos, endPortalFrameState, 2);
+                    } else if (state.is(ModBlocks.fake_end_portal.get())) {
+                        level.setBlock(pos, Blocks.END_PORTAL.defaultBlockState(), 2);
+                    }
+                }
+            }
         }
 
-        if(!level.isClientSide() && !event.getEntity().isCreative()){
-            BlockState state = event.getEntity().level().getBlockState(event.getPos());
-            BlockPos pos = event.getPos();
 
-            if (state.is(Blocks.BEDROCK)) {
-                level.setBlock(pos, ModBlocks.fake_bedrock.get().defaultBlockState(), 2);
-            } else if (state.is(Blocks.END_PORTAL_FRAME)) {
-                BlockState fakeEndPortalFrameState = ModBlocks.fake_end_portal_frame.get().defaultBlockState()
-                        .setValue(EndPortalFrameBlock.FACING, state.getValue(EndPortalFrameBlock.FACING))
-                        .setValue(EndPortalFrameBlock.HAS_EYE, state.getValue(EndPortalFrameBlock.HAS_EYE));
-                level.setBlock(pos, fakeEndPortalFrameState, 2);
-            } else if (state.is(Blocks.END_PORTAL)) {
-                level.setBlock(pos, ModBlocks.fake_end_portal.get().defaultBlockState(), 2);
-            }
-
-            if (state.is(ModBlocks.fake_bedrock.get())) {
-                level.setBlock(pos, Blocks.BEDROCK.defaultBlockState(), 2);
-            } else if (state.is(ModBlocks.fake_end_portal_frame.get())) {
-                BlockState endPortalFrameState = Blocks.END_PORTAL_FRAME.defaultBlockState()
-                        .setValue(EndPortalFrameBlock.FACING, state.getValue(EndPortalFrameBlock.FACING))
-                        .setValue(EndPortalFrameBlock.HAS_EYE, state.getValue(EndPortalFrameBlock.HAS_EYE));
-                level.setBlock(pos, endPortalFrameState, 2);
-            } else if (state.is(ModBlocks.fake_end_portal.get())) {
-                level.setBlock(pos, Blocks.END_PORTAL.defaultBlockState(), 2);
-            }
-        }
     }
 
     @Override
