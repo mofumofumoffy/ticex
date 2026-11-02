@@ -13,6 +13,7 @@ import moffy.ticex.client.modules.mekanism.MekaPlateModelCache;
 import moffy.ticex.client.modules.mekanism.MekanicArmorModelProvider;
 import moffy.ticex.client.modules.mekanism.MekanicArmorQuadCache;
 import moffy.ticex.event.TicEXMekanismEvent;
+import moffy.ticex.item.CatalystItem;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableMekaSuitArmor;
 import moffy.ticex.item.modifiable.ModifiableMekaTool;
@@ -79,7 +80,7 @@ public class TicEXMekanismModule implements AddonModule {
         TicEXItems.CATALYST_MEKASUIT = TicEXRegistry.ITEMS_EXTENDED.registerEnum(
                 "catalyst_mekasuit",
                 ArmorItem.Type.values(),
-                type -> new ToolPartItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId())
+                type -> new CatalystItem(PROPS, CatalystMaterialStatsType.getOrMakeType("catalyst_mekasuit", type).getId())
         );
 
         TicEXItems.MEKA_EDGE = TicEXRegistry.ITEMS_EXTENDED.register("meka_tool",
@@ -87,7 +88,7 @@ public class TicEXMekanismModule implements AddonModule {
         );
 
         TicEXItems.CATALYST_MEKA_TOOL = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_tool",
-                () -> new ToolPartItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_tool").getId())
+                () -> new CatalystItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_tool").getId())
         );
 
         TicEXModifiers.MEKANIC_MODIFIER = TicEXRegistry.MODIFIERS.register("mekanic", ModifierMekanic::new);

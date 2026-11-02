@@ -3,6 +3,7 @@ package moffy.ticex.modules.projecte;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.event.TicEXPEEvent;
+import moffy.ticex.item.CatalystItem;
 import moffy.ticex.item.modifiable.ModifiableGemArmor;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.*;
@@ -42,7 +43,7 @@ public class TicEXPEModule implements AddonModule {
                 "catalyst_gem",
                 ArmorItem.Type.values(),
                 type ->
-                        new ToolPartItem(
+                        new CatalystItem(
                                 new Item.Properties(),
                                 CatalystMaterialStatsType.getOrMakeType("catalyst_gem", type).getId()
                         )

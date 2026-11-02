@@ -7,6 +7,7 @@ import moffy.ticex.client.modules.custom.CustomModel;
 import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.entity.slashblade.SBToolItemEntity;
 import moffy.ticex.event.TicEXSBEvent;
+import moffy.ticex.item.CatalystItem;
 import moffy.ticex.item.cores.ItemReconstCore;
 import moffy.ticex.item.modifiable.ModifiableSlashBladeItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
@@ -57,7 +58,7 @@ public class TicEXSlashBladeModule implements AddonModule {
         );
 
         TicEXItems.CATALYST_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_slashblade", () ->
-                new ToolPartItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_slashblade").getId())
+                new CatalystItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_slashblade").getId())
         );
 
         TicEXItems.REFORGED_SLASHBLADE = TicEXRegistry.ITEMS_EXTENDED.register("reforged_slashblade", () ->

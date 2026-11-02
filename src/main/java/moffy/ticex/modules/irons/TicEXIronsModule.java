@@ -3,6 +3,7 @@ package moffy.ticex.modules.irons;
 import moffy.addonapi.AddonModule;
 import moffy.ticex.TicEX;
 import moffy.ticex.event.TicEXIronsEvent;
+import moffy.ticex.item.CatalystItem;
 import moffy.ticex.item.modifiable.ModifiableIronsSpellbookItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.modifier.ModifierOvercasting;
@@ -25,7 +26,7 @@ public class TicEXIronsModule implements AddonModule {
         );
 
         TicEXItems.CATALYST_IRONS_SPELLBOOK = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_irons_spellbook", () ->
-                new ToolPartItem(
+                new CatalystItem(
                         new Item.Properties(),
                         CatalystMaterialStatsType.getOrMakeType("catalyst_irons_spellbook").getId()
                 )

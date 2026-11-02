@@ -13,6 +13,7 @@ import meranha.mekaweapons.items.modules.WeaponsModules;
 import moffy.ticex.TicEX;
 import moffy.ticex.client.modules.mekanism.weapons.MekanicArrowRenderer;
 import moffy.ticex.entity.mekanism.MekanicProjectile;
+import moffy.ticex.item.CatalystItem;
 import moffy.ticex.item.projectile.MekanicShotItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.lib.modules.mekanism.MekaGearCapability;
@@ -50,10 +51,10 @@ public class TicEXMekanismWeaponsUtils {
 
     public static void register(){
         TicEXItems.CATALYST_MEKA_TANA = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_tana",
-                () -> new ToolPartItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_tana").getId())
+                () -> new CatalystItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_tana").getId())
         );
         TicEXItems.CATALYST_MEKA_BOW = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_meka_bow",
-                () -> new ToolPartItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_bow").getId())
+                () -> new CatalystItem(new Item.Properties(), CatalystMaterialStatsType.getOrMakeType("catalyst_meka_bow").getId())
         );
 
         TicEXEntities.MEKANIC_PROJECTILE = TicEXRegistry.ENTITIES.register("mekanic", () ->

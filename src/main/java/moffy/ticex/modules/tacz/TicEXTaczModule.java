@@ -13,6 +13,7 @@ import moffy.ticex.TicEX;
 import moffy.ticex.client.modules.custom.CustomModel;
 import moffy.ticex.client.CustomTinkerRenders;
 import moffy.ticex.event.TicEXTaczEvent;
+import moffy.ticex.item.CatalystItem;
 import moffy.ticex.item.modifiable.ModifiableGunItem;
 import moffy.ticex.lib.CatalystMaterialStatsType;
 import moffy.ticex.registry.TicEXRegistry;
@@ -38,7 +39,7 @@ public class TicEXTaczModule implements AddonModule {
         );
 
         TicEXItems.CATALYST_KINETIC_GUN = TicEXRegistry.ITEMS_EXTENDED.register("catalyst_kinetic_gun", () ->
-                new ToolPartItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_kinetic_gun").getId())
+                new CatalystItem(defaultProperties, CatalystMaterialStatsType.getOrMakeType("catalyst_kinetic_gun").getId())
         );
 
         TicEXItems.BLITZ_GUN = TicEXRegistry.ITEMS_EXTENDED.register("blitz_gun", () ->
